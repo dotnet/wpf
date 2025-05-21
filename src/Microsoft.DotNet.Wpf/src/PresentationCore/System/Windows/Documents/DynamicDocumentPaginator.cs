@@ -1,5 +1,6 @@
-ï»¿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // 
@@ -62,7 +63,7 @@ namespace System.Windows.Documents
         /// <param name="userState">Unique identifier for the asynchronous task.</param>
         /// <exception cref="ArgumentException">
         /// Throws ArgumentException if the ContentPosition does not exist within 
-        /// this elementï¿½s tree.
+        /// this element’s tree.
         /// </exception>
         public virtual void GetPageNumberAsync(ContentPosition contentPosition, object userState)
         {
@@ -73,7 +74,7 @@ namespace System.Windows.Documents
             // Content position cannot be Missing.
             if (contentPosition == ContentPosition.Missing)
             {
-                throw new ArgumentException(SR.PaginatorMissingContentPosition, nameof(contentPosition));
+                throw new ArgumentException(SR.PaginatorMissingContentPosition, "contentPosition");
             }
 
             pageNumber = GetPageNumber(contentPosition);

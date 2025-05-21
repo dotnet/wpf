@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.Windows.Input.StylusPointer;
@@ -717,7 +718,7 @@ namespace System.Windows.Input
             // Second, if we still haven't thought of a reason to kill capture, validate
             // it on a Visual basis for things like still being in the right tree.
             //
-            if (!killCapture)
+            if (killCapture == false)
             {
                 DependencyObject containingVisual = InputElement.GetContainingVisual(dependencyObject);
                 killCapture = !ValidateVisualForCapture(containingVisual);
@@ -747,13 +748,13 @@ namespace System.Windows.Input
 
         private bool ValidateUIElementForCapture(UIElement element)
         {
-            if (!element.IsEnabled)
+            if (element.IsEnabled == false)
                 return false;
 
-            if (!element.IsVisible)
+            if (element.IsVisible == false)
                 return false;
 
-            if (!element.IsHitTestVisible)
+            if (element.IsHitTestVisible == false)
                 return false;
 
             return true;
@@ -761,13 +762,13 @@ namespace System.Windows.Input
 
         private bool ValidateUIElement3DForCapture(UIElement3D element)
         {
-            if (!element.IsEnabled)
+            if (element.IsEnabled == false)
                 return false;
 
-            if (!element.IsVisible)
+            if (element.IsVisible == false)
                 return false;
 
-            if (!element.IsHitTestVisible)
+            if (element.IsHitTestVisible == false)
                 return false;
 
             return true;
@@ -776,7 +777,7 @@ namespace System.Windows.Input
 
         private bool ValidateContentElementForCapture(ContentElement element)
         {
-            if (!element.IsEnabled)
+            if (element.IsEnabled == false)
                 return false;
 
             // NOTE: there are no IsVisible or IsHitTestVisible properties for ContentElements.
@@ -1437,7 +1438,10 @@ namespace System.Windows.Input
                             // All mouse information is now restricted to this presentation source.
                             _inputSource = rawMouseInputReport.InputSource;
 
-                            toDeactivate?.NotifyDeactivate();
+                            if (toDeactivate != null)
+                            {
+                                toDeactivate.NotifyDeactivate();
+                            }
                         }
                     }
 
@@ -1480,7 +1484,7 @@ namespace System.Windows.Input
                             IInputElement mouseOver = _mouseOver; // assume mouse is still over whatever it was before
                             IInputElement rawMouseOver = (_rawMouseOver != null) ? (IInputElement)_rawMouseOver.Target : null;
                             bool isPhysicallyOver = _isPhysicallyOver;
-                            bool isGlobalChange = !ArePointsClose(ptClient, _lastPosition);  // determine if the mouse actually physically moved
+                            bool isGlobalChange = ArePointsClose(ptClient, _lastPosition) == false;  // determine if the mouse actually physically moved
 
                             // Invoke Hit Test logic to determine what element the mouse will be over AFTER the move is processed.
                             // - Only do this if:
@@ -1668,7 +1672,7 @@ namespace System.Windows.Input
                             // element we are over or a change in which element
                             // we are over.
                             //
-                            bool isLocalChange = isMouseOverChange || !ArePointsClose(ptRelativeToOver, _positionRelativeToOver);
+                            bool isLocalChange = isMouseOverChange || ArePointsClose(ptRelativeToOver, _positionRelativeToOver) == false;
 
                             // Console.WriteLine("RawMouseActions.AbsoluteMove: isGlobalChange=" + isGlobalChange + " isLocalChange=" + isLocalChange);
 
@@ -1691,9 +1695,9 @@ namespace System.Windows.Input
                                 {
                                     _rawMouseOver = new WeakReference(rawMouseOver);
                                 }
-                                else
+                                else if (_rawMouseOver != null)
                                 {
-                                    _rawMouseOver?.Target = rawMouseOver;
+                                    _rawMouseOver.Target = rawMouseOver;
                                 }
 
                                 // Console.WriteLine("RawMouseActions.AbsoluteMove: ptRoot=" + ptRoot);

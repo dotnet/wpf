@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: RowCache caches information about Row layouts used by DocumentGrid.
@@ -1059,7 +1060,7 @@ namespace MS.Internal.Documents
             //Check for invalid indices.  If it's out of range then we just return.
             if (index > _rowCache.Count)
             {
-                Debug.Fail("Requested to update a non-existent row.");
+                Debug.Assert(false, "Requested to update a non-existent row.");
                 return;
             }
 
@@ -1273,7 +1274,7 @@ namespace MS.Internal.Documents
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException(nameof(args));
+                            throw new ArgumentOutOfRangeException("args");
                     }
                 }
 

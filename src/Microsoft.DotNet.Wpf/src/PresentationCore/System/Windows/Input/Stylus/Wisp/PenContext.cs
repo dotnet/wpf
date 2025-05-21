@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Win32.Penimc;
 
@@ -511,21 +512,21 @@ namespace System.Windows.Input
         private readonly IntPtr _hwnd;
         private readonly IntPtr _commHandle;
         
-        private PenContexts             _contexts;
+        PenContexts             _contexts;
         
-        private PenThread               _penThreadPenContext;
-        private int                     _id;
-        private int                     _tabletDeviceId;
-        private StylusPointPropertyInfo _infoX;
-        private StylusPointPropertyInfo _infoY;
-        private bool                    _supportInRange;
-        private List<int>               _stylusDevicesInRange;
-        private bool                    _isIntegrated;
+        PenThread               _penThreadPenContext;
+        int                     _id;
+        int                     _tabletDeviceId;
+        StylusPointPropertyInfo _infoX;
+        StylusPointPropertyInfo _infoY;
+        bool                    _supportInRange;
+        List<int>               _stylusDevicesInRange;
+        bool                    _isIntegrated;
 
-        private StylusPointDescription  _stylusPointDescription;
-        private int                     _statusPropertyIndex = -1;
+        StylusPointDescription  _stylusPointDescription;
+        int                     _statusPropertyIndex = -1;
 
-        private int                     _lastInRangeTime;
-        private int                     _queuedInRangeCount;
+        int                     _lastInRangeTime;
+        int                     _queuedInRangeCount;
     }
 }

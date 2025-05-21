@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //---------------------------------------------------------------------------
 //
@@ -973,7 +974,7 @@ namespace Microsoft.Build.Tasks.Windows
                     break;
             }
 
-            if (!isSupported)
+            if (isSupported == false)
             {
                 Log.LogErrorWithCodeFromResources(nameof(SR.TargetIsNotSupported), outputType);
 
@@ -1019,7 +1020,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                 bValidItem = IsValidInputFile(inputItem.ItemSpec);
 
-                if (!bValidItem)
+                if (bValidItem == false)
                 {
                     bValid = false;
                 }

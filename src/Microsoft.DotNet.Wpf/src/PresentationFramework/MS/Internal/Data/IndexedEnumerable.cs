@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: offers optimistic indexer, i.e. this[int index] { get; }
@@ -182,7 +183,10 @@ namespace MS.Internal.Data
                 _cachedIsEmpty = !ie.MoveNext();
 
                 IDisposable d = ie as IDisposable;
-                d?.Dispose();
+                if (d != null)
+                {
+                    d.Dispose();
+                }
 
                 if (_cachedIsEmpty.Value)
                     _cachedCount = 0;
@@ -240,7 +244,7 @@ namespace MS.Internal.Data
                 // moved beyond the end of the enumerator?
                 if (moveBy != 0)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(index)); // validating the index argument
+                    throw new ArgumentOutOfRangeException("index"); // validating the index argument
                 }
 
                 CacheCurrentItem(index, _enumerator.Current);
@@ -317,7 +321,7 @@ namespace MS.Internal.Data
                     {
                         // The number of elements in the source ICollection is greater than
                         // the available space from index to the end of the destination array.
-                        throw new ArgumentException(SR.CopyToNotEnoughSpace, nameof(index));
+                        throw new ArgumentException(SR.CopyToNotEnoughSpace, "index");
                     }
                 }
             }
@@ -390,7 +394,7 @@ namespace MS.Internal.Data
                 }
                 catch (InvalidOperationException)
                 {
-                    Debug.Fail("EnsureCacheCurrent: _enumerator.Current failed with InvalidOperationException");
+                    Debug.Assert(false, "EnsureCacheCurrent: _enumerator.Current failed with InvalidOperationException");
                 }
                 Debug.Assert(System.Windows.Controls.ItemsControl.EqualsEx(_cachedItem, current), "EnsureCacheCurrent: _cachedItem out of sync with _enumerator.Current");
             }
@@ -450,7 +454,10 @@ namespace MS.Internal.Data
         private void DisposeEnumerator(ref IEnumerator ie)
         {
             IDisposable d = ie as IDisposable;
-            d?.Dispose();
+            if (d != null)
+            {
+                d.Dispose();
+            }
 
             ie = null;
         }
@@ -669,7 +676,7 @@ namespace MS.Internal.Data
             return false;   // this method is no longer used (but must remain, for compat)
         }
 
-        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             InvalidateEnumerator();
         }
@@ -755,14 +762,17 @@ namespace MS.Internal.Data
             public void Dispose()
             {
                 IDisposable d = _enumerator as IDisposable;
-                d?.Dispose();
+                if (d != null)
+                {
+                    d.Dispose();
+                }
                 _enumerator = null;
             }
 
-            private IEnumerable _enumerable;
-            private IEnumerator _enumerator;
-            private IndexedEnumerable _indexedEnumerable;
-            private Predicate<object> _filterCallback;
+            IEnumerable _enumerable;
+            IEnumerator _enumerator;
+            IndexedEnumerable _indexedEnumerable;
+            Predicate<object> _filterCallback;
         }
     }
 }

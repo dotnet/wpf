@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //------------------------------------------------------------------------------
@@ -13,6 +14,9 @@
 
 namespace MS.Internal.Csp
 {
+    using System;
+    using System.IO;
+
     internal class TempDirectory : IDisposable
     {
         //------------------------------------------------------
@@ -178,9 +182,9 @@ namespace MS.Internal.Csp
         //------------------------------------------------------
 
         #region Private Fields
-        private string _dir = "";
-        private bool disposed = false;
-        private bool _leak = false;
+        string _dir = "";
+        bool disposed = false;
+        bool _leak = false;
         #endregion Private Fields
     }
 }

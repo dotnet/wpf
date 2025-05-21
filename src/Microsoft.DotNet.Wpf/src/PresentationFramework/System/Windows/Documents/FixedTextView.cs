@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal.Documents;
 using System.Collections;
@@ -764,7 +765,7 @@ namespace System.Windows.Documents
             e = null;
 
             HitTestResult result = VisualTreeHelper.HitTest(this.FixedPage, pt);
-            DependencyObject v = result?.VisualHit;
+            DependencyObject v = (result != null) ? result.VisualHit : null;
 
             while (v != null)
             {
@@ -822,7 +823,10 @@ namespace System.Windows.Documents
                     Glyphs startGlyphs = this.FixedPage.GetGlyphsElement(node);
                     GeneralTransform tranToGlyphs = this.FixedPage.TransformToDescendant(startGlyphs);
                     Point transformedPt = point;
-                    tranToGlyphs?.TryTransform(transformedPt, out transformedPt);
+                    if (tranToGlyphs != null)
+                    {
+                        tranToGlyphs.TryTransform(transformedPt, out transformedPt);
+                    }
 
                     GlyphRun run = startGlyphs.ToGlyphRun();
                     Rect alignmentRect = run.ComputeAlignmentBox();
@@ -1175,7 +1179,10 @@ namespace System.Windows.Documents
         private ITextPointer _CreateTextPointerFromGlyphs(Glyphs g, Point point)
         {
             GeneralTransform transform = this.VisualRoot.TransformToDescendant(g);
-            transform?.TryTransform(point, out point);
+            if (transform != null)
+            {
+                transform.TryTransform(point, out point);
+            }
 
             int charIndex;
             LogicalDirection edge;

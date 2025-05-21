@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -8,16 +9,12 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-using MS.Utility;
-using System.Collections;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using System.Windows.Media.Imaging;
+// These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media.Effects
 {
-    internal sealed partial class ImplicitInputBrush : Brush
+    sealed partial class ImplicitInputBrush : Brush
     {
         //------------------------------------------------------
         //
@@ -157,7 +154,6 @@ namespace System.Windows.Media.Effects
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_IMPLICITINPUTBRUSH))
                 {
                     Transform vTransform = Transform;
@@ -172,11 +168,9 @@ namespace System.Windows.Media.Effects
                 }
 
                 return _duceResource.GetHandle(channel);
-
-        }
+}
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
@@ -187,10 +181,8 @@ namespace System.Windows.Media.Effects
                     if (vRelativeTransform != null) ((DUCE.IResource)vRelativeTransform).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
-
-                }
-
-        }
+}
+}
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.
@@ -247,8 +239,6 @@ namespace System.Windows.Media.Effects
 
 
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
-
-
 
         #endregion Internal Fields
 

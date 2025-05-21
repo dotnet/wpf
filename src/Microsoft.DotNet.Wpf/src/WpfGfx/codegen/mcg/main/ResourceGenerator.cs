@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //------------------------------------------------------------------------------
@@ -140,6 +141,7 @@ namespace MS.Internal.MilCodeGen.Main
             [CommandLineArgumentAttribute(CommandLineArgumentType.Required)]
             public string outputDirectory;
 
+            public bool disableSd;
             public bool help;
         }
 
@@ -189,6 +191,16 @@ namespace MS.Internal.MilCodeGen.Main
             if (!File.Exists(parsedArgs.xsdFile))
             {
                 throw new FileNotFoundException("Schema not found", parsedArgs.xsdFile);
+            }
+
+            //
+            // Handle "-disableSd" option.
+            // NOTE: Side-effect.
+            //
+
+            if (parsedArgs.disableSd)
+            {
+                FileCodeSink.DisableSd();
             }
 
             //
@@ -252,14 +264,15 @@ namespace MS.Internal.MilCodeGen.Main
             // display usage
             Console.WriteLine(
                 [[inline]]
-                    Usage: -d:<file> -o:<dir> [-x:<file>]
+                    Usage: -d:<file> -o:<dir> [-x:<file>] [-disableSD]
 
                         Mil Code Generation Utility
 
                     -d:<file>           An XML file describing the resources.
                     -o:<dir>            A target root directory for the generated files.  
-                                        e.g. the root of the repo.
+                                        e.g. %SdxRoot%\wpf
                     -x:<file>           A schema file with which to validate the XML file.
+                    -disableSD          Disables use of Source Depot to check out the generated files.
 
                     Only one file of each type can be specified.
                 [[/inline]]

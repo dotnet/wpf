@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // 
@@ -80,10 +81,9 @@ namespace System.Windows.Navigation
                 return _navigator;
             }
         }
-
-        private Uri _uri;
-        private long _bytesRead;
-        private long _maxBytes;
-        private object _navigator;
+        Uri _uri;
+        long _bytesRead;
+        long _maxBytes;
+        object _navigator;
     }
 }

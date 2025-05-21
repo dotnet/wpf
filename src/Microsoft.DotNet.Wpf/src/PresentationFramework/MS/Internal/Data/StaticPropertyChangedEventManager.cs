@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Manager for static property-changed events in the "weak event listener"
@@ -80,7 +81,7 @@ namespace MS.Internal.Data
         /// </summary>
         protected override void StartListening(object source)
         {
-            Debug.Fail("Should never get here");
+            Debug.Assert(false, "Should never get here");
         }
 
         /// <summary>
@@ -88,7 +89,7 @@ namespace MS.Internal.Data
         /// </summary>
         protected override void StopListening(object source)
         {
-            Debug.Fail("Should never get here");
+            Debug.Assert(false, "Should never get here");
         }
 
         /// <summary>
@@ -243,12 +244,12 @@ namespace MS.Internal.Data
 
         #endregion Private Methods
 
-        private static readonly string AllListenersKey = "<All Listeners>"; // not a legal property name
-        private static readonly string StaticPropertyChanged = "StaticPropertyChanged";
+        static readonly string AllListenersKey = "<All Listeners>"; // not a legal property name
+        static readonly string StaticPropertyChanged = "StaticPropertyChanged";
 
         #region TypeRecord
 
-        private class TypeRecord
+        class TypeRecord
         {
             public TypeRecord(Type type, StaticPropertyChangedEventManager manager)
             {
@@ -261,7 +262,7 @@ namespace MS.Internal.Data
             public bool IsEmpty { get { return (_dict.Count == 0); } }
             public ListenerList ProposedAllListenersList { get { return _proposedAllListenersList; } }
 
-            private static MethodInfo OnStaticPropertyChangedMethodInfo
+            static MethodInfo OnStaticPropertyChangedMethodInfo
             {
                 get
                 {
@@ -289,7 +290,7 @@ namespace MS.Internal.Data
                 }
             }
 
-            private void OnStaticPropertyChanged(object sender, PropertyChangedEventArgs e)
+            void OnStaticPropertyChanged(object sender, PropertyChangedEventArgs e)
             {
                 HandleStaticPropertyChanged(e);
             }
@@ -349,9 +350,9 @@ namespace MS.Internal.Data
                     // source has changed a particular property.  Notify targets
                     // who are listening either for this property or for all properties.
                     PropertyRecord pr = (PropertyRecord)_dict[propertyName];
-                    ListenerList<PropertyChangedEventArgs> listeners = pr?.List;
+                    ListenerList<PropertyChangedEventArgs> listeners = (pr == null) ? null : pr.List;
                     PropertyRecord genericRecord = (PropertyRecord)_dict[String.Empty];
-                    ListenerList<PropertyChangedEventArgs> genericListeners = genericRecord?.List;
+                    ListenerList<PropertyChangedEventArgs> genericListeners = (genericRecord == null) ? null : genericRecord.List;
 
                     if (genericListeners == null)
                     {
@@ -387,7 +388,7 @@ namespace MS.Internal.Data
                     // source has changed all properties.  Notify all targets.
                     // Use previously calculated combined list, if available.
                     PropertyRecord pr = (PropertyRecord)_dict[AllListenersKey];
-                    ListenerList<PropertyChangedEventArgs> pcList = pr?.List;
+                    ListenerList<PropertyChangedEventArgs> pcList = (pr == null) ? null : pr.List;
 
                     if (pcList == null)
                     {
@@ -562,18 +563,18 @@ namespace MS.Internal.Data
                 return foundDirt;
             }
 
-            private Type _type;                 // the type whose static property-changes we're listening to
-            private HybridDictionary _dict;     // Property-name -> PropertyRecord
-            private StaticPropertyChangedEventManager _manager; // owner
-            private ListenerList<PropertyChangedEventArgs> _proposedAllListenersList;
-            private List<String> _toRemove = new List<String>();
+            Type _type;                 // the type whose static property-changes we're listening to
+            HybridDictionary _dict;     // Property-name -> PropertyRecord
+            StaticPropertyChangedEventManager _manager; // owner
+            ListenerList<PropertyChangedEventArgs> _proposedAllListenersList;
+            List<String> _toRemove = new List<String>();
         }
 
         #endregion TypeRecord
 
         #region PropertyRecord
 
-        private class PropertyRecord
+        class PropertyRecord
         {
             public PropertyRecord(string propertyName, TypeRecord owner)
                 : this(propertyName, owner, new ListenerList<PropertyChangedEventArgs>())
@@ -590,7 +591,7 @@ namespace MS.Internal.Data
             public bool IsEmpty { get { return _list.IsEmpty; } }
             public ListenerList<PropertyChangedEventArgs> List { get { return _list; } }
 
-            private static MethodInfo OnStaticPropertyChangedMethodInfo
+            static MethodInfo OnStaticPropertyChangedMethodInfo
             {
                 get
                 {
@@ -620,7 +621,7 @@ namespace MS.Internal.Data
                 }
             }
 
-            private void OnStaticPropertyChanged(object sender, EventArgs e)
+            void OnStaticPropertyChanged(object sender, EventArgs e)
             {
                 _typeRecord.HandleStaticPropertyChanged(new PropertyChangedEventArgs(_propertyName));
             }
@@ -656,9 +657,9 @@ namespace MS.Internal.Data
                 return _list.Purge();
             }
 
-            private string _propertyName;
-            private ListenerList<PropertyChangedEventArgs> _list;
-            private TypeRecord _typeRecord;
+            string _propertyName;
+            ListenerList<PropertyChangedEventArgs> _list;
+            TypeRecord _typeRecord;
         }
 
         #endregion PropertyRecord

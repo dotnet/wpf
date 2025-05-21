@@ -1,6 +1,3 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-
 namespace System.Windows.Input.Manipulations
 {
     public sealed partial class InertiaExpansionBehavior2D : System.Windows.Input.Manipulations.InertiaParameters2D

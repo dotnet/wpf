@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // 
@@ -165,9 +166,9 @@ namespace MS.Internal.FontCache
             byte[] bits;
 
             // Try our cache first.
-            lock (s_resourceCache)
+            lock (_resourceCache)
             {
-                bits = s_resourceCache.Get(_fontUri);
+                bits = _resourceCache.Get(_fontUri);
             }
 
             if (bits == null)
@@ -183,7 +184,7 @@ namespace MS.Internal.FontCache
                 {
                     WebResponse response = WpfWebRequestHelper.CreateRequestAndGetResponse(_fontUri);
                     fontStream = response.GetResponseStream();
-                    if (string.Equals(response.ContentType, ObfuscatedContentType, StringComparison.Ordinal))
+                    if (String.Equals(response.ContentType, ObfuscatedContentType, StringComparison.Ordinal))
                     {
                         // The third parameter makes sure the original stream is closed
                         // when the deobfuscating stream is disposed.
@@ -191,19 +192,19 @@ namespace MS.Internal.FontCache
                     }
                 }
 
-                // We don't want any memory leaks
-                // TODO: Remove FinalizableUnmanagedStream once FontFileStream is migrated from C++/CLI.
-                if (fontStream is UnmanagedMemoryStream unmanagedMemoryStream)
-                    return new FinalizableUnmanagedStream(unmanagedMemoryStream);
+                UnmanagedMemoryStream unmanagedStream = fontStream as UnmanagedMemoryStream;
 
-                // Convert the DeobfuscatingStream to byte[]; add it to our cache, dispose it
+                if (unmanagedStream != null)
+                    return unmanagedStream;
+
                 bits = StreamToByteArray(fontStream);
-                lock (s_resourceCache)
-                {
-                    s_resourceCache.Add(_fontUri, bits, false);
-                }
 
-                fontStream.Close();
+                fontStream?.Close();
+            }
+
+            lock (_resourceCache)
+            {
+                _resourceCache.Add(_fontUri, bits, false);
             }
 
             return ByteArrayToUnmanagedStream(bits);
@@ -238,9 +239,9 @@ namespace MS.Internal.FontCache
             byte[] bits;
 
             // Try our cache first.
-            lock (s_resourceCache)
+            lock (_resourceCache)
             {
-                bits = s_resourceCache.Get(_fontUri);
+                bits = _resourceCache.Get(_fontUri);
             }
 
             if (bits != null)
@@ -354,10 +355,10 @@ namespace MS.Internal.FontCache
         {
             string fontFilename = _fontUri.OriginalString.Substring(_fontUri.OriginalString.LastIndexOf('/') + 1).ToLowerInvariant();
 
-            Assembly fontResourceAssembly = Assembly.GetExecutingAssembly();
-            ResourceManager rm = new($"{ReflectionUtils.GetAssemblyPartialName(fontResourceAssembly)}.g", fontResourceAssembly);
+            var fontResourceAssembly = Assembly.GetExecutingAssembly();
+            ResourceManager rm = new ResourceManager($"{fontResourceAssembly.GetName().Name}.g", fontResourceAssembly);
 
-            return rm.GetStream($"fonts/{fontFilename}");
+            return rm?.GetStream($"fonts/{fontFilename}");
         }
 
         #endregion Private Methods
@@ -369,26 +370,6 @@ namespace MS.Internal.FontCache
         //------------------------------------------------------
 
         #region Private Classes
-
-        /// <summary>
-        /// Calls <see cref="UnmanagedMemoryStream.Dispose"/> from the destructor.
-        /// </summary>
-        // TODO: Remove this once FontFileStream is migrated from C++/CLI.
-        private sealed class FinalizableUnmanagedStream : UnmanagedMemoryStream
-        {
-            private readonly UnmanagedMemoryStream _unmanaged;
-
-            internal unsafe FinalizableUnmanagedStream(UnmanagedMemoryStream unmanagedStream)
-            {
-                _unmanaged = unmanagedStream;
-                Initialize(_unmanaged.PositionPointer, _unmanaged.Length, _unmanaged.Length, FileAccess.Read);
-            }
-
-            ~FinalizableUnmanagedStream()
-            {
-                _unmanaged.Dispose();
-            }
-        }
 
         private class PinnedByteArrayStream : UnmanagedMemoryStream
         {
@@ -442,7 +423,7 @@ namespace MS.Internal.FontCache
 
         private Uri     _fontUri;
 
-        private static readonly SizeLimitedCache<Uri, byte[]> s_resourceCache = new(MaximumCacheItems);
+        private static SizeLimitedCache<Uri, byte[]> _resourceCache = new SizeLimitedCache<Uri, byte[]>(MaximumCacheItems);
 
         /// <summary>
         /// The maximum number of fonts downloaded from pack:// Uris.

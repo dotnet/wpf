@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
@@ -332,7 +333,7 @@ namespace System.Windows.Controls.Primitives
         {
             var header = d as DataGridRowHeader;
             var row = header.ParentRow;
-            var dataGrid = row?.DataGridOwner;
+            var dataGrid = row != null ? row.DataGridOwner : null;
             return DataGridHelper.GetCoercedTransferPropertyValue(
                 header,
                 baseValue,
@@ -350,7 +351,7 @@ namespace System.Windows.Controls.Primitives
         {
             var header = d as DataGridRowHeader;
             var row = header.ParentRow;
-            var dataGrid = row?.DataGridOwner;
+            var dataGrid = row != null ? row.DataGridOwner : null;
             return DataGridHelper.GetCoercedTransferPropertyValue(
                 header,
                 baseValue,

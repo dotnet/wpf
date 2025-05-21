@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -15,26 +16,26 @@ namespace MS.Internal.Xaml.Context
     internal class NameFixupGraph
     {
         // Node -> out-edges (other objects the parent is dependent on)
-        private Dictionary<object, FrugalObjectList<NameFixupToken>> _dependenciesByParentObject;
+        Dictionary<object, FrugalObjectList<NameFixupToken>> _dependenciesByParentObject;
 
         // Node -> in-edge (other object that is dependent on this child)
-        private Dictionary<object, NameFixupToken> _dependenciesByChildObject;
+        Dictionary<object, NameFixupToken> _dependenciesByChildObject;
 
         // Node -> in-edges (other objects that are dependent on this name)
-        private Dictionary<string, FrugalObjectList<NameFixupToken>> _dependenciesByName;
+        Dictionary<string, FrugalObjectList<NameFixupToken>> _dependenciesByName;
 
         // Queue of tokens whose dependencies have been resolved, and are awaiting processing
-        private Queue<NameFixupToken> _resolvedTokensPendingProcessing;
+        Queue<NameFixupToken> _resolvedTokensPendingProcessing;
 
         // Token for a pending call to ProvideValue on the root object. Can't store this in
         // _dependenciesByParentObject because it has no parent.
-        private NameFixupToken _deferredRootProvideValue;
+        NameFixupToken _deferredRootProvideValue;
 
         // At the end of the parse, we start running reparses on partially initialized objects,
         // and remove those dependencies. But we still want to be able to inform MEs/TCs that
         // the named objects they're getting aren't actually fully initialized. So we save this list
         // of incompletely initialized objects at the point we start completing references.
-        private HashSet<object> _uninitializedObjectsAtParseEnd;
+        HashSet<object> _uninitializedObjectsAtParseEnd;
 
         public NameFixupGraph()
         {

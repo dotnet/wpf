@@ -79,38 +79,64 @@
     <Compile Include="TenFeetInstallationError.xaml.cs" />
     <Compile Include="MS\Internal\Documents\AccountType.cs" />
     <Compile Include="MS\Internal\Documents\CertificatePriorityStatus.cs" />
-    <Compile Include="MS\Internal\Documents\CredentialManagerDialog.cs" />
+    <Compile Include="MS\Internal\Documents\CredentialManagerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MS\Internal\Documents\CredentialManagerDialog.Designer.cs" />
     <Compile Include="MS\Internal\Documents\DocumentStatusResources.cs" />
     <Compile Include="MS\Internal\Documents\DocumentSignatureManager.cs" />
     <Compile Include="MS\Internal\Documents\DigitalSignature.cs" />
     <Compile Include="MS\Internal\Documents\DigitalSignatureProvider.cs" />
-    <Compile Include="MS\Internal\Documents\DialogBaseForm.cs" />
-    <Compile Include="MS\Internal\Documents\DialogDivider.cs" />
+    <Compile Include="MS\Internal\Documents\DialogBaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MS\Internal\Documents\DialogDivider.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="MS\Internal\Documents\FindToolBar.xaml.cs" />
     <Compile Include="MS\Internal\Documents\IDigitalSignatureProvider.cs" />
     <Compile Include="MS\Internal\Documents\PeoplePickerWrapper.cs" />
-    <Compile Include="MS\Internal\Documents\RequestedSignatureDialog.cs" />
+    <Compile Include="MS\Internal\Documents\RequestedSignatureDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MS\Internal\Documents\RequestedSignatureDialog.Designer.cs" />
-    <Compile Include="MS\Internal\Documents\RMEnrollmentPage1.cs" />
+    <Compile Include="MS\Internal\Documents\RMEnrollmentPage1.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MS\Internal\Documents\RMEnrollmentPage1.Designer.cs" />
-    <Compile Include="MS\Internal\Documents\RMEnrollmentPage2.cs" />
+    <Compile Include="MS\Internal\Documents\RMEnrollmentPage2.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MS\Internal\Documents\RMEnrollmentPage2.Designer.cs" />
-    <Compile Include="MS\Internal\Documents\RMEnrollmentPage3.cs" />
+    <Compile Include="MS\Internal\Documents\RMEnrollmentPage3.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MS\Internal\Documents\RMEnrollmentPage3.Designer.cs" />
-    <Compile Include="MS\Internal\Documents\RMPermissions.cs" />
+    <Compile Include="MS\Internal\Documents\RMPermissions.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MS\Internal\Documents\RMPermissions.Designer.cs" />
-    <Compile Include="MS\Internal\Documents\RMPublishingDialog.cs" />
+    <Compile Include="MS\Internal\Documents\RMPublishingDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MS\Internal\Documents\RMPublishingDialog.Designer.cs" />
-    <Compile Include="MS\Internal\Documents\RMPublishingDialog.RightsTable.cs" />
+    <Compile Include="MS\Internal\Documents\RMPublishingDialog.RightsTable.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MS\Internal\Documents\SignaturePolicy.cs" />
     <Compile Include="MS\Internal\Documents\SignatureResourceHelper.cs" />
     <Compile Include="MS\Internal\Documents\SignatureStatus.cs" />
-    <Compile Include="MS\Internal\Documents\SignatureSummaryDialog.cs" />
+    <Compile Include="MS\Internal\Documents\SignatureSummaryDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MS\Internal\Documents\SignatureSummaryDialog.Designer.cs" />
-    <Compile Include="MS\Internal\Documents\SigningDialog.cs" />
+    <Compile Include="MS\Internal\Documents\SigningDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MS\Internal\Documents\SigningDialog.Designer.cs " />
-    <Compile Include="MS\Internal\Documents\SigningProgress.cs" />
+    <Compile Include="MS\Internal\Documents\SigningProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MS\Internal\Documents\SigningProgress.Designer.cs" />
     <Compile Include="MS\Internal\Documents\RightsManagementLicense.cs" />
     <Compile Include="MS\Internal\Documents\RightsManagementManager.cs" />
@@ -127,7 +153,9 @@
     <Compile Include="MS\Internal\Documents\Application\DocumentApplicationState.cs" />
     <Compile Include="MS\Internal\Documents\Application\DocumentApplicationJournalEntryEventArgs.cs" />
     <Compile Include="MS\Internal\Documents\Application\DocumentProperties.cs" />
-    <Compile Include="MS\Internal\Documents\Application\DocumentPropertiesDialog.cs" />
+    <Compile Include="MS\Internal\Documents\Application\DocumentPropertiesDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MS\Internal\Documents\Application\DocumentPropertiesDialog.Designer.cs" />
     <Compile Include="MS\Internal\Documents\Application\NativeDirectoryServicesQueryAPIs.cs" />
     <Compile Include="MS\Internal\Documents\Application\NavigationHelper.cs" />

@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.Windows;
@@ -50,7 +51,7 @@ namespace MS.Utility
         Hashtable
     }
 
-    internal abstract class FrugalMapBase
+    abstract class FrugalMapBase
     {
         public abstract FrugalMapStoreState InsertEntry(int key, Object value);
 
@@ -166,7 +167,7 @@ namespace MS.Utility
             {
                 value = DependencyProperty.UnsetValue;
                 key = INVALIDKEY;
-                throw new ArgumentOutOfRangeException(nameof(index));
+                throw new ArgumentOutOfRangeException("index");
             }
         }
         
@@ -186,7 +187,7 @@ namespace MS.Utility
             else
             {
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), nameof(newMap));
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
         }
 
@@ -408,7 +409,7 @@ namespace MS.Utility
         {
             // If we're unsorted and we have entries to sort, do a simple
             // sort.  Sort the pairs (0,1), (1,2) and then (0,1) again.  
-            if ((!_sorted) && (_count > 1))
+            if ((false == _sorted) && (_count > 1))
             {
                 Entry temp;
                 if (_entry0.Key > _entry1.Key)
@@ -468,7 +469,7 @@ namespace MS.Utility
             {
                 key = INVALIDKEY;
                 value = DependencyProperty.UnsetValue;
-                throw new ArgumentOutOfRangeException(nameof(index));
+                throw new ArgumentOutOfRangeException("index");
             }
         }
 
@@ -496,17 +497,17 @@ namespace MS.Utility
             if (FrugalMapStoreState.Success != newMap.InsertEntry(_entry0.Key, _entry0.Value))
             {
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), nameof(newMap));
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
             if (FrugalMapStoreState.Success != newMap.InsertEntry(_entry1.Key, _entry1.Value))
             {
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), nameof(newMap));
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
             if (FrugalMapStoreState.Success != newMap.InsertEntry(_entry2.Key, _entry2.Value))
             {
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), nameof(newMap));
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
         }
 
@@ -912,7 +913,7 @@ namespace MS.Utility
             // If we're unsorted and we have entries to sort, do a simple
             // bubble sort. Sort the pairs, 0..5, and then again until we no
             // longer do any swapping.
-            if ((!_sorted) && (_count > 1))
+            if ((false == _sorted) && (_count > 1))
             {
                 bool swapped;
 
@@ -1020,7 +1021,7 @@ namespace MS.Utility
             {
                 key = INVALIDKEY;
                 value = DependencyProperty.UnsetValue;
-                throw new ArgumentOutOfRangeException(nameof(index));
+                throw new ArgumentOutOfRangeException("index");
             }
         }
 
@@ -1060,32 +1061,32 @@ namespace MS.Utility
             if (FrugalMapStoreState.Success != newMap.InsertEntry(_entry0.Key, _entry0.Value))
             {
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), nameof(newMap));
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
             if (FrugalMapStoreState.Success != newMap.InsertEntry(_entry1.Key, _entry1.Value))
             {
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), nameof(newMap));
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
             if (FrugalMapStoreState.Success != newMap.InsertEntry(_entry2.Key, _entry2.Value))
             {
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), nameof(newMap));
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
             if (FrugalMapStoreState.Success != newMap.InsertEntry(_entry3.Key, _entry3.Value))
             {
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), nameof(newMap));
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
             if (FrugalMapStoreState.Success != newMap.InsertEntry(_entry4.Key, _entry4.Value))
             {
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), nameof(newMap));
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
             if (FrugalMapStoreState.Success != newMap.InsertEntry(_entry5.Key, _entry5.Value))
             {
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), nameof(newMap));
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
         }
 
@@ -1215,7 +1216,7 @@ namespace MS.Utility
 
         public override void Sort()
         {
-            if ((!_sorted) && (_count > 1))
+            if ((false == _sorted) && (_count > 1))
             {
                 QSort(0, (_count - 1));
                 _sorted = true;
@@ -1233,7 +1234,7 @@ namespace MS.Utility
             {
                 value = DependencyProperty.UnsetValue;
                 key = INVALIDKEY;
-                throw new ArgumentOutOfRangeException(nameof(index));
+                throw new ArgumentOutOfRangeException("index");
             }
         }
 
@@ -1257,7 +1258,7 @@ namespace MS.Utility
                     continue;
                 }
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), nameof(newMap));
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
         }
 
@@ -1469,7 +1470,7 @@ namespace MS.Utility
             {
                 value = DependencyProperty.UnsetValue;
                 key = INVALIDKEY;
-                throw new ArgumentOutOfRangeException(nameof(index));
+                throw new ArgumentOutOfRangeException("index");
             }
         }
 
@@ -1493,7 +1494,7 @@ namespace MS.Utility
                     continue;
                 }
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), nameof(newMap));
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
         }
 
@@ -1618,7 +1619,7 @@ namespace MS.Utility
             {
                 value = DependencyProperty.UnsetValue;
                 key = INVALIDKEY;
-                throw new ArgumentOutOfRangeException(nameof(index));
+                throw new ArgumentOutOfRangeException("index");
             }
         }
 
@@ -1752,7 +1753,10 @@ namespace MS.Utility
 
         public void Sort()
         {
-            _mapStore?.Sort();
+            if (null != _mapStore)
+            {
+                _mapStore.Sort();
+            }
         }
 
         public void GetKeyValuePair(int index, out int key, out Object value)
@@ -1763,7 +1767,7 @@ namespace MS.Utility
             }
             else
             {
-                throw new ArgumentOutOfRangeException(nameof(index));
+                throw new ArgumentOutOfRangeException("index");
             }
         }
         
@@ -1773,16 +1777,19 @@ namespace MS.Utility
             {
                 if (null != list)
                 {
-                    _mapStore?.Iterate(list, callback);
+                    if (_mapStore != null)
+                    {
+                        _mapStore.Iterate(list, callback);
+                    }
                 }
                 else
                 {
-                    throw new ArgumentNullException(nameof(list));
+                    throw new ArgumentNullException("list");
                 }
             }
             else
             {
-                throw new ArgumentNullException(nameof(callback));
+                throw new ArgumentNullException("callback");
             }
         }
 
@@ -1931,7 +1938,7 @@ namespace MS.Utility
             {
                 value = DependencyProperty.UnsetValue;
                 key = INVALIDKEY;
-                throw new ArgumentOutOfRangeException(nameof(index));
+                throw new ArgumentOutOfRangeException("index");
             }
         }
 
@@ -1955,7 +1962,7 @@ namespace MS.Utility
                     continue;
                 }
                 // newMap is smaller than previous map
-                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), nameof(newMap));
+                throw new ArgumentException(SR.Format(SR.FrugalMap_TargetMapCannotHoldAllData, this.ToString(), newMap.ToString()), "newMap");
             }
         }
 
@@ -2095,7 +2102,10 @@ namespace MS.Utility
 
         public void Sort()
         {
-            _mapStore?.Sort();
+            if (null != _mapStore)
+            {
+                _mapStore.Sort();
+            }
         }
 
         public void GetKeyValuePair(int index, out int key, out Object value)
@@ -2106,7 +2116,7 @@ namespace MS.Utility
             }
             else
             {
-                throw new ArgumentOutOfRangeException(nameof(index));
+                throw new ArgumentOutOfRangeException("index");
             }
         }
 
@@ -2116,16 +2126,19 @@ namespace MS.Utility
             {
                 if (null != list)
                 {
-                    _mapStore?.Iterate(list, callback);
+                    if (_mapStore != null)
+                    {
+                        _mapStore.Iterate(list, callback);
+                    }
                 }
                 else
                 {
-                    throw new ArgumentNullException(nameof(list));
+                    throw new ArgumentNullException("list");
                 }
             }
             else
             {
-                throw new ArgumentNullException(nameof(callback));
+                throw new ArgumentNullException("callback");
             }
         }
 

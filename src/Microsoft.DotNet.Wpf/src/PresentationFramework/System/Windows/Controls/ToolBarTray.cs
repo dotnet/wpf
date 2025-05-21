@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using MS.Internal;
@@ -269,7 +270,7 @@ namespace System.Windows.Controls
             ToolBar toolBar = value as ToolBar;
             if (toolBar == null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(ToolBar)), nameof(value));
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(ToolBar)), "value");
             }
 
             ToolBars.Add(toolBar);
@@ -472,7 +473,7 @@ namespace System.Windows.Controls
         {
             if (_toolBarsCollection == null)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
             return _toolBarsCollection[index];
         }
@@ -657,7 +658,10 @@ namespace System.Windows.Controls
         {
             Point p = point;
             GeneralTransform transform = this.TransformToDescendant(toolBar);
-            transform?.TryTransform(point, out p);
+            if (transform != null)
+            {
+                transform.TryTransform(point, out p);
+            }
             return p;
         }
 

@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections; // IList
 using System.Windows.Controls; // TextBlock, ContentControl and AccessText
@@ -318,7 +319,7 @@ namespace System.Windows.Documents
             IEnumerator enumerator = range.GetEnumerator();
             if (enumerator == null)
             {
-                throw new ArgumentException(SR.TextElementCollection_NoEnumerator, nameof(range));
+                throw new ArgumentException(SR.TextElementCollection_NoEnumerator, "range");
             }
 
             this.TextContainer.BeginChange();
@@ -395,7 +396,7 @@ namespace System.Windows.Documents
 
             if (!(value is TextElementType))
             {
-                throw new ArgumentException(SR.Format(SR.TextElementCollection_TextElementTypeExpected, typeof(TextElementType).Name), nameof(value));
+                throw new ArgumentException(SR.Format(SR.TextElementCollection_TextElementTypeExpected, typeof(TextElementType).Name), "value");
             }
 
             ValidateChild((TextElementType)value);
@@ -450,7 +451,7 @@ namespace System.Windows.Documents
 
             if (newItem == null)
             {
-                throw new ArgumentException(SR.Format(SR.TextElementCollection_TextElementTypeExpected, typeof(TextElementType).Name), nameof(value));
+                throw new ArgumentException(SR.Format(SR.TextElementCollection_TextElementTypeExpected, typeof(TextElementType).Name), "value");
             }
 
             if (index < 0)
@@ -561,7 +562,7 @@ namespace System.Windows.Documents
 
                 if (!(value is TextElementType))
                 {
-                    throw new ArgumentException(SR.Format(SR.TextElementCollection_TextElementTypeExpected, typeof(TextElementType).Name), nameof(value));
+                    throw new ArgumentException(SR.Format(SR.TextElementCollection_TextElementTypeExpected, typeof(TextElementType).Name), "value");
                 }
 
                 ValidateChild((TextElementType)value);
@@ -719,7 +720,7 @@ namespace System.Windows.Documents
                 else
                 {
                     TextTreeTextElementNode node = this.TextContainer.FirstContainedNode as TextTreeTextElementNode;
-                    firstChild = (TextElementType)(node?.TextElement);
+                    firstChild = (TextElementType)(node == null ? null : node.TextElement);
                 }
 
                 return firstChild;
@@ -742,7 +743,7 @@ namespace System.Windows.Documents
                 else 
                 {
                     TextTreeTextElementNode node = this.TextContainer.LastContainedNode as TextTreeTextElementNode;
-                    lastChild = (TextElementType)(node?.TextElement);
+                    lastChild = (TextElementType)(node == null ? null : node.TextElement);
                 }
 
                 return lastChild;
@@ -837,7 +838,7 @@ namespace System.Windows.Documents
                 else if (_indexCache.Index < index)
                 {
                     element = _indexCache.Element;
-                    index -= _indexCache.Index;
+                    index = index - _indexCache.Index;
                 }
                 else // _indexCache.Index > index
                 {

@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.IO;
 using System.Windows.Input;
@@ -87,7 +88,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <summary>
         /// List of MetricEntry whose Metric Information must appear in the serialized form and always written as they do not have proper default
         /// </summary>
-        private static KnownTagCache.KnownTagIndex[] MetricEntry_Must = new KnownTagCache.KnownTagIndex[]
+        static KnownTagCache.KnownTagIndex[] MetricEntry_Must = new KnownTagCache.KnownTagIndex[]
         {
             (KnownTagCache.KnownTagIndex)((uint)KnownIdCache.KnownGuidBaseIndex + (uint)KnownIdCache.OriginalISFIdIndex.PitchRotation),
             (KnownTagCache.KnownTagIndex)((uint)KnownIdCache.KnownGuidBaseIndex + (uint)KnownIdCache.OriginalISFIdIndex.RollRotation),
@@ -97,7 +98,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <summary>
         /// List of MetricEntry whose Metric information will never appear in the Serialized format and always ignored
         /// </summary>
-        private static KnownTagCache.KnownTagIndex[] MetricEntry_Never = new KnownTagCache.KnownTagIndex[]
+        static KnownTagCache.KnownTagIndex[] MetricEntry_Never = new KnownTagCache.KnownTagIndex[]
         {
             (KnownTagCache.KnownTagIndex)((uint)KnownIdCache.KnownGuidBaseIndex + (uint)KnownIdCache.OriginalISFIdIndex.PacketStatus),
             (KnownTagCache.KnownTagIndex)((uint)KnownIdCache.KnownGuidBaseIndex + (uint)KnownIdCache.OriginalISFIdIndex.TimerTick),
@@ -107,7 +108,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <summary>
         /// Default StylusPointPropertyInfo for any property
         /// </summary>
-        private static StylusPointPropertyInfo DefaultPropertyMetrics = StylusPointPropertyInfoDefaults.DefaultValue;
+        static StylusPointPropertyInfo DefaultPropertyMetrics = StylusPointPropertyInfoDefaults.DefaultValue;
 
         /// <summary>
         /// Gets or sets the Tag associated with this entry
@@ -298,7 +299,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
             }
             return type;
         }
-
         /// <summary>
         /// This function checks if this packet property results in a valid metric entry. This will be a valid entry if
         /// 1. it is a custom property, 2. Does not belong to the global list of gaMetricEntry_Never, 3. Belongs to the
@@ -310,8 +310,8 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="metricEntryType"></param>
         /// <param name="index"></param>
         /// <returns></returns>
-
-        private static bool IsValidMetricEntry(StylusPointPropertyInfo propertyInfo, KnownTagCache.KnownTagIndex tag, out MetricEntryType metricEntryType, out uint index)
+        
+        static bool IsValidMetricEntry(StylusPointPropertyInfo propertyInfo, KnownTagCache.KnownTagIndex tag, out MetricEntryType metricEntryType, out uint index)
         {
             index = 0;
             // If this is a custom property, check if all the Metric values are null or not. If they are then this is not a 

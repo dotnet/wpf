@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: CompositeCollectionView provides the flattened view of an CompositeCollection.
@@ -198,7 +199,7 @@ namespace MS.Internal.Data
             {
                 // couldn't find item at index
                 item = null;
-                throw new ArgumentOutOfRangeException(nameof(index));
+                throw new ArgumentOutOfRangeException("index");
             }
             else
             {
@@ -407,7 +408,8 @@ namespace MS.Internal.Data
                         Debug.Assert(startingIndex >= 0, "Source composite collection failed to supply an index");
                         int index = startingIndex;
 
-                        _traceLog?.Add("ProcessCollectionChanged  action = {0}  item = {1}",
+                        if (_traceLog != null)
+                            _traceLog.Add("ProcessCollectionChanged  action = {0}  item = {1}",
                                         args.Action, TraceLog.IdFor(item));
 
                         CollectionContainer cc = item as CollectionContainer;
@@ -608,7 +610,8 @@ namespace MS.Internal.Data
 
                 case NotifyCollectionChangedAction.Reset:
                     {
-                        _traceLog?.Add("ProcessCollectionChanged  action = {0}", args.Action);
+                        if (_traceLog != null)
+                            _traceLog.Add("ProcessCollectionChanged  action = {0}", args.Action);
 
                         if (_collection.Count != 0)
                         {
@@ -774,7 +777,8 @@ namespace MS.Internal.Data
 
                 case NotifyCollectionChangedAction.Reset:
                     {
-                        _traceLog?.Add("ContainerCollectionChange from {0}  action = {1}",
+                        if (_traceLog != null)
+                            _traceLog.Add("ContainerCollectionChange from {0}  action = {1}",
                                             TraceLog.IdFor(sender), args.Action);
 
                         UpdateCurrencyAfterRefresh(sender);
@@ -821,7 +825,10 @@ namespace MS.Internal.Data
         internal override void GetCollectionChangedSources(int level, Action<int, object, bool?, List<string>> format, List<string> sources)
         {
             format(level, this, false, sources);
-            _collection?.GetCollectionChangedSources(level + 1, format, sources);
+            if (_collection != null)
+            {
+                _collection.GetCollectionChangedSources(level + 1, format, sources);
+            }
         }
 
         #endregion
@@ -1414,14 +1421,15 @@ namespace MS.Internal.Data
 
         // this method is here just to avoid the compiler error
         // error CS0649: Warning as Error: Field '..._traceLog' is never assigned to, and will always have its default value null
-        private void InitializeTraceLog()
+        void InitializeTraceLog()
         {
             _traceLog = new TraceLog(20);
         }
 
         private void TraceContainerCollectionChange(object sender, NotifyCollectionChangedAction action, object oldItem, object newItem)
         {
-            _traceLog?.Add("ContainerCollectionChange from {0}  action = {1} oldItem = {2} newItem = {3}",
+            if (_traceLog != null)
+                _traceLog.Add("ContainerCollectionChange from {0}  action = {1} oldItem = {2} newItem = {3}",
                                 TraceLog.IdFor(sender), action, TraceLog.IdFor(oldItem), TraceLog.IdFor(newItem));
         }
 
@@ -1522,7 +1530,7 @@ namespace MS.Internal.Data
                         if (cc != null)
                         {
                             IEnumerable ie = cc.View;   // View is null when Collection is null
-                            _containerEnumerator = ie?.GetEnumerator();
+                            _containerEnumerator = (ie != null) ? ie.GetEnumerator() : null;
                             continue;
                         }
 
@@ -1580,7 +1588,10 @@ namespace MS.Internal.Data
             private void DisposeContainerEnumerator()
             {
                 IDisposable d = _containerEnumerator as IDisposable;
-                d?.Dispose();
+                if (d != null)
+                {
+                    d.Dispose();
+                }
 
                 _containerEnumerator = null;
             }
@@ -1614,16 +1625,17 @@ namespace MS.Internal.Data
 
         #region Private Fields
 
-        private TraceLog _traceLog;
-        private CompositeCollection _collection;
-        private int _count = -1;
-        private int _version = 0;
+        TraceLog _traceLog;
+        CompositeCollection _collection;
+
+        int _count = -1;
+        int _version = 0;
 
         // Using X-Y coordinates to track current position in the composite collection:
         // X is the index in the first-level collection, whose members are items and subcollections
         // Y is the index into the subcollection, if any.  0, if not.
-        private int _currentPositionX = -1;
-        private int _currentPositionY = 0;
+        int _currentPositionX = -1;
+        int _currentPositionY = 0;
 
         private static readonly object s_afterLast = new Object();
 
@@ -1649,12 +1661,12 @@ namespace MS.Internal.Data
             {
                 int x, y;
                 if (!ItemsControl.EqualsEx(CurrentItem, GetItem(CurrentPosition, out x, out y)) && !_collection.HasRepeatedCollection())
-                    Debug.Fail("CurrentItem is not consistent with CurrentPosition");
+                    Debug.Assert(false, "CurrentItem is not consistent with CurrentPosition");
             }
             else
             {
                 if ((CurrentItem != null) && !_collection.HasRepeatedCollection())
-                    Debug.Fail("CurrentItem is not consistent with CurrentPosition");
+                    Debug.Assert(false, "CurrentItem is not consistent with CurrentPosition");
             }
         }
 

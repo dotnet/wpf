@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Defines RelativeSource MarkupExtension.
@@ -264,10 +265,10 @@ namespace System.Windows.Data
         {
             get { return (_ancestorLevel == -1); }
         }
-        #endregion private properties
+#endregion private properties
 
-        #region private methods
-        private void InitializeMode(RelativeSourceMode mode)
+#region private methods
+        void InitializeMode(RelativeSourceMode mode)
         {
             Debug.Assert(IsUninitialized);
 
@@ -286,7 +287,7 @@ namespace System.Windows.Data
             }
             else
             {
-                throw new ArgumentException(SR.RelativeSourceModeInvalid, nameof(mode));
+                throw new ArgumentException(SR.RelativeSourceModeInvalid, "mode");
             }
         }
 #endregion private methods

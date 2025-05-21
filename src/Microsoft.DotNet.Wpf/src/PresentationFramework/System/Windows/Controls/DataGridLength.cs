@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
@@ -76,7 +77,7 @@ namespace System.Windows.Controls
             {
                 throw new ArgumentException(
                     SR.DataGridLength_Infinity,
-                    nameof(value));
+                    "value");
             }
 
             if (type != DataGridLengthUnitType.Auto &&
@@ -87,21 +88,21 @@ namespace System.Windows.Controls
             {
                 throw new ArgumentException(
                     SR.DataGridLength_InvalidType, 
-                    nameof(type));
+                    "type");
             }
 
             if (Double.IsInfinity(desiredValue))
             {
                 throw new ArgumentException(
                     SR.DataGridLength_Infinity, 
-                    nameof(desiredValue));
+                    "desiredValue");
             }
 
             if (Double.IsInfinity(displayValue))
             {
                 throw new ArgumentException(
                     SR.DataGridLength_Infinity,
-                    nameof(displayValue));
+                    "displayValue");
             }
 
             _unitValue = (type == DataGridLengthUnitType.Auto) ? AutoValue : value;

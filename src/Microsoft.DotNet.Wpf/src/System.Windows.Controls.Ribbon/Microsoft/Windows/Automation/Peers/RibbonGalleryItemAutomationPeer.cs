@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 
@@ -34,7 +35,7 @@ namespace Microsoft.Windows.Automation.Peers
         #region AutomationPeer override
 
         ///
-        protected override string GetClassNameCore()
+        override protected string GetClassNameCore()
         {
             return "RibbonGalleryItem";
         }
@@ -71,7 +72,7 @@ namespace Microsoft.Windows.Automation.Peers
         }
 
         ///
-        protected override AutomationControlType GetAutomationControlTypeCore()
+        override protected AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.ListItem;
         }
@@ -99,17 +100,23 @@ namespace Microsoft.Windows.Automation.Peers
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         internal void RaiseAutomationIsSelectedChanged(bool isSelected)
         {
-            EventsSource?.RaisePropertyChangedEvent(
+            if (EventsSource != null)
+            {
+                EventsSource.RaisePropertyChangedEvent(
                     SelectionItemPatternIdentifiers.IsSelectedProperty,
                         !isSelected,
                         isSelected);
+            }
         }
 
 
         // Selection Events needs to be raised on DataItem Peers now when they exist.
         internal void RaiseAutomationSelectionEvent(AutomationEvents eventId)
         {
-            EventsSource?.RaiseAutomationEvent(eventId);
+            if (EventsSource != null)
+            {
+                EventsSource.RaiseAutomationEvent(eventId);
+            }
         }
 
         #endregion Selection Events

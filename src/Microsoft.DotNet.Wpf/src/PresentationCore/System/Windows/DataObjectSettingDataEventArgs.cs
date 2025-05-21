@@ -1,5 +1,11 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+//
+//
+// Description: DataObjectSettingData event arguments
+//
 
 namespace System.Windows
 {
@@ -32,7 +38,7 @@ namespace System.Windows
         /// Format which is going to be added to the DataObject.
         /// </param>
         public DataObjectSettingDataEventArgs(IDataObject dataObject, string format) //
-            : base(System.Windows.DataObject.SettingDataEvent, isDragDrop: false)
+            : base(System.Windows.DataObject.SettingDataEvent, /*isDragDrop:*/false)
         {
             ArgumentNullException.ThrowIfNull(dataObject);
 

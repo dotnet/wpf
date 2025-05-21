@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -8,10 +9,10 @@ using System.Windows.Markup;
 
 namespace System.Xaml
 {
-    internal static class LooseTypeExtensions
+    static class LooseTypeExtensions
     {
-        private const string WindowsBase = "WindowsBase";
-        private static readonly byte[] WindowsBaseToken = { 49, 191, 56, 86, 173, 54, 78, 53 };
+        const string WindowsBase = "WindowsBase";
+        static readonly byte[] WindowsBaseToken = { 49, 191, 56, 86, 173, 54, 78, 53 };
 
         // Note: this is a version-tolerant comparison, i.e. the types are considered equal if their
         // names, namespaces, assembly short names, culture infos, and public keys match.
@@ -50,7 +51,7 @@ namespace System.Xaml
 
         // When doing a version-tolerant comparison against System.Xaml types, we also need to
         // support references to types that were type-forwarded from WindowsBase.
-        private static bool IsWindowsBaseToSystemXamlComparison(Assembly a1, Assembly a2,
+        static bool IsWindowsBaseToSystemXamlComparison(Assembly a1, Assembly a2,
             AssemblyName name1, AssemblyName name2)
         {
             AssemblyName windowsBaseName = null;
@@ -105,7 +106,7 @@ namespace System.Xaml
             return true;
         }
 
-        private static bool LooselyImplementInterface(Type t, Type interfaceType)
+        static bool LooselyImplementInterface(Type t, Type interfaceType)
         {
             for (Type type = t; type is not null; type = type.BaseType)
             {
@@ -123,7 +124,7 @@ namespace System.Xaml
             return false;
         }
 
-        private static bool IsLooseSubClassOf(Type t1, Type t2)
+        static bool IsLooseSubClassOf(Type t1, Type t2)
         {
             if (t1 is null || t2 is null)
             {
@@ -135,7 +136,7 @@ namespace System.Xaml
                 return false; // strictly testing for sub-class
             }
 
-            for (Type baseType = t1.BaseType; baseType is not null; baseType = baseType.BaseType)
+            for(Type baseType = t1.BaseType; baseType is not null; baseType = baseType.BaseType)
             {
                 if (AssemblyQualifiedNameEquals(baseType, t2))
                 {

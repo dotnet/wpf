@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using MS.Utility;
@@ -70,7 +71,10 @@ namespace System.Windows.Media.Animation
 
                     DUCE.IResource storage = storageObject as DUCE.IResource;
 
-                    storage?.AddRefOnChannel(channel);
+                    if (storage != null)
+                    {
+                        storage.AddRefOnChannel(channel);
+                    }
                 }
             }
         }
@@ -92,7 +96,10 @@ namespace System.Windows.Media.Animation
 
                     DUCE.IResource storage = storageObject as DUCE.IResource;
 
-                    storage?.ReleaseOnChannel(channel);
+                    if (storage != null)
+                    {
+                        storage.ReleaseOnChannel(channel);
+                    }
                 }
             }
         }
@@ -150,12 +157,18 @@ namespace System.Windows.Media.Animation
         // overloads.
         internal void AddRefResource(DUCE.IResource resource, DUCE.Channel channel)
         {
-            resource?.AddRefOnChannel(channel);
+            if (resource != null)
+            {
+                resource.AddRefOnChannel(channel);
+            }
         }
 
         internal void ReleaseResource(DUCE.IResource resource, DUCE.Channel channel)
         {
-            resource?.ReleaseOnChannel(channel);
+            if (resource != null)
+            {
+                resource.ReleaseOnChannel(channel);
+            }
         }
 
         #endregion LocalProperty/CachedValue stuff

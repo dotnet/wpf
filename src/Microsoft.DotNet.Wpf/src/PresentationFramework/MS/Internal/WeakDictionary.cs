@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.Collections;
@@ -354,9 +355,9 @@ namespace MS.Internal
 
         #region Private Data
 
-        private IWeakHashtable _hashTable = WeakHashtable.FromKeyType(typeof(TKey));
-        private KeyCollection<TKey, TValue> _keys = null;
-        private ValueCollection<TKey, TValue> _values = null;
+        IWeakHashtable _hashTable = WeakHashtable.FromKeyType(typeof(TKey));
+        KeyCollection<TKey, TValue> _keys = null;
+        ValueCollection<TKey, TValue> _values = null;
 
         #endregion
     }

@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Root of CollectionViewGroup structure, as created by a CollectionView according to a GroupDescription.
@@ -235,7 +236,7 @@ namespace MS.Internal.Data
             RestoreGrouping(lsi, root, 0, deleteList);
         }
 
-        private void RestoreGrouping(LiveShapingItem lsi, GroupTreeNode node, int level, List<AbandonedGroupItem> deleteList)
+        void RestoreGrouping(LiveShapingItem lsi, GroupTreeNode node, int level, List<AbandonedGroupItem> deleteList)
         {
             if (node.ContainsItem)
             {
@@ -302,7 +303,7 @@ namespace MS.Internal.Data
             }
         }
 
-        private GroupTreeNode BuildGroupTree(LiveShapingItem lsi)
+        GroupTreeNode BuildGroupTree(LiveShapingItem lsi)
         {
             CollectionViewGroupInternal parentGroup = lsi.ParentGroup;
             GroupTreeNode node;
@@ -394,7 +395,7 @@ namespace MS.Internal.Data
             }
         }
 
-        private class GroupTreeNode
+        class GroupTreeNode
         {
             public GroupTreeNode FirstChild { get; set; }
             public GroupTreeNode Sibling { get; set; }
@@ -408,7 +409,7 @@ namespace MS.Internal.Data
         #region private methods
 
         // Initialize the given group
-        private void InitializeGroup(CollectionViewGroupInternal group, GroupDescription parentDescription, int level)
+        void InitializeGroup(CollectionViewGroupInternal group, GroupDescription parentDescription, int level)
         {
             // set the group description for dividing the group into subgroups
             GroupDescription groupDescription = GetGroupDescription(group, parentDescription, level);
@@ -416,7 +417,7 @@ namespace MS.Internal.Data
 
             // create subgroups for each of the explicit names
             ObservableCollection<object> explicitNames =
-                        groupDescription?.GroupNames;
+                        (groupDescription != null) ? groupDescription.GroupNames : null;
             if (explicitNames != null)
             {
                 for (int k = 0, n = explicitNames.Count; k < n; ++k)
@@ -432,7 +433,7 @@ namespace MS.Internal.Data
 
 
         // return the description of how to divide the given group into subgroups
-        private GroupDescription GetGroupDescription(CollectionViewGroup group, GroupDescription parentDescription, int level)
+        GroupDescription GetGroupDescription(CollectionViewGroup group, GroupDescription parentDescription, int level)
         {
             GroupDescription result = null;
             if (group == this)
@@ -472,7 +473,7 @@ namespace MS.Internal.Data
         }
 
         // add an item to the desired subgroup(s) of the given group
-        private void AddToSubgroups(object item, LiveShapingItem lsi, CollectionViewGroupInternal group, int level, bool loading)
+        void AddToSubgroups(object item, LiveShapingItem lsi, CollectionViewGroupInternal group, int level, bool loading)
         {
             object name = GetGroupName(item, group.GroupBy, level);
             ICollection nameList;
@@ -480,7 +481,10 @@ namespace MS.Internal.Data
             if (name == UseAsItemDirectly)
             {
                 // the item belongs to the group itself (not to any subgroups)
-                lsi?.AddParentGroup(group);
+                if (lsi != null)
+                {
+                    lsi.AddParentGroup(group);
+                }
 
                 if (loading)
                 {
@@ -510,7 +514,7 @@ namespace MS.Internal.Data
 
 
         // add an item to the subgroup with the given name
-        private void AddToSubgroup(object item, LiveShapingItem lsi, CollectionViewGroupInternal group, int level, object name, bool loading)
+        void AddToSubgroup(object item, LiveShapingItem lsi, CollectionViewGroupInternal group, int level, object name, bool loading)
         {
             CollectionViewGroupInternal subgroup;
             int index = (loading && IsDataInGroupOrder) ? group.LastIndex : 0;
@@ -570,7 +574,7 @@ namespace MS.Internal.Data
         }
 
         // move an item within the desired subgroup(s) of the given group
-        private void MoveWithinSubgroups(object item, CollectionViewGroupInternal group, int level, IList list, int oldIndex, int newIndex)
+        void MoveWithinSubgroups(object item, CollectionViewGroupInternal group, int level, IList list, int oldIndex, int newIndex)
         {
             object name = GetGroupName(item, group.GroupBy, level);
             ICollection nameList;
@@ -596,7 +600,7 @@ namespace MS.Internal.Data
         }
 
         // move an item within the subgroup with the given name
-        private void MoveWithinSubgroup(object item, CollectionViewGroupInternal group, int level, object name, IList list, int oldIndex, int newIndex)
+        void MoveWithinSubgroup(object item, CollectionViewGroupInternal group, int level, object name, IList list, int oldIndex, int newIndex)
         {
             CollectionViewGroupInternal subgroup;
 
@@ -633,11 +637,11 @@ namespace MS.Internal.Data
             // properties that the name depends on) without notification.
             // We don't support this - the Move is just a no-op.  But assert (in
             // debug builds) to help diagnose the problem if it arises.
-            Debug.Fail("Failed to find item in expected subgroup after Move");
+            Debug.Assert(false, "Failed to find item in expected subgroup after Move");
         }
 
         // move the item within its group
-        private void MoveWithinSubgroup(object item, CollectionViewGroupInternal group, IList list, int oldIndex, int newIndex)
+        void MoveWithinSubgroup(object item, CollectionViewGroupInternal group, IList list, int oldIndex, int newIndex)
         {
             if (group.Move(item, list, ref oldIndex, ref newIndex))
             {
@@ -651,7 +655,7 @@ namespace MS.Internal.Data
         ///     PropertyGroupDescriptions are used with
         ///     case insensitive comparisons.
         /// </summary>
-        private object GetGroupNameKey(object name, CollectionViewGroupInternal group)
+        object GetGroupNameKey(object name, CollectionViewGroupInternal group)
         {
             object groupNameKey = name;
             PropertyGroupDescription pgd = group.GroupBy as PropertyGroupDescription;
@@ -677,7 +681,7 @@ namespace MS.Internal.Data
 
         // remove an item from the desired subgroup(s) of the given group.
         // Return true if the item was not in one of the subgroups it was supposed to be.
-        private bool RemoveFromSubgroups(object item, CollectionViewGroupInternal group, int level)
+        bool RemoveFromSubgroups(object item, CollectionViewGroupInternal group, int level)
         {
             bool itemIsMissing = false;
             object name = GetGroupName(item, group.GroupBy, level);
@@ -710,7 +714,7 @@ namespace MS.Internal.Data
 
         // remove an item from the subgroup with the given name.
         // Return true if the item was not in one of the subgroups it was supposed to be.
-        private bool RemoveFromSubgroup(object item, CollectionViewGroupInternal group, int level, object name)
+        bool RemoveFromSubgroup(object item, CollectionViewGroupInternal group, int level, object name)
         {
             CollectionViewGroupInternal subgroup;
 
@@ -744,7 +748,7 @@ namespace MS.Internal.Data
 
         // remove an item from the direct children of a group.
         // Return true if this couldn't be done.
-        private bool RemoveFromGroupDirectly(CollectionViewGroupInternal group, object item)
+        bool RemoveFromGroupDirectly(CollectionViewGroupInternal group, object item)
         {
             int leafIndex = group.Remove(item, true);
             if (leafIndex >= 0)
@@ -763,7 +767,7 @@ namespace MS.Internal.Data
         // change so that the group names we used to insert it are
         // different from the names used to remove it.  If this happens,
         // remove the item the hard way.
-        private void RemoveItemFromSubgroupsByExhaustiveSearch(CollectionViewGroupInternal group, object item)
+        void RemoveItemFromSubgroupsByExhaustiveSearch(CollectionViewGroupInternal group, object item)
         {
             // try to remove the item from the direct children
             if (RemoveFromGroupDirectly(group, item))
@@ -788,7 +792,7 @@ namespace MS.Internal.Data
 
 
         // get the group name(s) for the given item
-        private object GetGroupName(object item, GroupDescription groupDescription, int level)
+        object GetGroupName(object item, GroupDescription groupDescription, int level)
         {
             if (groupDescription != null)
             {
@@ -802,13 +806,14 @@ namespace MS.Internal.Data
         #endregion private methods
 
         #region private fields
-        private CollectionView _view;
-        private IComparer _comparer;
-        private bool _isDataInGroupOrder = false;
-        private ObservableCollection<GroupDescription> _groupBy = new ObservableCollection<GroupDescription>();
-        private GroupDescriptionSelectorCallback _groupBySelector;
-        private static GroupDescription _topLevelGroupDescription;
-        private static readonly object UseAsItemDirectly = new NamedObject("UseAsItemDirectly");
+        CollectionView _view;
+        IComparer _comparer;
+        bool _isDataInGroupOrder = false;
+
+        ObservableCollection<GroupDescription> _groupBy = new ObservableCollection<GroupDescription>();
+        GroupDescriptionSelectorCallback _groupBySelector;
+        static GroupDescription _topLevelGroupDescription;
+        static readonly object UseAsItemDirectly = new NamedObject("UseAsItemDirectly");
         #endregion private fields
 
         #region private types
@@ -838,8 +843,8 @@ namespace MS.Internal.Data
         public LiveShapingItem Item { get { return _lsi; } }
         public CollectionViewGroupInternal Group { get { return _group; } }
 
-        private LiveShapingItem _lsi;
-        private CollectionViewGroupInternal _group;
+        LiveShapingItem _lsi;
+        CollectionViewGroupInternal _group;
     }
 }
 

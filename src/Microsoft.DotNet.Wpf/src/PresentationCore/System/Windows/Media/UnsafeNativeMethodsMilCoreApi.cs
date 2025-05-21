@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //  ABOUT THIS FILE:
 //   -- This file contains native methods which are deemed NOT SAFE in the sense that any usage of them
@@ -51,10 +52,10 @@ namespace MS.Win32.PresentationCore
             internal static extern int WgxConnection_Disconnect(IntPtr pTranspManager);
 
             [DllImport(DllImport.MilCore)]
-            internal static extern int /* HRESULT */ MILCreateStreamFromStreamDescriptor(ref System.Windows.Media.StreamDescriptor pSD, out IntPtr ppStream);
+            internal extern static int /* HRESULT */ MILCreateStreamFromStreamDescriptor(ref System.Windows.Media.StreamDescriptor pSD, out IntPtr ppStream);
 
             [DllImport(DllImport.MilCore)]
-            internal static extern unsafe void MilUtility_GetTileBrushMapping(
+            unsafe internal static extern void MilUtility_GetTileBrushMapping(
                 D3DMATRIX* transform,
                 D3DMATRIX* relativeTransform,
                 Stretch stretch,
@@ -71,7 +72,7 @@ namespace MS.Win32.PresentationCore
                 );
 
             [DllImport(DllImport.MilCore)]
-            internal static extern unsafe int MilUtility_PathGeometryBounds(
+            internal unsafe static extern int MilUtility_PathGeometryBounds(
                 MIL_PEN_DATA *pPenData,
                 double *pDashArray,
                 MilMatrix3x2D* pWorldMatrix,
@@ -85,7 +86,7 @@ namespace MS.Win32.PresentationCore
                 MilRectD* pBounds);
 
             [DllImport(DllImport.MilCore)]
-            internal static extern unsafe int MilUtility_PathGeometryCombine(
+            internal unsafe static extern int MilUtility_PathGeometryCombine(
                 MilMatrix3x2D* pMatrix,
                 MilMatrix3x2D* pMatrix1,
                 FillRule fillRule1,
@@ -102,7 +103,7 @@ namespace MS.Win32.PresentationCore
                 out FillRule resultFillRule);
 
             [DllImport(DllImport.MilCore)]
-            internal static extern unsafe int MilUtility_PathGeometryWiden(
+            internal unsafe static extern int MilUtility_PathGeometryWiden(
                 MIL_PEN_DATA *pPenData,
                 double *pDashArray,
                 MilMatrix3x2D* pMatrix,
@@ -115,7 +116,7 @@ namespace MS.Win32.PresentationCore
                 out FillRule widenedFillRule);
 
             [DllImport(DllImport.MilCore)]
-            internal static extern unsafe int MilUtility_PathGeometryOutline(
+            internal unsafe static extern int MilUtility_PathGeometryOutline(
                 MilMatrix3x2D* pMatrix,
                 FillRule fillRule,
                 byte* pPathData,
@@ -126,7 +127,7 @@ namespace MS.Win32.PresentationCore
                 out FillRule outlinedFillRule);
 
             [DllImport(DllImport.MilCore)]
-            internal static extern unsafe int MilUtility_PathGeometryFlatten(
+            internal unsafe static extern int MilUtility_PathGeometryFlatten(
                 MilMatrix3x2D* pMatrix,
                 FillRule fillRule,
                 byte* pPathData,
@@ -137,7 +138,7 @@ namespace MS.Win32.PresentationCore
                 out FillRule resultFillRule);
 
             [DllImport(DllImport.MilCore)]
-            internal static extern unsafe int MilGlyphCache_BeginCommandAtRenderTime(
+            internal unsafe static extern int MilGlyphCache_BeginCommandAtRenderTime(
                 IntPtr pMilSlaveGlyphCacheTarget,
                 byte* pbData,
                 uint cbSize,
@@ -145,26 +146,26 @@ namespace MS.Win32.PresentationCore
                 );
 
             [DllImport(DllImport.MilCore)]
-            internal static extern unsafe int MilGlyphCache_AppendCommandDataAtRenderTime(
+            internal unsafe static extern int MilGlyphCache_AppendCommandDataAtRenderTime(
                 IntPtr pMilSlaveGlyphCacheTarget,
                 byte* pbData,
                 uint cbSize
                 );
 
             [DllImport(DllImport.MilCore)]
-            internal static extern unsafe int MilGlyphCache_EndCommandAtRenderTime(
+            internal unsafe static extern int MilGlyphCache_EndCommandAtRenderTime(
                 IntPtr pMilSlaveGlyphCacheTarget
                 );
 
             [DllImport(DllImport.MilCore)]
-            internal static extern unsafe int MilGlyphRun_SetGeometryAtRenderTime(
+            internal unsafe static extern int MilGlyphRun_SetGeometryAtRenderTime(
                 IntPtr pMilGlyphRunTarget,
                 byte* pCmd,
                 uint cbCmd
                 );
 
             [DllImport(DllImport.MilCore)]
-            internal static extern unsafe int MilGlyphRun_GetGlyphOutline(
+            internal unsafe static extern int MilGlyphRun_GetGlyphOutline(
                 IntPtr pFontFace,
                 ushort glyphIndex, 
                 bool sideways, 
@@ -175,31 +176,31 @@ namespace MS.Win32.PresentationCore
                 );
 
             [DllImport(DllImport.MilCore)]
-            internal static extern unsafe int MilGlyphRun_ReleasePathGeometryData(
+            internal unsafe static extern int MilGlyphRun_ReleasePathGeometryData(
                 byte* pPathGeometryData
                 );
 
             [DllImport(DllImport.MilCore, EntryPoint = "MilCreateReversePInvokeWrapper")]
-            internal static extern unsafe /*HRESULT*/ int MilCreateReversePInvokeWrapper(
+            internal unsafe static extern /*HRESULT*/ int MilCreateReversePInvokeWrapper(
                 IntPtr pFcn, 
                 out IntPtr reversePInvokeWrapper);
 
             [DllImport(DllImport.MilCore, EntryPoint = "MilReleasePInvokePtrBlocking")]
-            internal static extern unsafe void MilReleasePInvokePtrBlocking(
+            internal unsafe static extern void MilReleasePInvokePtrBlocking(
                 IntPtr reversePInvokeWrapper);
 
             [DllImport(DllImport.MilCore, EntryPoint = "RenderOptions_ForceSoftwareRenderingModeForProcess")]
-            internal static extern unsafe void RenderOptions_ForceSoftwareRenderingModeForProcess(
+            internal unsafe static extern void RenderOptions_ForceSoftwareRenderingModeForProcess(
                 bool fForce);
 
             [DllImport(DllImport.MilCore, EntryPoint = "RenderOptions_IsSoftwareRenderingForcedForProcess")]
-            internal static extern unsafe bool RenderOptions_IsSoftwareRenderingForcedForProcess();
+            internal unsafe static extern bool RenderOptions_IsSoftwareRenderingForcedForProcess();
 
             [DllImport(DllImport.MilCore, EntryPoint = "RenderOptions_EnableHardwareAccelerationInRdp")]
-            internal static extern unsafe void RenderOptions_EnableHardwareAccelerationInRdp(bool value);                 
+            internal unsafe static extern void RenderOptions_EnableHardwareAccelerationInRdp(bool value);                 
 
             [DllImport(DllImport.MilCore, EntryPoint = "MilResource_CreateCWICWrapperBitmap")]
-            internal static extern unsafe int /* HRESULT */ CreateCWICWrapperBitmap(
+            internal unsafe static extern int /* HRESULT */ CreateCWICWrapperBitmap(
                 BitmapSourceSafeMILHandle /* IWICBitmapSource */ pIWICBitmapSource,
                 out BitmapSourceSafeMILHandle /* CWICWrapperBitmap as IWICBitmapSource */ pCWICWrapperBitmap);
         }
@@ -859,7 +860,7 @@ namespace MS.Win32.PresentationCore
             );
 
             [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICPixelFormatInfo_GetChannelMask_Proxy")]
-            internal static extern unsafe int /*HRESULT*/ GetChannelMask(
+            internal unsafe static extern int /*HRESULT*/ GetChannelMask(
                 IntPtr /* IWICPixelFormatInfo */ pIPixelFormatInfo,
                 UInt32 uiChannelIndex,
                 UInt32 cbMaskBuffer,

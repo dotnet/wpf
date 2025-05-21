@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -32,13 +33,13 @@ namespace System.Windows.Markup
     public class XmlnsDictionary : IDictionary, System.Xaml.IXamlNamespaceResolver
 #endif
     {
-        #region Public Methods
+#region Public Methods
         /// <summary>
         /// NamespaceDeclaration class which is similar to NamespaceDeclaration class in
         /// XmlNamespaceManager code in BCL. ScopeCount gets incremented and decremented
         /// at PushScope/PopScope, and acts like a marker between Scoped Declarations.
         /// </summary>
-        private struct NamespaceDeclaration
+        struct NamespaceDeclaration
         {
             /// <summary>
             /// namespace prefix
@@ -60,7 +61,7 @@ namespace System.Windows.Markup
         /// Namespace Scope 
         /// to retrieve all the declarations at current level or from the root node 
         /// </summary>
-        private enum NamespaceScope 
+        enum NamespaceScope 
         {
             /// <summary>
             /// All Namespaces from root to this Node
@@ -93,7 +94,7 @@ namespace System.Windows.Markup
         {
             if(null == xmlnsDictionary)
             {
-                throw new ArgumentNullException( nameof(xmlnsDictionary));
+                throw new ArgumentNullException( "xmlnsDictionary" );
             }
             
             // Copy the Declarations if they exists 
@@ -334,7 +335,7 @@ namespace System.Windows.Markup
         {
             if (prefix == null)
             {
-                throw new ArgumentNullException( nameof(prefix)); 
+                throw new ArgumentNullException( "prefix" ); 
             }
             
             if (_lastDecl >0)
@@ -365,7 +366,7 @@ namespace System.Windows.Markup
         {
             if (xmlNamespace == null)
             {
-                throw new ArgumentNullException( nameof(xmlNamespace)); 
+                throw new ArgumentNullException( "xmlNamespace" ); 
             }
 
             if (_lastDecl > 0)
@@ -606,10 +607,10 @@ namespace System.Windows.Markup
             CheckSealed();
             
             if (xmlNamespace == null)
-                throw new ArgumentNullException(nameof(xmlNamespace));
+                throw new ArgumentNullException("xmlNamespace");
 
             if (prefix == null)
-                throw new ArgumentNullException(nameof(prefix));
+                throw new ArgumentNullException("prefix");
 
             int lastScopeCount = _nsDeclarations[_lastDecl].ScopeCount;
 
@@ -656,12 +657,12 @@ namespace System.Windows.Markup
             {
                 if (xmlNamespace == null)
                 {
-                    throw new ArgumentNullException(nameof(xmlNamespace));
+                    throw new ArgumentNullException("xmlNamespace");
                 }
 
                 if (prefix == null)
                 {
-                    throw new ArgumentNullException(nameof(prefix));
+                    throw new ArgumentNullException("prefix");
                 }
 
                int lastScopeCount = _nsDeclarations[_lastDecl-1].ScopeCount;

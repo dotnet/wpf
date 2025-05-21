@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 /***************************************************************************\
@@ -37,7 +38,10 @@ namespace System.Windows.Controls
        /// </summary>
        public void Dispose()
        {
-           m_player?.Dispose();
+           if (m_player != null)
+           {
+               m_player.Dispose();
+           }
        }
 
 
@@ -193,7 +197,10 @@ namespace System.Windows.Controls
            if (m_uriChangedWhileLoadingStream)  // The source URI was changed, redo Stream loading
            {
                m_uriChangedWhileLoadingStream = false;
-               newStream?.Dispose();
+               if (newStream != null)  // Don't hold on to the new stream - it's not needed anymore
+               {
+                   newStream.Dispose();
+               }
                BeginLoadStream();
            }
            else if (newStream != null)  // We loaded the Stream, begin buffering it

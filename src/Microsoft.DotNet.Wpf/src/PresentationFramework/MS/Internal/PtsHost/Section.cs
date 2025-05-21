@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Section is representing a portion of a document in which 
@@ -417,7 +418,10 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal void InvalidateFormatCache()
         {
-            _mainTextSegment?.InvalidateFormatCache();
+            if (_mainTextSegment != null)
+            {
+                _mainTextSegment.InvalidateFormatCache();
+            }
         }
 
         /// <summary>
@@ -425,7 +429,10 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal void ClearUpdateInfo()
         {
-            _mainTextSegment?.ClearUpdateInfo();
+            if (_mainTextSegment != null)
+            {
+                _mainTextSegment.ClearUpdateInfo();
+            }
         }
 
         /// <summary>
@@ -460,7 +467,10 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal void UpdateSegmentLastFormatPositions()
         {
-            _mainTextSegment?.UpdateLastFormatPositions();
+            if(_mainTextSegment != null)
+            {
+                _mainTextSegment.UpdateLastFormatPositions();
+            }
         }
 
         /// <summary>

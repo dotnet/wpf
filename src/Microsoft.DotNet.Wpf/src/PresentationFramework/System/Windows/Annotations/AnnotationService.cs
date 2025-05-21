@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -131,7 +132,7 @@ namespace System.Windows.Annotations
             ArgumentNullException.ThrowIfNull(root);
 
             if (!(root is FrameworkElement || root is FrameworkContentElement))
-                throw new ArgumentException(SR.ParameterMustBeLogicalNode, nameof(root));
+                throw new ArgumentException(SR.ParameterMustBeLogicalNode, "root");
 
             Initialize(root);
         }
@@ -350,7 +351,7 @@ namespace System.Windows.Annotations
             ArgumentNullException.ThrowIfNull(element);
 
             if (!(element is FrameworkElement || element is FrameworkContentElement))
-                throw new ArgumentException(SR.ParameterMustBeLogicalNode, nameof(element));
+                throw new ArgumentException(SR.ParameterMustBeLogicalNode, "element");
 
             VerifyAccess();
 
@@ -385,7 +386,7 @@ namespace System.Windows.Annotations
             ArgumentNullException.ThrowIfNull(element);
 
             if (!(element is FrameworkElement || element is FrameworkContentElement))
-                throw new ArgumentException(SR.ParameterMustBeLogicalNode, nameof(element));
+                throw new ArgumentException(SR.ParameterMustBeLogicalNode, "element");
 
             VerifyAccess();
 
@@ -1041,7 +1042,7 @@ namespace System.Windows.Annotations
         /// </summary>
         /// <param name="root">the proposed root for a new AnnotationService being enabled</param>
         /// <exception cref="InvalidOperationException">Other Instance of AnnotationService Is Already Set</exception>
-        private static void VerifyServiceConfiguration(DependencyObject root)
+        static private void VerifyServiceConfiguration(DependencyObject root)
         {
             Invariant.Assert(root != null, "Parameter 'root' is null.");
 
@@ -1061,7 +1062,7 @@ namespace System.Windows.Annotations
         /// <param name="root">root the service is enabled on</param>
         /// <param name="documentViewerBase">DocumentViewerBase used by the viewer</param>
         /// <param name="document">document for the viewer</param>
-        private static void GetViewerAndDocument(DependencyObject root, out DocumentViewerBase documentViewerBase, out IDocumentPaginatorSource document)
+        static private void GetViewerAndDocument(DependencyObject root, out DocumentViewerBase documentViewerBase, out IDocumentPaginatorSource document)
         {
             documentViewerBase = root as DocumentViewerBase;
 
@@ -1099,7 +1100,7 @@ namespace System.Windows.Annotations
         /// </summary>
         /// <param name="document">the document</param>
         /// <returns>the ITextView</returns>
-        private static ITextView GetTextView(IDocumentPaginatorSource document)
+        static private ITextView GetTextView(IDocumentPaginatorSource document)
         {
             ITextView textView = null;
             IServiceProvider provider = document as IServiceProvider;
@@ -1123,7 +1124,7 @@ namespace System.Windows.Annotations
         /// <param name="node">the node to check for a service</param>
         /// <param name="data">this parameter is ignored</param>
         /// <returns>always returns true, to continue the traversal</returns>
-        private static bool VerifyNoServiceOnNode(DependencyObject node, object data, bool visitedViaVisualTree)
+        static private bool VerifyNoServiceOnNode(DependencyObject node, object data, bool visitedViaVisualTree)
         {
             Invariant.Assert(node != null, "Parameter 'node' is null.");
 

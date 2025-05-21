@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //#define DEBUG_RENDERING_FEEDBACK
 
@@ -33,7 +34,7 @@ namespace MS.Internal.Ink
             bool isLastNode)
         {
             System.Diagnostics.Debug.Assert(operations != null);
-            System.Diagnostics.Debug.Assert((!nodeData.IsEmpty) && (index >= 0));
+            System.Diagnostics.Debug.Assert((nodeData.IsEmpty == false) && (index >= 0));
           
 
             _operations = operations;
@@ -256,7 +257,7 @@ namespace MS.Internal.Ink
 
                     if (i == maxCount)
                     {
-                        Debug.Fail("StrokeNodeOperations.GetPointsAtStartOfSegment failed to find the D position");
+                        Debug.Assert(false, "StrokeNodeOperations.GetPointsAtStartOfSegment failed to find the D position");
                         //we didn't find the d point, return
                         return;
                     }
@@ -369,7 +370,7 @@ namespace MS.Internal.Ink
 
                     if (i == maxCount)
                     {
-                        Debug.Fail("StrokeNodeOperations.GetPointsAtEndOfSegment failed to find the B position");
+                        Debug.Assert(false, "StrokeNodeOperations.GetPointsAtEndOfSegment failed to find the B position");
                         //we didn't find the d point, return
                         return;
                     }
@@ -636,7 +637,7 @@ namespace MS.Internal.Ink
 
                             if (indexA == -1 || indexB == -1 || indexC == -1 || indexD == -1)
                             {
-                                Debug.Fail("Couldn't find all 4 indexes in StrokeNodeOperations.GetPointsAtMiddleSegment");
+                                Debug.Assert(false, "Couldn't find all 4 indexes in StrokeNodeOperations.GetPointsAtMiddleSegment");
                                 return;
                             }
 
@@ -862,7 +863,7 @@ namespace MS.Internal.Ink
         /// <returns></returns>
         internal StrokeFIndices CutTest(StrokeNode hitNode)
         {
-            if ((!IsValid) || (!hitNode.IsValid))
+            if ((IsValid == false) || (hitNode.IsValid == false))
             {
                 return StrokeFIndices.Empty;
             }
@@ -885,7 +886,7 @@ namespace MS.Internal.Ink
         /// <returns></returns>
         internal StrokeFIndices CutTest(Point begin, Point end)
         {
-            if (!IsValid)
+            if (IsValid == false)
             {
                 return StrokeFIndices.Empty;
             }
@@ -914,7 +915,7 @@ namespace MS.Internal.Ink
         {
             System.Diagnostics.Debug.Assert(IsValid && (_index >= 0));
 
-            if (!fragment.IsEmpty)
+            if (fragment.IsEmpty == false)
             {
                 // Adjust only findices which are on this segment of thew spine (i.e. between 0 and 1)
                 if (!DoubleUtil.AreClose(fragment.BeginFIndex, StrokeFIndices.BeforeFirst))
@@ -999,7 +1000,7 @@ namespace MS.Internal.Ink
             {
                 System.Diagnostics.Debug.Assert(IsValid);
 
-                if (!_isQuadCached)
+                if (_isQuadCached == false)
                 {
                     _connectingQuad = _operations.GetConnectingQuad(_lastNode, _thisNode);
                     _isQuadCached = true;
@@ -1058,7 +1059,7 @@ namespace MS.Internal.Ink
             // eg turn 2.75 into .75
             //
             double floor = Math.Floor(findex);
-            findex -= floor;
+            findex = findex - floor;
 
             double xDiff = (_thisNode.Position.X - _lastNode.Position.X) * findex;
             double yDiff = (_thisNode.Position.Y - _lastNode.Position.Y) * findex;

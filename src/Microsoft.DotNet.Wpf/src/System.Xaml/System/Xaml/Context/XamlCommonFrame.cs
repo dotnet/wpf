@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -40,7 +41,10 @@ namespace MS.Internal.Xaml.Context
         {
             XamlType = null;
             Member = null;
-            _namespaces?.Clear();
+            if (_namespaces is not null)
+            {
+                _namespaces.Clear();
+            }
         }
 
         public XamlType XamlType { get; set; }
@@ -53,7 +57,11 @@ namespace MS.Internal.Xaml.Context
 
         public void SetNamespaces(Dictionary<string, string> namespaces)
         {
-            _namespaces?.Clear();
+            if (_namespaces is not null)
+            {
+                _namespaces.Clear();
+            }
+
             if (namespaces is not null)
             {
                 foreach (KeyValuePair<string, string> ns in namespaces)

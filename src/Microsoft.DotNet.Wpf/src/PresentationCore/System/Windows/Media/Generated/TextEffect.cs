@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -8,23 +9,12 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-using MS.Internal.KnownBoxes;
-using MS.Internal.Collections;
-using MS.Utility;
-using System.Collections;
-using System.ComponentModel;
-using System.Globalization;
-using System.Text;
-using System.Windows.Media.Effects;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Markup;
-using System.Windows.Media.Converters;
+// These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media
 {
-    public sealed partial class TextEffect : Animatable
+    sealed partial class TextEffect : Animatable
     {
         //------------------------------------------------------
         //
@@ -65,7 +55,6 @@ namespace System.Windows.Media
 
         private static bool ValidatePositionStartValue(object value)
         {
-
             // This resource needs to be notified on new values being set.
             if (!OnPositionStartChanging((int) value))
             {
@@ -75,7 +64,6 @@ namespace System.Windows.Media
         }
         private static bool ValidatePositionCountValue(object value)
         {
-
             // This resource needs to be notified on new values being set.
             if (!OnPositionCountChanging((int) value))
             {
@@ -95,7 +83,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Transform)GetValue(TransformProperty);
+                return (Transform) GetValue(TransformProperty);
             }
             set
             {
@@ -111,7 +99,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Geometry)GetValue(ClipProperty);
+                return (Geometry) GetValue(ClipProperty);
             }
             set
             {
@@ -127,7 +115,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Brush)GetValue(ForegroundProperty);
+                return (Brush) GetValue(ForegroundProperty);
             }
             set
             {
@@ -143,7 +131,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (int)GetValue(PositionStartProperty);
+                return (int) GetValue(PositionStartProperty);
             }
             set
             {
@@ -159,7 +147,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (int)GetValue(PositionCountProperty);
+                return (int) GetValue(PositionCountProperty);
             }
             set
             {
@@ -285,7 +273,8 @@ namespace System.Windows.Media
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app.
+            // of your app. 
+
 
 
             // Initializations
@@ -336,8 +325,6 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
-
 
         #endregion Constructors
     }

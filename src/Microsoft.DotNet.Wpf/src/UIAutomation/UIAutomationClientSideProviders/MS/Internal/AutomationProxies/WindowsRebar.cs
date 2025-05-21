@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: HWND-based Rebar Proxy
 
@@ -12,7 +13,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    internal class WindowsRebar: ProxyHwnd, IRawElementProviderHwndOverride
+    class WindowsRebar: ProxyHwnd, IRawElementProviderHwndOverride
     {
         // ------------------------------------------------------
         //
@@ -22,7 +23,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Constructors
 
-        private WindowsRebar (IntPtr hwnd, ProxyFragment parent, int item)
+        WindowsRebar (IntPtr hwnd, ProxyFragment parent, int item)
             : base( hwnd, parent, item )
         {
             _sType = SR.LocalizedControlTypeRebar;
@@ -243,7 +244,7 @@ namespace MS.Internal.AutomationProxies
 
         #region RebarBandItem
 
-        private class RebarBandItem: ProxyFragment, IInvokeProvider
+        class RebarBandItem: ProxyFragment, IInvokeProvider
         {
             // ------------------------------------------------------
             //
@@ -452,7 +453,7 @@ namespace MS.Internal.AutomationProxies
 
             #region Private Fields
 
-            private IntPtr _hwndBand = IntPtr.Zero;
+            IntPtr _hwndBand = IntPtr.Zero;
 
             #endregion
 
@@ -468,7 +469,7 @@ namespace MS.Internal.AutomationProxies
 
         #region RebarBandChildOverrideProxy
 
-        private class RebarBandChildOverrideProxy: ProxyHwnd
+        class RebarBandChildOverrideProxy: ProxyHwnd
         {
             // ------------------------------------------------------
             //

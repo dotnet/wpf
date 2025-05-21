@@ -1,26 +1,19 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
-//
-//
 // This file was generated, please do not edit it directly.
-//
 // Please see MilCodeGen.html for more information.
-//
 
 using MS.Internal;
-using MS.Internal.KnownBoxes;
-using MS.Internal.Collections;
 using MS.Utility;
 using System.Collections;
 using System.ComponentModel;
-using System.Globalization;
 using System.Text;
-using System.Windows.Media.Effects;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
 using System.Windows.Markup;
 using System.Windows.Media.Converters;
+
+// These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media
 {
@@ -117,8 +110,6 @@ namespace System.Windows.Media
         /// </summary>
         public void Insert(int index, int value)
         {
-
-
             WritePreamble();
             _collection.Insert(index, value);
 
@@ -196,8 +187,6 @@ namespace System.Windows.Media
             }
             set
             {
-
-
                 WritePreamble();
                 _collection[ index ] = value;
 
@@ -522,7 +511,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            Int32Collection sourceInt32Collection = (Int32Collection)source;
+            Int32Collection sourceInt32Collection = (Int32Collection) source;
 
             base.CloneCore(source);
 
@@ -534,14 +523,13 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceInt32Collection._collection[i]);
             }
-
-        }
+}
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            Int32Collection sourceInt32Collection = (Int32Collection)source;
+            Int32Collection sourceInt32Collection = (Int32Collection) source;
 
             base.CloneCurrentValueCore(source);
 
@@ -553,14 +541,13 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceInt32Collection._collection[i]);
             }
-
-        }
+}
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            Int32Collection sourceInt32Collection = (Int32Collection)source;
+            Int32Collection sourceInt32Collection = (Int32Collection) source;
 
             base.GetAsFrozenCore(source);
 
@@ -572,14 +559,13 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceInt32Collection._collection[i]);
             }
-
-        }
+}
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            Int32Collection sourceInt32Collection = (Int32Collection)source;
+            Int32Collection sourceInt32Collection = (Int32Collection) source;
 
             base.GetCurrentValueAsFrozenCore(source);
 
@@ -591,8 +577,7 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceInt32Collection._collection[i]);
             }
-
-        }
+}
 
 
         #endregion ProtectedMethods
@@ -689,7 +674,7 @@ namespace System.Windows.Media
             // Helper to get the numeric list separator for a given culture.
             // char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(provider);
 
-            for (int i = 0; i < _collection.Count; i++)
+            for (int i=0; i<_collection.Count; i++)
             {
                 str.AppendFormat(
                     provider,
@@ -783,7 +768,6 @@ namespace System.Windows.Media
 
             void IDisposable.Dispose()
             {
-
             }
 
             /// <summary>
@@ -924,7 +908,6 @@ namespace System.Windows.Media
 
             ArgumentNullException.ThrowIfNull(collection);
 
-
             ICollection<int> icollectionOfT = collection as ICollection<int>;
 
             if (icollectionOfT != null)
@@ -945,11 +928,8 @@ namespace System.Windows.Media
 
                     foreach (int item in collection)
                     {
-
                         _collection.Add(item);
                     }
-
-
                 }
             }
 

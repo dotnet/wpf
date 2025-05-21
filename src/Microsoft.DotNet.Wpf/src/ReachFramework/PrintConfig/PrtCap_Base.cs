@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /*++
 
@@ -20,7 +21,7 @@ namespace MS.Internal.Printing.Configuration
     /// Do not use.
     /// Abstract base class of <see cref="InternalPrintCapabilities"/> feature.
     /// </summary>
-    internal abstract class PrintCapabilityFeature
+    abstract internal class PrintCapabilityFeature
     {
         #region Constructors
 
@@ -115,7 +116,7 @@ namespace MS.Internal.Printing.Configuration
     /// Do not use.
     /// Abstract base class of <see cref="PrintCapabilityFeature"/> option.
     /// </summary>
-    internal abstract class PrintCapabilityOption
+    abstract internal class PrintCapabilityOption
     {
         #region Constructors
 
@@ -160,7 +161,7 @@ namespace MS.Internal.Printing.Configuration
     /// Do not use.
     /// Abstract base class of <see cref="InternalPrintCapabilities"/> parameter definition.
     /// </summary>
-    internal abstract class ParameterDefinition
+    abstract internal class ParameterDefinition
     {
         #region Constructors
 
@@ -289,7 +290,7 @@ namespace MS.Internal.Printing.Configuration
         // so we just need to implement the prop-callback at the base class level and all derived
         // classes will inherit the implementation.
         /// <exception cref="XmlException">XML is not well-formed.</exception>
-        internal sealed override bool ParamDefPropCallback(ParameterDefinition baseParam, XmlPrintCapReader reader)
+        internal override sealed bool ParamDefPropCallback(ParameterDefinition baseParam, XmlPrintCapReader reader)
         {
             NonNegativeIntParameterDefinition param = baseParam as NonNegativeIntParameterDefinition;
             bool handled = true;
@@ -372,7 +373,7 @@ namespace MS.Internal.Printing.Configuration
 
         #region Internal Properties
 
-        internal sealed override bool IsValid
+        internal override sealed bool IsValid
         {
             get
             {
@@ -477,7 +478,7 @@ namespace MS.Internal.Printing.Configuration
     /// Do not use.
     /// Abstract base class of <see cref="InternalPrintCapabilities"/> root-level property.
     /// </summary>
-    internal abstract class PrintCapabilityRootProperty
+    abstract internal class PrintCapabilityRootProperty
     {
         #region Constructors
 

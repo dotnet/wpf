@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using SC = System.Collections;
 using MS.Internal.FontFace;
@@ -371,10 +372,10 @@ namespace System.Windows.Media
 
         private class Enumerator : IEnumerator<FontFamilyMap>, SC.IEnumerator
         {
-            private FontFamilyMap[] _items;
-            private int _count;
-            private int _index;
-            private FontFamilyMap _current;
+            FontFamilyMap[] _items;
+            int _count;
+            int _index;
+            FontFamilyMap _current;
 
             internal Enumerator(FontFamilyMap[] items, int count)
             {

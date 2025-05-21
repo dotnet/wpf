@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.Windows.Threading;
@@ -258,7 +259,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(ce);
 
 
-            if ((bool)ce.GetValue(GetsSourceChangedEventProperty))
+            if (true == (bool)ce.GetValue(GetsSourceChangedEventProperty))
             {
                 UpdateSourceOfElement(ce, null, null);
             }
@@ -430,21 +431,36 @@ namespace System.Windows
             }
             
             // Always set the SourceProperty on the new root.
-            newRoot?.SetValue(RootSourceProperty, this);
+            if (newRoot != null)
+            {
+                newRoot.SetValue(RootSourceProperty, this);
+            }
 
             UIElement oldRootUIElement = oldRoot as UIElement;
             UIElement newRootUIElement = newRoot as UIElement;
 
             // The IsVisible property can only be true if root visual is connected to a presentation source.
             // For Read-Only force-inherited properties, use a private update method.
-            oldRootUIElement?.UpdateIsVisibleCache();
-            newRootUIElement?.UpdateIsVisibleCache();
+            if(oldRootUIElement != null)
+            {
+                oldRootUIElement.UpdateIsVisibleCache();
+            }
+            if(newRootUIElement != null)
+            {
+                newRootUIElement.UpdateIsVisibleCache();
+            }
 
             // Broadcast the Unloaded event starting at the old root visual
-            oldRootUIElement?.OnPresentationSourceChanged(false);
+            if (oldRootUIElement != null)
+            {
+                oldRootUIElement.OnPresentationSourceChanged(false);
+            }
 
             // Broadcast the Loaded event starting at the root visual
-            newRootUIElement?.OnPresentationSourceChanged(true);
+            if (newRootUIElement != null)
+            {
+                newRootUIElement.OnPresentationSourceChanged(true);
+            }
 
             // To fire PresentationSourceChanged when the RootVisual changes;
             // rather than simulate a "parent" pointer change, we just walk the
@@ -519,7 +535,7 @@ namespace System.Windows
         {
             Debug.Assert(uie is UIElement3D or UIElement);
             
-            if ((bool)uie.GetValue(GetsSourceChangedEventProperty))
+            if (true == (bool)uie.GetValue(GetsSourceChangedEventProperty))
             {
                 UpdateSourceOfElement(uie, e.Ancestor, e.OldParent);
             }
@@ -527,7 +543,7 @@ namespace System.Windows
 
         internal static PresentationSource CriticalFromVisual(DependencyObject v)
         {
-            return CriticalFromVisual(v, enable2DTo3DTransition: true);
+            return CriticalFromVisual(v, true /* enable2DTo3DTransition */);
         }
 
         /// <param name="v">The dependency object to find the source for</param>
@@ -642,7 +658,7 @@ namespace System.Windows
 
         private static PresentationSource FindSource(DependencyObject o)
         {
-            return FindSource(o, enable2DTo3DTransition: true);
+            return FindSource(o, true /* enable2DTo3DTransition */);
         }
 
         /// <param name="o">The dependency object to find the source for</param>

@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: TextBlock element displays text. It is meant for UI scenarios.
@@ -29,7 +30,7 @@ namespace System.Windows.Controls
     /// reused during Measure, Arrange and Render phase.
     /// </summary>
     ///
-    internal class TextBlockCache
+    class TextBlockCache
     {
         public LineProperties _lineProperties;
         public TextRunCache _textRunCache;
@@ -175,7 +176,7 @@ namespace System.Windows.Controls
 
             if (_complexContent == null)
             {
-                Text += text;
+                Text = Text + text;
             }
             else
             {
@@ -1148,7 +1149,7 @@ namespace System.Windows.Controls
         {
             if (_complexContent == null)
             {
-                throw new ArgumentOutOfRangeException(nameof(index));
+                throw new ArgumentOutOfRangeException("index");
             }
             return _complexContent.VisualChildren[index];
         }
@@ -1234,7 +1235,10 @@ namespace System.Windows.Controls
 
             ClearLineMetrics();
 
-            _complexContent?.TextView.Invalidate();
+            if (_complexContent != null)
+            {
+                _complexContent.TextView.Invalidate();
+            }
 
             // To determine natural size of the text TextAlignment has to be ignored.
             // Since for rendering/hittesting lines are recreated, it can be done without
@@ -1376,7 +1380,10 @@ namespace System.Windows.Controls
             MS.Internal.PtsHost.TextPanelDebug.StartTimer("TextBlock.ArrangeOverride", MS.Internal.PtsHost.TextPanelDebug.Category.MeasureArrange);
 #endif
             // Remove all existing visuals. If there are inline objects, they will be added below.
-            _complexContent?.VisualChildren.Clear();
+            if (_complexContent != null)
+            {
+                _complexContent.VisualChildren.Clear();
+            }
 
             ArrayList inlineObjects = InlineObjects;
             int lineCount = LineCount;
@@ -1898,7 +1905,10 @@ Debug.Assert(lineCount == LineCount);
         /// </summary>
         internal void RemoveChild(Visual child)
         {
-            _complexContent?.VisualChildren.Remove(child);
+            if (_complexContent != null)
+            {
+                _complexContent.VisualChildren.Remove(child);
+            }
         }
 
         /// <summary>
@@ -2327,7 +2337,7 @@ Debug.Assert(lineCount == LineCount);
                                        && TextPointerBase.IsNextToAnyBreak(endOfLineTextPointer, LogicalDirection.Backward))
                                     {
                                         double endOfParaGlyphWidth = FontSize * CaretElement.c_endOfParaMagicMultiplier;
-                                        rect.Width += endOfParaGlyphWidth;
+                                        rect.Width = rect.Width + endOfParaGlyphWidth;
                                     }
 
                                     RectangleGeometry rectGeometry = new RectangleGeometry(rect);
@@ -2761,8 +2771,8 @@ Debug.Assert(lineCount == LineCount);
         //-------------------------------------------------------------------
         private ArrayList InlineObjects
         {
-            get { return _complexContent?.InlineObjects; }
-            set { _complexContent?.InlineObjects = value; }
+            get { return (_complexContent == null) ? null : _complexContent.InlineObjects; }
+            set { if (_complexContent != null) _complexContent.InlineObjects = value; }
         }
 
         //-------------------------------------------------------------------

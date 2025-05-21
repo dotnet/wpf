@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -37,7 +38,7 @@ namespace System.Windows
         /// <summary>
         /// Guards against multiple verifications of the switch values.
         /// </summary>
-        private static bool s_switchesVerified = false;
+        static int s_SwitchesVerified = 0;
 
         #endregion
 
@@ -182,19 +183,31 @@ namespace System.Windows
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void VerifySwitches(Dispatcher dispatcher)
         {
-            if (!Interlocked.CompareExchange(ref s_switchesVerified, true, false))
+            if (Interlocked.CompareExchange(ref s_SwitchesVerified, 1, 0) == 0)
             {
-                bool netFx47 = UseNetFx47CompatibleAccessibilityFeatures;
-                bool netFx471 = UseNetFx471CompatibleAccessibilityFeatures;
-                bool netFx472 = UseNetFx472CompatibleAccessibilityFeatures;
-
                 // If a flag is set to false, we also must ensure the prior accessibility switches are also false.
                 // Otherwise we should inform the developer, via an exception, to enable all the flags.
-                if (!((!netFx47 && !netFx471 && !netFx472) ||
-                      (!netFx47 && !netFx471 && netFx472) ||
-                      (!netFx47 && netFx471 && netFx472) ||
-                      (netFx47 && netFx471 && netFx472)))
-                { 
+                var orderedFlagValues =
+                typeof(AccessibilitySwitches).GetProperties(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public)
+                .Where(x => x.Name.EndsWith("CompatibleAccessibilityFeatures"))
+                .OrderBy(x => x.Name.Remove(x.Name.IndexOf("CompatibleAccessibilityFeatures", 0)), StringComparer.OrdinalIgnoreCase)
+                .Select(x => (bool)x.GetValue(null));
+
+                bool? lastFlag = null;
+                bool foundInvalidSwitchState = false;
+
+                foreach (var flag in orderedFlagValues)
+                {
+                    if (foundInvalidSwitchState = (!flag && lastFlag == true))
+                    {
+                        break;
+                    }
+
+                    lastFlag = flag;
+                }
+
+                if (foundInvalidSwitchState)
+                {
                     // Dispatch an EventLog and error throw so we get loaded UI, then the crash.
                     // This ensures the WER dialog shows.
                     DispatchOnError(dispatcher, SR.CombinationOfAccessibilitySwitchesNotSupported);

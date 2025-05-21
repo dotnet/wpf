@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // A Managed wrapper for Event Tracing for Windows
 // Based on TraceEvent.cs found in nt\base\wmi\trace.net
@@ -50,7 +51,7 @@ namespace MS.Utility
         }
 
         internal abstract void Register(Guid providerGuid);
-        internal abstract unsafe uint EventWrite(EventTrace.Event eventID, EventTrace.Keyword keywords, EventTrace.Level level, int argc, EventData* argv);
+        internal unsafe abstract uint EventWrite(EventTrace.Event eventID, EventTrace.Keyword keywords, EventTrace.Level level, int argc, EventData* argv);
 
         internal uint TraceEvent(EventTrace.Event eventID, EventTrace.Keyword keywords, EventTrace.Level level)
         {
@@ -485,7 +486,7 @@ namespace MS.Utility
         }
 
         // pack the argv data and emit the event using TraceEvent
-        internal override unsafe uint EventWrite(EventTrace.Event eventID, EventTrace.Keyword keywords, EventTrace.Level level, int argc, EventData* argv)
+        internal unsafe override uint EventWrite(EventTrace.Event eventID, EventTrace.Keyword keywords, EventTrace.Level level, int argc, EventData* argv)
         {
             ClassicEtw.EVENT_HEADER header;
             header.Header.ClientContext = 0;
@@ -523,7 +524,7 @@ namespace MS.Utility
         {
         }
 
-        internal override unsafe void Register(Guid providerGuid)
+        internal unsafe override void Register(Guid providerGuid)
         {
             _etwEnabledCallback =new ManifestEtw.EtwEnableCallback(EtwEnableCallback);
             ulong registrationHandle = 0;
@@ -556,7 +557,7 @@ namespace MS.Utility
             }
         }
 
-        internal override unsafe uint EventWrite(EventTrace.Event eventID, EventTrace.Keyword keywords, EventTrace.Level level, int argc, EventData* argv)
+        internal unsafe override uint EventWrite(EventTrace.Event eventID, EventTrace.Keyword keywords, EventTrace.Level level, int argc, EventData* argv)
         {
             ManifestEtw.EventDescriptor eventDescriptor;
             eventDescriptor.Id = (ushort) eventID;

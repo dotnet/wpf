@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //
@@ -714,10 +715,10 @@ namespace System.Windows.Markup
                 {
                     int i;
 
-                    i = ParseSubtag(ietfLanguageTag, reader, isPrimary: true);
+                    i = ParseSubtag(ietfLanguageTag, reader, /* isPrimary */ true);
                     while (i != -1)
                     {
-                        i = ParseSubtag(ietfLanguageTag, reader, isPrimary: false);
+                        i = ParseSubtag(ietfLanguageTag, reader, /* isPrimary */ false);
                     }
                 }
             }
@@ -727,7 +728,7 @@ namespace System.Windows.Markup
         //  end of string.
         // throws exception on improper formatting
         // It is assumed that caller has already converted to lower-case.
-        private static int ParseSubtag(string ietfLanguageTag, StringReader reader, bool isPrimary)
+        static private int ParseSubtag(string ietfLanguageTag, StringReader reader, bool isPrimary)
         {
             int c;
             bool ok;
@@ -777,23 +778,23 @@ namespace System.Windows.Markup
             }
         }
 
-        private static bool IsLowerAlpha(int c)
+        static private bool IsLowerAlpha(int c)
         {
             return (c >= 'a' && c <= 'z');
         }
 
-        private static bool IsDigit(int c)
+        static private bool IsDigit(int c)
         {
             return c >= '0' && c <= '9';
         }
 
-        private static void ThrowParseException(string ietfLanguageTag)
+        static private void ThrowParseException(string ietfLanguageTag)
         {
-             throw new ArgumentException(SR.Format(SR.XmlLangMalformed, ietfLanguageTag), nameof(ietfLanguageTag));
+             throw new ArgumentException(SR.Format(SR.XmlLangMalformed, ietfLanguageTag), "ietfLanguageTag");
         }
 
         // throws if there is a non-7-bit ascii character
-        private static string AsciiToLower(string tag)
+        static private string AsciiToLower(string tag)
         {
             int length = tag.Length;
 

@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 
@@ -180,7 +181,7 @@ namespace Standard
     /// <summary>
     /// For IWebBrowser2.  READYSTATE_*
     /// </summary>
-    internal enum READYSTATE
+    enum READYSTATE
     {
         UNINITIALIZED = 0,
         LOADING = 1,
@@ -1266,7 +1267,7 @@ namespace Standard
     }
 
     [Flags]
-    internal enum SLGP
+    enum SLGP
     {
         SHORTPATH = 0x1,
         UNCPRIORITY = 0x2,
@@ -1424,7 +1425,10 @@ namespace Standard
             }
             finally
             {
-                dc?._created = true;
+                if (dc != null)
+                {
+                    dc._created = true;
+                }
             }
 
             if (dc.IsInvalid)
@@ -1455,7 +1459,10 @@ namespace Standard
             }
             finally
             {
-                dc?._created = true;
+                if (dc != null)
+                {
+                    dc._created = true;
+                }
             }
 
             if (dc.IsInvalid)
@@ -1476,7 +1483,10 @@ namespace Standard
             }
             finally
             {
-                dc?.Hwnd = hwnd;
+                if (dc != null)
+                {
+                    dc.Hwnd = hwnd;
+                }
             }
 
             if (dc.IsInvalid)
@@ -1777,9 +1787,8 @@ namespace Standard
         public char[] szInfoTitle = new char[64];
         public uint dwInfoFlags;
         public Guid guidItem;
-
         // Vista only
-        private IntPtr hBalloonIcon;
+        IntPtr hBalloonIcon;
     }
 
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
@@ -1787,9 +1796,9 @@ namespace Standard
     internal class SHARDAPPIDINFO
     {
         [MarshalAs(UnmanagedType.Interface)]
-        private object psi;    // The namespace location of the the item that should be added to the recent docs folder.
+        object psi;    // The namespace location of the the item that should be added to the recent docs folder.
         [MarshalAs(UnmanagedType.LPWStr)]
-        private string pszAppID;  // The id of the application that should be associated with this recent doc.
+        string pszAppID;  // The id of the application that should be associated with this recent doc.
     }
 
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
@@ -1797,21 +1806,21 @@ namespace Standard
     internal class SHARDAPPIDINFOIDLIST
     {
         /// <summary>The idlist for the shell item that should be added to the recent docs folder.</summary>
-        private IntPtr pidl;
+        IntPtr pidl;
         /// <summary>The id of the application that should be associated with this recent doc.</summary>
         [MarshalAs(UnmanagedType.LPWStr)]
-        private string pszAppID;
+        string pszAppID;
     }
 
     [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
     internal class SHARDAPPIDINFOLINK
     {
-        private IntPtr psl;     // An IShellLink instance that when launched opens a recently used item in the specified
+        IntPtr psl;     // An IShellLink instance that when launched opens a recently used item in the specified
         // application. This link is not added to the recent docs folder, but will be added to the
         // specified application's destination list.
         [MarshalAs(UnmanagedType.LPWStr)]
-        private string pszAppID;  // The id of the application that should be associated with this recent doc.
+        string pszAppID;  // The id of the application that should be associated with this recent doc.
     }
 
 

@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Globalization;
 using System.Text;
@@ -86,7 +87,7 @@ namespace System.Windows.Navigation
             }
             else
             {
-                if (!baseUri.IsAbsoluteUri)
+                if (baseUri.IsAbsoluteUri == false)
                 {
                     // Most likely the BaseUriDP in element or IUriContext.BaseUri
                     // is set to a relative Uri programmatically in user's code.
@@ -111,7 +112,7 @@ namespace System.Windows.Navigation
 
         #region internal properties and methods
 
-        internal static Uri SiteOfOriginBaseUri
+        static internal Uri SiteOfOriginBaseUri
         {
             get
             {
@@ -119,7 +120,7 @@ namespace System.Windows.Navigation
             }
         }
 
-        internal static Uri PackAppBaseUri
+        static internal Uri PackAppBaseUri
         {
             get
             {
@@ -226,7 +227,7 @@ namespace System.Windows.Navigation
         //
         internal static void GetAssemblyNameAndPart(Uri uri, out string partName, out string assemblyName, out string assemblyVersion, out string assemblyKey)
         {
-            Invariant.Assert(uri != null && !uri.IsAbsoluteUri, "This method accepts relative uri only.");
+            Invariant.Assert(uri != null && uri.IsAbsoluteUri == false, "This method accepts relative uri only.");
 
             string original = uri.ToString(); // only relative Uri here (enforced by Package)
 
@@ -311,7 +312,7 @@ namespace System.Windows.Navigation
             } // end of if fHasComponent
         }
 
-        internal static bool IsComponentEntryAssembly(string component)
+        static internal bool IsComponentEntryAssembly(string component)
         {
             if (component.EndsWith(COMPONENT, StringComparison.OrdinalIgnoreCase))
             {
@@ -326,7 +327,7 @@ namespace System.Windows.Navigation
 
                     if (assembly != null)
                     {
-                        return ReflectionUtils.GetAssemblyPartialName(assembly).Equals(assemblyName, StringComparison.OrdinalIgnoreCase);
+                        return (string.Equals(SafeSecurityHelper.GetAssemblyPartialName(assembly), assemblyName, StringComparison.OrdinalIgnoreCase));
                     }
                     else
                     {
@@ -337,12 +338,12 @@ namespace System.Windows.Navigation
             return false;
         }
                 
-        internal static Uri GetResolvedUri(Uri baseUri, Uri orgUri)
+        static internal Uri GetResolvedUri(Uri baseUri, Uri orgUri)
         {
             return new Uri(baseUri, orgUri);
         }
 
-        internal static Uri MakeRelativeToSiteOfOriginIfPossible(Uri sUri)
+        static internal Uri MakeRelativeToSiteOfOriginIfPossible(Uri sUri)
         {
             if (Uri.Compare(sUri, SiteOfOriginBaseUri, UriComponents.Scheme, UriFormat.UriEscaped, StringComparison.OrdinalIgnoreCase) == 0)
             {                
@@ -356,7 +357,7 @@ namespace System.Windows.Navigation
             return sUri;
         }
 
-        internal static Uri ConvertPackUriToAbsoluteExternallyVisibleUri(Uri packUri)
+        static internal Uri ConvertPackUriToAbsoluteExternallyVisibleUri(Uri packUri)
         {
             Invariant.Assert(packUri.IsAbsoluteUri && string.Equals(packUri.Scheme, PackAppBaseUri.Scheme, StringComparison.OrdinalIgnoreCase));
 
@@ -376,7 +377,7 @@ namespace System.Windows.Navigation
         // object will not correctly resolve relative Uris in some cases.  This method
         // detects and fixes this by constructing a new Uri with an original string
         // that contains the scheme file://.
-        internal static Uri FixFileUri(Uri uri)
+        static internal Uri FixFileUri(Uri uri)
         {
             if (uri is not null && uri.IsAbsoluteUri &&
                 string.Equals(uri.Scheme, Uri.UriSchemeFile, StringComparison.OrdinalIgnoreCase) &&
@@ -388,7 +389,7 @@ namespace System.Windows.Navigation
             return uri;
         }
 
-        internal static Uri BaseUri
+        static internal Uri BaseUri
         {
             get
             {
@@ -402,7 +403,7 @@ namespace System.Windows.Navigation
             }
         }
 
-        internal static Assembly ResourceAssembly
+        static internal Assembly ResourceAssembly
         {
             get
             {
@@ -424,7 +425,7 @@ namespace System.Windows.Navigation
         // if the Uri provided the public Key token we must also verify that it matches the one in assemblyInfo.
         // We only add the version if the Uri is missing both the version and the key, otherwise returns null.
         // If the Uri is not a pack Uri, or we can't extract the information we need this method returns null.
-        internal static Uri AppendAssemblyVersion(Uri uri, Assembly assemblyInfo)
+        static internal Uri AppendAssemblyVersion(Uri uri, Assembly assemblyInfo)
         {
             Uri source = null;
             Uri baseUri = null;

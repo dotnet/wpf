@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Utility;
 using MS.Internal;
@@ -168,26 +169,31 @@ namespace System.Windows
                                 args.Source=newSource;
                         }
                     }
-
+                    
                     // Invoke listeners
 
-                    bool traceRoutedEventIsEnabled = TraceRoutedEvent.IsEnabled;
-                    if (traceRoutedEventIsEnabled)
+                    var traceRoutedEventIsEnabled = TraceRoutedEvent.IsEnabled;
+                    if ( traceRoutedEventIsEnabled )
                     {
+                        _traceArguments ??= new object[3];
+                        _traceArguments[0] = _routeItemList[i].Target;
+                        _traceArguments[1] = args;
+                        _traceArguments[2] = BooleanBoxes.Box(args.Handled);
                         TraceRoutedEvent.Trace(
                             TraceEventType.Start,
                             TraceRoutedEvent.InvokeHandlers,
-                            _routeItemList[i].Target, args, BooleanBoxes.Box(args.Handled));
+                            _traceArguments);
                     }
-
+                    
                     _routeItemList[i].InvokeHandler(args);
 
-                    if (traceRoutedEventIsEnabled)
+                    if( traceRoutedEventIsEnabled )
                     {
+                        _traceArguments[2] = BooleanBoxes.Box(args.Handled);
                         TraceRoutedEvent.Trace(
                             TraceEventType.Stop,
                             TraceRoutedEvent.InvokeHandlers,
-                            _routeItemList[i].Target, args, BooleanBoxes.Box(args.Handled));
+                            _traceArguments);
                     }
 
 
@@ -238,13 +244,17 @@ namespace System.Windows
                         }
                         
                         
-                        bool traceRoutedEventIsEnabled = TraceRoutedEvent.IsEnabled;
-                        if (traceRoutedEventIsEnabled)
+                        var traceRoutedEventIsEnabled = TraceRoutedEvent.IsEnabled;
+                        if ( traceRoutedEventIsEnabled )
                         {
+                            _traceArguments ??= new object[3];
+                            _traceArguments[0] = _routeItemList[i].Target;
+                            _traceArguments[1] = args;
+                            _traceArguments[2] = BooleanBoxes.Box(args.Handled);
                             TraceRoutedEvent.Trace(
                                 TraceEventType.Start,
                                 TraceRoutedEvent.InvokeHandlers,
-                                _routeItemList[i].Target, args, BooleanBoxes.Box(args.Handled));
+                                _traceArguments);
                         }
 
                         // Invoke listeners
@@ -252,10 +262,11 @@ namespace System.Windows
 
                         if (traceRoutedEventIsEnabled)
                         {
+                            _traceArguments[2] = BooleanBoxes.Box(args.Handled);
                             TraceRoutedEvent.Trace(
                                 TraceEventType.Stop,
                                 TraceRoutedEvent.InvokeHandlers,
-                                _routeItemList[i].Target, args, BooleanBoxes.Box(args.Handled));
+                                _traceArguments);
                         }
 
                     }
@@ -499,7 +510,10 @@ namespace System.Windows
             
             _routeItemList.Clear();
 
-            _branchNodeStack?.Clear();
+            if (_branchNodeStack != null)
+            {
+                _branchNodeStack.Clear();
+            }
 
             _sourceItemList.Clear();
         }
@@ -521,6 +535,9 @@ namespace System.Windows
 
         // Stores Source Items for separated trees
         private FrugalStructList<SourceItem> _sourceItemList;
+
+        // Stores arguments that are passed to TraceRoutedEvent.Trace (to reduce allocations)
+        private object[] _traceArguments;
 
         #endregion Data
     }

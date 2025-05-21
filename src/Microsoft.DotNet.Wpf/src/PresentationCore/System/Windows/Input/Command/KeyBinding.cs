@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: The KeyBinding class is used by the developer to create Keyboard Input Bindings 
 //
@@ -187,7 +188,7 @@ namespace System.Windows.Input
                 _settingGesture = true;
                 try
                 {
-                    Gesture = new KeyGesture(key, modifiers, validateGesture: false);
+                    Gesture = new KeyGesture(key, modifiers, /*validateGesture = */ false);
                 }
                 finally
                 {

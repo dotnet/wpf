@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Defines PropertyPathWorker object, workhorse for CLR bindings
@@ -121,7 +122,7 @@ namespace MS.Internal.Data
                         return (dp != null) ? dp.Name :
                                 (pi != null) ? pi.Name :
                                 (pd != null) ? pd.Name :
-                                dpa?.PropertyName;
+                                (dpa != null) ? dpa.PropertyName : null;
 
                     case SourceValueType.Indexer:
                         // return the indexer string, e.g. "[foo]"
@@ -363,9 +364,9 @@ namespace MS.Internal.Data
                     {
                         ((DependencyObject)item).SetValue(dp, value);
                     }
-                    else
+                    else if (dpa != null)
                     {
-                        dpa?.SetValue(item, value);
+                        dpa.SetValue(item, value);
                     }
                     break;
 
@@ -553,11 +554,9 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        private bool IsDynamic { get { return _isDynamic; } }
-
-        private SourceValueInfo[] SVI { get { return _parent.SVI; } }
-
-        private DataBindEngine Engine { get { return _engine; } }
+        bool IsDynamic { get { return _isDynamic; } }
+        SourceValueInfo[] SVI { get { return _parent.SVI; } }
+        DataBindEngine Engine { get { return _engine; } }
 
         //------------------------------------------------------
         //
@@ -689,7 +688,8 @@ namespace MS.Internal.Data
                 if (oldO == BindingExpression.StaticSource)
                 {
                     Type declaringType = (oldPI != null) ? oldPI.DeclaringType
-                                        : oldPD?.ComponentType;
+                                        : (oldPD != null) ? oldPD.ComponentType
+                                        : null;
                     if (declaringType != null)
                     {
                         StaticPropertyChangedEventManager.RemoveHandler(declaringType, OnStaticPropertyChanged, SVI[k].propertyName);
@@ -860,7 +860,8 @@ namespace MS.Internal.Data
                 if (newO == BindingExpression.StaticSource)
                 {
                     Type declaringType = (newPI != null) ? newPI.DeclaringType
-                                        : newPD?.ComponentType;
+                                        : (newPD != null) ? newPD.ComponentType
+                                        : null;
                     if (declaringType != null)
                     {
                         StaticPropertyChangedEventManager.AddHandler(declaringType, OnStaticPropertyChanged, SVI[k].propertyName);
@@ -909,12 +910,12 @@ namespace MS.Internal.Data
             }
         }
 
-        private void ReportNoInfoError(int k, object parent)
+        void ReportNoInfoError(int k, object parent)
         {
             // report cannot find info.  Ignore when in priority bindings.
             if (TraceData.IsEnabled)
             {
-                BindingExpression bindingExpression = _host?.ParentBindingExpression;
+                BindingExpression bindingExpression = (_host != null) ? _host.ParentBindingExpression : null;
                 if (bindingExpression == null || !bindingExpression.IsInPriorityBindingExpression)
                 {
                     if (!SystemXmlHelper.IsEmptyXmlDataCollection(parent))
@@ -999,7 +1000,7 @@ namespace MS.Internal.Data
         // different value every time the getter is called.   For the purpose of
         // detecting event leapfrogging, the value produced by such a property
         // should be ignored.
-        private bool IsNonIdempotentProperty(int level)
+        bool IsNonIdempotentProperty(int level)
         {
             PropertyDescriptor pd;
             if (level < 0 || (pd = _arySVS[level].info as PropertyDescriptor) == null)
@@ -1525,29 +1526,35 @@ namespace MS.Internal.Data
                     if (CriticalExceptions.IsCriticalApplicationException(ex))
                         throw;
                     BindingOperations.LogException(ex);
-                    _host?.ReportGetValueError(k, item, ex);
+                    if (_host != null)
+                        _host.ReportGetValueError(k, item, ex);
                 }
                 catch // non CLS compliant exception
                 {
-                    _host?.ReportGetValueError(k, item, new InvalidOperationException(SR.Format(SR.NonCLSException, "GetValue")));
+                    if (_host != null)
+                        _host.ReportGetValueError(k, item, new InvalidOperationException(SR.Format(SR.NonCLSException, "GetValue")));
                 }
 
                 // catch the pseudo-exception as well
                 if (o == IListIndexOutOfRange)
                 {
                     o = DependencyProperty.UnsetValue;
-                    _host?.ReportGetValueError(k, item, new ArgumentOutOfRangeException("index"));
+                    if (_host != null)
+                        _host.ReportGetValueError(k, item, new ArgumentOutOfRangeException("index"));
                 }
 
                 return o;
             }
 
-            _host?.ReportRawValueErrors(k, item, info);
+            if (_host != null)
+            {
+                _host.ReportRawValueErrors(k, item, info);
+            }
 
             return DependencyProperty.UnsetValue;
         }
 
-        private void SetPropertyInfo(object info, out PropertyInfo pi, out PropertyDescriptor pd, out DependencyProperty dp, out DynamicPropertyAccessor dpa)
+        void SetPropertyInfo(object info, out PropertyInfo pi, out PropertyDescriptor pd, out DependencyProperty dp, out DynamicPropertyAccessor dpa)
         {
             pi = null;
             pd = null;
@@ -1567,7 +1574,7 @@ namespace MS.Internal.Data
             }
         }
 
-        private void CheckReadOnly(object item, object info)
+        void CheckReadOnly(object item, object info)
         {
             PropertyInfo pi;
             PropertyDescriptor pd;
@@ -1597,7 +1604,7 @@ namespace MS.Internal.Data
             }
         }
 
-        private bool IsPropertyReadOnly(object item, PropertyInfo pi)
+        bool IsPropertyReadOnly(object item, PropertyInfo pi)
         {
             // Custom properties obtained from ICustomTypeProvider often don't
             // implement all the methods we call below.  In those cases, we catch
@@ -1642,7 +1649,7 @@ namespace MS.Internal.Data
         }
 
         // see whether DBNull is a valid value for update, and cache the answer
-        private void DetermineWhetherDBNullIsValid()
+        void DetermineWhetherDBNullIsValid()
         {
             bool result = false;
             object item = GetItem(Length - 1);
@@ -1655,7 +1662,7 @@ namespace MS.Internal.Data
             _isDBNullValidForUpdate = result;
         }
 
-        private bool DetermineWhetherDBNullIsValid(object item)
+        bool DetermineWhetherDBNullIsValid(object item)
         {
             PropertyInfo pi;
             PropertyDescriptor pd;
@@ -1664,7 +1671,7 @@ namespace MS.Internal.Data
             SetPropertyInfo(_arySVS[Length - 1].info, out pi, out pd, out dp, out dpa);
 
             string columnName = (pd != null) ? pd.Name :
-                                pi?.Name;
+                                (pi != null) ? pi.Name : null;
 
             object arg = (columnName == "Item" && pi != null) ? _arySVS[Length - 1].args[0] : null;
 
@@ -1679,7 +1686,7 @@ namespace MS.Internal.Data
             return false;   // this method is no longer used (but must remain, for compat)
         }
 
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (IsExtendedTraceEnabled(TraceDataLevel.Events))
             {
@@ -1694,7 +1701,7 @@ namespace MS.Internal.Data
             _host.OnSourcePropertyChanged(sender, e.PropertyName);
         }
 
-        private void OnValueChanged(object sender, ValueChangedEventArgs e)
+        void OnValueChanged(object sender, ValueChangedEventArgs e)
         {
             if (IsExtendedTraceEnabled(TraceDataLevel.Events))
             {
@@ -1709,7 +1716,7 @@ namespace MS.Internal.Data
             _host.OnSourcePropertyChanged(sender, e.PropertyDescriptor.Name);
         }
 
-        private void OnErrorsChanged(object sender, DataErrorsChangedEventArgs e)
+        void OnErrorsChanged(object sender, DataErrorsChangedEventArgs e)
         {
             if (e.PropertyName == SourcePropertyName)
             {
@@ -1717,7 +1724,7 @@ namespace MS.Internal.Data
             }
         }
 
-        private void OnStaticPropertyChanged(object sender, PropertyChangedEventArgs e)
+        void OnStaticPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (IsExtendedTraceEnabled(TraceDataLevel.Events))
             {
@@ -1732,7 +1739,7 @@ namespace MS.Internal.Data
             _host.OnSourcePropertyChanged(sender, e.PropertyName);
         }
 
-        private bool IsExtendedTraceEnabled(TraceDataLevel level)
+        bool IsExtendedTraceEnabled(TraceDataLevel level)
         {
             if (_host != null)
             {
@@ -1751,9 +1758,9 @@ namespace MS.Internal.Data
         //------------------------------------------------------
 
         // helper for setting context via the "using" pattern
-        private class ContextHelper : IDisposable
+        class ContextHelper : IDisposable
         {
-            private PropertyPathWorker _owner;
+            PropertyPathWorker _owner;
 
             public ContextHelper(PropertyPathWorker owner)
             {
@@ -1775,7 +1782,7 @@ namespace MS.Internal.Data
         }
 
         // wrapper for arguments to IList indexer
-        private class IListIndexerArg
+        class IListIndexerArg
         {
             public IListIndexerArg(int arg)
             {
@@ -1784,7 +1791,7 @@ namespace MS.Internal.Data
 
             public int Value { get { return _arg; } }
 
-            private int _arg;
+            int _arg;
         }
 
         //------------------------------------------------------
@@ -1793,7 +1800,7 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        private struct SourceValueState
+        struct SourceValueState
         {
             public ICollectionView collectionView;
             public object item;
@@ -1802,16 +1809,17 @@ namespace MS.Internal.Data
             public object[] args;           // for indexers
         }
 
-        private static readonly Char[] s_comma = new Char[] { ',' };
-        private static readonly Char[] s_dot = new Char[] { '.' };
-        private static readonly object NoParent = new NamedObject("NoParent");
-        private static readonly object AsyncRequestPending = new NamedObject("AsyncRequestPending");
+        static readonly Char[] s_comma = new Char[] { ',' };
+        static readonly Char[] s_dot = new Char[] { '.' };
+
+        static readonly object NoParent = new NamedObject("NoParent");
+        static readonly object AsyncRequestPending = new NamedObject("AsyncRequestPending");
         internal static readonly object IListIndexOutOfRange = new NamedObject("IListIndexOutOfRange");
 
         // a list of types that declare indexers known to be consistent
         // with IList.Item[int index].  It is safe to replace these indexers
         // with the IList one.
-        private static readonly IList<Type> IListIndexerAllowlist = new Type[]
+        static readonly IList<Type> IListIndexerAllowlist = new Type[]
         {
             typeof(System.Collections.ArrayList),
             typeof(System.Collections.IList),
@@ -1831,18 +1839,20 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        private PropertyPath _parent;
-        private PropertyPathStatus _status;
-        private object _treeContext;
-        private object _rootItem;
-        private SourceValueState[] _arySVS;
-        private ContextHelper _contextHelper;
-        private ClrBindingWorker _host;
-        private DataBindEngine _engine;
-        private bool _dependencySourcesChanged;
-        private bool _isDynamic;
-        private bool _needsDirectNotification;
-        private bool? _isDBNullValidForUpdate;
+        PropertyPath _parent;
+        PropertyPathStatus _status;
+        object _treeContext;
+        object _rootItem;
+        SourceValueState[] _arySVS;
+        ContextHelper _contextHelper;
+
+        ClrBindingWorker _host;
+        DataBindEngine _engine;
+
+        bool _dependencySourcesChanged;
+        bool _isDynamic;
+        bool _needsDirectNotification;
+        bool? _isDBNullValidForUpdate;
     }
 }
 

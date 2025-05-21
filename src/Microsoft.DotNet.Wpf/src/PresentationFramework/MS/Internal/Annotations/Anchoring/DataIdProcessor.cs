@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Windows;
@@ -178,7 +179,7 @@ namespace MS.Internal.Annotations.Anchoring
             ArgumentNullException.ThrowIfNull(startNode);
 
             if (DataIdElementName != locatorPart.PartType)
-                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), nameof(locatorPart));
+                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), "locatorPart");
 
             // Initial value
             continueResolving = true;
@@ -187,7 +188,7 @@ namespace MS.Internal.Annotations.Anchoring
             string id = locatorPart.NameValuePairs[ValueAttributeName];
             if (id == null)
             {
-                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), nameof(locatorPart));
+                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), "locatorPart");
             }
 
             // and from the node to examine.

@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Text Object Models Text pattern provider
@@ -111,9 +112,6 @@ namespace MS.Internal.Automation
                 return Array.Empty<Rect>();
             }
 
-            start = start.CreatePointer();
-            end = end.CreatePointer();
-
             TextRangeAdaptor.MoveToInsertionPosition(start, LogicalDirection.Forward);
             TextRangeAdaptor.MoveToInsertionPosition(end, LogicalDirection.Backward);
 
@@ -201,7 +199,10 @@ namespace MS.Internal.Automation
         internal void Select(ITextPointer start, ITextPointer end)
         {
             // Update the selection range
-            _textContainer.TextSelection?.Select(start, end);
+            if (_textContainer.TextSelection != null)
+            {
+                _textContainer.TextSelection.Select(start, end);
+            }
         }
 
         /// <summary>
@@ -262,7 +263,10 @@ namespace MS.Internal.Automation
                 }
 
                 FrameworkElement fe = renderScope as FrameworkElement;
-                fe?.BringIntoView(rangeVisibleBounds);
+                if (fe != null)
+                {
+                    fe.BringIntoView(rangeVisibleBounds);
+                }
             }
             else
             {
@@ -270,7 +274,10 @@ namespace MS.Internal.Automation
                 ITextPointer pointer = alignToTop ? start.CreatePointer() : end.CreatePointer();
                 pointer.MoveToElementEdge(alignToTop ? ElementEdge.AfterStart : ElementEdge.AfterEnd);
                 FrameworkContentElement element = pointer.GetAdjacentElement(LogicalDirection.Backward) as FrameworkContentElement;
-                element?.BringIntoView();
+                if (element != null)
+                {
+                    element.BringIntoView();
+                }
             }
         }
 
@@ -283,8 +290,8 @@ namespace MS.Internal.Automation
                 return null;
 
             // map null into the appropriate endpoint
-            rangeStart ??= _textContainer.Start;
-            rangeEnd ??= _textContainer.End;
+            rangeStart = rangeStart ?? _textContainer.Start;
+            rangeEnd = rangeEnd ?? _textContainer.End;
 
             // if either pointer belongs to the wrong tree, return null (meaning "entire range")
             if (rangeStart.TextContainer != _textContainer || rangeEnd.TextContainer != _textContainer)

@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //#define DEBUG_LASSO_FEEDBACK // DO NOT LEAVE ENABLED IN CHECKED IN CODE
 //
@@ -93,7 +94,7 @@ namespace MS.Internal.Ink
                     }
                 case InkCanvasEditingMode.Select:
                     {
-                        Debug.Fail("Cannot switch from Select to Select in mid-stroke");
+                        Debug.Assert(false, "Cannot switch from Select to Select in mid-stroke");
                         break;
                     }
                 case InkCanvasEditingMode.None:
@@ -106,7 +107,7 @@ namespace MS.Internal.Ink
                         break;
                     }
                 default:
-                    Debug.Fail("Unknown InkCanvasEditingMode!");
+                    Debug.Assert(false, "Unknown InkCanvasEditingMode!");
                     break;
             }
         }
@@ -357,7 +358,7 @@ namespace MS.Internal.Ink
         private void HitTestElement(InkCanvasInnerCanvas parent, UIElement uiElement, List<UIElement> elementsToSelect)
         {
             ElementCornerPoints elementPoints = GetTransformedElementCornerPoints(parent, uiElement);
-            if (elementPoints.Set)
+            if (elementPoints.Set != false)
             {
                 ReadOnlySpan<Point> points = GeneratePointGrid(elementPoints);
 

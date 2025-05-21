@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 
@@ -1317,7 +1318,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                             RibbonComboBox comboBoxParent = LogicalTreeHelper.GetParent(this) as RibbonComboBox;
                             if (comboBoxParent != null &&
                                 this == comboBoxParent.FirstGallery &&
-                                !comboBoxParent.IsSelectedItemCached)
+                                comboBoxParent.IsSelectedItemCached == false)
                             {
                                 comboBoxParent.UpdateSelectionProperties();
                             }
@@ -1710,7 +1711,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 IsHighlightChangeActive = true;
 
-                _highlightedContainer?.IsHighlighted = false;
+                if (_highlightedContainer != null)
+                {
+                    _highlightedContainer.IsHighlighted = false;
+                }
 
                 if (!isHighlighted)
                 {
@@ -1722,7 +1726,10 @@ namespace Microsoft.Windows.Controls.Ribbon
                     _highlightedContainer = container;
                     HighlightedItem = item;
 
-                    container?.IsHighlighted = true;
+                    if (container != null)
+                    {
+                        container.IsHighlighted = true;
+                    }
                 }
             }
             finally
@@ -2528,7 +2535,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 RibbonGalleryCategory category = (RibbonGalleryCategory)gallery.ItemContainerGenerator.ContainerFromIndex(index);
 
-                category?.NotifyPropertyChanged(e);
+                if (category != null)
+                {
+                    category.NotifyPropertyChanged(e);
+                }
             }
         }
 

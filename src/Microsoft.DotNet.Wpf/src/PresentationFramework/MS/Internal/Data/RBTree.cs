@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Root of a red-black tree.
@@ -49,7 +50,7 @@ namespace MS.Internal.Data
 #if LiveShapingInstrumentation
         protected static int QuickSortThreshold = 15;
 #else
-        private const int QuickSortThreshold = 15;
+        const int QuickSortThreshold = 15;
 #endif
 
         public RBTree() : base(false)
@@ -76,7 +77,7 @@ namespace MS.Internal.Data
             Insert(finger, x, true);
         }
 
-        private void Insert(RBFinger<T> finger, T x, bool checkSort = false)
+        void Insert(RBFinger<T> finger, T x, bool checkSort = false)
         {
 #if RBTreeFlightRecorder
             SaveTree();
@@ -170,7 +171,7 @@ namespace MS.Internal.Data
         //  3. recurse on smaller subfile first (limits stack depth)
         //  4. insertion-sort small subfiles, in one pass at the end
         //  5. eliminate tail recursion
-        private void QuickSort3(RBFinger<T> low, RBFinger<T> high)
+        void QuickSort3(RBFinger<T> low, RBFinger<T> high)
         {
             while (high - low > QuickSortThreshold)
             {
@@ -385,7 +386,7 @@ namespace MS.Internal.Data
 
         // Input: two regions [left, mid) and [mid, right), each of a single color
         // Output: swap so that the color on the left is now on the right, and vice-versa
-        private void Trade(RBFinger<T> left, RBFinger<T> mid, RBFinger<T> right)
+        void Trade(RBFinger<T> left, RBFinger<T> mid, RBFinger<T> right)
         {
             int n = Math.Min(mid - left, right - mid);
             for (int k = 0; k < n; ++k)
@@ -396,14 +397,14 @@ namespace MS.Internal.Data
             }
         }
 
-        private void Exchange(RBFinger<T> f1, RBFinger<T> f2)
+        void Exchange(RBFinger<T> f1, RBFinger<T> f2)
         {
             T x = f1.Item;
             f1.SetItem(f2.Item);
             f2.SetItem(x);
         }
 
-        private void InsertionSortImpl()
+        void InsertionSortImpl()
         {
             RBFinger<T> finger = FindIndex(1);
             while (finger.Node != this)
@@ -424,7 +425,8 @@ namespace MS.Internal.Data
         internal void RemoveNode(int index)
         {
             LeftChild = DeleteNode(this, LeftChild, index);
-            LeftChild?.IsRed = false;
+            if (LeftChild != null)
+                LeftChild.IsRed = false;
         }
 
         internal virtual RBNode<T> NewNode()
@@ -499,7 +501,8 @@ namespace MS.Internal.Data
 
             RBFinger<T> finger = FindIndex(index, true);
             RemoveAt(ref finger);
-            LeftChild?.IsRed = false;
+            if (LeftChild != null)
+                LeftChild.IsRed = false;
 
             Verify(size - 1);
         }
@@ -591,7 +594,8 @@ namespace MS.Internal.Data
             RBFinger<T> finger = Find(item, Comparison);
             if (finger.Found)
                 RemoveAt(ref finger);
-            LeftChild?.IsRed = false;
+            if (LeftChild != null)
+                LeftChild.IsRed = false;
             return finger.Found;
         }
 
@@ -615,7 +619,7 @@ namespace MS.Internal.Data
             }
         }
 
-        private void VerifyIndex(int index, int delta = 0)
+        void VerifyIndex(int index, int delta = 0)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(index);
             ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, Count + delta);
@@ -639,7 +643,7 @@ namespace MS.Internal.Data
             return b;
         }
 
-        private void SaveTree()
+        void SaveTree()
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(LeftSize);
@@ -651,23 +655,21 @@ namespace MS.Internal.Data
         {
             if (s.StartsWith("\"", StringComparison.Ordinal)) s = s.Substring(1);
             int index = s.IndexOf('(');
-            LeftSize = Int32.Parse(s.AsSpan(0, index), TypeConverterHelper.InvariantEnglishUS);
+            LeftSize = Int32.Parse(s.Substring(0, index), TypeConverterHelper.InvariantEnglishUS);
             s = s.Substring(index);
             this.LeftChild = LoadTree(ref s);
             this.LeftChild.Parent = this;
         }
 
-        private string _savedTree;
+        string _savedTree;
 
 #else
-        private void Verify(int expectedSize, bool checkSort = true) { }
-
-        private void SaveTree() { }
-
+        void Verify(int expectedSize, bool checkSort = true) { }
+        void SaveTree() { }
         public void LoadTree(string s) { }
 #endif // DEBUG
         #endregion Debugging
 
-        private Comparison<T> _comparison;
+        Comparison<T> _comparison;
     }
 }

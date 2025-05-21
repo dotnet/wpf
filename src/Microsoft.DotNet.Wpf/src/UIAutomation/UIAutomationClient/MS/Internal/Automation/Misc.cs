@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Miscellaneous helper routines
 
@@ -146,7 +147,7 @@ namespace MS.Internal.Automation
 
             if (pi.ClientSideWrapper == null)
             {
-                Debug.Fail("missing client-side pattern wrapper");
+                Debug.Assert(false, "missing client-side pattern wrapper");
                 return null;
             }
             else
@@ -685,7 +686,7 @@ namespace MS.Internal.Automation
             for (int source = 0; source < ach.Length; source++)
             {
                 // get rid of leading spaces
-                if (ach[source] == ' ' && !leadingSpace)
+                if (ach[source] == ' ' && leadingSpace == false)
                 {
                     continue;
                 }
@@ -695,7 +696,7 @@ namespace MS.Internal.Automation
                 }
 
                 // get rid of &
-                if (ach[source] == '&' && !amper)
+                if (ach[source] == '&' && amper == false)
                 {
                     amper = true;
                 }

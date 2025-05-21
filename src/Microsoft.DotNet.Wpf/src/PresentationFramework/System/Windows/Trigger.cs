@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -178,7 +179,7 @@ namespace System.Windows
 
             if (setter == null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, o.GetType(), typeof(Setter)), nameof(o));
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, o.GetType(), typeof(Setter)), "o");
             }
 
             return setter;
@@ -282,7 +283,7 @@ namespace System.Windows
             Trigger trigger = targetObject as Trigger;
             if (trigger == null)
             {
-                throw new ArgumentNullException(nameof(targetObject));
+                throw new ArgumentNullException("targetObject");
             }
             ArgumentNullException.ThrowIfNull(eventArgs);
 

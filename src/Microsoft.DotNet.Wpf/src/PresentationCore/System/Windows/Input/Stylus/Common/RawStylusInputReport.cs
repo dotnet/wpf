@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Windows.Input.StylusPlugIns;
@@ -22,48 +23,48 @@ namespace System.Windows.Input
         /// <summary>
         /// The actions represent by this input report
         /// </summary>
-        private RawStylusActions _actions;
+        RawStylusActions _actions;
 
         /// <summary>
         /// The id of the tablet associated with this input report
         /// </summary>
-        private int _tabletDeviceId;
+        int _tabletDeviceId;
 
         /// <summary>
         /// The id of the stylus associated with this input report
         /// </summary>
-        private int _stylusDeviceId;
+        int _stylusDeviceId;
 
         /// <summary>
         /// DevDiv: 652804 - Used show status in StylusInputQueue
         /// </summary>
-        private bool _isQueued;
+        bool _isQueued; 
 
         /// <summary>
         /// The raw data for this input report
         /// </summary>
-        private int[] _data;
+        int[] _data;
 
         /// <summary>
         /// cached value looked up from _stylusDeviceId
         /// </summary>
-        private StylusDevice _stylusDevice;
+        StylusDevice _stylusDevice;
 
         /// <summary>
         /// The raw input used for stylus plugins
         /// </summary>
-        private RawStylusInput _rawStylusInput;
+        RawStylusInput _rawStylusInput;
 
         /// <summary>
         /// Set from StylusDevice.Synchronize.
         /// </summary>
-        private bool _isSynchronize;
+        bool _isSynchronize; 
 
         /// <summary>
         /// Function to return the StylusPointDescription for the device associated with
         /// this input report.
         /// </summary>
-        private Func<StylusPointDescription> _stylusPointDescGenerator;
+        Func<StylusPointDescription> _stylusPointDescGenerator;
 
         #endregion
 

@@ -15,7 +15,6 @@ OpenProcess
 RealGetWindowClass
 RegisterClassEx
 SetActiveWindow
-SetEnhMetaFileBits
 UnregisterClass
 UpdateLayeredWindow
 WAIT_EVENT

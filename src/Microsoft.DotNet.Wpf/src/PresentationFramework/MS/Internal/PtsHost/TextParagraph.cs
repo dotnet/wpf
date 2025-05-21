@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows;
 using System.Windows.Documents;
@@ -182,7 +183,7 @@ namespace MS.Internal.PtsHost
         {
             _textRunCache = new TextRunCache();
             TextFormatter textFormatter = StructuralCache.TextFormatterHost.TextFormatter;
-            TextLineBreak textLineBreak = lineBreakRecord?.TextLineBreak;
+            TextLineBreak textLineBreak = lineBreakRecord != null ? lineBreakRecord.TextLineBreak : null;
 
             OptimalTextSource optimalTextSource = new OptimalTextSource(StructuralCache.TextFormatterHost, ParagraphStartCharacterPosition, durTrack, textParaClient, _textRunCache);
             StructuralCache.TextFormatterHost.Context = optimalTextSource;

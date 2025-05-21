@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.Collections.Specialized;       // NotifyCollectionChangedAction
@@ -873,7 +874,10 @@ namespace System.Windows.Controls
             }
 
             // link padding header to last header
-            _paddingHeader?.PreviousVisualHeader = lastHeader;
+            if (_paddingHeader != null)
+            {
+                _paddingHeader.PreviousVisualHeader = lastHeader;
+            }
         }
 
         //
@@ -931,14 +935,17 @@ namespace System.Windows.Controls
                                 }
                                 else
                                 {
-                                    Debug.Fail("Head is container for itself, but parent is neither GridViewHeaderRowPresenter nor null.");
+                                    Debug.Assert(false, "Head is container for itself, but parent is neither GridViewHeaderRowPresenter nor null.");
                                 }
                             }
                             else
                             {
                                 // case 2
                                 GridViewColumnHeader parentAsGVCH = parent as GridViewColumnHeader;
-                                parentAsGVCH?.ClearValue(ContentControl.ContentProperty);
+                                if (parentAsGVCH != null)
+                                {
+                                    parentAsGVCH.ClearValue(ContentControl.ContentProperty);
+                                }
                             }
                         }
                     }
@@ -1520,7 +1527,10 @@ namespace System.Windows.Controls
             _draggingSrcHeader.SuppressClickEvent = true;
 
             // lock Columns during header dragging
-            Columns?.BlockWrite();
+            if (Columns != null)
+            {
+                Columns.BlockWrite();
+            }
 
             // Remove the old floating header,
             // then create & add the new one per the source header's type
@@ -1546,7 +1556,10 @@ namespace System.Windows.Controls
             _indicator.Visibility = Visibility.Hidden;
 
             // unlock Columns during header dragging
-            Columns?.UnblockWrite();
+            if (Columns != null)
+            {
+                Columns.UnblockWrite();
+            }
 
             // if cancelled, do nothing
             if (!isCancel)

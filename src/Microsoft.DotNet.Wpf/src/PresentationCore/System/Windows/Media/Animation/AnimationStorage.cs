@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using MS.Internal;
@@ -210,7 +211,10 @@ namespace System.Windows.Media.Animation
                     // newly animated property will be passed across to the UCE.
                     Animatable a = d as Animatable;
 
-                    a?.RegisterForAsyncUpdateResource();
+                    if (a != null)
+                    {
+                        a.RegisterForAsyncUpdateResource();
+                    }
 
                     // If this AnimationStorage is a resource, add it to the
                     // channel now.
@@ -278,7 +282,10 @@ namespace System.Windows.Media.Animation
                     // across to the UCE.
                     Animatable a = d as Animatable;
 
-                    a?.RegisterForAsyncUpdateResource();
+                    if (a != null)
+                    {
+                        a.RegisterForAsyncUpdateResource();
+                    }
 
                     animatedPropertyMap[_dependencyProperty.GlobalIndex] = DependencyProperty.UnsetValue;
 
@@ -443,8 +450,8 @@ namespace System.Windows.Media.Animation
                                 metadata,
                                 oldEntry,
                                 ref newEntry,
-                                coerceWithDeferredReference: false,
-                                coerceWithCurrentValue: false,
+                                false /* coerceWithDeferredReference */,
+                                false /* coerceWithCurrentValue */,
                                 OperationType.Unknown);
 
                         if (_hadValidationError)

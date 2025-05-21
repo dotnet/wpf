@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using MS.Internal;
@@ -80,7 +81,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                         // If label is truncated - show the tooltip
                         tabGroupHeader.ShowLabelToolTip = DoubleUtil.GreaterThan(tabGroupHeader.IdealDesiredWidth, width);
 
-                        remainingSpace -= width;
+                        remainingSpace = remainingSpace - width;
                     }
 
                     desiredSize.Width += width;
@@ -89,7 +90,10 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
                 if (WaitingForMeasure || invalidateTHPanel)
                 {
-                    tabHeadersPanel?.InvalidateMeasure();
+                    if (tabHeadersPanel != null)
+                    {
+                        tabHeadersPanel.InvalidateMeasure();
+                    }
                 }
             }
 
@@ -252,7 +256,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             InvalidateVisual();
         }
 
-        private Pen _separatorPen;
+        Pen _separatorPen;
         private const double _desiredWidthEpsilon = 1e-10;
         #endregion
     }

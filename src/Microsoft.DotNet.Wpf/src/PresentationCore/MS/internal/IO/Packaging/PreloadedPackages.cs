@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //  
 //
@@ -132,7 +133,10 @@ namespace MS.Internal.IO.Packaging
 
             lock (_globalLock)
             {
-                _packagePairs?.Remove(uri);
+                if (_packagePairs != null)
+                {
+                    _packagePairs.Remove(uri);
+                }
             }
         }
 
@@ -151,7 +155,7 @@ namespace MS.Internal.IO.Packaging
 
             if (!uri.IsAbsoluteUri)
             {
-                throw new ArgumentException(SR.UriMustBeAbsolute, nameof(uri));
+                throw new ArgumentException(SR.UriMustBeAbsolute, "uri");
             }
         }
 
@@ -224,8 +228,8 @@ namespace MS.Internal.IO.Packaging
         // ListDictionary is the best fit for this scenarios; otherwise we should be using
         // Hashtable. HybridDictionary already has functionality of switching between
         //  ListDictionary and Hashtable depending on the size of the collection
-        private static HybridDictionary _packagePairs;
-        private static readonly Object  _globalLock;
+        static private HybridDictionary _packagePairs;
+        static private readonly Object  _globalLock;
 
         #endregion Private Fields
     }

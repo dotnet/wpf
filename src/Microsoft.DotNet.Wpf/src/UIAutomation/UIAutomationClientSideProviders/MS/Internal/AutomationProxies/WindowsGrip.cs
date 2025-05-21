@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Windows Button Proxy
 
@@ -10,7 +11,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    internal class WindowsGrip: ProxyFragment
+    class WindowsGrip: ProxyFragment
     {
         // ------------------------------------------------------
         //
@@ -77,7 +78,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Internal Methods
 
-        internal static bool IsGripPresent(IntPtr hwnd, bool onStatusBar)
+        static internal bool IsGripPresent(IntPtr hwnd, bool onStatusBar)
         {
             NativeMethods.Win32Rect client = new NativeMethods.Win32Rect();
             if (!Misc.GetClientRectInScreenCoordinates(hwnd, ref client))

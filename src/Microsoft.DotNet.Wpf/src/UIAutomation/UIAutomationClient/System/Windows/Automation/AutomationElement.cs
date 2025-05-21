@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Main class used by Automation clients, represents a UI element
 
@@ -383,7 +384,7 @@ namespace System.Windows.Automation
 
             //Not true - some AE's from properties and event args (eg. SelectionItem.SelectionContainer,
             //and FocuEventArgs's previousFocus) don't currently come through CacheReqest
-            //Debug.Fail("Should always have runtimeID from cache at ctor.");
+            //Debug.Assert(false, "Should always have runtimeID from cache at ctor.");
 
             // false -> return null (instead of throwing) if not available; true->wrap
             int [] val = LookupCachedValue(AutomationElement.RuntimeIdProperty, false, true) as int[];
@@ -1193,11 +1194,11 @@ namespace System.Windows.Automation
         //  Private Methods
         //
         //------------------------------------------------------
-
+ 
         #region Private Methods
 
         // Lookup a cached AutomationPattern or AutomationProperty
-        private object LookupCachedValue(AutomationIdentifier id, bool throwIfNotRequested, bool wrap)
+        object LookupCachedValue(AutomationIdentifier id, bool throwIfNotRequested, bool wrap)
         {
             if (_cachedValues == null)
             {

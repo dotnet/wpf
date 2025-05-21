@@ -1217,11 +1217,6 @@
         <target state="translated">E/A-Fehler beim Öffnen der Datei "{0}".</target>
         <note />
       </trans-unit>
-      <trans-unit id="ITypeDataObject_Not_Implemented">
-        <source>Data object '{0}' doesn't implement the 'ITypedDataObject' interface and can't be read using 'TryGetData&lt;T&gt;(string, out T)' methods.</source>
-        <target state="translated">Das Datenobjekt „{0}“ implementiert nicht die Schnittstelle „ITypedDataObject“ und kann nicht mithilfe der Methoden „TryGetData&lt;T&gt;(string, out T)“ gelesen werden.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Image_AlphaThresholdOutOfRange">
         <source>Alpha threshold must be from 0 through 100.</source>
         <target state="translated">Der Alpha-Schwellenwert muss zwischen 0 und 100 liegen.</target>
@@ -1785,6 +1780,16 @@
       <trans-unit id="InvalidPartName">
         <source>The part name does not correspond to its content type.</source>
         <target state="translated">Der Teilname entspricht nicht dessen Inhaltstyp.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionStateValue">
+        <source>PermissionState value '{0}' is not valid for this Permission.</source>
+        <target state="translated">Der PermissionState-Wert "{0}" ist für diese Berechtigung nicht gültig.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionType">
+        <source>Permission type is not valid. Expected '{0}'.</source>
+        <target state="translated">Ungültiger Berechtigungstyp. Erwartet wurde "{0}".</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidPressureValue">
@@ -2850,6 +2855,11 @@
       <trans-unit id="SearchText">
         <source>Search</source>
         <target state="translated">Suche</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
+        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
+        <target state="translated">SandboxExternalContent kann bei Verwendung mit teilweiser Vertrauenswürdigkeit nicht auf "true" festgelegt werden.</target>
         <note />
       </trans-unit>
       <trans-unit id="SeekNegative">

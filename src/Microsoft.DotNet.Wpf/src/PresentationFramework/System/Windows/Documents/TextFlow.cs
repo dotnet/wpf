@@ -989,7 +989,7 @@ namespace System.Windows.Documents
                 throw new ArgumentNullException("child");
             }
 
-            ReadOnlyCollection<Rect> rectangles = ReadOnlyCollection<Rect>.Empty;
+            ReadOnlyCollection<Rect> rectangles = new ReadOnlyCollection<Rect>(new List<Rect>(0));
             if (IsLayoutDataValid)
             {
                 // Here we must call the internal function on document page that tells it whether or not
@@ -1019,7 +1019,7 @@ namespace System.Windows.Documents
                 else
                 {
                     // Return empty collection
-                    hostedElements = new HostedElements(ReadOnlyCollection<TextSegment>.Empty);
+                    hostedElements = new HostedElements(new ReadOnlyCollection<TextSegment>(new List<TextSegment>(0)));
                 }
                 return hostedElements;
             }

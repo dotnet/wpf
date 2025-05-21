@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using MS.Internal;
@@ -294,7 +295,8 @@ namespace System.Windows.Controls
                 ||  AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection)   )
             {
                 ListBoxAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this) as ListBoxAutomationPeer;
-                peer?.RaiseSelectionEvents(e);
+                if (peer != null)
+                    peer.RaiseSelectionEvents(e);
             }
         }
 
@@ -391,7 +393,7 @@ namespace System.Windows.Controls
                 case Key.Space:
                 case Key.Enter:
                     {
-                        if (e.Key == Key.Enter && !(bool)GetValue(KeyboardNavigation.AcceptsReturnProperty))
+                        if (e.Key == Key.Enter && (bool)GetValue(KeyboardNavigation.AcceptsReturnProperty) == false)
                         {
                             handled = false;
                             break;
@@ -884,7 +886,10 @@ namespace System.Windows.Controls
                 }
 
                 IDisposable d = enumerator as IDisposable;
-                d?.Dispose();
+                if (d != null)
+                {
+                    d.Dispose();
+                }
             }
             finally
             {
@@ -1024,7 +1029,7 @@ namespace System.Windows.Controls
         internal ItemInfo AnchorItemInternal
         {
             get { return _anchorItem; }
-            set { _anchorItem = value?.Clone(); }   // clone, so that adjustments to selection and anchor don't double-adjust
+            set { _anchorItem = (value != null) ? value.Clone() : null; }   // clone, so that adjustments to selection and anchor don't double-adjust
         }
 
         /// <summary>

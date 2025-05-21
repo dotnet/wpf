@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections.Generic;
 using System.Text;
@@ -124,7 +125,7 @@ namespace System.Windows.Input.Manipulations
                 // Make sure that the timestamp is advancing during the processing of manipulations.
                 if (unchecked(timestamp - this.currentManipulationState.Timestamp) < 0)
                 {
-                    throw Exceptions.InvalidTimestamp(nameof(timestamp), timestamp);
+                    throw Exceptions.InvalidTimestamp("timestamp", timestamp);
                 }
             }
             // NOTE: null and empty are both valid for manipulators.
@@ -144,12 +145,15 @@ namespace System.Windows.Input.Manipulations
                 // Make sure that the timestamp is advancing during the processing of manipulations.
                 if (unchecked(timestamp - this.currentManipulationState.Timestamp) < 0)
                 {
-                    throw Exceptions.InvalidTimestamp(nameof(timestamp), timestamp);
+                    throw Exceptions.InvalidTimestamp("timestamp", timestamp);
                 }
             }
 
             OnCompleteManipulation(timestamp);
-            this.manipulatorStates?.Clear();
+            if (this.manipulatorStates != null)
+            {
+                this.manipulatorStates.Clear();
+            }
         }
 
         #endregion Public Methods
@@ -306,7 +310,10 @@ namespace System.Windows.Input.Manipulations
             {
                 foreach (Manipulator2D manipulator in manipulators)
                 {
-                    removedManipulatorIds?.Remove(manipulator.Id);
+                    if (removedManipulatorIds != null)
+                    {
+                        removedManipulatorIds.Remove(manipulator.Id);
+                    }
                     currentManipulatorCount++;
 
                     ManipulatorState state;
@@ -1053,7 +1060,7 @@ namespace System.Windows.Input.Manipulations
             float result = CalculateWeightedMovingAverage(queue, accessor);
 
             // convert to milliseconds
-            result *= ManipulationProcessor2D.TimestampTicksPerMillisecond;
+            result = result * ManipulationProcessor2D.TimestampTicksPerMillisecond;
             return result;
         }
 

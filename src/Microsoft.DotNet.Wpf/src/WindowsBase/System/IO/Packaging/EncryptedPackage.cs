@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Runtime.InteropServices;
 using System.Security.RightsManagement;
@@ -497,7 +498,10 @@ namespace System.IO.Packaging
             }
             finally
             {
-                root?.Close();
+                if (root != null)
+                {
+                    root.Close();
+                }
             }
 
             return retval;
@@ -550,7 +554,10 @@ namespace System.IO.Packaging
             }
             finally
             {
-                root?.Close();
+                if (root != null)
+                {
+                    root.Close();
+                }
             }
 
             return retval;
@@ -567,9 +574,15 @@ namespace System.IO.Packaging
             // Since _package is only initialized when the client calls GetPackage, it might
             // not be set when the client calls Flush, so we have to check.
             //
-            _package?.Flush();
+            if (_package != null)
+            {
+                _package.Flush();
+            }
 
-            _packageStream?.Flush();
+            if (_packageStream != null)
+            {
+                _packageStream.Flush();
+            }
 
             Invariant.Assert(_root != null, "The envelope cannot be null");
 
@@ -1002,7 +1015,10 @@ namespace System.IO.Packaging
                         // might have opened the compound file just to look at the properties, and
                         // never even opened the package.
                         //
-                        _package?.Close();
+                        if (_package != null)
+                        {
+                            _package.Close();
+                        }
                     }
                     finally
                     {
@@ -1010,7 +1026,10 @@ namespace System.IO.Packaging
 
                         try
                         {
-                            _packageStream?.Close();
+                            if (_packageStream != null)
+                            {
+                                _packageStream.Close();
+                            }
                         }
                         finally
                         {
@@ -1018,7 +1037,10 @@ namespace System.IO.Packaging
 
                             try
                             {
-                                _packageProperties?.Dispose();
+                                if (_packageProperties != null)
+                                {
+                                    _packageProperties.Dispose();
+                                }
                             }
                             finally
                             {
@@ -1026,7 +1048,10 @@ namespace System.IO.Packaging
 
                                 try
                                 {
-                                    _root?.Close();
+                                    if (_root != null)
+                                    {
+                                        _root.Close();
+                                    }
                                 }
                                 finally
                                 {

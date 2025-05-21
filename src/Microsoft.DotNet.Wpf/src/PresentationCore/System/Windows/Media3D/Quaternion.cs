@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: 3D quaternion implementation. 
 //
@@ -447,7 +448,7 @@ namespace System.Windows.Media.Media3D
         /// <returns>SLERP-interpolated quaternion between the two given quaternions.</returns>
         public static Quaternion Slerp(Quaternion from, Quaternion to, double t)
         {
-            return Slerp(from, to, t, useShortestPath: true);
+            return Slerp(from, to, t, /* useShortestPath = */ true);
         }
         
         /// <summary>
@@ -571,7 +572,7 @@ namespace System.Windows.Media.Media3D
 
         #region Private Methods
             
-        private static double Max(double a, double b, double c, double d)
+        static private double Max(double a, double b, double c, double d)
         {
             if (b > a)
                 a = b;

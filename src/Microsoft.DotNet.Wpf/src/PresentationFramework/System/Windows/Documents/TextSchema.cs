@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using System.Windows.Controls; // TextBox, TextBlock
@@ -283,7 +284,7 @@ namespace System.Windows.Documents
         internal static bool IsNonMergeableInline(Type elementType)
         {
             TextElementEditingBehaviorAttribute att = (TextElementEditingBehaviorAttribute)Attribute.GetCustomAttribute(elementType, typeof(TextElementEditingBehaviorAttribute));
-            if (att != null && !att.IsMergeable)
+            if (att != null && att.IsMergeable == false)
             {
                 return true;
             }
@@ -501,7 +502,7 @@ namespace System.Windows.Documents
             }
             else if (typeof(LineBreak).IsAssignableFrom(type))
             {
-                return Array.Empty<DependencyProperty>();
+                return _emptyPropertyList;
             }
             else if (typeof(Floater).IsAssignableFrom(type))
             {
@@ -559,7 +560,7 @@ namespace System.Windows.Documents
             }
 
             Invariant.Assert(false, "We do not expect any unknown elements derived directly from TextElement. Schema must have been checking for that");
-            return Array.Empty<DependencyProperty>(); // to make compiler happy
+            return _emptyPropertyList; // to make compiler happy
         }
 
         // Compares two values for equality
@@ -1200,6 +1201,9 @@ namespace System.Windows.Documents
             { 
                 UIElement.AllowDropProperty,
             };
+
+        // Empty property list
+        private static readonly DependencyProperty[] _emptyPropertyList = new DependencyProperty[] { };
 
         // Structural property list.
         // NB: Existing code depends on these being inheritable properties.

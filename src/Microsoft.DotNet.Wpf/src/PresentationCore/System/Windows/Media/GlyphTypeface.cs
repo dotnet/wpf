@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -113,7 +114,7 @@ namespace System.Windows.Media
             ArgumentNullException.ThrowIfNull(typefaceSource);
 
             if (!typefaceSource.IsAbsoluteUri)
-                throw new ArgumentException(SR.UriNotAbsolute, nameof(typefaceSource));
+                throw new ArgumentException(SR.UriNotAbsolute, "typefaceSource");
 
             // remember the original Uri that contains face index
             _originalUri = typefaceSource;
@@ -225,10 +226,10 @@ namespace System.Windows.Media
             ArgumentNullException.ThrowIfNull(glyphs);
 
             if (glyphs.Count <= 0)
-                throw new ArgumentException(SR.CollectionNumberOfElementsMustBeGreaterThanZero, nameof(glyphs));
+                throw new ArgumentException(SR.CollectionNumberOfElementsMustBeGreaterThanZero, "glyphs");
 
             if (glyphs.Count > ushort.MaxValue)
-                throw new ArgumentException(SR.Format(SR.CollectionNumberOfElementsMustBeLessOrEqualTo, ushort.MaxValue), nameof(glyphs));
+                throw new ArgumentException(SR.Format(SR.CollectionNumberOfElementsMustBeLessOrEqualTo, ushort.MaxValue), "glyphs");
 
             UnmanagedMemoryStream pinnedFontSource = FontSource.GetUnmanagedStream();
 
@@ -1058,7 +1059,7 @@ namespace System.Windows.Media
             try
             {
                 if (glyphIndex >= fontFaceDWrite.GlyphCount)
-                    throw new ArgumentOutOfRangeException(nameof(glyphIndex), SR.Format(SR.GlyphIndexOutOfRange, glyphIndex));
+                    throw new ArgumentOutOfRangeException("glyphIndex", SR.Format(SR.GlyphIndexOutOfRange, glyphIndex));
 
                 glyphMetrics = new MS.Internal.Text.TextInterface.GlyphMetrics();
 
@@ -1606,7 +1607,7 @@ namespace System.Windows.Media
         // Need ability to add ref and get pointer to the DWrite font face for the rendering
         // thread to access
         //
-        internal unsafe IntPtr GetDWriteFontAddRef
+        unsafe internal IntPtr GetDWriteFontAddRef
         {
             get
             {

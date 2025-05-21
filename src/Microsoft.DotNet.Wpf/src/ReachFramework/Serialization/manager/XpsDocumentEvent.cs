@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows.Xps.Packaging;
 using System.Printing;
@@ -225,7 +226,7 @@ namespace System.Windows.Xps.Serialization
             XpsSerializationCompletedEventArgs e
             )
         {
-            if (e.Cancelled)
+            if (e.Cancelled == true)
             {
                 _documentEvent = XpsDocumentEventType.XpsDocumentCancel;
 
@@ -233,7 +234,9 @@ namespace System.Windows.Xps.Serialization
             }
         }
 
-        private XpsSerializationXpsDriverDocEventArgs OnXpsDriverDocEvent()
+        XpsSerializationXpsDriverDocEventArgs
+        OnXpsDriverDocEvent(
+            )
         {
             XpsSerializationXpsDriverDocEventArgs e = new XpsSerializationXpsDriverDocEventArgs(_documentEvent,
                                                                                                 _currentCount,

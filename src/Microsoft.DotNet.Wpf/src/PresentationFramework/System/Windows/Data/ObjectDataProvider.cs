@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Implementation of ObjectDataProvider object.
@@ -350,7 +351,7 @@ namespace System.Windows.Data
             _objectInstance = value;
 
             // set the objectType by looking at the new value
-            SetObjectType(value?.GetType());
+            SetObjectType((value != null) ? value.GetType() : null);
 
             // raise this change event AFTER both oType and oInstance are updated
             OnPropertyChanged(s_instance);
@@ -371,7 +372,7 @@ namespace System.Windows.Data
             return false;
         }
 
-        private void QueryWorker(object obj)
+        void QueryWorker(object obj)
         {
             object      data    = null;
             Exception   e       = null; // exception to pass back to main thread
@@ -429,7 +430,7 @@ namespace System.Windows.Data
             OnQueryFinished(data, e, null, null);
         }
 
-        private object CreateObjectInstance(out Exception e)
+        object CreateObjectInstance(out Exception e)
         {
             object  instance = null;
             string  error   = null; // string that describes known error
@@ -499,7 +500,7 @@ namespace System.Windows.Data
             return instance;
         }
 
-        private object InvokeMethodOnInstance(out Exception e)
+        object InvokeMethodOnInstance(out Exception e)
         {
             object  data = null;
             string  error   = null; // string that describes known error
@@ -645,24 +646,24 @@ namespace System.Windows.Data
 
         #region Private Fields
 
-        private Type _objectType;
-        private object _objectInstance;
-        private string _methodName;
-        private DataSourceProvider _instanceProvider;
-        private ParameterCollection _constructorParameters;
-        private ParameterCollection _methodParameters;
-        private bool _isAsynchronous = false;
+        Type _objectType;
+        object _objectInstance;
+        string _methodName;
+        DataSourceProvider _instanceProvider;
+        ParameterCollection _constructorParameters;
+        ParameterCollection _methodParameters;
+        bool _isAsynchronous = false;
 
-        private SourceMode _mode = SourceMode.NoSource;
-        private bool _needNewInstance = true;   // set to true when ObjectType or ConstructorParameters change
+        SourceMode _mode = SourceMode.NoSource;
+        bool _needNewInstance = true;   // set to true when ObjectType or ConstructorParameters change
 
-        private EventHandler _sourceDataChangedHandler;
+        EventHandler _sourceDataChangedHandler;
 
-        private const string s_instance = "ObjectInstance";
-        private const string s_type = "ObjectType";
-        private const string s_method = "MethodName";
-        private const string s_async = "IsAsynchronous";
-        private const BindingFlags s_invokeMethodFlags =
+        const string s_instance = "ObjectInstance";
+        const string s_type = "ObjectType";
+        const string s_method = "MethodName";
+        const string s_async = "IsAsynchronous";
+        const BindingFlags s_invokeMethodFlags =
                             BindingFlags.Public |
                             BindingFlags.Instance |
                             BindingFlags.Static |

@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
@@ -69,7 +70,7 @@ namespace System.Windows.Controls
                 {
                     OnChanging(new CalendarDateRangeChangingEventArgs(_start, newEnd));
                     _end = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(End)));
+                    OnPropertyChanged(new PropertyChangedEventArgs("End"));
                 }
             }
         }
@@ -95,11 +96,11 @@ namespace System.Windows.Controls
 
                     _start = value;
 
-                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(Start)));
+                    OnPropertyChanged(new PropertyChangedEventArgs("Start"));
 
                     if (newEnd != oldEnd)
                     {
-                        OnPropertyChanged(new PropertyChangedEventArgs(nameof(End)));
+                        OnPropertyChanged(new PropertyChangedEventArgs("End"));
                     }
                 }
             }

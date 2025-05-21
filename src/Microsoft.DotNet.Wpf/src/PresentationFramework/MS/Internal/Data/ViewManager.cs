@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Mapping of (collection, viewName) to CollectionView
@@ -212,8 +213,8 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        private WeakReference _weakRef;
-        private int _hashCode;  // cache target's hashcode, lest it get GC'd out from under us
+        WeakReference _weakRef;
+        int _hashCode;  // cache target's hashcode, lest it get GC'd out from under us
     }
 
     #endregion WeakRefKey
@@ -316,9 +317,9 @@ namespace MS.Internal.Data
             _isInitialized = true;
         }
 
-        private ICollectionView _view;
-        private int _version;
-        private bool _isInitialized = false;
+        ICollectionView _view;
+        int _version;
+        bool _isInitialized = false;
     }
 
     #endregion ViewRecord
@@ -348,7 +349,8 @@ namespace MS.Internal.Data
         }
 
         public SynchronizationInfo SynchronizationInfo;
-        private WeakReference _wrViewTable = ViewManager.NullWeakRef;
+
+        WeakReference _wrViewTable = ViewManager.NullWeakRef;
     }
 
     internal struct SynchronizationInfo
@@ -425,9 +427,10 @@ namespace MS.Internal.Data
 
 
         public static readonly SynchronizationInfo None = new SynchronizationInfo(null, null);
-        private object _context;
-        private MethodInfo _callbackMethod;
-        private WeakReference _callbackTarget;
+
+        object _context;
+        MethodInfo _callbackMethod;
+        WeakReference _callbackTarget;
     }
 
     #endregion CollectionRecord
@@ -441,7 +444,7 @@ namespace MS.Internal.Data
         // survive a longer period of inactivity, but also means
         // the collection will live past its normal lifetime a longer time.
         // There's a tradeoff between robustness and perceived leaking.
-        private const int InactivityThreshold = 2;
+        const int InactivityThreshold = 2;
 
         //------------------------------------------------------
         //
@@ -616,7 +619,7 @@ namespace MS.Internal.Data
 
         // return the CollectionRecord for the given collection.  If one doesn't
         // exist yet, create it and raise the CollectionRegistering event
-        private CollectionRecord EnsureCollectionRecord(object collection, Func<object, object> GetSourceItem = null)
+        CollectionRecord EnsureCollectionRecord(object collection, Func<object, object> GetSourceItem = null)
         {
             CollectionRecord cr = this[collection];
             if (cr == null)
@@ -651,7 +654,10 @@ namespace MS.Internal.Data
                 {
                     ViewRecord vr = (ViewRecord)de.Value;
                     CollectionView cv = vr.View as CollectionView;
-                    cv?.SetAllowsCrossThreadChanges(isSynchronized);
+                    if (cv != null)
+                    {
+                        cv.SetAllowsCrossThreadChanges(isSynchronized);
+                    }
                 }
             }
         }
@@ -671,7 +677,7 @@ namespace MS.Internal.Data
             si.AccessCollection(collection, accessMethod, writeAccess);
         }
 
-        internal static ViewManager Current
+        static internal ViewManager Current
         {
             get { return DataBindEngine.CurrentDataBindEngine.ViewManager; }
         }
@@ -838,8 +844,9 @@ namespace MS.Internal.Data
             }
         }
 
-        private HybridDictionary _inactiveViewTables = new HybridDictionary();
-        private static object StaticObject = new object();
+        HybridDictionary _inactiveViewTables = new HybridDictionary();
+
+        static object StaticObject = new object();
         internal static WeakReference StaticWeakRef = new WeakReference(StaticObject);
         internal static WeakReference NullWeakRef = new WeakReference(null);
     }

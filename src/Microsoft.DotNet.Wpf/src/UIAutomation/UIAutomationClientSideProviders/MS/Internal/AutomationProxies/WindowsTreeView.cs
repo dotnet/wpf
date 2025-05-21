@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Win32 TreeView proxy
 
@@ -13,7 +14,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    internal class WindowsTreeView : ProxyHwnd, ISelectionProvider
+    class WindowsTreeView : ProxyHwnd, ISelectionProvider
     {
         // ------------------------------------------------------
         //
@@ -108,7 +109,10 @@ namespace MS.Internal.AutomationProxies
                 return;
             }
 
-            el?.DispatchEvents (eventId, idProp, idObject, idChild);
+            if (el != null)
+            {
+                el.DispatchEvents (eventId, idProp, idObject, idChild);
+            }
         }
 
         #endregion Proxy Create
@@ -342,19 +346,20 @@ namespace MS.Internal.AutomationProxies
         }
 
         // Builds a list of Win32 WinEvents to process a UIAutomation Event.
-        protected override ReadOnlySpan<WinEventTracker.EvtIdProperty> EventToWinEvent(AutomationEvent idEvent)
+        // Returns an array of Events to Set. The number of valid entries in this array pass back in cEvent.
+        protected override WinEventTracker.EvtIdProperty [] EventToWinEvent (AutomationEvent idEvent, out int cEvent)
         {
             if (idEvent == AutomationElement.StructureChangedEvent)
             {
-                return new WinEventTracker.EvtIdProperty[3]
-                {
-                    new(NativeMethods.EventObjectStateChange, idEvent),
-                    new(NativeMethods.EventObjectCreate, idEvent),
-                    new(NativeMethods.EventObjectDestroy, idEvent)
+                cEvent = 3;
+                return new WinEventTracker.EvtIdProperty [3] {
+                    new WinEventTracker.EvtIdProperty (NativeMethods.EventObjectStateChange, idEvent),
+                    new WinEventTracker.EvtIdProperty (NativeMethods.EventObjectCreate, idEvent),
+                    new WinEventTracker.EvtIdProperty (NativeMethods.EventObjectDestroy, idEvent)
                 };
             }
 
-            return base.EventToWinEvent(idEvent);
+            return base.EventToWinEvent (idEvent, out cEvent);
         }
 
         #endregion
@@ -493,7 +498,7 @@ namespace MS.Internal.AutomationProxies
         }
 
         // set the check state for the specified item
-        private static unsafe bool SetCheckState (IntPtr hwnd, IntPtr item, bool check)
+        private unsafe static bool SetCheckState (IntPtr hwnd, IntPtr item, bool check)
         {
             uint val = (check) ? 2U : 1U;
 
@@ -704,7 +709,7 @@ namespace MS.Internal.AutomationProxies
         #region TreeViewItem
 
         // Summary description for TreeViewItem.
-        private class TreeViewItem : ProxyFragment, ISelectionItemProvider, IExpandCollapseProvider, IValueProvider, IToggleProvider, IScrollItemProvider, IInvokeProvider
+        class TreeViewItem : ProxyFragment, ISelectionItemProvider, IExpandCollapseProvider, IValueProvider, IToggleProvider, IScrollItemProvider, IInvokeProvider
         {
             // ------------------------------------------------------
             //

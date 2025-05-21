@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows.Controls;
 using System.Windows;
@@ -287,7 +288,10 @@ namespace Microsoft.Windows.Themes
                 childArrangeRect.Height = finalSize.Height - borderY;
             }
 
-            Child?.Arrange(childArrangeRect);
+            if (Child != null)
+            {
+                Child.Arrange(childArrangeRect);
+            }
 
             return finalSize;
         }

@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Win32;
 using MS.Internal; // Invariant
@@ -72,10 +73,9 @@ namespace System.Windows.Documents
                 }
             }
 
-            Span<UInt16> charType3 = stackalloc UInt16[2];
-            ReadOnlySpan<char> sourceChars = [text[position - 1], text[position]];
+            UInt16[] charType3 = new UInt16[2];
 
-            SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE3, sourceChars, charType3);
+            SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE3, new char[] { text[position - 1], text[position] }, 2, charType3);
 
             // Otherwise we're at a word boundary if the classes of the surrounding text differ.
             return IsWordBoundary(text[position - 1], text[position]) ||
@@ -202,7 +202,6 @@ namespace System.Windows.Documents
         private static CharClass[] GetClasses(char[] text)
         {
             CharClass[] classes = new CharClass[text.Length];
-            UInt16 charType1 = UInt16.MinValue;
 
             for (int i = 0; i < text.Length; i++)
             {
@@ -227,11 +226,13 @@ namespace System.Windows.Documents
                 }
                 else
                 {
-                    SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE1, [ch], new Span<UInt16>(ref charType1));
+                    UInt16[] charType1 = new UInt16[1];
 
-                    if ((charType1 & SafeNativeMethods.C1_SPACE) != 0)
+                    SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE1, new char[] { ch }, 1, charType1);
+
+                    if ((charType1[0] & SafeNativeMethods.C1_SPACE) != 0)
                     {
-                        if ((charType1 & SafeNativeMethods.C1_BLANK) != 0)
+                        if ((charType1[0] & SafeNativeMethods.C1_BLANK) != 0)
                         {
                             classification = CharClass.Blank | CharClass.WBF_ISWHITE;
                         }
@@ -240,7 +241,7 @@ namespace System.Windows.Documents
                             classification = CharClass.WhiteSpace | CharClass.WBF_ISWHITE;
                         }
                     }
-                    else if ((charType1 & SafeNativeMethods.C1_PUNCT) != 0 && !IsDiacriticOrKashida(ch))
+                    else if ((charType1[0] & SafeNativeMethods.C1_PUNCT) != 0 && !IsDiacriticOrKashida(ch))
                     {
                         classification = CharClass.Punctuation;
                     }
@@ -259,11 +260,11 @@ namespace System.Windows.Documents
         // Returns true if a char is a non-spacing diacritic or kashida.
         private static bool IsDiacriticOrKashida(char ch)
         {
-            UInt16 charType3 = UInt16.MinValue;
+            UInt16 []charType3 = new UInt16[1];
 
-            SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE3, [ch], new Span<UInt16>(ref charType3));
+            SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE3, new char[] { ch }, 1, charType3);
 
-            return (charType3 & (SafeNativeMethods.C3_DIACRITIC | SafeNativeMethods.C3_NONSPACING | SafeNativeMethods.C3_VOWELMARK | SafeNativeMethods.C3_KASHIDA)) != 0;
+            return (charType3[0] & (SafeNativeMethods.C3_DIACRITIC | SafeNativeMethods.C3_NONSPACING | SafeNativeMethods.C3_VOWELMARK | SafeNativeMethods.C3_KASHIDA)) != 0;
         }
 
         // Returns true if a character falls within a specified code point range.
@@ -301,22 +302,17 @@ namespace System.Windows.Documents
         #region Private Fields
 
         // Unicode line feed char.
-        private const char LineFeedChar = (char)0x000a;
-
+        const char LineFeedChar = (char)0x000a;
         // Unicode carriage return char.
-        private const char CarriageReturnChar = (char)0x000d;
-
+        const char CarriageReturnChar = (char)0x000d;
         // Unicode quotation mark char.
-        private const char QuotationMarkChar = (char)0x0022;
-
+        const char QuotationMarkChar = (char)0x0022;
         // Unicode apostrophe char.
-        private const char ApostropheChar = (char)0x0027;
-
+        const char ApostropheChar = (char)0x0027;
         // Unicode soft hyphen char.
-        private const char SoftHyphenChar = (char)0x00ad;
-
+        const char SoftHyphenChar = (char)0x00ad;
         // Unicode right single quotation char.
-        private const char RightSingleQuotationChar = (char)0x2019;
+        const char RightSingleQuotationChar = (char)0x2019;
         // Unicode object replacement char.
         private const char ObjectReplacementChar = (char)0xfffc;
 
@@ -336,7 +332,7 @@ namespace System.Windows.Documents
         }
 
         // Character classifications for u+0000 - u+00ff.
-        private static readonly byte []_latinClasses = new byte[] {
+        static readonly byte []_latinClasses = new byte[] {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x14, //0x00
         0x00, 0x13, 0x14, 0x14, 0x14, 0x14, 0x00, 0x00, //0x08
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, //0x10

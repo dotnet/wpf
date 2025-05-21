@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using MS.Win32;
@@ -245,7 +246,10 @@ namespace System.Windows.Input.StylusWisp
                 throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, doStylusCapture.GetType()));
             }
 
-            doStylusCapture?.VerifyAccess();
+            if (doStylusCapture != null)
+            {
+                doStylusCapture.VerifyAccess();
+            }
 
             bool success = false;
 
@@ -326,7 +330,7 @@ namespace System.Windows.Input.StylusWisp
                 if (_stylusOver == stylusOver)
                 {
                     Point ptOffset = GetPosition(stylusOver);
-                    fOffsetChanged = !MS.Internal.DoubleUtil.AreClose(ptOffset.X, _rawElementRelativePosition.X) || !MS.Internal.DoubleUtil.AreClose(ptOffset.Y, _rawElementRelativePosition.Y);
+                    fOffsetChanged = MS.Internal.DoubleUtil.AreClose(ptOffset.X, _rawElementRelativePosition.X) == false || MS.Internal.DoubleUtil.AreClose(ptOffset.Y, _rawElementRelativePosition.Y) == false;
                 }
 
                 if (fOffsetChanged || _stylusOver != stylusOver)
@@ -1947,49 +1951,49 @@ namespace System.Windows.Input.StylusWisp
 
         /////////////////////////////////////////////////////////////////////
 
-        private WispTabletDevice _tabletDevice;
-        private string _sName;
-        private int _id;
-        private bool _fInverted;
-        private bool _fInRange;
-        private StylusButtonCollection _stylusButtonCollection;
-        private IInputElement _stylusOver;
+        WispTabletDevice _tabletDevice;
+        string _sName;
+        int _id;
+        bool _fInverted;
+        bool _fInRange;
+        StylusButtonCollection _stylusButtonCollection;
+        IInputElement _stylusOver;
 #if MULTICAPTURE
         private DeferredElementTreeState _stylusOverTreeState;
 #endif
 
-        private IInputElement _stylusCapture;
-        private CaptureMode _captureMode;
+        IInputElement _stylusCapture;
+        CaptureMode _captureMode;
 #if MULTICAPTURE
         private DeferredElementTreeState _stylusCaptureWithinTreeState;
 #endif
-        private StylusPoint _rawPosition = new StylusPoint(0, 0);
-        private Point _rawElementRelativePosition = new Point(0, 0);
-        private StylusPointCollection _eventStylusPoints;
+        StylusPoint _rawPosition = new StylusPoint(0, 0);
+        Point _rawElementRelativePosition = new Point(0, 0);
+        StylusPointCollection _eventStylusPoints;
 
         private PresentationSource _inputSource;
 
         private PenContext _activePenContext;
 
-        private bool _needToSendMouseDown;
+        bool _needToSendMouseDown;
         private Point _lastMouseScreenLocation = new Point(0, 0);
         private Point _lastScreenLocation = new Point(0, 0);
 
-        private bool _fInAir = true;
-        private bool _fLeftButtonDownTrigger = true; // default to left button down
-        private bool _fGestureWasFired = true; // StylusDown resets this.
-        private bool _fBlockMouseMoveChanges; // StylusDown sets to true, SystemGesture & StylusUp sets to false.
-        private bool _fDetectedDrag; // StylusDown resets this.  Used for generating DoubleTap gestures.
+        bool _fInAir = true;
+        bool _fLeftButtonDownTrigger = true; // default to left button down
+        bool _fGestureWasFired = true; // StylusDown resets this.
+        bool _fBlockMouseMoveChanges; // StylusDown sets to true, SystemGesture & StylusUp sets to false.
+        bool _fDetectedDrag; // StylusDown resets this.  Used for generating DoubleTap gestures.
 
         // Used to track the promoted mouse state.
-        private MouseButtonState _promotedMouseState;
+        MouseButtonState _promotedMouseState;
 
         // real time pen input info that is tracked per stylus device
-        private StylusPlugInCollection _nonVerifiedTarget;
-        private StylusPlugInCollection _verifiedTarget;
+        StylusPlugInCollection _nonVerifiedTarget;
+        StylusPlugInCollection _verifiedTarget;
 
-        private object _rtiCaptureChanged = new object();
-        private StylusPlugInCollection _stylusCapturePlugInCollection;
+        object _rtiCaptureChanged = new object();
+        StylusPlugInCollection _stylusCapturePlugInCollection;
 
 
         // Information used to distinguish double-clicks (actually, multi clicks) from

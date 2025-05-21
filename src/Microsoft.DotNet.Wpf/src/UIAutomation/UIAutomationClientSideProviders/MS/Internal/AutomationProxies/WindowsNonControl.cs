@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: A Windows Proxy to set IsContent and IsControl to false.
 //  By setting both IsContent and IsControl to false this will hide these
@@ -11,7 +12,7 @@ using System.Windows.Automation.Provider;
 
 namespace MS.Internal.AutomationProxies
 {
-    internal class WindowsNonControl: ProxyHwnd
+    class WindowsNonControl: ProxyHwnd
     {
         // ------------------------------------------------------
         //
@@ -21,7 +22,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Constructors
 
-        private WindowsNonControl(IntPtr hwnd, ProxyFragment parent, int item)
+        WindowsNonControl(IntPtr hwnd, ProxyFragment parent, int item)
             : base(hwnd, parent, item)
         {
             _fIsContent = false;

@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /*++
 
@@ -16,7 +17,7 @@ using MS.Internal.PrintWin32Thunk.Win32ApiThunk;
 
 namespace System.Printing
 {
-    internal abstract class  PrinterHResult
+    abstract internal class  PrinterHResult
     {
         ///<summary>
         ///
@@ -304,11 +305,14 @@ namespace System.Printing
         ///<summary>
         ///
         ///</summary>
-        private static System.Resources.ResourceManager     printResourceManager;
+        static
+        System.Resources.ResourceManager     printResourceManager;
 
-        private const int  defaultWin32ErrorMessageLength = 256;
+        const
+        int  defaultWin32ErrorMessageLength = 256;
 
-        private const int  FormatMessageFromSystem = unchecked((int)0x00001000);
+        const
+        int  FormatMessageFromSystem = unchecked((int)0x00001000);
     };
 
     /// <summary>
@@ -403,7 +407,10 @@ namespace System.Printing
             System.Runtime.Serialization.StreamingContext   context
             )
         {
-            info?.AddValue("PrinterName", printerName);
+            if (info != null)
+            {
+                info.AddValue("PrinterName", printerName);
+            }
             base.GetObjectData(info, context);
         }
 #pragma warning restore SYSLIB0051 // Type or member is obsolete
@@ -567,7 +574,10 @@ namespace System.Printing
             System.Runtime.Serialization.StreamingContext   context
             )
         {
-            info?.AddValue("ServerName", serverName);
+            if (info != null)
+            {
+                info.AddValue("ServerName", serverName);
+            }
 
             base.GetObjectData(info, context);
         }
@@ -804,9 +814,9 @@ namespace System.Printing
             }
 
 
-        private Collection<String>  committedAttributes;
-        private Collection<String>  failedAttributes;
-        private String              printObjectName;
+        Collection<String>  committedAttributes;
+        Collection<String>  failedAttributes;
+        String              printObjectName;
     };
 
     /// <summary>
@@ -923,7 +933,10 @@ namespace System.Printing
             System.Runtime.Serialization.StreamingContext    context
             )
         {
-            info?.AddValue("JobId", jobId );
+            if( info != null )
+            {
+                info.AddValue("JobId", jobId );
+            }
             base.GetObjectData(info, context);
         }
 #pragma warning restore SYSLIB0051 // Type or member is obsolete
@@ -1054,9 +1067,9 @@ namespace System.Printing
             this.jobId = (int)(info.GetValue("JobId", typeof(int)));
         }
 
-        private int            jobId;
-        private String         printQueueName;
-        private String jobContainer;
+        int            jobId;
+        String         printQueueName;
+        String         jobContainer;
     };
 
     /// <summary>

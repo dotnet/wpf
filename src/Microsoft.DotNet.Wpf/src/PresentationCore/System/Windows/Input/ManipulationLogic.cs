@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -443,7 +444,10 @@ namespace System.Windows.Input
             set
             {
                 _mode = value;
-                _manipulationProcessor?.SupportedManipulations = ConvertMode(_mode);
+                if (_manipulationProcessor != null)
+                {
+                    _manipulationProcessor.SupportedManipulations = ConvertMode(_mode);
+                }
             }
         }
 
@@ -480,7 +484,10 @@ namespace System.Windows.Input
             set
             {
                 _pivot = value;
-                _manipulationProcessor?.Pivot = ConvertPivot(value);
+                if (_manipulationProcessor != null)
+                {
+                    _manipulationProcessor.Pivot = ConvertPivot(value);
+                }
             }
         }
 
@@ -502,7 +509,10 @@ namespace System.Windows.Input
 
         internal void SetManipulationParameters(ManipulationParameters2D parameter)
         {
-            _manipulationProcessor?.SetParameters(parameter);
+            if (_manipulationProcessor != null)
+            {
+                _manipulationProcessor.SetParameters(parameter);
+            }
         }
 
         private void UpdateManipulators(ICollection<IManipulator> updatedManipulators)

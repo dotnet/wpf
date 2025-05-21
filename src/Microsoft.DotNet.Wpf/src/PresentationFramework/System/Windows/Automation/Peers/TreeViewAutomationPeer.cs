@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows.Automation.Provider;
 using System.Windows.Controls;
@@ -14,19 +15,19 @@ namespace System.Windows.Automation.Peers
         {}
     
         ///
-        protected override AutomationControlType GetAutomationControlTypeCore()
+        override protected AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.Tree;
         }
 
         ///
-        protected override string GetClassNameCore()
+        override protected string GetClassNameCore()
         {
             return "TreeView";
         }
 
         ///
-        public override object GetPattern(PatternInterface patternInterface)
+        override public object GetPattern(PatternInterface patternInterface)
         {
             if (patternInterface == PatternInterface.Selection)
             {
@@ -80,7 +81,10 @@ namespace System.Windows.Automation.Peers
                             if (peer != null)
                             {
                                 AutomationPeer wrapperPeer = peer.GetWrapperPeer();
-                                wrapperPeer?.EventsSource = peer;
+                                if(wrapperPeer != null)
+                                {
+                                    wrapperPeer.EventsSource = peer;
+                                }
                             }
 
                             // Not to add same Item again
@@ -98,7 +102,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        protected override ItemAutomationPeer CreateItemAutomationPeer(object item)
+        override protected ItemAutomationPeer CreateItemAutomationPeer(object item)
         {
             return new TreeViewDataItemAutomationPeer(item, this, null);
         }

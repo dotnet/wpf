@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -46,12 +47,12 @@ namespace System.Xaml.Schema
 
         public EventHandler<XamlSetMarkupExtensionEventArgs> SetMarkupExtensionHandler
         {
-            get { return _xamlType?.SetMarkupExtensionHandler; }
+            get { return _xamlType is not null ? _xamlType.SetMarkupExtensionHandler : null; }
         }
 
         public EventHandler<XamlSetTypeConverterEventArgs> SetTypeConverterHandler
         {
-            get { return _xamlType?.SetTypeConverterHandler; }
+            get { return _xamlType is not null ? _xamlType.SetTypeConverterHandler : null; }
         }
 
         public virtual void AddToCollection(object instance, object item)

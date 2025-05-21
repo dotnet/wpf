@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 // Description: Listen for shut down events on behalf of a target, in a way that
@@ -80,7 +81,7 @@ namespace MS.Internal
         // derived class should override this method to inform the target that a shutdown
         // event has occurred.  This method might be called on any thread (e.g.
         // AppDomain.DomainUnload events are typically raised on worker threads).
-        internal abstract void OnShutDown(object target, object sender, EventArgs e);
+        abstract internal void OnShutDown(object target, object sender, EventArgs e);
 
         // stop listening for shutdown events
         internal void StopListening()
@@ -88,7 +89,7 @@ namespace MS.Internal
             if ((_flags & PrivateFlags.Listening) == 0)
                 return;
 
-            _flags &= ~PrivateFlags.Listening;
+            _flags = _flags & ~PrivateFlags.Listening;
 
             if ((_flags & PrivateFlags.DomainUnload) != 0)
             {
@@ -115,8 +116,9 @@ namespace MS.Internal
         private void HandleShutDown(object sender, EventArgs e)
         {
             // The dispatcher and AppDomain events might arrive on separate threads
-            // at the same time. The interlock assures that we only do the work once.
-            if (!Interlocked.Exchange(ref _inShutDown, true))
+            // at the same time.  The interlock assures that we only do the work
+            // once.
+            if (Interlocked.Exchange(ref _inShutDown, 1) == 0)
             {
                 // ShutDown is a one-time event.  Stop listening (thus releasing
                 // references to the ShutDownListener).
@@ -132,7 +134,7 @@ namespace MS.Internal
         }
 
         [Flags]
-        private enum PrivateFlags : ushort
+        enum PrivateFlags : ushort
         {
             DomainUnload        = ShutDownEvents.DomainUnload,
             ProcessExit         = ShutDownEvents.ProcessExit,
@@ -142,8 +144,8 @@ namespace MS.Internal
             Listening           = 0x8000,
         }
 
-        private PrivateFlags _flags;
-        private WeakReference _dispatcherWR;
-        private bool _inShutDown;
+        PrivateFlags _flags;
+        WeakReference _dispatcherWR;
+        int _inShutDown;
     }
 }

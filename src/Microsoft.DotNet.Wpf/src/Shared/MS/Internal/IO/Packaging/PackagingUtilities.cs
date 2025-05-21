@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -99,7 +100,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="offset">offset</param>
         /// <param name="count">count</param>
         /// <remarks>Common argument verification for Stream.Read()</remarks>
-        internal static void VerifyStreamReadArgs(Stream s, byte[] buffer, int offset, int count)
+        static internal void VerifyStreamReadArgs(Stream s, byte[] buffer, int offset, int count)
         {
             if (!s.CanRead)
                 throw new NotSupportedException(SR.ReadNotSupported);
@@ -108,19 +109,19 @@ namespace MS.Internal.IO.Packaging
 
             if (offset < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(offset), SR.OffsetNegative);
+                throw new ArgumentOutOfRangeException("offset", SR.OffsetNegative);
             }
 
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(count), SR.ReadCountNegative);
+                throw new ArgumentOutOfRangeException("count", SR.ReadCountNegative);
             }
 
             checked     // catch any integer overflows
             {
                 if (offset + count > buffer.Length)
                 {
-                    throw new ArgumentException(SR.ReadBufferTooSmall, nameof(buffer));
+                    throw new ArgumentException(SR.ReadBufferTooSmall, "buffer");
                 }
             }
         }
@@ -133,7 +134,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="offset"></param>
         /// <param name="count"></param>
         /// <remarks>common argument verification for Stream.Write</remarks>
-        internal static void VerifyStreamWriteArgs(Stream s, byte[] buffer, int offset, int count)
+        static internal void VerifyStreamWriteArgs(Stream s, byte[] buffer, int offset, int count)
         {
             if (!s.CanWrite)
                 throw new NotSupportedException(SR.WriteNotSupported);
@@ -142,18 +143,18 @@ namespace MS.Internal.IO.Packaging
 
             if (offset < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(offset), SR.OffsetNegative);
+                throw new ArgumentOutOfRangeException("offset", SR.OffsetNegative);
             }
 
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(count), SR.WriteCountNegative);
+                throw new ArgumentOutOfRangeException("count", SR.WriteCountNegative);
             }
 
             checked
             {
                 if (offset + count > buffer.Length)
-                    throw new ArgumentException(SR.WriteBufferTooSmall, nameof(buffer));
+                    throw new ArgumentException(SR.WriteBufferTooSmall, "buffer");
             }
         }
 
@@ -533,7 +534,8 @@ namespace MS.Internal.IO.Packaging
             }
             finally
             {
-                userProfileKey?.Close();
+                if (userProfileKey != null)
+                    userProfileKey.Close();
             }
 
             return userHasProfile;
@@ -789,7 +791,7 @@ namespace MS.Internal.IO.Packaging
                 Dispose(false);
             }
 
-            private void CheckDisposed()
+            void CheckDisposed()
             {
                 ObjectDisposedException.ThrowIf(_disposed, typeof(ReliableIsolatedStorageFileFolder));
             }

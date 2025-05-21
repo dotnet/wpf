@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -7,12 +8,12 @@ namespace System.Xaml
 {
     internal class XamlSubreader : XamlReader, IXamlLineInfo
     {
-        private XamlReader _reader;
-        private IXamlLineInfo _lineInfoReader;
-        private bool _done;
-        private bool _firstRead;
-        private bool _rootIsStartMember;
-        private int _depth;
+        XamlReader _reader;
+        IXamlLineInfo _lineInfoReader;
+        bool _done;
+        bool _firstRead;
+        bool _rootIsStartMember;
+        int _depth;
 
         public XamlSubreader(XamlReader reader)
         {

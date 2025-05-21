@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -235,7 +236,7 @@ namespace MS.Internal.FontCache
         /// <param name="numBytes">Size of the memory block in bytes</param>
         /// <param name="hash">Previous hash code to combine with</param>
         /// <returns>Hash code</returns>
-        internal static unsafe int HashMemory(void * pv, int numBytes, int hash)
+        internal unsafe static int HashMemory(void * pv, int numBytes, int hash)
         {
             byte * pb = (byte*)pv;
 
@@ -492,7 +493,7 @@ namespace MS.Internal.FontCache
                         out faceIndex
                     ))
                 {
-                    throw new ArgumentException(SR.FaceIndexMustBePositiveOrZero, nameof(fontUri));
+                    throw new ArgumentException(SR.FaceIndexMustBePositiveOrZero, "fontUri");
                 }
 
                 // face index was specified in a fragment, we need to strip off fragment from the source Uri
@@ -794,8 +795,10 @@ namespace MS.Internal.FontCache
             {
                 if (disposing)
                 {
-                    _viewHandle?.Dispose();
-                    _mappingHandle?.Dispose();
+                    if (_viewHandle != null)
+                        _viewHandle.Dispose();
+                    if (_mappingHandle != null)
+                        _mappingHandle.Dispose();
                 }
 
                 // We only handle flat disk files read only, should never be writeable.

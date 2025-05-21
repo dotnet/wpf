@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description:
 //  Common container-related operations that can be shared among internal
@@ -25,27 +26,27 @@ namespace MS.Internal.IO.Packaging.CompoundFile
     /// <summary>
     /// ContainerUtilities
     /// </summary>
-    internal static class ContainerUtilities
+    static internal class ContainerUtilities
     {
-        private static readonly Int32 _int16Size = sizeof(Int16);
-        private static readonly Int32 _int32Size = sizeof(Int32);
-        private static readonly byte[] _paddingBuf = new byte[4];        // for writing DWORD padding
+        static private readonly Int32 _int16Size = sizeof(Int16);
+        static private readonly Int32 _int32Size = sizeof(Int32);
+        static private readonly byte[] _paddingBuf = new byte[4];        // for writing DWORD padding
 
 
 #if !PBTCOMPILER
-        private static readonly Int32 _int64Size = sizeof(Int64);
+        static private readonly Int32 _int64Size = sizeof(Int64);
 
         /// Used by ConvertBackSlashPathToStringArrayPath and 
         ///     ConvertStringArrayPathToBackSlashPath to separate path elements.
-        internal static readonly char PathSeparator = Path.DirectorySeparatorChar;
-        internal static readonly string PathSeparatorAsString = new string(ContainerUtilities.PathSeparator, 1);
+        static readonly internal char PathSeparator = Path.DirectorySeparatorChar;
+        static readonly internal string PathSeparatorAsString = new string(ContainerUtilities.PathSeparator, 1);
 #endif
 
 
         /// <summary>
         /// Byte size of Int16 Type
         /// </summary>
-        internal static Int32 Int16Size
+        static internal Int32 Int16Size
         {
             get
             {
@@ -57,7 +58,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <summary>
         /// Byte size of Int32 Type
         /// </summary>
-        internal static Int32 Int32Size
+        static internal Int32 Int32Size
         {
             get
             {
@@ -68,7 +69,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <summary>
         /// Byte size of Int64 Type
         /// </summary>
-        internal static Int32 Int64Size
+        static internal Int32 Int64Size
         {
             get
             {
@@ -135,7 +136,10 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     {
                         strByteLen += padLength;
 
-                        writer?.Write(_paddingBuf, 0, padLength);
+                        if (writer != null)
+                        {
+                            writer.Write(_paddingBuf, 0, padLength);
+                        }
                     }
                 }
 
@@ -255,7 +259,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <summary>
         /// Subset of CheckStringAgainstNullAndEmpty - and just checks against null reference.
         /// </summary>
-        internal static void CheckAgainstNull(object paramRef,
+        static internal void CheckAgainstNull(object paramRef,
             string testStringIdentifier)
         {
             if (paramRef == null)
@@ -288,7 +292,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
         // IMPORTANT: When updating this, make sure the counterpart is similarly
         //  updated.
-        internal static string[] ConvertBackSlashPathToStringArrayPath(string backSlashPath)
+        static internal string[] ConvertBackSlashPathToStringArrayPath(string backSlashPath)
         {
             // A null string will get a null array
             if ((null == backSlashPath) || (0 == backSlashPath.Length))
@@ -310,7 +314,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 if (0 == arrayElement.Length)
                     throw new ArgumentException(
-                        SR.PathHasEmptyElement, nameof(backSlashPath));
+                        SR.PathHasEmptyElement, "backSlashPath");
             }
 
             // No empty strings, this array should be fine.
@@ -337,7 +341,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         // IMPORTANT: When updating this, make sure the counterpart is similarly
         //  updated.
 
-        internal static string ConvertStringArrayPathToBackSlashPath(IList arrayPath)
+        static internal string ConvertStringArrayPathToBackSlashPath(IList arrayPath)
         {
             // Null array gets a null string
             if ((null == arrayPath) || (1 > arrayPath.Count))
@@ -366,7 +370,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// </summary>
         /// <param name="storages">storage collection (strings)</param>
         /// <param name="streamName">stream name</param>
-        internal static string ConvertStringArrayPathToBackSlashPath(IList storages, string streamName)
+        static internal string ConvertStringArrayPathToBackSlashPath(IList storages, string streamName)
         {
             string result = ConvertStringArrayPathToBackSlashPath(storages);
             if (result.Length > 0)
@@ -400,7 +404,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         ///         ArgumentException "The name parameter cannot be an empty string"
         ///
         ///</remarks>
-        internal static void CheckStringAgainstNullAndEmpty(string testString,
+        static internal void CheckStringAgainstNullAndEmpty(string testString,
             string testStringIdentifier)
         {
             if (testString == null)
@@ -416,7 +420,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// The 0x01 through 0x1F characters, serving as the first character of the stream/storage name, 
         /// are reserved for use by OLE. This is a compound file restriction. 
         /// </summary>
-        internal static void CheckStringAgainstReservedName(string nameString,
+        static internal void CheckStringAgainstReservedName(string nameString,
             string nameStringIdentifier)
         {
             if (IsReservedName(nameString))
@@ -430,7 +434,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// range 0x01 to 0x1F.  (1-31)
         /// This is a compound file restriction
         /// </summary>
-        internal static bool IsReservedName(string nameString)
+        static internal bool IsReservedName(string nameString)
         {
             CheckStringAgainstNullAndEmpty(nameString, "nameString");
 
@@ -444,16 +448,16 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// </summary>
         /// <param name="testString">string to test</param>
         /// <param name="testStringIdentifier">message for exception</param>
-        internal static void CheckStringForEmbeddedPathSeparator(string testString,
+        static internal void CheckStringForEmbeddedPathSeparator(string testString,
             string testStringIdentifier)
         {
             CheckStringAgainstNullAndEmpty(testString, testStringIdentifier);
 
-            if (testString.Contains(PathSeparator))
+            if (testString.IndexOf(PathSeparator) != -1)
                 throw new ArgumentException(
                     SR.Format(SR.NameCanNotHaveDelimiter,
                         testStringIdentifier,
-                        PathSeparator), nameof(testString));
+                        PathSeparator), "testString");
         }
 
 #endif

@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows.Automation.Provider;
 using System.Windows.Controls.Primitives;
@@ -16,7 +17,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        public override object GetPattern(PatternInterface patternInterface)
+        override public object GetPattern(PatternInterface patternInterface)
         {
             if(patternInterface == PatternInterface.SelectionItem)
             {

@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -9,12 +10,11 @@
 //
 
 using MS.Internal;
-using MS.Utility;
-using System.Collections;
+// These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media.Animation
 {
-    public abstract partial class TimelineGroup : Timeline
+    abstract partial class TimelineGroup : Timeline
     {
         //------------------------------------------------------
         //
@@ -65,7 +65,7 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-                return (TimelineCollection)GetValue(ChildrenProperty);
+                return (TimelineCollection) GetValue(ChildrenProperty);
             }
             set
             {
@@ -167,9 +167,10 @@ namespace System.Windows.Media.Animation
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app.
+            // of your app
+
             Debug.Assert(s_Children == null || s_Children.IsFrozen,
-                "Detected context bound default value TimelineGroup.s_Children (See OS Bug #947272).");
+                "Detected context bound default value TimelineGroup.s_Children");
 
 
             // Initializations
@@ -184,8 +185,6 @@ namespace System.Windows.Media.Animation
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
-
 
         #endregion Constructors
     }

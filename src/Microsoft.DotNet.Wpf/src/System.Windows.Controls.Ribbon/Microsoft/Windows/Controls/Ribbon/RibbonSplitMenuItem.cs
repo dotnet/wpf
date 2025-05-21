@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #region Using declarations
 
@@ -144,7 +145,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void OnDropDownToolTipPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             RibbonSplitMenuItem splitMenuItem = (RibbonSplitMenuItem)d;
-            splitMenuItem._partArrowButton?.CoerceValue(FrameworkElement.ToolTipProperty);
+            if (splitMenuItem._partArrowButton != null)
+            {
+                splitMenuItem._partArrowButton.CoerceValue(FrameworkElement.ToolTipProperty);
+            }
         }
 
         #endregion
@@ -197,7 +201,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonSplitMenuItem splitMenuItem = (RibbonSplitMenuItem)d;
 
             RibbonToggleButton toggleButton = splitMenuItem._headerButton as RibbonToggleButton;
-            toggleButton?.IsChecked = splitMenuItem.IsChecked;
+            if (toggleButton != null)
+            {
+                toggleButton.IsChecked = splitMenuItem.IsChecked;
+            }
         }
 
         // UIElement.IsEnabledCore's getter simply returns true (e.g. RibbonSplitButton follows this path), but MenuItem
@@ -285,10 +292,16 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void SetBorderThickness()
         {
-            // Right = 0.0
-            _highlightLeftBorder?.BorderThickness = new Thickness(BorderThickness.Left, BorderThickness.Top, 0.0, BorderThickness.Bottom);
-            // Left = 0.0
-            _highlightRightBorder?.BorderThickness = new Thickness(0.0, BorderThickness.Top, BorderThickness.Right, BorderThickness.Bottom);
+            if (_highlightLeftBorder != null)
+            {
+                // Right = 0.0
+                _highlightLeftBorder.BorderThickness = new Thickness(BorderThickness.Left, BorderThickness.Top, 0.0, BorderThickness.Bottom);
+            }
+            if (_highlightRightBorder != null)
+            {
+                // Left = 0.0
+                _highlightRightBorder.BorderThickness = new Thickness(0.0, BorderThickness.Top, BorderThickness.Right, BorderThickness.Bottom);
+            }
         }
 
         #endregion
@@ -338,10 +351,11 @@ namespace Microsoft.Windows.Controls.Ribbon
         #region Private Data
         private const string HeaderButtonTemplatePart = "PART_HeaderButton";
         private const string ArrowButtonTemplatePart = "PART_ArrowToggleButton";
-        private ButtonBase _headerButton;
-        private RibbonToggleButton _partArrowButton;
-        private ButtonBase _partHeaderButton;
-        private Border _highlightLeftBorder, _highlightRightBorder;
+
+        ButtonBase _headerButton;
+        RibbonToggleButton _partArrowButton;
+        ButtonBase _partHeaderButton;
+        Border _highlightLeftBorder, _highlightRightBorder;
         #endregion
 
         #region KeyTips

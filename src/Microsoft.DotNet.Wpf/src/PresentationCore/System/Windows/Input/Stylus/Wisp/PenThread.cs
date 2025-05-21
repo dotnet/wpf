@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //#define TRACE
 
@@ -35,10 +36,13 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        private void DisposeHelper()
+        void DisposeHelper()
         {
             // NOTE: PenThreadWorker deals with already being disposed logic.
-            _penThreadWorker?.Dispose();
+            if (_penThreadWorker != null)
+            {
+                _penThreadWorker.Dispose();
+            }
             GC.KeepAlive(this);
         }
 

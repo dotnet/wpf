@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
 *
@@ -159,7 +160,7 @@ namespace System.Windows.Markup
                 ||
                 (!( WritePosition >= ReadLength  )) )
             {
-                throw new ArgumentOutOfRangeException( nameof(offset));
+                throw new ArgumentOutOfRangeException( "offset" );
             }
 
             return WritePosition;
@@ -304,7 +305,7 @@ namespace System.Windows.Markup
                 ||
                (!(ReadPosition < ReadLength)))
             {
-                throw new ArgumentOutOfRangeException( nameof(offset));
+                throw new ArgumentOutOfRangeException( "offset" );
             }
 
             return ReadPosition;
@@ -333,8 +334,8 @@ namespace System.Windows.Markup
         /// <summary>
         /// Given a position in the Stream returns the buffer and
         /// start offset position in the buffer
-        /// </summary>
-        private byte[] GetBufferFromFilePosition(long position,bool reader,
+         /// </summary>
+        byte[] GetBufferFromFilePosition(long position,bool reader,
             out int bufferOffset,out int bufferIndex)
         {
             byte[] buffer = null;
@@ -375,7 +376,7 @@ namespace System.Windows.Markup
             if (bufferArray.Count <= bufferIndex)
             {
                 Debug.Assert(bufferArray.Count == bufferIndex,"Need to allocate more than one buffer");
-                Debug.Assert(!reader, "Allocating a buffer on Read");
+                Debug.Assert(false == reader,"Allocating a buffer on Read");
 
                 buffer = new byte[BufferSize];
 
@@ -401,7 +402,7 @@ namespace System.Windows.Markup
         /// <param name="arrayList">ArrayList containing the Memory</param>
         /// <param name="firstBufferPosition">If any arrays are cleaned up returns the
         /// updated position that the first array in the buffer starts at</param>
-        private void CheckIfCanRemoveFromArrayList(long position,ArrayList arrayList,ref long firstBufferPosition)
+         void CheckIfCanRemoveFromArrayList(long position,ArrayList arrayList,ref long firstBufferPosition)
         {
             // see if there are any buffers we can get rid of.
             int bufferIndex = (int) ((position - firstBufferPosition)/BufferSize);
@@ -488,7 +489,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Constant Buffer size to be used for all allocated buffers
         /// </summary>
-        private int BufferSize
+        int BufferSize
         {
             get { return _bufferSize; }
         }
@@ -497,7 +498,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// File Position that the first buffer in the Readers array of buffer starts at
         /// </summary>
-        private long ReaderFirstBufferPosition
+        long ReaderFirstBufferPosition
         {
             get { return _readerFirstBufferPosition ; }
             set { _readerFirstBufferPosition = value; }
@@ -506,7 +507,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// File Position that the first buffer in the Writers array of buffer starts at
         /// </summary>
-        private long WriterFirstBufferPosition
+        long WriterFirstBufferPosition
         {
             get { return _writerFirstBufferPosition ; }
             set { _writerFirstBufferPosition = value; }
@@ -515,7 +516,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// ArrayList containing all the buffers used by the Reader
         /// </summary>
-        private ArrayList ReaderBufferArrayList
+        ArrayList ReaderBufferArrayList
         {
             get { return _readerBufferArrayList ; }
             set { _readerBufferArrayList = value; }
@@ -524,7 +525,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// ArrayList of all the buffers used by the Writer.
         /// </summary>
-        private ArrayList WriterBufferArrayList
+        ArrayList WriterBufferArrayList
         {
             get { return _writerBufferArrayList ; }
             set { _writerBufferArrayList = value; }
@@ -544,21 +545,21 @@ namespace System.Windows.Markup
 
         #region Data
 
-        private long _readPosition;
-        private long _readLength;
-        private long _writePosition;
-        private long _writeLength;
+        long _readPosition;
+        long _readLength;
+        long _writePosition;
+        long _writeLength;
 
-        private ReaderWriterLock _bufferLock;
+        ReaderWriterLock _bufferLock;
 
-        private WriterStream _writerStream;
-        private ReaderStream _readerStream;
-        private long _readerFirstBufferPosition;
-        private long _writerFirstBufferPosition;
-        private ArrayList _readerBufferArrayList;
-        private ArrayList _writerBufferArrayList;
+        WriterStream _writerStream;
+        ReaderStream _readerStream;
+        long _readerFirstBufferPosition;
+        long _writerFirstBufferPosition;
+        ArrayList _readerBufferArrayList;
+        ArrayList _writerBufferArrayList;
 #if DEBUG
-        private bool _writeComplete;
+        bool _writeComplete;
 #endif
 
         // size of each allocated buffer.
@@ -718,7 +719,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// StreamManager for the writer stream
         /// </summary>
-        private ReadWriteStreamManager StreamManager
+        ReadWriteStreamManager StreamManager
         {
             get { return _streamManager; }
         }
@@ -728,7 +729,7 @@ namespace System.Windows.Markup
 
         #region Data
 
-        private ReadWriteStreamManager _streamManager;
+        ReadWriteStreamManager _streamManager;
 
         #endregion Data
     }
@@ -780,7 +781,7 @@ namespace System.Windows.Markup
         /// </summary>
         public override void Close()
         {
-            Debug.Fail("Close called on ReaderStream");
+            Debug.Assert(false,"Close called on ReaderStream");
         }
 
         /// <summary>
@@ -788,7 +789,7 @@ namespace System.Windows.Markup
         /// </summary>
         public override void Flush()
         {
-            Debug.Fail("Flush called on ReaderStream");
+            Debug.Assert(false,"Flush called on ReaderStream");
         }
 
         /// <summary>
@@ -888,7 +889,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// StreamManager that this class should use
         /// </summary>
-        private ReadWriteStreamManager StreamManager
+        ReadWriteStreamManager StreamManager
         {
             get { return _streamManager; }
         }
@@ -897,7 +898,7 @@ namespace System.Windows.Markup
 
         #region Data
 
-        private ReadWriteStreamManager _streamManager;
+        ReadWriteStreamManager _streamManager;
 
         #endregion Data
     }

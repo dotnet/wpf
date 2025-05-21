@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using MS.Internal.Interop;
@@ -44,15 +45,15 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// The captured element for the current StylusDevice
         /// </summary>
-        private IInputElement _stylusCapture;
+        IInputElement _stylusCapture;
 
         /// <summary>
         /// The element the current StylusDevice is over
         /// </summary>
-        private IInputElement _stylusOver;
+        IInputElement _stylusOver;
 
-        private DeferredElementTreeState _stylusOverTreeState = new DeferredElementTreeState();
-        private DeferredElementTreeState _stylusCaptureWithinTreeState = new DeferredElementTreeState();
+        DeferredElementTreeState _stylusOverTreeState = new DeferredElementTreeState();
+        DeferredElementTreeState _stylusCaptureWithinTreeState = new DeferredElementTreeState();
 
         // Event handlers/ops for stylus over and capture
         private DependencyPropertyChangedEventHandler _overIsEnabledChangedEventHandler;
@@ -795,7 +796,7 @@ namespace System.Windows.Input.StylusPointer
             // Second, if we still haven't thought of a reason to kill capture, validate
             // it on a Visual basis for things like still being in the right tree.
             //
-            if (!killCapture)
+            if (killCapture == false)
             {
                 DependencyObject containingVisual = InputElement.GetContainingVisual(dependencyObject);
                 killCapture = !ValidateVisualForCapture(containingVisual, CurrentStylusDevice);

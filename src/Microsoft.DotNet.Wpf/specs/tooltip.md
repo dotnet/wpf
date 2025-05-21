@@ -6,7 +6,7 @@ especially the changes needed to meet the accessibility requirements of WCAG 2.1
 
 # Background
 
-Microsoft is committed to making its products and UI platforms meet the accessibility requirements of WCAG 2.1 in a uniform way.
+Microsoft is commmitted to making its products and UI platforms meet the accessibility requirements of WCAG 2.1 in a uniform way.
 This document describes how WPF's tooltips will honor that commitment.
 
 The document includes the following sections:

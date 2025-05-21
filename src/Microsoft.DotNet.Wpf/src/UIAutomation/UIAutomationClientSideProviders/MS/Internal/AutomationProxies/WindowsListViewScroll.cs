@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Class to provide scroll bars for listview
 //
@@ -17,7 +18,7 @@ namespace MS.Internal.AutomationProxies
     // The default implementation for scroll bars uses SB_THUMBTRACK and SB_THUMBPOSITION for SetValue
     // This does not work with listview so the Scrollbar is overloaded with a derived version that
     // uses LVM_SCROLL messages instead
-    internal class WindowsListViewScrollBar: WindowsScrollBar, IRangeValueProvider
+    class WindowsListViewScrollBar: WindowsScrollBar, IRangeValueProvider
         {
 
             // ------------------------------------------------------

@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 namespace MS.Internal.TextFormatting
 {
@@ -168,7 +169,7 @@ namespace MS.Internal.TextFormatting
             {
                 throw new ArgumentException(
                     SR.Collection_CopyTo_ArrayCannotBeMultidimensional, 
-                    nameof(array));                
+                    "array");                
             }
 
             ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
@@ -180,7 +181,7 @@ namespace MS.Internal.TextFormatting
                         SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, 
                         "arrayIndex", 
                         "array"),
-                    nameof(arrayIndex));
+                    "arrayIndex");
             }
 
             if ((array.Length - Count - arrayIndex) < 0)

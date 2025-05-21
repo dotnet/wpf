@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #if DEBUG
 #define TRACE
@@ -209,7 +210,7 @@ namespace System.Windows.Media.Animation
 
             if (newValue < 0 || newValue > 1 || double.IsNaN(newValue))
             {
-                throw new ArgumentException(SR.Timing_InvalidArgAccelAndDecel, nameof(value));
+                throw new ArgumentException(SR.Timing_InvalidArgAccelAndDecel, "value");
             }
 
             return true;
@@ -598,7 +599,7 @@ namespace System.Windows.Media.Animation
 
             if (newValue <= 0 || newValue > double.MaxValue || double.IsNaN(newValue))
             {
-                throw new ArgumentException(SR.Timing_InvalidArgFinitePositive, nameof(value));
+                throw new ArgumentException(SR.Timing_InvalidArgFinitePositive, "value");
             }
 
             return true;
@@ -680,7 +681,7 @@ namespace System.Windows.Media.Animation
         /// <returns>
         /// A Duration quantity representing the natural duration.
         /// </returns>
-        protected internal Duration GetNaturalDuration(Clock clock)
+        internal protected Duration GetNaturalDuration(Clock clock)
         {
             return GetNaturalDurationCore(clock);
         }
@@ -1085,7 +1086,7 @@ namespace System.Windows.Media.Animation
                 builder.Append(", AccelerationRatio = ");
                 builder.Append(AccelerationRatio);
             }
-            if (AutoReverse)
+            if (AutoReverse != false)
             {
                 builder.Append(", AutoReverse = ");
                 builder.Append(AutoReverse);

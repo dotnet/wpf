@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.Windows.Automation.Peers;     // IViewAutomationPeer
@@ -92,7 +93,7 @@ namespace System.Windows.Controls
         }
 
         // Fields to implement DO's inheritance context
-        private DependencyObject _inheritanceContext;
+        DependencyObject _inheritanceContext;
 
         #endregion InheritanceContext
 
@@ -104,7 +105,7 @@ namespace System.Windows.Controls
         /// <remarks>ListView will use this method to get an automationPeer for a given view 
         /// and default to the properties/patterns implemented by the view before going to 
         /// default fall-backs on ListView.</remarks>
-        protected internal virtual IViewAutomationPeer GetAutomationPeer(ListView parent)
+        internal protected virtual IViewAutomationPeer GetAutomationPeer(ListView parent)
         {
             return null;
         }

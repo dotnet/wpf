@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -18,12 +19,12 @@ namespace System.Xaml
     public class XamlType : IEquatable<XamlType>
     {
         // Initialized in constructor
-        private readonly string _name;
-        private XamlSchemaContext _schemaContext;
-        private readonly IList<XamlType> _typeArguments;
+        readonly string _name;
+        XamlSchemaContext _schemaContext;
+        readonly IList<XamlType> _typeArguments;
 
         // Thread safety: if setting outside ctor, do an interlocked compare against null
-        private TypeReflector _reflector;
+        TypeReflector _reflector;
 
         /// <summary>
         /// Lazy init: NullableReference.IsSet is null when not initialized
@@ -32,8 +33,8 @@ namespace System.Xaml
 
         // Lazy init: null until initialized
         // Thread safety: idempotent, assignment races are okay; do not assign incomplete values
-        private ReadOnlyCollection<string> _namespaces;
-        private ThreeValuedBool _isNameValid;
+        ReadOnlyCollection<string> _namespaces;
+        ThreeValuedBool _isNameValid;
 
         protected XamlType(string typeName, IList<XamlType> typeArguments, XamlSchemaContext schemaContext)
         {
@@ -242,7 +243,7 @@ namespace System.Xaml
                 if (_reflector.AllowedContentTypes is null)
                 {
                     _reflector.AllowedContentTypes = LookupAllowedContentTypes() ??
-                        ReadOnlyCollection<XamlType>.Empty;
+                        EmptyList<XamlType>.Value;
                 }
 
                 return _reflector.AllowedContentTypes;
@@ -262,7 +263,7 @@ namespace System.Xaml
                 if (_reflector.ContentWrappers is null)
                 {
                     _reflector.ContentWrappers = LookupContentWrappers() ??
-                        ReadOnlyCollection<XamlType>.Empty;
+                        EmptyList<XamlType>.Value;
                 }
 
                 return _reflector.ContentWrappers;
@@ -634,7 +635,7 @@ namespace System.Xaml
             EnsureReflector();
             if (_reflector.ExcludedReadOnlyMembers is null)
             {
-                _reflector.ExcludedReadOnlyMembers = LookupAllExcludedReadOnlyMembers() ?? ReadOnlyCollection<XamlMember>.Empty;
+                _reflector.ExcludedReadOnlyMembers = LookupAllExcludedReadOnlyMembers() ?? EmptyList<XamlMember>.Value;
             }
 
             return _reflector.ExcludedReadOnlyMembers;
@@ -646,7 +647,7 @@ namespace System.Xaml
         {
             if (UnderlyingType is null)
             {
-                return ReadOnlyCollection<ConstructorInfo>.Empty;
+                return EmptyList<ConstructorInfo>.Value;
             }
 
             if (IsPublic)
@@ -724,7 +725,7 @@ namespace System.Xaml
 
         protected virtual IList<XamlType> LookupAllowedContentTypes()
         {
-            IList<XamlType> contentWrappers = ContentWrappers ?? ReadOnlyCollection<XamlType>.Empty;
+            IList<XamlType> contentWrappers = ContentWrappers ?? EmptyList<XamlType>.Value;
             List<XamlType> result = new List<XamlType>(contentWrappers.Count + 1);
             result.Add(ItemType);
 
@@ -1048,7 +1049,7 @@ namespace System.Xaml
         {
             if (UnderlyingType is null)
             {
-                return BaseType?.GetAllAttachableMembers();
+                return (BaseType is not null) ? BaseType.GetAllAttachableMembers() : null;
             }
 
             EnsureReflector();
@@ -1059,7 +1060,7 @@ namespace System.Xaml
         {
             if (UnderlyingType is null)
             {
-                return BaseType?.GetAllMembers();
+                return (BaseType is not null) ? BaseType.GetAllMembers() : null;
             }
 
             EnsureReflector();
@@ -1133,7 +1134,7 @@ namespace System.Xaml
         {
             if (UnderlyingType is null)
             {
-                return BaseType?.GetAttachableMember(name);
+                return (BaseType is not null) ? BaseType.GetAttachableMember(name) : null;
             }
 
             EnsureReflector();
@@ -1570,7 +1571,7 @@ namespace System.Xaml
                 return new ReadOnlyCollection<T>(list);
             }
 
-            return ReadOnlyCollection<T>.Empty;
+            return EmptyList<T>.Value;
         }
 
         private static ReadOnlyCollection<XamlType> GetTypeArguments(IList<XamlType> typeArguments)
@@ -1622,8 +1623,9 @@ namespace System.Xaml
             if (index >= 0)
             {
                 // save the subscript
-                ReadOnlySpan<char> typeNameSpan = GenericTypeNameScanner.StripSubscript(typeName, out ReadOnlySpan<char> subscript);
-                typeName = string.Concat(typeNameSpan.Slice(0, index), subscript);
+                string subscript;
+                typeName = GenericTypeNameScanner.StripSubscript(typeName, out subscript);
+                typeName = string.Concat(typeName.AsSpan(0, index), subscript);
             }
 
             // if nested, add the containing name
@@ -1955,5 +1957,11 @@ namespace System.Xaml
         }
 
         #endregion
+
+        internal static class EmptyList<T>
+        {
+            public static readonly ReadOnlyCollection<T> Value =
+                new ReadOnlyCollection<T>(Array.Empty<T>());
+        }
     }
 }

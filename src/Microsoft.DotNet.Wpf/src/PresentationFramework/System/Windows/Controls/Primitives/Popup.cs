@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 
@@ -1194,7 +1195,10 @@ namespace System.Windows.Controls.Primitives
                     {
                         // restore capture to popup we took it from, if there was one
                         Popup parentPopup = parentPopupRoot.Parent as Popup;
-                        parentPopup?.EstablishPopupCapture(isRestoringCapture:true);
+                        if (parentPopup != null)
+                        {
+                            parentPopup.EstablishPopupCapture(isRestoringCapture:true);
+                        }
                     }
                 }
                 _cacheValid[(int)CacheBits.CaptureEngaged] = false;
@@ -1294,7 +1298,7 @@ namespace System.Windows.Controls.Primitives
             UIElement element = value as UIElement;
             if (element == null && value != null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), nameof(value));
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value");
             }
 
             this.Child = element;
@@ -2818,9 +2822,9 @@ namespace System.Windows.Controls.Primitives
                                 // byteWidth = bytes per row AND bytes per vertical pixel
                                 int byteWidth = bm.bmWidth / 8;
                                 int right /*px*/ = (bottom /*bytes*/ % byteWidth) * 8 /*px/byte*/;
-                                bottom /*px*/ /= /*bytes*/ byteWidth /*bytes/px*/;
+                                bottom /*px*/ = bottom /*bytes*/ / byteWidth /*bytes/px*/;
                                 int left /*px*/ = top /*bytes*/ % byteWidth * 8 /*px/byte*/;
-                                top /*px*/ /= /*bytes*/ byteWidth /*bytes/px*/;
+                                top /*px*/ = top /*bytes*/ / byteWidth /*bytes/px*/;
 
                                 // (Final value) Convert LRTB to Width and Height
                                 width = right - left + 1;

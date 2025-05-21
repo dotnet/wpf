@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description:
 //  This is a helper class for pack:// Uris. This is a part of the 
@@ -44,7 +45,7 @@ namespace MS.Internal.IO.Packaging
         internal static bool IsPackUri(Uri uri)
         {
             return uri != null && 
-                string.Equals(uri.Scheme, System.IO.Packaging.PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase);
+                string.Compare(uri.Scheme, System.IO.Packaging.PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) == 0;
         }
 
         /// <summary>
@@ -132,7 +133,7 @@ namespace MS.Internal.IO.Packaging
             partUriString = String.Empty;
 
             if (partUri == null)
-                return new ArgumentNullException(nameof(partUri));
+                return new ArgumentNullException("partUri");
 
             Exception argumentException = null;
 
@@ -489,7 +490,7 @@ namespace MS.Internal.IO.Packaging
                 Debug.Assert(segments.Length > 0 && segments[0] == String.Empty);
 
                 //If the extension was not equal to .rels, we would have exited early.
-                Debug.Assert(string.Equals((Path.GetExtension(segments[segments.Length - 1])), _relationshipPartUpperCaseExtension, StringComparison.Ordinal));
+                Debug.Assert(String.CompareOrdinal((Path.GetExtension(segments[segments.Length - 1])), _relationshipPartUpperCaseExtension) == 0);
 
                 // must be at least two segments and the last one must end with .RELs
                 // and the length of the segment should be greater than just the extension.
@@ -502,12 +503,12 @@ namespace MS.Internal.IO.Packaging
 
                 // In addition we need to make sure that the relationship is not created by taking another relationship
                 // as the source of this uri. So XXX/_rels/_rels/YYY.rels.rels would be invalid.
-                if (segments.Length > 3 && result)
+                if (segments.Length > 3 && result == true)
                 {
                     if ((segments[segments.Length - 1]).EndsWith(_relsrelsUpperCaseExtension, StringComparison.Ordinal))
                     {
                         // look for "_rels" segment in the third last segment
-                        if(string.Equals(segments[segments.Length - 3], _relationshipPartUpperCaseSegmentName, StringComparison.Ordinal))
+                        if(String.CompareOrdinal(segments[segments.Length - 3], _relationshipPartUpperCaseSegmentName) == 0)
                             throw new ArgumentException(SR.NotAValidRelationshipPartUri);
                     }
                 }

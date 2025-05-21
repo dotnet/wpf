@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Base class for all nodes in a TextContainer or TextBlock splay
@@ -213,8 +214,11 @@ namespace System.Windows.Documents
                 }
             }
 
-            // Splay to keep the tree balanced.
-            previousNode?.Splay();
+            if (previousNode != null)
+            {
+                // Splay to keep the tree balanced.
+                previousNode.Splay();
+            }
 
             return previousNode;
         }
@@ -263,8 +267,11 @@ namespace System.Windows.Documents
                 }
             }
 
-            // Splay to keep the tree balanced.
-            nextNode?.Splay();
+            if (nextNode != null)
+            {
+                // Splay to keep the tree balanced.
+                nextNode.Splay();
+            }
 
             return nextNode;
         }
@@ -418,7 +425,10 @@ namespace System.Windows.Documents
 
             // Hook up the new tree to the containing node.
             this.ParentNode = containingNode;
-            containingNode?.ContainedNode = this;
+            if (containingNode != null)
+            {
+                containingNode.ContainedNode = this;
+            }
         }
 
         // Removes this node from its tree.
@@ -436,12 +446,24 @@ namespace System.Windows.Documents
             leftSubTree = this.LeftChildNode;
             rightSubTree = this.RightChildNode;
 
-            leftSubTree?.ParentNode = null;
-            rightSubTree?.ParentNode = null;
+            if (leftSubTree != null)
+            {
+                leftSubTree.ParentNode = null;
+            }
+            if (rightSubTree != null)
+            {
+                rightSubTree.ParentNode = null;
+            }
 
             root = Join(leftSubTree, rightSubTree);
-            containerNode?.ContainedNode = root;
-            root?.ParentNode = containerNode;
+            if (containerNode != null)
+            {
+                containerNode.ContainedNode = root;
+            }
+            if (root != null)
+            {
+                root.ParentNode = containerNode;
+            }
 
             this.ParentNode = null;
             this.LeftChildNode = null;
@@ -469,7 +491,10 @@ namespace System.Windows.Documents
                 root.LeftCharCount = 0;
             }
 
-            rightSubTree?.ParentNode = root;
+            if (rightSubTree != null)
+            {
+                rightSubTree.ParentNode = root;
+            }
         }
 
         // Combines two trees.  Every node in leftSubTree will precede every node
@@ -495,7 +520,10 @@ namespace System.Windows.Documents
                 // Then merge the two trees.
                 // No change to any LeftSymbolCounts.
                 maxNode.RightChildNode = rightSubTree;
-                rightSubTree?.ParentNode = maxNode;
+                if (rightSubTree != null)
+                {
+                    rightSubTree.ParentNode = maxNode;
+                }
             }
             else if (rightSubTree != null)
             {
@@ -817,7 +845,10 @@ namespace System.Windows.Documents
 
             rightChildNode = this.RightChildNode;
             this.RightChildNode = rightChildNode.LeftChildNode;
-            rightChildNode.LeftChildNode?.ParentNode = this;
+            if (rightChildNode.LeftChildNode != null)
+            {
+                rightChildNode.LeftChildNode.ParentNode = this;
+            }
 
             parentNode = this.ParentNode;
             rightChildNode.ParentNode = parentNode;
@@ -879,7 +910,10 @@ namespace System.Windows.Documents
 
             leftChildNode = this.LeftChildNode;
             this.LeftChildNode = leftChildNode.RightChildNode;
-            leftChildNode.RightChildNode?.ParentNode = this;
+            if (leftChildNode.RightChildNode != null)
+            {
+                leftChildNode.RightChildNode.ParentNode = this;
+            }
 
             parentNode = this.ParentNode;
             leftChildNode.ParentNode = parentNode;

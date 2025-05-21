@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -9,20 +10,12 @@
 //
 
 using MS.Internal;
-using MS.Internal.Collections;
-using MS.Utility;
-using System.Collections;
-using System.ComponentModel;
-using System.Globalization;
-using System.Text;
-using System.Windows.Markup;
-using System.Windows.Media.Media3D.Converters;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
+// These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media.Media3D
 {
-    public sealed partial class MeshGeometry3D : Geometry3D
+    sealed partial class MeshGeometry3D : Geometry3D
     {
         //------------------------------------------------------
         //
@@ -63,10 +56,6 @@ namespace System.Windows.Media.Media3D
 
         private static void PositionsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
-
-
-
             MeshGeometry3D target = ((MeshGeometry3D) d);
 
 
@@ -74,10 +63,6 @@ namespace System.Windows.Media.Media3D
         }
         private static void NormalsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
-
-
-
             MeshGeometry3D target = ((MeshGeometry3D) d);
 
 
@@ -85,10 +70,6 @@ namespace System.Windows.Media.Media3D
         }
         private static void TextureCoordinatesPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
-
-
-
             MeshGeometry3D target = ((MeshGeometry3D) d);
 
 
@@ -96,10 +77,6 @@ namespace System.Windows.Media.Media3D
         }
         private static void TriangleIndicesPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
-
-
-
             MeshGeometry3D target = ((MeshGeometry3D) d);
 
 
@@ -116,7 +93,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Point3DCollection)GetValue(PositionsProperty);
+                return (Point3DCollection) GetValue(PositionsProperty);
             }
             set
             {
@@ -131,7 +108,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Vector3DCollection)GetValue(NormalsProperty);
+                return (Vector3DCollection) GetValue(NormalsProperty);
             }
             set
             {
@@ -146,7 +123,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (PointCollection)GetValue(TextureCoordinatesProperty);
+                return (PointCollection) GetValue(TextureCoordinatesProperty);
             }
             set
             {
@@ -161,7 +138,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Int32Collection)GetValue(TriangleIndicesProperty);
+                return (Int32Collection) GetValue(TriangleIndicesProperty);
             }
             set
             {
@@ -243,7 +220,7 @@ namespace System.Windows.Media.Media3D
 
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for (int i = 0; i < PositionsCount; i++)
+                    for(int i = 0; i < PositionsCount; i++)
                     {
                         MilPoint3F resource = CompositionResourceManager.Point3DToMilPoint3F(vPositions.Internal_GetItem(i));
                         channel.AppendCommandData(
@@ -253,7 +230,7 @@ namespace System.Windows.Media.Media3D
                     }
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for (int i = 0; i < NormalsCount; i++)
+                    for(int i = 0; i < NormalsCount; i++)
                     {
                         MilPoint3F resource = CompositionResourceManager.Vector3DToMilPoint3F(vNormals.Internal_GetItem(i));
                         channel.AppendCommandData(
@@ -263,7 +240,7 @@ namespace System.Windows.Media.Media3D
                     }
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for (int i = 0; i < TextureCoordinatesCount; i++)
+                    for(int i = 0; i < TextureCoordinatesCount; i++)
                     {
                         Point resource = vTextureCoordinates.Internal_GetItem(i);
                         channel.AppendCommandData(
@@ -273,7 +250,7 @@ namespace System.Windows.Media.Media3D
                     }
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for (int i = 0; i < TriangleIndicesCount; i++)
+                    for(int i = 0; i < TriangleIndicesCount; i++)
                     {
                         Int32 resource = vTriangleIndices.Internal_GetItem(i);
                         channel.AppendCommandData(
@@ -288,11 +265,8 @@ namespace System.Windows.Media.Media3D
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_MESHGEOMETRY3D))
                 {
-
-
                     AddRefOnChannelAnimations(channel);
 
 
@@ -300,22 +274,16 @@ namespace System.Windows.Media.Media3D
                 }
 
                 return _duceResource.GetHandle(channel);
-
-        }
+}
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
-
-
                     ReleaseOnChannelAnimations(channel);
-
-                }
-
-        }
+}
+}
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.
@@ -427,6 +395,7 @@ namespace System.Windows.Media.Media3D
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
             // of your app.
+
             Debug.Assert(s_Positions == null || s_Positions.IsFrozen,
                 "Detected context bound default value MeshGeometry3D.s_Positions (See OS Bug #947272).");
 
@@ -482,8 +451,6 @@ namespace System.Windows.Media.Media3D
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
-
 
         #endregion Constructors
     }

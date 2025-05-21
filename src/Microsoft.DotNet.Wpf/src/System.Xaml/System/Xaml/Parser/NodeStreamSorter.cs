@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -13,24 +14,27 @@ namespace MS.Internal.Xaml
 {
     internal class NodeStreamSorter: IEnumerator<XamlNode>
     {
-        private XamlParserContext _context;
-        private XamlXmlReaderSettings _settings;
-        private IEnumerator<XamlNode> _source;
-        private Queue<XamlNode> _buffer;
-        private XamlNode _current;
-        private ReorderInfo[] _sortingInfoArray;
-        private XamlNode[] _originalNodesInOrder;
-        private Dictionary<string, string> _xmlnsDictionary;
+        XamlParserContext _context;
+        XamlXmlReaderSettings _settings;
+        IEnumerator<XamlNode> _source;
+        Queue<XamlNode> _buffer;
+        XamlNode _current;
 
-        private class SeenCtorDirectiveFlags
+        ReorderInfo[] _sortingInfoArray;
+        XamlNode[] _originalNodesInOrder;
+
+        Dictionary<string, string> _xmlnsDictionary;
+
+        class SeenCtorDirectiveFlags
         {
             public bool SeenInstancingProperty;
             public bool SeenOutOfOrderCtorDirective;
         }
 
-        private List<SeenCtorDirectiveFlags> _seenStack = new List<SeenCtorDirectiveFlags>();
-        private int _startObjectDepth;
-        private List<int> _moveList;
+        List<SeenCtorDirectiveFlags> _seenStack = new List<SeenCtorDirectiveFlags>();
+        int _startObjectDepth;
+
+        List<int> _moveList;
 
         private void InitializeObjectFrameStack()
         {
@@ -46,7 +50,7 @@ namespace MS.Internal.Xaml
         private void StartObjectFrame()
         {
             _startObjectDepth += 1;
-            if (_seenStack.Count <=_startObjectDepth)
+            if(_seenStack.Count <=_startObjectDepth)
             {
                 _seenStack.Add(new SeenCtorDirectiveFlags());
             }
@@ -60,19 +64,19 @@ namespace MS.Internal.Xaml
             _startObjectDepth -= 1;
         }
 
-        private bool HaveSeenInstancingProperty
+        bool HaveSeenInstancingProperty
         {
             get { return _seenStack[_startObjectDepth].SeenInstancingProperty; }
             set { _seenStack[_startObjectDepth].SeenInstancingProperty = value; }
         }
 
-        private bool HaveSeenOutOfOrderCtorDirective
+        bool HaveSeenOutOfOrderCtorDirective
         {
             get { return _seenStack[_startObjectDepth].SeenOutOfOrderCtorDirective; }
             set { _seenStack[_startObjectDepth].SeenOutOfOrderCtorDirective = value; }
         }
 
-        private struct ReorderInfo
+        struct ReorderInfo
         {
             public int Depth { get; set; }
             public int OriginalOrderIndex { get; set; }
@@ -273,7 +277,7 @@ namespace MS.Internal.Xaml
             // then dig in and correct the stream.
             //
             // if (HaveSeenOutOfOrderCtorDirective)
-            if (_moveList is not null)
+            if(_moveList is not null)
             {
                 SortContentsOfReadAheadBuffer();
             }
@@ -612,9 +616,9 @@ namespace MS.Internal.Xaml
             end = current;
             int originalIdx = _sortingInfoArray[current].OriginalOrderIndex;
             XamlMember nextMember = _originalNodesInOrder[originalIdx].Member;
-            while (!IsInstancingMember(nextMember))
+            while(!IsInstancingMember(nextMember))
             {
-                if (!AdvanceTo(current, XamlNodeType.StartMember, depth, out end))
+                if(!AdvanceTo(current, XamlNodeType.StartMember, depth, out end))
                 {
                     return false;
                 }
@@ -665,7 +669,7 @@ namespace MS.Internal.Xaml
                     }
                     else
                     {
-                        Debug.Fail("Missing End Object in node sorter");
+                        Debug.Assert(false, "Missing End Object in node sorter");
                     }
                 }
 
@@ -704,7 +708,7 @@ namespace MS.Internal.Xaml
             {
                 XamlNodeType currentNodeType = _sortingInfoArray[idx].XamlNodeType;
                 int nodeDepth = _sortingInfoArray[idx].Depth;
-                if (nodeDepth == searchDepth)
+                if(nodeDepth == searchDepth)
                 {
                     if (currentNodeType == nodeType)
                     {

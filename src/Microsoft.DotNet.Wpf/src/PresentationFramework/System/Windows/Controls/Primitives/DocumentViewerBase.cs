@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections;               // IEnumerator
 using System.Collections.ObjectModel;   // ReadOnlyCollection<T>
@@ -58,7 +59,7 @@ namespace System.Windows.Controls.Primitives
         protected DocumentViewerBase()
             : base()
         {
-            _pageViews = ReadOnlyCollection<DocumentPageView>.Empty;
+            _pageViews = new ReadOnlyCollection<DocumentPageView>(new List<DocumentPageView>());
             // By default text selection is enabled.
             SetFlags(true, Flags.IsSelectionEnabled);
         }
@@ -600,7 +601,10 @@ namespace System.Windows.Controls.Primitives
         protected virtual void OnCancelPrintCommand()
         {
 #if !DONOTREFPRINTINGASMMETA
-            _documentWriter?.CancelAsync();
+            if (_documentWriter != null)
+            {
+                _documentWriter.CancelAsync();
+            }
 #endif // DONOTREFPRINTINGASMMETA
         }
 
@@ -614,7 +618,7 @@ namespace System.Windows.Controls.Primitives
             // Document has been changed. Update existing DocumentPageViews to point them to the new Document.
             for (index = 0; index < _pageViews.Count; index++)
             {
-                _pageViews[index].DocumentPaginator = _document?.DocumentPaginator;
+                _pageViews[index].DocumentPaginator = (_document != null) ? _document.DocumentPaginator : null;
             }
 
             // Document invalidation invalidates following properties:
@@ -833,12 +837,15 @@ namespace System.Windows.Controls.Primitives
                 _pageViews = pageViews;
                 for (index = 0; index < _pageViews.Count; index++)
                 {
-                    _pageViews[index].DocumentPaginator = _document?.DocumentPaginator;
+                    _pageViews[index].DocumentPaginator = (_document != null) ? _document.DocumentPaginator : null;
                 }
 
                 // Collection of DocumentPageView has been changed. Need to update
                 // TextView, if one already exists.
-                _textView?.OnPagesUpdated();
+                if (_textView != null)
+                {
+                    _textView.OnPagesUpdated();
+                }
 
                 // DocumentPageViews collection has been changed. Notify all listeners
                 // and/or derived classes about this fact.
@@ -1002,8 +1009,11 @@ namespace System.Windows.Controls.Primitives
                 _textView = null;
             }
 
-            // Must be enabled - otherwise it won't be on the tree
-            service?.Disable();
+            if (service != null)
+            {
+                // Must be enabled - otherwise it won't be on the tree
+                service.Disable();
+            }
 
             // If new Document supports TextEditor, create one.
             // If the Document is already attached to TextEditor (TextSelection != null), 
@@ -1022,7 +1032,10 @@ namespace System.Windows.Controls.Primitives
             }
 
             // Re-enable the service in order to register on the new TextView
-            service?.Enable(service.Store);
+            if (service != null)
+            {
+                service.Enable(service.Store);
+            }
         }
 
         /// <summary>
@@ -1307,7 +1320,10 @@ namespace System.Windows.Controls.Primitives
                 }
 
                 DependencyObject depObj = oldDocument as DependencyObject;
-                depObj?.ClearValue(PathNode.HiddenParentProperty);
+                if (depObj != null)
+                {
+                    depObj.ClearValue(PathNode.HiddenParentProperty);
+                }
             }
 
             // If DocumentViewer was created through style, then do not modify
@@ -1387,7 +1403,10 @@ namespace System.Windows.Controls.Primitives
 
             // Document is also represented as Automation child. Need to invalidate peer to force update.
             DocumentViewerBaseAutomationPeer peer = UIElementAutomationPeer.FromElement(this) as DocumentViewerBaseAutomationPeer;
-            peer?.InvalidatePeer();
+            if (peer != null)
+            {
+                peer.InvalidatePeer();
+            }
 
             // Respond to Document change - update state that is affected by this change.
             OnDocumentChanged();
@@ -1704,7 +1723,7 @@ namespace System.Windows.Controls.Primitives
             IDocumentPaginatorSource document = value as IDocumentPaginatorSource;
             if (document == null)
             {
-                throw new ArgumentException(SR.DocumentViewerChildMustImplementIDocumentPaginatorSource, nameof(value));
+                throw new ArgumentException(SR.DocumentViewerChildMustImplementIDocumentPaginatorSource, "value");
             }
             this.Document = document;
         }

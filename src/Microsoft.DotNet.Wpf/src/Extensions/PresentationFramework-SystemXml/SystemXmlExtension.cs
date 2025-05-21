@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Helper methods for code that uses types from System.Xml.
 
@@ -170,7 +171,7 @@ namespace MS.Internal
             if (nsmgr == null)
             {
                 XmlDataProvider xdp = Helper.XmlDataProviderForElement(target);
-                nsmgr = xdp?.XmlNamespaceManager;
+                nsmgr = (xdp != null) ? xdp.XmlNamespaceManager : null;
             }
 
             return nsmgr;

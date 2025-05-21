@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 #region Using declarations
@@ -122,7 +123,8 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonComboBoxAutomationPeer peer = UIElementAutomationPeer.FromElement(cb) as RibbonComboBoxAutomationPeer;
             // Raise the propetyChangeEvent for Value if Automation Peer exist, the new Value must
             // be the one in SelctionBoxItem(selected value is the one user will care about)
-            peer?.RaiseValuePropertyChangedEvent((string)e.OldValue, (string)e.NewValue);
+            if (peer != null)
+                peer.RaiseValuePropertyChangedEvent((string)e.OldValue, (string)e.NewValue);
 
 
             cb.TextUpdated((string)e.NewValue, false);
@@ -367,7 +369,10 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             set
             {
-                _firstGallery?.HighlightedItem = value;
+                if (_firstGallery != null)
+                {
+                    _firstGallery.HighlightedItem = value;
+                }
             }
         }
 
@@ -775,9 +780,9 @@ namespace Microsoft.Windows.Controls.Ribbon
                     {
                         SetValue(TextProperty, newText);
                     }
-                    else
+                    else if (EditableTextBoxSite != null)
                     {
-                        EditableTextBoxSite?.Text = newText;
+                        EditableTextBoxSite.Text = newText;
                     }
                 }
                 finally
@@ -807,7 +812,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
         }
 
-        private object UpdateTextBoxCallback(object arg)
+        object UpdateTextBoxCallback(object arg)
         {
             _updateTextBoxOperation = null;
 
@@ -828,7 +833,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             return null;
         }
 
-        private void UpdateTextBox(string matchedText, string newText)
+        void UpdateTextBox(string matchedText, string newText)
         {
             // Replace the TextBox's text with the matched text and
             // select the text beyond what the user typed
@@ -884,12 +889,15 @@ namespace Microsoft.Windows.Controls.Ribbon
 
                 Dispatcher.BeginInvoke((Action)delegate()
                 {
-                    // Scroll the highlighted item into view. Note that we need to do the
-                    // scroll in a Dispatcher operation because the scroll operation wont
-                    // succeed until the Popup contents are Loaded and connected to a
-                    // PresentationSource. We need to allow time for that to happen.
+                    if (_firstGallery != null)
+                    {
+                        // Scroll the highlighted item into view. Note that we need to do the
+                        // scroll in a Dispatcher operation because the scroll operation wont
+                        // succeed until the Popup contents are Loaded and connected to a
+                        // PresentationSource. We need to allow time for that to happen.
 
-                    _firstGallery?.ScrollIntoView(_firstGallery.HighlightedItem);
+                        _firstGallery.ScrollIntoView(_firstGallery.HighlightedItem);
+                    }
                 },
                 DispatcherPriority.Render);
             }
@@ -1403,17 +1411,17 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
         }
 
-        private void OnGallerySelectionChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        void OnGallerySelectionChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             UpdateSelectionProperties();
         }
 
-        private void OnGalleryItemSelectionChanged(object sender, RoutedEventArgs e)
+        void OnGalleryItemSelectionChanged(object sender, RoutedEventArgs e)
         {
             UpdateSelectionProperties();
         }
 
-        private void OnGalleryHighlightChanged(object sender, EventArgs e)
+        void OnGalleryHighlightChanged(object sender, EventArgs e)
         {
             // Note that the _firstGallery does not physically take keyboard focus.
 
@@ -1432,7 +1440,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
         }
 
-        private void OnGalleryGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        void OnGalleryGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             // When on of the GalleryItems within the _firstGallery acquires Keyboard
             // focus reinstate focus to the parent based on the IsEditable mode

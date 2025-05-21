@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows.Input.StylusWisp;
 using System.Windows.Input.Tracing;
@@ -345,7 +346,10 @@ namespace System.Windows.Input
                 StylusDeviceCollection styluses = _stylusDeviceCollection;
                 _stylusDeviceCollection = null;
 
-                styluses?.Dispose();
+                if (styluses != null)
+                {
+                    styluses.Dispose();
+                }
 
                 _penThread = null;
                 _isDisposalPending = false;
@@ -417,11 +421,11 @@ namespace System.Windows.Input
             }
         }
 
-        private PenThread _penThread; // Hold ref on worker thread we use to talk to wisptis.
+        PenThread _penThread; // Hold ref on worker thread we use to talk to wisptis.
 
         protected Size _cancelSize = Size.Empty;
 
-        private StylusDeviceCollection _stylusDeviceCollection;
+        StylusDeviceCollection _stylusDeviceCollection;
 
         private bool _isDisposalPending;
 

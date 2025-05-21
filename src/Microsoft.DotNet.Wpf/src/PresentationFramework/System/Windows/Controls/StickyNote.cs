@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Globalization;
 using System.Xml;
@@ -166,12 +167,18 @@ namespace System.Windows.Controls
             if (!this.IsExpanded)
             {
                 Button button = GetIconButton();
-                button?.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
+                if (button != null)
+                {
+                    button.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
+                }
             }
             else
             {
                 Button closeButton = GetCloseButton();
-                closeButton?.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
+                if (closeButton != null)
+                {
+                    closeButton.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
+                }
 
                 Thumb titleThumb = GetTitleThumb();
                 if (titleThumb != null)
@@ -557,7 +564,7 @@ namespace System.Windows.Controls
             ApplyTemplate();
 
             // We are interested in the expanded note.
-            if (IsExpanded)
+            if ( IsExpanded == true )
             {
                 Invariant.Assert(Content != null);
 
@@ -569,7 +576,7 @@ namespace System.Windows.Controls
                     Invariant.Assert(innerControl != null, "InnerControl is null or not a UIElement.");
 
                     // Don't mess with focus if its already on our inner control
-                    if (!innerControl.IsKeyboardFocused)
+                    if ( innerControl.IsKeyboardFocused == false )
                     {
                         // We should set the focus to the inner control after it is added the visual tree.
                         innerControl.Focus();
@@ -776,7 +783,8 @@ namespace System.Windows.Controls
             if (stickyNoteControl.Content != null && stickyNoteControl.Content.Type != StickyNoteType.Ink)
             {
                 FrameworkElement innerControl = stickyNoteControl.Content.InnerControl;
-                innerControl?.SetValue(e.Property, e.NewValue);
+                if (innerControl != null)
+                    innerControl.SetValue(e.Property, e.NewValue);
             }
         }
 
@@ -792,7 +800,8 @@ namespace System.Windows.Controls
             if (e.Property == ForegroundProperty && stickyNoteControl.Content != null && stickyNoteControl.Content.Type != StickyNoteType.Ink)
             {
                 FrameworkElement innerControl = stickyNoteControl.Content.InnerControl;
-                innerControl?.SetValue(ForegroundProperty, e.NewValue);
+                if (innerControl != null)
+                    innerControl.SetValue(ForegroundProperty, e.NewValue);
             }
         }
 
@@ -916,13 +925,13 @@ namespace System.Windows.Controls
                 if (newRectangle.X < 0)
                 {
                     //newRect.X is negative, simply add it to width to subtract it
-                    newRectangle.Width += newRectangle.X;
+                    newRectangle.Width = newRectangle.Width + newRectangle.X;
                     newRectangle.X = 0d;
                 }
                 if (newRectangle.Y < 0)
                 {
                     //newRect.Y is negative, simply add it to height to subtract it
-                    newRectangle.Height += newRectangle.Y;
+                    newRectangle.Height = newRectangle.Height + newRectangle.Y;
                     newRectangle.Y = 0d;
                 }
                 e.NewRectangle = newRectangle;
@@ -956,8 +965,11 @@ namespace System.Windows.Controls
                 Invariant.Assert(Content != null && Content.InnerControl is InkCanvas);
                 FrameworkElement parent = VisualTreeHelper.GetParent(Content.InnerControl) as FrameworkElement;
 
-                // Invalidate ContentArea's measure so that scrollbar could be updated correctly.
-                parent?.InvalidateMeasure();
+                if (parent != null)
+                {
+                    // Invalidate ContentArea's measure so that scrollbar could be updated correctly.
+                    parent.InvalidateMeasure();
+                }
             }
 
             //fire trace event
@@ -1052,7 +1064,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void OnDragDelta(object sender, DragDeltaEventArgs args)
         {
-            Invariant.Assert(IsExpanded, "Dragging occurred when the StickyNoteControl was not expanded.");
+            Invariant.Assert(IsExpanded == true, "Dragging occurred when the StickyNoteControl was not expanded.");
 
             Thumb source = args.Source as Thumb;
             double horizontalChange = args.HorizontalChange;
@@ -1085,7 +1097,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void OnTitleDragDelta(double horizontalChange, double verticalChange)
         {
-            Invariant.Assert(IsExpanded);
+            Invariant.Assert(IsExpanded != false);
 
             Rect rectNote = StickyNoteBounds;
             Rect rectPage = PageBounds;
@@ -1126,7 +1138,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void OnResizeDragDelta(double horizontalChange, double verticalChange)
         {
-            Invariant.Assert(IsExpanded);
+            Invariant.Assert(IsExpanded != false);
 
             Rect rectNote = StickyNoteBounds;
 
@@ -1214,7 +1226,7 @@ namespace System.Windows.Controls
                     Focus();
                 }
 
-                if (eatEvent)
+                if (eatEvent == true)
                 {
                     args.Handled = true;
                 }
@@ -1261,10 +1273,16 @@ namespace System.Windows.Controls
             }
 
             Button closeButton = GetCloseButton();
-            closeButton?.RemoveHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
+            if (closeButton != null)
+            {
+                closeButton.RemoveHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
+            }
 
             Button iconButton = GetIconButton();
-            iconButton?.RemoveHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
+            if (iconButton != null)
+            {
+                iconButton.RemoveHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
+            }
 
             Thumb titleThumb = GetTitleThumb();
             if (titleThumb != null)
@@ -1366,7 +1384,10 @@ namespace System.Windows.Controls
         private void BringToFront()
         {
             PresentationContext pc = ((IAnnotationComponent)this).PresentationContext;
-            pc?.BringToFront(this);
+            if ( pc != null )
+            {
+                pc.BringToFront(this);
+            }
         }
 
         /// <summary>
@@ -1377,7 +1398,10 @@ namespace System.Windows.Controls
         private void SendToBack()
         {
             PresentationContext pc = ((IAnnotationComponent)this).PresentationContext;
-            pc?.SendToBack(this);
+            if (pc != null)
+            {
+                pc.SendToBack(this);
+            }
         }
 
         /// <summary>
@@ -1386,7 +1410,10 @@ namespace System.Windows.Controls
         private void InvalidateTransform()
         {
             PresentationContext pc = ((IAnnotationComponent)this).PresentationContext;
-            pc?.InvalidateTransform(this);
+            if ( pc != null )
+            {
+                pc.InvalidateTransform(this);
+            }
         }
 
         /// <summary>
@@ -1641,10 +1668,16 @@ namespace System.Windows.Controls
 
             // Set the target for the Copy/Paste commands to our inner control
             MenuItem copyMenuItem = GetCopyMenuItem();
-            copyMenuItem?.CommandTarget = Content.InnerControl;
+            if (copyMenuItem != null)
+            {
+                copyMenuItem.CommandTarget = Content.InnerControl;
+            }
 
             MenuItem pasteMenuItem = GetPasteMenuItem();
-            pasteMenuItem?.CommandTarget = Content.InnerControl;
+            if (pasteMenuItem != null)
+            {
+                pasteMenuItem.CommandTarget = Content.InnerControl;
+            }
         }
 
 

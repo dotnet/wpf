@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #if !DONOTREFPRINTINGASMMETA
 /*
@@ -240,8 +241,8 @@ namespace System.Windows.Controls
         {
             get
             {
-                if( ((!_isPrintableAreaWidthUpdated) && (!_isPrintableAreaHeightUpdated)) ||
-                    ((_isPrintableAreaWidthUpdated)  && (!_isPrintableAreaHeightUpdated)))
+                if( ((_isPrintableAreaWidthUpdated == false) && (_isPrintableAreaHeightUpdated == false)) ||
+                    ((_isPrintableAreaWidthUpdated == true)  && (_isPrintableAreaHeightUpdated == false)))
                 {
                     _isPrintableAreaWidthUpdated  = true;
                     _isPrintableAreaHeightUpdated = false;
@@ -262,8 +263,8 @@ namespace System.Windows.Controls
         {
             get
             {
-                if( ((!_isPrintableAreaWidthUpdated) && (!_isPrintableAreaHeightUpdated)) ||
-                    ((!_isPrintableAreaWidthUpdated)  && (_isPrintableAreaHeightUpdated)))
+                if( ((_isPrintableAreaWidthUpdated == false) && (_isPrintableAreaHeightUpdated == false)) ||
+                    ((_isPrintableAreaWidthUpdated == false)  && (_isPrintableAreaHeightUpdated == true)))
                 {
                     _isPrintableAreaWidthUpdated  = false;
                     _isPrintableAreaHeightUpdated = true;
@@ -521,7 +522,10 @@ namespace System.Windows.Controls
 
             PickCorrectPrintingEnvironment(ref printQueue, ref printTicket);
 
-            printQueue?.CurrentJobSettings.Description = description;
+            if(printQueue != null)
+            {
+                printQueue.CurrentJobSettings.Description = description;
+            }
 
             writer = PrintQueue.CreateXpsDocumentWriter(printQueue);
 

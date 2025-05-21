@@ -1,6 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-
+// See the LICENSE file in the project root for more information.
 using System.Reflection;
 
 namespace WinRT
@@ -15,7 +15,7 @@ namespace WinRT
                 type = typeof(Exception);
             }
             Type customMapping = Projections.FindCustomHelperTypeMapping(type);
-            if (customMapping is not null)
+            if (customMapping is object)
             {
                 return customMapping;
             }
@@ -31,7 +31,7 @@ namespace WinRT
         public static Type GetHelperType(this Type type)
         {
             var helperType = type.FindHelperType();
-            if (helperType is not null)
+            if (helperType is object)
                 return helperType;
             throw new InvalidOperationException($"Target type is not a projected type: {type.FullName}.");
         }
@@ -48,7 +48,7 @@ namespace WinRT
             {
                 return null;
             }
-            if (helperType.IsGenericType && vftblType is not null)
+            if (helperType.IsGenericType && vftblType is object)
             {
                 vftblType = vftblType.MakeGenericType(helperType.GetGenericArguments());
             }

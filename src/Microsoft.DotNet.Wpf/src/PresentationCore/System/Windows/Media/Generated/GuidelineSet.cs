@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -10,21 +11,13 @@
 
 using MS.Internal;
 using MS.Internal.KnownBoxes;
-using MS.Internal.Collections;
-using MS.Utility;
-using System.Collections;
-using System.ComponentModel;
-using System.Globalization;
-using System.Text;
-using System.Windows.Media.Effects;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using System.Windows.Markup;
-using System.Windows.Media.Converters;
+// These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media
 {
-    public sealed partial class GuidelineSet : Animatable, DUCE.IResource
+    sealed partial class GuidelineSet : Animatable, DUCE.IResource
     {
         //------------------------------------------------------
         //
@@ -65,10 +58,6 @@ namespace System.Windows.Media
 
         private static void GuidelinesXPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
-
-
-
             GuidelineSet target = ((GuidelineSet) d);
 
 
@@ -76,10 +65,6 @@ namespace System.Windows.Media
         }
         private static void GuidelinesYPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
-
-
-
             GuidelineSet target = ((GuidelineSet) d);
 
 
@@ -103,7 +88,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (DoubleCollection)GetValue(GuidelinesXProperty);
+                return (DoubleCollection) GetValue(GuidelinesXProperty);
             }
             set
             {
@@ -118,7 +103,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (DoubleCollection)GetValue(GuidelinesYProperty);
+                return (DoubleCollection) GetValue(GuidelinesYProperty);
             }
             set
             {
@@ -133,7 +118,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (bool)GetValue(IsDynamicProperty);
+                return (bool) GetValue(IsDynamicProperty);
             }
             set
             {
@@ -208,7 +193,7 @@ namespace System.Windows.Media
 
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for (int i = 0; i < GuidelinesXCount; i++)
+                    for(int i = 0; i < GuidelinesXCount; i++)
                     {
                         Double resource = vGuidelinesX.Internal_GetItem(i);
                         channel.AppendCommandData(
@@ -218,7 +203,7 @@ namespace System.Windows.Media
                     }
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for (int i = 0; i < GuidelinesYCount; i++)
+                    for(int i = 0; i < GuidelinesYCount; i++)
                     {
                         Double resource = vGuidelinesY.Internal_GetItem(i);
                         channel.AppendCommandData(
@@ -237,8 +222,6 @@ namespace System.Windows.Media
             {
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_GUIDELINESET))
                 {
-
-
                     AddRefOnChannelAnimations(channel);
 
 
@@ -256,11 +239,8 @@ namespace System.Windows.Media
 
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
-
-
                     ReleaseOnChannelAnimations(channel);
-
-                }
+}
             }
         }
         DUCE.ResourceHandle DUCE.IResource.GetHandle(DUCE.Channel channel)
@@ -357,7 +337,8 @@ namespace System.Windows.Media
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app.
+            // of your app.  (Windows OS 
+
             Debug.Assert(s_GuidelinesX == null || s_GuidelinesX.IsFrozen,
                 "Detected context bound default value GuidelineSet.s_GuidelinesX (See OS Bug #947272).");
 
@@ -396,8 +377,6 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
-
 
         #endregion Constructors
     }

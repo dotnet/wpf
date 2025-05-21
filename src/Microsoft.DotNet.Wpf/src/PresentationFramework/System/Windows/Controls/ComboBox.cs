@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
@@ -212,7 +213,10 @@ namespace System.Windows.Controls
 
             // Fire accessibility event
             ComboBoxAutomationPeer peer = UIElementAutomationPeer.FromElement(comboBox) as ComboBoxAutomationPeer;
-            peer?.RaiseExpandCollapseAutomationEvent(oldValue, newValue);
+            if(peer != null)
+            {
+                peer.RaiseExpandCollapseAutomationEvent(oldValue, newValue);
+            }
 
             if (newValue)
             {
@@ -232,7 +236,10 @@ namespace System.Windows.Controls
                             ComboBox cb = (ComboBox)arg;
                             cb.UpdateSelectionBoxItem();
 
-                            cb._clonedElement?.CoerceValue(FrameworkElement.FlowDirectionProperty);
+                            if (cb._clonedElement != null)
+                            {
+                                cb._clonedElement.CoerceValue(FrameworkElement.FlowDirectionProperty);
+                            }
 
                             return null;
                         },
@@ -565,7 +572,8 @@ namespace System.Windows.Controls
                 ||  AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection)   )
             {
                 ComboBoxAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this) as ComboBoxAutomationPeer;
-                peer?.RaiseSelectionEvents(e);
+                if (peer != null)
+                    peer.RaiseSelectionEvents(e);
             }
         }
 
@@ -609,7 +617,8 @@ namespace System.Windows.Controls
             ComboBoxAutomationPeer peer = UIElementAutomationPeer.FromElement(cb) as ComboBoxAutomationPeer;
             // Raise the propetyChangeEvent for Value if Automation Peer exist, the new Value must
             // be the one in SelctionBoxItem(selected value is the one user will care about)
-            peer?.RaiseValuePropertyChangedEvent((string)e.OldValue, (string)e.NewValue);
+            if (peer != null)
+                peer.RaiseValuePropertyChangedEvent((string)e.OldValue, (string)e.NewValue);
 
             cb.TextUpdated((string)e.NewValue, false);
         }
@@ -758,9 +767,9 @@ namespace System.Windows.Controls
                     {
                         SetCurrentValueInternal(TextProperty, newText);
                     }
-                    else
+                    else if (EditableTextBoxSite != null)
                     {
-                        EditableTextBoxSite?.Text = newText;
+                        EditableTextBoxSite.Text = newText;
                     }
                 }
                 finally
@@ -771,7 +780,7 @@ namespace System.Windows.Controls
             }
         }
 
-        private object UpdateTextBoxCallback(object arg)
+        object UpdateTextBoxCallback(object arg)
         {
             _updateTextBoxOperation = null;
 
@@ -792,7 +801,7 @@ namespace System.Windows.Controls
             return null;
         }
 
-        private void UpdateTextBox(string matchedText, MatchedTextInfo matchedTextInfo)
+        void UpdateTextBox(string matchedText, MatchedTextInfo matchedTextInfo)
         {
             // Replace the TextBox's text with the matched text and
             // select the text beyond what the user typed
@@ -1846,7 +1855,7 @@ namespace System.Windows.Controls
 
             SetCurrentValueInternal(IsDropDownOpenProperty, BooleanBoxes.Box(openDropDown));
 
-            if (!openDropDown && commitSelection && (infoToSelect != null))
+            if (openDropDown == false && commitSelection && (infoToSelect != null))
             {
                 SelectionChange.SelectJustThisItem(infoToSelect, true /* assumeInItemsCollection */);
             }
@@ -1945,12 +1954,18 @@ namespace System.Windows.Controls
             set
             {
                 ComboBoxItem cbi = (_highlightedInfo != null) ? _highlightedInfo.Container as ComboBoxItem : null;
-                cbi?.SetIsHighlighted(false);
+                if (cbi != null)
+                {
+                    cbi.SetIsHighlighted(false);
+                }
 
                 _highlightedInfo = value;
 
                 cbi = (_highlightedInfo != null) ? _highlightedInfo.Container as ComboBoxItem : null;
-                cbi?.SetIsHighlighted(true);
+                if (cbi != null)
+                {
+                    cbi.SetIsHighlighted(true);
+                }
 
                 CoerceValue(IsSelectionBoxHighlightedProperty);
             }

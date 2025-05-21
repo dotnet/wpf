@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -365,7 +366,10 @@ namespace System.Windows.Markup
                         }
 
                         UIElement uiElement = args.Instance as UIElement;
-                        uiElement?.SetPersistId(_persistId++);
+                        if (uiElement != null)
+                        {
+                            uiElement.SetPersistId(_persistId++);
+                        }
 
                         DependencyObject dObject = args.Instance as DependencyObject;
                         if (dObject != null && _stack.CurrentFrame.XmlnsDictionary != null)
@@ -416,14 +420,14 @@ namespace System.Windows.Markup
                     }
                     else if (xamlReader.NodeType == System.Xaml.XamlNodeType.Value)
                     {
-                        if (lastPropWasSyncMode)
+                        if (lastPropWasSyncMode == true)
                         {
                             if (xamlReader.Value as String == "Async")
                             {
                                 async = true;
                             }
                         }
-                        else if (lastPropWasSyncRecords)
+                        else if (lastPropWasSyncRecords == true)
                         {
                             if (xamlReader.Value is int)
                             {
@@ -477,7 +481,10 @@ namespace System.Windows.Markup
             }
 
             Application app = rootObject as Application;
-            app?.ApplicationMarkupBaseUri = GetBaseUri(settings.BaseUri);
+            if (app != null)
+            {
+                app.ApplicationMarkupBaseUri = GetBaseUri(settings.BaseUri);
+            }
 
             return rootObject;
         }
@@ -499,7 +506,7 @@ namespace System.Windows.Markup
             if (baseException is System.Windows.Markup.XamlParseException)
             {
                 var xe = ((System.Windows.Markup.XamlParseException)baseException);
-                xe.BaseUri ??= baseUri;
+                xe.BaseUri = xe.BaseUri ?? baseUri;
                 if (lineInfo != null && xe.LinePosition == 0 && xe.LineNumber == 0)
                 {
                     xe.LinePosition = lineInfo.LinePosition;
@@ -560,7 +567,7 @@ namespace System.Windows.Markup
             xamlReader.HandleAsyncQueueItem();
         }
 
-        private const int AsyncLoopTimeout = (int)200;
+        const int AsyncLoopTimeout = (int)200;
         /// <summary>
         /// called when in async mode when get a time slice to read and load the Tree
         /// </summary>
@@ -653,7 +660,7 @@ namespace System.Windows.Markup
                 else
                 {
                     // if not at the EndOfDocument then post another work item
-                    if (!_textReader.IsEof)
+                    if (false == _textReader.IsEof)
                     {
                         Post();
                     }
@@ -950,7 +957,10 @@ namespace System.Windows.Markup
             }
 
             Application app = root as Application;
-            app?.ApplicationMarkupBaseUri = GetBaseUri(parserContext.BaseUri);
+            if (app != null)
+            {
+                app.ApplicationMarkupBaseUri = GetBaseUri(parserContext.BaseUri);
+            }
 
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordXamlBaml | EventTrace.Keyword.KeywordPerf, EventTrace.Event.WClientParseXamlEnd, parserContext.BaseUri);
 
@@ -968,7 +978,7 @@ namespace System.Windows.Markup
             catch (Exception e)
             {
                 IUriContext uriContext = reader as IUriContext;
-                Uri baseUri = uriContext?.BaseUri;
+                Uri baseUri = (uriContext != null) ? uriContext.BaseUri : null;
                 // Don't wrap critical exceptions or already-wrapped exceptions.
                 if (MS.Internal.CriticalExceptions.IsCriticalException(e) || !ShouldReWrapException(e, baseUri))
                 {
@@ -1088,10 +1098,16 @@ namespace System.Windows.Markup
                 }
 
                 DependencyObject dObject = root as DependencyObject;
-                dObject?.SetValue(BaseUriHelper.BaseUriProperty, readerSettings.BaseUri);
+                if (dObject != null)
+                {
+                    dObject.SetValue(BaseUriHelper.BaseUriProperty, readerSettings.BaseUri);
+                }
 
                 Application app = root as Application;
-                app?.ApplicationMarkupBaseUri = GetBaseUri(readerSettings.BaseUri);
+                if (app != null)
+                {
+                    app.ApplicationMarkupBaseUri = GetBaseUri(readerSettings.BaseUri);
+                }
 
                 Debug.Assert(parent == null || root == parent);
             }
@@ -1121,13 +1137,13 @@ namespace System.Windows.Markup
             return (root);
         }
 
-        private static Uri GetBaseUri(Uri uri)
+        static Uri GetBaseUri(Uri uri)
         {
             if (uri == null)
             {
                 return MS.Internal.Utility.BindUriHelper.BaseUri;
             }
-            else if (!uri.IsAbsoluteUri)
+            else if (uri.IsAbsoluteUri == false)
             {
                 return new Uri(MS.Internal.Utility.BindUriHelper.BaseUri, uri);
             }

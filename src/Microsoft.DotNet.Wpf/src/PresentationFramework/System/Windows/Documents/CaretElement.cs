@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows.Media; // Brush, Transform
 using System.Windows.Media.Animation; // AnimationClock
@@ -103,7 +104,7 @@ namespace System.Windows.Documents
         {
             if (index != 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
 
             return _caretElement;
@@ -705,7 +706,7 @@ namespace System.Windows.Documents
                     if (flowDirection == FlowDirection.RightToLeft)
                     {
                         // BiDi caret indicator should always direct by the right to left
-                        bidiCaretIndicatorWidth *= -1;
+                        bidiCaretIndicatorWidth = bidiCaretIndicatorWidth * (-1);
                     }
 
                     // Draw BIDI caret to indicate the coming input is BIDI characters.
@@ -860,8 +861,11 @@ namespace System.Windows.Documents
             if (layer == null)
             {
                 // There is no AdornerLayer available.  Clear cached value and exit.
-                // We're currently in a layer that doesn't exist.
-                _adornerLayer?.Remove(this);
+                if (_adornerLayer != null)
+                {
+                    // We're currently in a layer that doesn't exist.
+                    _adornerLayer.Remove(this);
+                }
 
                 _adornerLayer = null;
                 return;
@@ -873,8 +877,11 @@ namespace System.Windows.Documents
                 return;
             }
 
-            // We're currently in the wrong layer.
-            _adornerLayer?.Remove(this);
+            if (_adornerLayer != null)
+            {
+                // We're currently in the wrong layer.
+                _adornerLayer.Remove(this);
+            }
 
             // Add ourselves to the correct layer.
             _adornerLayer = layer;

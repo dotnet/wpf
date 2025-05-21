@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Diagnostics;
@@ -480,22 +481,18 @@ namespace System.Windows
         /// <returns>A string representation of this Duration.</returns>
         public override string ToString()
         {
-            return HasTimeSpan ? TypeDescriptor.GetConverter(_timeSpan).ConvertToString(_timeSpan) : ToStringInvariant();
-        }
-
-        /// <summary>
-        /// This method does not use the current <see cref="System.TimeSpan"/>'s <see cref="TypeDescriptor"/> for retrieving the
-        /// current converter, but rather uses the standard <see cref="TimeSpan.ToString()"/> override for <see cref="DurationConverter"/> needs.
-        /// </summary>
-        /// <returns>A culture-invariant representation of the <see cref="Duration"/> instance.</returns>
-        internal string ToStringInvariant()
-        {
-            if (_durationType == DurationType.Forever)
+            if (HasTimeSpan)
+            {
+                return TypeDescriptor.GetConverter(_timeSpan).ConvertToString(_timeSpan);
+            }
+            else if (_durationType == DurationType.Forever)
+            {
                 return "Forever";
-            else if (_durationType == DurationType.Automatic)
+            }
+            else // IsAutomatic
+            {
                 return "Automatic";
-
-            return _timeSpan.ToString();
+            }
         }
 
         #endregion

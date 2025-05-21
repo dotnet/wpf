@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using MS.Internal.KnownBoxes;
@@ -86,7 +87,10 @@ namespace System.Windows.Controls
             bool isSelected = (bool) e.NewValue;
 
             Selector parentSelector = listItem.ParentSelector;
-            parentSelector?.RaiseIsSelectedChangedAutomationEvent(listItem, isSelected);
+            if (parentSelector != null)
+            {
+                parentSelector.RaiseIsSelectedChangedAutomationEvent(listItem, isSelected);
+            }
 
             if (isSelected)
             {
@@ -269,7 +273,10 @@ namespace System.Windows.Controls
             if (Selector.UiGetIsSelectable(this) && Focus())
             {
                 ListBox parent = ParentListBox;
-                parent?.NotifyListItemClicked(this, mouseButton);
+                if (parent != null)
+                {
+                    parent.NotifyListItemClicked(this, mouseButton);
+                }
             }
         }
 
@@ -340,7 +347,10 @@ namespace System.Windows.Controls
 
             // If earlier, we decided to set focus to the old parent ListBox, do it here
             // after calling base so that the state for IsKeyboardFocusWithin is updated correctly.
-            oldItemsControl?.Focus();
+            if (oldItemsControl != null)
+            {
+                oldItemsControl.Focus();
+            }
         }
 
 
@@ -384,7 +394,7 @@ namespace System.Windows.Controls
 
         #region Private Fields
 
-        private DispatcherOperation parentNotifyDraggedOperation = null;
+        DispatcherOperation parentNotifyDraggedOperation = null;
 
         #endregion
 

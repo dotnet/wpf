@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -135,8 +136,8 @@ namespace System.Windows.Markup
                 return targetType;
         }
 
-        // Helper to insert line and position numbers into message, if they are present
-        private void ThrowException(
+                // Helper to insert line and position numbers into message, if they are present
+        void ThrowException(
              string id,
              int  lineNumber,
              int  linePosition)

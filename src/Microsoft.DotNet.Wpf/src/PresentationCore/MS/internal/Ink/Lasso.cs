@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.Windows;
@@ -118,7 +119,7 @@ namespace MS.Internal.Ink
         {
             System.Diagnostics.Debug.Assert(_points != null);
 
-            if (!_bounds.Contains(point))
+            if (false == _bounds.Contains(point))
             {
                 return false;
             }
@@ -224,7 +225,7 @@ namespace MS.Internal.Ink
                 currentStrokeSegmentBounds.Union(nodeBounds);
 
                 // Skip the node if it's outside of the lasso's bounds
-                if (currentStrokeSegmentBounds.IntersectsWith(_bounds))
+                if (currentStrokeSegmentBounds.IntersectsWith(_bounds) == true)
                 {
                     // currentStrokeSegmentBounds, made up of the bounding box of
                     // this StrokeNode unioned with the last StrokeNode,
@@ -689,7 +690,7 @@ namespace MS.Internal.Ink
 
             // Don't add this point if the lasso already has a loop; or
             // if it's filtered by base class's filter.
-            if (_hasLoop || base.Filter(point))
+            if (true == _hasLoop || true == base.Filter(point))
             {
                 // Don't add this point to the lasso.
                 return true;
@@ -700,7 +701,7 @@ namespace MS.Internal.Ink
             // Now check whether the line lastPoint->point intersect with the
             // existing lasso.
 
-            if (GetIntersectionWithExistingLasso(point, ref intersection))
+            if (true == GetIntersectionWithExistingLasso(point, ref intersection))
             {
                 System.Diagnostics.Debug.Assert(intersection >= 0 && intersection <= points.Count - 2);
 
@@ -728,11 +729,11 @@ namespace MS.Internal.Ink
                 // points[i-1] should be removed
                 if (i > 0)
                 {
-                    points.RemoveRange(0, count: i);   // Remove points[0] to points[i-1]
+                    points.RemoveRange(0, i /*count*/);   // Remove points[0] to points[i-1]
                     IsIncrementalLassoDirty = true;
                 }
 
-                if (IsIncrementalLassoDirty)
+                if (true == IsIncrementalLassoDirty)
                 {
                     // Update the bounds
                     Rect bounds = Rect.Empty;
@@ -771,7 +772,7 @@ namespace MS.Internal.Ink
 
             Rect newRect = new Rect(points[count - 1], point);
 
-            if (!_prevBounds.IntersectsWith(newRect))
+            if (false == _prevBounds.IntersectsWith(newRect))
             {
                 // The point is not contained in the bound of the existing lasso, no intersection.
                 return false;
@@ -785,12 +786,10 @@ namespace MS.Internal.Ink
                     continue;
                 }
 
-                double s = FindIntersection(
-                    hitBegin: points[count-1] - points[i],
-                    hitEnd: point - points[i],
-                    orgBegin: new Vector(0, 0),
-                    orgEnd: points[i+1] - points[i]);
-
+                double s = FindIntersection(points[count-1] - points[i],            /*hitBegin*/
+                                                    point - points[i],              /*hitEnd*/
+                                                    new Vector(0, 0),               /*orgBegin*/
+                                                    points[i+1] - points[i]         /*orgEnd*/);
                 if (s >=0 && s <= 1)
                 {
                     // Intersection found, adjust the fIndex

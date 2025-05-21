@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -24,7 +25,7 @@ namespace MS.Internal.AutomationProxies
     //------------------------------------------------------
 
     // Proxy for List view Group Subset Link
-    internal class ListViewGroupSubsetLink: ProxySimple, IInvokeProvider
+    class ListViewGroupSubsetLink: ProxySimple, IInvokeProvider
         {
             //------------------------------------------------------
             //
@@ -66,7 +67,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // Gets the bounding rectangle for this element
-            internal override unsafe Rect BoundingRectangle
+            internal unsafe override Rect BoundingRectangle
             {
                 get
                 {

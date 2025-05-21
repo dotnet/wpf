@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -225,7 +226,7 @@ namespace MS.Internal.Annotations.Anchoring
             TextAnchor anchor = selection as TextAnchor;
 
             if (anchor == null)
-                throw new ArgumentException(SR.WrongSelectionType, nameof(selection));
+                throw new ArgumentException(SR.WrongSelectionType, "selection");
 
             return GetAnchorPointForPointer(anchor.Start.CreatePointer(LogicalDirection.Forward));
         }
@@ -367,7 +368,7 @@ namespace MS.Internal.Annotations.Anchoring
             {
                 TextAnchor textAnchor = selection as TextAnchor;
                 if (textAnchor == null)
-                    throw new ArgumentException(SR.WrongSelectionType, nameof(selection));
+                    throw new ArgumentException(SR.WrongSelectionType, "selection");
 
                 start = textAnchor.Start;
                 end = textAnchor.End;

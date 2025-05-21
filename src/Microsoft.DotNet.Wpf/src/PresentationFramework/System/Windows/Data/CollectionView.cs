@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Base implementation of ICollectionView that enforces
@@ -122,7 +123,10 @@ namespace System.Windows.Data
                         }
 
                         IDisposable d = e as IDisposable;
-                        d?.Dispose();
+                        if (d != null)
+                        {
+                            d.Dispose();
+                        }
                     },
                     false);
             }
@@ -1425,7 +1429,10 @@ namespace System.Windows.Data
         internal void InvalidateEnumerableWrapper()
         {
             IndexedEnumerable wrapper = (IndexedEnumerable) Interlocked.Exchange(ref _enumerableWrapper, null);
-            wrapper?.Invalidate();
+            if (wrapper != null)
+            {
+                wrapper.Invalidate();
+            }
         }
 
         internal ReadOnlyCollection<ItemPropertyInfo> GetItemProperties()
@@ -1563,7 +1570,10 @@ namespace System.Windows.Data
             }
 
             IDisposable d = ie as IDisposable;
-            d?.Dispose();
+            if (d != null)
+            {
+                d.Dispose();
+            }
 
             return result;
         }
@@ -1613,7 +1623,7 @@ namespace System.Windows.Data
 
         internal class PlaceholderAwareEnumerator : IEnumerator
         {
-            private enum Position { BeforePlaceholder, OnPlaceholder, OnNewItem, AfterPlaceholder}
+            enum Position { BeforePlaceholder, OnPlaceholder, OnNewItem, AfterPlaceholder}
 
             public PlaceholderAwareEnumerator(CollectionView collectionView, IEnumerator baseEnumerator, NewItemPlaceholderPosition placeholderPosition, object newItem)
             {
@@ -1700,12 +1710,12 @@ namespace System.Windows.Data
                 _baseEnumerator.Reset();
             }
 
-            private CollectionView _collectionView;
-            private IEnumerator _baseEnumerator;
-            private NewItemPlaceholderPosition _placeholderPosition;
-            private Position _position;
-            private object _newItem;
-            private int _timestamp;
+            CollectionView _collectionView;
+            IEnumerator _baseEnumerator;
+            NewItemPlaceholderPosition _placeholderPosition;
+            Position _position;
+            object _newItem;
+            int _timestamp;
         }
 
         #endregion Internal Types
@@ -1867,11 +1877,11 @@ namespace System.Windows.Data
         {
             if (value)
             {
-                _flags |= flags;
+                _flags = _flags | flags;
             }
             else
             {
-                _flags &= ~flags;
+                _flags = _flags & ~flags;
             }
         }
 
@@ -2098,7 +2108,7 @@ namespace System.Windows.Data
 
             public bool Busy { get { return _entered; } }
 
-            private bool _entered;
+            bool _entered;
         }
 
         [Flags]
@@ -2130,30 +2140,31 @@ namespace System.Windows.Data
         private List<NotifyCollectionChangedEventArgs> _changeLog = new();
         private List<NotifyCollectionChangedEventArgs> _tempChangeLog = s_emptyList;
 
-        private DataBindOperation _databindOperation;
-        private object                  _vmData;            // view manager's private data
-        private IEnumerable             _sourceCollection;  // the underlying collection
-        private CultureInfo             _culture;           // culture to use when sorting
-        private SimpleMonitor           _currentChangedMonitor = new SimpleMonitor();
-        private int                     _deferLevel;
-        private IndexedEnumerable       _enumerableWrapper;
-        private Predicate<object>       _filter;
-        private object                  _currentItem;
-        private int                     _currentPosition;
-        private CollectionViewFlags     _flags = CollectionViewFlags.ShouldProcessCollectionChanged | CollectionViewFlags.NeedsRefresh;
-        private bool _currentElementWasRemovedOrReplaced;
-        private static object           _newItemPlaceholder = new NamedObject("NewItemPlaceholder");
-        private object                  _syncObject = new object();
-        private DataBindEngine          _engine;
-        private int                     _timestamp;
+        DataBindOperation       _databindOperation;
+        object                  _vmData;            // view manager's private data
+        IEnumerable             _sourceCollection;  // the underlying collection
+        CultureInfo             _culture;           // culture to use when sorting
+        SimpleMonitor           _currentChangedMonitor = new SimpleMonitor();
+        int                     _deferLevel;
+        IndexedEnumerable       _enumerableWrapper;
+        Predicate<object>       _filter;
+        object                  _currentItem;
+        int                     _currentPosition;
+        CollectionViewFlags     _flags = CollectionViewFlags.ShouldProcessCollectionChanged |
+                                        CollectionViewFlags.NeedsRefresh;
+        bool                    _currentElementWasRemovedOrReplaced;
+        static object           _newItemPlaceholder = new NamedObject("NewItemPlaceholder");
+        object                  _syncObject = new object();
+        DataBindEngine          _engine;
+        int                     _timestamp;
 
         private static readonly List<NotifyCollectionChangedEventArgs> s_emptyList = new();
-        private static readonly string IEnumerableT = typeof(IEnumerable<>).Name;
+        static readonly string IEnumerableT = typeof(IEnumerable<>).Name;
         internal static readonly object NoNewItem = new NamedObject("NoNewItem");
 
         // since there's nothing in the uncancelable event args that is mutable,
         // just create one instance to be used universally.
-        private static readonly CurrentChangingEventArgs uncancelableCurrentChangingEventArgs = new CurrentChangingEventArgs(false);
+        static readonly CurrentChangingEventArgs uncancelableCurrentChangingEventArgs = new CurrentChangingEventArgs(false);
 
         internal const string CountPropertyName = "Count";
         internal const string IsEmptyPropertyName = "IsEmpty";

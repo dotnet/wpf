@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Holds an existing collection structure
@@ -96,7 +97,10 @@ namespace System.Windows.Data
             IEnumerator enumerator = Collection.GetEnumerator();
             bool result = enumerator.MoveNext();
             IDisposable d = enumerator as IDisposable;
-            d?.Dispose();
+            if (d != null)
+            {
+                d.Dispose();
+            }
 
             return result;
         }
@@ -343,7 +347,8 @@ namespace System.Windows.Data
             {
                 CollectionChangedEventManager.RemoveHandler(View, OnCollectionChanged);
 
-                _traceLog?.Add("Unsubscribe to CollectionChange from {0}",
+                if (_traceLog != null)
+                    _traceLog.Add("Unsubscribe to CollectionChange from {0}",
                             TraceLog.IdFor(View));
             }
 
@@ -358,7 +363,8 @@ namespace System.Windows.Data
             {
                 CollectionChangedEventManager.AddHandler(View, OnCollectionChanged);
 
-                _traceLog?.Add("Subscribe to CollectionChange from {0}", TraceLog.IdFor(View));
+                if (_traceLog != null)
+                    _traceLog.Add("Subscribe to CollectionChange from {0}", TraceLog.IdFor(View));
             }
 
             if (shouldRaiseChangeEvent) // it's as if this were a refresh of the container's collection
@@ -375,7 +381,7 @@ namespace System.Windows.Data
 
         // this method is here just to avoid the compiler error
         // error CS0649: Warning as Error: Field '..._traceLog' is never assigned to, and will always have its default value null
-        private void InitializeTraceLog()
+        void InitializeTraceLog()
         {
             _traceLog = new TraceLog(20);
         }

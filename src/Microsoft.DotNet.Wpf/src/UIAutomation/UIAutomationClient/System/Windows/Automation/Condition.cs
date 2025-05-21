@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal.Automation;
 using System.Runtime.InteropServices;
@@ -23,7 +24,7 @@ namespace System.Windows.Automation
             get { return handle == IntPtr.Zero; }
         }
 
-        protected override bool ReleaseHandle()
+        override protected bool ReleaseHandle()
         {
             Marshal.FreeCoTaskMem(handle);
             return true;

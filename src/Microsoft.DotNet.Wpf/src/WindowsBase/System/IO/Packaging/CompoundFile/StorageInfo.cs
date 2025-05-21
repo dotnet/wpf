@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using MS.Internal.IO.Packaging.CompoundFile;
@@ -79,13 +80,13 @@ public class StorageInfo
     /// The only time this is allowed to be null is when this storage is the
     /// root storage.
     /// </summary>
-    private StorageInfo parentStorage;
+    StorageInfo parentStorage;
 
     /// <summary>
     /// Each storage holds a reference to the container root.  This value will
     /// be equal to null for the container root.
     /// </summary>
-    private StorageRoot rootStorage;
+    StorageRoot rootStorage;
 
     /// <summary>
     /// There is one StorageInfoCore object per underlying IStorage. If 
@@ -156,7 +157,7 @@ public class StorageInfo
     /// Respond to a request from a child StorageInfo object to give
     /// it a StorageInfoCore object for the given name.
     /// </summary>
-    private StorageInfoCore CoreForChildStorage( string storageNname )
+    StorageInfoCore CoreForChildStorage( string storageNname )
     {
         CheckDisposedStatus();
         
@@ -1013,7 +1014,7 @@ public class StorageInfo
     /// If this returns true, the storage cache pointer should be live.
     /// </summary>
     /// <returns>Whether "this" storage exists</returns>
-    private bool InternalExists()
+    bool InternalExists()
     {
         return InternalExists( core.storageName );
     }
@@ -1032,7 +1033,7 @@ public class StorageInfo
     /// If this returns true, the storage cache pointer should be live.
     /// </summary>
     /// <returns>Whether "this" storage exists</returns>
-    private bool InternalExists(string name)
+    bool InternalExists(string name)
     {
         // We can't have an IStorage unless we exist.
         if( null != core.safeIStorage )
@@ -1065,7 +1066,7 @@ public class StorageInfo
         return parentStorage.CanOpenStorage( name );
     }
     
-    private bool CanOpenStorage( string nameInternal )
+    bool CanOpenStorage( string nameInternal )
     {
         bool openSuccess = false;
         StorageInfoCore childCore = core.elementInfoCores[ nameInternal ] as StorageInfoCore ;
@@ -1107,7 +1108,7 @@ public class StorageInfo
     /// If it doesn't, abort with an exception.  This implements the little
     /// shortcut.
     /// </summary>
-    private void VerifyExists()
+    void VerifyExists()
     {
         if( !InternalExists() )
         {
@@ -1120,7 +1121,7 @@ public class StorageInfo
     /// <summary>
     /// Grabs the STATSTG representing us
     /// </summary>
-    private System.Runtime.InteropServices.ComTypes.STATSTG GetStat()
+    System.Runtime.InteropServices.ComTypes.STATSTG GetStat()
     {
         System.Runtime.InteropServices.ComTypes.STATSTG returnValue;
 
@@ -1139,7 +1140,7 @@ public class StorageInfo
     /// DateTime from a 64-bit value representing FILETIME instead of the
     /// FILETIME struct itself.
     /// </summary>
-    private DateTime ConvertFILETIMEToDateTime( System.Runtime.InteropServices.ComTypes.FILETIME time )
+    DateTime ConvertFILETIMEToDateTime( System.Runtime.InteropServices.ComTypes.FILETIME time )
     {
         // We should let the user know when the time is not valid, rather than 
         //  return a bogus date of Dec 31. 1600.

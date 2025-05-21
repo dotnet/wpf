@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //#define Profiling
@@ -1573,9 +1574,12 @@ namespace System.Windows.Controls
                 }
 
                 OnScrollChange();
-                // When layout gets updated it may happen that visual is obscured by a ScrollBar
-                // We call MakeVisible again to make sure element is visible in this case
-                ScrollOwner?.MakeVisible(visual, originalRect);
+                if (ScrollOwner != null)
+                {
+                    // When layout gets updated it may happen that visual is obscured by a ScrollBar
+                    // We call MakeVisible again to make sure element is visible in this case
+                    ScrollOwner.MakeVisible(visual, originalRect);
+                }
             }
             else
             {
@@ -1655,8 +1659,11 @@ namespace System.Windows.Controls
                                 groupItem.UpdateLayout();
 
                                 VirtualizingPanel itemsHost = groupItem.ItemsHost as VirtualizingPanel;
-                                // Recursively call child panels until item is found.
-                                itemsHost?.BringIndexIntoViewPublic(index);
+                                if (itemsHost != null)
+                                {
+                                    // Recursively call child panels until item is found.
+                                    itemsHost.BringIndexIntoViewPublic(index);
+                                }
                             }
                             break;
                         }
@@ -1745,7 +1752,7 @@ namespace System.Windows.Controls
         ///     Attached property for use on the ItemsControl that is the host for the items being
         ///     presented by this panel. Use this property to turn virtualization on/off.
         /// </summary>
-        public static new readonly DependencyProperty IsVirtualizingProperty =
+        public new static readonly DependencyProperty IsVirtualizingProperty =
             VirtualizingPanel.IsVirtualizingProperty;
 
         /// <summary>
@@ -1754,7 +1761,7 @@ namespace System.Windows.Controls
         ///
         ///     Note that this property can only be set before the panel has been initialized
         /// </summary>
-        public static new readonly DependencyProperty VirtualizationModeProperty =
+        public new static readonly DependencyProperty VirtualizationModeProperty =
             VirtualizingPanel.VirtualizationModeProperty;
 
         /// <summary>
@@ -1987,7 +1994,10 @@ namespace System.Windows.Controls
         {
             ItemsControl itemsControl = ItemsControl.GetItemsOwner(this);
 
-            itemsControl?.RaiseEvent(e);
+            if (itemsControl != null)
+            {
+                itemsControl.RaiseEvent(e);
+            }
         }
 
         #endregion
@@ -3104,7 +3114,10 @@ namespace System.Windows.Controls
                             {
                                 DependencyObject itemsOwner = itemStorageProvider as DependencyObject;
                                 Panel parentPanel = (itemsOwner != null) ? VisualTreeHelper.GetParent(itemsOwner) as Panel : null;
-                                parentPanel?.InvalidateMeasure();
+                                if (parentPanel != null)
+                                {
+                                    parentPanel.InvalidateMeasure();
+                                }
                             }
                         }
 
@@ -3208,7 +3221,7 @@ namespace System.Windows.Controls
                         SnapshotData data = new SnapshotData {
                             UniformOrAverageContainerSize = uniformOrAverageContainerPixelSize,
                             UniformOrAverageContainerPixelSize = uniformOrAverageContainerPixelSize,
-                            EffectiveOffsets = effectiveOffsetInfo?.OffsetList
+                            EffectiveOffsets = (effectiveOffsetInfo != null) ? effectiveOffsetInfo.OffsetList : null
                         };
                         SnapshotDataField.SetValue(this, data);
                     }
@@ -3508,7 +3521,7 @@ namespace System.Windows.Controls
                         SnapshotData data = new SnapshotData {
                             UniformOrAverageContainerSize = uniformOrAverageContainerPixelSize,
                             UniformOrAverageContainerPixelSize = uniformOrAverageContainerPixelSize,
-                            EffectiveOffsets = effectiveOffsetInfo?.OffsetList
+                            EffectiveOffsets = (effectiveOffsetInfo != null) ? effectiveOffsetInfo.OffsetList : null
                         };
                         SnapshotDataField.SetValue(this, data);
 
@@ -4010,7 +4023,10 @@ namespace System.Windows.Controls
                 CleanupContainers(Int32.MaxValue, Int32.MaxValue, itemsControl);
             }
 
-            _realizedChildren?.Clear();
+            if (_realizedChildren != null)
+            {
+                _realizedChildren.Clear();
+            }
 
             InternalChildren.ClearInternal();
         }
@@ -4049,7 +4065,10 @@ namespace System.Windows.Controls
         internal void ClearAllContainers()
         {
             IItemContainerGenerator generator = Generator;
-            generator?.RemoveAll();
+            if (generator != null)
+            {
+                generator.RemoveAll();
+            }
         }
 
         #endregion
@@ -4420,7 +4439,10 @@ namespace System.Windows.Controls
                                                     // need to remeasure, which should count
                                                     // as part of the scroll operation
                                                     DispatcherOperation clearIsScrollActiveOperation = ClearIsScrollActiveOperationField.GetValue(this);
-                                                    clearIsScrollActiveOperation?.Abort();
+                                                    if (clearIsScrollActiveOperation != null)
+                                                    {
+                                                        clearIsScrollActiveOperation.Abort();
+                                                    }
                                                     clearIsScrollActiveOperation = Dispatcher.BeginInvoke(DispatcherPriority.Background,
                                                         (Action)ClearIsScrollActive);
 
@@ -5665,7 +5687,7 @@ namespace System.Windows.Controls
             // giving the child panel the offset it wants the next time this
             // panel measures the child.
             EffectiveOffsetInformation effectiveOffsetInformation = EffectiveOffsetInformationField.GetValue(firstContainer);
-            List<Double> childOffsetList = effectiveOffsetInformation?.OffsetList;
+            List<Double> childOffsetList = (effectiveOffsetInformation != null) ? effectiveOffsetInformation.OffsetList : null;
             if (childOffsetList != null)
             {
                 int count = childOffsetList.Count;
@@ -6426,7 +6448,7 @@ namespace System.Windows.Controls
             // this only applies to a hierarchical element with a visible ItemsHost
             bool isChildHorizontal = isHorizontal;
             IHierarchicalVirtualizationAndScrollInfo virtualizingChild = GetVirtualizingChild(child, ref isChildHorizontal);
-            Panel itemsHost = virtualizingChild?.ItemsHost;
+            Panel itemsHost = (virtualizingChild == null) ? null : virtualizingChild.ItemsHost;
             if (itemsHost == null || !itemsHost.IsVisible)
                 return;
 
@@ -6457,7 +6479,7 @@ namespace System.Windows.Controls
             object item = GetItemFromContainer(child);
             if (item == DependencyProperty.UnsetValue)
             {
-                Debug.Fail("SetInset should only be called for a container");
+                Debug.Assert(false, "SetInset should only be called for a container");
                 return;
             }
 
@@ -6496,7 +6518,7 @@ namespace System.Windows.Controls
             {
                 // re-measure the scrolling panel
                 ItemsControl scrollingItemsControl = GetScrollingItemsControl(child);
-                Panel scrollingPanel = scrollingItemsControl?.ItemsHost;
+                Panel scrollingPanel = (scrollingItemsControl == null) ? null : scrollingItemsControl.ItemsHost;
                 if (scrollingPanel != null)
                 {
                     VirtualizingStackPanel vsp = scrollingPanel as VirtualizingStackPanel;
@@ -9192,7 +9214,7 @@ namespace System.Windows.Controls
             System.Windows.Controls.ItemContainerGenerator generator = Generator as System.Windows.Controls.ItemContainerGenerator;
             ItemsControl itemsControl = ItemsControl.GetItemsOwner(this);
 
-            if (generator != null && itemsControl != null && !itemsControl.IsGrouping)
+            if (generator != null && itemsControl != null && itemsControl.IsGrouping == false)
             {
                 foreach (UIElement child in InternalChildren)
                 {
@@ -9253,7 +9275,7 @@ namespace System.Windows.Controls
                         }
                     }
 
-                    Debug.Fail("We should have found a child");
+                    Debug.Assert(false, "We should have found a child");
                 }
             }
 
@@ -9557,7 +9579,7 @@ namespace System.Windows.Controls
         // At the time this method is called, scrolling state is in its new, valid state.
         private void OnScrollChange()
         {
-            ScrollOwner?.InvalidateScrollInfo();
+            if (ScrollOwner != null) { ScrollOwner.InvalidateScrollInfo(); }
         }
 
         /// <summary>
@@ -9837,7 +9859,10 @@ namespace System.Windows.Controls
             if (discardOffsets)
             {
                 // All saved offsets are now meaningless.  Discard them.
-                previouslyMeasuredOffsets?.Clear();
+                if (previouslyMeasuredOffsets != null)
+                {
+                    previouslyMeasuredOffsets.Clear();
+                }
                 lastPageSafeOffset = null;
                 lastPagePixelSize = null;
             }
@@ -11390,7 +11415,7 @@ namespace System.Windows.Controls
                 // We must be the ItemsHost to turn on Virtualization.
                 bool isVirtualizing = IsItemsHost && value;
 
-                if (!isVirtualizing)
+                if (isVirtualizing == false)
                 {
                     _realizedChildren = null;
                 }
@@ -11982,40 +12007,39 @@ namespace System.Windows.Controls
         {
             #region static members
 
-            private const int s_StfFormatVersion = 3;   // Format of output file
-            private const int s_MaxTraceRecords = 30000;    // max length of in-memory _traceList
-            private const int s_MinTraceRecords = 5000;     // keep this many records after flushing
-            private const int s_DefaultLayoutUpdatedThreshold = 20; // see _luThreshold
+            const int s_StfFormatVersion = 3;   // Format of output file
+            const int s_MaxTraceRecords = 30000;    // max length of in-memory _traceList
+            const int s_MinTraceRecords = 5000;     // keep this many records after flushing
+            const int s_DefaultLayoutUpdatedThreshold = 20; // see _luThreshold
 
-            private static string _targetName;
+            static string _targetName;
             static ScrollTracer()
             {
                 _targetName = FrameworkCompatibilityPreferences.GetScrollingTraceTarget();
                 _flushDepth = 0;
                 _luThreshold = s_DefaultLayoutUpdatedThreshold;
 
-                string trace = FrameworkCompatibilityPreferences.GetScrollingTraceFile();
-                if (!string.IsNullOrEmpty(trace))
+                string s = FrameworkCompatibilityPreferences.GetScrollingTraceFile();
+                if (!String.IsNullOrEmpty(s))
                 {
-                    Span<Range> splitRegions = stackalloc Range[4];
-                    ReadOnlySpan<char> traceSplits = trace.AsSpan();
-                    int regionsLength = traceSplits.Split(splitRegions, ';');
+                    string[] a = s.Split(';');
+                    _fileName = a[0];
 
-                    _fileName = traceSplits[splitRegions[0]].ToString();
-
-                    if (regionsLength > 1)
+                    if (a.Length > 1)
                     {
-                        if (int.TryParse(traceSplits[splitRegions[1]], NumberStyles.Integer, CultureInfo.InvariantCulture, out int flushDepth))
+                        int flushDepth;
+                        if (Int32.TryParse(a[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out flushDepth))
                         {
                             _flushDepth = flushDepth;
                         }
                     }
 
-                    if (regionsLength > 2)
+                    if (a.Length > 2)
                     {
-                        if (int.TryParse(traceSplits[splitRegions[2]], NumberStyles.Integer, CultureInfo.InvariantCulture, out int luThreshold))
+                        int luThreshold;
+                        if (Int32.TryParse(a[2], NumberStyles.Integer, CultureInfo.InvariantCulture, out luThreshold))
                         {
-                            _luThreshold = (luThreshold <= 0) ? int.MaxValue : luThreshold;
+                            _luThreshold = (luThreshold <= 0) ? Int32.MaxValue : luThreshold;
                         }
                     }
                 }
@@ -12041,7 +12065,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            private static bool _isEnabled;
+            static bool _isEnabled;
             internal static bool IsEnabled { get { return _isEnabled; } }
 
             // for use from VS Immediate window
@@ -12068,9 +12092,9 @@ namespace System.Windows.Controls
                 return (target == o);
             }
 
-            private static string _fileName;
-            private static int _flushDepth;
-            private static int _luThreshold;    // go inactive after this many consecutive LayoutUpdated
+            static string _fileName;
+            static int _flushDepth;
+            static int _luThreshold;    // go inactive after this many consecutive LayoutUpdated
 
             // for use from VS Immediate window
             internal static void SetFileAndDepth(string filename, int flushDepth)
@@ -12081,7 +12105,7 @@ namespace System.Windows.Controls
             }
 
             // for use from VS Immediate window
-            private static void Flush()
+            static void Flush()
             {
                 lock (s_TargetToTraceListMap)
                 {
@@ -12093,7 +12117,7 @@ namespace System.Windows.Controls
             }
 
             // for use from VS Immediate window
-            private static void Mark(params ReadOnlySpan<object> args)
+            static void Mark(params ReadOnlySpan<object> args)
             {
                 ScrollTraceRecord record = new ScrollTraceRecord(ScrollTraceOp.Mark, null, -1, 0, 0, BuildDetail(args));
                 lock (s_TargetToTraceListMap)
@@ -12302,7 +12326,7 @@ namespace System.Windows.Controls
             }
 
             // when app shuts down, flush pending info to the file
-            private static void OnApplicationExit(object sender, ExitEventArgs e)
+            static void OnApplicationExit(object sender, ExitEventArgs e)
             {
                 Application app = sender as Application;
                 if (app != null)
@@ -12314,7 +12338,7 @@ namespace System.Windows.Controls
             }
 
             // in case of unhandled exception, flush pending info to the file
-            private static void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+            static void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
             {
                 Application app = sender as Application;
                 if (app != null)
@@ -12474,7 +12498,7 @@ namespace System.Windows.Controls
                 = new List<Tuple<WeakReference<ItemsControl>,TraceList>>();
             private static int s_seqno;
 
-            private static TraceList TraceListForItemsControl(ItemsControl target)
+            static TraceList TraceListForItemsControl(ItemsControl target)
             {
                 TraceList traceList = null;
 
@@ -12538,7 +12562,7 @@ namespace System.Windows.Controls
             }
 
             // Must be called under "lock (s_TargetToTraceListMap)"
-            private static void CloseAllTraceLists()
+            static void CloseAllTraceLists()
             {
                 for (int i=0, n=s_TargetToTraceListMap.Count; i<n; ++i)
                 {
@@ -12671,7 +12695,7 @@ namespace System.Windows.Controls
             }
         }
 
-        private static readonly UncommonField<ScrollTracingInfo>
+        static readonly UncommonField<ScrollTracingInfo>
             ScrollTracingInfoField = new UncommonField<ScrollTracingInfo>();
 
         #endregion ScrollTracingInfo
@@ -12769,7 +12793,7 @@ namespace System.Windows.Controls
             internal int                    ItemIndex   { get; private set; }
             internal string                 Detail      { get; set; }
 
-            private object _extraData;
+            object _extraData;
 
             internal Snapshot Snapshot
             {

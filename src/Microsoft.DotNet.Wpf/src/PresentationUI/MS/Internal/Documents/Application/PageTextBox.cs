@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: PageTextBox is a derived TextBox with some extra 
 //              functionality for the Page related behaviours of 
@@ -373,7 +374,7 @@ namespace MS.Internal.Documents.Application
             /// <summary>
             /// <see cref="AutomationPeer.GetClassNameCore"/>
             /// </summary>
-            protected override string GetClassNameCore()
+            override protected string GetClassNameCore()
             {
                 return "PageTextBox";
             }
@@ -381,7 +382,7 @@ namespace MS.Internal.Documents.Application
             /// <summary>
             /// <see cref="AutomationPeer.GetPattern"/>
             /// </summary>
-            public override object GetPattern(PatternInterface patternInterface)
+            override public object GetPattern(PatternInterface patternInterface)
             {
                 if (patternInterface == PatternInterface.Value)
                 {

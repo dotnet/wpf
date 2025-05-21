@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -8,23 +9,10 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-using MS.Internal.KnownBoxes;
-using MS.Internal.Collections;
-using MS.Utility;
-using System.Collections;
-using System.ComponentModel;
-using System.Globalization;
-using System.Text;
-using System.Windows.Media.Effects;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Markup;
-using System.Windows.Media.Converters;
-
+// These types are aliased to match the unamanaged names used in interop
 namespace System.Windows.Media
 {
-    public abstract partial class TileBrush : Brush
+    abstract partial class TileBrush : Brush
     {
         //------------------------------------------------------
         //
@@ -151,7 +139,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (BrushMappingMode)GetValue(ViewportUnitsProperty);
+                return (BrushMappingMode) GetValue(ViewportUnitsProperty);
             }
             set
             {
@@ -166,7 +154,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (BrushMappingMode)GetValue(ViewboxUnitsProperty);
+                return (BrushMappingMode) GetValue(ViewboxUnitsProperty);
             }
             set
             {
@@ -181,7 +169,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Rect)GetValue(ViewportProperty);
+                return (Rect) GetValue(ViewportProperty);
             }
             set
             {
@@ -196,7 +184,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Rect)GetValue(ViewboxProperty);
+                return (Rect) GetValue(ViewboxProperty);
             }
             set
             {
@@ -211,7 +199,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Stretch)GetValue(StretchProperty);
+                return (Stretch) GetValue(StretchProperty);
             }
             set
             {
@@ -226,7 +214,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (TileMode)GetValue(TileModeProperty);
+                return (TileMode) GetValue(TileModeProperty);
             }
             set
             {
@@ -241,7 +229,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (AlignmentX)GetValue(AlignmentXProperty);
+                return (AlignmentX) GetValue(AlignmentXProperty);
             }
             set
             {
@@ -256,7 +244,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (AlignmentY)GetValue(AlignmentYProperty);
+                return (AlignmentY) GetValue(AlignmentYProperty);
             }
             set
             {
@@ -396,7 +384,8 @@ namespace System.Windows.Media
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app.
+            // of your app. 
+
             RenderOptions.CachingHintProperty.OverrideMetadata(
                 typeof(TileBrush),
                 new UIPropertyMetadata(CachingHint.Unspecified,
@@ -487,8 +476,6 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
-
 
         #endregion Constructors
     }

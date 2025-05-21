@@ -67,7 +67,7 @@
                         Margin="0,0,6,0"
                         VerticalAlignment="Center"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                        Content="{TemplateBinding Icon}"/>
+                        Content="{TemplateBinding Icon}" />
                     <ContentPresenter
                         x:Name="HeaderPresenter"
                         Grid.Column="1"
@@ -105,13 +105,7 @@
                                 <TranslateTransform />
                             </Border.RenderTransform>
                             <ScrollViewer CanContentScroll="True" Style="{StaticResource MenuItemScrollViewerStyle}">
-                                <Grid>
-                                    <ItemsPresenter x:Name="ItemsPresenter"
-                                    KeyboardNavigation.DirectionalNavigation="Cycle"
-                                    KeyboardNavigation.TabNavigation="Cycle"
-                                    Grid.IsSharedSizeScope="True"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                </Grid>
+                                <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
                             </ScrollViewer>
                             <Border.Effect>
                                 <DropShadowEffect
@@ -175,7 +169,7 @@
             CornerRadius="6">
             <Grid Margin="10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <ContentPresenter
@@ -228,8 +222,8 @@
             CornerRadius="4">
             <Grid Margin="8,6,8,6">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemCheckBoxIconColumnGroup"/>
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIconColumnGroup"/>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Shortcut" />
                 </Grid.ColumnDefinitions>
@@ -327,7 +321,7 @@
                 CornerRadius="4">
                 <Grid x:Name="MenuItemContent" Margin="8,6,8,6">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIconColumnGroup"/>
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
@@ -383,11 +377,7 @@
                             <TranslateTransform />
                         </Border.RenderTransform>
                         <ScrollViewer CanContentScroll="True" Style="{StaticResource MenuItemScrollViewerStyle}">
-                            <ItemsPresenter x:Name="ItemsPresenter"
-                                    KeyboardNavigation.DirectionalNavigation="Cycle"
-                                    KeyboardNavigation.TabNavigation="Cycle"
-                                    Grid.IsSharedSizeScope="True"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
                         </ScrollViewer>
                         <Border.Effect>
                             <DropShadowEffect

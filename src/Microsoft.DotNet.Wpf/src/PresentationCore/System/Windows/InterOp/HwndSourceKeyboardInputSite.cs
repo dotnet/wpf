@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows.Input;
 
@@ -13,7 +14,7 @@ namespace System.Windows.Interop
             ArgumentNullException.ThrowIfNull(sink);
             if (!(sink is UIElement))
             {
-                throw new ArgumentException(SR.KeyboardSinkMustBeAnElement, nameof(sink));
+                throw new ArgumentException(SR.KeyboardSinkMustBeAnElement, "sink");
             }
             
             _source = source;

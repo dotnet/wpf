@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -26,13 +27,13 @@ namespace MS.Internal.Xaml.Runtime
     // We start out by forwarding all calls to the transparent runtime.
     // If a call fails with a MethodAccessException, we fall back to the elevated runtime.
     // After the first failure, we automatically go to the elevated runtime for non-public types.
-    internal class PartialTrustTolerantRuntime : XamlRuntime
+    class PartialTrustTolerantRuntime : XamlRuntime
     {
-        private bool _memberAccessPermissionDenied;
-        private ClrObjectRuntime _transparentRuntime;
-        private ClrObjectRuntime _elevatedRuntime;
-        private XamlAccessLevel _accessLevel;
-        private XamlSchemaContext _schemaContext;
+        bool _memberAccessPermissionDenied;
+        ClrObjectRuntime _transparentRuntime;
+        ClrObjectRuntime _elevatedRuntime;
+        XamlAccessLevel _accessLevel;
+        XamlSchemaContext _schemaContext;
 
         public PartialTrustTolerantRuntime(XamlRuntimeSettings runtimeSettings, XamlAccessLevel accessLevel, XamlSchemaContext schemaContext)
         {
@@ -50,7 +51,10 @@ namespace MS.Internal.Xaml.Runtime
             set
             {
                 _transparentRuntime.LineInfo = value;
-                _elevatedRuntime?.LineInfo = value;
+                if (_elevatedRuntime is not null)
+                {
+                    _elevatedRuntime.LineInfo = value;
+                }
             }
         }
 

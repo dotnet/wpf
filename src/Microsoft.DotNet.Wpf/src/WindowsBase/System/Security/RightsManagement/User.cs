@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using MS.Internal.Security.RightsManagement;
@@ -23,7 +24,7 @@ namespace System.Security.RightsManagement
 
             if (name.Trim().Length == 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(name));
+                throw new ArgumentOutOfRangeException("name");
             }
 
             if ((authenticationType != AuthenticationType.Windows) &&
@@ -31,7 +32,7 @@ namespace System.Security.RightsManagement
                 (authenticationType != AuthenticationType.WindowsPassport) &&
                 (authenticationType != AuthenticationType.Internal))
             {
-                throw new ArgumentOutOfRangeException(nameof(authenticationType));
+                throw new ArgumentOutOfRangeException("authenticationType");
             }
 
             // We only support Anyone for the internal mode at the moment
@@ -40,7 +41,7 @@ namespace System.Security.RightsManagement
                 if (!CompareToAnyone(name) && !CompareToOwner(name))
                 {
                     // we only support Anyone as internal user 
-                    throw new ArgumentOutOfRangeException(nameof(name));
+                    throw new ArgumentOutOfRangeException("name");
                 }
             }
 

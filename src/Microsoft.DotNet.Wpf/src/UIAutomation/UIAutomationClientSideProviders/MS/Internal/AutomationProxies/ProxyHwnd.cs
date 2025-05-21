@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Base class for all the Win32 and office Controls.
 //
@@ -14,13 +15,12 @@
 //                  AdviseEventAdded
 //                  AdviseEventRemoved
 
-using System.Windows.Automation.Provider;
-using System.Runtime.InteropServices;
-using System.Collections.Generic;
-using System.Windows.Automation;
-using System.Windows;
-using MS.Win32;
 using System;
+using System.Windows;
+using System.Windows.Automation;
+using System.Windows.Automation.Provider;
+using System.Collections;
+using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
@@ -28,7 +28,7 @@ namespace MS.Internal.AutomationProxies
 
     // Base Class for all the Windows Control that handle context.
     // Implements the default behavior
-    internal class ProxyHwnd : ProxyFragment, IRawElementProviderAdviseEvents
+    class ProxyHwnd : ProxyFragment, IRawElementProviderAdviseEvents
     {
         // ------------------------------------------------------
         //
@@ -60,7 +60,7 @@ namespace MS.Internal.AutomationProxies
 
         // Advises proxy that an event has been added.
         // Maps the Automation Events into WinEvents and add those to the list of WinEvents notification hooks
-        internal virtual void AdviseEventAdded(AutomationEvent eventId, AutomationProperty[] aidProps)
+        internal virtual void AdviseEventAdded (AutomationEvent eventId, AutomationProperty [] aidProps)
         {
             // No RawElementBase creation callback, exit from here
             if (_createOnEvent == null)
@@ -68,23 +68,24 @@ namespace MS.Internal.AutomationProxies
                 return;
             }
 
-            ReadOnlySpan<WinEventTracker.EvtIdProperty> aEvents;
+            int cEvents = 0;
+            WinEventTracker.EvtIdProperty [] aEvents;
 
             // Gets an Array of WinEvents to trap on a per window handle basis
             if (eventId == AutomationElement.AutomationPropertyChangedEvent)
             {
-                aEvents = PropertyToWinEvent(aidProps);
+                aEvents = PropertyToWinEvent (aidProps, out cEvents);
             }
             else
             {
-                aEvents = EventToWinEvent(eventId);
+                aEvents = EventToWinEvent (eventId, out cEvents);
             }
 
             // If we have WinEvents to trap, add those to the list of WinEvent
             // notification list
-            if (aEvents.Length > 0)
+            if (cEvents > 0)
             {
-                WinEventTracker.AddToNotificationList(_hwnd, _createOnEvent, aEvents);
+                WinEventTracker.AddToNotificationList (_hwnd, _createOnEvent, aEvents, cEvents);
             }
         }
 
@@ -97,23 +98,24 @@ namespace MS.Internal.AutomationProxies
                 return;
             }
 
-            ReadOnlySpan<WinEventTracker.EvtIdProperty> aEvents;
+            int cEvents;
+            WinEventTracker.EvtIdProperty [] aEvents;
 
             // Gets an Array of WinEvents to trap on a per window handle basis
             if (eventId == AutomationElement.AutomationPropertyChangedEvent)
             {
-                aEvents = PropertyToWinEvent(aidProps);
+                aEvents = PropertyToWinEvent (aidProps, out cEvents);
             }
             else
             {
-                aEvents = EventToWinEvent(eventId);
+                aEvents = EventToWinEvent (eventId, out cEvents);
             }
 
             // If we have WinEvents to remove, remive those to the list of WinEvent
             // notification list
-            if (aEvents.Length > 0)
+            if (cEvents > 0)
             {
-                WinEventTracker.RemoveToNotificationList(_hwnd, aEvents, null);
+                WinEventTracker.RemoveToNotificationList (_hwnd, aEvents, null, cEvents);
             }
         }
 
@@ -393,30 +395,30 @@ namespace MS.Internal.AutomationProxies
             return null;
         }
 
-        /// <summary> Builds a list of Win32 WinEvents to process a UIAutomation Event. </summary>
-        /// <param name="idEvent"> An UIAutomation event. </param>
-        /// <returns> Returns an array of Events to Set. </returns>
-        protected virtual ReadOnlySpan<WinEventTracker.EvtIdProperty> EventToWinEvent(AutomationEvent idEvent)
+        // Builds a list of Win32 WinEvents to process a UIAutomation Event.
+        protected virtual WinEventTracker.EvtIdProperty [] EventToWinEvent (AutomationEvent idEvent, out int cEvent)
         {
             // Fill this variable with a WinEvent id if found
-            int idWinEvent;
+            int idWinEvent = 0;
 
             if (idEvent == SelectionItemPattern.ElementSelectedEvent)
             {
+                cEvent = 2;
                 return new WinEventTracker.EvtIdProperty[2]
                 {
-                    new(NativeMethods.EventObjectSelection, idEvent), 
-                    new(NativeMethods.EventObjectStateChange, idEvent)
+                    new WinEventTracker.EvtIdProperty (NativeMethods.EventObjectSelection, idEvent), 
+                    new WinEventTracker.EvtIdProperty (NativeMethods.EventObjectStateChange, idEvent)
                 };
             }
             else if (idEvent == SelectionItemPattern.ElementAddedToSelectionEvent)
             {
                 // For some control, the Event Selection is sent instead of SelectionAdd
                 // Trap both.
+                cEvent = 2;
                 return new WinEventTracker.EvtIdProperty [2]
                 {
-                    new(NativeMethods.EventObjectSelectionAdd, idEvent), 
-                    new(NativeMethods.EventObjectSelection, idEvent)
+                    new WinEventTracker.EvtIdProperty (NativeMethods.EventObjectSelectionAdd, idEvent), 
+                    new WinEventTracker.EvtIdProperty (NativeMethods.EventObjectSelection, idEvent)
                 };
             }
             else if (idEvent == SelectionItemPattern.ElementRemovedFromSelectionEvent)
@@ -429,39 +431,44 @@ namespace MS.Internal.AutomationProxies
             }
             else if (idEvent == InvokePattern.InvokedEvent)
             {
+                cEvent = 4;
                 return new WinEventTracker.EvtIdProperty[4] { 
-                    new(NativeMethods.EventSystemCaptureEnd, idEvent), // For SysHeaders
-                    new(NativeMethods.EventObjectStateChange, idEvent),
-                    new(NativeMethods.EventObjectValueChange, idEvent), // For WindowsScrollBarBits
-                    new(NativeMethods.EventObjectInvoke, idEvent)
+                    new WinEventTracker.EvtIdProperty (NativeMethods.EventSystemCaptureEnd, idEvent), // For SysHeaders
+                    new WinEventTracker.EvtIdProperty (NativeMethods.EventObjectStateChange, idEvent),
+                    new WinEventTracker.EvtIdProperty (NativeMethods.EventObjectValueChange, idEvent), // For WindowsScrollBarBits
+                    new WinEventTracker.EvtIdProperty (NativeMethods.EventObjectInvoke, idEvent)
                 };
             }
             else if (idEvent == AutomationElement.StructureChangedEvent)
             {
+                cEvent = 3;
                 return new WinEventTracker.EvtIdProperty[3] { 
-                    new(NativeMethods.EventObjectCreate, idEvent), 
-                    new(NativeMethods.EventObjectDestroy, idEvent), 
-                    new(NativeMethods.EventObjectReorder, idEvent) 
+                    new WinEventTracker.EvtIdProperty (NativeMethods.EventObjectCreate, idEvent), 
+                    new WinEventTracker.EvtIdProperty (NativeMethods.EventObjectDestroy, idEvent), 
+                    new WinEventTracker.EvtIdProperty (NativeMethods.EventObjectReorder, idEvent) 
                 };
             }
             else if (idEvent == TextPattern.TextSelectionChangedEvent)
             {
+                cEvent = 2;
                 return new WinEventTracker.EvtIdProperty[2] {
-                    new(NativeMethods.EventObjectLocationChange, idEvent),
-                    new(NativeMethods.EventObjectTextSelectionChanged, idEvent)
+                    new WinEventTracker.EvtIdProperty (NativeMethods.EventObjectLocationChange, idEvent),
+                    new WinEventTracker.EvtIdProperty (NativeMethods.EventObjectTextSelectionChanged, idEvent)
                 };
             }
             else
             {
-                return ReadOnlySpan<WinEventTracker.EvtIdProperty>.Empty;
+                cEvent = 0;
+                return null;
             }
 
             // found one and only one
-            return new WinEventTracker.EvtIdProperty [1] { new(idWinEvent, idEvent) };
+            cEvent = 1;
+            return new WinEventTracker.EvtIdProperty [1] { new WinEventTracker.EvtIdProperty (idWinEvent, idEvent) };
         }
         
         // Check if a point is within the client Rect of a window
-        protected static bool PtInClientRect (IntPtr hwnd, int x, int y)
+        static protected bool PtInClientRect (IntPtr hwnd, int x, int y)
         {
             NativeMethods.Win32Rect rc = new NativeMethods.Win32Rect ();
             if (!Misc.GetClientRect(hwnd, ref rc))
@@ -488,7 +495,7 @@ namespace MS.Internal.AutomationProxies
 
         // Get the access key of the associated label (if there is
         // an associated label).
-        protected static string GetLabelAccessKey(IntPtr hwnd)
+        static protected string GetLabelAccessKey(IntPtr hwnd)
         {
             string accessKey = string.Empty;
             IntPtr label = Misc.GetLabelhwnd(hwnd);
@@ -505,22 +512,29 @@ namespace MS.Internal.AutomationProxies
 
         // Builds a list of Win32 WinEvents to process changes in properties changes values.
         // Returns an array of Events to Set. The number of valid entries in this array is pass back in cEvents
-        private ReadOnlySpan<WinEventTracker.EvtIdProperty> PropertyToWinEvent(AutomationProperty[] aProps)
+        private WinEventTracker.EvtIdProperty [] PropertyToWinEvent (AutomationProperty [] aProps, out int cEvent)
         {
-            List<WinEventTracker.EvtIdProperty> automationEvents = new(16);
+            ArrayList alEvents = new ArrayList (16);
 
             foreach (AutomationProperty idProp in aProps)
             {
-                int[] evtId = PropertyToWinEvent(idProp);
+                int [] evtId = PropertyToWinEvent (idProp);
 
                 for (int i = 0; evtId != null && i < evtId.Length; i++)
                 {
-                    automationEvents.Add(new WinEventTracker.EvtIdProperty(evtId[i], idProp));
+                    alEvents.Add (new WinEventTracker.EvtIdProperty (evtId [i], idProp));
                 }
 
             }
 
-            return CollectionsMarshal.AsSpan(automationEvents);
+            WinEventTracker.EvtIdProperty [] aEvtIdProperties = new WinEventTracker.EvtIdProperty [alEvents.Count];
+
+            cEvent = alEvents.Count;
+            for (int i = 0; i < cEvent; i++)
+            {
+                aEvtIdProperties [i] = (WinEventTracker.EvtIdProperty) alEvents [i];
+            }
+            return aEvtIdProperties;
         }
 
         #endregion

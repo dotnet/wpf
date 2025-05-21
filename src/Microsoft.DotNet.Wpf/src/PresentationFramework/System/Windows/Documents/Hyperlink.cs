@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -680,7 +681,8 @@ namespace System.Windows.Documents
             if (AutomationPeer.ListenerExists(AutomationEvents.InvokePatternOnInvoked))
             {
                 AutomationPeer peer = ContentElementAutomationPeer.CreatePeerForElement(this);
-                peer?.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
+                if (peer != null)
+                    peer.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
             }
 
             DoNavigation(this);
@@ -821,7 +823,7 @@ namespace System.Windows.Documents
         //
         //---------------------------------------------------------------------
 
-        private static bool ShouldPreventUriSpoofing
+        static bool ShouldPreventUriSpoofing
         {
             get
             {
@@ -832,8 +834,7 @@ namespace System.Windows.Documents
                 return (bool)s_shouldPreventUriSpoofing;
             }
         }
-
-        private static bool? s_shouldPreventUriSpoofing;
+        static bool? s_shouldPreventUriSpoofing;
 
         #endregion Private Properties
 

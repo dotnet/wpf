@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal.Documents;
 using MS.Internal;
@@ -213,7 +214,7 @@ namespace System.Windows.Documents
             get
             {
                 //agurcan: The following line makes it hard to use debugger on FDS code so I'm commenting it out
-                //Debug.Fail("Unexpected Highlights access on NullTextContainer!");
+                //Debug.Assert(false, "Unexpected Highlights access on NullTextContainer!");
                 return null;
             }
         }
@@ -248,7 +249,7 @@ namespace System.Windows.Documents
 
             set
             {
-                Debug.Fail("Unexpected call to NullTextContainer.set_TextView!");
+                Debug.Assert(false, "Unexpected call to NullTextContainer.set_TextView!");
             }
         }
 

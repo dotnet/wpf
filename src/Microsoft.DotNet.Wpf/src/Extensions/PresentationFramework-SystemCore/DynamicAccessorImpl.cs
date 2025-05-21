@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Implementation of DynamicAccessor derived types
 
@@ -43,8 +44,8 @@ namespace MS.Internal
             _setter.Target(_setter, component, value);
         }
 
-        private CallSite<Func<CallSite, object, object>> _getter;
-        private CallSite<Action<CallSite, object, object>> _setter;
+        CallSite<Func<CallSite, object, object>> _getter;
+        CallSite<Action<CallSite, object, object>> _setter;
     }
 
     #endregion DynamicPropertyAccessorImpl
@@ -151,11 +152,11 @@ namespace MS.Internal
             return _accessors[rank-1];
         }
 
-        private CallSite _getterCallSite, _setterCallSite;
-        private MulticastDelegate _getterDelegate, _setterDelegate;
+        CallSite            _getterCallSite, _setterCallSite;
+        MulticastDelegate   _getterDelegate, _setterDelegate;
 
-        private static DynamicIndexerAccessor[] _accessors = new DynamicIndexerAccessor[1];
-        private static readonly object _lock = new object();
+        static DynamicIndexerAccessor[] _accessors = new DynamicIndexerAccessor[1];
+        static readonly object _lock = new object();
     }
 
     #endregion DynamicIndexerAccessor

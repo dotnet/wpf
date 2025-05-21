@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -90,7 +91,7 @@ namespace MS.Internal.Annotations
         {
             if (item != null && this.Contains(item))
             {
-                throw new ArgumentException(SR.Format(SR.XmlNodeAlreadyOwned, "change", "change"), nameof(item));
+                throw new ArgumentException(SR.Format(SR.XmlNodeAlreadyOwned, "change", "change"), "item");
             }
 
             base.InsertItem(index, item);
@@ -106,7 +107,7 @@ namespace MS.Internal.Annotations
         {
             if (item != null && this.Contains(item))
             {
-                throw new ArgumentException(SR.Format(SR.XmlNodeAlreadyOwned, "change", "change"), nameof(item));
+                throw new ArgumentException(SR.Format(SR.XmlNodeAlreadyOwned, "change", "change"), "item");
             }
 
             XmlElement originalItem = this[index];
@@ -249,7 +250,7 @@ namespace MS.Internal.Annotations
 
         #region Private Fields
 
-        private Dictionary<XmlDocument, int> _xmlDocsRefCounts;
+        Dictionary<XmlDocument, int> _xmlDocsRefCounts;
 
         #endregion Private Fields
     }

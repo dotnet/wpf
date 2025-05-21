@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.ComponentModel;
@@ -8,7 +9,7 @@ using System.Xaml.Schema;
 
 namespace System.Windows.Baml2006
 {
-    internal static class Baml6KnownTypes
+    static class Baml6KnownTypes
     {
         public const Int16 BooleanConverter = 46;
         public const Int16 DependencyPropertyConverter = 137;
@@ -22,9 +23,9 @@ namespace System.Windows.Baml2006
         public const Int16 XamlVector3DCollectionSerializer = 752;
     }
 
-    internal partial class WpfSharedBamlSchemaContext: XamlSchemaContext
+    partial class WpfSharedBamlSchemaContext: XamlSchemaContext
     {
-        private object _syncObject;
+        object _syncObject;
 
         // Data structures for KNOWN types/members.
         private Baml6Assembly[] _knownBamlAssemblies;

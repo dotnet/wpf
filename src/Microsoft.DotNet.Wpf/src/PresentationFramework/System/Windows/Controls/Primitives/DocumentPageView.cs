@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Provides a view port for a page of content for a DocumentPage.
@@ -211,7 +212,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         /// <param name="availableSize">Available size that parent can give to the child. This is soft constraint.</param>
         /// <returns>The DocumentPageView's desired size.</returns>
-        protected sealed override Size MeasureOverride(Size availableSize)
+        protected override sealed Size MeasureOverride(Size availableSize)
         {
             Size newPageSize, pageZoom;
             Size pageSize;
@@ -339,7 +340,7 @@ namespace System.Windows.Controls.Primitives
         /// Content arrangement.
         /// </summary>
         /// <param name="finalSize">The final size that element should use to arrange itself and its children.</param>
-        protected sealed override Size ArrangeOverride(Size finalSize)
+        protected override sealed Size ArrangeOverride(Size finalSize)
         {
             Transform pageTransform;
             ScaleTransform pageScaleTransform;
@@ -357,7 +358,7 @@ namespace System.Windows.Controls.Primitives
                 }
                 Invariant.Assert(_pageHost != null);
 
-                pageVisual = _documentPage?.Visual;
+                pageVisual = (_documentPage == null) ? null : _documentPage.Visual;
                 if (pageVisual == null)
                 {
                     // Remove existing visiual children.
@@ -469,7 +470,7 @@ namespace System.Windows.Controls.Primitives
         {
             if (index != 0 || _pageHost == null)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
             return _pageHost;
         }
@@ -787,7 +788,10 @@ namespace System.Windows.Controls.Primitives
         private void OnPageConnected()
         {
             _newPageConnected = false;
-            _textView?.OnPageConnected();
+            if (_textView != null)
+            {
+                _textView.OnPageConnected();
+            }
             if (this.PageConnected != null && _documentPage != null)
             {
                 this.PageConnected(this, EventArgs.Empty);
@@ -799,7 +803,10 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private void OnPageDisconnected()
         {
-            _textView?.OnPageDisconnected();
+            if (_textView != null)
+            {
+                _textView.OnPageDisconnected();
+            }
             if (this.PageDisconnected != null)
             {
                 this.PageDisconnected(this, EventArgs.Empty);
@@ -827,7 +834,10 @@ namespace System.Windows.Controls.Primitives
             if (_documentPage != null)
             {
                 // Remove visual for currently used page.
-                _pageHost?.PageVisual = null;
+                if (_pageHost != null)
+                {
+                    _pageHost.PageVisual = null;
+                }
 
                 // Clear TextView & DocumentPage
                 if (_documentPage != DocumentPage.Missing)

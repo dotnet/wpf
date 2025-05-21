@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -7,7 +8,6 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Text;
-using MS.Internal;
 using System.Threading;
 using System.Xaml.MS.Impl;
 using System.Xaml.Schema;
@@ -27,14 +27,14 @@ namespace System.Xaml
 
         // We don't expect a lot of contention on our dictionaries, so avoid the overhead of
         // extra lock partitioning
-        private const int ConcurrencyLevel = 1;
-        private const int DictionaryCapacity = 17;
+        const int ConcurrencyLevel = 1;
+        const int DictionaryCapacity = 17;
 
         // Immutable, initialized in constructor
         private readonly ReadOnlyCollection<Assembly> _referenceAssemblies;
 
         // take this lock when iterating new assemblies in the AppDomain/RefAssm
-        private object _syncExaminingAssemblies;
+        object _syncExaminingAssemblies;
 
         #endregion
 
@@ -170,20 +170,19 @@ namespace System.Xaml
             return result;
         }
 
-        private string GetPrefixForClrNs(string clrNs, string assemblyName)
+        string GetPrefixForClrNs(string clrNs, string assemblyName)
         {
             if (string.IsNullOrEmpty(assemblyName))
             {
                 return KnownStrings.LocalPrefix;
             }
 
-            StringBuilder sb = new();
-            ReadOnlySpan<char> values = clrNs.AsSpan();
-            foreach (Range segment in values.Split('.'))
+            var sb = new StringBuilder();
+            foreach (string segment in clrNs.Split('.'))
             {
-                if (!values[segment].IsEmpty)
+                if (!string.IsNullOrEmpty(segment))
                 {
-                    sb.Append(char.ToLower(values[segment][0], TypeConverterHelper.InvariantEnglishUS));
+                    sb.Append(char.ToLower(segment[0], TypeConverterHelper.InvariantEnglishUS));
                 }
             }
 
@@ -212,7 +211,7 @@ namespace System.Xaml
             }
         }
 
-        private void InitializePreferredPrefixes()
+        void InitializePreferredPrefixes()
         {
             // To avoid an assignment race condition, prevent new assemblies from being processed while we're
             // iterating the existing list
@@ -228,7 +227,7 @@ namespace System.Xaml
             }
         }
 
-        private void UpdatePreferredPrefixes(XmlNsInfo newNamespaces, ConcurrentDictionary<string, string> prefixDict)
+        void UpdatePreferredPrefixes(XmlNsInfo newNamespaces, ConcurrentDictionary<string, string> prefixDict)
         {
             foreach (KeyValuePair<string, string> nsToPrefix in newNamespaces.Prefixes)
             {
@@ -711,15 +710,15 @@ namespace System.Xaml
         private ConcurrentDictionary<Assembly, XmlNsInfo> _xmlnsInfoForUnreferencedAssemblies;
 
         // immutable, initialized in ctor
-        private AssemblyLoadHandler _assemblyLoadHandler;
+        AssemblyLoadHandler _assemblyLoadHandler;
 
         // tracks new assemblies seen by the AssemblyLoad handler, but not yet reflected
         private IList<Assembly> _unexaminedAssemblies;
-        private bool _isGCCallbackPending;
+        bool _isGCCallbackPending;
 
         // take this lock when modifying _unexaminedAssemblies or _isGCCallbackPending
         // Acquisition order: If also taking _syncExaminingAssemblies, take it first
-        private object _syncAccessingUnexaminedAssemblies;
+        object _syncAccessingUnexaminedAssemblies;
 
         // This dictionary is also thread-safe for single reads and writes, but if you're
         // iterating them, lock on _syncExaminingAssemblies to ensure consistent results
@@ -787,6 +786,7 @@ namespace System.Xaml
                 return false;
             }
 
+            // Not using Assembly.GetName() because it doesn't work in partial-trust
             AssemblyName toAssemblyName = new AssemblyName(toAssembly.FullName);
             foreach (AssemblyName friend in friends)
             {
@@ -1038,11 +1038,12 @@ namespace System.Xaml
             ConcurrentDictionary<string, IList<string>> assemblyMappings = nsInfo.ClrToXmlNs;
             IList<string> result;
 
-            clrNs ??= string.Empty;
+            clrNs = clrNs ?? string.Empty;
 
             if (!assemblyMappings.TryGetValue(clrNs, out result))
             {
-                string assemblyName = FullyQualifyAssemblyNamesInClrNamespaces ? assembly.FullName : ReflectionUtils.GetAssemblyPartialName(assembly).ToString();
+                string assemblyName = FullyQualifyAssemblyNamesInClrNamespaces ?
+                    assembly.FullName : GetAssemblyShortName(assembly);
                 string xmlns = ClrNamespaceUriParser.GetUri(clrNs, assemblyName);
                 List<string> list = new List<string>();
                 list.Add(xmlns);
@@ -1087,7 +1088,7 @@ namespace System.Xaml
             }
         }
 
-        private void SchemaContextAssemblyLoadEventHandler(object sender, AssemblyLoadEventArgs args)
+        void SchemaContextAssemblyLoadEventHandler(object sender, AssemblyLoadEventArgs args)
         {
             lock (_syncAccessingUnexaminedAssemblies)
             {
@@ -1180,18 +1181,17 @@ namespace System.Xaml
             return foundNew;
         }
 
-        // This method should be called inside _syncExaminingAssemblies lock
-        private bool UpdateNamespaceByUriList(XmlNsInfo nsInfo)
+        bool UpdateNamespaceByUriList(XmlNsInfo nsInfo)
         {
-            IList<XmlNsInfo.XmlNsDefinition> xmlnsDefs = nsInfo.NsDefs;
             bool foundNew = false;
-
-            for (int i = 0; i < xmlnsDefs.Count; i++)
+            IList<XmlNsInfo.XmlNsDefinition> xmlnsDefs = nsInfo.NsDefs;
+            int xmlnsDefsCount = xmlnsDefs.Count;
+            for (int i = 0; i < xmlnsDefsCount; i++)
             {
                 XmlNsInfo.XmlNsDefinition xmlnsDef = xmlnsDefs[i];
+                AssemblyNamespacePair pair = new AssemblyNamespacePair(nsInfo.Assembly, xmlnsDef.ClrNamespace);
                 XamlNamespace ns = GetXamlNamespace(xmlnsDef.XmlNamespace);
-
-                ns.AddAssemblyNamespacePair(new AssemblyNamespacePair(nsInfo.Assembly, xmlnsDef.ClrNamespace));
+                ns.AddAssemblyNamespacePair(pair);
                 foundNew = true;
             }
 
@@ -1201,6 +1201,14 @@ namespace System.Xaml
         #endregion
 
         #region Helper Methods
+
+        // Given an assembly, return the assembly short name.  We need to avoid Assembly.GetName() so we run in PartialTrust without asserting.
+        internal static string GetAssemblyShortName(Assembly assembly)
+        {
+            string assemblyLongName = assembly.FullName;
+            string assemblyShortName = assemblyLongName.Substring(0, assemblyLongName.IndexOf(','));
+            return assemblyShortName;
+        }
 
         internal static ConcurrentDictionary<K, V> CreateDictionary<K, V>()
         {
@@ -1383,7 +1391,7 @@ namespace System.Xaml
         // WeakRef wrapper around XSC so that it can hook AppDomain event without getting rooted
         private class AssemblyLoadHandler
         {
-            private WeakReference schemaContextRef;
+            WeakReference schemaContextRef;
 
             public AssemblyLoadHandler(XamlSchemaContext schemaContext)
             {
@@ -1393,7 +1401,10 @@ namespace System.Xaml
             private void OnAssemblyLoad(object sender, AssemblyLoadEventArgs args)
             {
                 XamlSchemaContext schemaContext = (XamlSchemaContext)schemaContextRef.Target;
-                schemaContext?.SchemaContextAssemblyLoadEventHandler(sender, args);
+                if (schemaContext is not null)
+                {
+                    schemaContext.SchemaContextAssemblyLoadEventHandler(sender, args);
+                }
             }
 
             public void Hook()

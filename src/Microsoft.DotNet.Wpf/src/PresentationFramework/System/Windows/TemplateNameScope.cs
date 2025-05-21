@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
 *
@@ -195,7 +196,7 @@ namespace System.Windows
         /// <param name="name">Name of the element</param>
         void INameScope.UnregisterName(string name)
         {
-            Debug.Fail("Should never be trying to unregister via this interface for templates");
+            Debug.Assert(false, "Should never be trying to unregister via this interface for templates");
         }
 
         /// <summary>
@@ -268,7 +269,7 @@ namespace System.Windows
         // Is templated parent an FE or an FCE?
         private bool                   _isTemplatedParentAnFE;
 
-        private ProvideValueServiceProvider    _provideValueServiceProvider;
+        ProvideValueServiceProvider    _provideValueServiceProvider;
 
         // This is a HybridDictionary of Name-Object maps
         private HybridDictionary _nameMap;

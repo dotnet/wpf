@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Defines XmlBindingWorker object, workhorse for XML bindings
@@ -260,7 +261,7 @@ namespace MS.Internal.Data
                         if ((xdc = itemsSource as XmlDataCollection) == null)
                         {
                             ICollectionView icv = itemsSource as ICollectionView;
-                            xdc = (icv?.SourceCollection) as XmlDataCollection;
+                            xdc = ((icv != null) ? icv.SourceCollection : null) as XmlDataCollection;
                         }
 
                         if (xdc != null)
@@ -382,7 +383,7 @@ namespace MS.Internal.Data
             return doc;
         }
 
-        private XmlDataCollection BuildQueriedCollection(XmlNodeList nodes)
+        XmlDataCollection BuildQueriedCollection(XmlNodeList nodes)
         {
             if (TraceData.IsExtendedTraceEnabled(ParentBindingExpression, TraceDataLevel.GetValue))
             {
@@ -406,7 +407,7 @@ namespace MS.Internal.Data
             return false;   // this method is no longer used (but must remain, for compat)
         }
 
-        private void OnXmlNodeChanged(object sender, XmlNodeChangedEventArgs e)
+        void OnXmlNodeChanged(object sender, XmlNodeChangedEventArgs e)
         {
             if (TraceData.IsExtendedTraceEnabled(ParentBindingExpression, TraceDataLevel.Events))
             {
@@ -421,7 +422,7 @@ namespace MS.Internal.Data
             ProcessXmlNodeChanged(e);
         }
 
-        private void ProcessXmlNodeChanged(EventArgs args)
+        void ProcessXmlNodeChanged(EventArgs args)
         {
             // By the time this worker is notified, its binding's TargetElement may already be gone.
             // We should first check TargetElement to see if this worker still matters. (Fix 1494812)
@@ -522,7 +523,7 @@ namespace MS.Internal.Data
                 if (TraceData.IsEnabled)
                 {
                     TraceData.TraceAndNotify(TraceEventType.Error, TraceData.CannotGetXmlNodeCollection, ParentBindingExpression,
-                        traceParameters: new object[] { ContextNode?.Name, XPath, ParentBindingExpression, xe },
+                        traceParameters: new object[] { (ContextNode != null) ? ContextNode.Name : null, XPath, ParentBindingExpression, xe },
                         eventParameters: new object[] { xe });
                 }
             }

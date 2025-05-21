@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -66,7 +67,7 @@ namespace System.Windows.Controls.Primitives
         {
             if (index != 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
 
             return _transformDecorator;
@@ -156,7 +157,10 @@ namespace System.Windows.Controls.Primitives
                 // To help developers and users identify the real problem, store the
                 // exception, so that it can be reported when the crashing null-ref
                 // occurs.
-                popup?.SavedException = e;
+                if (popup != null)
+                {
+                    popup.SavedException = e;
+                }
 
                 throw;
             }

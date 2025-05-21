@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description:
 //      Visual tree diagnostic API.
@@ -374,10 +375,10 @@ namespace System.Windows.Diagnostics
             private static bool s_IsVisualTreeChangedEnabled;
             private static bool? s_AllowChangesDuringVisualTreeChanged;
 
-            private const string c_enableVisualTreeNotificationsEnvironmentVariable = "ENABLE_XAML_DIAGNOSTICS_VISUAL_TREE_NOTIFICATIONS";
-            private const string c_devmodeRegKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock";
-            private const string c_devmodeRegKeyFullPath = @"HKEY_LOCAL_MACHINE\" + c_devmodeRegKey;
-            private const string c_devmodeValueName = "AllowDevelopmentWithoutDevLicense";
+            const string c_enableVisualTreeNotificationsEnvironmentVariable = "ENABLE_XAML_DIAGNOSTICS_VISUAL_TREE_NOTIFICATIONS";
+            const string c_devmodeRegKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock";
+            const string c_devmodeRegKeyFullPath = @"HKEY_LOCAL_MACHINE\" + c_devmodeRegKey;
+            const string c_devmodeValueName = "AllowDevelopmentWithoutDevLicense";
         }
     }
 }

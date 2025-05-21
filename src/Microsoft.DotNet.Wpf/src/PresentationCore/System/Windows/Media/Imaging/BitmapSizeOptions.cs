@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 
@@ -173,7 +174,7 @@ namespace System.Windows.Media.Imaging
                 case Rotation.Rotate270:
                     break;
                 default:
-                    throw new ArgumentException(SR.Image_SizeOptionsAngle, nameof(rotation));
+                    throw new ArgumentException(SR.Image_SizeOptionsAngle, "rotation");
             }
 
             BitmapSizeOptions sizeOptions = new BitmapSizeOptions
@@ -197,21 +198,21 @@ namespace System.Windows.Media.Imaging
         {
             if (_pixelWidth == 0 && _pixelHeight != 0)
             {
-                Debug.Assert(_preservesAspectRatio);
+                Debug.Assert(_preservesAspectRatio == true);
 
                 newWidth = (uint)((_pixelHeight * width)/height);
                 newHeight = (uint)_pixelHeight;
             }
             else if (_pixelWidth != 0 && _pixelHeight == 0)
             {
-                Debug.Assert(_preservesAspectRatio);
+                Debug.Assert(_preservesAspectRatio == true);
 
                 newWidth = (uint)_pixelWidth;
                 newHeight = (uint)((_pixelWidth * height)/width);
             }
             else if (_pixelWidth != 0 && _pixelHeight != 0)
             {
-                Debug.Assert(!_preservesAspectRatio);
+                Debug.Assert(_preservesAspectRatio == false);
 
                 newWidth = (uint)_pixelWidth;
                 newHeight = (uint)_pixelHeight;

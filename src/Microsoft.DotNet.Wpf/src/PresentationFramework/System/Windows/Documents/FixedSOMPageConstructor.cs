@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows.Shapes;
 using System.Windows.Controls;
@@ -189,7 +190,7 @@ namespace System.Windows.Documents
 
         internal override void SetClosedState(bool closed)
         {
-            Debug.Fail("It should not be called");
+            Debug.Assert(false, "It should not be called");
         }
 
         internal override void SetFigureCount(int figureCount)

@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.Windows.Controls.Primitives;
@@ -128,7 +129,7 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    width -= GetVisualCanvasMarginX();
+                    width = width - GetVisualCanvasMarginX();
                 }
 
                 double height = Height;
@@ -138,7 +139,7 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    height -= GetVisualCanvasMarginY();
+                    height = height - GetVisualCanvasMarginY();
                 }
 
                 Vector offset = VisualTreeHelper.GetOffset(_referenceHeader);
@@ -151,7 +152,10 @@ namespace System.Windows.Controls
         internal void ClearHeader()
         {
             _referenceHeader = null;
-            _visualBrushCanvas?.Background = null;
+            if (_visualBrushCanvas != null)
+            {
+                _visualBrushCanvas.Background = null;
+            }
         }
 
         private double GetVisualCanvasMarginX()

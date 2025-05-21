@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.ComponentModel;
@@ -272,8 +273,11 @@ namespace System.Windows
                 ResourceDictionary oldValue = ResourcesField.GetValue(this);
                 ResourcesField.SetValue(this, value);
 
-                // This element is no longer an owner for the old RD
-                oldValue?.RemoveOwner(this);
+                if (oldValue != null)
+                {
+                    // This element is no longer an owner for the old RD
+                    oldValue.RemoveOwner(this);
+                }
 
                 if (value != null)
                 {
@@ -540,7 +544,7 @@ namespace System.Windows
                     // Inheritance
                     //
 
-                    if (!TreeWalkHelper.SkipNext(InheritanceBehavior) || fmetadata.OverridesInheritanceBehavior)
+                    if (!TreeWalkHelper.SkipNext(InheritanceBehavior) || fmetadata.OverridesInheritanceBehavior == true)
                     {
                         // Used to terminate tree walk if a tree boundary is hit
                         InheritanceBehavior inheritanceBehavior;
@@ -848,7 +852,7 @@ namespace System.Windows
         /// This will make the culture pertain to the scope of the element where it is applied.  The
         /// XmlLanguage names follow the RFC 3066 standard. For example, U.S. English is "en-US".
         /// </summary>
-        public static readonly DependencyProperty LanguageProperty =
+        static public readonly DependencyProperty LanguageProperty =
                     FrameworkElement.LanguageProperty.AddOwner(
                                 typeof(FrameworkContentElement),
                                 new FrameworkPropertyMetadata(
@@ -907,7 +911,7 @@ namespace System.Windows
         }
 
         // If the cursor is changed, we may need to set the actual cursor.
-        private static void OnCursorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static private void OnCursorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             FrameworkContentElement fce = ((FrameworkContentElement)d);
 
@@ -939,7 +943,7 @@ namespace System.Windows
         }
 
         // If the ForceCursor property changed, we may need to set the actual cursor.
-        private static void OnForceCursorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static private void OnForceCursorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             FrameworkContentElement fce = ((FrameworkContentElement)d);
 
@@ -1291,7 +1295,7 @@ namespace System.Windows
         ///     building code will call the GetUIParentCore method to find the
         ///     next non-visual parent.
         /// </returns>
-        internal sealed override bool BuildRouteCore(EventRoute route, RoutedEventArgs args)
+        internal override sealed bool BuildRouteCore(EventRoute route, RoutedEventArgs args)
         {
             bool continuePastCoreTree = false;
 
@@ -1994,12 +1998,15 @@ namespace System.Windows
                 while(enumerator.MoveNext())
                 {
                     DependencyObject child =enumerator.Current as DependencyObject;
-                    // CODE REVIEW (dwaynen)
-                    //
-                    // We assume we will only ever have a UIElement or a ContentElement
-                    // as a child of a FrameworkContentElement.  (Not a raw Visual.)
+                    if(child != null)
+                    {
+                        // CODE REVIEW (dwaynen)
+                        //
+                        // We assume we will only ever have a UIElement or a ContentElement
+                        // as a child of a FrameworkContentElement.  (Not a raw Visual.)
 
-                    child?.CoerceValue(property);
+                        child.CoerceValue(property);
+                    }
                 }
             }
         }
@@ -2027,7 +2034,10 @@ namespace System.Windows
         private void EventHandlersStoreRemove(EventPrivateKey key, Delegate handler)
         {
             EventHandlersStore store = EventHandlersStore;
-            store?.Remove(key, handler);
+            if (store != null)
+            {
+                store.Remove(key, handler);
+            }
         }
 
         // Gettor and Settor for flag that indicates
@@ -2096,7 +2106,7 @@ namespace System.Windows
                 // Thus we support any indices in the range [-1, 65535).
                 if (value < -1 || value >= 0xFFFF)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), SR.TemplateChildIndexOutOfRange);
+                    throw new ArgumentOutOfRangeException("value", SR.TemplateChildIndexOutOfRange);
                 }
 
                 uint childIndex = (value == -1) ? 0xFFFF : (uint)value;

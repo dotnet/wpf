@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.IO;
 using System.Runtime.InteropServices;
@@ -188,7 +189,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 if ((ull & 0x0001) > 0)
                     fneg = true;
 
-                ull >>= 1;
+                ull = ull >> 1;
 
                 long l = (long)ull;
 

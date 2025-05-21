@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal.Documents;
 using System.Collections;
@@ -98,7 +99,7 @@ namespace System.Windows.Documents
 
             if (docRef == null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(DocumentReference)), nameof(value));
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(DocumentReference)), "value");
             }
 
             if (docRef.IsInitialized)
@@ -137,7 +138,7 @@ namespace System.Windows.Documents
 
         void IFixedNavigate.NavigateAsync(string elementID)
         {
-            if (IsPageCountValid)
+            if (IsPageCountValid == true)
             {
                 FixedHyperLink.NavigateToElement(this, elementID);
             }
@@ -238,7 +239,7 @@ namespace System.Windows.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(pageNumber), SR.IDPNegativePageNumber);
+                throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
             }
 
             DocumentPage innerDP = null;
@@ -263,7 +264,7 @@ namespace System.Windows.Documents
         {
             if (fixedDocPageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(fixedDocPageNumber), SR.IDPNegativePageNumber);
+                throw new ArgumentOutOfRangeException("fixedDocPageNumber", SR.IDPNegativePageNumber);
             }
 
             ArgumentNullException.ThrowIfNull(document);
@@ -288,7 +289,7 @@ namespace System.Windows.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(pageNumber), SR.IDPNegativePageNumber);
+                throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
             }
 
             ArgumentNullException.ThrowIfNull(userState);
@@ -345,7 +346,10 @@ namespace System.Windows.Documents
                 if (asyncRequest != null)
                 {
                     asyncRequest.Cancelled = true;
-                    asyncRequest.Page.ChildPaginator?.CancelAsync(asyncRequest);
+                    if (asyncRequest.Page.ChildPaginator != null)
+                    {
+                        asyncRequest.Page.ChildPaginator.CancelAsync(asyncRequest);
+                    }
                 }
             }
         }
@@ -671,7 +675,7 @@ namespace System.Windows.Documents
                 }
             }
 
-            if (documentSequencePageCountFinal)
+            if (documentSequencePageCountFinal == true)
             {
                 _paginator.NotifyPaginationCompleted(EventArgs.Empty);
             }

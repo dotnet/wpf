@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 #region Using declarations
@@ -957,7 +958,10 @@ namespace Microsoft.Windows.Controls.Ribbon
                 else
                 {
                     UIElement3D uiElement3D = element as UIElement3D;
-                    uiElement3D?.AddHandler(routedEvent, handler);
+                    if (uiElement3D != null)
+                    {
+                        uiElement3D.AddHandler(routedEvent, handler);
+                    }
                 }
             }
         }
@@ -982,7 +986,10 @@ namespace Microsoft.Windows.Controls.Ribbon
                 else
                 {
                     UIElement3D uiElement3D = element as UIElement3D;
-                    uiElement3D?.RemoveHandler(routedEvent, handler);
+                    if (uiElement3D != null)
+                    {
+                        uiElement3D.RemoveHandler(routedEvent, handler);
+                    }
                 }
             }
         }
@@ -1139,7 +1146,10 @@ namespace Microsoft.Windows.Controls.Ribbon
                     {
                         source = element;
                     }
-                    source?.RaiseEvent(new RibbonDismissPopupEventArgs(RibbonDismissPopupMode.MousePhysicallyNotOver));
+                    if (source != null)
+                    {
+                        source.RaiseEvent(new RibbonDismissPopupEventArgs(RibbonDismissPopupMode.MousePhysicallyNotOver));
+                    }
                 }
             }
         }
@@ -1253,7 +1263,10 @@ namespace Microsoft.Windows.Controls.Ribbon
                         {
                             settor(false);
                             e.Handled = true;
-                            targetFocusOnFalse?.Focus();
+                            if (targetFocusOnFalse != null)
+                            {
+                                targetFocusOnFalse.Focus();
+                            }
                         }
                     }
                     break;
@@ -1281,18 +1294,24 @@ namespace Microsoft.Windows.Controls.Ribbon
                         {
                             settor(false);
                             e.Handled = true;
-                            targetFocusOnFalse?.Focus();
+                            if (targetFocusOnFalse != null)
+                            {
+                                targetFocusOnFalse.Focus();
+                            }
                         }
                         else
                         {
                             settor(true);
-                            targetFocusContainerOnTrue?.Dispatcher.BeginInvoke(
+                            if (targetFocusContainerOnTrue != null)
+                            {
+                                targetFocusContainerOnTrue.Dispatcher.BeginInvoke(
                                     (Action)delegate()
                                     {
                                         targetFocusContainerOnTrue.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
                                     },
                                     DispatcherPriority.Input,
                                     null);
+                            }
                             e.Handled = true;
                         }
 
@@ -1307,7 +1326,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         public static UIElement TryGetChild(this Popup popup)
         {
-            return (popup?.Child);
+            return (popup == null ? null : popup.Child);
         }
 
         public static bool IsCaptureInSubtree(UIElement element)
@@ -1376,7 +1395,10 @@ namespace Microsoft.Windows.Controls.Ribbon
                 {
                     if (starLayoutManager != iContainsStarLayoutManager.StarLayoutManager)
                     {
-                        iContainsStarLayoutManager.StarLayoutManager?.UnregisterStarLayoutProvider(iProvideStarLayoutInfoBase);
+                        if (iContainsStarLayoutManager.StarLayoutManager != null)
+                        {
+                            iContainsStarLayoutManager.StarLayoutManager.UnregisterStarLayoutProvider(iProvideStarLayoutInfoBase);
+                        }
                         starLayoutManager.RegisterStarLayoutProvider(iProvideStarLayoutInfoBase);
                         iContainsStarLayoutManager.StarLayoutManager = starLayoutManager;
                     }
@@ -1392,7 +1414,10 @@ namespace Microsoft.Windows.Controls.Ribbon
                     // will already be dirty for measure.
 
                     UIElement managerElement = starLayoutManager as UIElement;
-                    managerElement?.InvalidateMeasure();
+                    if (managerElement != null)
+                    {
+                        managerElement.InvalidateMeasure();
+                    }
                 }
             }
         }
@@ -2881,16 +2906,19 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal static void InvalidateScrollBarVisibility(ScrollViewer submenuScrollViewer)
         {
-            // The scroll viewer needs to re-evaluate the visibility of the scrollbars
-            // and that happens in its MeasureOverride call. Also note that we need to
-            // make this invalidate call async because we may already be within a
-            // ScrollViewer measure pass, by which we would miss the boat.
-
-            submenuScrollViewer?.Dispatcher.BeginInvoke((Action)delegate ()
+            if (submenuScrollViewer != null)
             {
-                submenuScrollViewer.InvalidateMeasure();
-            },
-            DispatcherPriority.Render);
+                // The scroll viewer needs to re-evaluate the visibility of the scrollbars
+                // and that happens in its MeasureOverride call. Also note that we need to
+                // make this invalidate call async because we may already be within a
+                // ScrollViewer measure pass, by which we would miss the boat.
+
+                submenuScrollViewer.Dispatcher.BeginInvoke((Action)delegate()
+                {
+                    submenuScrollViewer.InvalidateMeasure();
+                },
+                DispatcherPriority.Render);
+            }
         }
 
         #endregion

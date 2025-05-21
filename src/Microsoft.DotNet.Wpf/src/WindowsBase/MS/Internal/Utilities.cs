@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Runtime.InteropServices;
 using Windows.Win32;
@@ -48,7 +49,10 @@ namespace MS.Internal
             // Dispose can safely be called on an object multiple times.
             IDisposable t = disposable;
             disposable = default(T);
-            t?.Dispose();
+            if (null != t)
+            {
+                t.Dispose();
+            }
         }
         
         internal static void SafeRelease<T>(ref T comObject) where T : class

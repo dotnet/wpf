@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 namespace System.Windows
 {
@@ -179,7 +180,7 @@ namespace System.Windows
             }
         }
 
-        public override bool Equals(object o)
+        override public bool Equals(object o)
         {
             if(! (o is Dependent))
                 return false;
@@ -226,7 +227,7 @@ namespace System.Windows
 
         // We don't expect to need this function. [Required when overriding Equals()]
         // Write a good HashCode anyway (if not a fast one)
-        public override int GetHashCode()
+        override public int GetHashCode()
         {
             int hashCode;
             Expression ex = (Expression)_wrEX.Target;

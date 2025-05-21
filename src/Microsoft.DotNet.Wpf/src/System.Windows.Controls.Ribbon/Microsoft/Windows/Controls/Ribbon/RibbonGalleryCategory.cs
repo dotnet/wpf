@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 #region Using declarations
@@ -220,7 +221,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (e.Property == MinColumnCountProperty || e.Property == MaxColumnCountProperty || e.Property == IsSharedColumnSizeScopeProperty || e.Property == ColumnsStretchToFillProperty)
             {
                 RibbonGallery gallery = galleryCategory.RibbonGallery;
-                gallery?.InvalidateMeasureOnAllCategoriesPanel();
+                if (gallery != null)
+                {
+                    gallery.InvalidateMeasureOnAllCategoriesPanel();
+                }
             }
         }
         internal void NotifyPropertyChanged(DependencyPropertyChangedEventArgs e)
@@ -584,7 +588,10 @@ namespace Microsoft.Windows.Controls.Ribbon
                     break;
 
                 case NotifyCollectionChangedAction.Add:
-                    RibbonGallery?.IsMaxColumnWidthValid = false;
+                    if (RibbonGallery != null)
+                    {
+                        RibbonGallery.IsMaxColumnWidthValid = false;
+                    }
                     break;
                 case NotifyCollectionChangedAction.Move:
                     break;

@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 #if RIBBON_IN_FRAMEWORK
@@ -142,7 +143,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     && DoubleUtil.LessThanOrClose(minDropDownSize.Height, newHeight))
                 {
                     itemsPresenter.Height = newHeight;
-                    result &= true;
+                    result = result & true;
                 }
             }
 

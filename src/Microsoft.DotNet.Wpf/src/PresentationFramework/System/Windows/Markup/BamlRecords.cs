@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
 *
@@ -447,7 +448,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Return the object if it should be treated as IAddChild, otherwise return null
         /// </summary>
-        internal static IAddChild AsIAddChild(object obj)
+        static internal IAddChild AsIAddChild(object obj)
         {
             IAddChild iac = obj as IAddChildInternal;
             return iac;
@@ -457,12 +458,12 @@ namespace System.Windows.Markup
         /// <summary>
         /// True if type should be treated as IAddChild
         /// </summary>
-        internal static bool TreatAsIAddChild(Type parentObjectType)
+        static internal bool TreatAsIAddChild(Type parentObjectType)
         {
             return (KnownTypes.Types[(int)KnownElements.IAddChildInternal].IsAssignableFrom( parentObjectType ));
         }
 
-        internal static BamlRecordType GetPropertyStartRecordType(Type propertyType, bool propertyCanWrite)
+        static internal BamlRecordType GetPropertyStartRecordType(Type propertyType, bool propertyCanWrite)
         {
             BamlRecordType recordType;
             if (propertyType.IsArray)
@@ -684,7 +685,7 @@ namespace System.Windows.Markup
                 case BamlRecordType.TypeSerializerInfo:
                 case BamlRecordType.AttributeInfo:
                 case BamlRecordType.StringInfo:
-                    Debug.Fail("Assembly, Type and Attribute records are not cached, so don't ask for one.");
+                    Debug.Assert(false,"Assembly, Type and Attribute records are not cached, so don't ask for one.");
                     record = null;
                     break;
                 case BamlRecordType.StaticResourceStart:
@@ -709,7 +710,7 @@ namespace System.Windows.Markup
                     record = new BamlPropertyWithStaticResourceIdRecord();
                     break;
                 default:
-                    Debug.Fail("Unknown RecordType");
+                    Debug.Assert(false,"Unknown RecordType");
                     record = null;
                     break;
             }
@@ -776,14 +777,14 @@ namespace System.Windows.Markup
         // Cache of BamlRecords, used during read, to avoid lots of records from being
         // created.  If a record gets pinned (BamlRecord.IsPinned gets set), it is not re-used.
 
-#if !PBTCOMPILER
-        private BamlRecord[] _readCache = new BamlRecord[(int)BamlRecordType.LastRecordType];
-#endif
+        #if !PBTCOMPILER
+        BamlRecord[] _readCache = new BamlRecord[(int)BamlRecordType.LastRecordType];
+        #endif
 
         // Cache of BamlRecords, used during write, also to avoid lots of records
         // from being created.
 
-        private BamlRecord[] _writeCache = null; //new BamlRecord[(int)BamlRecordType.LastRecordType];
+        BamlRecord[] _writeCache = null; //new BamlRecord[(int)BamlRecordType.LastRecordType];
     }
 
     // The base of all baml records.  This gives a fixed size record that contains
@@ -861,7 +862,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                Debug.Fail("Must override RecordType");
+                Debug.Assert(false, "Must override RecordType");
                 return BamlRecordType.Unknown;
             }
         }
@@ -1126,7 +1127,7 @@ namespace System.Windows.Markup
         }
 
         // This provides subclasses with a referece section to create their own section.
-        internal static new BitVector32.Section LastFlagsSection
+        internal new static BitVector32.Section LastFlagsSection
         {
             get { return BamlRecord.LastFlagsSection; }
         }
@@ -1140,7 +1141,7 @@ namespace System.Windows.Markup
         // sync the type type of _recordSize below.
         internal const int MaxRecordSizeFieldLength = 4;
 
-        private Int32          _recordSize = -1;   // we use a 7 bit encoded variable size
+        Int32          _recordSize = -1;   // we use a 7 bit encoded variable size
 
 #endregion Data
     }
@@ -1245,9 +1246,9 @@ namespace System.Windows.Markup
 
 #region Data
 
-        private string _prefix;
-        private string _xmlNamespace;
-        private short[] _assemblyIds;
+        string _prefix;
+        string _xmlNamespace;
+        short[] _assemblyIds;
 
 #endregion Data
     }
@@ -1335,7 +1336,7 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
-        internal static new BitVector32.Section LastFlagsSection
+        internal new static BitVector32.Section LastFlagsSection
         {
             get { return _assemblyIdHighSection; }
         }
@@ -1346,8 +1347,8 @@ namespace System.Windows.Markup
 #endregion Properties
 
 #region Data
-        private string _xmlns;
-        private string _clrns;
+        string _xmlns;
+        string _clrns;
 #endregion Data
 
     }
@@ -1391,10 +1392,10 @@ namespace System.Windows.Markup
             set { _value = value; }
         }
 
-        #endregion Properties
+#endregion Properties
 
 #region Data
-        private string _value;
+        string _value;
 #endregion Data
 
     }
@@ -1605,7 +1606,7 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
-        internal static new BitVector32.Section LastFlagsSection
+        internal new static BitVector32.Section LastFlagsSection
         {
             get { return _sharedSetSection; }
         }
@@ -1622,17 +1623,17 @@ namespace System.Windows.Markup
         internal const Int32 ValuePositionSize = 4;
 
         // Relative position in the stream where the value associated with this key starts
-        private Int32 _valuePosition;
+        Int32 _valuePosition;
 
         // Position in the stream where ValuePosition was written.  This is needed
         // when updating the ValuePosition.
-        private Int64 _valuePositionPosition = -1;
+        Int64 _valuePositionPosition = -1;
 
         // Actual object key used by a dictionary.  This is a Type object
-        private object _keyObject = null;
+        object _keyObject = null;
 
 #if !PBTCOMPILER
-        private object[] _staticResourceValues;
+        object[] _staticResourceValues;
 #endif
 
 #endregion Data
@@ -1763,7 +1764,7 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
-        internal static new BitVector32.Section LastFlagsSection
+        internal new static BitVector32.Section LastFlagsSection
         {
             get { return _sharedSetSection; }
         }
@@ -1813,20 +1814,20 @@ namespace System.Windows.Markup
         internal const Int32 ValuePositionSize = 4;
 
         // Relative position in the stream where the value associated with this key starts
-        private Int32 _valuePosition;
+        Int32 _valuePosition;
 
         // Position in the stream where ValuePosition was written.  This is needed
         // when updating the ValuePosition.
-        private Int64 _valuePositionPosition = -1;
+        Int64 _valuePositionPosition = -1;
 
         // Actual object key used by a dictionary.  This is the Value string
         // after conversion.
-        private object _keyObject = null;
+        object _keyObject = null;
 
-        private Int16 _valueId;
+        Int16 _valueId;
 
 #if !PBTCOMPILER
-        private object[] _staticResourceValues;
+        object[] _staticResourceValues;
 #endif
 
 #endregion Data
@@ -1914,9 +1915,9 @@ namespace System.Windows.Markup
 #endif
 
 #region Data
-        private string _name;
-        private Int16  _nameId;
-        private BamlAttributeUsage _attributeUsage;
+        string _name;
+        Int16  _nameId;
+        BamlAttributeUsage _attributeUsage;
 #endregion Data
 
     }
@@ -1991,8 +1992,8 @@ namespace System.Windows.Markup
 #endif
 
 #region Data
-        private string _name;
-        private Int16 _nameId;
+        string _name;
+        Int16  _nameId;
 #endregion Data
 
     }
@@ -2058,7 +2059,7 @@ namespace System.Windows.Markup
 #endif
 
 #region Data
-        private short _attributeId = -1;
+        short _attributeId = -1;
 #endregion Data
 
     }
@@ -2121,7 +2122,7 @@ namespace System.Windows.Markup
         #endregion Properties
 
         #region Data
-        private short _stringId = 0;
+        short _stringId = 0;
 
         #endregion Data
     }
@@ -2182,7 +2183,7 @@ namespace System.Windows.Markup
         #endregion Properties
 
         #region Data
-        private short _typeId = 0;
+        short _typeId = 0;
         #endregion Data
     }
 
@@ -2242,7 +2243,7 @@ namespace System.Windows.Markup
 
         #region Data
 
-        private short _converterTypeId = 0;
+        short _converterTypeId = 0;
 
         #endregion Data
     }
@@ -2304,7 +2305,7 @@ namespace System.Windows.Markup
 #endif
 
 #region Data
-        private short  _attributeId = -1;
+        short  _attributeId = -1;
 #endregion Data
 
 
@@ -2429,7 +2430,7 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
-        internal static new BitVector32.Section LastFlagsSection
+        internal new static BitVector32.Section LastFlagsSection
         {
             get { return _isValueStaticExtensionSection; }
         }
@@ -2444,9 +2445,9 @@ namespace System.Windows.Markup
         #endregion Properties
 
         #region Data
-        private short _attributeId = -1;
-        private short _extensionTypeId = 0;
-        private short _valueId = 0;
+        short _attributeId = -1;
+        short _extensionTypeId = 0;
+        short _valueId = 0;
 
         private static readonly short ExtensionIdMask = 0x0FFF;
         private static readonly short TypeExtensionValueMask = 0x4000;
@@ -2667,12 +2668,12 @@ namespace System.Windows.Markup
             set { _typeContext = value; }
         }
 
-        private short                  _valueId;
-        private Type                   _valueType;
-        private string                 _value;
-        private string                 _valueMemberName;
-        private Type                   _serializerType;
-        private ITypeDescriptorContext _typeContext;
+        short                  _valueId;
+        Type                   _valueType;
+        string                 _value;
+        string                 _valueMemberName;
+        Type                   _serializerType;
+        ITypeDescriptorContext _typeContext;
     }
 
     //
@@ -2867,7 +2868,7 @@ namespace System.Windows.Markup
             set { _flags[_isRawEnumValueSetSection] = value ? 1 : 0; }
         }
 
-        private object _valueObject;
+        object _valueObject;
 
         // Allocate space in _flags.
         private static BitVector32.Section _isValueSetSection
@@ -2882,7 +2883,7 @@ namespace System.Windows.Markup
             = BitVector32.CreateSection(1, _isValueTypeIdSection);
 
         // This provides subclasses with a referece section to create their own section.
-        internal static new BitVector32.Section LastFlagsSection
+        internal new static BitVector32.Section LastFlagsSection
         {
             get { return _isRawEnumValueSetSection; }
         }
@@ -2894,8 +2895,8 @@ namespace System.Windows.Markup
 
         internal static readonly short TypeIdValueMask = 0x4000;
 
-        private short                  _attributeId = 0;
-        private short                  _serializerTypeId = 0;
+        short                  _attributeId = 0;
+        short                  _serializerTypeId = 0;
 
 #endregion Data
     }
@@ -2986,7 +2987,7 @@ namespace System.Windows.Markup
         #endregion Properties
 
         #region Data
-        private short _typeId = 0;
+        short _typeId = 0;
         #endregion Data
     }
 
@@ -3112,7 +3113,7 @@ namespace System.Windows.Markup
 
 #region Data
 
-        private short _attributeId = -1;
+        short _attributeId = -1;
 
 #endregion Data
     }
@@ -3197,7 +3198,7 @@ namespace System.Windows.Markup
             set { Debug.Assert(value == -1, "Wrong size set for element record"); }
         }
 
-        private Int32 _connectionId = -1;
+        Int32 _connectionId = -1;
     }
 
     // An object record in the object tree.  This can be a CLR
@@ -3312,7 +3313,7 @@ namespace System.Windows.Markup
 
 
         // This provides subclasses with a referece section to create their own section.
-        internal static new BitVector32.Section LastFlagsSection
+        internal new static BitVector32.Section LastFlagsSection
         {
             get { return _isInjected; }
         }
@@ -3398,7 +3399,7 @@ namespace System.Windows.Markup
 #region Data
 
         // Id of the type of this object
-        private string _runtimeName = null;
+        string _runtimeName = null;
 
 #endregion Data
     }
@@ -3503,18 +3504,18 @@ namespace System.Windows.Markup
 
         // Size of the ContentSize field written out to the baml stream.  This
         // must be kept in sync with the size of the _contentSize field.
-        private const Int64 ContentSizeSize = 4;
+        const Int64 ContentSizeSize = 4;
 
         // Size of the content between the end of the start record and the
         // beginning of the end record for this element.
-        private Int32 _contentSize = - 1;
+        Int32 _contentSize = - 1;
 
         // Absolute position in the stream where ContentSize is written.
-        private Int64 _contentSizePosition = -1;
+        Int64 _contentSizePosition = -1;
 
 #if !PBTCOMPILER
 
-        private byte[] _valuesBuffer;
+        byte[] _valuesBuffer;
 
 #endif
 
@@ -3656,7 +3657,7 @@ namespace System.Windows.Markup
 
 #region Data
 
-        private short _valueId = 0;
+        short _valueId = 0;
 
         private static readonly byte TypeExtensionValueMask = 0x01;
         private static readonly byte StaticExtensionValueMask = 0x02;
@@ -3669,7 +3670,7 @@ namespace System.Windows.Markup
             = BitVector32.CreateSection(1, _isValueTypeExtensionSection);
 
         // This provides subclasses with a referece section to create their own section.
-        internal static new BitVector32.Section LastFlagsSection
+        internal new static BitVector32.Section LastFlagsSection
         {
             get { return _isValueStaticExtensionSection; }
         }
@@ -3747,7 +3748,7 @@ namespace System.Windows.Markup
 
 #region Data
 
-        private short _staticResourceId = -1;
+        short _staticResourceId = -1;
 
 #if !PBTCOMPILER
         public override string ToString()
@@ -3825,7 +3826,7 @@ namespace System.Windows.Markup
 
 #region Data
 
-        private short _attributeId = -1;
+        short _attributeId = -1;
 
 #if !PBTCOMPILER
         public override string ToString()
@@ -3898,7 +3899,7 @@ namespace System.Windows.Markup
 #endregion Properties
 
 #region Data
-        private Int16 _valueId;
+        Int16 _valueId;
 #endregion Data
     }
 
@@ -3956,7 +3957,7 @@ namespace System.Windows.Markup
 
 #region Data
 
-        private short _converterTypeId = 0;
+        short _converterTypeId = 0;
 
 #endregion Data
     }
@@ -4075,10 +4076,10 @@ namespace System.Windows.Markup
 #endregion Properties
 
 #region Data
-        private int         _maxAsyncRecords  = -1;
-        private bool        _loadAsync = false;
-        private long        _filePos = -1;
-        private bool        _debugBaml = false;
+        int         _maxAsyncRecords  = -1;
+        bool        _loadAsync = false;
+        long        _filePos = -1;
+        bool        _debugBaml = false;
 #endregion Data
     }
 
@@ -4219,7 +4220,7 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
-        internal static new BitVector32.Section LastFlagsSection
+        internal new static BitVector32.Section LastFlagsSection
         {
             get { return _assemblyIdHighSection; }
         }
@@ -4256,8 +4257,8 @@ namespace System.Windows.Markup
 
 #region Data
 
-        private string   _assemblyFullName;
-        private Assembly _assembly;
+        string   _assemblyFullName;
+        Assembly _assembly;
 
 #endregion Data
     }
@@ -4432,7 +4433,7 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
-        internal static new BitVector32.Section LastFlagsSection
+        internal new static BitVector32.Section LastFlagsSection
         {
             get { return _typeIdHighSection; }
         }
@@ -4449,11 +4450,11 @@ namespace System.Windows.Markup
             UnusedThree          = 0x4,
         }
 
-        private TypeInfoFlags _typeInfoFlags = 0;
-        private short         _assemblyId = -1;
-        private string        _typeFullName;
+        TypeInfoFlags _typeInfoFlags = 0;
+        short         _assemblyId = -1;
+        string        _typeFullName;
 #if !PBTCOMPILER
-        private Type          _type;
+        Type          _type;
 #endif
 
 #endregion Data
@@ -4548,9 +4549,9 @@ namespace System.Windows.Markup
 
 #region Data
 
-        private short _serializerTypeId = 0;
+        short _serializerTypeId = 0;
 #if !PBTCOMPILER
-        private Type _serializerType;
+        Type _serializerType;
 #endif
 
 #endregion Data
@@ -4913,7 +4914,7 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
-        internal static new BitVector32.Section LastFlagsSection
+        internal new static BitVector32.Section LastFlagsSection
         {
             get { return _attributeUsageSection; }
         }
@@ -4931,21 +4932,21 @@ namespace System.Windows.Markup
 
 #region Data
 
-        private short _ownerId;
-        private short _attributeId;
-        private string _name;
+        short _ownerId;
+        short _attributeId;
+        string _name;
 
 #if !PBTCOMPILER
-        private Type               _ownerType = null;
-        private RoutedEvent        _Event = null;
-        private DependencyProperty _dp = null;
-        private EventInfo          _ei = null;
-        private PropertyInfo       _pi = null;
-        private MethodInfo         _smi = null;
-        private MethodInfo         _gmi = null;
+        Type               _ownerType = null;
+        RoutedEvent        _Event = null;
+        DependencyProperty _dp = null;
+        EventInfo          _ei = null;
+        PropertyInfo       _pi = null;
+        MethodInfo         _smi = null;
+        MethodInfo         _gmi = null;
 #endif
 
-        private object             _dpOrMiOrPi = null;   // MethodInfo, PropertyInfo or DependencyProperty
+        object             _dpOrMiOrPi = null;   // MethodInfo, PropertyInfo or DependencyProperty
 
 #endregion Data
     }
@@ -5052,13 +5053,13 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
-        internal static new BitVector32.Section LastFlagsSection
+        internal new static BitVector32.Section LastFlagsSection
         {
             get { return _stringIdHighSection; }
         }
 #endif
 
-        private string _value ;
+        string _value ;
 #endregion Data
     }
 
@@ -5116,7 +5117,7 @@ namespace System.Windows.Markup
         #endregion Properties
 
         #region Data
-        private short _attributeId = -1;
+        short _attributeId = -1;
         #endregion Data
     }
 
@@ -5178,8 +5179,8 @@ namespace System.Windows.Markup
             get { return 8; }
         }
 
-        private uint _lineNumber;
-        private uint _linePosition;
+        uint _lineNumber;
+        uint _linePosition;
 
 #endregion Properties
 
@@ -5240,7 +5241,7 @@ namespace System.Windows.Markup
             get { return 4; }
         }
 
-        private uint _linePosition;
+        uint _linePosition;
 
 #endregion Properties
 

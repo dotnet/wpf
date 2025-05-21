@@ -1,6 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-
+// See the LICENSE file in the project root for more information.
 using System.Collections;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -15,7 +15,7 @@ using global::System.Runtime.CompilerServices;
 namespace MS.Internal.WindowsRuntime.Windows.Foundation.Collections
 {
     [Guid("BBE1FA4C-B0E3-4583-BAEF-1F1B2E483E56")]
-    internal interface IVectorView<T> : IIterable<T>
+    interface IVectorView<T> : IIterable<T>
     {
         T GetAt(uint index);
         bool IndexOf(T value, out uint index);
@@ -360,8 +360,7 @@ namespace MS.Internal.WindowsRuntime.ABI.System.Collections.Generic
             _obj = obj;
             _FromVectorView = new FromAbiHelper(this);
         }
-
-        private FromAbiHelper _FromVectorView;
+        FromAbiHelper _FromVectorView;
 
         public unsafe T GetAt(uint index)
         {

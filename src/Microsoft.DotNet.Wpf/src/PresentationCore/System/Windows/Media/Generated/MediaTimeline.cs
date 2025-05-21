@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -8,23 +9,12 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-using MS.Internal.KnownBoxes;
-using MS.Internal.Collections;
-using MS.Utility;
-using System.Collections;
-using System.ComponentModel;
-using System.Globalization;
-using System.Text;
-using System.Windows.Media.Effects;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Markup;
-using System.Windows.Media.Converters;
+// These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media
 {
-    public partial class MediaTimeline : Timeline
+    partial class MediaTimeline : Timeline
     {
         //------------------------------------------------------
         //
@@ -75,7 +65,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Uri)GetValue(SourceProperty);
+                return (Uri) GetValue(SourceProperty);
             }
             set
             {
@@ -200,6 +190,7 @@ namespace System.Windows.Media
             // of your app.
 
 
+
             // Initializations
             Type typeofThis = typeof(MediaTimeline);
             SourceProperty =
@@ -212,8 +203,6 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
-
 
         #endregion Constructors
     }

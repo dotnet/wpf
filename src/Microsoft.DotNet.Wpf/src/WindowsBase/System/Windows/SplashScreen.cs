@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Globalization;
@@ -53,7 +54,8 @@ namespace System.Windows
 
             _resourceName = resourceName.ToLowerInvariant();
             _hInstance = (HINSTANCE)Marshal.GetHINSTANCE(resourceAssembly.ManifestModule);
-            _resourceManager = new ResourceManager($"{ReflectionUtils.GetAssemblyPartialName(resourceAssembly)}.g", resourceAssembly);
+            AssemblyName name = new(resourceAssembly.FullName);
+            _resourceManager = new ResourceManager($"{name.Name}.g", resourceAssembly);
         }
 
         public void Show(bool autoClose)

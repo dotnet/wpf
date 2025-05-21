@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Arguments to the CollectionRegistering event (see BindingOperations).
@@ -23,7 +24,7 @@ namespace System.Windows.Data
 
         public object Parent { get { return _parent; } }
 
-        private IEnumerable _collection;
-        private object _parent;
+        IEnumerable _collection;
+        object _parent;
     }
 }

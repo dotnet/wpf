@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using MS.Internal;
@@ -91,7 +92,10 @@ namespace System.Windows.Controls
             bool isSelected = (bool)e.NewValue;
 
             TabControl parentTabControl = tabItem.TabControlParent;
-            parentTabControl?.RaiseIsSelectedChangedAutomationEvent(tabItem, isSelected);
+            if (parentTabControl != null)
+            {
+                parentTabControl.RaiseIsSelectedChangedAutomationEvent(tabItem, isSelected);
+            }
 
             if (isSelected)
             {
@@ -415,7 +419,10 @@ namespace System.Windows.Controls
             if (IsSelected)
             {
                 TabControl tabControl = TabControlParent;
-                tabControl?.SelectedContentTemplate = newContentTemplate;
+                if (tabControl != null)
+                {
+                    tabControl.SelectedContentTemplate = newContentTemplate;
+                }
             }
         }
 
@@ -432,7 +439,10 @@ namespace System.Windows.Controls
             if (IsSelected)
             {
                 TabControl tabControl = TabControlParent;
-                tabControl?.SelectedContentTemplateSelector = newContentTemplateSelector;
+                if (tabControl != null)
+                {
+                    tabControl.SelectedContentTemplateSelector = newContentTemplateSelector;
+                }
             }
         }
 
@@ -536,7 +546,7 @@ namespace System.Windows.Controls
             DefaultValue = 0,
         }
 
-        private BoolField _tabItemBoolFieldStore = BoolField.DefaultValue;
+        BoolField _tabItemBoolFieldStore = BoolField.DefaultValue;
 
         #endregion Private Fields
 

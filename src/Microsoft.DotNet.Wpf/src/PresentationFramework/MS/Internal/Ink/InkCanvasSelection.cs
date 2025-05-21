@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -126,7 +127,7 @@ namespace MS.Internal.Ink
         /// <param name="activeSelectionHitResult"></param>
         internal void StartFeedbackAdorner(Rect feedbackRect, InkCanvasSelectionHitResult activeSelectionHitResult)
         {
-            Debug.Assert( _inkCanvas.EditingCoordinator.UserIsEditing);
+            Debug.Assert( _inkCanvas.EditingCoordinator.UserIsEditing == true );
             Debug.Assert(activeSelectionHitResult != InkCanvasSelectionHitResult.None, "activeSelectionHitResult cannot be InkCanvasSelectionHitResult.None.");
 
             _activeSelectionHitResult = activeSelectionHitResult;
@@ -477,7 +478,7 @@ namespace MS.Internal.Ink
             }
             else
             {
-                Debug.Fail("The updatedElement has to be the same type as the originalElement.");
+                Debug.Assert(false, "The updatedElement has to be the same type as the originalElement.");
             }
         }
 
@@ -597,7 +598,7 @@ namespace MS.Internal.Ink
                 }
                 else
                 {
-                    Debug.Fail("An unexpected single selected Element");
+                    Debug.Assert(false, "An unexpected single selected Element");
                 }
             }
 
@@ -913,7 +914,7 @@ namespace MS.Internal.Ink
         private static Matrix MapRectToRect(Rect target, Rect source)
         {
             if(source.IsEmpty)
-                throw new ArgumentOutOfRangeException(nameof(source), SR.InvalidDiameter);
+                throw new ArgumentOutOfRangeException("source", SR.InvalidDiameter);
             /*
             In the horizontal direction:
 

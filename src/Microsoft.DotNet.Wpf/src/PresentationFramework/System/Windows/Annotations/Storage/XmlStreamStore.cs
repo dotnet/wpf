@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -131,11 +132,11 @@ namespace System.Windows.Annotations.Storage
 
                     // we are making sure that the newAnnotation doesn't already exist in the store
                     if (editor != null)
-                        throw new ArgumentException(SR.AnnotationAlreadyExists, nameof(newAnnotation));
+                        throw new ArgumentException(SR.AnnotationAlreadyExists, "newAnnotation");
 
                     // we are making sure that the newAnnotation doesn't already exist in the store map
                     if (_storeAnnotationsMap.FindAnnotation(newAnnotation.Id) != null)
-                        throw new ArgumentException(SR.AnnotationAlreadyExists, nameof(newAnnotation));
+                        throw new ArgumentException(SR.AnnotationAlreadyExists, "newAnnotation");
 
                     // simply add the annotation to the map to save on performance
                     // notice that we need to tell the map that this instance of the annotation is dirty
@@ -779,11 +780,11 @@ namespace System.Windows.Annotations.Storage
             {
                 if (knownNamespace == null)
                 {
-                    throw new ArgumentException(SR.NullUri, nameof(knownNamespaces));
+                    throw new ArgumentException(SR.NullUri, "knownNamespaces");
                 }
                 if (allNamespaces.Contains(knownNamespace))
                 {
-                    throw new ArgumentException(SR.DuplicatedUri, nameof(knownNamespaces));
+                    throw new ArgumentException(SR.DuplicatedUri, "knownNamespaces");
                 }
                 allNamespaces.Add(knownNamespace);
             }
@@ -797,12 +798,12 @@ namespace System.Windows.Annotations.Storage
                     {
                         if (name == null)
                         {
-                            throw new ArgumentException(SR.NullUri, nameof(knownNamespaces));
+                            throw new ArgumentException(SR.NullUri, "knownNamespaces");
                         }
 
                         if (allNamespaces.Contains(name))
                         {
-                            throw new ArgumentException(SR.DuplicatedCompatibleUri, nameof(knownNamespaces));
+                            throw new ArgumentException(SR.DuplicatedCompatibleUri, "knownNamespaces");
                         }
                         allNamespaces.Add(name);
                     }//foreach
@@ -876,7 +877,7 @@ namespace System.Windows.Annotations.Storage
             {
                 if (!Uri.IsWellFormedUriString(xmlNamespace, UriKind.RelativeOrAbsolute))
                 {
-                    throw new ArgumentException(SR.Format(SR.InvalidNamespace, xmlNamespace), nameof(xmlNamespace));
+                    throw new ArgumentException(SR.Format(SR.InvalidNamespace, xmlNamespace), "xmlNamespace");
                 }
                 Uri namespaceUri = new Uri(xmlNamespace, UriKind.RelativeOrAbsolute);
                 if (!_ignoredNamespaces.Contains(namespaceUri))
@@ -1028,13 +1029,13 @@ namespace System.Windows.Annotations.Storage
         // The xpath navigator used to navigate the annotations Xml stream
         private XPathNavigator _rootNavigator;
         // map that holds AnnotationId->Annotation
-        private StoreAnnotationsMap _storeAnnotationsMap;
+        StoreAnnotationsMap _storeAnnotationsMap;
         //list of ignored namespaces during XmlLoad
-        private List<Uri> _ignoredNamespaces = new List<Uri>();
+        List<Uri> _ignoredNamespaces = new List<Uri>();
 
-        // XmlCompatibilityReader - we need to hold that one open, so the underlying stream stays open too
+        //XmlCompatibilityReader - we need to hold that one open, so the underlying stream stays open too
         // if the store is disposed the reader will be disposed and the stream will be closed too.
-        private XmlCompatibilityReader _xmlCompatibilityReader;
+        XmlCompatibilityReader _xmlCompatibilityReader;
 
         ///
         ///Static fields

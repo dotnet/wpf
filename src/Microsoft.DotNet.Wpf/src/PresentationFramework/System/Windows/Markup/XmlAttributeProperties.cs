@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -182,7 +183,7 @@ namespace System.Windows.Markup
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( nameof(dependencyObject));
+                throw new ArgumentNullException( "dependencyObject" );
             }
 
             return (string)dependencyObject.GetValue(XmlSpaceProperty);
@@ -195,7 +196,7 @@ namespace System.Windows.Markup
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( nameof(dependencyObject));
+                throw new ArgumentNullException( "dependencyObject" );
             }
 
             dependencyObject.SetValue(XmlSpaceProperty, value);
@@ -216,7 +217,7 @@ namespace System.Windows.Markup
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( nameof(dependencyObject));
+                throw new ArgumentNullException( "dependencyObject" );
             }
 
             return (XmlnsDictionary)dependencyObject.GetValue(XmlnsDictionaryProperty);
@@ -229,10 +230,10 @@ namespace System.Windows.Markup
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( nameof(dependencyObject));
+                throw new ArgumentNullException( "dependencyObject" );
             }
 
-            if (!dependencyObject.IsSealed)
+            if (dependencyObject.IsSealed == false)
             {
                 dependencyObject.SetValue(XmlnsDictionaryProperty, value);
             }
@@ -254,7 +255,7 @@ namespace System.Windows.Markup
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( nameof(dependencyObject));
+                throw new ArgumentNullException( "dependencyObject" );
             }
 
             return (string)dependencyObject.GetValue(XmlnsDefinitionProperty);
@@ -267,7 +268,7 @@ namespace System.Windows.Markup
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( nameof(dependencyObject));
+                throw new ArgumentNullException( "dependencyObject" );
             }
 
             dependencyObject.SetValue(XmlnsDefinitionProperty, value);
@@ -291,7 +292,7 @@ namespace System.Windows.Markup
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( nameof(dependencyObject));
+                throw new ArgumentNullException( "dependencyObject" );
             }
 
             return (Hashtable)dependencyObject.GetValue(XmlNamespaceMapsProperty);
@@ -307,7 +308,7 @@ namespace System.Windows.Markup
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( nameof(dependencyObject));
+                throw new ArgumentNullException( "dependencyObject" );
             }
 
             dependencyObject.SetValue(XmlNamespaceMapsProperty, value);

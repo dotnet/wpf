@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #define TRACE
 
@@ -75,7 +76,7 @@ namespace MS.Internal
 
         // determine whether an extended trace should be produced for the given
         // object
-        public static bool IsExtendedTraceEnabled(object element, TraceDataLevel level)
+        static public bool IsExtendedTraceEnabled(object element, TraceDataLevel level)
         {
             if (TraceData.IsEnabled)
             {
@@ -87,22 +88,22 @@ namespace MS.Internal
         }
 
         // report/describe any additional parameters passed to TraceData.Trace()
-        public static void OnTrace(AvTraceBuilder traceBuilder, ReadOnlySpan<object> parameters)
+        static public void OnTrace( AvTraceBuilder traceBuilder, object[] parameters, int start )
         {
-            for (int i = 0; i < parameters.Length; i++)
+            for( int i = start; i < parameters.Length; i++ )
             {
-                object objectParam = parameters[i];
+                object o = parameters[i];
+                string s = o as string;
                 traceBuilder.Append(" ");
-
-                if (objectParam is string stringValue)
+                if (s != null)
                 {
-                    traceBuilder.Append(stringValue);
+                    traceBuilder.Append(s);
                 }
-                else if (objectParam is not null)
+                else if (o != null)
                 {
-                    traceBuilder.Append(objectParam.GetType().Name);
+                    traceBuilder.Append(o.GetType().Name);
                     traceBuilder.Append(":");
-                    Describe(traceBuilder, objectParam);
+                    Describe(traceBuilder, o);
                 }
                 else
                 {
@@ -124,7 +125,7 @@ namespace MS.Internal
         /// <param name="o">object to be described;
         /// currently recognized types: BindingExpression, Binding, DependencyObject, Exception</param>
         /// <returns>a string that describes the object</returns>
-        public static void Describe(AvTraceBuilder traceBuilder, object o)
+        static public void Describe(AvTraceBuilder traceBuilder, object o)
         {
             if (o == null)
             {
@@ -177,7 +178,7 @@ namespace MS.Internal
         /// <param name="traceBuilder">description will be appended to this builder</param>
         /// <param name="o">a source object (e.g. element in a Binding Path, DataItem in BindingExpression, ContextElement)</param>
         /// <returns>a string that describes the object</returns>
-        public static void DescribeSourceObject(AvTraceBuilder traceBuilder, object o)
+        static public void DescribeSourceObject(AvTraceBuilder traceBuilder, object o)
         {
             if (o == null)
             {
@@ -199,7 +200,7 @@ namespace MS.Internal
 
         /// <summary>
         /// </summary>
-        public static string DescribeSourceObject(object o)
+        static public string DescribeSourceObject(object o)
         {
             AvTraceBuilder atb = new AvTraceBuilder(null);
             DescribeSourceObject(atb, o);
@@ -213,7 +214,7 @@ namespace MS.Internal
         /// <param name="targetElement">TargetElement</param>
         /// <param name="targetProperty">TargetProperty</param>
         /// <returns>a string that describes TargetElement and TargetProperty</returns>
-        public static void DescribeTarget(AvTraceBuilder traceBuilder, DependencyObject targetElement, DependencyProperty targetProperty)
+        static public void DescribeTarget(AvTraceBuilder traceBuilder, DependencyObject targetElement, DependencyProperty targetProperty)
         {
             if (targetElement != null)
             {
@@ -233,14 +234,14 @@ namespace MS.Internal
 
         /// <summary>
         /// </summary>
-        public static string DescribeTarget(DependencyObject targetElement, DependencyProperty targetProperty)
+        static public string DescribeTarget(DependencyObject targetElement, DependencyProperty targetProperty)
         {
             AvTraceBuilder atb = new AvTraceBuilder(null);
             DescribeTarget(atb, targetElement, targetProperty);
             return atb.ToString();
         }
 
-        public static string Identify(object o)
+        static public string Identify(object o)
         {
             if (o == null)
                 return "<null>";
@@ -261,7 +262,7 @@ namespace MS.Internal
             };
         }
 
-        public static string IdentifyWeakEvent(Type type)
+        static public string IdentifyWeakEvent(Type type)
         {
             const string suffix = "EventManager";
             string name = type.Name;
@@ -273,7 +274,7 @@ namespace MS.Internal
             return name;
         }
 
-        public static string IdentifyAccessor(object accessor)
+        static public string IdentifyAccessor(object accessor)
         {
             return accessor switch
             {
@@ -284,7 +285,7 @@ namespace MS.Internal
             };
         }
 
-        public static string IdentifyException(Exception ex)
+        static public string IdentifyException(Exception ex)
         {
             if (ex == null)
                 return "<no error>";

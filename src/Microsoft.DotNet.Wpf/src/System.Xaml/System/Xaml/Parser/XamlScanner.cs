@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -11,10 +12,10 @@ using MS.Internal.Xaml.Context;
 
 namespace MS.Internal.Xaml.Parser
 {
-    internal class XamlScanner
+    class XamlScanner
     {
-        private XmlReader _xmlReader;
-        private IXmlLineInfo _xmlLineInfo;
+        XmlReader _xmlReader;
+        IXmlLineInfo _xmlLineInfo;
 
         // XamlParserContext vs. XamlScannerStack
         // The XamlScannerStack belongs to the Scanner (aka XamlScanner) exclusively.
@@ -24,17 +25,17 @@ namespace MS.Internal.Xaml.Parser
         // Except the scanner loads namespaces into the Parser's XamlParserContext,
         // and reads from it to resolve type names and namespace prefixes.
         //
-        private XamlScannerStack _scannerStack;
-        private XamlParserContext _parserContext;
+        XamlScannerStack _scannerStack;
+        XamlParserContext _parserContext;
 
-        private XamlText _accumulatedText;
-        private List<XamlAttribute> _attributes;
-        private int _nextAttribute;
-        private XamlScannerNode _currentNode;
-        private Queue<XamlScannerNode> _readNodesQueue;
-        private XamlXmlReaderSettings _settings;
-        private XamlAttribute _typeArgumentAttribute;
-        private bool _hasKeyAttribute;
+        XamlText _accumulatedText;
+        List<XamlAttribute> _attributes;
+        int _nextAttribute;
+        XamlScannerNode _currentNode;
+        Queue<XamlScannerNode> _readNodesQueue;
+        XamlXmlReaderSettings _settings;
+        XamlAttribute _typeArgumentAttribute;
+        bool _hasKeyAttribute;
 
         internal XamlScanner(XamlParserContext context, XmlReader xmlReader, XamlXmlReaderSettings settings)
         {
@@ -660,7 +661,7 @@ namespace MS.Internal.Xaml.Parser
             // The Name attribute
             foreach (XamlAttribute attr in _attributes)
             {
-                switch (attr.Kind)
+                switch(attr.Kind)
                 {
                 case ScannerAttributeKind.Name:
                     nameAttribute = attr;
@@ -878,7 +879,7 @@ namespace MS.Internal.Xaml.Parser
                 KS.Eq(XamlLanguage.XData.Name, name);
         }
 
-        private XamlException LineInfo(XamlException e)
+        XamlException LineInfo(XamlException e)
         {
             if (_xmlLineInfo is not null)
             {

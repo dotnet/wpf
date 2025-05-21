@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
 *
@@ -1586,7 +1587,10 @@ namespace System.Windows.Media.Animation
     {
         Clock clock = GetStoryboardClock(containingObject, false, InteractiveOperation.Pause);
 
-        clock?.Controller.Pause();
+        if (clock != null)
+        {
+            clock.Controller.Pause();
+        }
         
         if( TraceAnimation.IsEnabled )
         {
@@ -1630,7 +1634,10 @@ namespace System.Windows.Media.Animation
         {
             clock.Controller.Remove();
             HybridDictionary clocks = StoryboardClockTreesField.GetValue(containingObject);
-            clocks?.Remove(this);
+            if (clocks != null)
+            {
+                clocks.Remove(this);
+            }
         }
 
         if( TraceAnimation.IsEnabled )
@@ -1674,7 +1681,10 @@ namespace System.Windows.Media.Animation
     {
         Clock clock = GetStoryboardClock(containingObject, false, InteractiveOperation.Resume);
 
-        clock?.Controller.Resume();
+        if (clock != null)
+        {
+            clock.Controller.Resume();
+        }
 
         if( TraceAnimation.IsEnabled )
         {
@@ -1730,9 +1740,12 @@ namespace System.Windows.Media.Animation
     {
         Clock clock = GetStoryboardClock(containingObject, false, InteractiveOperation.Seek);
 
+        if (clock != null)
+        {
             // Seek is a public API as well, so its parameters should get validated there.
-            clock?.Controller.Seek(offset, origin);
+            clock.Controller.Seek(offset, origin);
         }
+    }
 
     /// <summary>
     ///     Given an object, look on the clock store for a clock that was
@@ -1778,9 +1791,12 @@ namespace System.Windows.Media.Animation
     {
         Clock clock = GetStoryboardClock(containingObject, false, InteractiveOperation.SeekAlignedToLastTick);
 
+        if (clock != null)
+        {
             // SeekAlignedToLastTick is a public API as well, so its parameters should get validated there.
-            clock?.Controller.SeekAlignedToLastTick(offset, origin);
+            clock.Controller.SeekAlignedToLastTick(offset, origin);
         }
+    }
 
     /// <summary>
     ///     Given an object, look on the clock store for a clock that was
@@ -1816,7 +1832,10 @@ namespace System.Windows.Media.Animation
     {
         Clock clock = GetStoryboardClock(containingObject, false, InteractiveOperation.SetSpeedRatio);
 
-        clock?.Controller.SpeedRatio = speedRatio;
+        if (clock != null)
+        {
+            clock.Controller.SpeedRatio = speedRatio;
+        }
     }
 
     /// <summary>
@@ -1850,7 +1869,10 @@ namespace System.Windows.Media.Animation
     {
         Clock clock = GetStoryboardClock(containingObject, false, InteractiveOperation.SkipToFill);
 
-        clock?.Controller.SkipToFill();
+        if (clock != null)
+        {
+            clock.Controller.SkipToFill();
+        }
     }
 
     /// <summary>
@@ -1884,7 +1906,10 @@ namespace System.Windows.Media.Animation
     {
         Clock clock = GetStoryboardClock(containingObject, false, InteractiveOperation.Stop);
 
-        clock?.Controller.Stop();
+        if (clock != null)
+        {
+            clock.Controller.Stop();
+        }
 
         if( TraceAnimation.IsEnabled )
         {
@@ -2191,10 +2216,10 @@ namespace System.Windows.Media.Animation
             _original = null;
         }
 
-        private DependencyObject _target;     // The object to invalidate
-        private DependencyProperty _property; // The property to invalidate on the above object.
-        private Freezable _clone;             // The cloned Freezable whose Changed event we were listening to.
-        private Freezable _original;          // The original Freezable whose Changed event we're also listening to.
+        DependencyObject _target;     // The object to invalidate
+        DependencyProperty _property; // The property to invalidate on the above object.
+        Freezable _clone;             // The cloned Freezable whose Changed event we were listening to.
+        Freezable _original;          // The original Freezable whose Changed event we're also listening to.
     }
 
     internal static class Layers

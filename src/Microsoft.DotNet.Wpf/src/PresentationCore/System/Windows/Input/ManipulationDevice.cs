@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -125,7 +126,10 @@ namespace System.Windows.Input
 
             RemoveAllManipulators();
 
-            _manipulationDevices?.Remove(_target);
+            if (_manipulationDevices != null)
+            {
+                _manipulationDevices.Remove(_target);
+            }
         }
 
         private void RemoveAllManipulators()
@@ -164,7 +168,10 @@ namespace System.Windows.Input
             VerifyAccess();
 
             manipulator.Updated -= OnManipulatorUpdated;
-            _manipulators?.Remove(manipulator);
+            if (_manipulators != null)
+            {
+                _manipulators.Remove(manipulator);
+            }
 
             // Removing a manipulator counts as an update
             OnManipulatorUpdated(manipulator, EventArgs.Empty);
@@ -208,7 +215,7 @@ namespace System.Windows.Input
             }
             else
             {
-                return ReadOnlyCollection<IManipulator>.Empty;
+                return new ReadOnlyCollection<IManipulator>(new List<IManipulator>(2));
             }
         }
 
@@ -339,7 +346,7 @@ namespace System.Windows.Input
                         // If a Complete is requested, then pass it along to the manipulation processor
                         if (deltaEventArgs.RequestedComplete)
                         {
-                            _manipulationLogic.Complete(withInertia: deltaEventArgs.RequestedInertia);
+                            _manipulationLogic.Complete(/* withInertia = */ deltaEventArgs.RequestedInertia);
                             _manipulationLogic.PushEventsToDevice();
                         }
                         else if (deltaEventArgs.RequestedCancel)
@@ -365,7 +372,7 @@ namespace System.Windows.Input
                         if (startedEventArgs.RequestedComplete)
                         {
                             // If a Complete is requested, pass it along to the manipulation processor
-                            _manipulationLogic.Complete(withInertia: false);
+                            _manipulationLogic.Complete(/* withInertia = */ false);
                             _manipulationLogic.PushEventsToDevice();
                         }
                         else if (startedEventArgs.RequestedCancel)
@@ -507,7 +514,7 @@ namespace System.Windows.Input
         private bool _wasTicking; // boolean used to track suspended manipulation devices
         private Func<Point, Point> _compensateForBoundaryFeedback;
         private bool _manipulationEnded = false;
-        private IManipulator _removedManipulator = null;
+        IManipulator _removedManipulator = null;
 
         [ThreadStatic]
         private static Int64 LastUpdatedTimestamp;

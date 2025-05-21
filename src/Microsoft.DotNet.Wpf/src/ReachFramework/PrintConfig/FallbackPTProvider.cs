@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Globalization;
@@ -52,7 +53,7 @@ namespace MS.Internal.Printing.Configuration
             // indicate right away if there was an error in binding the provider
             // to the device.  Doing late binding would mean that any instance
             // method could throw a no such printer exception.
-            if (!UnsafeNativeMethods.OpenPrinterW(deviceName, out this._deviceHandle, new HandleRef(this, IntPtr.Zero)))
+            if (false == UnsafeNativeMethods.OpenPrinterW(deviceName, out this._deviceHandle, new HandleRef(this, IntPtr.Zero)))
             {
                 throw new PrintQueueException(Marshal.GetLastWin32Error(), "PrintConfig.Provider.BindFail", deviceName);
             }
@@ -112,7 +113,7 @@ namespace MS.Internal.Printing.Configuration
                         PrintSchemaTags.Framework.PrintTicketRoot,
                         PTUtility.GetTextFromResource("FormatException.XMLNotWellFormed"),
                         xmlException.Message),
-                    nameof(printTicket),
+                    "printTicket",
                     xmlException);
             }
 
@@ -349,7 +350,10 @@ namespace MS.Internal.Printing.Configuration
 
         public override void Release()
         {
-            _deviceHandle?.Dispose();
+            if (_deviceHandle != null)
+            {
+                _deviceHandle.Dispose();
+            }
 
             this._deviceHandle = null;
             this._deviceName = null;
@@ -561,7 +565,7 @@ namespace MS.Internal.Printing.Configuration
 
                 default:
                 {
-                    throw new ArgumentOutOfRangeException(nameof(baseType));
+                    throw new ArgumentOutOfRangeException("baseType");
                 }
             }
 

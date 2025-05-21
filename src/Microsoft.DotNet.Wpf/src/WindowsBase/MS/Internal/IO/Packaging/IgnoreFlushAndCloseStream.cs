@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //  Description:    The class is used to wrap a given stream in a way that the Flush
 //                  and Close calls to the stream are Ignored. This stream class has been

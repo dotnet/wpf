@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows.Threading;
 using MS.Internal;
@@ -640,7 +641,7 @@ namespace System.Windows.Input
                     moveFocusTo = _activeSource.RootVisual;
                 }
 
-                Focus(moveFocusTo, askOld: false, askNew: true, forceToNullIfFailed: true);
+                Focus(moveFocusTo, /*askOld=*/ false, /*askNew=*/ true, /*forceToNullIfFailed=*/ true);
             }
             else
             {
@@ -703,7 +704,10 @@ namespace System.Windows.Input
                         // we are now active.
                         _activeSource = keyboardInput.InputSource;
 
-                        toDeactivate?.NotifyDeactivate();
+                        if(toDeactivate != null)
+                        {
+                            toDeactivate.NotifyDeactivate();
+                        }
                     }
                 }
 
@@ -727,7 +731,8 @@ namespace System.Windows.Input
                     e.StagingItem.SetData(_tagScanCode, new ScanCode(keyboardInput.ScanCode, keyboardInput.IsExtendedKey));
 
                     // Tell the InputManager that the MostRecentDevice is us.
-                    _inputManager?.MostRecentInputDevice = this;
+                    if(_inputManager is not null)
+                        _inputManager.MostRecentInputDevice = this;
                 }
 
                 // We are missing detection for redundant ups
@@ -743,7 +748,8 @@ namespace System.Windows.Input
                     e.StagingItem.SetData(_tagScanCode, new ScanCode(keyboardInput.ScanCode, keyboardInput.IsExtendedKey));
 
                     // Tell the InputManager that the MostRecentDevice is us.
-                    _inputManager?.MostRecentInputDevice = this;
+                    if(_inputManager is not null)
+                        _inputManager.MostRecentInputDevice = this;
                 }
             }
 

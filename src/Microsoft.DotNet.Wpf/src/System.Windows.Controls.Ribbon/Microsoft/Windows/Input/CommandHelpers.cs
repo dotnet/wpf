@@ -53,11 +53,17 @@ namespace Microsoft.Windows.Input
                     {
                         case CommandOperation.Preview:
                             previewCommand = command as IPreviewCommand;
-                            previewCommand?.Preview(previewParameter);
+                            if (previewCommand != null)
+                            {
+                                previewCommand.Preview(previewParameter);
+                            }
                             break;
                         case CommandOperation.CancelPreview:
                             previewCommand = command as IPreviewCommand;
-                            previewCommand?.CancelPreview();
+                            if (previewCommand != null)
+                            {
+                                previewCommand.CancelPreview();
+                            }
                             break;
                         case CommandOperation.Execute:
                             command.Execute(parameter);

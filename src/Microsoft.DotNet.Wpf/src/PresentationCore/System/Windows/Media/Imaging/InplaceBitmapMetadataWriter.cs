@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -15,7 +16,7 @@ namespace System.Windows.Media.Imaging
     /// <summary>
     /// Metadata Class for BitmapImage.
     /// </summary>
-    public sealed partial class InPlaceBitmapMetadataWriter : BitmapMetadata
+    sealed public partial class InPlaceBitmapMetadataWriter : BitmapMetadata
     {
         #region Constructors
 
@@ -41,7 +42,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///
         /// </summary>
-        internal static InPlaceBitmapMetadataWriter CreateFromFrameDecode(BitmapSourceSafeMILHandle frameHandle, object syncObject)
+        static internal InPlaceBitmapMetadataWriter CreateFromFrameDecode(BitmapSourceSafeMILHandle frameHandle, object syncObject)
         {
             Invariant.Assert(frameHandle != null);
 
@@ -69,7 +70,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///
         /// </summary>
-        internal static InPlaceBitmapMetadataWriter CreateFromDecoder(SafeMILHandle decoderHandle, object syncObject)
+        static internal InPlaceBitmapMetadataWriter CreateFromDecoder(SafeMILHandle decoderHandle, object syncObject)
         {
             Invariant.Assert(decoderHandle != null);
 

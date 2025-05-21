@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -11,12 +12,12 @@ namespace MS.Internal.Xaml.Context
     // This stack has the following features:
     //  1) it recycles frames
     //  2) it is <T>, and avoids activator.createinstance with the creationDelegate
-    internal class XamlContextStack<T> where T : XamlFrame
+    class XamlContextStack<T> where T : XamlFrame
     {
         private int _depth;
-        private T _currentFrame;
-        private T _recycledFrame;
-        private Func<T> _creationDelegate;
+        T _currentFrame;
+        T _recycledFrame;
+        Func<T> _creationDelegate;
 
         public XamlContextStack(Func<T> creationDelegate)
         {
@@ -47,7 +48,10 @@ namespace MS.Internal.Xaml.Context
                         _currentFrame = newFrame;
                     }
 
-                    lastFrameInNewStack?.Previous = newFrame;
+                    if (lastFrameInNewStack is not null)
+                    {
+                        lastFrameInNewStack.Previous = newFrame;
+                    }
 
                     lastFrameInNewStack = newFrame;
                     iteratorFrame = (T)iteratorFrame.Previous;

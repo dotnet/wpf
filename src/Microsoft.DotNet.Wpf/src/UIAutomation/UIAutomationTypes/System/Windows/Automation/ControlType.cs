@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Identifier for Automation ControlTypes
 
@@ -69,13 +70,13 @@ namespace System.Windows.Automation
         internal static ControlType Register(AutomationIdentifierConstants.ControlTypes id, string programmaticName, string stId,
                                 AutomationProperty[] requiredProperties)
         {
-            return ControlType.Register(id, programmaticName, stId, requiredProperties, Array.Empty<AutomationPattern>(), Array.Empty<AutomationPattern[]>());
+            return ControlType.Register(id, programmaticName, stId, requiredProperties, Array.Empty<AutomationPattern>(), new AutomationPattern[0][]);
         }
 
         //Required patterns, never supported patterns and required properties are set to an empty array
         internal static ControlType Register(AutomationIdentifierConstants.ControlTypes id, string programmaticName, string stId)
         {
-            return ControlType.Register(id, programmaticName, stId, Array.Empty<AutomationProperty>(), Array.Empty<AutomationPattern>(), Array.Empty<AutomationPattern[]>());
+            return ControlType.Register(id, programmaticName, stId, Array.Empty<AutomationProperty>(), Array.Empty<AutomationPattern>(), new AutomationPattern[0][]);
         }
         #endregion
         
@@ -231,7 +232,7 @@ namespace System.Windows.Automation
                                                                                                                                                     });
 
         /// <summary>ControlType ID: Document - Lets a user view/manipulate multiple pages of text.</summary>
-        public static readonly ControlType Document = ControlType.Register(AutomationIdentifierConstants.ControlTypes.Document, "ControlType.Document", nameof(SR.LocalizedControlTypeDocument), Array.Empty<AutomationProperty>(),
+        public static readonly ControlType Document = ControlType.Register(AutomationIdentifierConstants.ControlTypes.Document, "ControlType.Document", nameof(SR.LocalizedControlTypeDocument), new AutomationProperty[0],
                                                                                                         new AutomationPattern[] { ValuePatternIdentifiers.Pattern },
                                                                                                         new AutomationPattern[][] {
                                                                                                                                     new AutomationPattern[] { ScrollPatternIdentifiers.Pattern } ,

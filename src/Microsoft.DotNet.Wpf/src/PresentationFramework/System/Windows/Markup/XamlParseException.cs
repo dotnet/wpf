@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -538,12 +539,12 @@ namespace System.Windows.Markup
 
         #region Data
 
-        private int _lineNumber = 0;
-        private int _linePosition = 0;
-        private object _keyContext = null;
-        private string _uidContext = null;
-        private string _nameContext = null;
-        private Uri _baseUri = null;
+        int _lineNumber = 0;
+        int _linePosition = 0;
+        object _keyContext = null;
+        string _uidContext = null;
+        string _nameContext = null;
+        Uri _baseUri = null;
 
         #endregion Data
 

@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description:
 //  This class provides api's to add/remove/verify signatures on an MMCF container.
@@ -84,7 +85,7 @@ namespace System.IO.Packaging
             ArgumentNullException.ThrowIfNull(signature);
 
             if (result < VerifyResult.Success || result > VerifyResult.NotSigned)
-                throw new System.ArgumentOutOfRangeException(nameof(result));
+                throw new System.ArgumentOutOfRangeException("result");
 
             _signature = signature;
             _result = result;
@@ -201,7 +202,7 @@ namespace System.IO.Packaging
                 ArgumentNullException.ThrowIfNull(value);
 
                 if (value.Length == 0)
-                    throw new ArgumentException(SR.UnsupportedHashAlgorithm, nameof(value));
+                    throw new ArgumentException(SR.UnsupportedHashAlgorithm, "value");
 
                 _hashAlgorithmString = value;
             }
@@ -220,7 +221,7 @@ namespace System.IO.Packaging
             set
             {
                 if ((value < CertificateEmbeddingOption.InCertificatePart) || (value > CertificateEmbeddingOption.NotEmbedded))
-                    throw new ArgumentOutOfRangeException(nameof(value));
+                    throw new ArgumentOutOfRangeException("value");
 
                 _certificateEmbeddingOption = value;
             }
@@ -287,7 +288,7 @@ namespace System.IO.Packaging
         /// Type of default signature origin relationship
         /// </summary>
         /// <value></value>
-        public static String SignatureOriginRelationshipType
+        static public String SignatureOriginRelationshipType
         {
             get
             {
@@ -299,7 +300,7 @@ namespace System.IO.Packaging
         /// Default hash algorithm
         /// </summary>
         /// <value></value>
-        public static String DefaultHashAlgorithm
+        static public String DefaultHashAlgorithm
         {
             get
             {
@@ -836,7 +837,7 @@ namespace System.IO.Packaging
         /// </summary>
         /// <param name="hwndParent"></param>
         /// <returns>null if user cancels or no certificate could be located</returns>
-        internal static X509Certificate PromptForSigningCertificate(IntPtr hwndParent)
+        static internal X509Certificate PromptForSigningCertificate(IntPtr hwndParent)
         {
             X509Certificate2 X509cert = null;
 
@@ -919,7 +920,7 @@ namespace System.IO.Packaging
                         if (_signatures.Count == 0)
                             DeleteOriginPart();
 
-                        throw new ArgumentException(SR.PartToSignMissing, nameof(parts));
+                        throw new ArgumentException(SR.PartToSignMissing, "parts");
                     }
                 }
             }
@@ -956,12 +957,12 @@ namespace System.IO.Packaging
                 {
                     // ensure they don't duplicate the reserved one
                     if (string.Equals(obj.Id, XTable.Get(XTable.ID.OpcAttrValue), StringComparison.Ordinal))
-                        throw new ArgumentException(SR.SignaturePackageObjectTagMustBeUnique, nameof(signatureObjects));
+                        throw new ArgumentException(SR.SignaturePackageObjectTagMustBeUnique, "signatureObjects");
 
                     // check for duplicates
                     //if (ids.Contains(obj.Id))
                     if (ids.Exists(new StringMatchPredicate(obj.Id).Match))
-                        throw new ArgumentException(SR.SignatureObjectIdMustBeUnique, nameof(signatureObjects));
+                        throw new ArgumentException(SR.SignatureObjectIdMustBeUnique, "signatureObjects");
                     else
                         ids.Add(obj.Id);
                 }
@@ -977,7 +978,7 @@ namespace System.IO.Packaging
                 }
                 catch (System.Xml.XmlException xmlException)
                 {
-                    throw new ArgumentException(SR.Format(SR.NotAValidXmlIdString, signatureId), nameof(signatureId), xmlException);
+                    throw new ArgumentException(SR.Format(SR.NotAValidXmlIdString, signatureId), "signatureId", xmlException);
                 }
             }
         }

@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Table row implementation
@@ -62,7 +63,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            throw (new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(TableCell)), nameof(value)));
+            throw (new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(TableCell)), "value"));
         }
 
         /// <summary>
@@ -154,7 +155,10 @@ namespace System.Windows.Documents
         /// </summary>
         internal void OnEnterParentTree()
         {
-            Table?.OnStructureChanged();
+            if (Table != null)
+            {
+                Table.OnStructureChanged();
+            }
         }
 
         /// <summary>
@@ -231,7 +235,7 @@ namespace System.Windows.Documents
             Debug.Assert(_spannedCells != null);
 
             if ((_formatCellCount > 0) ||
-               isLastRowOfAnySpan)
+               isLastRowOfAnySpan == true)
             {
                 SetFlags(true, Flags.HasRealCells);
             }
@@ -265,7 +269,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// Table owner accessor
         /// </summary>
-        internal Table Table { get { return (RowGroup?.Table); } }
+        internal Table Table { get { return (RowGroup != null ? RowGroup.Table : null); } }
 
         /// <summary>
         /// Returns the row's cell collection

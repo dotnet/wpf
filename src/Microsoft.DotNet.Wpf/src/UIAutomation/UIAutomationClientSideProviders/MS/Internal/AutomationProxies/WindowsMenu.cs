@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: HWND-based Menu Proxy
 
@@ -21,7 +22,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Win32 menu proxy
-    internal class WindowsMenu: ProxyHwnd
+    class WindowsMenu: ProxyHwnd
     {
         // ------------------------------------------------------
         //
@@ -456,7 +457,7 @@ namespace MS.Internal.AutomationProxies
             if (MenuRelatedEvent(eventId, aidProps))
             {
                 // Sytem wide event register with hwnd == IntPtr.Zero
-                WinEventTracker.AddToNotificationList(IntPtr.Zero, new WinEventTracker.ProxyRaiseEvents(MenuEvents), _menuEvents);
+                WinEventTracker.AddToNotificationList(IntPtr.Zero, new WinEventTracker.ProxyRaiseEvents(MenuEvents), _menuEvents, _menuEvents.Length);
 
                 // Keep counter of how many requests came so we will know when to remove ourselves from the notification list
                 // We need a counter since system wide events are not based on the hwnd.
@@ -477,7 +478,7 @@ namespace MS.Internal.AutomationProxies
                 --_eventListeners;
                 if (_eventListeners == 0 && MenuRelatedEvent (eventId, aidProps))
                 {
-                    WinEventTracker.RemoveToNotificationList(IntPtr.Zero, _menuEvents, new WinEventTracker.ProxyRaiseEvents(MenuEvents));
+                    WinEventTracker.RemoveToNotificationList (IntPtr.Zero, _menuEvents, new WinEventTracker.ProxyRaiseEvents (MenuEvents), _menuEvents.Length);
                 }
             }
         }
@@ -1108,7 +1109,7 @@ namespace MS.Internal.AutomationProxies
         private MenuType _type;
 
         // Menu-specific events
-        private static readonly WinEventTracker.EvtIdProperty [] _menuEvents = new WinEventTracker.EvtIdProperty [] {
+        private readonly static WinEventTracker.EvtIdProperty [] _menuEvents = new WinEventTracker.EvtIdProperty [] {
                 new WinEventTracker.EvtIdProperty(NativeMethods.EventSystemMenuPopupStart, ExpandCollapsePattern.ExpandCollapseStateProperty),
                 new WinEventTracker.EvtIdProperty(NativeMethods.EventSystemMenuPopupEnd, ExpandCollapsePattern.ExpandCollapseStateProperty),
                 new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectInvoke, InvokePattern.InvokedEvent)
@@ -1347,7 +1348,7 @@ namespace MS.Internal.AutomationProxies
                         else
                         {
                             // Wrong logic, we should be able to find the Fxx combination we just built
-                            System.Diagnostics.Debug.Fail("Cannot find back the accelerator in the menu!");
+                            System.Diagnostics.Debug.Assert(false, "Cannot find back the accelerator in the menu!");
                             return menuRawText;
                         }
                     }
@@ -2452,7 +2453,7 @@ namespace MS.Internal.AutomationProxies
                         {
                             // Take the remaining string from the Keyword
                             // Case Alt+Enter
-                            return string.Concat(sCanonicalsKeyword, menuRawText.Substring(pos + cKeyChars + 1, cMenuChars - (pos + cKeyChars + 1)));
+                            return sCanonicalsKeyword + menuRawText.Substring(pos + cKeyChars + 1, cMenuChars - (pos + cKeyChars + 1));
                         }
                     }
                 }
@@ -2474,7 +2475,7 @@ namespace MS.Internal.AutomationProxies
                 // Check that it is the form Fxx
                 if (pos < cChars - 1 && pos > 0 && menuText [pos] == 'f')
                 {
-                    int iKey = int.Parse(menuText.AsSpan(pos + 1, cChars - (pos + 1)), CultureInfo.InvariantCulture);
+                    int iKey = int.Parse(menuText.Substring(pos + 1, cChars - (pos + 1)), CultureInfo.InvariantCulture);
                     if (iKey > 0 && iKey <= 12)
                     {
                         return "F" + iKey.ToString(CultureInfo.CurrentCulture);
@@ -2982,7 +2983,7 @@ namespace MS.Internal.AutomationProxies
 
             #region Private Fields
 
-            private IntPtr _hwndParent;
+            IntPtr _hwndParent;
 
             #endregion
         }

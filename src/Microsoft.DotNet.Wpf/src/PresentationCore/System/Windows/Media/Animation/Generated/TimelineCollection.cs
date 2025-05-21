@@ -1,23 +1,20 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
-//
-//
 // This file was generated, please do not edit it directly.
-//
 // Please see MilCodeGen.html for more information.
-//
 
-using MS.Internal;
 using MS.Utility;
 using System.Collections;
+
+// These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media.Animation
 {
     /// <summary>
     /// A collection of Timeline objects.
     /// </summary>
-
     public sealed partial class TimelineCollection : Animatable, IList, IList<Timeline>
     {
         //------------------------------------------------------
@@ -473,10 +470,10 @@ namespace System.Windows.Media.Animation
         {
             base.OnInheritanceContextChangedCore(args);
 
-            for (int i = 0; i < this.Count; i++)
+            for (int i=0; i<this.Count; i++)
             {
                 DependencyObject inheritanceChild = _collection[i];
-                if (inheritanceChild != null && inheritanceChild.InheritanceContext == this)
+                if (inheritanceChild!= null && inheritanceChild.InheritanceContext == this)
                 {
                     inheritanceChild.OnInheritanceContextChanged(args);
                 }
@@ -569,7 +566,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            TimelineCollection sourceTimelineCollection = (TimelineCollection)source;
+            TimelineCollection sourceTimelineCollection = (TimelineCollection) source;
 
             base.CloneCore(source);
 
@@ -579,7 +576,7 @@ namespace System.Windows.Media.Animation
 
             for (int i = 0; i < count; i++)
             {
-                Timeline newValue = (Timeline)sourceTimelineCollection._collection[i].Clone();
+                Timeline newValue = (Timeline) sourceTimelineCollection._collection[i].Clone();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -591,7 +588,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            TimelineCollection sourceTimelineCollection = (TimelineCollection)source;
+            TimelineCollection sourceTimelineCollection = (TimelineCollection) source;
 
             base.CloneCurrentValueCore(source);
 
@@ -601,7 +598,7 @@ namespace System.Windows.Media.Animation
 
             for (int i = 0; i < count; i++)
             {
-                Timeline newValue = (Timeline)sourceTimelineCollection._collection[i].CloneCurrentValue();
+                Timeline newValue = (Timeline) sourceTimelineCollection._collection[i].CloneCurrentValue();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -613,7 +610,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            TimelineCollection sourceTimelineCollection = (TimelineCollection)source;
+            TimelineCollection sourceTimelineCollection = (TimelineCollection) source;
 
             base.GetAsFrozenCore(source);
 
@@ -623,7 +620,7 @@ namespace System.Windows.Media.Animation
 
             for (int i = 0; i < count; i++)
             {
-                Timeline newValue = (Timeline)sourceTimelineCollection._collection[i].GetAsFrozen();
+                Timeline newValue = (Timeline) sourceTimelineCollection._collection[i].GetAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -635,7 +632,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            TimelineCollection sourceTimelineCollection = (TimelineCollection)source;
+            TimelineCollection sourceTimelineCollection = (TimelineCollection) source;
 
             base.GetCurrentValueAsFrozenCore(source);
 
@@ -645,7 +642,7 @@ namespace System.Windows.Media.Animation
 
             for (int i = 0; i < count; i++)
             {
-                Timeline newValue = (Timeline)sourceTimelineCollection._collection[i].GetCurrentValueAsFrozen();
+                Timeline newValue = (Timeline) sourceTimelineCollection._collection[i].GetCurrentValueAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -894,60 +891,66 @@ namespace System.Windows.Media.Animation
 
             WritePreamble();
 
-            ArgumentNullException.ThrowIfNull(collection);
-
-            bool needsItemValidation = true;
-            ICollection<Timeline> icollectionOfT = collection as ICollection<Timeline>;
-
-            if (icollectionOfT != null)
+            if (collection != null)
             {
-                _collection = new FrugalStructList<Timeline>(icollectionOfT);
-            }
-            else
-            {
-                ICollection icollection = collection as ICollection;
+                bool needsItemValidation = true;
+                ICollection<Timeline> icollectionOfT = collection as ICollection<Timeline>;
 
-                if (icollection != null) // an IC but not and IC<T>
+                if (icollectionOfT != null)
                 {
-                    _collection = new FrugalStructList<Timeline>(icollection);
+                    _collection = new FrugalStructList<Timeline>(icollectionOfT);
                 }
-                else // not a IC or IC<T> so fall back to the slower Add
-                {
-                    _collection = new FrugalStructList<Timeline>();
+                else
+                {       
+                    ICollection icollection = collection as ICollection;
 
+                    if (icollection != null) // an IC but not and IC<T>
+                    {
+                        _collection = new FrugalStructList<Timeline>(icollection);
+                    }
+                    else // not a IC or IC<T> so fall back to the slower Add
+                    {
+                        _collection = new FrugalStructList<Timeline>();
+
+                        foreach (Timeline item in collection)
+                        {
+                            if (item == null)
+                            {
+                                throw new System.ArgumentException(SR.Collection_NoNull);
+                            }
+                            Timeline newValue = item;
+                            OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
+                            _collection.Add(newValue);
+
+                        }
+
+                        needsItemValidation = false;
+                    }
+                }
+
+                if (needsItemValidation)
+                {
                     foreach (Timeline item in collection)
                     {
                         if (item == null)
                         {
                             throw new System.ArgumentException(SR.Collection_NoNull);
                         }
-                        Timeline newValue = item;
-                        OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
-                        _collection.Add(newValue);
+                        OnFreezablePropertyChanged(/* oldValue = */ null, item);
 
                     }
-
-                    needsItemValidation = false;
                 }
-            }
 
-            if (needsItemValidation)
+
+                WritePostscript();
+            }
+            else
             {
-                foreach (Timeline item in collection)
-                {
-                    if (item == null)
-                    {
-                        throw new System.ArgumentException(SR.Collection_NoNull);
-                    }
-                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
-
-                }
+                throw new ArgumentNullException("collection");
             }
-
-
-            WritePostscript();
         }
 
         #endregion Constructors
+
     }
 }

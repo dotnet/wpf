@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows.Documents;
 
@@ -74,13 +75,13 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // CreateParaclient
         //-------------------------------------------------------------------
-        internal abstract override void CreateParaclient(
+        internal override abstract void CreateParaclient(
             out IntPtr paraClientHandle);       // OUT: opaque to PTS paragraph client
         
         //-------------------------------------------------------------------
         // CollapseMargin
         //-------------------------------------------------------------------
-        internal abstract override void CollapseMargin(
+        internal override abstract void CollapseMargin(
             BaseParaClient paraClient,          // IN:
             MarginCollapsingState mcs,          // IN:  input margin collapsing state
             uint fswdir,                        // IN:  current direction (of the track, in which margin collapsing is happening)
@@ -98,7 +99,7 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // GetFloaterPolygons
         //-------------------------------------------------------------------
-        internal virtual unsafe void GetFloaterPolygons(
+        internal unsafe virtual void GetFloaterPolygons(
             FloaterBaseParaClient paraClient,       // IN:
             uint fswdirTrack,                   // IN:  direction of Track
             int ncVertices,                     // IN:  size of array of vertex counts (= number of polygons)
@@ -109,7 +110,7 @@ namespace MS.Internal.PtsHost
             out int cfspt,                      // OUT: actual total number of vertices in all polygons
             out int fWrapThrough)               // OUT: fill text in empty areas within obstacles?
         {
-            Debug.Fail("Tight wrap is not currently supported.");
+            Debug.Assert(false, "Tight wrap is not currently supported.");
             ccVertices = cfspt = fWrapThrough = 0;
         }
 

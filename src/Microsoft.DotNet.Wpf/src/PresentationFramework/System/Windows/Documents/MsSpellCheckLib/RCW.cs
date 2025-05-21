@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: RCW for ISpellChecker and related COM types.
@@ -300,18 +301,18 @@ namespace System.Windows.Documents
             {
                 [return: MarshalAs(UnmanagedType.Interface)]
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-                public extern virtual ISpellChecker CreateSpellChecker([In, MarshalAs(UnmanagedType.LPWStr)] string languageTag);
+                public virtual extern ISpellChecker CreateSpellChecker([In, MarshalAs(UnmanagedType.LPWStr)] string languageTag);
 
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-                public extern virtual int IsSupported([In, MarshalAs(UnmanagedType.LPWStr)] string languageTag);
+                public virtual extern int IsSupported([In, MarshalAs(UnmanagedType.LPWStr)] string languageTag);
 
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-                public extern virtual void RegisterUserDictionary([In, MarshalAs(UnmanagedType.LPWStr)] string dictionaryPath, [In, MarshalAs(UnmanagedType.LPWStr)] string languageTag);
+                public virtual extern void RegisterUserDictionary([In, MarshalAs(UnmanagedType.LPWStr)] string dictionaryPath, [In, MarshalAs(UnmanagedType.LPWStr)] string languageTag);
 
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
-                public extern virtual void UnregisterUserDictionary([In, MarshalAs(UnmanagedType.LPWStr)] string dictionaryPath, [In, MarshalAs(UnmanagedType.LPWStr)] string languageTag);
+                public virtual extern void UnregisterUserDictionary([In, MarshalAs(UnmanagedType.LPWStr)] string dictionaryPath, [In, MarshalAs(UnmanagedType.LPWStr)] string languageTag);
 
-                public extern virtual IEnumString SupportedLanguages
+                public virtual extern IEnumString SupportedLanguages
                 {
                     [return: MarshalAs(UnmanagedType.Interface)]
                     [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]

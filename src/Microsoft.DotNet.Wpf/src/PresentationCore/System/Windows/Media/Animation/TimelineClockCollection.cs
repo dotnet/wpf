@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 namespace System.Windows.Media.Animation
 {
@@ -122,8 +123,11 @@ namespace System.Windows.Media.Animation
             {
                 List<Clock> list = clockGroup.InternalChildren;
 
-                // Get free parameter validation from Array.Copy
-                list?.CopyTo(array, index);
+                if (list != null)
+                {
+                    // Get free parameter validation from Array.Copy
+                    list.CopyTo(array, index);
+                }
             }
 
             // Need to perform parameter validation in the list == null case
@@ -281,7 +285,7 @@ namespace System.Windows.Media.Animation
 
                 if (list == null)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(index));
+                    throw new ArgumentOutOfRangeException("index");
                 }
 
                 return list[index];
@@ -423,7 +427,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         private ClockCollection()
         {
-            Debug.Fail("Parameterless constructor is illegal for ClockCollection.");
+            Debug.Assert(false, "Parameterless constructor is illegal for ClockCollection.");
         }
 
         #endregion

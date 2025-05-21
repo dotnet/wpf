@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // 
@@ -170,7 +171,7 @@ namespace System.Windows
         /// Special representation applies for <see cref="double.NaN"/> values, emitted as "Auto" string instead. </summary>
         /// <param name="value">The value to format as string.</param>
         /// <param name="handler">The handler specifying culture used for conversion.</param>
-        internal static void FormatLengthAsString(double value, ref DefaultInterpolatedStringHandler handler)
+        static internal void FormatLengthAsString(double value, ref DefaultInterpolatedStringHandler handler)
         {
             if (double.IsNaN(value))
                 handler.AppendLiteral("Auto");
@@ -184,7 +185,7 @@ namespace System.Windows
         //   [value] is a double
         //   [unit] is a string specifying the unit, like 'in' or 'px', or nothing (means pixels)
         // NOTE - This code is called from FontSizeConverter, so changes will affect both.
-        internal static double FromString(string s, CultureInfo cultureInfo)
+        static internal double FromString(string s, CultureInfo cultureInfo)
         {
             ReadOnlySpan<char> valueSpan = s.AsSpan().Trim();
             double unitFactor = 1.0;

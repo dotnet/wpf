@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Spinner Proxy
 
@@ -14,7 +15,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // WinForms NumericUpDown proxy
-    internal class WinformsSpinner : ProxyHwnd, IRawElementProviderHwndOverride, IRangeValueProvider, IValueProvider
+    class WinformsSpinner : ProxyHwnd, IRawElementProviderHwndOverride, IRangeValueProvider, IValueProvider
     {
         // ------------------------------------------------------
         //
@@ -151,7 +152,7 @@ namespace MS.Internal.AutomationProxies
                 IntPtr hwndSpin;
 
                 // Find the Edit control.  Typically the UpDown is first so we'll start with the other window.                                
-                if (Misc.ProxyGetClassName(hwndLastChild).Contains("Edit", StringComparison.OrdinalIgnoreCase))
+                if (Misc.ProxyGetClassName(hwndLastChild).IndexOf("Edit", StringComparison.OrdinalIgnoreCase) != -1)
                 {
                     hwndEdit = hwndLastChild;
                     hwndSpin = hwndFirstChild;
@@ -159,7 +160,7 @@ namespace MS.Internal.AutomationProxies
                 else
                 {
                     // Haven't seen this but suppose it's possible.  Subsequent test will confirm.
-                    if (Misc.ProxyGetClassName(hwndFirstChild).Contains("Edit", StringComparison.OrdinalIgnoreCase))
+                    if (Misc.ProxyGetClassName(hwndFirstChild).IndexOf("Edit", StringComparison.OrdinalIgnoreCase) != -1)
                     {
                         hwndEdit = hwndFirstChild;
                         hwndSpin = hwndLastChild;
@@ -277,7 +278,10 @@ namespace MS.Internal.AutomationProxies
             base.AdviseEventAdded(eventId, aidProps);
 
             // Need to also advise the edit portions of the spinner so that it can raise events.
-            _elEdit?.AdviseEventAdded(eventId, aidProps);
+            if (_elEdit != null)
+            {
+                _elEdit.AdviseEventAdded(eventId, aidProps);
+            }
         }
 
         internal override void AdviseEventRemoved(AutomationEvent eventId, AutomationProperty[] aidProps)
@@ -285,7 +289,10 @@ namespace MS.Internal.AutomationProxies
             base.AdviseEventRemoved(eventId, aidProps);
 
             // Need to also remove the advise from the edit portions of the spinner.
-            _elEdit?.AdviseEventRemoved(eventId, aidProps);
+            if (_elEdit != null)
+            {
+                _elEdit.AdviseEventRemoved(eventId, aidProps);
+            }
         }
 
         #endregion
@@ -470,7 +477,7 @@ namespace MS.Internal.AutomationProxies
         // Proxy for ComboBox Edit portion
         // The Edit proxy does not exist, it the the whole spinner. This class is needed
         // though to override ProviderOptions
-        private class WinformsSpinnerEdit : WinformsSpinner
+        class WinformsSpinnerEdit : WinformsSpinner
         {
             //------------------------------------------------------
             //

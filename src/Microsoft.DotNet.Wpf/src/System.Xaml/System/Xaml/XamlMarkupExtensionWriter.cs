@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -7,15 +8,15 @@ using System.Text;
 
 namespace System.Xaml
 {
-    internal class XamlMarkupExtensionWriter : XamlWriter
+    class XamlMarkupExtensionWriter : XamlWriter
     {
-        private StringBuilder sb;
-        private Stack<Node> nodes;
-        private WriterState currentState;
-        private XamlXmlWriter xamlXmlWriter;
-        private XamlXmlWriterSettings settings;
-        private XamlMarkupExtensionWriterSettings meSettings;
-        private bool failed;
+        StringBuilder sb;
+        Stack<Node> nodes;
+        WriterState currentState;
+        XamlXmlWriter xamlXmlWriter;
+        XamlXmlWriterSettings settings;
+        XamlMarkupExtensionWriterSettings meSettings;
+        bool failed;
 
         public XamlMarkupExtensionWriter(XamlXmlWriter xamlXmlWriter)
         {
@@ -28,11 +29,11 @@ namespace System.Xaml
             Initialize(xamlXmlWriter);
         }
 
-        private void Initialize(XamlXmlWriter xamlXmlWriter)
+        void Initialize(XamlXmlWriter xamlXmlWriter)
         {
             this.xamlXmlWriter = xamlXmlWriter;
             settings = xamlXmlWriter.Settings; // This will clone, only want to do this once
-            meSettings ??= new XamlMarkupExtensionWriterSettings();
+            meSettings = meSettings ?? new XamlMarkupExtensionWriterSettings();
             currentState = Start.State;
             sb = new StringBuilder();
             nodes = new Stack<Node>();
@@ -89,7 +90,7 @@ namespace System.Xaml
             }
         }
 
-        private string LookupPrefix(XamlType type)
+        string LookupPrefix(XamlType type)
         {
             string prefix = xamlXmlWriter.LookupPrefix(type.GetXamlNamespaces(), out _);
 
@@ -106,7 +107,7 @@ namespace System.Xaml
             return prefix;
         }
 
-        private string LookupPrefix(XamlMember property)
+        string LookupPrefix(XamlMember property)
         {
             string prefix = xamlXmlWriter.LookupPrefix(property.GetXamlNamespaces(), out _);
 
@@ -123,7 +124,7 @@ namespace System.Xaml
             return prefix;
         }
 
-        private void CheckMemberForUniqueness(Node objectNode, XamlMember property)
+        void CheckMemberForUniqueness(Node objectNode, XamlMember property)
         {
             if (!settings.AssumeValidInput)
             {
@@ -180,7 +181,7 @@ namespace System.Xaml
             currentState.WriteValue(this, s);
         }
 
-        private class Node
+        class Node
         {
             public XamlMember XamlProperty
             {
@@ -207,10 +208,10 @@ namespace System.Xaml
             }
         }
 
-        private abstract class WriterState
+        abstract class WriterState
         {
             // according to the BNF, CharactersToEscape ::= ['",={}\]
-            private static char[] specialChars = new char[] { '\'', '"', ',', '=', '{', '}', '\\', ' ' };
+            static char[] specialChars = new char[] { '\'', '"', ',', '=', '{', '}', '\\', ' ' };
 
             public virtual void WriteStartObject(XamlMarkupExtensionWriter writer, XamlType type)
             {
@@ -295,11 +296,12 @@ namespace System.Xaml
         // XamlMarkupExtensionWriter returns to this state after a markup extension has been completed,
         // i.e. when the number of closing curly bracket "}" matches the number of opening curly bracket "{".
         // At this state, XamlMarkupExtensionWriter is ready to start writing a markup extension
-        private class Start : WriterState
+        class Start : WriterState
         {
-            private static WriterState state = new Start();
-
-            private Start() { }
+            static WriterState state = new Start();
+            Start()
+            {
+            }
 
             public static WriterState State
             {
@@ -321,9 +323,11 @@ namespace System.Xaml
             }
         }
 
-        private abstract class InObject : WriterState
+        abstract class InObject : WriterState
         {
-            protected InObject() { }
+            protected InObject()
+            {
+            }
 
             public abstract string Delimiter
             {
@@ -427,11 +431,12 @@ namespace System.Xaml
             }
         }
 
-        private class InObjectBeforeMember : InObject
+        class InObjectBeforeMember : InObject
         {
-            private static WriterState state = new InObjectBeforeMember();
-
-            private InObjectBeforeMember() { }
+            static WriterState state = new InObjectBeforeMember();
+            InObjectBeforeMember()
+            {
+            }
 
             public static WriterState State
             {
@@ -457,11 +462,12 @@ namespace System.Xaml
             }
         }
 
-        private class InObjectAfterMember : InObject
+        class InObjectAfterMember : InObject
         {
-            private static WriterState state = new InObjectAfterMember();
-
-            private InObjectAfterMember() { }
+            static WriterState state = new InObjectAfterMember();
+            InObjectAfterMember()
+            {
+            }
 
             public static WriterState State
             {
@@ -480,7 +486,7 @@ namespace System.Xaml
             }
         }
 
-        private abstract class InPositionalParameters : WriterState
+        abstract class InPositionalParameters : WriterState
         {
             protected InPositionalParameters()
             {
@@ -506,11 +512,12 @@ namespace System.Xaml
             }
         }
 
-        private class InPositionalParametersBeforeValue : InPositionalParameters
+        class InPositionalParametersBeforeValue : InPositionalParameters
         {
-            private static WriterState state = new InPositionalParametersBeforeValue();
-
-            private InPositionalParametersBeforeValue() { }
+            static WriterState state = new InPositionalParametersBeforeValue();
+            InPositionalParametersBeforeValue()
+            {
+            }
 
             public static WriterState State
             {
@@ -523,11 +530,12 @@ namespace System.Xaml
             }
         }
 
-        private class InPositionalParametersAfterValue : InPositionalParameters
+        class InPositionalParametersAfterValue : InPositionalParameters
         {
-            private static WriterState state = new InPositionalParametersAfterValue();
-
-            private InPositionalParametersAfterValue() { }
+            static WriterState state = new InPositionalParametersAfterValue();
+            InPositionalParametersAfterValue()
+            {
+            }
 
             public static WriterState State
             {
@@ -552,11 +560,12 @@ namespace System.Xaml
             }
         }
 
-        private class InMember : WriterState
+        class InMember : WriterState
         {
-            private static WriterState state = new InMember();
-
-            private InMember() { }
+            static WriterState state = new InMember();
+            InMember()
+            {
+            }
 
             public static WriterState State
             {
@@ -589,11 +598,12 @@ namespace System.Xaml
             }
         }
 
-        private class InMemberAfterValueOrEndObject : WriterState
+        class InMemberAfterValueOrEndObject : WriterState
         {
-            private static WriterState state = new InMemberAfterValueOrEndObject();
-
-            private InMemberAfterValueOrEndObject() { }
+            static WriterState state = new InMemberAfterValueOrEndObject();
+            InMemberAfterValueOrEndObject()
+            {
+            }
 
             public static WriterState State
             {

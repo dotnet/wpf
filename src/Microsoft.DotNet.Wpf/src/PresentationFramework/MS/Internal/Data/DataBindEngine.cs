@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Data binding engine.
@@ -438,7 +439,7 @@ namespace MS.Internal.Data
             }
         }
 
-        private bool DoCleanup(bool forceCleanup)
+        bool DoCleanup(bool forceCleanup)
         {
             if (CleanupEnabled || forceCleanup)
             {
@@ -463,7 +464,7 @@ namespace MS.Internal.Data
             }
         }
 
-        private bool DoCleanup()
+        bool DoCleanup()
         {
             bool foundDirt = false;
 
@@ -511,7 +512,7 @@ namespace MS.Internal.Data
             }
         }
 
-        private void ProcessCrossThreadRequests()
+        void ProcessCrossThreadRequests()
         {
             if (IsShutDown)
                 return;
@@ -621,7 +622,10 @@ namespace MS.Internal.Data
                 foreach (object o in asyncDispatchers.Keys)
                 {
                     IAsyncDataDispatcher dispatcher = o as IAsyncDataDispatcher;
-                    dispatcher?.CancelAllRequests();
+                    if (dispatcher != null)
+                    {
+                        dispatcher.CancelAllRequests();
+                    }
                 }
             }
 
@@ -688,8 +692,8 @@ namespace MS.Internal.Data
         //------------------------------------------------------
 
         private HybridDictionary _mostRecentTask;           // client --> Task
-        private Task _head;
-        private Task _tail;
+        Task _head;
+        Task _tail;
         private UIElement _layoutElement;
         private ViewManager _viewManager = new ViewManager();
         private CommitManager _commitManager = new CommitManager();

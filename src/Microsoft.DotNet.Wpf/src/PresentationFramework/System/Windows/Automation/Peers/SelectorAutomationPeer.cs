@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows.Automation.Provider;
 using System.Windows.Controls;
@@ -15,13 +16,13 @@ namespace System.Windows.Automation.Peers
         {}
 
         ///
-        protected override AutomationControlType GetAutomationControlTypeCore()
+        override protected AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.List;
         }
 
         ///
-        public override object GetPattern(PatternInterface patternInterface)
+        override public object GetPattern(PatternInterface patternInterface)
         {
             if(patternInterface == PatternInterface.Selection)
             {
@@ -146,7 +147,10 @@ namespace System.Windows.Automation.Peers
             if (numSelected == 1 && numAdded == 1)
             {
                 SelectorItemAutomationPeer peer = FindOrCreateItemAutomationPeer(owner._selectedItems[0].Item) as SelectorItemAutomationPeer;
-                peer?.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementSelected);
+                if(peer != null)
+                {
+                    peer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementSelected);
+                }
             }
             else
             {
@@ -164,14 +168,20 @@ namespace System.Windows.Automation.Peers
                     {
                         SelectorItemAutomationPeer peer = FindOrCreateItemAutomationPeer(e.AddedItems[i]) as SelectorItemAutomationPeer;
 
-                        peer?.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementAddedToSelection);
+                        if (peer != null)
+                        {
+                            peer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementAddedToSelection);
+                        }
                     }
 
                     for (i = 0; i < numRemoved; i++)
                     {
                         SelectorItemAutomationPeer peer = FindOrCreateItemAutomationPeer(e.RemovedItems[i]) as SelectorItemAutomationPeer;
 
-                        peer?.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection);
+                        if (peer != null)
+                        {
+                            peer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection);
+                        }
                     }
                 }
             }

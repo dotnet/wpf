@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: The ApplicationCommands class defines a standard set of commands that are required in most applications.
 //              The goal of these commands is to unify input, programming model and UI for the most common actions in

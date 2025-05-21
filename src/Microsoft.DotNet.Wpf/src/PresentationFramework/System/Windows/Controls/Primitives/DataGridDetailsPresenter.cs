@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 
@@ -46,7 +47,7 @@ namespace System.Windows.Controls.Primitives
         {
             var details = d as DataGridDetailsPresenter;
             var row = details.DataGridRowOwner;
-            var dataGrid = row?.DataGridOwner;
+            var dataGrid = row != null ? row.DataGridOwner : null;
             return DataGridHelper.GetCoercedTransferPropertyValue(
                 details, 
                 baseValue, 
@@ -64,7 +65,7 @@ namespace System.Windows.Controls.Primitives
         {
             var details = d as DataGridDetailsPresenter;
             var row = details.DataGridRowOwner;
-            var dataGrid = row?.DataGridOwner;
+            var dataGrid = row != null ? row.DataGridOwner : null;
             return DataGridHelper.GetCoercedTransferPropertyValue(
                 details, 
                 baseValue, 
@@ -110,7 +111,7 @@ namespace System.Windows.Controls.Primitives
             }
 
             DataGridRow rowOwner = DataGridRowOwner;
-            DataGrid dataGridOwner = rowOwner?.DataGridOwner;
+            DataGrid dataGridOwner = rowOwner != null ? rowOwner.DataGridOwner : null;
             if ((dataGridOwner != null) && (rowOwner != null))
             {
                 // HandleSelectionForRowHeaderAndDetailsInput below sets the CurrentCell
@@ -157,7 +158,7 @@ namespace System.Windows.Controls.Primitives
         internal void SyncProperties()
         {
             DataGridRow owner = DataGridRowOwner;
-            Content = owner?.Item;
+            Content = owner != null ? owner.Item : null;
             DataGridHelper.TransferProperty(this, ContentTemplateProperty);
             DataGridHelper.TransferProperty(this, ContentTemplateSelectorProperty);
         }

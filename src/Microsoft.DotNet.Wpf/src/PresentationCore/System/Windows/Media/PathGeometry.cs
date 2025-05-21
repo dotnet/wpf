@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using System.Windows.Media.Composition;
@@ -663,7 +664,10 @@ namespace System.Windows.Media
         {
             PathFigureCollection figures = Figures;
 
-            figures?.Clear();
+            if (figures != null)
+            {
+                figures.Clear();
+            }
         }
         #endregion
 
@@ -755,7 +759,10 @@ namespace System.Windows.Media
                 double[] dashArray = null;
 
                 // If we have a pen, populate the CMD struct
-                pen?.GetBasicPenData(&penData, out dashArray);
+                if (pen != null)
+                {
+                    pen.GetBasicPenData(&penData, out dashArray);
+                }
 
                 MilMatrix3x2D worldMatrix3X2 = CompositionResourceManager.MatrixToMilMatrix3x2D(ref worldMatrix);
 

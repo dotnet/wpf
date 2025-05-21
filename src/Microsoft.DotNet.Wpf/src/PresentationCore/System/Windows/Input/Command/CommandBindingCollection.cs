@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: The CommandBindingCollection class serves the purpose of Storing/Retrieving 
 //                   CommandBindings.
@@ -144,7 +145,10 @@ namespace System.Windows.Input
             }
             set
             {
-                _innerCBList?[index] = value;
+                if (_innerCBList != null)
+                {
+                    _innerCBList[index] = value;
+                }
             }
         }
         

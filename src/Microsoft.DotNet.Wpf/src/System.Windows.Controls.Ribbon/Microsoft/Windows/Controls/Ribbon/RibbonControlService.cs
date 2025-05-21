@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 #region Using declarations
@@ -666,7 +667,10 @@ namespace Microsoft.Windows.Controls.Ribbon
                 if (ribbonGroupItemsPanel != null)
                 {
                     RibbonGroup ribbonGroup = TreeHelper.FindVisualAncestor<RibbonGroup>(ribbonGroupItemsPanel);
-                    ribbonGroup?.UpdateGroupSizeDefinitionsAsync();
+                    if (ribbonGroup != null)
+                    {
+                        ribbonGroup.UpdateGroupSizeDefinitionsAsync();
+                    }
                 }
             }
 
@@ -702,7 +706,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (RibbonControlService.GetIsInControlGroup(d))
             {
                 RibbonControlGroup controlGroup = TreeHelper.FindVisualAncestor<RibbonControlGroup>(d);
-                controlGroup?.CoerceValue(DefaultControlSizeDefinitionProperty);
+                if (controlGroup != null)
+                {
+                    controlGroup.CoerceValue(DefaultControlSizeDefinitionProperty);
+                }
             }
         }
 

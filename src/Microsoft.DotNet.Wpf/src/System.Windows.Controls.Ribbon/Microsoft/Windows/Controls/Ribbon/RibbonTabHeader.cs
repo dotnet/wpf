@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.Windows.Automation;
@@ -333,7 +334,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             base.OnGotKeyboardFocus(e);
             RibbonTab ribbonTab = RibbonTab;
-            ribbonTab?.IsSelected = true;
+            if (ribbonTab != null)
+            {
+                ribbonTab.IsSelected = true;
+            }
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
@@ -518,7 +522,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             Panel parentPanel = VisualTreeHelper.GetParent(this) as Panel;
-            parentPanel?.InvalidateMeasure();
+            if (parentPanel != null)
+            {
+                parentPanel.InvalidateMeasure();
+            }
         }
 
         private static void OnIsRibbonTabSelectedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

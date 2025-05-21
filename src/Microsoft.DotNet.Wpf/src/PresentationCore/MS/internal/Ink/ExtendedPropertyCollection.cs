@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 namespace System.Windows.Ink
 {
@@ -147,7 +148,7 @@ namespace System.Windows.Ink
         {
             if (this.Contains(id))
             {
-                throw new ArgumentException(SR.EPExists, nameof(id));
+                throw new ArgumentException(SR.EPExists, "id");
             }
 
             ExtendedProperty extendedProperty = new ExtendedProperty(id, value);
@@ -165,7 +166,7 @@ namespace System.Windows.Ink
         {
             if (!Contains(id))
             {
-                throw new ArgumentException(SR.EPGuidNotFound, nameof(id));
+                throw new ArgumentException(SR.EPGuidNotFound, "id");
             }
 
             ExtendedProperty propertyToRemove = GetExtendedPropertyById(id);
@@ -225,7 +226,7 @@ namespace System.Windows.Ink
                 ExtendedProperty ep = GetExtendedPropertyById(attributeId);
                 if (ep == null)
                 {
-                    throw new ArgumentException(SR.EPNotFound, nameof(attributeId));
+                    throw new ArgumentException(SR.EPNotFound, "attributeId");
                 }
                 return ep.Value;
             }

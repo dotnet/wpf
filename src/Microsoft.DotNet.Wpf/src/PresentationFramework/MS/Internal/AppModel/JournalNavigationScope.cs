@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // 
 // Description:
@@ -178,7 +179,7 @@ namespace MS.Internal.AppModel
         public void GoForward()
         {
             // CanGoForward checks the calling thread and InAppShutdown as well
-            if (!CanGoForward)
+            if (CanGoForward == false)
                 throw new InvalidOperationException(SR.NoForwardEntry);
 
             if (!_host.GoForwardOverride())
@@ -200,7 +201,7 @@ namespace MS.Internal.AppModel
         public void GoBack()
         {
             // CanGoBack checks the calling thread and InAppShutdown as well
-            if (!CanGoBack)
+            if (CanGoBack == false)
                 throw new InvalidOperationException(SR.NoBackEntry);
 
             if (!_host.GoBackOverride())
@@ -225,7 +226,7 @@ namespace MS.Internal.AppModel
         public JournalEntry RemoveBackEntry()
         {
             _host.VerifyContextAndObjectState();
-            return _journal?.RemoveBackEntry();
+            return _journal == null ? null : _journal.RemoveBackEntry();
         }
 
         public System.Collections.IEnumerable BackStack
@@ -329,7 +330,10 @@ namespace MS.Internal.AppModel
 
         internal void AbortJournalNavigation()
         {
-            _journal?.AbortJournalNavigation();
+            if (_journal != null)
+            {
+                _journal.AbortJournalNavigation();
+            }
         }
 
         internal INavigatorBase FindTarget(string name)

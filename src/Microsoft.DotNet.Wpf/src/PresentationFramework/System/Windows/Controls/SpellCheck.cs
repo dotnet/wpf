@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Threading;
 using System.Windows.Documents;
@@ -214,7 +215,10 @@ namespace System.Windows.Controls
             {
                 TextEditor textEditor = TextEditor._GetTextEditor(textBoxBase);
 
-                textEditor?.SetSpellingReform((SpellingReform)e.NewValue);
+                if (textEditor != null)
+                {
+                    textEditor.SetSpellingReform((SpellingReform)e.NewValue);
+                }
             }
         }
 

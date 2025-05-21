@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -143,7 +144,7 @@ namespace System.Xaml
         public XamlDuplicateMemberException() { }
 
         public XamlDuplicateMemberException(XamlMember member, XamlType type)
-            : base(SR.Format(SR.DuplicateMemberSet, member?.Name, type?.Name))
+            : base(SR.Format(SR.DuplicateMemberSet, (member is not null) ? member.Name : null, (type is not null) ? type.Name : null))
         {
             DuplicateMember = member;
             ParentType = type;
@@ -179,7 +180,7 @@ namespace System.Xaml
     [Serializable]  // FxCop advised this be Serializable.
     public class XamlInternalException : XamlException
     {
-        private const string MessagePrefix = "Internal XAML system error: ";
+        const string MessagePrefix = "Internal XAML system error: ";
 
         // FxCop required this, default constructor.
         public XamlInternalException()

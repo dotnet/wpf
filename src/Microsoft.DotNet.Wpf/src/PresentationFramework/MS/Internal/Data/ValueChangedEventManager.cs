@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Manager for the ValueChanged event in the "weak event listener"
@@ -381,7 +382,7 @@ namespace MS.Internal.Data
 
         #endregion Private Methods
 
-        private List<PropertyDescriptor> _toRemove = new List<PropertyDescriptor>();
+        List<PropertyDescriptor> _toRemove = new List<PropertyDescriptor>();
 
         #region ValueChangedRecord
 
@@ -529,11 +530,11 @@ namespace MS.Internal.Data
                 return (target is MS.Internal.Data.ValueTable);
             }
 
-            private PropertyDescriptor _pd;
-            private ValueChangedEventManager _manager;
-            private object _source;
-            private ListenerList<ValueChangedEventArgs> _listeners = new ListenerList<ValueChangedEventArgs>();
-            private ValueChangedEventArgs _eventArgs;
+            PropertyDescriptor _pd;
+            ValueChangedEventManager _manager;
+            object _source;
+            ListenerList<ValueChangedEventArgs> _listeners = new ListenerList<ValueChangedEventArgs>();
+            ValueChangedEventArgs _eventArgs;
         }
 
         #endregion ValueChangedRecord

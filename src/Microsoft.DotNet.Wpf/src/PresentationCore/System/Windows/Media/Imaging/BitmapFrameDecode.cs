@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections.ObjectModel;
 using MS.Internal;
@@ -274,7 +275,10 @@ namespace System.Windows.Media.Imaging
         {
             ReadPreamble();
 
-            _decoder?.CheckOriginalWritable();
+            if (_decoder != null)
+            {
+                _decoder.CheckOriginalWritable();
+            }
 
             // Demand Site Of Origin on the URI before usage of metadata.
             CheckIfSiteOfOrigin();
@@ -679,7 +683,7 @@ namespace System.Windows.Media.Imaging
                 if (_decoder.InternalDecoder == null)
                 {
                     Debug.Assert(_decoder is LateBoundBitmapDecoder);
-                    Debug.Assert(!IsDownloading);
+                    Debug.Assert(IsDownloading == false);
 
                     _decoder = ((LateBoundBitmapDecoder)_decoder).Decoder;
                     _syncObject = _decoder.SyncObject;

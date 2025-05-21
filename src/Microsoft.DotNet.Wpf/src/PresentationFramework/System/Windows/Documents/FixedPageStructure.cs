@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -290,7 +291,7 @@ namespace System.Windows.Documents
                     currentFixedNode[1] == FixedFlowMap.FixedOrderEndVisual)
                 {
                     prevTextPoint.X = 2;
-                    prevTextPoint.Y += 10;
+                    prevTextPoint.Y = prevTextPoint.Y + 10;
                     String outputString = currentFixedNode[1] == FixedFlowMap.FixedOrderStartVisual ?
                                 "FixedOrderStartVisual" : "FixedOrderEndVisual";
                     ft = new FormattedText(outputString,
@@ -328,7 +329,7 @@ namespace System.Windows.Documents
                     else
                     {
                         prevTextPoint.X = 2;
-                        prevTextPoint.Y += 10;
+                        prevTextPoint.Y = prevTextPoint.Y + 10;
                     }
                     ft = new FormattedText(currentFixedNode.ToString(),
                                             EnglishCulture,
@@ -362,7 +363,7 @@ namespace System.Windows.Documents
                     else
                     {
                         prevTextPoint.X = 2;
-                        prevTextPoint.Y += 10;
+                        prevTextPoint.Y = prevTextPoint.Y + 10;
                     }
                     ft = new FormattedText(currentFixedNode.ToString(),
                                             EnglishCulture,
@@ -406,7 +407,7 @@ namespace System.Windows.Documents
                     else
                     {
                         prevTextPoint.X = 2;
-                        prevTextPoint.Y += 10;
+                        prevTextPoint.Y = prevTextPoint.Y + 10;
 
                     }
 
@@ -425,7 +426,7 @@ namespace System.Windows.Documents
                 // For anything else, there is this code to draw ...
                 //
                 prevTextPoint.X = 2;
-                prevTextPoint.Y += 10;
+                prevTextPoint.Y = prevTextPoint.Y + 10;
                 ft = new FormattedText(currentFixedNode.ToString(),
                                         EnglishCulture,
                                         FlowDirection.LeftToRight,

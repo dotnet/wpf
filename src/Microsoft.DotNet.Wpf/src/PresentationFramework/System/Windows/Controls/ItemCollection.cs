@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: ItemCollection holds the list of items that constitute the content of a ItemsControl.
@@ -246,7 +247,10 @@ namespace System.Windows.Controls
                 throw new InvalidOperationException(SR.ItemsSourceInUse);
             }
 
-            _internalView?.Clear();
+            if (_internalView != null)
+            {
+                _internalView.Clear();
+            }
             ModelParent.ClearValue(ItemsControl.HasItemsPropertyKey);
         }
 
@@ -283,7 +287,7 @@ namespace System.Windows.Controls
         {
             ArgumentNullException.ThrowIfNull(array);
             if (array.Rank > 1)
-                throw new ArgumentException(SR.BadTargetArray, nameof(array)); // array is multidimensional.
+                throw new ArgumentException(SR.BadTargetArray, "array"); // array is multidimensional.
             ArgumentOutOfRangeException.ThrowIfNegative(index);
 
             // use the view instead of the collection, because it may have special sort/filter
@@ -634,7 +638,8 @@ namespace System.Windows.Controls
             set
             {
                 MyFilter = value;
-                _collectionView?.Filter = value;
+                if (_collectionView != null)
+                    _collectionView.Filter = value;
             }
         }
 
@@ -1277,7 +1282,7 @@ namespace System.Windows.Controls
             get
             {
                 ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                return cvls?.IsLiveSorting;
+                return (cvls != null) ? cvls.IsLiveSorting : null;
             }
             set
             {
@@ -1299,7 +1304,7 @@ namespace System.Windows.Controls
             get
             {
                 ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                return cvls?.IsLiveFiltering;
+                return (cvls != null) ? cvls.IsLiveFiltering : null;
             }
             set
             {
@@ -1321,7 +1326,7 @@ namespace System.Windows.Controls
             get
             {
                 ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                return cvls?.IsLiveGrouping;
+                return (cvls != null) ? cvls.IsLiveGrouping : null;
             }
             set
             {
@@ -1544,7 +1549,7 @@ namespace System.Windows.Controls
 
         internal void BeginInit()
         {
-            Debug.Assert(!_isInitializing);
+            Debug.Assert(_isInitializing == false);
             _isInitializing = true;
             if (_collectionView != null)            // disconnect from collectionView to cut extraneous events
                 UnhookCollectionView(_collectionView);
@@ -1552,7 +1557,7 @@ namespace System.Windows.Controls
 
         internal void EndInit()
         {
-            Debug.Assert(_isInitializing);
+            Debug.Assert(_isInitializing == true);
             EnsureCollectionView();
             _isInitializing = false;                // now we allow collectionView to be hooked up again
             if (_collectionView != null)
@@ -1574,7 +1579,10 @@ namespace System.Windows.Controls
         internal override void GetCollectionChangedSources(int level, Action<int, object, bool?, List<string>> format, List<string> sources)
         {
             format(level, this, false, sources);
-            _collectionView?.GetCollectionChangedSources(level+1, format, sources);
+            if (_collectionView != null)
+            {
+                _collectionView.GetCollectionChangedSources(level+1, format, sources);
+            }
         }
 
 
@@ -1616,7 +1624,7 @@ namespace System.Windows.Controls
         // for either of these cases, a reasonable default return value or behavior is provided.
 
         // EnsureCollectionView() will set _collectionView to the InternalView if the mode is correct.
-        private bool EnsureCollectionView()
+        bool EnsureCollectionView()
         {
             if (_collectionView == null && !IsUsingItemsSource && _internalView != null)
             {
@@ -1641,7 +1649,7 @@ namespace System.Windows.Controls
             return (_collectionView != null);
         }
 
-        private void EnsureInternalView()
+        void EnsureInternalView()
         {
             if (_internalView == null)
             {
@@ -1651,7 +1659,7 @@ namespace System.Windows.Controls
         }
 
         // Change the collection view in use, unhook/hook event handlers
-        private void SetCollectionView(CollectionView view)
+        void SetCollectionView(CollectionView view)
         {
             if (_collectionView == view)
                 return;
@@ -1709,12 +1717,12 @@ namespace System.Windows.Controls
             }
 
             // with a new view, we have new live shaping behavior
-            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsLiveSorting)));
-            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsLiveFiltering)));
-            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsLiveGrouping)));
+            OnPropertyChanged(new PropertyChangedEventArgs("IsLiveSorting"));
+            OnPropertyChanged(new PropertyChangedEventArgs("IsLiveFiltering"));
+            OnPropertyChanged(new PropertyChangedEventArgs("IsLiveGrouping"));
         }
 
-        private void ApplySortFilterAndGroup()
+        void ApplySortFilterAndGroup()
         {
             if (!IsShapingActive)
                 return;
@@ -1775,7 +1783,7 @@ namespace System.Windows.Controls
             }
         }
 
-        private void HookCollectionView(CollectionView view)
+        void HookCollectionView(CollectionView view)
         {
             CollectionChangedEventManager.AddHandler(view, OnViewCollectionChanged);
             CurrentChangingEventManager.AddHandler(view, OnCurrentChanging);
@@ -1817,7 +1825,7 @@ namespace System.Windows.Controls
             }
         }
 
-        private void UnhookCollectionView(CollectionView view)
+        void UnhookCollectionView(CollectionView view)
         {
             CollectionChangedEventManager.RemoveHandler(view, OnViewCollectionChanged);
             CurrentChangingEventManager.RemoveHandler(view, OnCurrentChanging);
@@ -1881,7 +1889,7 @@ namespace System.Windows.Controls
             }
         }
 
-        private void OnViewCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        void OnViewCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             // when the collection changes, the enumerator is no longer valid.
             // This should be detected by IndexedEnumerable, but isn't because
@@ -1897,19 +1905,19 @@ namespace System.Windows.Controls
             OnCollectionChanged(e);
         }
 
-        private void OnCurrentChanged(object sender, EventArgs e)
+        void OnCurrentChanged(object sender, EventArgs e)
         {
             Debug.Assert(sender == _collectionView);
             OnCurrentChanged();
         }
 
-        private void OnCurrentChanging(object sender, CurrentChangingEventArgs e)
+        void OnCurrentChanging(object sender, CurrentChangingEventArgs e)
         {
             Debug.Assert(sender == _collectionView);
             OnCurrentChanging(e);
         }
 
-        private void OnViewPropertyChanged(object sender, PropertyChangedEventArgs e)
+        void OnViewPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             OnPropertyChanged(e);
         }
@@ -1926,7 +1934,7 @@ namespace System.Windows.Controls
         // a) InternalView is lazily created
         // b) modifying access is only allowed when the InnerView is being used
         // c) modifying access is only allowed when Refresh is not deferred
-        private void CheckIsUsingInnerView()
+        void CheckIsUsingInnerView()
         {
             if (IsUsingItemsSource)
                 throw new InvalidOperationException(SR.ItemsSourceInUse);
@@ -1936,7 +1944,7 @@ namespace System.Windows.Controls
             VerifyRefreshNotDeferred();
         }
 
-        private void EndDefer()
+        void EndDefer()
         {
             --_deferLevel;
 

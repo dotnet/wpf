@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
@@ -159,7 +160,10 @@ namespace System.Windows.Controls.Primitives
             //doing soft casting here because the peer can be that of RadioButton and it is not derived from
             //ToggleButtonAutomationPeer - specifically to avoid implementing TogglePattern
             ToggleButtonAutomationPeer peer = UIElementAutomationPeer.FromElement(button) as ToggleButtonAutomationPeer;
-            peer?.RaiseToggleStatePropertyChangedEvent(oldValue, newValue);
+            if (peer != null)
+            {
+                peer.RaiseToggleStatePropertyChangedEvent(oldValue, newValue);
+            }
 
             if (newValue == true)
             {

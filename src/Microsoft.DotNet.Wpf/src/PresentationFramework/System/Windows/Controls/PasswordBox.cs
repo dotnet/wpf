@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Security;
@@ -890,7 +891,10 @@ namespace System.Windows.Controls
             PasswordBox passwordBox = (PasswordBox)d;
 
             // Force a layout refresh to display the new char.
-            passwordBox._renderScope?.InvalidateMeasure();
+            if (passwordBox._renderScope != null)
+            {
+                passwordBox._renderScope.InvalidateMeasure();
+            }
         }
 
         /// <summary>
@@ -1021,7 +1025,10 @@ namespace System.Windows.Controls
             _textEditor.TextView = textview;
             this.TextContainer.TextView = textview;
 
-            this.ScrollViewer?.CanContentScroll = true;
+            if (this.ScrollViewer != null)
+            {
+                this.ScrollViewer.CanContentScroll = true;
+            }
         }
 
         // Uninitializes a render scope and clears this control's reference.
@@ -1038,7 +1045,10 @@ namespace System.Windows.Controls
         {
             Select(0, 0);
 
-            this.ScrollViewer?.ScrollToHome();
+            if (this.ScrollViewer != null)
+            {
+                this.ScrollViewer.ScrollToHome();
+            }
         }
 
         /// <summary>
@@ -1147,7 +1157,10 @@ namespace System.Windows.Controls
             }
 
             // Set border properties
-            _border?.Style = null;
+            if (_border != null)
+            {
+                _border.Style = null;
+            }
         }
 
         /// <summary>
@@ -1155,7 +1168,10 @@ namespace System.Windows.Controls
         /// </summary>
         private void DetachFromVisualTree()
         {
-            _textEditor?.Selection.DetachFromVisualTree();
+            if (_textEditor != null)
+            {
+                _textEditor.Selection.DetachFromVisualTree();
+            }
 
             // Invalidate our cached copy of scroll viewer.
             _scrollViewer = null;

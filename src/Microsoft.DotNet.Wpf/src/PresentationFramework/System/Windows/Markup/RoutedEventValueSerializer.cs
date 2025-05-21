@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //  Contents:  Value serializer for the RoutedEvent class
@@ -35,9 +36,9 @@ namespace System.Windows.Markup
             return base.ConvertToString(value, context);
         }
 
-        private static Dictionary<Type, Type> initializedTypes = new Dictionary<Type, Type>();
+        static Dictionary<Type, Type> initializedTypes = new Dictionary<Type, Type>();
 
-        private static void ForceTypeConstructors(Type currentType)
+        static void ForceTypeConstructors(Type currentType)
         {
             // Force load the Statics by walking up the hierarchy and running class constructors
             while (currentType != null && !initializedTypes.ContainsKey(currentType))

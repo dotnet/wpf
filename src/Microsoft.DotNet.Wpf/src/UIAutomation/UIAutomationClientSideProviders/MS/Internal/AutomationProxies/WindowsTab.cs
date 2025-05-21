@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
 *
@@ -22,7 +23,7 @@ using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.Na
 
 namespace MS.Internal.AutomationProxies
 {
-    internal class WindowsTab: ProxyHwnd, ISelectionProvider, IScrollProvider, IRawElementProviderHwndOverride
+    class WindowsTab: ProxyHwnd, ISelectionProvider, IScrollProvider, IRawElementProviderHwndOverride
     {
         // ------------------------------------------------------
         //
@@ -107,7 +108,10 @@ namespace MS.Internal.AutomationProxies
                     el = new WindowsTab(hwnd, null, -1);
                     break;
             }
-            el?.DispatchEvents (eventId, idProp, idObject, idChild);
+            if (el != null)
+            {
+                el.DispatchEvents (eventId, idProp, idObject, idChild);
+            }
         }
 
         #endregion
@@ -315,7 +319,10 @@ namespace MS.Internal.AutomationProxies
                 {
                     // Register for UpDown ValueChange WinEvents, which will be
                     // translated to scrolling events for the tab control.
-                    WinEventTracker.AddToNotificationList(upDownHwnd, new WinEventTracker.ProxyRaiseEvents(UpDownControlRaiseEvents), _upDownEvents);
+                    WinEventTracker.AddToNotificationList(
+                        upDownHwnd,
+                        new WinEventTracker.ProxyRaiseEvents(UpDownControlRaiseEvents),
+                        _upDownEvents, 1);
                 }
             }
 
@@ -332,7 +339,8 @@ namespace MS.Internal.AutomationProxies
                 IntPtr upDownHwnd = GetUpDownHwnd();
                 if (upDownHwnd != IntPtr.Zero)
                 {
-                    WinEventTracker.RemoveToNotificationList(upDownHwnd, _upDownEvents, null);
+                    WinEventTracker.RemoveToNotificationList(
+                        upDownHwnd, _upDownEvents, null, 1);
                 }
             }
             base.AdviseEventRemoved(eventId, aidProps);
@@ -489,7 +497,7 @@ namespace MS.Internal.AutomationProxies
             }
             else if (horizontalPercent < 0 || horizontalPercent > 100)
             {
-                throw new ArgumentOutOfRangeException(nameof(horizontalPercent), SR.ScrollBarOutOfRange);
+                throw new ArgumentOutOfRangeException("horizontalPercent", SR.ScrollBarOutOfRange);
             }
 
             // Get up/down control's hwnd
@@ -856,7 +864,7 @@ namespace MS.Internal.AutomationProxies
         #region Selection Helper
 
         // detect if tab-control supports multiple selection
-        internal static bool SupportMultipleSelection (IntPtr hwnd)
+        static internal bool SupportMultipleSelection (IntPtr hwnd)
         {
             return Misc.IsBitSet(Misc.GetWindowStyle(hwnd), (NativeMethods.TCS_BUTTONS | NativeMethods.TCS_MULTISELECT));
         }
@@ -874,7 +882,7 @@ namespace MS.Internal.AutomationProxies
         private const int SpinControl = -2;
 
         // Updown specific events.
-        private static readonly WinEventTracker.EvtIdProperty[] _upDownEvents;
+        private readonly static WinEventTracker.EvtIdProperty[] _upDownEvents;
 
         #endregion
     }
@@ -887,7 +895,7 @@ namespace MS.Internal.AutomationProxies
 
     #region WindowsTabItem
 
-    internal class WindowsTabItem : ProxyFragment, ISelectionItemProvider, IScrollItemProvider
+    class WindowsTabItem : ProxyFragment, ISelectionItemProvider, IScrollItemProvider
     {
         // ------------------------------------------------------
         //
@@ -1065,7 +1073,7 @@ namespace MS.Internal.AutomationProxies
                 throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
-            if (!((ISelectionItemProvider)this).IsSelected)
+            if (((ISelectionItemProvider)this).IsSelected == false)
             {
                 Select();
             }
@@ -1093,7 +1101,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // If multiple selections allowed, add requested selection
-            if (WindowsTab.SupportMultipleSelection(_hwnd))
+            if (WindowsTab.SupportMultipleSelection(_hwnd) == true)
             {
                 // Press ctrl and mouse click tab
                 NativeMethods.Win32Point pt = new NativeMethods.Win32Point();
@@ -1130,7 +1138,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // If multiple selections allowed, unselect element
-            if (WindowsTab.SupportMultipleSelection(_hwnd))
+            if (WindowsTab.SupportMultipleSelection(_hwnd) == true)
             {
                 NativeMethods.Win32Point pt = new NativeMethods.Win32Point();
                 if (GetClickablePoint(out pt, true))
@@ -1174,7 +1182,7 @@ namespace MS.Internal.AutomationProxies
 
                     if (!XSendMessage.GetItem(_hwnd, _item, ref TCItem))
                     {
-                        System.Diagnostics.Debug.Fail("XSendMessage.GetItem() failed!");
+                        System.Diagnostics.Debug.Assert(false, "XSendMessage.GetItem() failed!");
                         return false;
                     }
 
@@ -1357,7 +1365,7 @@ namespace MS.Internal.AutomationProxies
         #region Private Fields
 
         // Cached value for a winform
-        private bool _fIsWinform;
+        bool _fIsWinform;
 
         #endregion Private Fields
     }
@@ -1372,7 +1380,7 @@ namespace MS.Internal.AutomationProxies
 
     #region WindowsTabChildOverrideProxy
 
-    internal class WindowsTabChildOverrideProxy : ProxyHwnd
+    class WindowsTabChildOverrideProxy : ProxyHwnd
     {
         // ------------------------------------------------------
         //

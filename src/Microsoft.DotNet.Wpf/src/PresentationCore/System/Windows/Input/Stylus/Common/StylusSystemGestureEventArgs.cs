@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 
@@ -156,9 +157,9 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        private SystemGesture     _id;
-        private int               _buttonState;
-        private int               _gestureX;
-        private int               _gestureY;
+        SystemGesture     _id;
+        int               _buttonState;
+        int               _gestureX;
+        int               _gestureY;
     }
 }

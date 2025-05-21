@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description:
 //  The COM and P/Invoke interop code necessary for the managed compound
@@ -225,7 +226,10 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                         // If the storage was originally opened on lockbyte implementation
                         //  we need to dispose it as well
-                        _unsafeLockByteStream?.Dispose();
+                        if (_unsafeLockByteStream != null)
+                        {
+                            _unsafeLockByteStream.Dispose();
+                        }
                     }
                 }
                 finally

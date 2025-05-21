@@ -47,9 +47,19 @@
     <PackagingContent Include="$(MSBuildThisFileDirectory)Microsoft.WinFX.targets" SubFolder="root\targets" />
   </ItemGroup>
 
-  <!-- Limit the assemblies that are packaged into Microsoft.NET.Sdk.WindowsDesktop -->
+  <!--
+    Limit the assemblies that are packaged into Microsoft.NET.Sdk.WindowsDesktop
+  -->
+  <ItemGroup Condition="'$(TargetFramework)'=='net472'">
+    <PackagingAssemblyContent Include="System.Collections.Immutable.dll" />
+    <PackagingAssemblyContent Include="System.Memory.dll" />
+    <PackagingAssemblyContent Include="System.Numerics.Vectors.dll" />
+    <PackagingAssemblyContent Include="System.Reflection.Metadata.dll" />
+    <PackagingAssemblyContent Include="System.Runtime.CompilerServices.Unsafe.dll" />
+  </ItemGroup>
   <ItemGroup>
     <PackagingAssemblyContent Include="PresentationBuildTasks.dll" />
+    <PackagingAssemblyContent Include="System.Reflection.MetadataLoadContext.dll" />
   </ItemGroup>
 
   <ItemGroup>
@@ -74,9 +84,6 @@
     </Compile>
     <Compile Include="$(WpfSharedDir)\MS\Internal\ResourceIDHelper.cs">
       <Link>Shared\MS\Internal\ResourceIDHelper.cs</Link>
-    </Compile>
-    <Compile Include="$(WpfSharedDir)\MS\Internal\ReflectionUtils.cs">
-      <Link>Shared\MS\Internal\ReflectionUtils.cs</Link>
     </Compile>
     <Compile Include="$(WpfSharedDir)\MS\Internal\SecurityHelper.cs">
       <Link>Shared\MS\Internal\SecurityHelper.cs</Link>
@@ -298,16 +305,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Build.Framework" Version="$(MicrosoftBuildFrameworkPackageVersion)" IncludeAssets="compile" />
-    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="$(MicrosoftBuildUtilitiesCorePackageVersion)" IncludeAssets="compile" />
+    <PackageReference Include="Microsoft.Build.Framework" Version="$(MicrosoftBuildFrameworkPackageVersion)" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="$(MicrosoftBuildUtilitiesCorePackageVersion)" />
+    <PackageReference Include="System.Reflection.MetadataLoadContext" Version="$(SystemReflectionMetadataLoadContextVersion)" />
 
-    <!-- Reference (don't redistribute) the live version of SRM on .NETCoreApp and fallback to the toolset version for .NET Framework. -->
-    <PackageReference Include="System.Reflection.MetadataLoadContext" IncludeAssets="compile">
-      <Version Condition="'$(TargetFrameworkIdentifier)' != '.NETFramework'">$(SystemReflectionMetadataLoadContextVersion)</Version>
-      <Version Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">$(SystemReflectionMetadataLoadContextToolsetVersion)</Version>
-    </PackageReference>
-    <!-- System.CodeDom live version is provided by the SDK. Use latest and don't redistribute it. -->
-    <PackageReference Include="System.CodeDom" Version="$(SystemCodeDomPackageVersion)" Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp'" IncludeAssets="compile" />
+    <!--
+      Provide specific/old versions for PresentationBuildTasks which needs to run inside MSBuild
+    -->
+    <PackageReference Include="System.CodeDom" Version="$(SystemCodeDomPackageVersionForPresentationBuildTasks)" />
   </ItemGroup>
 
 </Project>

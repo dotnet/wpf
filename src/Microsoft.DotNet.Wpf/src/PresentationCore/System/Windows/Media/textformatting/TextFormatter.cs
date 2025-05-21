@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -38,7 +39,7 @@ namespace System.Windows.Media.TextFormatting
         /// Client to create a new instance of TextFormatter
         /// </summary>
         /// <returns>New instance of TextFormatter</returns>
-        public static TextFormatter Create(TextFormattingMode textFormattingMode)
+        static public TextFormatter Create(TextFormattingMode textFormattingMode)
         {
             if ((int)textFormattingMode < 0 || (int)textFormattingMode > 1)
             {
@@ -53,7 +54,7 @@ namespace System.Windows.Media.TextFormatting
         /// Client to create a new instance of TextFormatter
         /// </summary>
         /// <returns>New instance of TextFormatter</returns>
-        public static TextFormatter Create()
+        static public TextFormatter Create()
         {
             // create a new instance of TextFormatter which allows the use of multiple contexts.
             return new TextFormatterImp();
@@ -68,7 +69,7 @@ namespace System.Windows.Media.TextFormatting
 #if OPTIMALBREAK_API
         static public TextFormatter CreateFromContext(TextFormatterContext soleContext)
 #else
-        internal static TextFormatter CreateFromContext(TextFormatterContext soleContext)
+        static internal TextFormatter CreateFromContext(TextFormatterContext soleContext)
 #endif
         {
             // create a new instance of TextFormatter for the specified context.
@@ -84,7 +85,7 @@ namespace System.Windows.Media.TextFormatting
 #if OPTIMALBREAK_API
         static public TextFormatter CreateFromContext(TextFormatterContext soleContext, TextFormattingMode textFormattingMode)
 #else
-        internal static TextFormatter CreateFromContext(TextFormatterContext soleContext, TextFormattingMode textFormattingMode)
+        static internal TextFormatter CreateFromContext(TextFormatterContext soleContext, TextFormattingMode textFormattingMode)
 #endif
         {
             // create a new instance of TextFormatter for the specified context.
@@ -101,7 +102,7 @@ namespace System.Windows.Media.TextFormatting
         /// through friend assembly mechanics to quickly reuse the default TextFormatter retained in the current
         /// dispatcher of the running thread. 
         /// </remarks>
-        internal static TextFormatter FromCurrentDispatcher()
+        static internal TextFormatter FromCurrentDispatcher()
         {
             return FromCurrentDispatcher(TextFormattingMode.Ideal);
         }
@@ -114,7 +115,7 @@ namespace System.Windows.Media.TextFormatting
         /// through friend assembly mechanics to quickly reuse the default TextFormatter retained in the current
         /// dispatcher of the running thread. 
         /// </remarks>
-        internal static TextFormatter FromCurrentDispatcher(TextFormattingMode textFormattingMode)
+        static internal TextFormatter FromCurrentDispatcher(TextFormattingMode textFormattingMode)
         {
             Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
 

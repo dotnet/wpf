@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.Collections;
@@ -46,9 +47,9 @@ namespace System.Windows.Xps.Serialization
         private List<Geometry> _fullClip = new List<Geometry>();
 
         private Size     _pageSize;
-
+        
         // Used to track visual brushes whos visuals are being traversed. We do this to detect cycles in the visual tree
-        private TreeWalkProgress _treeWalkProgress;
+        TreeWalkProgress _treeWalkProgress;
         
         #endregion
 
@@ -458,8 +459,8 @@ namespace System.Windows.Xps.Serialization
 
     internal static class GeometryHelper
     {
-        private const double FUZZ = 1e-6;           // Relative 0
-        private const double PI_OVER_180 = Math.PI / 180;  // PI/180
+        const double FUZZ = 1e-6;           // Relative 0
+        const double PI_OVER_180 = Math.PI / 180;  // PI/180
 
         //  Function: AcceptRadius
         //  Synopsis: Accept one radius

@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Proxy for UI elements that are native IAccessible 
 //              implementations.  NativeMsaaProviderRoot creates
@@ -569,7 +570,7 @@ namespace MS.Internal.AutomationProxies
 
             Accessible[] accessibles = _acc.GetSelection();
             if (accessibles == null)
-                return Array.Empty<IRawElementProviderSimple>();
+                return new IRawElementProviderSimple[] {};
 
             IRawElementProviderSimple [] rawEPS= new IRawElementProviderSimple[accessibles.Length];
             for (int i=0;i<accessibles.Length;i++)
@@ -839,7 +840,7 @@ namespace MS.Internal.AutomationProxies
             }
 
 
-            if (!rval)
+            if (rval == false)
             {
                 // If it's not a recognized role, but does have a default action, support
                 // Invoke as a fallback...
@@ -1184,7 +1185,7 @@ namespace MS.Internal.AutomationProxies
         }
 
         // Used by Toggle and Invoke...
-        private void CallDoDefaultAction()
+        void CallDoDefaultAction()
         {
             // Make sure that the control is enabled
             if (!SafeNativeMethods.IsWindowEnabled(_hwnd))
@@ -1219,13 +1220,13 @@ namespace MS.Internal.AutomationProxies
         //  Private Fields
         //
         //------------------------------------------------------
-
+ 
         #region Private Fields
 
         //private delegate AutomationPattern PatternChecker(Accessible acc);
 
         // a struct holding an entry for the table below
-        private struct RoleCtrlType
+        struct RoleCtrlType
         {
             public RoleCtrlType(AccessibleRole role, ControlType ctrlType)
             {
@@ -1280,7 +1281,7 @@ namespace MS.Internal.AutomationProxies
         };
 
         // a struct holding an entry for the table below
-        private struct CtrlTypePatterns
+        struct CtrlTypePatterns
         {
             public CtrlTypePatterns(ControlType ctrlType, params AutomationPattern[] patterns)
             {

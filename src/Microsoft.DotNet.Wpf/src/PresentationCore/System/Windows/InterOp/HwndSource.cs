@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Threading;
 using System.Windows.Threading;
@@ -443,7 +444,7 @@ namespace System.Windows.Interop
 
                 // New world transform has been set-up by HwndTarget
                 // set the layouts size again to account for this
-                if (IsLayoutActive())
+                if (IsLayoutActive() == true)
                 {
                     // Call the helper method SetLayoutSize to set Layout's size
                     // We may already be inside a call to SetLayoutSize - schedule another call
@@ -497,7 +498,7 @@ namespace System.Windows.Interop
                 // whichever code handles the DPI changes set up updated
                 // window sizes etc. in screen/client coordinates, and now
                 // we must adapt and update the corresponding layout sizes as well.
-                if (IsLayoutActive())
+                if (IsLayoutActive() == true)
                 {
                     // Call the helper method SetLayoutSize to set Layout's size
                     // We may already be inside a call to SetLayoutSize - schedule another call
@@ -576,7 +577,7 @@ namespace System.Windows.Interop
                             ((UIElement)(_rootVisual)).LayoutUpdated += new EventHandler(OnLayoutUpdated);
                         }
 
-                        if (_hwndTarget != null && !_hwndTarget.IsDisposed)
+                        if (_hwndTarget != null && _hwndTarget.IsDisposed == false)
                         {
                             _hwndTarget.RootVisual = _rootVisual;
                         }
@@ -604,7 +605,7 @@ namespace System.Windows.Interop
 
                     RootChanged(oldRoot, _rootVisual);
 
-                    if (IsLayoutActive())
+                    if (IsLayoutActive() == true)
                     {
                         // Call the helper method SetLayoutSize to set Layout's size
                         SetLayoutSize();
@@ -701,7 +702,7 @@ namespace System.Windows.Interop
 
                 // Even though we created the HwndTarget, it can get disposed out from
                 // underneath us.
-                if (_hwndTarget!= null && _hwndTarget.IsDisposed)
+                if (_hwndTarget!= null && _hwndTarget.IsDisposed == true)
                 {
                     return null;
                 }
@@ -886,7 +887,7 @@ namespace System.Windows.Interop
             // For windows with UsesPerPixelOpacity, we force the client to
             // fill the window, so we don't need to add in any frame space.
             //
-            if (!_adjustSizingForNonClientArea && !UsesPerPixelOpacity)
+            if (_adjustSizingForNonClientArea == false && !UsesPerPixelOpacity)
             {
                 int style = NativeMethods.IntPtrToInt32((IntPtr)SafeNativeMethods.GetWindowStyle(new HandleRef(this, _hwndWrapper.Handle), false));
                 int styleEx = NativeMethods.IntPtrToInt32((IntPtr)SafeNativeMethods.GetWindowStyle(new HandleRef(this, _hwndWrapper.Handle), true));
@@ -975,7 +976,7 @@ namespace System.Windows.Interop
             {
                 CheckDisposed(true);
 
-                if (!IsValidSizeToContent(value))
+                if (IsValidSizeToContent(value) != true)
                 {
                     throw new InvalidEnumArgumentException("value", (int)value, typeof(SizeToContent));
                 }
@@ -991,7 +992,7 @@ namespace System.Windows.Interop
                 // if a developer goes directly to HwndSource and sets SizeToContent, we will
                 // not notify the wrapping Window
 
-                if (IsLayoutActive())
+                if (IsLayoutActive() == true)
                 {
                     // Call the helper method SetLayoutSize to set Layout's size
                     SetLayoutSize();
@@ -1001,7 +1002,7 @@ namespace System.Windows.Interop
 
         private bool IsLayoutActive()
         {
-            if ((_rootVisual is UIElement) && _hwndTarget!= null && !_hwndTarget.IsDisposed)
+            if ((_rootVisual is UIElement) && _hwndTarget!= null && _hwndTarget.IsDisposed == false)
             {
                 return true;
             }
@@ -1016,7 +1017,7 @@ namespace System.Windows.Interop
         private void SetLayoutSize()
         {
             Debug.Assert(_hwndTarget!= null, "HwndTarget is null");
-            Debug.Assert(!_hwndTarget.IsDisposed, "HwndTarget is disposed");
+            Debug.Assert(_hwndTarget.IsDisposed == false, "HwndTarget is disposed");
 
             UIElement rootUIElement = null;
             rootUIElement = _rootVisual as UIElement;
@@ -1139,7 +1140,7 @@ namespace System.Windows.Interop
             // Compute View's size and set
             NativeMethods.RECT rc = new NativeMethods.RECT(0, 0, 0, 0);
 
-            if (_adjustSizingForNonClientArea)
+            if (_adjustSizingForNonClientArea == true)
             {
                 GetNonClientRect(ref rc);
             }
@@ -1329,7 +1330,7 @@ namespace System.Windows.Interop
             // Only if SizeToContent overrides Win32 sizing change calls.
             // If it's coming from OnResize (_myOwnUpdate != true), it means we are adjusting
             // to the right size; don't need to do anything here.
-            if ((!_myOwnUpdate) && (SizeToContent != SizeToContent.Manual))
+            if ((_myOwnUpdate != true) && (SizeToContent != SizeToContent.Manual))
             {
                 // Get the current style and calculate the size to be with the new style.
                 // If WM_WINDOWPOSCHANGING is sent because of style changes, WM_STYLECHANGED is sent
@@ -1424,7 +1425,7 @@ namespace System.Windows.Interop
 
                 // WM_SIZE has the client size of the window.
                 // for appmodel window case, get the outside size of the hwnd.
-                if (_adjustSizingForNonClientArea)
+                if (_adjustSizingForNonClientArea == true)
                 {
                     NativeMethods.RECT rect = new NativeMethods.RECT(0, 0, (int)pt.X, (int)pt.Y);
                     GetNonClientRect(ref rect);
@@ -1451,7 +1452,7 @@ namespace System.Windows.Interop
                 // call to Measure is optimized out and no layout happens.  Invalidating
                 // layout here ensures that we do layout.
                 // This can happen only in the Window case
-                if (_adjustSizingForNonClientArea)
+                if (_adjustSizingForNonClientArea == true)
                 {
                     rootUIElement.InvalidateMeasure();
                 }
@@ -1520,7 +1521,7 @@ namespace System.Windows.Interop
         // HwndSourceParameters.TreatAncestorsAsNonClientArea setting.
         private void GetNonClientRect(ref NativeMethods.RECT rc)
         {
-            Debug.Assert(_adjustSizingForNonClientArea);
+            Debug.Assert(_adjustSizingForNonClientArea == true);
 
             IntPtr hwndRoot = IntPtr.Zero;
 
@@ -2240,7 +2241,7 @@ namespace System.Windows.Interop
             }
         }
 
-        private IKeyboardInputSink ChildSinkWithFocus
+        IKeyboardInputSink ChildSinkWithFocus
         {
             get
             {
@@ -2639,7 +2640,9 @@ namespace System.Windows.Interop
         {
             get
             {
-                return !_isDisposed && _hwndTarget is not null && !_hwndTarget.IsDisposed;
+                return _isDisposed == false &&
+                       _hwndTarget != null &&
+                       _hwndTarget.IsDisposed == false;
             }
         }
 
@@ -2659,7 +2662,7 @@ namespace System.Windows.Interop
                    value == SizeToContent.WidthAndHeight;
         }
 
-        private class ThreadDataBlob
+        class ThreadDataBlob
         {
             public int TranslateAcceleratorCallDepth;
         }
@@ -2801,9 +2804,9 @@ namespace System.Windows.Interop
 
         private HwndAppCommandInputProvider _appCommand;
 
-        private WeakEventDispatcherShutdown _weakShutdownHandler;
-        private WeakEventPreprocessMessage _weakPreprocessMessageHandler;
-        private WeakEventPreprocessMessage _weakMenuModeMessageHandler;
+        WeakEventDispatcherShutdown _weakShutdownHandler;
+        WeakEventPreprocessMessage _weakPreprocessMessageHandler;
+        WeakEventPreprocessMessage _weakMenuModeMessageHandler;
 
         private static System.LocalDataStoreSlot _threadSlot;
 

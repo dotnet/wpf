@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Windows LinkLabel Proxy
 
@@ -11,7 +12,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // FormsLink proxy
-    internal class FormsLink : ProxyHwnd, IInvokeProvider
+    class FormsLink : ProxyHwnd, IInvokeProvider
     {
         // ------------------------------------------------------
         //
@@ -65,14 +66,18 @@ namespace MS.Internal.AutomationProxies
         #region ProxyHwnd Interface
 
         // Builds a list of Win32 WinEvents to process a UIAutomation Event.
-        protected override ReadOnlySpan<WinEventTracker.EvtIdProperty> EventToWinEvent(AutomationEvent idEvent)
+        // Param name="idEvent", UIAuotmation event
+        // Param name="cEvent"out, number of winevent set in the array
+        // Returns an array of Events to Set. The number of valid entries in this array pass back in cEvent
+        protected override WinEventTracker.EvtIdProperty[] EventToWinEvent(AutomationEvent idEvent, out int cEvent)
         {
             if (idEvent == InvokePattern.InvokedEvent)
             {
-                return new WinEventTracker.EvtIdProperty[1] { new(NativeMethods.EventSystemCaptureEnd, idEvent) };
+                cEvent = 1;
+                return new WinEventTracker.EvtIdProperty[1] { new WinEventTracker.EvtIdProperty(NativeMethods.EventSystemCaptureEnd, idEvent) };
             }
 
-            return base.EventToWinEvent(idEvent);
+            return base.EventToWinEvent(idEvent, out cEvent);
         }
 
         #endregion ProxyHwnd Interface

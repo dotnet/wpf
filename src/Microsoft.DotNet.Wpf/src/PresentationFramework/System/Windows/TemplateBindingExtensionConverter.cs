@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -48,7 +49,7 @@ namespace System.Windows
                 TemplateBindingExtension templateBinding = value as TemplateBindingExtension;
 
                 if(templateBinding == null)
-                    throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "TemplateBindingExtension"), nameof(value));
+                    throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "TemplateBindingExtension"), "value");
 
                 return new InstanceDescriptor(typeof(TemplateBindingExtension).GetConstructor(new Type[] { typeof(DependencyProperty) }),
                     new object[] { templateBinding.Property });

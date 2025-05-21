@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
@@ -14,7 +15,7 @@ namespace System.Windows.Markup.Primitives
     /// </summary>
     internal class MarkupObjectWrapper : MarkupObject
     {
-        private MarkupObject  _baseObject;
+        MarkupObject  _baseObject;
 
         public MarkupObjectWrapper(MarkupObject baseObject)
         {
@@ -54,7 +55,7 @@ namespace System.Windows.Markup.Primitives
     /// </summary>
     internal class MarkupPropertyWrapper : MarkupProperty 
     {
-        private MarkupProperty _baseProperty;
+        MarkupProperty _baseProperty;
 
         /*
         protected MarkupProperty BaseProperty
@@ -161,7 +162,7 @@ namespace System.Windows.Markup.Primitives
     /// </summary>
     internal class ExtensionSimplifierMarkupObject : MarkupObjectWrapper
     {
-        private IValueSerializerContext _context;
+        IValueSerializerContext _context;
 
         public ExtensionSimplifierMarkupObject(MarkupObject baseObject, IValueSerializerContext context)
             : base(baseObject) 
@@ -200,7 +201,7 @@ namespace System.Windows.Markup.Primitives
     /// </summary>
     internal class ExtensionSimplifierProperty : MarkupPropertyWrapper
     {
-        private IValueSerializerContext _context;
+        IValueSerializerContext _context;
 
         public ExtensionSimplifierProperty(MarkupProperty baseProperty, IValueSerializerContext context) : base(baseProperty) 
         {

@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Runtime.InteropServices;
 
@@ -583,7 +584,7 @@ namespace MS.Internal
         eChildLast = 0x2
     };
 
-    internal enum MILResourceType
+    enum MILResourceType
     {
         eMILResourceVideo = 0,
         eMILCOB = 1,
@@ -593,7 +594,7 @@ namespace MS.Internal
         eMILResourceLast = 5
     };
 
-    internal enum MILAVInstructionType
+    enum MILAVInstructionType
     {
         eAVPlay = 0,
         eAVStop,
@@ -657,21 +658,21 @@ namespace MS.Internal
     [StructLayout(LayoutKind.Sequential)]
     internal struct WICBitmapPattern
     {
-        private Int64 Offset;
-        private UInt32 Length;
-        private IntPtr Pattern;
-        private IntPtr Mask;
+        Int64 Offset;
+        UInt32 Length;
+        IntPtr Pattern;
+        IntPtr Mask;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct MILBitmapItem
     {
-        private uint          Size;
-        private IntPtr        Desc;
-        private uint          DescSize;
-        private IntPtr        Data;
-        private uint          DataSize;
-        private uint          Cookie;
+        uint          Size;
+        IntPtr        Desc;
+        uint          DescSize;
+        IntPtr        Data;
+        uint          DataSize;
+        uint          Cookie;
     };
 
     [StructLayout(LayoutKind.Sequential)]
@@ -679,15 +680,15 @@ namespace MS.Internal
     {
         // Size of this structure.
 
-        private int nSize;
+        int nSize;
 
         // minimum number of inputs required.
 
-        private int cMinInputs;
+        int cMinInputs;
 
         // maximum number of inputs that will be processed.
 
-        private int cMaxInputs;
+        int cMaxInputs;
 
         // Set to false requires all the inputs and the
         // output to have the same pixel format determined
@@ -695,23 +696,23 @@ namespace MS.Internal
         // index. Set to true allows different input/output
         // pixel formats.
 
-        [MarshalAs(UnmanagedType.Bool)] private bool fSupportMultiFormat;
+        [MarshalAs(UnmanagedType.Bool)] bool fSupportMultiFormat;
 
         // Supports auxilliary data out.
 
-        [MarshalAs(UnmanagedType.Bool)] private bool fAuxiliaryData;
+        [MarshalAs(UnmanagedType.Bool)] bool fAuxiliaryData;
 
         // TRUE if the effect supports multiple output
 
-        [MarshalAs(UnmanagedType.Bool)] private bool fSupportMultiOutput;
+        [MarshalAs(UnmanagedType.Bool)] bool fSupportMultiOutput;
 
         // TRUE if the effect can provide output band by band
 
-        [MarshalAs(UnmanagedType.Bool)] private bool fSupportBanding;
+        [MarshalAs(UnmanagedType.Bool)] bool fSupportBanding;
 
         // TRUE if the effect supports multi-resolution
 
-        [MarshalAs(UnmanagedType.Bool)] private bool fSupportMultiResolution;
+        [MarshalAs(UnmanagedType.Bool)] bool fSupportMultiResolution;
 };
 
     [StructLayout(LayoutKind.Sequential)]

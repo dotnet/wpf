@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.IO;
@@ -226,11 +227,17 @@ namespace System.Windows.Shell
                 // Associate the jumplist with the application so we can retrieve it later.
                 s_applicationMap[application] = value;
 
-                value?._application = application;
+                if (value != null)
+                {
+                    value._application = application;
+                }
             }
 
-            // Changes will only get applied if the list isn't in an ISupportInitialize block.
-            value?.ApplyFromApplication();
+            if (value != null)
+            {
+                // Changes will only get applied if the list isn't in an ISupportInitialize block.
+                value.ApplyFromApplication();
+            }
         }
 
         /// <summary>

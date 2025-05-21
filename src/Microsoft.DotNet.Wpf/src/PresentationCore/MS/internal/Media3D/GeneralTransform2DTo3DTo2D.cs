@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows;
 
@@ -102,7 +103,10 @@ namespace MS.Internal.Media3D
 
             // store the inverse as well
             _transform2DInverse = (GeneralTransform)_transform2D.Inverse;
-            _transform2DInverse?.Freeze();
+            if (_transform2DInverse != null)
+            {
+                _transform2DInverse.Freeze();
+            }
 
             // make a copy of the camera and other values on the Viewport3D
             Viewport3DVisual viewport3D = (Viewport3DVisual)VisualTreeHelper.GetContainingVisual2D(visual3D);
@@ -118,7 +122,10 @@ namespace MS.Internal.Media3D
             _objectToViewport = visual3D.TransformToAncestor(viewport3D);
 
             // if the transform was not possible, it could be null - check before freezing
-            _objectToViewport?.Freeze();
+            if (_objectToViewport != null)
+            {
+                _objectToViewport.Freeze();
+            }
             
             // store the needed transformations for the various operations
             _worldTransformation = M3DUtil.GetWorldTransformationMatrix(visual3D);
@@ -293,7 +300,7 @@ namespace MS.Internal.Media3D
                 
                 // in this case we have a non-indexed mesh
                 int count = positions.Count;
-                count -= (count % 3);
+                count = count - (count % 3);
 
                 for (int i = 0; i < count; i+=3)
                 {
@@ -1326,7 +1333,7 @@ namespace MS.Internal.Media3D
         private GeneralTransform3DTo2D _objectToViewport;
 
         // the cache of valid edges
-        private List<HitTestEdge> _validEdgesCache = null;
+        List<HitTestEdge> _validEdgesCache = null;
 
         // the "ring" around the element with capture to use in the capture case
         private const double BUFFER_SIZE = 2.0;                  

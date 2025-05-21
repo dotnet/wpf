@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /*++
 
@@ -297,7 +298,7 @@ namespace System.Windows.Xps.Packaging
             ArgumentNullException.ThrowIfNull(contentType);
             if (0 == contentType.ToString().Length)
             {
-                throw new ArgumentException(SR.Format(SR.ReachPackaging_InvalidContentType, contentType), nameof(contentType));
+                throw new ArgumentException(SR.Format(SR.ReachPackaging_InvalidContentType, contentType), "contentType");
             }
             
             //Do not compress image Content Types
@@ -1177,7 +1178,7 @@ namespace System.Windows.Xps.Packaging
         {
             if (ContentType.Empty.AreTypeAndSubTypeEqual(contentType))
             {
-                throw new ArgumentException(SR.Format(SR.ReachPackaging_InvalidContentType, contentType), nameof(contentType));
+                throw new ArgumentException(SR.Format(SR.ReachPackaging_InvalidContentType, contentType), "contentType");
             }
 
             string key;
@@ -1272,7 +1273,7 @@ namespace System.Windows.Xps.Packaging
         {
             lock (_globalLock)
             {
-                _packageCache[uri] += 1;
+                _packageCache[uri] = _packageCache[uri]+1;
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Highlight rendering for the Speller.
@@ -7,7 +8,7 @@
 
 using MS.Internal;
 using System.Windows.Media;
-using System.Collections.Generic;
+using System.Collections;
 using System.Collections.ObjectModel;
 
 namespace System.Windows.Documents
@@ -192,7 +193,7 @@ namespace System.Windows.Documents
         #region Private Types
 
         // Argument for the Changed event, encapsulates a highlight change.
-        private sealed class SpellerHighlightChangedEventArgs : HighlightChangedEventArgs
+        private class SpellerHighlightChangedEventArgs : HighlightChangedEventArgs
         {
             // Constructor.
             internal SpellerHighlightChangedEventArgs(ITextPointer start, ITextPointer end)
@@ -208,7 +209,7 @@ namespace System.Windows.Documents
             }
 
             // Collection of changed content ranges.
-            internal override IList<TextSegment> Ranges
+            internal override IList Ranges
             {
                 get
                 {

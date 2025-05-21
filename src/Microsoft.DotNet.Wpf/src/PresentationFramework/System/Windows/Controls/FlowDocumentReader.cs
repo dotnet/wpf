@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.Collections;                   // IEnumerator
@@ -688,7 +689,10 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnPrintCommand()
         {
-            CurrentViewer?.Print();
+            if (CurrentViewer != null)
+            {
+                CurrentViewer.Print();
+            }
         }
 
         /// <summary>
@@ -696,7 +700,10 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnCancelPrintCommand()
         {
-            CurrentViewer?.CancelPrint();
+            if (CurrentViewer != null)
+            {
+                CurrentViewer.CancelPrint();
+            }
         }
 
         /// <summary>
@@ -1034,7 +1041,10 @@ namespace System.Windows.Controls
             }
 
             // Attach document to the current viewer.
-            CurrentViewer?.SetDocument(newDocument);
+            if (CurrentViewer != null)
+            {
+                CurrentViewer.SetDocument(newDocument);
+            }
 
             // Document invalidation invalidates following properties:
             //      - PageCount
@@ -1055,7 +1065,10 @@ namespace System.Windows.Controls
 
             // Document is also represented as Automation child. Need to invalidate peer to force update.
             FlowDocumentReaderAutomationPeer peer = UIElementAutomationPeer.FromElement(this) as FlowDocumentReaderAutomationPeer;
-            peer?.InvalidatePeer();
+            if (peer != null)
+            {
+                peer.InvalidatePeer();
+            }
         }
 
         /// <summary>
@@ -1505,7 +1518,10 @@ namespace System.Windows.Controls
         /// </summary>
         private void OnPreviousPageCommand()
         {
-            CurrentViewer?.PreviousPage();
+            if (CurrentViewer != null)
+            {
+                CurrentViewer.PreviousPage();
+            }
         }
 
         /// <summary>
@@ -1513,7 +1529,10 @@ namespace System.Windows.Controls
         /// </summary>
         private void OnNextPageCommand()
         {
-            CurrentViewer?.NextPage();
+            if (CurrentViewer != null)
+            {
+                CurrentViewer.NextPage();
+            }
         }
 
         /// <summary>
@@ -1521,7 +1540,10 @@ namespace System.Windows.Controls
         /// </summary>
         private void OnFirstPageCommand()
         {
-            CurrentViewer?.FirstPage();
+            if (CurrentViewer != null)
+            {
+                CurrentViewer.FirstPage();
+            }
         }
 
         /// <summary>
@@ -1529,7 +1551,10 @@ namespace System.Windows.Controls
         /// </summary>
         private void OnLastPageCommand()
         {
-            CurrentViewer?.LastPage();
+            if (CurrentViewer != null)
+            {
+                CurrentViewer.LastPage();
+            }
         }
 
         /// <summary>
@@ -1560,7 +1585,10 @@ namespace System.Windows.Controls
                 if ((findResult != null) && (!findResult.IsEmpty))
                 {
                     // Bring find result into view.
-                    CurrentViewer?.ShowFindResult(findResult);
+                    if (CurrentViewer != null)
+                    {
+                        CurrentViewer.ShowFindResult(findResult);
+                    }
                 }
                 else
                 {
@@ -1618,7 +1646,10 @@ namespace System.Windows.Controls
 
             // Fire automation events if automation is active.
             FlowDocumentReaderAutomationPeer peer = UIElementAutomationPeer.FromElement(viewer) as FlowDocumentReaderAutomationPeer;
-            peer?.RaiseCurrentViewChangedEvent((FlowDocumentReaderViewingMode)e.NewValue, (FlowDocumentReaderViewingMode)e.OldValue);
+            if (peer != null)
+            {
+                peer.RaiseCurrentViewChangedEvent((FlowDocumentReaderViewingMode)e.NewValue, (FlowDocumentReaderViewingMode)e.OldValue);
+            }
         }
 
         /// <summary>
@@ -1656,7 +1687,10 @@ namespace System.Windows.Controls
 
             // Fire automation events if automation is active.
             FlowDocumentReaderAutomationPeer peer = UIElementAutomationPeer.FromElement(viewer) as FlowDocumentReaderAutomationPeer;
-            peer?.RaiseSupportedViewsChangedEvent(e);
+            if (peer != null)
+            {
+                peer.RaiseSupportedViewsChangedEvent(e);
+            }
         }
 
         /// <summary>
@@ -1803,7 +1837,10 @@ namespace System.Windows.Controls
             if (reader.Selection != null)
             {
                 CaretElement caretElement = reader.Selection.CaretElement;
-                caretElement?.InvalidateVisual();
+                if (caretElement != null)
+                {
+                    caretElement.InvalidateVisual();
+                }
             }
         }
 
@@ -1918,7 +1955,7 @@ namespace System.Windows.Controls
             }
             if (!(value is FlowDocument))
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(FlowDocument)), nameof(value));
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(FlowDocument)), "value");
             }
             Document = value as FlowDocument;
         }

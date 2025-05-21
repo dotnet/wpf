@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Win32;
 using System.Windows.Interop;
@@ -568,7 +569,7 @@ namespace System.Windows.Threading
             if( timeout.TotalMilliseconds < 0 &&
                 timeout != TimeSpan.FromMilliseconds(-1))
             {
-                throw new ArgumentOutOfRangeException(nameof(timeout));
+                throw new ArgumentOutOfRangeException("timeout");
             }
 
             // Fast-Path: if on the same thread, and invoking at Send priority,
@@ -710,7 +711,7 @@ namespace System.Windows.Threading
             if( timeout.TotalMilliseconds < 0 &&
                 timeout != TimeSpan.FromMilliseconds(-1))
             {
-                throw new ArgumentOutOfRangeException(nameof(timeout));
+                throw new ArgumentOutOfRangeException("timeout");
             }
 
             // Fast-Path: if on the same thread, and invoking at Send priority,
@@ -941,7 +942,7 @@ namespace System.Windows.Threading
                 }
             }
 
-            if (succeeded)
+            if (succeeded == true)
             {
                 // We have enqueued the operation.  Register a callback
                 // with the cancellation token to abort the operation
@@ -955,7 +956,10 @@ namespace System.Windows.Threading
                     operation.Completed += (s,e) => cancellationRegistration.Dispose();
                 }
 
-                hooks?.RaiseOperationPosted(this, operation);
+                if(hooks != null)
+                {
+                    hooks.RaiseOperationPosted(this, operation);
+                }
 
                 if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordDispatcher | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info))
                 {
@@ -1246,7 +1250,7 @@ namespace System.Windows.Threading
             ValidatePriority(priority, "priority");
             if(priority == DispatcherPriority.Inactive)
             {
-                throw new ArgumentException(SR.InvalidPriority, nameof(priority));
+                throw new ArgumentException(SR.InvalidPriority, "priority");
             }
 
             ArgumentNullException.ThrowIfNull(method);
@@ -1266,7 +1270,7 @@ namespace System.Windows.Threading
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException(nameof(timeout));
+                    throw new ArgumentOutOfRangeException("timeout");
                 }
             }
 
@@ -1389,7 +1393,10 @@ namespace System.Windows.Threading
                 finally
                 {
                     ctTimeoutRegistration.Dispose();
-                    ctsTimeout?.Dispose();
+                    if (ctsTimeout != null)
+                    {
+                        ctsTimeout.Dispose();
+                    }
                 }
             }
 
@@ -1873,7 +1880,10 @@ namespace System.Windows.Threading
                     }
                 }
 
-                operation?.Abort();
+                if(operation != null)
+                {
+                    operation.Abort();
+                }
             } while(operation != null);
 
             // clear out the fields that could be holding onto large graphs of objects.
@@ -1927,7 +1937,10 @@ namespace System.Windows.Threading
 
             if (notify)
             {
-                hooks?.RaiseOperationPriorityChanged(this, operation);
+                if(hooks != null)
+                {
+                    hooks.RaiseOperationPriorityChanged(this, operation);
+                }
 
                 if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordDispatcher | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info))
                 {
@@ -1958,7 +1971,10 @@ namespace System.Windows.Threading
 
             if (notify)
             {
-                hooks?.RaiseOperationAborted(this, operation);
+                if(hooks != null)
+                {
+                    hooks.RaiseOperationAborted(this, operation);
+                }
 
                 if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordDispatcher | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info))
                 {
@@ -2015,11 +2031,17 @@ namespace System.Windows.Threading
                     eventlogged = true;
                 }
 
-                hooks?.RaiseOperationStarted(this, op);
+                if(hooks != null)
+                {
+                    hooks.RaiseOperationStarted(this, op);
+                }
 
                 op.Invoke();
 
-                hooks?.RaiseOperationCompleted(this, op);
+                if(hooks != null)
+                {
+                    hooks.RaiseOperationCompleted(this, op);
+                }
 
                 if (eventlogged)
                 {
@@ -2260,7 +2282,10 @@ namespace System.Windows.Threading
 
             if (idle)
             {
-                hooks?.RaiseDispatcherInactive(this);
+                if(hooks != null)
+                {
+                    hooks.RaiseDispatcherInactive(this);
+                }
 
                 ComponentDispatcher.RaiseIdle();
             }
@@ -2543,7 +2568,10 @@ namespace System.Windows.Threading
                         }
 
                         // Now that we are outside of the lock, promote the timer.
-                        timer?.Promote();
+                        if(timer != null)
+                        {
+                            timer.Promote();
+                        }
                     } while(timer != null);
 }
             }

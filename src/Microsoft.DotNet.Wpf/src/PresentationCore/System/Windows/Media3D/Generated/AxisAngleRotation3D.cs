@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -8,21 +9,12 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-using MS.Internal.Collections;
-using MS.Utility;
-using System.Collections;
-using System.ComponentModel;
-using System.Globalization;
-using System.Text;
-using System.Windows.Markup;
-using System.Windows.Media.Media3D.Converters;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
+// These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media.Media3D
 {
-    public sealed partial class AxisAngleRotation3D : Rotation3D
+    sealed partial class AxisAngleRotation3D : Rotation3D
     {
         //------------------------------------------------------
         //
@@ -90,7 +82,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Vector3D)GetValue(AxisProperty);
+                return (Vector3D) GetValue(AxisProperty);
             }
             set
             {
@@ -105,7 +97,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (double)GetValue(AngleProperty);
+                return (double) GetValue(AngleProperty);
             }
             set
             {
@@ -183,11 +175,8 @@ namespace System.Windows.Media.Media3D
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_AXISANGLEROTATION3D))
                 {
-
-
                     AddRefOnChannelAnimations(channel);
 
 
@@ -195,22 +184,16 @@ namespace System.Windows.Media.Media3D
                 }
 
                 return _duceResource.GetHandle(channel);
-
-        }
+}
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
-
-
                     ReleaseOnChannelAnimations(channel);
-
-                }
-
-        }
+}
+}
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.
@@ -298,6 +281,7 @@ namespace System.Windows.Media.Media3D
             // of your app.
 
 
+
             // Initializations
             Type typeofThis = typeof(AxisAngleRotation3D);
             AxisProperty =
@@ -319,8 +303,6 @@ namespace System.Windows.Media.Media3D
                                    /* isIndependentlyAnimated  = */ true,
                                    /* coerceValueCallback */ null);
         }
-
-
 
         #endregion Constructors
     }

@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -52,7 +53,7 @@ namespace System.Windows.Markup
         {
             if(null == assemblyNames)
             {
-                throw new ArgumentNullException( nameof(assemblyNames));
+                throw new ArgumentNullException( "assemblyNames" );
             }
 
             _assemblyNames = assemblyNames;
@@ -71,7 +72,7 @@ namespace System.Windows.Markup
         {
             if(null == assemblyNames)
             {
-                throw new ArgumentNullException( nameof(assemblyNames));
+                throw new ArgumentNullException( "assemblyNames" );
             }
 
             _assemblyNames = assemblyNames;
@@ -102,17 +103,17 @@ namespace System.Windows.Markup
         {
             if(null == xmlNamespace)
             {
-                throw new ArgumentNullException( nameof(xmlNamespace));
+                throw new ArgumentNullException( "xmlNamespace" );
             }
             if(null == localName)
             {
-                throw new ArgumentNullException( nameof(localName));
+                throw new ArgumentNullException( "localName" );
             }
 
             TypeAndSerializer typeAndSerializer =
                 GetTypeOnly(xmlNamespace,localName);
 
-            return typeAndSerializer?.ObjectType;
+            return typeAndSerializer != null ? typeAndSerializer.ObjectType : null;
         }
 
 #if !PBTCOMPILER
@@ -136,15 +137,15 @@ namespace System.Windows.Markup
         {
             if( null == xmlNamespace )
             {
-                throw new ArgumentNullException(nameof(xmlNamespace));
+                throw new ArgumentNullException("xmlNamespace");
             }
             if( null == clrNamespace )
             {
-                throw new ArgumentNullException(nameof(clrNamespace));
+                throw new ArgumentNullException("clrNamespace");
             }
             if( null == assemblyName )
             {
-                throw new ArgumentNullException(nameof(assemblyName));
+                throw new ArgumentNullException("assemblyName");
             }
 
             // Parameter validation : Check for String.Empty as well?
@@ -161,7 +162,10 @@ namespace System.Windows.Markup
             _piReverseTable[fullName] = xmlNamespace;
 
             // Add mapping to the SchemaContext
-            _schemaContext?.SetMappingProcessingInstruction(xmlNamespace, pair);
+            if (_schemaContext != null)
+            {
+                _schemaContext.SetMappingProcessingInstruction(xmlNamespace, pair);
+            }
         }
 #endif
         /// <summary>
@@ -179,11 +183,11 @@ namespace System.Windows.Markup
         {
             if( null == assemblyName )
             {
-                throw new ArgumentNullException(nameof(assemblyName));
+                throw new ArgumentNullException("assemblyName");
             }
             if( null == assemblyPath )
             {
-                throw new ArgumentNullException(nameof(assemblyPath));
+                throw new ArgumentNullException("assemblyPath");
             }
             if (assemblyPath == string.Empty)
             {
@@ -444,11 +448,11 @@ namespace System.Windows.Markup
 
             if(null == localName)
             {
-                throw new ArgumentNullException( nameof(localName));
+                throw new ArgumentNullException( "localName" );
             }
             if(null == xmlNamespace)
             {
-                throw new ArgumentNullException( nameof(xmlNamespace));
+                throw new ArgumentNullException( "xmlNamespace" );
             }
             if (owner != null && !ReflectionHelper.IsPublicType(owner))
             {
@@ -951,7 +955,7 @@ namespace System.Windows.Markup
 
 #if PBTCOMPILER
         // Checks to see if a given event handler delegate type is accessible.
-        private static bool IsAllowedEventDelegateType(Type delegateType)
+        static private bool IsAllowedEventDelegateType(Type delegateType)
         {
             if (!ReflectionHelper.IsPublicType(delegateType))
             {
@@ -1114,7 +1118,7 @@ namespace System.Windows.Markup
 
         // Checks to see if a given property's set method is accessible.
         // Used only in compiled Baml Load sceanrios.
-        internal static bool IsAllowedPropertySet(PropertyInfo pi, bool allowProtected, out bool isPublic)
+        static internal bool IsAllowedPropertySet(PropertyInfo pi, bool allowProtected, out bool isPublic)
         {
             MethodInfo mi = pi.GetSetMethod(true);
             bool isProtected = allowProtected && mi != null && mi.IsFamily;
@@ -1127,7 +1131,7 @@ namespace System.Windows.Markup
 
         // Checks to see if a given property's get method is accessible.
         // Used only in compiled Baml Load sceanrios.
-        private static bool IsAllowedPropertyGet(PropertyInfo pi, bool allowProtected, out bool isPublic)
+        static private bool IsAllowedPropertyGet(PropertyInfo pi, bool allowProtected, out bool isPublic)
         {
             MethodInfo mi = pi.GetGetMethod(true);
             bool isProtected = allowProtected && mi != null && mi.IsFamily;
@@ -1140,7 +1144,7 @@ namespace System.Windows.Markup
 
         // Checks to see if a given event's add method is accessible.
         // Used only in compiled Baml Load sceanrios.
-        private static bool IsAllowedEvent(EventInfo ei, bool allowProtected, out bool isPublic)
+        static private bool IsAllowedEvent(EventInfo ei, bool allowProtected, out bool isPublic)
         {
             MethodInfo mi = ei.GetAddMethod(true);
             bool isProtected = allowProtected && mi != null && mi.IsFamily;
@@ -1154,7 +1158,7 @@ namespace System.Windows.Markup
 
         // Checks to see if a given event's add method is public.
         // Used in all (xaml load, xaml compile & compiled Baml Load sceanrios.
-        private static bool IsPublicEvent(EventInfo ei)
+        static private bool IsPublicEvent(EventInfo ei)
         {
             MethodInfo mi = ei.GetAddMethod(true);
             return (mi != null && mi.IsPublic);
@@ -1399,7 +1403,6 @@ namespace System.Windows.Markup
 
                             if (null != memberInfo)
                             {
-#pragma warning disable IDE0031
                                 if (infoRecord != null)
                                 {
 #if !PBTCOMPILER
@@ -1411,7 +1414,6 @@ namespace System.Windows.Markup
 #endif
                                     infoRecord.SetPropertyMember(memberInfo);
                                 }
-#pragma warning restore IDE0031
                             }
                         }
                     }
@@ -1543,7 +1545,6 @@ namespace System.Windows.Markup
                                 memberInfo = PropertyInfoFromName(localName, baseType, tryInternal, true, out isInternal);
                             }
 
-#pragma warning disable IDE0031
                             if (null != memberInfo)
                             {
                                 if (infoRecord != null)
@@ -1558,7 +1559,6 @@ namespace System.Windows.Markup
                                     infoRecord.SetPropertyMember(memberInfo);
                                 }
                             }
-#pragma warning restore IDE0031
                         }
                     }
                 }
@@ -1782,7 +1782,7 @@ namespace System.Windows.Markup
 
             if(null == ownerType)
             {
-                throw new ArgumentNullException( nameof(ownerType));
+                throw new ArgumentNullException( "ownerType" );
             }
 
             return DependencyProperty.FromName(localName, ownerType);
@@ -2152,11 +2152,11 @@ namespace System.Windows.Markup
         {
             if (element == null)
             {
-                throw new ArgumentNullException( nameof(element));
+                throw new ArgumentNullException( "element" );
             }
             if (typeName == null)
             {
-                throw new ArgumentNullException( nameof(typeName));
+                throw new ArgumentNullException( "typeName" );
             }
 
             // Now map the prefix to an xml namespace uri
@@ -2172,7 +2172,7 @@ namespace System.Windows.Markup
             XmlnsDictionary prefixDictionary = element.GetValue(XmlAttributeProperties.XmlnsDictionaryProperty)
                                                as XmlnsDictionary;
 
-            object xmlNamespaceObject = prefixDictionary?[prefix];
+            object xmlNamespaceObject = (prefixDictionary != null) ? prefixDictionary[prefix] : null;
 
             // Then get the list of NamespaceMapEntry objects that maps the xml namespace uri to one
             // or more clr namespace / assembly pairs.  This should be stored on the root element
@@ -2481,7 +2481,7 @@ namespace System.Windows.Markup
 
         private static bool IsInternalAllowedOnType(Type type)
         {
-            bool isInternalAllowed = ReflectionHelper.LocalAssemblyName == ReflectionUtils.GetAssemblyPartialName(type.Assembly) ||
+            bool isInternalAllowed = ReflectionHelper.LocalAssemblyName == type.Assembly.GetName().Name ||
                                      IsFriendAssembly(type.Assembly);
             _hasInternals = _hasInternals || isInternalAllowed;
             return isInternalAllowed;
@@ -3147,7 +3147,7 @@ namespace System.Windows.Markup
                 if (_xmlnsCache == null)
                 {
 #if PBTCOMPILER
-                    Debug.Fail("Should initialize cache prior to compiling");
+                    Debug.Assert(false, "Should initialize cache prior to compiling");
 #else
                     _xmlnsCache = new XmlnsCache();
 #endif
@@ -3418,7 +3418,7 @@ namespace System.Windows.Markup
             if (_xmlnsCache == null)
             {
 #if PBTCOMPILER
-                Debug.Fail("Should initialize cache prior to compiling");
+                Debug.Assert(false, "Should initialize cache prior to compiling");
 #else
                 _xmlnsCache = new XmlnsCache();
 #endif
@@ -4052,16 +4052,16 @@ namespace System.Windows.Markup
             }
 
             // Private data members
-            private string        _clrNamespace;
-            private Type          _baseType;
-            private bool          _trimSurroundingWhitespace;
-            private Hashtable     _dpLookupHashtable;  // Hashtable of PropertyAndType keyed by dp name
-            private HybridDictionary     _propertyConverters = new HybridDictionary(); // Dictionary of TypeConverters keyed on dpOrPi
-            private bool _trimSurroundingWhitespaceSet;
+            string        _clrNamespace;
+            Type          _baseType;
+            bool          _trimSurroundingWhitespace;
+            Hashtable     _dpLookupHashtable;  // Hashtable of PropertyAndType keyed by dp name
+            HybridDictionary     _propertyConverters = new HybridDictionary(); // Dictionary of TypeConverters keyed on dpOrPi
+            bool          _trimSurroundingWhitespaceSet;
 #if !PBTCOMPILER
-            private TypeConverter _typeConverter;
+            TypeConverter _typeConverter;
 #endif
-            private Type          _typeConverterType;
+            Type          _typeConverterType;
         }
 
         // DP setter method, PropertyInfo and Type record held in _dpLookupHashtable
@@ -4126,27 +4126,27 @@ namespace System.Windows.Markup
         // Map table associated with this XamlTypeMapper.  This contains information
         // about what is stored in BAML.  The XamlTypeMapper makes use of the caches in
         // the BamlMapTable to store some assembly, type and property information.
-        private BamlMapTable _mapTable;
+        BamlMapTable _mapTable;
 
         // Array of assembly names that can be used when resolving clr namespaces
-        private string[] _assemblyNames;
+        string[] _assemblyNames;
 
         // array or namespace map entries such as `http:// mappings.
-        private NamespaceMapEntry[] _namespaceMaps;
+        NamespaceMapEntry[] _namespaceMaps;
 
         // HashTable of cached type lookups and the serializers for that type.  These
         // are always TypeAndSerializer objects
-        private Hashtable _typeLookupFromXmlHashtable = new Hashtable();
+        Hashtable _typeLookupFromXmlHashtable = new Hashtable();
 
         // Hash table of mappings between xmlNamespace and mappings
-        private Hashtable _namespaceMapHashList = new Hashtable();
+        Hashtable _namespaceMapHashList = new Hashtable();
 
         // Hashtable where the key is the fullTypeName + '#' + propertyName and the value
-        private HybridDictionary _typeInformationCache = new HybridDictionary();
+        HybridDictionary _typeInformationCache = new HybridDictionary();
 
 #if !PBTCOMPILER
         // Hashtable where the key is the type and the value is the set of constructors for that type
-        private HybridDictionary _constructorInformationCache;
+        HybridDictionary _constructorInformationCache;
 
         // A SchemaContext that respects the namespace mappings, PIs, and assembly paths
         // passed in to this TypeMapper
@@ -4155,25 +4155,25 @@ namespace System.Windows.Markup
 
         // Hashtable where key is the xmlNamespace, and value is the
         // ClrNamespaceAssemblyPair structure containing clrNamespace and assembly
-        private HybridDictionary _piTable =  new HybridDictionary();
+        HybridDictionary _piTable =  new HybridDictionary();
 
         // Hashtable where key is the clrNamespace + "#" + assemblyName and the
         // value is the corresponding xmlNamespace.  This is used for fast lookups
         // of xmlnamespace if you know the assembly and clr namespace.
-        private Dictionary<string, string> _piReverseTable = new Dictionary<string, string>();
+        Dictionary<string, string> _piReverseTable = new Dictionary<string, string>();
 
         // Hashtable where key is the assembly's short name that has been uppercased,
         // and the value is a path where that assembly can be loaded from.
         // Always lock on this object when writing to it
-        private HybridDictionary _assemblyPathTable = new HybridDictionary();
+        HybridDictionary _assemblyPathTable = new HybridDictionary();
 
         // true if referenced assemblies in the _assemblyPathTable have been loaded
-        private bool _referenceAssembliesLoaded = false;
+        bool _referenceAssembliesLoaded = false;
 
         // Line number and position in original Xaml file corresponding to the
         // current BAML record.
-        private int _lineNumber = 0;
-        private int _linePosition = 0;
+        int _lineNumber = 0;
+        int _linePosition = 0;
 
         // Cache of namespace and assemblies.
         private static XmlnsCache _xmlnsCache = null;
@@ -4227,13 +4227,13 @@ namespace System.Windows.Markup
         public NamespaceMapEntry(string xmlNamespace,string assemblyName,string clrNamespace)
         {
             if (xmlNamespace == null)
-                throw new ArgumentNullException(nameof(xmlNamespace));
+                throw new ArgumentNullException("xmlNamespace");
 
             if (assemblyName == null)
-                throw new ArgumentNullException(nameof(assemblyName));
+                throw new ArgumentNullException("assemblyName");
 
             if (clrNamespace == null)
-                throw new ArgumentNullException(nameof(clrNamespace));
+                throw new ArgumentNullException("clrNamespace");
 
             _xmlNamespace = xmlNamespace;
             _assemblyName = assemblyName;
@@ -4271,7 +4271,7 @@ namespace System.Windows.Markup
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException(nameof(value));
+                    throw new ArgumentNullException("value");
                 }
                 if (_xmlNamespace == null)
                 {
@@ -4290,7 +4290,7 @@ namespace System.Windows.Markup
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException(nameof(value));
+                    throw new ArgumentNullException("value");
                 }
                 if (_assemblyName == null)
                 {
@@ -4309,7 +4309,7 @@ namespace System.Windows.Markup
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException(nameof(value));
+                    throw new ArgumentNullException("value");
                 }
                 if (_clrNamespace == null)
                 {
@@ -4370,16 +4370,16 @@ namespace System.Windows.Markup
             set { _isLocalAssembly = value; }
         }
 
-        private bool _isLocalAssembly;
+        bool     _isLocalAssembly;
 #endif
 
 #region Data
 
-        private string   _xmlNamespace;
-        private string   _assemblyName;
-        private string   _assemblyPath;
-        private Assembly _assembly;
-        private string _clrNamespace;
+        string   _xmlNamespace;
+        string   _assemblyName;
+        string   _assemblyPath;
+        Assembly _assembly;
+        string   _clrNamespace;
 
 #endregion Data
     }
@@ -4432,7 +4432,7 @@ namespace System.Windows.Markup
         /// </summary>
         internal static NamespaceMapEntry[] GetDefaultNamespaceMaps()
         {
-            return Array.Empty<NamespaceMapEntry>();
+            return (NamespaceMapEntry[])_defaultNamespaceMapTable.Clone();
         }
 
 #endregion Properties
@@ -4440,7 +4440,12 @@ namespace System.Windows.Markup
 #region Data
 
         // array of our defaultAssemblies.
-        private static readonly string[] _defaultAssemblies = { "WindowsBase", "PresentationCore", "PresentationFramework" };
+        private static readonly string[] _defaultAssemblies = {"WindowsBase", "PresentationCore", "PresentationFramework"};
+
+        // array of namespaceMaps the map an xmlns namespaceURI
+        // to the assembly and urtNamespace to search in when resolving the xml
+
+        private static readonly NamespaceMapEntry[] _defaultNamespaceMapTable = { };
 
 #endregion Data
     }

@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //
@@ -1969,7 +1970,7 @@ namespace MS.Internal.PtsHost
                         break;
 
                     default:
-                        Debug.Fail("Unsupported unit type");
+                        Debug.Assert(false, "Unsupported unit type");
                         break;
                 }
                 _durMinWidth += _calculatedColumns[i].DurMinWidth;
@@ -2100,7 +2101,7 @@ namespace MS.Internal.PtsHost
             {
                 // have no choice - table's parent requires the width to be exact
                 durTableUserWidth = durAvailableWidth;
-                if (durTableUserWidth < _durMinWidth && !DoubleUtil.AreClose(durTableUserWidth, _durMinWidth))
+                if (durTableUserWidth < _durMinWidth && DoubleUtil.AreClose(durTableUserWidth, _durMinWidth) == false)
                 {
                     durTableUserWidth = _durMinWidth;
                 }
@@ -2114,7 +2115,7 @@ namespace MS.Internal.PtsHost
                     double tr = iP * mul;
 
                     // floating point (tl > tr)
-                    if (tl > tr && !DoubleUtil.AreClose(tl, tr))
+                    if (tl > tr && DoubleUtil.AreClose(tl, tr) == false)
                     {
                         mul = durAbsoluteMax + durAutoMax;
                         div = iP;
@@ -2130,7 +2131,7 @@ namespace MS.Internal.PtsHost
                     durTableUserWidth = mul * 100 / div + durTotalPadding;
 
                     // floating point (durTableUserWidth > durAvailableWidth)
-                    if (durTableUserWidth > durAvailableWidth && !DoubleUtil.AreClose(durTableUserWidth, durAvailableWidth))
+                    if (durTableUserWidth > durAvailableWidth && DoubleUtil.AreClose(durTableUserWidth, durAvailableWidth) == false)
                     {
                         durTableUserWidth = durAvailableWidth;
                     }
@@ -2142,7 +2143,7 @@ namespace MS.Internal.PtsHost
                 }
 
                 // floating point (durTableUserWidth < _durMinWidth)
-                if (durTableUserWidth < _durMinWidth && !DoubleUtil.AreClose(durTableUserWidth, _durMinWidth))
+                if (durTableUserWidth < _durMinWidth && DoubleUtil.AreClose(durTableUserWidth, _durMinWidth) == false)
                 {
                     durTableUserWidth = _durMinWidth;
                 }
@@ -2150,13 +2151,13 @@ namespace MS.Internal.PtsHost
             else
             {
                 // floating point (_durMaxWidth < durAvailableWidth)
-                if (_durMaxWidth < durAvailableWidth && !DoubleUtil.AreClose(_durMaxWidth, durAvailableWidth))
+                if (_durMaxWidth < durAvailableWidth && DoubleUtil.AreClose(_durMaxWidth, durAvailableWidth) == false)
                 {
                     // use max value if that smaller the parent size
                     durTableUserWidth = _durMaxWidth;
                 }
                 // floating point (_durMinWidth > durAvailableWidth)
-                else if (_durMinWidth > durAvailableWidth && !DoubleUtil.AreClose(_durMinWidth, durAvailableWidth))
+                else if (_durMinWidth > durAvailableWidth && DoubleUtil.AreClose(_durMinWidth, durAvailableWidth) == false)
                 {
                     // have to use min if that is bigger the parent
                     durTableUserWidth = _durMinWidth;
@@ -2179,19 +2180,19 @@ namespace MS.Internal.PtsHost
 
             // floating point (0 < (durAutoMax + durAbsoluteMax))
             // Step 4 - Calculate the space for 'auto' sized columns.
-            if (0 < (durAutoMax + durAbsoluteMax) && !DoubleUtil.IsZero(durAutoMax + durAbsoluteMax))
+            if (0 < (durAutoMax + durAbsoluteMax) && DoubleUtil.IsZero(durAutoMax + durAbsoluteMax) == false)
             {
                 // cache width remaining for normal and user columns over percent columns (durAbsoluteAndAutoWidths)
                 durAbsoluteAndAutoWidths = iP * durTableUserWidth / 100;
 
                 // floating point (durAbsoluteAndAutoWidths < (durAbsoluteMin + durAutoMin))
-                if (durAbsoluteAndAutoWidths < (durAbsoluteMin + durAutoMin) && !DoubleUtil.AreClose(durAbsoluteAndAutoWidths, (durAbsoluteMin + durAutoMin)))
+                if (durAbsoluteAndAutoWidths < (durAbsoluteMin + durAutoMin) && DoubleUtil.AreClose(durAbsoluteAndAutoWidths, (durAbsoluteMin + durAutoMin)) == false)
                 {
                     durAbsoluteAndAutoWidths = durAbsoluteMin + durAutoMin;
                 }
 
                 // floating point (durAbsoluteAndAutoWidths > (durTableUserWidth - durScalableMin))
-                if (durAbsoluteAndAutoWidths > (durTableUserWidth - durScalableMin) && !DoubleUtil.AreClose(durAbsoluteAndAutoWidths, (durTableUserWidth - durScalableMin)))
+                if (durAbsoluteAndAutoWidths > (durTableUserWidth - durScalableMin) && DoubleUtil.AreClose(durAbsoluteAndAutoWidths, (durTableUserWidth - durScalableMin)) == false)
                 {
                     durAbsoluteAndAutoWidths = durTableUserWidth - durScalableMin;
                 }
@@ -2207,16 +2208,16 @@ namespace MS.Internal.PtsHost
             // first try to use max width for user columns and normal columns
             //
             // floating point (0 < durAbsoluteMax)
-            if (0 < durAbsoluteMax && !DoubleUtil.IsZero(durAbsoluteMax))
+            if (0 < durAbsoluteMax && DoubleUtil.IsZero(durAbsoluteMax) == false)
             {
                 durAbsoluteWidths = durAbsoluteMax;
-                if (durAbsoluteWidths > durAbsoluteAndAutoWidths && !DoubleUtil.AreClose(durAbsoluteWidths, durAbsoluteAndAutoWidths))
+                if (durAbsoluteWidths > durAbsoluteAndAutoWidths && DoubleUtil.AreClose(durAbsoluteWidths, durAbsoluteAndAutoWidths) == false)
                 {
                     durAbsoluteWidths = durAbsoluteAndAutoWidths;
                 }
 
                 // floating point (0 < durAutoMax)
-                if (0 < durAutoMax && !DoubleUtil.IsZero(durAutoMax))
+                if (0 < durAutoMax && DoubleUtil.IsZero(durAutoMax) == false)
                 {
                     durAutoWidths = durAutoMin;
 
@@ -2241,7 +2242,7 @@ namespace MS.Internal.PtsHost
                     durAutoWidths = 0;
 
                     // floating point (durAbsoluteWidths < durAbsoluteAndAutoWidths)
-                    if (durAbsoluteWidths < durAbsoluteAndAutoWidths && !DoubleUtil.AreClose(durAbsoluteWidths, durAbsoluteAndAutoWidths))
+                    if (durAbsoluteWidths < durAbsoluteAndAutoWidths && DoubleUtil.AreClose(durAbsoluteWidths, durAbsoluteAndAutoWidths) == false)
                     {
                         durAbsoluteWidths = durAbsoluteAndAutoWidths;
                     }
@@ -2252,12 +2253,12 @@ namespace MS.Internal.PtsHost
                 durAbsoluteWidths = 0;
 
                 // floating point (0 < durAutoMax)
-                if (0 < durAutoMax && !DoubleUtil.IsZero(durAutoMax))
+                if (0 < durAutoMax && DoubleUtil.IsZero(durAutoMax) == false)
                 {
                     durAutoWidths = durAutoMin;
 
                     // floating point (durAutoWidths < durAbsoluteAndAutoWidths)
-                    if (durAutoWidths < durAbsoluteAndAutoWidths && !DoubleUtil.AreClose(durAutoWidths, durAbsoluteAndAutoWidths))
+                    if (durAutoWidths < durAbsoluteAndAutoWidths && DoubleUtil.AreClose(durAutoWidths, durAbsoluteAndAutoWidths) == false)
                     {
                         durAutoWidths = durAbsoluteAndAutoWidths;
                     }
@@ -2269,7 +2270,7 @@ namespace MS.Internal.PtsHost
             }
 
             // floating point (durAutoWidths > durAutoMax)
-            if (durAutoWidths > durAutoMax && !DoubleUtil.AreClose(durAutoWidths, durAutoMax))
+            if (durAutoWidths > durAutoMax && DoubleUtil.AreClose(durAutoWidths, durAutoMax) == false)
             {
                 fUseMaxMax = true;
             }
@@ -2284,13 +2285,13 @@ namespace MS.Internal.PtsHost
                 fUseMin = true;
             }
             // floating point (durAutoWidths < durAutoMax)
-            else if (durAutoWidths < durAutoMax && !DoubleUtil.AreClose(durAutoWidths, durAutoMax))
+            else if (durAutoWidths < durAutoMax && DoubleUtil.AreClose(durAutoWidths, durAutoMax) == false)
             {
                 fSubtract = true;
             }
 
             // floating point (durAbsoluteWidths > durAbsoluteMax)
-            if (durAbsoluteWidths > durAbsoluteMax && !DoubleUtil.AreClose(durAbsoluteWidths, durAbsoluteMax))
+            if (durAbsoluteWidths > durAbsoluteMax && DoubleUtil.AreClose(durAbsoluteWidths, durAbsoluteMax) == false)
             {
                 fUseUserMaxMax = true;
             }
@@ -2305,7 +2306,7 @@ namespace MS.Internal.PtsHost
                 fUseUserMin = true;
             }
             // floating point (durAbsoluteWidths < durAbsoluteMax)
-            else if (durAbsoluteWidths < durAbsoluteMax && !DoubleUtil.AreClose(durAbsoluteWidths, durAbsoluteMax))
+            else if (durAbsoluteWidths < durAbsoluteMax && DoubleUtil.AreClose(durAbsoluteWidths, durAbsoluteMax) == false)
             {
                 fUserSubtract = true;
             }
@@ -2336,7 +2337,7 @@ namespace MS.Internal.PtsHost
                         : fUseMin
                         ? _calculatedColumns[i].DurMinWidth
                           // floating point (0 < durAutoMax)
-                        : (0 < durAutoMax && !DoubleUtil.IsZero(durAutoMax))
+                        : (0 < durAutoMax && DoubleUtil.IsZero(durAutoMax) == false)
                         ? _calculatedColumns[i].DurMinWidth + (_calculatedColumns[i].DurMaxWidth * (durAutoWidths - durAutoMin) / durAutoMax)
                         : 0;
                 }
@@ -2356,7 +2357,7 @@ namespace MS.Internal.PtsHost
                     durAbsoluteAndAutoWidths -= _calculatedColumns[i].DurMinWidth;
 
                     // floating point (durAbsoluteAndAutoWidths < 0)
-                    if (durAbsoluteAndAutoWidths < 0 && !DoubleUtil.IsZero(durAbsoluteAndAutoWidths))
+                    if (durAbsoluteAndAutoWidths < 0 && DoubleUtil.IsZero(durAbsoluteAndAutoWidths) == false)
                     {
                         durAbsoluteAndAutoWidths = 0;
                     }
@@ -2384,7 +2385,7 @@ namespace MS.Internal.PtsHost
                         : fUseUserMin
                         ? _calculatedColumns[i].DurMinWidth
                         // floating point (0 < durAbsoluteMax)
-                        : (0 < durAbsoluteMax && !DoubleUtil.IsZero(durAbsoluteMax))
+                        : (0 < durAbsoluteMax && DoubleUtil.IsZero(durAbsoluteMax) == false)
                         ? _calculatedColumns[i].DurMinWidth + (_calculatedColumns[i].DurMaxWidth * (durAbsoluteWidths - durAbsoluteMin) / durAbsoluteMax)
                         : 0;
                 }

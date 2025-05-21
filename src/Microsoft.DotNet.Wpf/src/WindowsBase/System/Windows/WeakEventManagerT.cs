@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -118,9 +119,9 @@ namespace System.Windows
 
         #region Private Data
 
-        private Delegate _handler;
-        private string _eventName;
-        private EventInfo _eventInfo;
+        Delegate _handler;
+        string _eventName;
+        EventInfo _eventInfo;
 
         #endregion Private Data
     }

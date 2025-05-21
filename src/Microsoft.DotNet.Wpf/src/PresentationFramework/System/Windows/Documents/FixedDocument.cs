@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal;                  // DoubleUtil
 using MS.Internal.Documents;
@@ -11,7 +12,6 @@ using System.Windows.Markup; // IAddChild, ContentPropertyAttribute
 using System.IO;
 using System.IO.Packaging;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;        // DesignerSerializationVisibility
 using System.Globalization;
 using MS.Internal.Annotations.Component;
@@ -133,7 +133,7 @@ namespace System.Windows.Documents
 
             if (fp == null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(PageContent)), nameof(value));
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(PageContent)), "value");
             }
 
             if (fp.IsInitialized)
@@ -183,7 +183,7 @@ namespace System.Windows.Documents
         #region IFixedNavigate
         void IFixedNavigate.NavigateAsync(string elementID)
         {
-            if (IsPageCountValid)
+            if (IsPageCountValid == true)
             {
                 FixedHyperLink.NavigateToElement(this, elementID);
             }
@@ -320,7 +320,7 @@ namespace System.Windows.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(pageNumber), SR.IDPNegativePageNumber);
+                throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
             }
 
             if (pageNumber < Pages.Count)
@@ -365,7 +365,7 @@ namespace System.Windows.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(pageNumber), SR.IDPNegativePageNumber);
+                throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
             }
 
             ArgumentNullException.ThrowIfNull(userState);
@@ -868,8 +868,8 @@ namespace System.Windows.Documents
             if (baseUri.Scheme.Equals(PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase))
             {
                 // avoid the case of pack://application,,,
-                if (!baseUri.Host.Equals(BaseUriHelper.PackAppBaseUri.Host) &&
-                    !baseUri.Host.Equals(BaseUriHelper.SiteOfOriginBaseUri.Host))
+                if (baseUri.Host.Equals(BaseUriHelper.PackAppBaseUri.Host) != true &&
+                    baseUri.Host.Equals(BaseUriHelper.SiteOfOriginBaseUri.Host) != true)
                 {
                     Uri structureUri = GetStructureUriFromRelationship(baseUri, _structureRelationshipName);
                     if (structureUri != null)
@@ -896,8 +896,8 @@ namespace System.Windows.Documents
             if (baseUri.Scheme.Equals(PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase))
             {
                 // avoid the case of pack://application,,,
-                if (!baseUri.Host.Equals(BaseUriHelper.PackAppBaseUri.Host) &&
-                    !baseUri.Host.Equals(BaseUriHelper.SiteOfOriginBaseUri.Host))
+                if (baseUri.Host.Equals(BaseUriHelper.PackAppBaseUri.Host) != true &&
+                    baseUri.Host.Equals(BaseUriHelper.SiteOfOriginBaseUri.Host) != true)
                 {
                     Uri structureUri = GetStructureUriFromRelationship(baseUri, _storyFragmentsRelationshipName);
 
@@ -962,7 +962,7 @@ namespace System.Windows.Documents
          /// <summary>
         /// Retrieves the Uri for the DocumentStructure from the container's relationship
         /// </summary>
-        private static Uri GetStructureUriFromRelationship(Uri contentUri, string relationshipName)
+        static private Uri GetStructureUriFromRelationship(Uri contentUri, string relationshipName)
         {
             Uri absTargetUri = null;
             if (contentUri != null && relationshipName != null)
@@ -1032,7 +1032,7 @@ namespace System.Windows.Documents
             Debug.Assert(args.Ranges != null);
 
             DocumentsTrace.FixedTextOM.Highlight.Trace($"HightlightMoved From {0}-{0} To {0}-{0}");
-            Debug.Assert(args.Ranges.Count > 0 && args.Ranges[0].Start.CompareTo(args.Ranges[0].End) < 0);
+            Debug.Assert(args.Ranges.Count > 0 && ((TextSegment)args.Ranges[0]).Start.CompareTo(((TextSegment)args.Ranges[0]).End) < 0);
 
             // REVIEW:benwest:7/9/2004: This code is reseting the entire highlight data structure
             // on every highlight delta, which scales horribly.  It should be possible
@@ -1131,13 +1131,13 @@ namespace System.Windows.Documents
                 }
             }
 
-            List<int> dirtyPages = new List<int>();
-            IList<TextSegment> ranges = args.Ranges;
+            ArrayList dirtyPages = new ArrayList();
+            IList ranges = args.Ranges;
 
             // Find the dirty page
             for (int i = 0; i < ranges.Count; i++)
             {
-                TextSegment textSegment = ranges[i];
+                TextSegment textSegment = (TextSegment)ranges[i];
                 int startPage = this.FixedContainer.GetPageNumber(textSegment.Start);
                 int endPage =  this.FixedContainer.GetPageNumber(textSegment.End);
 
@@ -1171,7 +1171,10 @@ namespace System.Windows.Documents
             {
                 HighlightVisual hv = HighlightVisual.GetHighlightVisual(SyncGetPage(i, false /*forceReload*/));
 
-                hv?.InvalidateHighlights();
+                if (hv != null)
+                {
+                    hv.InvalidateHighlights();
+                }
             }
         }
 

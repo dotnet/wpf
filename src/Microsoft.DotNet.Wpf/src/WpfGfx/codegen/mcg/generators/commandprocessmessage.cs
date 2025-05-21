@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //+-----------------------------------------------------------------------------
@@ -66,7 +67,7 @@ namespace MS.Internal.MilCodeGen.Generators
             string generatedPath = 
                 Path.Combine(
                     _resourceModel.OutputDirectory,
-                    "src\\WpfGfx\\core\\uce"
+                    "src\\Graphics\\core\\uce"
                     );
 
             FileCodeSink processMessageFile = new FileCodeSink(generatedPath, "generated_process_message.inl");
@@ -106,7 +107,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
             processMessageFile.WriteBlock(
                 [[inline]]
-                    switch (nCmdType)
+                    switch(nCmdType)
                     {
                         [[m_processMessage.ToString()]]
     

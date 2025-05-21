@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -10,17 +11,16 @@
 
 using MS.Internal;
 using System.ComponentModel;
-using System.Globalization;
 using System.Windows.Markup;
 using System.Windows.Media.Converters;
+// These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media
 {
-
     [Serializable]
     [TypeConverter(typeof(MatrixConverter))]
     [ValueSerializer(typeof(MatrixValueSerializer))] // Used by MarkupWriter
-    public partial struct Matrix : IFormattable
+    partial struct Matrix : IFormattable
     {
         //------------------------------------------------------
         //
@@ -44,7 +44,7 @@ namespace System.Windows.Media
         /// </returns>
         /// <param name='matrix1'>The first Matrix to compare</param>
         /// <param name='matrix2'>The second Matrix to compare</param>
-        public static bool operator ==(Matrix matrix1, Matrix matrix2)
+        public static bool operator == (Matrix matrix1, Matrix matrix2)
         {
             if (matrix1.IsDistinguishedIdentity || matrix2.IsDistinguishedIdentity)
             {
@@ -72,7 +72,7 @@ namespace System.Windows.Media
         /// </returns>
         /// <param name='matrix1'>The first Matrix to compare</param>
         /// <param name='matrix2'>The second Matrix to compare</param>
-        public static bool operator !=(Matrix matrix1, Matrix matrix2)
+        public static bool operator != (Matrix matrix1, Matrix matrix2)
         {
             return !(matrix1 == matrix2);
         }
@@ -88,7 +88,7 @@ namespace System.Windows.Media
         /// </returns>
         /// <param name='matrix1'>The first Matrix to compare</param>
         /// <param name='matrix2'>The second Matrix to compare</param>
-        public static bool Equals(Matrix matrix1, Matrix matrix2)
+        public static bool Equals (Matrix matrix1, Matrix matrix2)
         {
             if (matrix1.IsDistinguishedIdentity || matrix2.IsDistinguishedIdentity)
             {
@@ -270,7 +270,6 @@ namespace System.Windows.Media
         /// </returns>
         public override string ToString()
         {
-
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, null /* format provider */);
         }
@@ -284,7 +283,6 @@ namespace System.Windows.Media
         /// </returns>
         public string ToString(IFormatProvider provider)
         {
-
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, provider);
         }
@@ -300,7 +298,6 @@ namespace System.Windows.Media
         /// </returns>
         string IFormattable.ToString(string format, IFormatProvider provider)
         {
-
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(format, provider);
         }
@@ -333,8 +330,6 @@ namespace System.Windows.Media
                                  _offsetX,
                                  _offsetY);
         }
-
-
 
         #endregion Internal Properties
 

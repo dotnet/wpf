@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 #region Using declarations
@@ -132,7 +133,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         // At the time this method is called, scrolling state is in its new, valid state.
         private void OnScrollChange()
         {
-            ScrollOwner?.InvalidateScrollInfo();
+            if (ScrollOwner != null) { ScrollOwner.InvalidateScrollInfo(); }
         }
 
         private void VerifyScrollingData(Size viewport, Size extent, Vector offset)
@@ -154,7 +155,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             OnScrollChange();
         }
 
-        private static double ComputeScrollOffsetWithMinimalScroll(
+        static private double ComputeScrollOffsetWithMinimalScroll(
             double topView,
             double bottomView,
             double topChild,
@@ -194,7 +195,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         }
 
         // Returns an offset coerced into the [0, Extent - Viewport] range.
-        private static double CoerceOffset(double offset, double extent, double viewport)
+        static private double CoerceOffset(double offset, double extent, double viewport)
         {
             if (offset > extent - viewport) { offset = extent - viewport; }
             if (offset < 0) { offset = 0; }
@@ -618,7 +619,10 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             {
                 TreeHelper.InvalidateMeasureForVisualAncestorPath(this, RibbonHelper.IsISupportStarLayout);
                 RibbonGallery gallery = this.Gallery;
-                gallery?.InvalidateMeasureOnAllCategoriesPanel();
+                if (gallery != null)
+                {
+                    gallery.InvalidateMeasureOnAllCategoriesPanel();
+                }
             }
         }
 

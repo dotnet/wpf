@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -8,14 +9,13 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using System.Collections;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using MS.Utility;
+// These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows
 {
-    public sealed partial class TextDecoration : Animatable
+    sealed partial class TextDecoration : Animatable
     {
         //------------------------------------------------------
         //
@@ -67,7 +67,7 @@ namespace System.Windows
         {
             get
             {
-                return (Pen)GetValue(PenProperty);
+                return (Pen) GetValue(PenProperty);
             }
             set
             {
@@ -83,7 +83,7 @@ namespace System.Windows
         {
             get
             {
-                return (double)GetValue(PenOffsetProperty);
+                return (double) GetValue(PenOffsetProperty);
             }
             set
             {
@@ -99,7 +99,7 @@ namespace System.Windows
         {
             get
             {
-                return (TextDecorationUnit)GetValue(PenOffsetUnitProperty);
+                return (TextDecorationUnit) GetValue(PenOffsetUnitProperty);
             }
             set
             {
@@ -115,7 +115,7 @@ namespace System.Windows
         {
             get
             {
-                return (TextDecorationUnit)GetValue(PenThicknessUnitProperty);
+                return (TextDecorationUnit) GetValue(PenThicknessUnitProperty);
             }
             set
             {
@@ -131,7 +131,7 @@ namespace System.Windows
         {
             get
             {
-                return (TextDecorationLocation)GetValue(LocationProperty);
+                return (TextDecorationLocation) GetValue(LocationProperty);
             }
             set
             {
@@ -259,7 +259,8 @@ namespace System.Windows
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app.
+            // of your app.  (Windows OS 
+
 
 
             // Initializations
@@ -310,8 +311,6 @@ namespace System.Windows
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
-
 
         #endregion Constructors
     }

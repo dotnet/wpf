@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: The Freezable class (plus the FreezableHelper class)
 //              encompasses all of the Freezable pattern.
@@ -474,16 +475,21 @@ namespace System.Windows
         // FireChanged occurs.
         //
         [ThreadStatic]
-        private static EventStorage _eventStorage;
+        static private EventStorage _eventStorage = null;
 
         /// <summary>
         /// Property to access and intialize the thread static _eventStorage variable.
         /// </summary>
-        private static EventStorage CachedEventStorage
+        private EventStorage CachedEventStorage
         {
             get
             {
-                _eventStorage ??= new EventStorage(INITIAL_EVENTSTORAGE_SIZE);
+                // make sure _eventStorage is not null - with ThreadStatic it appears that the second
+                // thread to access the variable will set this to null
+                if (_eventStorage == null)
+                {
+                    _eventStorage = new EventStorage(INITIAL_EVENTSTORAGE_SIZE);
+                }
 
                 return _eventStorage;
             }
@@ -542,7 +548,10 @@ namespace System.Windows
                 DependencyObject context = SingletonContext;
 
                 contextAsFreezable = context as Freezable;
-                contextAsFreezable?.GetChangeHandlersAndInvalidateSubProperties(ref calledHandlers);
+                if (contextAsFreezable != null)
+                {
+                    contextAsFreezable.GetChangeHandlersAndInvalidateSubProperties(ref calledHandlers);
+                }
 
                 if (SingletonContextProperty != null)
                 {
@@ -568,7 +577,10 @@ namespace System.Windows
                         if (currentDO != lastDO)
                         {
                             contextAsFreezable = currentDO as Freezable;
-                            contextAsFreezable?.GetChangeHandlersAndInvalidateSubProperties(ref calledHandlers);
+                            if (contextAsFreezable != null)
+                            {
+                                contextAsFreezable.GetChangeHandlersAndInvalidateSubProperties(ref calledHandlers);
+                            }
 
                             lastDO = currentDO;
                         }
@@ -701,7 +713,7 @@ namespace System.Windows
         /// Freezable can't be frozen.</exception>
         //  Future Note: Consider removing if we move Freezables to DO's, and moving it into
         // SetFreezableContextCore directly.  What situations would remain for subclasses to need to call it?
-        protected internal static bool Freeze(Freezable freezable, bool isChecking)
+        static protected internal bool Freeze(Freezable freezable, bool isChecking)
         {
             if (freezable != null)
             {
@@ -1085,7 +1097,7 @@ namespace System.Windows
             // Make sure we actually removed something - if not throw an exception
             if (failed)
             {
-                throw new ArgumentException(SR.Freezable_NotAContext, nameof(context));
+                throw new ArgumentException(SR.Freezable_NotAContext, "context");
             }
         }
 
@@ -1446,7 +1458,7 @@ namespace System.Windows
 
             if (failed)
             {
-                throw new ArgumentException(SR.Freezable_UnregisteredHandler, nameof(handler));
+                throw new ArgumentException(SR.Freezable_UnregisteredHandler, "handler");
             }
         }
 
@@ -1887,10 +1899,10 @@ namespace System.Windows
                 }
             }
 
-            private EventHandler[] _events;         // list of events
-            private int _logSize;                   // the logical size of the list
-            private int _physSize;                  // the allocated buffer size
-            private bool _inUse;
+            EventHandler[] _events;         // list of events
+            int _logSize;                   // the logical size of the list
+            int _physSize;                  // the allocated buffer size
+            bool _inUse;
         }
 
         //------------------------------------------------------

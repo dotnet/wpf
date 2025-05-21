@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Break records for PTS pages.
@@ -130,7 +131,7 @@ namespace MS.Internal.PtsHost
             PtsContext ptsContext = null;
 
             // Do actual dispose only once.
-            if (!Interlocked.CompareExchange(ref _disposed, true, false))
+            if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
             {
                 // Dispose PTS break record.
                 // According to following article the entire reachable graph from 
@@ -182,7 +183,7 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Whether object is already disposed.
         /// </summary>
-        private bool _disposed;
+        private int _disposed;
 
         #endregion Private Fields
     }

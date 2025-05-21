@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -8,21 +9,10 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-using MS.Internal.Collections;
-using MS.Utility;
-using System.Collections;
-using System.ComponentModel;
-using System.Globalization;
-using System.Text;
-using System.Windows.Markup;
-using System.Windows.Media.Media3D.Converters;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-
+// These types are aliased to match the unamanaged names used in interop
 namespace System.Windows.Media.Media3D
 {
-    public abstract partial class Light : Model3D
+    abstract partial class Light : Model3D
     {
         //------------------------------------------------------
         //
@@ -79,7 +69,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Color)GetValue(ColorProperty);
+                return (Color) GetValue(ColorProperty);
             }
             set
             {
@@ -197,6 +187,7 @@ namespace System.Windows.Media.Media3D
             // of your app.
 
 
+
             // Initializations
             Type typeofThis = typeof(Light);
             ColorProperty =
@@ -209,8 +200,6 @@ namespace System.Windows.Media.Media3D
                                    /* isIndependentlyAnimated  = */ true,
                                    /* coerceValueCallback */ null);
         }
-
-
 
         #endregion Constructors
     }

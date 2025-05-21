@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //---------------------------------------------------------------------------
 //
@@ -476,7 +477,7 @@ namespace MS.Internal
                 }
 
                 int pathEndIndex = SourceFileInfo.RelativeSourceFilePath.LastIndexOf(Path.DirectorySeparatorChar);
-                string targetPath = string.Concat(TargetPath, SourceFileInfo.RelativeSourceFilePath.Substring(0, pathEndIndex + 1));
+                string targetPath = TargetPath + SourceFileInfo.RelativeSourceFilePath.Substring(0, pathEndIndex + 1);
 
                 // Create if not already exists
                 if (targetPath.Length > 0 && !Directory.Exists(targetPath))
@@ -565,7 +566,10 @@ namespace MS.Internal
                 }
 
 
-                SourceFileInfo?.CloseStream();
+                if (SourceFileInfo != null)
+                {
+                    SourceFileInfo.CloseStream();
+                }
 
                 if (bamlStream != null)
                 {
@@ -708,11 +712,11 @@ namespace MS.Internal
             return sourceFileInfo;
         }
 
-        #endregion CompileUnit
+#endregion CompileUnit
 
-        #region ErrorHandling
+#region ErrorHandling
 
-        private static void ThrowCompilerException(string id)
+        static void ThrowCompilerException(string id)
         {
             string message = SR.GetResourceString(id);
             ThrowCompilerExceptionImpl(message);
@@ -736,13 +740,13 @@ namespace MS.Internal
             ThrowCompilerExceptionImpl(message);
         }
 
-        private static void ThrowCompilerException(string id, string value1, string value2, string value3, string value4)
+        static void ThrowCompilerException(string id, string value1, string value2, string value3, string value4)
         {
             string message = SR.Format(SR.GetResourceString(id), value1, value2, value3, value4);
             ThrowCompilerExceptionImpl(message);
         }
 
-        private static void ThrowCompilerExceptionImpl(string message)
+        static void ThrowCompilerExceptionImpl(string message)
         {
             Exception compilerException = new Exception(message);
             throw compilerException;
@@ -978,10 +982,11 @@ namespace MS.Internal
 
                 // eventSetter = new EventSetter();
                 //
+                CodeExpression[] esParams = {};
                 CodeVariableReferenceExpression cvreES = new CodeVariableReferenceExpression(EVENTSETTER);
                 CodeAssignStatement casES = new CodeAssignStatement(cvreES,
                                                                     new CodeObjectCreateExpression(KnownTypes.Types[(int)KnownElements.EventSetter],
-                                                                                                   Array.Empty<CodeExpression>()));
+                                                                                                   esParams));
 
                 // eventSetter.Event = Button.ClickEvent;
                 //
@@ -1930,7 +1935,7 @@ namespace MS.Internal
             // Fetch the EventHandlerType from either the EventInfo or the MethodInfo
             // for the Add{Propertyname}Handler method's MethodInfo
             Type eventHandlerType = GetEventHandlerType(miEvent);
-            string [] typeArgsList = cc?.GenericTypeArgs;
+            string [] typeArgsList = cc != null ? cc.GenericTypeArgs : null;
 
             cdce.DelegateType = GenerateConstructedTypeReference(eventHandlerType, typeArgsList, eventTarget, eventTargetName, eventName);
             cdce.MethodName = eventHandler.Trim() + (subClassed ? HELPER : string.Empty);
@@ -3155,8 +3160,9 @@ namespace MS.Internal
             //
             CodeObjectCreateExpression coce;
             CodeVariableReferenceExpression cvre = new CodeVariableReferenceExpression(APPVAR);
+            CodeExpression[] ctorParams = {};
 
-            coce = new CodeObjectCreateExpression(appClassName, Array.Empty<CodeExpression>());
+            coce = new CodeObjectCreateExpression(appClassName, ctorParams);
 
             CodeVariableDeclarationStatement cvds = new CodeVariableDeclarationStatement(appClassName, APPVAR, coce);
 
@@ -3353,7 +3359,7 @@ namespace MS.Internal
                 relPath = TaskHelper.GetRootRelativePath(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar, fullFilePath);
             }
 
-            if (!string.IsNullOrEmpty(relPath))
+            if (string.IsNullOrEmpty(relPath) == false)
             {
                 resourceId = relPath;
             }

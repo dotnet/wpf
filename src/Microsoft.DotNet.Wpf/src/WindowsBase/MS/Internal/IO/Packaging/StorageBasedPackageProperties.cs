@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description:
 //  This class provides access to the package properties of an RM-protected OPC
@@ -730,7 +731,7 @@ namespace MS.Internal.IO.Packaging
                 {
                     throw new ArgumentException(
                                 SR.Format(SR.InvalidDocumentPropertyType, propVal.GetType().ToString()),
-                                nameof(propVal));
+                                "propVal");
                 }
 
                 //
@@ -823,7 +824,7 @@ namespace MS.Internal.IO.Packaging
                     default:
                         throw new ArgumentException(
                             SR.Format(SR.UnknownDocumentProperty, fmtid.ToString(), propId),
-                            nameof(propId)
+                            "propId"
                             );
                 }
             }
@@ -842,7 +843,7 @@ namespace MS.Internal.IO.Packaging
                     default:
                         throw new ArgumentException(
                             SR.Format(SR.UnknownDocumentProperty, fmtid.ToString(), propId),
-                            nameof(propId)
+                            "propId"
                             );
                 }
             }
@@ -850,7 +851,7 @@ namespace MS.Internal.IO.Packaging
             {
                 throw new ArgumentException(
                     SR.Format(SR.UnknownDocumentProperty, fmtid.ToString(), propId),
-                    nameof(fmtid)
+                    "fmtid"
                     );
             }
         }

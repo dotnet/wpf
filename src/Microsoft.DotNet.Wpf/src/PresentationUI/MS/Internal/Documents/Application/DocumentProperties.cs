@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: This is a wrapper for DocumentPropertiesDialog, which caches the values which
 //              are displayed in the Dialog, and controls security access.
@@ -314,7 +315,10 @@ namespace MS.Internal.Documents.Application
             DocumentPropertiesDialog dialog = null;
             dialog = new DocumentPropertiesDialog();
             dialog.ShowDialog();
-            dialog?.Dispose();
+            if (dialog != null)
+            {
+                dialog.Dispose();
+            }
         }
         #endregion Internal Methods
 

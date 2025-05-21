@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using MS.Internal;
@@ -580,8 +581,11 @@ namespace System.Windows.Controls
                 if (tooltip.IsOpen)
                 {
                     IInputElement element = owner as IInputElement;
-                    // ** Public callout - re-entrancy is possible **//
-                    element?.RaiseEvent(new ToolTipEventArgs(opening: false));
+                    if (element != null)
+                    {
+                        // ** Public callout - re-entrancy is possible **//
+                        element.RaiseEvent(new ToolTipEventArgs(opening:false));
+                    }
                 }
             }
             finally
@@ -1290,7 +1294,7 @@ namespace System.Windows.Controls
 
         #region Private Types
 
-        private struct WeakRefWrapper<T> where T : class
+        struct WeakRefWrapper<T> where T : class
         {
             private WeakReference<T> _storage;
 
@@ -1352,7 +1356,7 @@ namespace System.Windows.Controls
         // the top-down scan is still efficient in practice (the rectangles usually arrive in
         // top-down order already), and the majority of edges in the resulting convex hull are
         // axis-aligned.
-        private class ConvexHull
+        class ConvexHull
         {
             internal ConvexHull(PresentationSource source, List<NativeMethods.RECT> rects)
             {
@@ -1699,10 +1703,10 @@ namespace System.Windows.Controls
                 return (b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X);
             }
 
-            private enum Direction { Skew, Left, Right, Up, Down }
+            enum Direction { Skew, Left, Right, Up, Down }
 
             [DebuggerDisplay("{X} {Y} {Direction}")]
-            private struct Point
+            struct Point
             {
                 public int X { get; set; }
                 public int Y { get; set; }
@@ -1716,11 +1720,11 @@ namespace System.Windows.Controls
                 }
             }
 
-            private class PointList : List<Point>
+            class PointList : List<Point>
             { }
 
-            private Point[] _points;
-            private PresentationSource _source;
+            Point[] _points;
+            PresentationSource _source;
         }
 
         #endregion
@@ -1732,7 +1736,7 @@ namespace System.Windows.Controls
         // tooltips instantly (where "continuous" and "instantly" are the
         // end-user's perception).   The value here is large enough to make the
         // "SafeAreaOnHyperlink" test pass.
-        private static int ShortDelay = 73;
+        static private int ShortDelay = 73;
 
         // pending ToolTip
         private ToolTip _pendingToolTip;

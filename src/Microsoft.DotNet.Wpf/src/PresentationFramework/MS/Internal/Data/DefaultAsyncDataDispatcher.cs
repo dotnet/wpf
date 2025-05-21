@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Default async scheduler for data operations.
@@ -53,7 +54,7 @@ namespace MS.Internal.Data
 
         // Run a single request.  This method gets scheduled on a worker thread
         // from the process ThreadPool.
-        private void ProcessRequest(object o)
+        void ProcessRequest(object o)
         {
             AsyncDataRequest request = (AsyncDataRequest)o;
 
@@ -95,6 +96,6 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        private ArrayList _list = new ArrayList();
+        ArrayList _list = new ArrayList();
     }
 }

@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Wraps some of IAccessible to support getting basic properties
 //              and default action
@@ -618,7 +619,7 @@ namespace MS.Internal.AutomationProxies
                 children = new Accessible[1];
                 children[0] = AccessibleFromObject(obj, _acc);
             }
-            else if (obj is not null)
+            else if (obj is object)
             {
                 children = new Accessible[1];
                 children[0] = AccessibleFromObject(obj, _acc);
@@ -913,7 +914,7 @@ namespace MS.Internal.AutomationProxies
                     // Get the raw children because accNavigate doesn't work
                     if (UnsafeNativeMethods.AccessibleChildren(accessibleObject, 0, childCount, aChildren, out childrenReturned) == NativeMethods.E_INVALIDARG)
                     {
-                        System.Diagnostics.Debug.Fail("Call to AccessibleChildren() returned E_INVALIDARG.");
+                        System.Diagnostics.Debug.Assert(false, "Call to AccessibleChildren() returned E_INVALIDARG.");
                         throw new ElementNotAvailableException();
                     }
                 }
@@ -966,7 +967,10 @@ namespace MS.Internal.AutomationProxies
                 index = children.Length - 1; 
 
             Accessible nav = AccessibleFromObject(children[index], parent);
-            nav?._accessibleChildrenIndex = index;
+            if (nav != null)
+            {
+                nav._accessibleChildrenIndex = index;
+            }
 
             return nav;
         }
@@ -1367,7 +1371,7 @@ namespace MS.Internal.AutomationProxies
 
                     default:
                         // we want to know when we get an exception we haven't seen before
-                        Debug.Fail(string.Format(CultureInfo.CurrentCulture, "MsaaNativeProvider: IAccessible threw a COMException: {0}", e.Message));
+                        Debug.Assert(false, string.Format(CultureInfo.CurrentCulture, "MsaaNativeProvider: IAccessible threw a COMException: {0}", e.Message));
                         break;
                 }
             }
@@ -1384,7 +1388,7 @@ namespace MS.Internal.AutomationProxies
             else
             {
                 // we want to know when we get an exception we haven't seen before
-                Debug.Fail(string.Format(CultureInfo.CurrentCulture, "Unexpected IAccessible exception: {0}", e));
+                Debug.Assert(false, string.Format(CultureInfo.CurrentCulture, "Unexpected IAccessible exception: {0}", e));
             }
 
             // rethrow the exception
@@ -1401,7 +1405,7 @@ namespace MS.Internal.AutomationProxies
         // released, so we need a way to work with the existing code anyway; and this error
         // appears to be a side-effect of other security-related code in the Winforms impl
         // which Winforms really do not want to modify), we use this workaround.
-        private static IAccessible WashPartialTrustWinformsAccessible(IAccessible old)
+        static IAccessible WashPartialTrustWinformsAccessible(IAccessible old)
         {
             // Basic alg: get the parent, get all its children, then check each
             // one looking for the one that corresponds to the same element as the

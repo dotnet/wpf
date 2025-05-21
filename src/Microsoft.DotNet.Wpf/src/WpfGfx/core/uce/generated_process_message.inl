@@ -1,7 +1,3 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-
-
 //---------------------------------------------------------------------------
 
 //
@@ -10,7 +6,7 @@
 // File name: generated_process_message.inl
 //---------------------------------------------------------------------------
 
-switch (nCmdType)
+switch(nCmdType)
 {
     case MilCmdTransportSyncFlush:
     {
@@ -3679,3 +3675,4 @@ switch (nCmdType)
         IFC(WGXERR_UCE_MALFORMEDPACKET);
         break;
 }
+

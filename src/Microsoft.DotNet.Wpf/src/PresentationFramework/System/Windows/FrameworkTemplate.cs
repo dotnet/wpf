@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -242,8 +243,11 @@ namespace System.Windows
 
                 _resources = value;
 
-                // A Template ResourceDictionary can be accessed across threads
-                _resources?.CanBeAccessedAcrossThreads = true;
+                if (_resources != null)
+                {
+                    // A Template ResourceDictionary can be accessed across threads
+                    _resources.CanBeAccessedAcrossThreads = true;
+                }
             }
         }
 
@@ -371,7 +375,8 @@ namespace System.Windows
             if (templateRoot != null &&
                 typeof(FrameworkContentElement).IsAssignableFrom(templateRoot.Type))
             {
-                throw new ArgumentException(SR.Format(SR.VisualTreeRootIsFrameworkElement, nameof(FrameworkElement), templateRoot.Type.Name));
+                throw new ArgumentException(SR.Format(SR.VisualTreeRootIsFrameworkElement,
+                    typeof(FrameworkElement).Name, templateRoot.Type.Name));
             }
         }
 
@@ -414,7 +419,10 @@ namespace System.Windows
 
             //Let go of the TemplateContent object to reduce survived allocations.
             //Need to keep while parsing due to ambient lookup of DependencyPropertyConverter.
-            _templateHolder?.ResetTemplateLoadData();
+            if (_templateHolder != null)
+            {
+                _templateHolder.ResetTemplateLoadData();
+            }
         }
 
         // Subclasses need to call this method before any changes to their state.
@@ -822,7 +830,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    Debug.Fail("We do not have support for DynamicResource within unshared template content");
+                    Debug.Assert(false, "We do not have support for DynamicResource within unshared template content");
                 }
             }
 
@@ -975,7 +983,10 @@ namespace System.Windows
 
                 while (templateReader.Read())
                 {
-                    lineInfoConsumer?.SetLineInfo(lineInfo.LineNumber, lineInfo.LinePosition);
+                    if (lineInfoConsumer != null)
+                    {
+                        lineInfoConsumer.SetLineInfo(lineInfo.LineNumber, lineInfo.LinePosition);
+                    }
 
                     // We need to call the ObjectWriter first because x:Name & RNPA needs to be registered
                     // before we call InvalidateProperties.
@@ -1038,13 +1049,16 @@ namespace System.Windows
                             {
                                 if (Names.CurrentFrame.Property == XamlLanguage.ConnectionId)
                                 {
-                                    _styleConnector?.Connect((int)templateReader.Value, Names.CurrentFrame.Instance);
+                                    if (_styleConnector != null)
+                                    {
+                                        _styleConnector.Connect((int)templateReader.Value, Names.CurrentFrame.Instance);
+                                    }
                                 }
                             }
                             break;
 
                         default:
-                            Debug.Fail("Unknown enum value");
+                            Debug.Assert(false, "Unknown enum value");
                             break;
                     }
                 }
@@ -1612,7 +1626,7 @@ namespace System.Windows
 
 #if DEBUG
         // Debug counter for intelligent breakpoints.
-        private static int _globalDebugInstanceCounter = 0;
+        static private int _globalDebugInstanceCounter = 0;
         private int        _debugInstanceCounter;
 #endif
 

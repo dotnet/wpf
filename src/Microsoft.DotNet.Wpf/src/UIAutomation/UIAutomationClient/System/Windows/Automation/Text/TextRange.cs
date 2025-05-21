@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Client-side wrapper for text range.
 //
@@ -29,7 +30,7 @@ namespace System.Windows.Automation.Text
             get { return handle == IntPtr.Zero; }
         }
 
-        protected override bool ReleaseHandle()
+        override protected bool ReleaseHandle()
         {
             return UiaCoreApi.UiaTextRangeRelease(handle);
         }
@@ -182,7 +183,7 @@ namespace System.Windows.Automation.Text
 
             if (value.GetType() != ai.Type)
             {
-                throw new ArgumentException(SR.Format(SR.TextAttributeValueWrongType, attribute, ai.Type.Name, value.GetType().Name), nameof(value));
+                throw new ArgumentException(SR.Format(SR.TextAttributeValueWrongType, attribute, ai.Type.Name, value.GetType().Name), "value");
             }
 
             // note: if we implement attributes whose values are logical elements, patterns,
@@ -422,17 +423,17 @@ namespace System.Windows.Automation.Text
         }
 
         #endregion Public Properties
-
+        
         //------------------------------------------------------
         //
         //  Private Methods
         //
         //------------------------------------------------------
-
+ 
         #region Private Methods
 
         // check an endpoint argument to see if it is valid.
-        private void ValidateEndpointArgument(TextPatternRangeEndpoint endpoint, string name)
+        void ValidateEndpointArgument(TextPatternRangeEndpoint endpoint, string name)
         {
             if (endpoint != TextPatternRangeEndpoint.Start && endpoint != TextPatternRangeEndpoint.End)
             {
@@ -441,7 +442,7 @@ namespace System.Windows.Automation.Text
         }
 
         // check a range argument to see if it is valid.
-        private void ValidateRangeArgument(TextPatternRange range, string name)
+        void ValidateRangeArgument(TextPatternRange range, string name)
         {
             // check if the argument is null
             if (range == null)
@@ -457,7 +458,7 @@ namespace System.Windows.Automation.Text
 }
 
         // check an unit argument to see if it is valid.
-        private void ValidateUnitArgument(TextUnit unit, string name)
+        void ValidateUnitArgument(TextUnit unit, string name)
         {
             if (unit<TextUnit.Character || unit>TextUnit.Document)
             {
@@ -472,11 +473,11 @@ namespace System.Windows.Automation.Text
         //  Private Fields
         //
         //------------------------------------------------------
-
+ 
         #region Private Fields
 
-        private SafeTextRangeHandle _hTextRange;
-        private TextPattern _pattern;
+        SafeTextRangeHandle _hTextRange;
+        TextPattern _pattern;
 
         #endregion Private Fields
     }

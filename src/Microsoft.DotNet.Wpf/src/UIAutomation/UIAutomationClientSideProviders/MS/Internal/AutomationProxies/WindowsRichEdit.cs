@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: HWND-based RichEdit Proxy
 
@@ -15,7 +16,7 @@ using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.Na
 
 namespace MS.Internal.AutomationProxies
 {
-    internal class WindowsRichEdit : ProxyHwnd, IValueProvider, ITextProvider
+    class WindowsRichEdit : ProxyHwnd, IValueProvider, ITextProvider
     {
         // ------------------------------------------------------
         //
@@ -25,7 +26,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Constructors
 
-        private WindowsRichEdit (IntPtr hwnd, ProxyFragment parent, int style)
+        WindowsRichEdit (IntPtr hwnd, ProxyFragment parent, int style)
             : base( hwnd, parent, style )
         {
             _type = WindowsEditBox.GetEditboxtype(hwnd);
@@ -238,7 +239,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             if (range == null)
-                return Array.Empty<ITextRangeProvider>();
+                return new ITextRangeProvider[] { };
             else
                 return new ITextRangeProvider[] { new WindowsRichEditRange(range, this) };
         }
@@ -248,7 +249,7 @@ namespace MS.Internal.AutomationProxies
             ITextRange range = GetVisibleRange();
 
             if (range == null)
-                return Array.Empty<ITextRangeProvider>();
+                return new ITextRangeProvider[] { };
             else
                 return new ITextRangeProvider[] { new WindowsRichEditRange(range, this) };
         }
@@ -529,7 +530,7 @@ namespace MS.Internal.AutomationProxies
                     object embeddedObject;
                     while (start < end && embeddedObjectOffset != -1)
                     {
-                        sbText.Append(text.AsSpan(start, embeddedObjectOffset - start));
+                        sbText.Append(text.Substring(start, embeddedObjectOffset - start));
                         range.SetRange(embeddedObjectOffset, end);
                         if (range.GetEmbeddedObject(out embeddedObject) == NativeMethods.S_OK && embeddedObject != null)
                         {
@@ -547,7 +548,7 @@ namespace MS.Internal.AutomationProxies
 
                     if (start < end)
                     {
-                        sbText.Append(text.AsSpan(start, end - start));
+                        sbText.Append(text.Substring(start, end - start));
                     }
 
                     text = sbText.ToString();
@@ -744,8 +745,8 @@ namespace MS.Internal.AutomationProxies
         private WindowsEditBox.EditboxType _type;
 
         // Used in RaiseEvents() to track changes in the selection endpoints.
-        private static int _raiseEventsOldSelectionStart;
-        private static int _raiseEventsOldSelectionEnd;
+        static private int _raiseEventsOldSelectionStart;
+        static private int _raiseEventsOldSelectionEnd;
         private const int _NO_ENDPOINT = -1;
 
         #endregion private Fields

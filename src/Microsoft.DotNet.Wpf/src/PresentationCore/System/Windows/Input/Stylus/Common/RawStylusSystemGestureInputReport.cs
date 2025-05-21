@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 
@@ -191,9 +192,9 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        private SystemGesture _id;
-        private int _gestureX; // gesture location in tablet device coordinates
-        private int _gestureY;
-        private int _buttonState;
-    }
+        SystemGesture _id;
+        int _gestureX;// gesture location in tablet device coordinates
+        int _gestureY;
+        int _buttonState;
+}
 }

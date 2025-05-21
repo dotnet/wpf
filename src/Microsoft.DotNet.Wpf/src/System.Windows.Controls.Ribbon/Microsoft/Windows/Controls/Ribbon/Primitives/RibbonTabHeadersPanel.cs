@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -636,7 +637,10 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             for (int i = 0; i < countAllTabs; i++)
             {
                 RibbonTabHeader tabHeader = children[i] as RibbonTabHeader;
-                tabHeader?.ShowLabelToolTip = tabHeader.IsContextualTab ? showContextualTabHeaderToolTips : showRegularTabHeaderToolTips;
+                if (tabHeader != null)
+                {
+                    tabHeader.ShowLabelToolTip = tabHeader.IsContextualTab ? showContextualTabHeaderToolTips : showRegularTabHeaderToolTips;
+                }
             }
         }
 
@@ -742,13 +746,19 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                         }
 
                         RibbonContextualTabGroupsPanel contextualTabGroupsPanel = groupHeaderItemsControl.InternalItemsHost as RibbonContextualTabGroupsPanel;
-                        contextualTabGroupsPanel?.WaitingForMeasure = false;
+                        if (contextualTabGroupsPanel != null)
+                        {
+                            contextualTabGroupsPanel.WaitingForMeasure = false;
+                        }
                     }
                     else
                     {
                         // Tell the ContextualTabGroupsPanel that we are waiting on its Measure.
                         RibbonContextualTabGroupsPanel contextualTabGroupsPanel = groupHeaderItemsControl.InternalItemsHost as RibbonContextualTabGroupsPanel;
-                        contextualTabGroupsPanel?.WaitingForMeasure = true;
+                        if (contextualTabGroupsPanel != null)
+                        {
+                            contextualTabGroupsPanel.WaitingForMeasure = true;
+                        }
                     }
                 }
             }
@@ -770,7 +780,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         private double _separatorOpacity;
         private const double _tabHeaderMinWidth = 30.0;
         private const double _desiredWidthEpsilon = 1e-10;
-        private Pen _separatorPen = null;
+        Pen _separatorPen = null;
 
         #endregion
 
@@ -800,7 +810,10 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
             if (!fValid)
             {
-                ScrollOwner?.InvalidateScrollInfo();
+                if (ScrollOwner != null)
+                {
+                    ScrollOwner.InvalidateScrollInfo();
+                }
             }
         }
 
@@ -828,7 +841,10 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             {
                 if (ScrollData._scrollOwner != value)
                 {
-                    Ribbon?.NotifyTabHeadersScrollOwnerChanged(ScrollData._scrollOwner, value);
+                    if (Ribbon != null)
+                    {
+                        Ribbon.NotifyTabHeadersScrollOwnerChanged(ScrollData._scrollOwner, value);
+                    }
                     ScrollData._scrollOwner = value;
                 }
             }
@@ -915,7 +931,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
         private void OnScrollChange()
         {
-            ScrollOwner?.InvalidateScrollInfo();
+            if (ScrollOwner != null) { ScrollOwner.InvalidateScrollInfo(); }
         }
 
         internal static double ComputeScrollOffsetWithMinimalScroll(

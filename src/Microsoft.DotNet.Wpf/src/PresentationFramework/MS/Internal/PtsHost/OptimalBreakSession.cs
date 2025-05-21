@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //
@@ -36,9 +37,15 @@ namespace MS.Internal.PtsHost
         {
             try
             {
-                _textParagraphCache?.Dispose();
+                if(_textParagraphCache != null)
+                {
+                    _textParagraphCache.Dispose();
+                }
 
-                _optimalTextSource?.Dispose();
+                if(_optimalTextSource != null)
+                {
+                    _optimalTextSource.Dispose();
+                }
             }
             finally
             {
@@ -92,7 +99,10 @@ namespace MS.Internal.PtsHost
         /// </summary>
         public override void Dispose()
         {
-            _textBreakpoint?.Dispose();
+            if(_textBreakpoint != null)
+            {
+                _textBreakpoint.Dispose();
+            }
 
             base.Dispose();
         }

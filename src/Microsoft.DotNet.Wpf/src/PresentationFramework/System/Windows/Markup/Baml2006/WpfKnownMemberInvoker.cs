@@ -1,16 +1,17 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Xaml.Schema;
 using System.Reflection;
 
 namespace System.Windows.Baml2006
 {
-    internal class WpfKnownMemberInvoker : XamlMemberInvoker
+    class WpfKnownMemberInvoker : XamlMemberInvoker
     {
-        private WpfKnownMember _member;
-        private bool _hasShouldSerializeMethodBeenLookedup = false;
-        private MethodInfo _shouldSerializeMethod = null;
+        WpfKnownMember _member;
+        bool _hasShouldSerializeMethodBeenLookedup = false;
+        MethodInfo _shouldSerializeMethod = null;
 
         public WpfKnownMemberInvoker(WpfKnownMember member) : base(member)
         {

@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -138,7 +139,7 @@ namespace MS.Internal.IO.Packaging
             checked
             {
                 if (offset + count > buffer.Length)
-                    throw new ArgumentException(SR.IOBufferOverflow, nameof(buffer));
+                    throw new ArgumentException(SR.IOBufferOverflow, "buffer");
 
                 // make sure some data is in the stream - block until it is
                 int bytesAvailable = GetData(new Block(_position, count));
@@ -247,7 +248,7 @@ namespace MS.Internal.IO.Packaging
 
                     default:
                         {
-                            throw new ArgumentOutOfRangeException(nameof(origin), SR.SeekOriginInvalid);
+                            throw new ArgumentOutOfRangeException("origin", SR.SeekOriginInvalid);
                         }
                 }
             }
@@ -395,8 +396,10 @@ namespace MS.Internal.IO.Packaging
                             _disposed = true;
 
                             // release any blocked threads - Set() does not throw any exceptions
-                            _readEventHandles[(int)ReadEvent.FullDownloadReadEvent]?.Set();
-                            _readEventHandles[(int)ReadEvent.ByteRangeReadEvent]?.Set();
+                            if (_readEventHandles[(int)ReadEvent.FullDownloadReadEvent] != null)
+                                _readEventHandles[(int)ReadEvent.FullDownloadReadEvent].Set();
+                            if (_readEventHandles[(int)ReadEvent.ByteRangeReadEvent] != null)
+                                _readEventHandles[(int)ReadEvent.ByteRangeReadEvent].Set();
 
                             // Free ByteRangeDownloader
                             FreeByteRangeDownloader();
@@ -414,7 +417,10 @@ namespace MS.Internal.IO.Packaging
                             }
 
                             // Free Full Download
-                            _responseStream?.Close();
+                            if (_responseStream != null)
+                            {
+                                _responseStream.Close();
+                            }
 
                             FreeTempFile();
 #if DEBUG
@@ -1176,7 +1182,10 @@ namespace MS.Internal.IO.Packaging
                     finally
                     {
                         // FreeFullDownload
-                        _responseStream?.Close();
+                        if (_responseStream != null)
+                        {
+                            _responseStream.Close();
+                        }
                     }
                 }
                 finally
@@ -1260,11 +1269,11 @@ namespace MS.Internal.IO.Packaging
         //------------------------------------------------------
         private enum ReadEvent { FullDownloadReadEvent = 0, ByteRangeReadEvent = 1, MaxReadEventEnum };
 
-        private Uri                     _uri;               // uri we are resolving
+        Uri                     _uri;               // uri we are resolving
 
-        private WebRequest              _originalRequest;   // Proxy member is Critical
-        private Stream                  _tempFileStream;    // local temp stream we are writing to and reading from - protected by _tempFileMutex
-        private long                    _position;          // our "logical stream position"
+        WebRequest              _originalRequest;   // Proxy member is Critical
+        Stream                  _tempFileStream;    // local temp stream we are writing to and reading from - protected by _tempFileMutex
+        long                    _position;          // our "logical stream position"
 
         // syncObject - provides mutually-exclusive access control to the following entities:
         // 1. _highWaterMark - this is actually queried outside of a lock in get_Length, but this is safe as a stale value only impacts perf

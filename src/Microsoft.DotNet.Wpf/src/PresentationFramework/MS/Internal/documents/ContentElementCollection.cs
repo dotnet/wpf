@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Generic Collection of Table related objects.
@@ -70,7 +71,7 @@ namespace MS.Internal.Documents
             }
             if (index < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), SR.TableCollectionOutOfRangeNeedNonNegNum);
+                throw new ArgumentOutOfRangeException("index", SR.TableCollectionOutOfRangeNeedNonNegNum);
             }
             if (array.Length - index < Size)
             {
@@ -102,7 +103,7 @@ namespace MS.Internal.Documents
             ArgumentNullException.ThrowIfNull(array);
             if (index < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), SR.TableCollectionOutOfRangeNeedNonNegNum);
+                throw new ArgumentOutOfRangeException("index", SR.TableCollectionOutOfRangeNeedNonNegNum);
             }
             if (array.Length - index < Size)
             {
@@ -144,7 +145,7 @@ namespace MS.Internal.Documents
         /// <exception cref="ArgumentException">
         /// If the new child already has a parent.
         /// </exception>
-        public abstract void Add(TItem item);
+        abstract public void Add(TItem item);
 
         /// <summary>
         /// Removes all elements from the ContentElementCollection.
@@ -154,7 +155,7 @@ namespace MS.Internal.Documents
         /// To reset the capacity of the ContentElementCollection, call TrimToSize
         /// or set the Capacity property directly.
         /// </remarks>
-        public abstract void Clear();
+        abstract public void Clear();
 
         /// <summary>
         /// Determines whether a TItem is in the ContentElementCollection.
@@ -215,7 +216,7 @@ namespace MS.Internal.Documents
         /// accommodate the new TItem. The indexes of the TItems that are
         /// moved are also updated.
         /// </remarks>
-        public abstract void Insert(int index, TItem item);
+        abstract public void Insert(int index, TItem item);
 
         /// <summary>
         /// Removes the specified TItem from the ContentElementCollection.
@@ -232,7 +233,7 @@ namespace MS.Internal.Documents
         /// the vacated spot. The indices of the TItems that are moved
         /// also updated.
         /// </remarks>
-        public abstract bool Remove(TItem item);
+        abstract public bool Remove(TItem item);
 
         /// <summary>
         /// Removes the TItem at the specified index.
@@ -248,7 +249,7 @@ namespace MS.Internal.Documents
         /// the vacated spot. The indices of the TItems that are moved
         /// also updated.
         /// </remarks>
-        public abstract void RemoveAt(int index);
+        abstract public void RemoveAt(int index);
 
 
 
@@ -271,7 +272,7 @@ namespace MS.Internal.Documents
         /// the vacated spot. The indices of the TItems that are moved are
         /// also updated.
         /// </remarks>
-        public abstract void RemoveRange(int index, int count);
+        abstract public void RemoveRange(int index, int count);
 
 
         /// <summary>
@@ -452,7 +453,7 @@ namespace MS.Internal.Documents
 
             if (newItem == null)
             {
-                throw new ArgumentException(SR.Format(SR.TableCollectionElementTypeExpected, typeof(TItem).Name), nameof(value));
+                throw new ArgumentException(SR.Format(SR.TableCollectionElementTypeExpected, typeof(TItem).Name), "value");
             }
 
             this.Insert(index, newItem);
@@ -506,7 +507,7 @@ namespace MS.Internal.Documents
 
                 if (item == null)
                 {
-                    throw new ArgumentException(SR.Format(SR.TableCollectionElementTypeExpected, typeof(TItem).Name), nameof(value));
+                    throw new ArgumentException(SR.Format(SR.TableCollectionElementTypeExpected, typeof(TItem).Name), "value");
                 }
 
                 this[index] = item;
@@ -678,7 +679,7 @@ namespace MS.Internal.Documents
         /// Note that the function requires that _item[index] == null and
         /// it also requires that the passed in item is not included into another ContentElementCollection.
         /// </remarks>
-        internal abstract void PrivateConnectChild(int index, TItem item);
+        abstract internal void PrivateConnectChild(int index, TItem item);
 
 
         /// <summary>
@@ -686,7 +687,7 @@ namespace MS.Internal.Documents
         /// Disconnects the item from the model tree;
         /// Sets the TItem's slot in the collection's array to null.
         /// </summary>
-        internal abstract void PrivateDisconnectChild(TItem item);
+        abstract internal void PrivateDisconnectChild(TItem item);
 
 
         /// <summary>

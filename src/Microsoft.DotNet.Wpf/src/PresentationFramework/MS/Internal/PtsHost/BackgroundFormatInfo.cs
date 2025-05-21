@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // 
 //
@@ -154,7 +155,7 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Whether background layout is globally enabled
         /// </summary>
-        internal static bool IsBackgroundFormatEnabled { get { return _isBackgroundFormatEnabled; } }
+        static internal bool IsBackgroundFormatEnabled { get { return _isBackgroundFormatEnabled; } }
 
         /// <summary>
         /// Does the final dtr extend through the sum of the text
@@ -266,7 +267,7 @@ namespace MS.Internal.PtsHost
         // Holds the formatter to invalidate when _throttleBackgroundTimer
         // fires.
         //-------------------------------------------------------------------
-        private IFlowDocumentFormatter _pendingBackgroundFormatter;
+        IFlowDocumentFormatter _pendingBackgroundFormatter;
 
         //-------------------------------------------------------------------
         // Number of seconds to disable background layout after receiving

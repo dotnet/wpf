@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /*++
 
@@ -899,13 +900,25 @@ namespace System.Windows.Xps.Serialization
             _currentXpsColorContextRef    = 0;
             _currentXpsResourceDictionaryRef = 0;
 
-            _fontResourceStream?.Initialize();
+            if(_fontResourceStream!=null)
+            {
+                _fontResourceStream.Initialize();
+            }
 
-            _imageResourceStream?.Initialize();
+            if(_imageResourceStream!=null)
+            {
+                _imageResourceStream.Initialize();
+            }
 
-            _colorContextResourceStream?.Initialize();
+            if(_colorContextResourceStream!=null)
+            {
+                _colorContextResourceStream.Initialize();
+            }
 
-            _resourceDictionaryResourceStream?.Initialize();
+            if(_resourceDictionaryResourceStream!=null)
+            {
+                _resourceDictionaryResourceStream.Initialize();
+            }
 
 
             _fontAcquireMode = ResourceAcquireMode.NoneAcquired;

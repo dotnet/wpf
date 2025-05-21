@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -60,7 +61,7 @@ namespace Microsoft.Build.Tasks.Windows
             bool successful = true;
             TaskHelper.DisplayLogo(Log, nameof(UpdateManifestForBrowserApplication));
 
-            if (!HostInBrowser)
+            if (HostInBrowser != true)
             {
                 // HostInBrowser is not true, don't modify the manifest.
                 // Stop here.
@@ -84,8 +85,11 @@ namespace Microsoft.Build.Tasks.Windows
                 }
                 finally
                 {
-                    // Close the manifest reader
-                    manifestReader?.Close();
+                    if (manifestReader != null)
+                    {
+                        // Close the manifest reader
+                        manifestReader.Close();
+                    }
                 }
 
                 // NOTE:
@@ -117,8 +121,11 @@ namespace Microsoft.Build.Tasks.Windows
                 }
                 finally
                 {
-                    // Close the manifest writer
-                    manifestWriter?.Close();
+                    if (manifestWriter != null)
+                    {
+                        // Close the manifest writer
+                        manifestWriter.Close();
+                    }
                 }
 
             }

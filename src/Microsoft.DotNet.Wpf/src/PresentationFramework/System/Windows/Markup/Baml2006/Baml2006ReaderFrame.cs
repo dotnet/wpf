@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Xaml;
 using MS.Internal.Xaml.Context;
@@ -85,7 +86,10 @@ namespace System.Windows.Baml2006
         {
             XamlType = null;
             Member = null;
-            _namespaces?.Clear();
+            if (_namespaces != null)
+            {
+                _namespaces.Clear();
+            }
 
             Flags = Baml2006ReaderFrameFlags.None;
             IsDeferredContent = false;

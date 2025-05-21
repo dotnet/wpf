@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.Xml;
@@ -488,12 +489,12 @@ namespace System.Windows.Xps.Serialization
 
         #region private data
 
-        private Dispatcher _dispatcher;
-        private bool _serializationOperationCanceled;
-        private XmlWriter _currentPageXmlWriter;
-        private bool _isBatchWorkItemInProgress;
-        private Stack _operationStack;
-        private Queue _batchOperationQueue;
+        Dispatcher _dispatcher;
+        bool _serializationOperationCanceled;
+        XmlWriter _currentPageXmlWriter;
+        bool _isBatchWorkItemInProgress;
+        Stack _operationStack;
+        Queue _batchOperationQueue;
 
         #endregion private data
     }

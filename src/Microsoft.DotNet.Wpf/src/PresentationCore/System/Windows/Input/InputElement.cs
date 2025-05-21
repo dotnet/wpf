@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows.Media;
 using MS.Internal;
@@ -179,7 +180,7 @@ namespace System.Windows.Input
         // Returns the root visual of the containing element.
         internal static DependencyObject GetRootVisual(DependencyObject o)
         {
-            return GetRootVisual(o, enable2DTo3DTransition: true);
+            return GetRootVisual(o, true /* enable2DTo3DTransition */);
         }
         
         internal static DependencyObject GetRootVisual(DependencyObject o, bool enable2DTo3DTransition)
@@ -236,14 +237,14 @@ namespace System.Windows.Input
 
                 bool isUpSimple = false;
                 isUpSimple = vFrom.TrySimpleTransformToAncestor(rootFrom,
-                                                                inverse: false,
+                                                                false, /* do not apply inverse */
                                                                 out gUp,
                                                                 out mUp);               
                 if (isUpSimple)
                 {
                     ptTranslated = mUp.Transform(ptTranslated);
                 }
-                else if (!gUp.TryTransform(ptTranslated, out ptTranslated))
+                else if (gUp.TryTransform(ptTranslated, out ptTranslated) == false)
                 {
                     // Error.  Out parameter has been set false.
                     return new Point();
@@ -305,7 +306,7 @@ namespace System.Windows.Input
                         }
 
                         bool isDownSimple = vToAsVisual.TrySimpleTransformToAncestor(rootTo,
-                                                                                     inverse: true,
+                                                                                     true, /* apply inverse */
                                                                                      out gDown,
                                                                                      out mDown);
 
@@ -315,7 +316,7 @@ namespace System.Windows.Input
                         }
                         else if (gDown != null)
                         {
-                            if (!gDown.TryTransform(ptTranslated, out ptTranslated))
+                            if (gDown.TryTransform(ptTranslated, out ptTranslated) == false)
                             {
                                 // Error.  Out parameter has been set false.
                                 return new Point();

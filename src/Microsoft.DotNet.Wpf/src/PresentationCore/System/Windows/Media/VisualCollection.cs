@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description:
 //      The VisualCollection implementation is based on the
@@ -554,7 +555,10 @@ namespace System.Windows.Media
                 for (int i = indexToRemove; i < _size; i++)
                 {
                     Visual  child = _items[i+1];
-                    child?._parentIndex = i;
+                    if (child != null)
+                    {
+                        child._parentIndex = i;
+                    }
                     _items[i] = child;
                 }
 
@@ -695,7 +699,10 @@ namespace System.Windows.Media
             for (int i = _size-1; i >= index; i--)
             {
                 Visual child = _items[i];
-                child?._parentIndex = i+1;
+                if (child != null)
+                {
+                    child._parentIndex = i+1;
+                }
                 _items[i+1] = child;
             }
             _items[index] = null;
@@ -774,7 +781,10 @@ namespace System.Windows.Media
                 for (int i = index; i < _size; i++)
                 {
                     Visual child = _items[i + count];
-                    child?._parentIndex = i;
+                    if (child != null)
+                    {
+                        child._parentIndex = i;
+                    }
                     _items[i] = child;
                     _items[i + count] = null;
                 }
@@ -817,7 +827,10 @@ namespace System.Windows.Media
                         for (int i = oldIndex; i < newIndex; i++)
                         {
                             Visual child = _items[i + 1];
-                            child?._parentIndex = i;
+                            if (child != null)
+                            {
+                                child._parentIndex = i;
+                            }
                             _items[i] = child;
                         }
                     }
@@ -830,7 +843,10 @@ namespace System.Windows.Media
                         for (int i = oldIndex; i > newIndex; i--)
                         {
                             Visual child = _items[i - 1];
-                            child?._parentIndex = i;
+                            if (child != null)
+                            {
+                                child._parentIndex = i;
+                            }
                             _items[i] = child;
                         }
                     }

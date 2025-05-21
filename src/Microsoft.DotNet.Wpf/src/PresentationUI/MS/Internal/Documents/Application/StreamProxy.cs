@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description:
 //   Implements the Proxy pattern from Design Patterns for Stream.  The intended
@@ -262,15 +263,15 @@ namespace MS.Internal.Documents.Application
             }
         }
     }
-        #endregion Internal Properties
+    #endregion Internal Properties
 
-        #region Private Fields
-        //--------------------------------------------------------------------------
-        // Private Fields
-        //--------------------------------------------------------------------------
+    #region Private Fields
+    //--------------------------------------------------------------------------
+    // Private Fields
+    //--------------------------------------------------------------------------
 
-        private Stream _proxy;
-        private bool _isTargetReadOnly;
+    Stream _proxy;
+    bool _isTargetReadOnly;
 
     #endregion Private Fields
 }

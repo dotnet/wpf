@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Control for displaying paginated content.
@@ -122,11 +123,14 @@ namespace System.Windows.Controls
         {
             if (ValidateMaxPagesAcross(pagesAcross))
             {
-                _documentScrollInfo?.FitColumns(pagesAcross);
+                if (_documentScrollInfo != null)
+                {
+                    _documentScrollInfo.FitColumns(pagesAcross);
+                }
             }
             else
             {
-                throw new ArgumentOutOfRangeException(nameof(pagesAcross));
+                throw new ArgumentOutOfRangeException("pagesAcross");
             }
         }
 
@@ -873,7 +877,10 @@ namespace System.Windows.Controls
             AttachContent();
 
             // Update the toolbar with our current document state.
-            _findToolbar?.DocumentLoaded = (Document != null) ? true : false;
+            if (_findToolbar != null)
+            {
+                _findToolbar.DocumentLoaded = (Document != null) ? true : false;
+            }
 
             // We do not automatically go to the first page on the _first_ content
             // assignment, for two reasons:
@@ -913,7 +920,10 @@ namespace System.Windows.Controls
         protected override void OnPreviousPageCommand()
         {
             //Scroll to the previous row.
-            _documentScrollInfo?.ScrollToPreviousRow();
+            if (_documentScrollInfo != null)
+            {
+                _documentScrollInfo.ScrollToPreviousRow();
+            }
         }
 
         /// <summary>
@@ -922,7 +932,10 @@ namespace System.Windows.Controls
         protected override void OnNextPageCommand()
         {
             //Scroll to the previous row.
-            _documentScrollInfo?.ScrollToNextRow();
+            if (_documentScrollInfo != null)
+            {
+                _documentScrollInfo.ScrollToNextRow();
+            }
         }
 
         /// <summary>
@@ -931,7 +944,10 @@ namespace System.Windows.Controls
         protected override void OnFirstPageCommand()
         {
             //Scroll to the top of the document.
-            _documentScrollInfo?.MakePageVisible( 0 );
+            if (_documentScrollInfo != null)
+            {
+                _documentScrollInfo.MakePageVisible( 0 );
+            }
         }
 
         /// <summary>
@@ -940,7 +956,10 @@ namespace System.Windows.Controls
         protected override void OnLastPageCommand()
         {
             //Scroll to the bottom of the document.
-            _documentScrollInfo?.MakePageVisible( PageCount - 1 );
+            if (_documentScrollInfo != null)
+            {
+                _documentScrollInfo.MakePageVisible( PageCount - 1 );
+            }
         }
 
         /// <summary>
@@ -967,7 +986,10 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnViewThumbnailsCommand()
         {
-            _documentScrollInfo?.ViewThumbnails();
+            if (_documentScrollInfo != null)
+            {
+                _documentScrollInfo.ViewThumbnails();
+            }
         }
 
         /// <summary>
@@ -975,7 +997,10 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnFitToWidthCommand()
         {
-            _documentScrollInfo?.FitToPageWidth();
+            if (_documentScrollInfo != null)
+            {
+                _documentScrollInfo.FitToPageWidth();
+            }
         }
 
         /// <summary>
@@ -983,7 +1008,10 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnFitToHeightCommand()
         {
-            _documentScrollInfo?.FitToPageHeight();
+            if (_documentScrollInfo != null)
+            {
+                _documentScrollInfo.FitToPageHeight();
+            }
         }
 
         /// <summary>
@@ -991,7 +1019,10 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnFitToMaxPagesAcrossCommand()
         {
-            _documentScrollInfo?.FitColumns(MaxPagesAcross);
+            if (_documentScrollInfo != null)
+            {
+                _documentScrollInfo.FitColumns(MaxPagesAcross);
+            }
         }
 
         /// <summary>
@@ -1002,11 +1033,14 @@ namespace System.Windows.Controls
         {
             if (ValidateMaxPagesAcross(pagesAcross))
             {
-                _documentScrollInfo?.FitColumns(pagesAcross);
+                if (_documentScrollInfo != null)
+                {
+                    _documentScrollInfo.FitColumns(pagesAcross);
+                }
             }
             else
             {
-                throw new ArgumentOutOfRangeException(nameof(pagesAcross));
+                throw new ArgumentOutOfRangeException("pagesAcross");
             }
         }
 
@@ -1036,7 +1070,10 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnScrollPageUpCommand()
         {
-            _documentScrollInfo?.PageUp();
+            if (_documentScrollInfo != null)
+            {
+                _documentScrollInfo.PageUp();
+            }
         }
 
         /// <summary>
@@ -1044,7 +1081,10 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnScrollPageDownCommand()
         {
-            _documentScrollInfo?.PageDown();
+            if (_documentScrollInfo != null)
+            {
+                _documentScrollInfo.PageDown();
+            }
         }
 
         /// <summary>
@@ -1052,7 +1092,10 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnScrollPageLeftCommand()
         {
-            _documentScrollInfo?.PageLeft();
+            if (_documentScrollInfo != null)
+            {
+                _documentScrollInfo.PageLeft();
+            }
         }
 
         /// <summary>
@@ -1060,7 +1103,10 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnScrollPageRightCommand()
         {
-            _documentScrollInfo?.PageRight();
+            if (_documentScrollInfo != null)
+            {
+                _documentScrollInfo.PageRight();
+            }
         }
 
         /// <summary>
@@ -1068,7 +1114,10 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnMoveUpCommand()
         {
-            _documentScrollInfo?.LineUp();
+            if (_documentScrollInfo != null)
+            {
+                _documentScrollInfo.LineUp();
+            }
         }
 
         /// <summary>
@@ -1076,7 +1125,10 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnMoveDownCommand()
         {
-            _documentScrollInfo?.LineDown();
+            if (_documentScrollInfo != null)
+            {
+                _documentScrollInfo.LineDown();
+            }
         }
 
         /// <summary>
@@ -1084,7 +1136,10 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnMoveLeftCommand()
         {
-            _documentScrollInfo?.LineLeft();
+            if (_documentScrollInfo != null)
+            {
+                _documentScrollInfo.LineLeft();
+            }
         }
 
         /// <summary>
@@ -1092,7 +1147,10 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnMoveRightCommand()
         {
-            _documentScrollInfo?.LineRight();
+            if (_documentScrollInfo != null)
+            {
+                _documentScrollInfo.LineRight();
+            }
         }
 
         /// <summary>
@@ -1173,7 +1231,7 @@ namespace System.Windows.Controls
             else
             {
                 //Return an empty collection (null is not valid).
-                pageViews = ReadOnlyCollection<DocumentPageView>.Empty;
+                pageViews = new ReadOnlyCollection<DocumentPageView>(new List<DocumentPageView>(0));
             }
 
             return pageViews;
@@ -1924,7 +1982,7 @@ namespace System.Windows.Controls
             // Argument wasn't a valid int, throw an exception.
             if (!isValidArg)
             {
-                throw new ArgumentException(SR.DocumentViewerArgumentMustBeInteger, nameof(data));
+                throw new ArgumentException(SR.DocumentViewerArgumentMustBeInteger, "data");
             }
 
             dv.OnFitToMaxPagesAcrossCommand(columnValue);
@@ -1957,7 +2015,7 @@ namespace System.Windows.Controls
             // Argument wasn't a valid percent, throw an exception.
             if (zoomValue == DependencyProperty.UnsetValue)
             {
-                throw new ArgumentException(SR.DocumentViewerArgumentMustBePercentage, nameof(data));
+                throw new ArgumentException(SR.DocumentViewerArgumentMustBePercentage, "data");
             }
             dv.Zoom = (double)zoomValue;
         }
@@ -2133,7 +2191,10 @@ namespace System.Windows.Controls
                         //will be made visible after it's made.
                         this.Focus();
 
-                        _documentScrollInfo?.MakeSelectionVisible();
+                        if (_documentScrollInfo != null)
+                        {
+                            _documentScrollInfo.MakeSelectionVisible();
+                        }
 
                         //Put the focus back on the Find Toolbar's TextBox to search again.
                         _findToolbar.GoToTextBox();
@@ -2179,7 +2240,10 @@ namespace System.Windows.Controls
         /// </summary>
         private void GoToFind()
         {
-            _findToolbar?.GoToTextBox();
+            if (_findToolbar != null)
+            {
+                _findToolbar.GoToTextBox();
+            }
         }
 
 
@@ -2407,7 +2471,10 @@ namespace System.Windows.Controls
             DocumentViewer dv = (DocumentViewer) d;
 
             // If the ShowPageBorders has changed, then set the new value on the IDocumentScrollInfo.
-            dv._documentScrollInfo?.ShowPageBorders = (bool) e.NewValue;
+            if (dv._documentScrollInfo != null)
+            {
+                dv._documentScrollInfo.ShowPageBorders = (bool) e.NewValue;
+            }
         }
         #endregion ShowPageBorders
 
@@ -2513,7 +2580,10 @@ namespace System.Windows.Controls
             DocumentViewer dv = (DocumentViewer)d;
 
             // If the VerticalPageSpacing has changed, then set the new value on IDocumentScrollInfo.
-            dv._documentScrollInfo?.VerticalPageSpacing = (double) e.NewValue;
+            if (dv._documentScrollInfo != null)
+            {
+                dv._documentScrollInfo.VerticalPageSpacing = (double) e.NewValue;
+            }
         }
         #endregion VerticalPageSpacing
 
@@ -2526,7 +2596,10 @@ namespace System.Windows.Controls
             DocumentViewer dv = (DocumentViewer)d;
 
             // If the HorizontalPageSpacing has changed, then set the new value on IDocumentScrollInfo.
-            dv._documentScrollInfo?.HorizontalPageSpacing = (double) e.NewValue;
+            if (dv._documentScrollInfo != null)
+            {
+                dv._documentScrollInfo.HorizontalPageSpacing = (double) e.NewValue;
+            }
         }
         #endregion HorizontalPageSpacing
 

@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: ITextStoreACP implementation.
@@ -948,8 +949,11 @@ namespace System.Windows.Documents
 
             // Convert to local coordinates.
             GeneralTransform transform = compositionTarget.RootVisual.TransformToDescendant(RenderScope);
-            // REVIEW: should we throw if the point could not be transformed?
-            transform?.TryTransform(milPoint, out milPoint);
+            if (transform != null)
+            {
+                // REVIEW: should we throw if the point could not be transformed?
+                transform.TryTransform(milPoint, out milPoint);
+            }
 
             // Validate layout information on TextView
             if (!view.Validate(milPoint))
@@ -1089,7 +1093,7 @@ namespace System.Windows.Documents
                         end = navigator;
                     }
 
-                    if (!lineRect.IsEmpty)
+                    if (lineRect.IsEmpty == false)
                     {
                         rectBound.Union(lineRect);
                     }
@@ -1406,7 +1410,10 @@ namespace System.Windows.Documents
 
                 // Composition event is completed, so new composition undo unit will be opened.
                 CompositionParentUndoUnit unit = PeekCompositionParentUndoUnit();
-                unit?.IsLastCompositionUnit = true;
+                if (unit != null)
+                {
+                    unit.IsLastCompositionUnit = true;
+                }
             }
 
             _nextUndoUnitIsFirstCompositionUnit = true;
@@ -1689,7 +1696,10 @@ namespace System.Windows.Documents
                 }
             }
 
-            _textservicesproperty?.OnLayoutUpdated();
+            if (_textservicesproperty != null)
+            {
+                _textservicesproperty.OnLayoutUpdated();
+            }
         }
 
         // Called as the selection changes.
@@ -1971,7 +1981,10 @@ namespace System.Windows.Documents
             //
             _nextUndoUnitIsFirstCompositionUnit = false;
             CompositionParentUndoUnit topUndoUnit = PeekCompositionParentUndoUnit();
-            topUndoUnit?.IsLastCompositionUnit = false;
+            if (null != topUndoUnit)
+            {
+                topUndoUnit.IsLastCompositionUnit = false;
+            }
 
             CompositionParentUndoUnit compositionUndoUnit = OpenCompositionUndoUnit(range.Start, range.End);
             UndoCloseAction undoCloseAction = UndoCloseAction.Rollback;
@@ -2382,7 +2395,10 @@ namespace System.Windows.Documents
                 }
                 finally
                 {
-                    undoManager?.IsImeSupportModeEnabled = wasImeSupportModeEnabled;
+                    if (undoManager != null)
+                    {
+                        undoManager.IsImeSupportModeEnabled = wasImeSupportModeEnabled;
+                    }
 
                     // The TextContainer will have changed when playing back the recorded events and thus we need to refresh the TextPointers.
                     _previousCompositionStart = (_previousCompositionStartOffset == -1) ? null : textEditor.TextContainer.CreatePointerAtOffset(_previousCompositionStartOffset, LogicalDirection.Backward);
@@ -3043,7 +3059,7 @@ namespace System.Windows.Documents
 
             int i;
             bool eaten = false;
-            for (i = 0; (i < _mouseSinks.Count) && (!eaten); i++)
+            for (i = 0; (i < _mouseSinks.Count) && (eaten == false); i++)
             {
                 MouseSink mSink = (MouseSink)_mouseSinks[i];
 
@@ -3161,7 +3177,7 @@ namespace System.Windows.Documents
 
             // Scan the line range and compute the top and the height of the bounding rectangle.
             ITextPointer navigator = start.CreatePointer(LogicalDirection.Forward);
-            while (navigator.MoveToNextContextPosition(LogicalDirection.Forward) && navigator.CompareTo(end) < 0)
+            while (navigator.MoveToNextContextPosition(LogicalDirection.Forward) == true && navigator.CompareTo(end) < 0)
             {
                 TextPointerContext context = navigator.GetPointerContext(LogicalDirection.Backward);
                 switch (context)
@@ -3339,9 +3355,12 @@ namespace System.Windows.Documents
         {
             CompositionParentUndoUnit unit = PeekCompositionParentUndoUnit();
 
-            // We also put the caret at the end of the composition after
-            // redoing a composition undo.  So update the end position now.
-            unit?.RecordRedoSelectionState(caretPosition, caretPosition);
+            if (unit != null)
+            {
+                // We also put the caret at the end of the composition after
+                // redoing a composition undo.  So update the end position now.
+                unit.RecordRedoSelectionState(caretPosition, caretPosition);
+            }
         }
 
         // Repositions an ITextRange to comply with limitations on IME input.
@@ -4646,28 +4665,26 @@ namespace System.Windows.Documents
         {
             #region static members
 
-            private const int s_CtfFormatVersion = 1;   // Format of output file
-            private const int s_MaxTraceRecords = 3000;    // max length of in-memory _traceList
-            private const int s_MinTraceRecords = 500;     // keep this many records after flushing
+            const int s_CtfFormatVersion = 1;   // Format of output file
+            const int s_MaxTraceRecords = 3000;    // max length of in-memory _traceList
+            const int s_MinTraceRecords = 500;     // keep this many records after flushing
 
-            private static string _targetName;
+            static string _targetName;
             static IMECompositionTracer()
             {
                 _targetName = FrameworkCompatibilityPreferences.GetIMECompositionTraceTarget();
                 _flushDepth = 0;
 
-                string trace = FrameworkCompatibilityPreferences.GetIMECompositionTraceFile();
-                if (!string.IsNullOrEmpty(trace))
+                string s = FrameworkCompatibilityPreferences.GetIMECompositionTraceFile();
+                if (!String.IsNullOrEmpty(s))
                 {
-                    Span<Range> splitRegions = stackalloc Range[3];
-                    ReadOnlySpan<char> traceSplits = trace.AsSpan();
-                    int regionsLength = traceSplits.Split(splitRegions, ';');
+                    string[] a = s.Split(';');
+                    _fileName = a[0];
 
-                    _fileName = traceSplits[splitRegions[0]].ToString();
-
-                    if (regionsLength > 1)
+                    if (a.Length > 1)
                     {
-                        if (int.TryParse(traceSplits[splitRegions[1]], NumberStyles.Integer, CultureInfo.InvariantCulture, out int flushDepth))
+                        int flushDepth;
+                        if (Int32.TryParse(a[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out flushDepth))
                         {
                             _flushDepth = flushDepth;
                         }
@@ -4695,7 +4712,7 @@ namespace System.Windows.Documents
                 }
             }
 
-            private static bool _isEnabled;
+            static bool _isEnabled;
             internal static bool IsEnabled { get { return _isEnabled; } }
 
             // for use from VS Immediate window
@@ -4722,8 +4739,8 @@ namespace System.Windows.Documents
                 return (target == o);
             }
 
-            private static string _fileName;
-            private static int _flushDepth;
+            static string _fileName;
+            static int _flushDepth;
 
             // for use from VS Immediate window
             internal static void Flush()
@@ -4873,7 +4890,7 @@ namespace System.Windows.Documents
             }
 
             // when app shuts down, flush pending info to the file
-            private static void OnApplicationExit(object sender, ExitEventArgs e)
+            static void OnApplicationExit(object sender, ExitEventArgs e)
             {
                 Application app = sender as Application;
                 if (app != null)
@@ -4885,7 +4902,7 @@ namespace System.Windows.Documents
             }
 
             // in case of unhandled exception, flush pending info to the file
-            private static void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+            static void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
             {
                 Application app = sender as Application;
                 if (app != null)
@@ -4946,7 +4963,7 @@ namespace System.Windows.Documents
                 = new List<Tuple<WeakReference<FrameworkElement>,TraceList>>();
             private static int s_seqno;
 
-            private static TraceList TraceListForUiScope(FrameworkElement target)
+            static TraceList TraceListForUiScope(FrameworkElement target)
             {
                 TraceList traceList = null;
 
@@ -5010,7 +5027,7 @@ namespace System.Windows.Documents
             }
 
             // Must be called under "lock (s_TargetToTraceListMap)"
-            private static void CloseAllTraceLists()
+            static void CloseAllTraceLists()
             {
                 for (int i=0, n=s_TargetToTraceListMap.Count; i<n; ++i)
                 {
@@ -5123,7 +5140,7 @@ namespace System.Windows.Documents
             }
         }
 
-        private static readonly UncommonField<IMECompositionTracingInfo>
+        static readonly UncommonField<IMECompositionTracingInfo>
             IMECompositionTracingInfoField = new UncommonField<IMECompositionTracingInfo>();
 
         #endregion IMECompositionTracingInfo

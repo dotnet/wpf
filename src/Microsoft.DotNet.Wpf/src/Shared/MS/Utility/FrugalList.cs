@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -66,7 +67,7 @@ namespace MS.Utility
         Array
     }
 
-    internal abstract class FrugalListBase<T>
+    abstract class FrugalListBase<T>
     {
         /// <summary>
         /// Number of entries in this store
@@ -1612,9 +1613,9 @@ namespace MS.Utility
                 return _targetStore;
             }
 
-            private ArrayItemList<T> _targetStore;
-            private T[] _sourceArray;
-            private T[] _targetArray;
+            ArrayItemList<T> _targetStore;
+            T[] _sourceArray;
+            T[] _targetArray;
         }
 
         #endregion Compacter
@@ -1795,7 +1796,10 @@ namespace MS.Utility
 
         public void Clear()
         {
-            _listStore?.Clear();
+            if (_listStore is not null)
+            {
+                _listStore.Clear();
+            }
         }
 
         public bool Contains(T value)
@@ -1935,7 +1939,7 @@ namespace MS.Utility
                 _list = list;
 
                 FrugalListBase<T> store = _list._listStore;
-                _storeCompacter = store?.NewCompacter(newCount);
+                _storeCompacter = (store is not null) ? store.NewCompacter(newCount) : null;
             }
 
             public void Include(int start, int end)
@@ -1951,8 +1955,8 @@ namespace MS.Utility
                 }
             }
 
-            private FrugalObjectList<T> _list;
-            private FrugalListBase<T>.Compacter _storeCompacter;
+            FrugalObjectList<T> _list;
+            FrugalListBase<T>.Compacter _storeCompacter;
         }
         #endregion Compacter
     }
@@ -2175,7 +2179,10 @@ namespace MS.Utility
 
         public void Clear()
         {
-            _listStore?.Clear();
+            if (_listStore is not null)
+            {
+                _listStore.Clear();
+            }
         }
 
         public bool Contains(T value)

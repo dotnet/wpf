@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description:
 //  This is an internal class that is build around ArrayList of Memory streams to enable really large (63 bit size)
@@ -16,7 +17,7 @@ namespace MS.Internal.IO.Packaging
         //  Public Methods
         //
         //------------------------------------------------------
-        public override bool CanRead
+        override public bool CanRead
         {
             get
             {
@@ -24,7 +25,7 @@ namespace MS.Internal.IO.Packaging
             }
         }
 
-        public override bool CanSeek
+        override public bool CanSeek
         {
             get
             {
@@ -32,7 +33,7 @@ namespace MS.Internal.IO.Packaging
             }
         }
 
-        public override bool CanWrite
+        override public bool CanWrite
         {
             get
             {
@@ -40,7 +41,7 @@ namespace MS.Internal.IO.Packaging
             }
         }
 
-        public override long Length
+        override public long Length
         {
             get
             {
@@ -50,7 +51,7 @@ namespace MS.Internal.IO.Packaging
             }
         }
 
-        public override long Position
+        override public long Position
         {
             get
             {
@@ -132,7 +133,7 @@ namespace MS.Internal.IO.Packaging
 #endif
         }
 
-        public override long Seek(long offset, SeekOrigin origin)
+        override public long Seek(long offset, SeekOrigin origin)
         {
             CheckDisposed();
             long newStreamPosition = _currentStreamPosition;
@@ -151,7 +152,7 @@ namespace MS.Internal.IO.Packaging
             }
             else
             {
-                throw new ArgumentOutOfRangeException(nameof(origin));
+                throw new ArgumentOutOfRangeException("origin");
             }
 
             if (newStreamPosition  < 0)
@@ -163,7 +164,7 @@ namespace MS.Internal.IO.Packaging
             return _currentStreamPosition;
         }
 
-        public override int Read(byte[] buffer, int offset, int count)
+        override public int Read(byte[] buffer, int offset, int count)
         {
             CheckDisposed();
 
@@ -240,7 +241,7 @@ namespace MS.Internal.IO.Packaging
             }
         }
 
-        public override void Write(byte[] buffer, int offset, int count)
+        override public void Write(byte[] buffer, int offset, int count)
         {
             CheckDisposed();
 #if DEBUG
@@ -281,7 +282,7 @@ namespace MS.Internal.IO.Packaging
 #endif
         }
 
-        public override void Flush()
+        override public void Flush()
         {
             CheckDisposed();
         }
@@ -403,8 +404,11 @@ namespace MS.Internal.IO.Packaging
                         }
 
                         // clean up isolated storage resources if in use
-                        // can only rely on _isolatedStorageStream behaving correctly if we are not in our finalizer
-                        _isolatedStorageStream?.Close();
+                        if (_isolatedStorageStream != null)
+                        {
+                            // can only rely on _isolatedStorageStream behaving correctly if we are not in our finalizer
+                            _isolatedStorageStream.Close();
+                        }
                     }
                 }
             }

@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Reflection;
 using System.Text;
@@ -94,7 +95,7 @@ namespace System.Windows
 
         // Build the Uri for the assembly:
         // /AssemblyName;Component/themes/<CurrentTheme>.<Color>.xaml
-        private static Uri GenerateUri(string assemblyName, string resourceName, ReadOnlySpan<char> themeName)
+        private static Uri GenerateUri(string assemblyName, string resourceName, string themeName)
         {
             StringBuilder uri = new StringBuilder(assemblyName.Length + 50);
 
@@ -112,12 +113,11 @@ namespace System.Windows
             uri.Append(resourceName);
             uri.Append(".xaml");
 
-            return new Uri(uri.ToString(), System.UriKind.RelativeOrAbsolute);
+            return new System.Uri(uri.ToString(), System.UriKind.RelativeOrAbsolute);
         }
 
         internal static Uri GenerateFallbackUri(ResourceDictionary dictionary, string resourceName)
         {
-            Span<Range> splitRegions = stackalloc Range[3];
             for (int i = 0; i < _themeDictionaryInfos.Count; i++)
             {
                 ThemeDictionaryInfo info = _themeDictionaryInfos[i];
@@ -131,11 +131,8 @@ namespace System.Windows
                 }
                 if ((ResourceDictionary)info.DictionaryReference.Target == dictionary)
                 {
-                    ReadOnlySpan<char> nameSpan = resourceName.AsSpan();
-                    if (nameSpan.Split(splitRegions, '/') < 2)
-                        throw new IndexOutOfRangeException();
-
-                    return GenerateUri(info.AssemblyName, resourceName, nameSpan[splitRegions[1]]);
+                    string themeName = resourceName.Split('/')[1];
+                    return GenerateUri(info.AssemblyName, resourceName, themeName);
                 }
             }
             return null;

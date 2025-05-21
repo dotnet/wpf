@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows;
 using System.Windows.Media;
@@ -188,7 +189,7 @@ namespace MS.Internal
             e = o as UIElement;
             if (e != null)
             {
-                if (e.HasAutomationPeer)
+                if (e.HasAutomationPeer == true)
                     ap = e.GetAutomationPeer();
             }
             else
@@ -196,7 +197,7 @@ namespace MS.Internal
                 ce = o as ContentElement;
                 if (ce != null)
                 {
-                    if (ce.HasAutomationPeer)
+                    if (ce.HasAutomationPeer == true)
                         ap = ce.GetAutomationPeer();
                 }
                 else
@@ -204,7 +205,7 @@ namespace MS.Internal
                     e3d = o as UIElement3D;
                     if (e3d != null)
                     {
-                        if (e3d.HasAutomationPeer)
+                        if (e3d.HasAutomationPeer == true)
                             ap = e3d.GetAutomationPeer();
                     }
                 }

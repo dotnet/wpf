@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -522,8 +523,8 @@ namespace System.Windows
             public Delegate Handler { get { return (_handler != null) ? (Delegate)_handler.Target : null; } }
             public bool HasHandler { get { return _handler != null; } }
 
-            private WeakReference _target;
-            private WeakReference _handler;
+            WeakReference _target;
+            WeakReference _handler;
         }
 
         /// <summary>
@@ -625,7 +626,7 @@ namespace System.Windows
                 AddHandlerToCWT(target, handler);
             }
 
-            private void AddHandlerToCWT(object target, Delegate handler)
+            void AddHandlerToCWT(object target, Delegate handler)
             {
                 // add the handler to the CWT - this keeps the handler alive throughout
                 // the lifetime of the target, without prolonging the lifetime of

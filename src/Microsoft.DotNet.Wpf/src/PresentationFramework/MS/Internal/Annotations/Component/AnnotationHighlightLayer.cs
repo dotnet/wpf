@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -7,7 +8,7 @@
 // and StickyNote anchors as well.
 //
 
-using System.Collections.Generic;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Documents;
@@ -491,7 +492,7 @@ namespace MS.Internal.Annotations.Component
             return null;
         }
 
-        private void GetSpannedSegments(ITextPointer start, ITextPointer end, out int startSeg, out int endSeg)
+        void GetSpannedSegments(ITextPointer start, ITextPointer end, out int startSeg, out int endSeg)
         {
             startSeg = -1;
             endSeg = -1;
@@ -509,7 +510,7 @@ namespace MS.Internal.Annotations.Component
             }
 
             if ((startSeg < 0) || (endSeg < 0) || (startSeg > endSeg))
-                Debug.Fail("Mismatched segment data");
+                Debug.Assert(false, "Mismatched segment data");
         }
 
         #endregion Private Methods
@@ -546,7 +547,7 @@ namespace MS.Internal.Annotations.Component
         #region Private Types
 
         // Argument for the Changed event, encapsulates a highlight change.
-        private sealed class AnnotationHighlightChangedEventArgs : HighlightChangedEventArgs
+        private class AnnotationHighlightChangedEventArgs : HighlightChangedEventArgs
         {
             // Constructor.
             internal AnnotationHighlightChangedEventArgs(ITextPointer start, ITextPointer end)
@@ -557,7 +558,7 @@ namespace MS.Internal.Annotations.Component
             }
 
             // Collection of changed content ranges.
-            internal override IList<TextSegment> Ranges
+            internal override IList Ranges
             {
                 get
                 {
@@ -875,11 +876,13 @@ namespace MS.Internal.Annotations.Component
                 if (_cachedTopOwner != TopOwner)
                 {
                     //remove it from the old owner children
-                    _cachedTopOwner?.RemoveChild(this);
+                    if (_cachedTopOwner != null)
+                        _cachedTopOwner.RemoveChild(this);
                     _cachedTopOwner = TopOwner;
 
                     //add it to the new owner children
-                    _cachedTopOwner?.AddChild(this);
+                    if (_cachedTopOwner != null)
+                        _cachedTopOwner.AddChild(this);
                 }
                 Fill = OwnerColor;
             }
@@ -891,7 +894,8 @@ namespace MS.Internal.Annotations.Component
             /// </summary>
             internal void Discard()
             {
-                TopOwner?.RemoveChild(this);
+                if (TopOwner != null)
+                    TopOwner.RemoveChild(this);
                 _activeOwners.Clear();
                 _owners.Clear();
             }
@@ -1114,7 +1118,8 @@ namespace MS.Internal.Annotations.Component
 
                     //reset render transformation of the TopOwner
                     UIElement uie = TopOwner as UIElement;
-                    uie?.RenderTransform = Transform.Identity;
+                    if (uie != null)
+                        uie.RenderTransform = Transform.Identity;
 
                     return geometry;
                 }
@@ -1213,8 +1218,8 @@ namespace MS.Internal.Annotations.Component
         /// <summary>
         /// A list of all HiglightSegments ordered by position
         /// </summary>
-        private List<HighlightSegment> _segments;
-        private bool _isFixedContainer = false;
+        List<HighlightSegment> _segments;
+        bool _isFixedContainer = false;
 
         #endregion Private Fields
     }

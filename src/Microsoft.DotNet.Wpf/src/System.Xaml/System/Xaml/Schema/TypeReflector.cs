@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -13,7 +14,7 @@ using XAML3 = System.Windows.Markup;
 namespace System.Xaml.Schema
 {
     [Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2002:Do not lock on objects with weak identity", Justification = "This type is internal.")]
-    internal class TypeReflector : Reflector
+    class TypeReflector : Reflector
     {
         private const XamlCollectionKind XamlCollectionKindInvalid = (XamlCollectionKind)byte.MaxValue;
 
@@ -499,7 +500,11 @@ namespace System.Xaml.Schema
                 {
                     if (knownMember is not null)
                     {
-                        knownMembers?.Add(knownMember);
+                        if (knownMembers is not null)
+                        {
+                            knownMembers.Add(knownMember);
+                        }
+
                         continue;
                     }
                     else if (skipKnownNegatives)
@@ -1133,7 +1138,7 @@ namespace System.Xaml.Schema
 
         internal class ThreadSafeDictionary<K, V> : Dictionary<K, V> where V : class
         {
-            private bool _isComplete;
+            bool _isComplete;
 
             internal ThreadSafeDictionary()
             {

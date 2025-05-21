@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -107,7 +108,7 @@ namespace MS.Internal.Controls
         {
             if (_child == null || index != 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
 
             return _child;
@@ -159,7 +160,10 @@ namespace MS.Internal.Controls
 
             finalSize = base.ArrangeOverride(size);
 
-            _child?.Arrange(new Rect(new Point(), finalSize));
+            if (_child != null)
+            {
+                _child.Arrange(new Rect(new Point(), finalSize));
+            }
             return finalSize;
         }
 

@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Runtime.InteropServices;
 using System.Text;
@@ -16,13 +17,13 @@ namespace System.Windows.Automation.Peers
         {}
     
         ///
-        protected override string GetClassNameCore()
+        override protected string GetClassNameCore()
         {
             return "Window";
         }
 
         ///
-        protected override string GetNameCore()
+        override protected string GetNameCore()
         {
             string name = base.GetNameCore();
 
@@ -51,7 +52,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        protected override AutomationControlType GetAutomationControlTypeCore()
+        override protected AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.Window;
         }
@@ -59,7 +60,7 @@ namespace System.Windows.Automation.Peers
 
 
         ///
-        protected override Rect GetBoundingRectangleCore()
+        override protected Rect GetBoundingRectangleCore()
         {
             Window window = (Window)Owner;
             Rect bounds = new Rect(0,0,0,0);

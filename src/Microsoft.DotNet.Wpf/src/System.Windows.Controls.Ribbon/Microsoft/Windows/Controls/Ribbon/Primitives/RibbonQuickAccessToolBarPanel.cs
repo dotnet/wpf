@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -175,7 +176,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             UIElementCollection children = InternalChildren;
             List<UIElement> generatedItems = GeneratedChildren;
             int overflowIndex = 0;
-            RibbonQuickAccessToolBarOverflowPanel overflowPanel = QAT?.OverflowPanel;
+            RibbonQuickAccessToolBarOverflowPanel overflowPanel = QAT == null ? null : QAT.OverflowPanel;
 
             for (int i = 0; i < generatedItems.Count; i++)
             {
@@ -245,7 +246,10 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                     Dispatcher.BeginInvoke((Action)delegate()
                         {
                             UIElement parent = VisualTreeHelper.GetParent(this) as UIElement;
-                            parent?.InvalidateMeasure();
+                            if (parent != null)
+                            {
+                                parent.InvalidateMeasure();
+                            }
                         },
                         DispatcherPriority.Normal,
                         null);
@@ -313,9 +317,9 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                 Debug.Assert(object.ReferenceEquals(InternalChildren[j], GeneratedChildren[j]));
                 UIElement currentChild = InternalChildren[j];
                 Debug.Assert(currentChild != null);
-                Debug.Assert(!RibbonQuickAccessToolBar.GetIsOverflowItem(currentChild));
-                Debug.Assert(this.Children.Contains(currentChild));
-                Debug.Assert(!QAT.OverflowPanel.Children.Contains(currentChild));
+                Debug.Assert(RibbonQuickAccessToolBar.GetIsOverflowItem(currentChild) == false);
+                Debug.Assert(this.Children.Contains(currentChild) == true);
+                Debug.Assert(QAT.OverflowPanel.Children.Contains(currentChild) == false);
                 Debug.Assert(currentChild.IsVisible == this.IsVisible);
                 Debug.Assert(currentChild.DesiredSize.Width > 0.0);
             }
@@ -327,9 +331,9 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                 Debug.Assert(object.ReferenceEquals(QAT.OverflowPanel.Children[overflowPanelIndex], GeneratedChildren[k]));
                 UIElement currentChild = GeneratedChildren[k];
                 Debug.Assert(currentChild != null);
-                Debug.Assert(RibbonQuickAccessToolBar.GetIsOverflowItem(currentChild));
-                Debug.Assert(!this.Children.Contains(currentChild));
-                Debug.Assert(QAT.OverflowPanel.Children.Contains(currentChild));
+                Debug.Assert(RibbonQuickAccessToolBar.GetIsOverflowItem(currentChild) == true);
+                Debug.Assert(this.Children.Contains(currentChild) == false);
+                Debug.Assert(QAT.OverflowPanel.Children.Contains(currentChild) == true);
             }
         }
 #endif

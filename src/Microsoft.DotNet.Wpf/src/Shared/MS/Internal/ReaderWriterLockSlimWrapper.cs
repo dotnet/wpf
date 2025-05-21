@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Wrapper that allows ReaderWriterLockSlim to detect potential 
 //              error conditions like (i) calling into Dispose() of the lock object
@@ -307,7 +308,10 @@ namespace MS.Internal
                     }
                     finally
                     {
-                        dispatcherProcessingDisabled?.Dispose();
+                        if (dispatcherProcessingDisabled != null)
+                        {
+                            dispatcherProcessingDisabled.Value.Dispose();
+                        }
                     }
                 }
             }
@@ -383,7 +387,7 @@ namespace MS.Internal
         private readonly LockRecursionPolicy _lockRecursionPolicy;
         private readonly bool _disableDispatcherProcessingWhenNoRecursion;
 
-        private bool _disposed;
+        bool _disposed;
 
         #endregion Private Fields
     }

@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using MS.Win32;
@@ -146,7 +147,7 @@ namespace System.Windows.Media
         #endregion
 
         [DllImport(DllImport.MilCore)]
-        private static extern int /* HRESULT */ MILCreateEventProxy(ref EventProxyDescriptor pEPD, out SafeMILHandle ppEventProxy);
+        private extern static int /* HRESULT */ MILCreateEventProxy(ref EventProxyDescriptor pEPD, out SafeMILHandle ppEventProxy);
     }
     #endregion
 }

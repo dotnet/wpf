@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using MS.Internal.PresentationCore;
@@ -622,10 +623,16 @@ namespace System.Windows.Media
                 _mediaClock = newClock;
 
                 // Disassociate the old clock
-                oldClock?.Player = null;
+                if (oldClock != null)
+                {
+                    oldClock.Player = null;
+                }
 
                 // Associate the new clock;
-                newClock?.Player = player;
+                if (newClock != null)
+                {
+                    newClock.Player = player;
+                }
 
                 // According to the spec, setting the Clock to null
                 // should set the Source to null

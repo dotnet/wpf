@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 #region Using declarations
@@ -150,7 +151,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (e.OldValue != null)
             {
                 UIElement element = e.OldValue as UIElement;
-                element?.PositionAndSizeOfSetController = null;
+                if (element != null)
+                {
+                    element.PositionAndSizeOfSetController = null;
+                }
             }
             if (e.NewValue != null)
             {
@@ -218,7 +222,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal UIElement ContentChild
         {
-            get { return _partContentPresenter?.ContentChild; }
+            get { return _partContentPresenter != null ? _partContentPresenter.ContentChild : null; }
         }
 
         internal bool ChildHasLargeImage

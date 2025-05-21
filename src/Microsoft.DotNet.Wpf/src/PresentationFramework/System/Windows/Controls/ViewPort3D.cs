@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Viewport3D element is a UIElement that contains a 3D
@@ -183,7 +184,7 @@ namespace System.Windows.Controls
                     return _viewport3DVisual;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
+                    throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
         }
 
@@ -229,7 +230,7 @@ namespace System.Windows.Controls
 
             if (visual3D == null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(Visual3D)), nameof(value));
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(Visual3D)), "value");
             }
 
             Children.Add(visual3D);

@@ -1,9 +1,8 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections;
-using System.Diagnostics;
-using System.Threading;
 using MS.Utility;
 
 namespace System.Windows
@@ -82,7 +81,7 @@ namespace System.Windows
                 
                 for (int i=0; i<keys.Count; i++)
                 {
-                    if (keys.List[i].IsSubclassOf(dType))
+                    if (keys.List[i].IsSubclassOf(dType) == true)
                     {
                         classListenersLists = (ClassHandlersStore)_dTypedClassListeners[keys.List[i]];                            
                         classListenersLists.UpdateSubClassHandlers(routedEvent, updatedClassListeners);
@@ -126,7 +125,7 @@ namespace System.Windows
                 // Requires GlobalLock to access _ownerTypedRoutedEventList
                 IDictionaryEnumerator htEnumerator = _ownerTypedRoutedEventList.GetEnumerator();
                 
-                while(htEnumerator.MoveNext())
+                while(htEnumerator.MoveNext() == true)
                 {
                     FrugalObjectList<RoutedEvent> ownerRoutedEventList = (FrugalObjectList<RoutedEvent>)htEnumerator.Value;
                 
@@ -423,28 +422,33 @@ namespace System.Windows
 
         #region Global Index for RoutedEvent and EventPrivateKey
 
-        /// <summary>
-        /// Increments the global counter for <see cref="RoutedEvent"/> and <see cref="EventPrivateKey"/> storage.
-        /// </summary>
-        /// <returns>Globally unique index for the event within the application.</returns>
-        /// <exception cref="InvalidOperationException">Thrown in case the index is bigger than <see cref="int.MaxValue"/>.</exception>
-        internal static int GetNextAvailableGlobalIndex()
+        internal static int GetNextAvailableGlobalIndex(object value)
         {
-            // Prevent GlobalIndex from overflow. RoutedEvents are meant to be static members and are to be registered 
-            // only via static constructors. However there is no cheap way of ensuring this, without having to do a stack walk. Hence 
-            // concievably people could register RoutedEvents via instance methods and therefore cause the GlobalIndex to 
-            // overflow. This check will explicitly catch this error, instead of silently malfuntioning.
-            uint newIndex = Interlocked.Increment(ref s_globalEventIndex);
-            if (newIndex >= int.MaxValue)
-                throw new InvalidOperationException(SR.TooManyRoutedEvents);
+            int index;
+            lock (Synchronized)
+            {
+                // Prevent GlobalIndex from overflow. RoutedEvents are meant to be static members and are to be registered 
+                // only via static constructors. However there is no cheap way of ensuring this, without having to do a stack walk. Hence 
+                // concievably people could register RoutedEvents via instance methods and therefore cause the GlobalIndex to 
+                // overflow. This check will explicitly catch this error, instead of silently malfuntioning.
+                if (_globalIndexToEventMap.Count >= Int32.MaxValue)
+                {
+                    throw new InvalidOperationException(SR.TooManyRoutedEvents);
+                }
 
-            return (int)newIndex;
+                index = _globalIndexToEventMap.Add(value);
+            }
+            return index;
         }
 
-        /// <summary>
-        /// Access must be done atomically, currently only accessed via <see cref="GetNextAvailableGlobalIndex"/> method.
-        /// </summary>
-        private static uint s_globalEventIndex = uint.MinValue;
+        // Must be called from within a lock of GlobalEventManager.Synchronized
+        internal static object EventFromGlobalIndex(int globalIndex)
+        {
+            return _globalIndexToEventMap[globalIndex];
+        }
+
+        // must be used within a lock of GlobalEventManager.Synchronized
+        private static ArrayList _globalIndexToEventMap = new ArrayList(100); // figure out what this number is in a typical scenario
 
         #endregion
 
@@ -470,7 +474,7 @@ namespace System.Windows
         // This is the cached value for the DType of DependencyObject
         private static DependencyObjectType _dependencyObjectType = DependencyObjectType.FromSystemTypeInternal(typeof(DependencyObject));
 
-        internal static readonly Lock Synchronized = new();
+        internal static object Synchronized = new object();
 
         #endregion Data
     }

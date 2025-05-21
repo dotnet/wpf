@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //  Synopsis: Implements class Parsers for internal use of type converters
 //
@@ -163,29 +164,29 @@ namespace MS.Internal.Markup
     /// SVG path spec is closely followed http://www.w3.org/TR/SVG11/paths.html
     /// 3/23/2006, new parser for performance (fyuan)
     /// </summary>
-    internal sealed class AbbreviatedGeometryParser
+    sealed internal class AbbreviatedGeometryParser
     {
-        private const bool      AllowSign    = true;
-        private const bool      AllowComma   = true;
-        private const bool      IsFilled     = true;
-        private const bool      IsClosed     = true;
-        private const bool      IsStroked    = true;
-        private const bool      IsSmoothJoin = true;
-
-        private IFormatProvider _formatProvider;
+        const bool      AllowSign    = true;
+        const bool      AllowComma   = true;
+        const bool      IsFilled     = true;
+        const bool      IsClosed     = true;
+        const bool      IsStroked    = true;
+        const bool      IsSmoothJoin = true;
         
-        private string          _pathString;        // Input string to be parsed
-        private int             _pathLength;
-        private int             _curIndex;          // Location to read next character from 
-        private bool            _figureStarted;     // StartFigure is effective
+        IFormatProvider _formatProvider;
         
-        private Point           _lastStart;         // Last figure starting point
-        private Point           _lastPoint;         // Last point
-        private Point           _secondLastPoint;   // The point before last point
+        string          _pathString;        // Input string to be parsed
+        int             _pathLength;
+        int             _curIndex;          // Location to read next character from 
+        bool            _figureStarted;     // StartFigure is effective
         
-        private char            _token;             // Non whitespace character returned by ReadToken
-
-        private StreamGeometryContext _context;
+        Point           _lastStart;         // Last figure starting point
+        Point           _lastPoint;         // Last point
+        Point           _secondLastPoint;   // The point before last point
+        
+        char            _token;             // Non whitespace character returned by ReadToken
+        
+        StreamGeometryContext _context;
         
         /// <summary>
         /// Throw unexpected token exception
@@ -195,7 +196,7 @@ namespace MS.Internal.Markup
             throw new System.FormatException(SR.Format(SR.Parser_UnexpectedToken, _pathString, _curIndex - 1));
         }
 
-        private bool More()
+        bool More()
         {
             return _curIndex < _pathLength;
         }
@@ -289,8 +290,8 @@ namespace MS.Internal.Markup
             
             return false;
         }
-
-        private void SkipDigits(bool signAllowed)
+        
+        void SkipDigits(bool signAllowed)
         {
             // Allow for a sign
             if (signAllowed && More() && ((_pathString[_curIndex] == '-') || _pathString[_curIndex] == '+'))
@@ -333,7 +334,7 @@ namespace MS.Internal.Markup
         /// Read a floating point number
         /// </summary>
         /// <returns></returns>
-        private double ReadNumber(bool allowComma)
+        double ReadNumber(bool allowComma)
         {
             if (!IsNumber(allowComma))
             {
@@ -435,12 +436,12 @@ namespace MS.Internal.Markup
                 }
             }
         }
-
+        
         /// <summary>
         /// Read a bool: 1 or 0
         /// </summary>
         /// <returns></returns>
-        private bool ReadBool()
+        bool ReadBool()
         {
             SkipWhiteSpace(AllowComma);
 

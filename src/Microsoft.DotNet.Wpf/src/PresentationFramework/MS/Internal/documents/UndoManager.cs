@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -95,7 +96,7 @@ namespace MS.Internal.Documents
             ArgumentNullException.ThrowIfNull(scope);
             ArgumentNullException.ThrowIfNull(undoManager);
 
-            if (undoManager is not null && ((UndoManager)undoManager)._scope != null)
+            if (undoManager is UndoManager && ((UndoManager)undoManager)._scope != null)
             {
                 throw new InvalidOperationException(SR.UndoManagerAlreadyAttached);
             }
@@ -105,7 +106,7 @@ namespace MS.Internal.Documents
 
             // Attach the service to the scope via private dependency property
             scope.SetValue(UndoManager.UndoManagerInstanceProperty, undoManager);
-            if (undoManager is not null)
+            if (undoManager is UndoManager)
             {
                 Debug.Assert(((UndoManager)undoManager)._scope == null);
                 ((UndoManager)undoManager)._scope = scope;
@@ -140,7 +141,7 @@ namespace MS.Internal.Documents
                 scope.ClearValue(UndoManager.UndoManagerInstanceProperty);
 
                 // Break the linkage to its scope
-                if (undoManager is not null)
+                if (undoManager is UndoManager)
                 {
                     Debug.Assert(((UndoManager)undoManager)._scope == scope);
                     ((UndoManager)undoManager)._scope = null;

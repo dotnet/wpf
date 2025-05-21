@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Localization comments related class
@@ -372,8 +373,8 @@ namespace MS.Internal.Globalization
 
     internal class PropertyComment
     {
-        private string _target;
-        private object _value;
+        string _target;
+        object _value;
 
         internal PropertyComment() { }
 

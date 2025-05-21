@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Windows.Markup;
@@ -47,7 +48,7 @@ namespace System.Windows.Input
 
             if (name.Length == 0)
             {
-                throw new ArgumentException(SR.StringEmpty, nameof(name));
+                throw new ArgumentException(SR.StringEmpty, "name");
             }
 
             ArgumentNullException.ThrowIfNull(ownerType);
@@ -398,7 +399,10 @@ namespace System.Windows.Input
                     else
                     {
                         targetAsUIElement3D = target as UIElement3D;
-                        targetAsUIElement3D?.RaiseEvent(args, userInitiated);
+                        if (targetAsUIElement3D != null)
+                        {
+                            targetAsUIElement3D.RaiseEvent(args, userInitiated);
+                        }
                     }                    
                 }
 
@@ -413,9 +417,9 @@ namespace System.Windows.Input
                     {
                         targetAsContentElement.RaiseEvent(args, userInitiated);
                     }
-                    else
+                    else if (targetAsUIElement3D != null)
                     {
-                        targetAsUIElement3D?.RaiseEvent(args, userInitiated);
+                        targetAsUIElement3D.RaiseEvent(args, userInitiated);
                     }
                 }
 

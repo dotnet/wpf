@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 namespace System.Windows.Media
 {
@@ -84,7 +85,7 @@ namespace System.Windows.Media
             Dictionary<ushort, bool> glyphsUsed = _collectedGlyphTypefaces[glyphTypeface];
             if (glyphsUsed == null)
             {
-                throw new ArgumentException(SR.GlyphTypefaceNotRecorded, nameof(glyphTypeface));
+                throw new ArgumentException(SR.GlyphTypefaceNotRecorded, "glyphTypeface");
             }
             return glyphsUsed.Keys;
         }

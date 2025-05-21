@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Windows Static Proxy
 
@@ -10,7 +11,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    internal class WindowsStatic: ProxyHwnd
+    class WindowsStatic: ProxyHwnd
     {
         // ------------------------------------------------------
         //
@@ -20,7 +21,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Constructors
 
-        private WindowsStatic (IntPtr hwnd, ProxyFragment parent, StaticType type, int style)
+        WindowsStatic (IntPtr hwnd, ProxyFragment parent, StaticType type, int style)
             : base( hwnd, parent, 0)
         {
             _type = type;
@@ -110,7 +111,8 @@ namespace MS.Internal.AutomationProxies
                 WindowsStatic wtv = (WindowsStatic) Create (hwnd, 0);
                 // If wtv is null the window handle is invalid or no longer available (or something,
                 // Create eats the problem).
-                wtv?.DispatchEvents (eventId, idProp, idObject, idChild);
+                if (wtv != null)
+                    wtv.DispatchEvents (eventId, idProp, idObject, idChild);
             }
         }
 
@@ -223,12 +225,12 @@ namespace MS.Internal.AutomationProxies
 
         #region Private Fields
 
-        private StaticType _type;
+        StaticType _type;
 
-        private int _style;
+        int _style;
 
         // Static control types based on style constants
-        private enum StaticType
+        enum StaticType
         {
             Bitmap,
             Icon,

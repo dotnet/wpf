@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -29,7 +30,7 @@ namespace System.Windows.Media
         /// </summary>
         internal abstract bool IsHit { get; }
 
-        internal abstract IntersectionDetail IntersectionDetail { get; }
+        abstract internal IntersectionDetail IntersectionDetail { get; }
 
         #region Static Drawing Context Methods
 
@@ -47,7 +48,7 @@ namespace System.Windows.Media
             Point point1)
         {
             // PERF: Consider ways to reduce the allocation of Geometries during managed hit test and bounds passes.
-            DrawGeometry(brush: null, pen, new LineGeometry(point0, point1));
+            DrawGeometry(null /* brush */, pen, new LineGeometry(point0, point1));
         }
 
         /// <summary>
@@ -168,7 +169,7 @@ namespace System.Windows.Media
                 ImageSource = imageSource
             };
 
-            DrawGeometry(imageBrush, pen: null, new RectangleGeometry(rectangle));
+            DrawGeometry(imageBrush, null /* pen */, new RectangleGeometry(rectangle));
         }
 
         /// <summary>
@@ -187,10 +188,10 @@ namespace System.Windows.Media
             Rect rectangle)
         {
             // Hit test a rect with a VideoBrush once it exists.
-            // DrawGeometry(new VideoBrush(video), pen: null, new RectangleGeometry(rectangle));
+            // DrawGeometry(new VideoBrush(video), null /* pen */, new RectangleGeometry(rectangle));
 
             // PERF: Consider ways to reduce the allocation of Geometries during managed hit test and bounds passes.
-            DrawGeometry(Brushes.Black, pen: null, new RectangleGeometry(rectangle));
+            DrawGeometry(Brushes.Black, null /* pen */, new RectangleGeometry(rectangle));
         }
 
         #endregion Static Drawing Context Methods

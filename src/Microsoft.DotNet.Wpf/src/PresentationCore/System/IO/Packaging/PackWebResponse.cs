@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -497,7 +498,6 @@ namespace System.IO.Packaging
                             // prevent recursion in our call to _responseStream.Close()
                             _disposed = true;
 
-#pragma warning disable IDE0031
                             if (_responseStream != null)
                             {
 #if DEBUG
@@ -509,7 +509,7 @@ namespace System.IO.Packaging
 #endif
                                 _responseStream.Close();
                             }
-#pragma warning restore IDE0031
+
                             // FullResponse
                             if (_fullResponse != null)
                             {
@@ -528,7 +528,10 @@ namespace System.IO.Packaging
                             _responseAvailable.Close();     // this call can not throw an exception
 
                             // timer
-                            _timeoutTimer?.Dispose();
+                            if (_timeoutTimer != null)
+                            {
+                                _timeoutTimer.Dispose();
+                            }
 }
                         finally
                         {
@@ -608,7 +611,7 @@ namespace System.IO.Packaging
                         // full container request?
                         if (_parent._partName == null)
                         {
-                            Debug.Fail("Cannot return full-container stream from cached container object");
+                            Debug.Assert(false, "Cannot return full-container stream from cached container object");
                         }
                         else
                         {
@@ -690,7 +693,8 @@ namespace System.IO.Packaging
                     // Prevent recursion - this sync-protected member is safe to set in a CachedResponse
                     // mode because we have no other thread in operation.
                     _parent._disposed = true;
-                    _parent._responseStream?.Close();
+                    if (_parent._responseStream != null)
+                        _parent._responseStream.Close();
                 }
                 finally
                 {
@@ -762,7 +766,8 @@ namespace System.IO.Packaging
                     if (!_disposed)
                     {
                         // dispose the timer - it is no longer needed
-                        _timeoutTimer?.Dispose();
+                        if (_timeoutTimer != null)
+                            _timeoutTimer.Dispose();
 #if DEBUG
                         if (PackWebRequestFactory._traceSwitch.Enabled)
                             System.Diagnostics.Trace.TraceInformation(
@@ -895,7 +900,10 @@ namespace System.IO.Packaging
                     }
 #endif
                     // clean up
-                    _timeoutTimer?.Dispose();
+                    if (_timeoutTimer != null)
+                    {
+                        _timeoutTimer.Dispose();
+                    }
                 }
                 finally
                 {

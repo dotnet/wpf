@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // 
 //
@@ -133,7 +134,10 @@ namespace System.Windows.Documents.Internal
 
             _adornerLayer = AdornerLayer.GetAdornerLayer(renderScope);
 
-            _adornerLayer?.Add(this);
+            if (_adornerLayer != null)
+            {
+                _adornerLayer.Add(this);
+            }
 
             _x = xPos;
             _top = yPos;

@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: TextView implementation for DocumentPageView.
@@ -312,7 +313,7 @@ namespace MS.Internal.Documents
             }
             if (IsPageMissing)
             {
-                return ReadOnlyCollection<GlyphRun>.Empty;
+                return new ReadOnlyCollection<GlyphRun>(new List<GlyphRun>());
             }
             return _pageTextView.GetGlyphRuns(start, end);
         }
@@ -527,7 +528,7 @@ namespace MS.Internal.Documents
             {
                 if (!IsValid || IsPageMissing)
                 {
-                    return ReadOnlyCollection<TextSegment>.Empty;
+                    return new ReadOnlyCollection<TextSegment>(new List<TextSegment>());
                 }
                 return _pageTextView.TextSegments;
             }

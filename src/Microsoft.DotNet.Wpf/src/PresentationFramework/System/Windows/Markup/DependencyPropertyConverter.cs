@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
 *
@@ -132,7 +133,7 @@ namespace System.Windows.Markup
             {
                 value = value.Trim();
                 // If it contains a . it means that it is a full name with type and property.
-                if (value.Contains('.'))
+                if (value.Contains("."))
                 {
                     // Prefixes could have .'s so we take the last one and do a type resolve against that
                     int lastIndex = value.LastIndexOf('.');

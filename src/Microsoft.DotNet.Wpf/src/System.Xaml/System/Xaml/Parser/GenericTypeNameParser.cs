@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -8,10 +9,10 @@ using System.Xaml.Schema;
 
 namespace MS.Internal.Xaml.Parser
 {
-    internal class GenericTypeNameParser
+    class GenericTypeNameParser
     {
         [Serializable]
-        private class TypeNameParserException : Exception
+        class TypeNameParserException : Exception
         {
             public TypeNameParserException(string message)
                 : base(message)
@@ -27,7 +28,7 @@ namespace MS.Internal.Xaml.Parser
         private GenericTypeNameScanner _scanner;
         private string _inputText;
         private Func<string, string> _prefixResolver;
-        private Stack<TypeNameFrame> _stack;
+        Stack<TypeNameFrame> _stack;
 
         public GenericTypeNameParser(Func<string, string> prefixResolver)
         {
@@ -36,7 +37,9 @@ namespace MS.Internal.Xaml.Parser
 
         public static XamlTypeName ParseIfTrivalName(string text, Func<string, string> prefixResolver, out string error)
         {
-            if (text.Contains('(') || text.Contains('['))
+            int parenIdx = text.IndexOf('(');
+            int bracketIdx = text.IndexOf('[');
+            if (parenIdx != -1 || bracketIdx != -1)
             {
                 error = string.Empty;
                 return null;
@@ -260,7 +263,7 @@ namespace MS.Internal.Xaml.Parser
             _stack.Push(frame);
         }
 
-        private void Callout_FoundName(string prefix, string name)
+        void Callout_FoundName(string prefix, string name)
         {
             TypeNameFrame frame = new TypeNameFrame
             {
@@ -271,7 +274,7 @@ namespace MS.Internal.Xaml.Parser
             _stack.Push(frame);
         }
 
-        private void Callout_EndOfType()
+        void Callout_EndOfType()
         {
             TypeNameFrame frame = _stack.Pop();
             XamlTypeName typeName = new XamlTypeName(frame.Namespace, frame.Name, frame.TypeArgs);
@@ -285,7 +288,7 @@ namespace MS.Internal.Xaml.Parser
             frame.TypeArgs.Add(typeName);
         }
 
-        private void Callout_Subscript(string subscript)
+        void Callout_Subscript(string subscript)
         {
             TypeNameFrame frame = _stack.Peek();
             frame.Name += subscript;
@@ -322,9 +325,9 @@ namespace MS.Internal.Xaml.Parser
         }
     }
 
-    internal class TypeNameFrame
+    class TypeNameFrame
     {
-        private List<XamlTypeName> _typeArgs;
+        List<XamlTypeName> _typeArgs;
 
         public string Namespace { get; set; }
         public string Name { get; set; }

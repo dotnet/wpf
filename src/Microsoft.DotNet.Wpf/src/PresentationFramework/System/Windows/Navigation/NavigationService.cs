@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -77,7 +78,7 @@ namespace System.Windows.Navigation
 
         #if DEBUG
             // We should only be replacing queue items that aren't already posted
-            Debug.Assert(_navigateQueueItem == null || !_navigateQueueItem.IsPosted);
+            Debug.Assert(_navigateQueueItem == null || _navigateQueueItem.IsPosted == false);
         #endif
             _navigateQueueItem = null;
             _request = null;
@@ -95,7 +96,7 @@ namespace System.Windows.Navigation
 
             // If the Uri is absolute uri, we just take the uri. Otherwise we require sender to implement
             // IUriContext so we can resolve with its base uri.
-            if ((bpu != null) && (!bpu.IsAbsoluteUri))
+            if ((bpu != null) && (bpu.IsAbsoluteUri == false))
             {
                 DependencyObject dobj = e.OriginalSource as DependencyObject;
 
@@ -160,7 +161,7 @@ namespace System.Windows.Navigation
 
                         if (navigator != null)
                         {
-                            inSameThread = (((DispatcherObject)navigator).CheckAccess());
+                            inSameThread = (((DispatcherObject)navigator).CheckAccess() == true);
                         }
                     }
                 }
@@ -195,7 +196,7 @@ namespace System.Windows.Navigation
 
         // Tests if two uris resolve to the same Uri.  The Uri fragments are also
         // compared.  Neither comparison is case sensitive.
-        private static bool IsSameUri(Uri baseUri, Uri a, Uri b, bool withFragment)
+        static private bool IsSameUri(Uri baseUri, Uri a, Uri b, bool withFragment)
         {
             if (object.ReferenceEquals(a, b)) // also handles both null
             {
@@ -391,7 +392,10 @@ namespace System.Windows.Navigation
             else
             {
                 FrameworkContentElement fce = elem as FrameworkContentElement;
-                fce?.BringIntoView();
+                if (fce != null)
+                {
+                    fce.BringIntoView();
+                }
             }
         }
 
@@ -409,7 +413,7 @@ namespace System.Windows.Navigation
             return _journalScope;
         }
 
-        private bool IsConsistent(NavigateInfo navInfo)
+        bool IsConsistent(NavigateInfo navInfo)
         {
             return navInfo == null
                 || navInfo.IsConsistent
@@ -443,7 +447,10 @@ namespace System.Windows.Navigation
             if (v == null)
                 return false; // Template may not be applied yet.
             IJournalState ijs = v as IJournalState;
-            ijs?.RestoreJournalState(rvs);
+            if (ijs != null)
+            {
+                ijs.RestoreJournalState(rvs);
+            }
             //else: maybe type of viewer changed. Still returning true so that restoring state
             //  is not reattempted in this case.
             return true;
@@ -458,7 +465,7 @@ namespace System.Windows.Navigation
         /// </summary>
         /// <param name="targetName"></param>
         /// <returns></returns>
-        internal static INavigatorBase FindTargetInApplication(string targetName)
+        static internal INavigatorBase FindTargetInApplication(string targetName)
         {
             // Application has two window collections. One for Application windows (windows
             // created on the same thread as the app) and the other for all other windows.
@@ -484,7 +491,7 @@ namespace System.Windows.Navigation
             return navigator;
         }
 
-        private static INavigatorBase FindTargetInWindowCollection(WindowCollection wc, string targetName)
+        static private INavigatorBase FindTargetInWindowCollection(WindowCollection wc, string targetName)
         {
             INavigatorBase navigator = null;
             NavigationWindow nw = null;
@@ -498,7 +505,7 @@ namespace System.Windows.Navigation
                     // if we're on the same thread as that of nw then we can simple try to
                     // find target in nw, else we need to find target on the nw's thread.
                     // We do that below by using nw.Dispatcher.Invoke
-                    if (nw.CheckAccess())
+                    if (nw.CheckAccess() == true)
                     {
                         navigator = FindTargetInNavigationWindow(nw, targetName);
                     }
@@ -529,7 +536,7 @@ namespace System.Windows.Navigation
         /// <param name="navigationWindow">Navigation Window</param>
         /// <param name="navigatorId">NavigatorId to search</param>
         /// <returns></returns>
-        private static INavigatorBase FindTargetInNavigationWindow(NavigationWindow navigationWindow, string navigatorId)
+        static private INavigatorBase FindTargetInNavigationWindow(NavigationWindow navigationWindow, string navigatorId)
         {
             if (navigationWindow != null)
             {
@@ -564,8 +571,11 @@ namespace System.Windows.Navigation
             if (newParent == oldParent)
                 return;
 
-            // Remove from old parent's list
-            oldParent?.RemoveChild(this);
+            if (oldParent != null)
+            {
+                // Remove from old parent's list
+                oldParent.RemoveChild(this);
+            }
 
             if (newParent != null)
             {
@@ -588,8 +598,11 @@ namespace System.Windows.Navigation
             ChildNavigationServices.Add(ncChild);
             ncChild._parentNavigationService = this;
 
-            // The view may need to be changed if NavigationContainers came or went
-            JournalScope?.Journal.UpdateView();
+            if (JournalScope != null)
+            {
+                // The view may need to be changed if NavigationContainers came or went
+                JournalScope.Journal.UpdateView();
+            }
 
             // If parent's navigation was stopped, stop pending navigations in the child as well
             if (this.NavStatus == NavigationStatus.Stopped)
@@ -618,8 +631,11 @@ namespace System.Windows.Navigation
                 ncChild.InvalidateJournalNavigationScope();
             }
 
-            // The view may need to be changed if NavigationContainers came or went
-            JournalScope?.Journal.UpdateView();
+            if (JournalScope != null)
+            {
+                // The view may need to be changed if NavigationContainers came or went
+                JournalScope.Journal.UpdateView();
+            }
 
             // Do we need to stop navigations in the child?
             // If no, then just remove from our PendingNavigationList
@@ -711,7 +727,7 @@ namespace System.Windows.Navigation
                 // Get the content from the attached DP
                 keepAlive = JournalEntry.GetKeepAlive(o);
 
-                if (!keepAlive)
+                if (keepAlive == false)
                 {
                     PageFunctionBase pf = o as PageFunctionBase;
 
@@ -818,7 +834,10 @@ namespace System.Windows.Navigation
             //
             // Detach the Finish handler so we don't hold a reference to the PageFunction.
             PageFunctionBase currentPF = oldTree as PageFunctionBase;
-            currentPF?.FinishHandler = null;
+            if (currentPF != null)
+            {
+                currentPF.FinishHandler = null;
+            }
             //
             // Dispose the old tree here. TEMP until Bug 864908 is fixed
             // if the root is a PageFunction whose KeepAlive is set to TRUE, or a page
@@ -864,7 +883,7 @@ namespace System.Windows.Navigation
             // This will be non-null IFF a PageFunction with a non-PageFunction parent has finished.
             // Then navInfo.NavigationMode may be Back or New.
             // (New iff finishingChildPageFunction.RemoveFromJournal==false).
-            PageFunctionBase finishingChildPageFunction = pfReturnInfo?.FinishingChildPageFunction;
+            PageFunctionBase finishingChildPageFunction = (pfReturnInfo != null) ? pfReturnInfo.FinishingChildPageFunction : null;
             Debug.Assert(finishingChildPageFunction == null ||
                 !IsPageFunction(newTree) &&
                 (finishingChildPageFunction.RemoveFromJournal && navInfo.NavigationMode == NavigationMode.Back ||
@@ -875,7 +894,7 @@ namespace System.Windows.Navigation
             // has just finished
             if (finishingChildPageFunction != null)
             {
-                object returnEventArgs = pfReturnInfo?.ReturnEventArgs;
+                object returnEventArgs = (pfReturnInfo != null) ? pfReturnInfo.ReturnEventArgs : null;
 
                 if (newTree != null)
                 {
@@ -886,7 +905,10 @@ namespace System.Windows.Navigation
                         // Return event handler should not be left attached.
                         Debug.Assert(finishingChildPageFunction._Return == null);
 
-                        pfReturnInfo.JournalEntry?.SaveState(newTree);
+                        if (pfReturnInfo.JournalEntry != null)
+                        {
+                            pfReturnInfo.JournalEntry.SaveState(newTree);
+                        }
                         return false;
                     }
                 }
@@ -1047,19 +1069,25 @@ namespace System.Windows.Navigation
         {
             if (!ReferenceEquals(v, _oldRootVisual))
             {
-                // Step 1: Remove the inherited NavigationService property
-                // This will cause a property invalidation and sub-frames will remove themselves from the parent's list
-                // That will cause a Journal view update so back/fwd state reflects the state of the new tree
-                _oldRootVisual?.SetValue(NavigationServiceProperty, null);
+                if (_oldRootVisual != null)
+                {
+                    // Step 1: Remove the inherited NavigationService property
+                    // This will cause a property invalidation and sub-frames will remove themselves from the parent's list
+                    // That will cause a Journal view update so back/fwd state reflects the state of the new tree
+                    _oldRootVisual.SetValue(NavigationServiceProperty, null);
+                }
 
-                // Step 1: Set the inherited NavigationService property
-                // This will cause a property invalidation and sub-frames will remove themselves from the parent's list
-                // That will cause a Journal view update so back/fwd state reflects the state of the new tree
-                // Note: setting NavigationService has a non-obvious side effect -
-                // if v has any data-bound properties that use ElementName binding,
-                // the name will be resolved in the "inner scope", not the "outer
-                // scope".  (Bug 1765041)
-                v?.SetValue(NavigationServiceProperty, this);
+                if (v != null)
+                {
+                    // Step 1: Set the inherited NavigationService property
+                    // This will cause a property invalidation and sub-frames will remove themselves from the parent's list
+                    // That will cause a Journal view update so back/fwd state reflects the state of the new tree
+                    // Note: setting NavigationService has a non-obvious side effect -
+                    // if v has any data-bound properties that use ElementName binding,
+                    // the name will be resolved in the "inner scope", not the "outer
+                    // scope".  (Bug 1765041)
+                    v.SetValue(NavigationServiceProperty, this);
+                }
 
                 _oldRootVisual = v;
             }
@@ -1084,7 +1112,7 @@ namespace System.Windows.Navigation
             }
 
             // If an invalid root element is passed to Navigation Service, throw exception here.
-            if (!IsValidRootElement(bp))
+            if (IsValidRootElement(bp) == false)
             {
                 throw new InvalidOperationException(SR.Format(SR.WrongNavigateRootElement, bp.ToString()));
             }
@@ -1105,7 +1133,7 @@ namespace System.Windows.Navigation
                          "Source in OnContentReady does not match source in NavigateInfo");
             if (bpu == null)
             {
-                bpu = navInfo?.Source;
+                bpu = (navInfo == null) ? null : navInfo.Source;
             }
 
             Uri bpuClean = BindUriHelper.GetUriRelativeToPackAppBase(bpu);
@@ -1550,7 +1578,7 @@ namespace System.Windows.Navigation
             }
 
             // HandleNavigating will call DoStopLoading which aborts current webrequest if there is any.
-            if (!HandleNavigating(resolvedSource, null, navigationState, newRequest, navigateOnSourceChanged))
+            if (HandleNavigating(resolvedSource, null, navigationState, newRequest, navigateOnSourceChanged) == false)
             {
                 return false;
             }
@@ -1619,11 +1647,11 @@ namespace System.Windows.Navigation
                     throw new InvalidOperationException(SR.InvalidOperation_CannotReenterPageFunction);
             }
 
-            Uri source = navigateInfo?.Source;
+            Uri source = navigateInfo == null ? null : navigateInfo.Source;
 
             // HandleNavigating will set the pending Uri from navigationState if available
             // See comments in NavigateInfo class
-            if (!HandleNavigating(source, root, navigationState, null, false))
+            if (HandleNavigating(source, root, navigationState, null, false) == false)
             {
                 return false;
             }
@@ -1842,7 +1870,10 @@ namespace System.Windows.Navigation
                 fireStopped = true;
             }
 
-            _navigatorHostImpl?.OnSourceUpdatedFromNavService(true /* journalOrCancel */);
+            if (_navigatorHostImpl != null)
+            {
+                _navigatorHostImpl.OnSourceUpdatedFromNavService(true /* journalOrCancel */);
+            }
 
             // Event handler exception continuality: if exception occurs in NavigationStopped event handler,
             // we want to finish stopping navigation.
@@ -1968,7 +1999,7 @@ namespace System.Windows.Navigation
             remove { _navigating -= value; }
         }
 
-        private NavigatingCancelEventHandler _navigating;
+        NavigatingCancelEventHandler _navigating;
 
         /// <summary>
         /// Fires the Navigating event and returns a bool to indicate whether a navigation is
@@ -2001,7 +2032,7 @@ namespace System.Windows.Navigation
             {
                 // This should happen only for the Application case when processing the Startup Uri
                 Debug.Assert(this.Application != null &&
-                             this.Application.CheckAccess() &&
+                             this.Application.CheckAccess() == true &&
                              IsSameUri(null, Application.StartupUri,
                                                      navigateInfo.Source, false /* withFragment */),
                              "Encountered unexpected condition in FireNavigating, see comments in the file");
@@ -2038,7 +2069,10 @@ namespace System.Windows.Navigation
 
             if (e.Cancel)
             {
-                JournalScope?.AbortJournalNavigation();
+                if (JournalScope != null)
+                {
+                    JournalScope.AbortJournalNavigation();
+                }
             }
 
             return (!e.Cancel && !IsDisposed);
@@ -2099,14 +2133,14 @@ namespace System.Windows.Navigation
                 throw;
             }
 
-            if (allowNavigation)
+            if (allowNavigation == true)
             {
                 DoStopLoading(false /*clearRecursiveLoads*/, true /*fireEvents*/);
                 Debug.Assert(PendingNavigationList.Count == 0,
                              "Pending child navigations were not stopped before starting a new navigation");
 
                 // NavigationStopped event handler could have caused a new navigation.
-                if (!_recursiveNavigateList.Contains(localNavigateQueueItem))
+                if (_recursiveNavigateList.Contains(localNavigateQueueItem) == false)
                     return false;
 
                 _recursiveNavigateList.Clear();
@@ -2129,7 +2163,10 @@ namespace System.Windows.Navigation
 
         private void CleanupAfterNavigationCancelled(NavigateQueueItem localNavigateQueueItem)
         {
-            JournalScope?.AbortJournalNavigation();
+            if (JournalScope != null)
+            {
+                JournalScope.AbortJournalNavigation();
+            }
 
             // If event was canceled then we need to remove it.
             // If the event was canceled AND superceded by StopLoading or Navigate, it won't be
@@ -2138,7 +2175,10 @@ namespace System.Windows.Navigation
             // and the caller could now proceed with the navigation
             _recursiveNavigateList.Remove(localNavigateQueueItem);
 
-            _navigatorHostImpl?.OnSourceUpdatedFromNavService(true /* journalOrCancel */);
+            if (_navigatorHostImpl != null)
+            {
+                _navigatorHostImpl.OnSourceUpdatedFromNavService(true /* journalOrCancel */);
+            }
 
             // Browser downloading state not reset; case 4.
             InformBrowserAboutStoppedNavigation();
@@ -2157,7 +2197,7 @@ namespace System.Windows.Navigation
             remove { _navigated -= value; }
         }
 
-        private NavigatedEventHandler _navigated;
+        NavigatedEventHandler _navigated;
 
         private void FireNavigated(object navState)
         {
@@ -2298,7 +2338,7 @@ namespace System.Windows.Navigation
             remove { _navigationProgress -= value; }
         }
 
-        private NavigationProgressEventHandler _navigationProgress;
+        NavigationProgressEventHandler _navigationProgress;
 
         private void FireNavigationProgress(Uri source)
         {
@@ -2350,7 +2390,7 @@ namespace System.Windows.Navigation
             remove { _loadCompleted -= value; }
         }
 
-        private LoadCompletedEventHandler _loadCompleted;
+        LoadCompletedEventHandler _loadCompleted;
 
         private void FireLoadCompleted(bool isNavInitiator, object navState)
         {
@@ -2511,7 +2551,7 @@ namespace System.Windows.Navigation
             remove { _stopped -= value; }
         }
 
-        private NavigationStoppedEventHandler _stopped;
+        NavigationStoppedEventHandler _stopped;
 
         private void FireNavigationStopped(object navState)
         {
@@ -3019,7 +3059,7 @@ namespace System.Windows.Navigation
             Invariant.Assert(navFlags != NavigationMode.Refresh ^ object.ReferenceEquals(bp, _bp),
                 "Navigating to the same object should be handled as fragment navigation, except for Refresh.");
 
-            Uri source = navigateInfo?.Source;
+            Uri source = navigateInfo == null ? null : navigateInfo.Source;
             // The baseUri passed to GetResolvedUri() is null because here we have a new Content
             // object. Its URI is not resolved relative to the URI of the previous Content.
             Uri resolvedSource = BindUriHelper.GetResolvedUri(null, source);
@@ -3159,7 +3199,7 @@ namespace System.Windows.Navigation
 
                     if (baseUri != null)
                     {
-                        Invariant.Assert(baseUri.IsAbsoluteUri, "BaseUri for root element should be absolute.");
+                        Invariant.Assert(baseUri.IsAbsoluteUri == true, "BaseUri for root element should be absolute.");
 
                         Uri markupUri;
 
@@ -3176,7 +3216,7 @@ namespace System.Windows.Navigation
                         //
                         //   For all other cases, take whatever value of BaseUri in root element.
                         //
-                        if (_currentCleanSource != null && !BindUriHelper.StartWithFragment(_currentCleanSource))
+                        if (_currentCleanSource != null && BindUriHelper.StartWithFragment(_currentCleanSource) == false )
                         {
                             markupUri = _currentSource;
                         }
@@ -3428,7 +3468,7 @@ namespace System.Windows.Navigation
                 // into App to determine top level container does not make sense.
                 return (INavigatorHost is NavigationWindow ||
                         (this.Application != null &&
-                        this.Application.CheckAccess() &&
+                        this.Application.CheckAccess() == true &&
                         this.Application.NavService == this)
                         );
             }
@@ -3469,7 +3509,10 @@ namespace System.Windows.Navigation
                 if (_navigatorHost != null)
                 {
                     IInputElement iie = _navigatorHost as IInputElement;
-                    iie?.RemoveHandler(Hyperlink.RequestNavigateEvent, navHandler);
+                    if (iie != null)
+                    {
+                        iie.RemoveHandler(Hyperlink.RequestNavigateEvent, navHandler);
+                    }
 
                     IDownloader oldDownloader = _navigatorHost as IDownloader;
                     if (oldDownloader != null)
@@ -3481,7 +3524,10 @@ namespace System.Windows.Navigation
                 if (value != null)
                 {
                     IInputElement iie = value as IInputElement;
-                    iie?.AddHandler(Hyperlink.RequestNavigateEvent, navHandler);
+                    if (iie != null)
+                    {
+                        iie.AddHandler(Hyperlink.RequestNavigateEvent, navHandler);
+                    }
 
                     // We want to listen to ContentRendered of the INavigatorHost so
                     // that we can scroll into view the correct element if needed
@@ -3530,8 +3576,8 @@ namespace System.Windows.Navigation
                 // into App to determine if app is shuttind down does not make sense.
                 bool isAppShuttingDown = false;
                 if ((this.Application != null) &&
-                    (this.Application.CheckAccess()) &&
-                    (Application.IsShuttingDown))
+                    (this.Application.CheckAccess() == true) &&
+                    (Application.IsShuttingDown == true))
                 {
                     isAppShuttingDown = true;
                 }
@@ -3586,7 +3632,7 @@ namespace System.Windows.Navigation
             return null;
         }
 
-        internal static bool IsPageFunction(object content)
+        static internal bool IsPageFunction(object content)
         {
             return (content as PageFunctionBase == null ? false : true);
         }
@@ -3631,7 +3677,7 @@ namespace System.Windows.Navigation
             }
 
             // Need to Check for refresh on history navigations as well and call LoadHistory instead?
-            if (!ps._Resume)
+            if (ps._Resume == false)
             {
                 ps.CallStart();
             }
@@ -3911,7 +3957,7 @@ namespace System.Windows.Navigation
             //    ExceptionStringTable.txt.
             //
             // For now, only block Window as root element.
-            if (!AllowWindowNavigation &&
+            if (AllowWindowNavigation == false &&
                 bp != null &&
                 bp is Window)
             {
@@ -4211,8 +4257,8 @@ namespace System.Windows.Navigation
             }
         }
 
-        private Object _content;
-        private Uri _uri;
+        Object _content;
+        Uri _uri;
     }
 
     #endregion BPReadyEventArgs Class
@@ -4389,12 +4435,12 @@ namespace System.Windows.Navigation
             return null;
         }
 
-        private Uri _source;
-        private object _content;
-        private Object _navState;
-        private NavigationService _nc;
-        private NavigationMode _navigationMode = NavigationMode.New;
-        private DispatcherOperation _postedOp;
+        Uri _source;
+        object _content;
+        Object _navState;
+        NavigationService _nc;
+        NavigationMode _navigationMode = NavigationMode.New;
+        DispatcherOperation _postedOp;
     }
 
     #endregion NavigateQueueItem class
@@ -4446,7 +4492,10 @@ namespace System.Windows.Navigation
 
             // Now that we've recursed through all descendants, dispose this node if it needs it
             IDisposable disposable = node as IDisposable;
-            disposable?.Dispose();
+            if (disposable != null)
+            {
+                disposable.Dispose();
+            }
         }
 
         internal DisposeTreeQueueItem(Object node)

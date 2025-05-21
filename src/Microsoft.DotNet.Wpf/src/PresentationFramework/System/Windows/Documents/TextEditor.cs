@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using System.Globalization;
@@ -282,7 +283,10 @@ namespace System.Windows.Documents
         // Forwards a spelling reform property change off to the speller.
         internal void SetSpellingReform(SpellingReform spellingReform)
         {
-            _speller?.SetSpellingReform(spellingReform);
+            if (_speller != null)
+            {
+                _speller.SetSpellingReform(spellingReform);
+            }
         }
 
         // Queries a FrameworkElement for its TextView
@@ -298,7 +302,7 @@ namespace System.Windows.Documents
         {
             TextEditor textEditor = TextEditor._GetTextEditor(frameworkElement);
 
-            return textEditor?.Selection;
+            return (textEditor == null) ? null : textEditor.Selection;
         }
 
         // Registers all text editing command handlers for a given control type
@@ -1274,9 +1278,15 @@ namespace System.Windows.Documents
         /// </summary>
         internal void CompleteComposition()
         {
-            TextStore?.CompleteComposition();
+            if (TextStore != null)
+            {
+                TextStore.CompleteComposition();
+            }
 
-            ImmComposition?.CompleteComposition();
+            if (ImmComposition != null)
+            {
+                ImmComposition.CompleteComposition();
+            }
         }
 
         #endregion Class Internal Methods
@@ -1599,12 +1609,18 @@ namespace System.Windows.Documents
                 return null;
             }
 
-            _textstore?.OnLayoutUpdated();
+            if (_textstore != null)
+            {
+                _textstore.OnLayoutUpdated();
+            }
 
             // IMM32's OnLostFocus handler. Clean the composition string if it exists.
             if (_immEnabled)
             {
-                _immComposition?.OnLayoutUpdated();
+                if (_immComposition != null)
+                {
+                    _immComposition.OnLayoutUpdated();
+                }
             }
 
             return null;
@@ -1646,7 +1662,7 @@ namespace System.Windows.Documents
             This.SetSpellCheckEnabled(This.IsSpellCheckEnabled);
 
             // Finalize any active IME composition when transitioning to true.
-            if ((bool)e.NewValue && This._textstore != null)
+            if ((bool)e.NewValue == true && This._textstore != null)
             {
                 This._textstore.CompleteCompositionAsync();
             }
@@ -1682,7 +1698,10 @@ namespace System.Windows.Documents
             }
 
             // Cicero's OnGotKeyboardFocus handler. It updates the focus DIM.
-            This._textstore?.OnGotFocus();
+            if (This._textstore != null)
+            {
+                This._textstore.OnGotFocus();
+            }
 
             // IMM32's OnGotFocus handler. Ready for the composition string.
             if (_immEnabled)
@@ -1737,7 +1756,10 @@ namespace System.Windows.Documents
             This._selection.UpdateCaretAndHighlight();
 
             // Call the TextStore's OnLostfocus handler.  Finalizes the curernt composition, if any.
-            This._textstore?.OnLostFocus();
+            if (This._textstore != null)
+            {
+                This._textstore.OnLostFocus();
+            }
 
             // IMM32's OnLostFocus handler. Clean the composition string if it exists.
             if (_immEnabled)

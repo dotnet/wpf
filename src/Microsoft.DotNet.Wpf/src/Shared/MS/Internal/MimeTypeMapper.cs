@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.Collections;
@@ -16,14 +17,14 @@ namespace MS.Internal
     internal static class MimeTypeMapper
     {
 
-        internal static ContentType GetMimeTypeFromUri(Uri uriSource)
+        static internal ContentType GetMimeTypeFromUri(Uri uriSource)
         {
             ContentType mimeType = ContentType.Empty;
 
             if (uriSource != null)
             {
                 Uri uri = uriSource;
-                if (!uri.IsAbsoluteUri)
+                if (uri.IsAbsoluteUri == false)
                 {
                       uri = new Uri("http://foo/bar/");
                       uri = new Uri(uri, uriSource);
@@ -72,7 +73,7 @@ namespace MS.Internal
         //
         // Call UrlMon API to get MimeType for a given extension.
         //
-        private static ContentType GetMimeTypeFromUrlMon(Uri uriSource)
+        static private ContentType GetMimeTypeFromUrlMon(Uri uriSource)
         {
             ContentType mimeType = ContentType.Empty;
 
@@ -103,7 +104,7 @@ namespace MS.Internal
             return mimeType;
         }
 
-        private static string GetDocument(Uri uri)
+        static private string GetDocument(Uri uri)
         {
             string docstring;
 
@@ -129,13 +130,13 @@ namespace MS.Internal
             return docstring;
         }
 
-        internal static string GetFileExtension(Uri uri)
+        static internal string GetFileExtension(Uri uri)
         {
             string docString = GetDocument(uri);
             string extensionWithDot = Path.GetExtension(docString);
             string extension = String.Empty;
 
-            if (!String.IsNullOrEmpty(extensionWithDot))
+            if (String.IsNullOrEmpty(extensionWithDot) == false)
             {
                 extension = extensionWithDot.Substring(1).ToLower(CultureInfo.InvariantCulture);
             }
@@ -143,7 +144,7 @@ namespace MS.Internal
             return extension;
         }
 
-        internal static bool IsHTMLMime(ContentType contentType)
+        static internal bool IsHTMLMime(ContentType contentType)
         {
             return (HtmlMime.AreTypeAndSubTypeEqual(contentType)
                 || HtmMime.AreTypeAndSubTypeEqual(contentType));

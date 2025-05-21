@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows.Media;
 using System.Reflection;
@@ -111,11 +112,11 @@ namespace System.Windows.Forms.Integration
                     {
                         case SW.FlowDirection.RightToLeft:
                             adapter.RightToLeft = SWF.RightToLeft.Yes;
-                            propertyInfo?.SetValue(childControl, true, null);
+                            if (propertyInfo != null) { propertyInfo.SetValue(childControl, true, null); }
                             break;
                         case SW.FlowDirection.LeftToRight:
                             adapter.RightToLeft = SWF.RightToLeft.No;
-                            propertyInfo?.SetValue(childControl, false, null);
+                            if (propertyInfo != null) { propertyInfo.SetValue(childControl, false, null); }
                             break;
                     }
                 }
@@ -222,7 +223,10 @@ namespace System.Windows.Forms.Integration
                 if (defined)
                 {
                     WinFormsAdapter adapter = GetAdapter(host);
-                    adapter?.ForeColor = wfColor;
+                    if (adapter != null)
+                    {
+                        adapter.ForeColor = wfColor;
+                    }
                 }
             }
         }

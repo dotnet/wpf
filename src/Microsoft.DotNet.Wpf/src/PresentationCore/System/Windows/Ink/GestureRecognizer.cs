@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal.Ink.GestureRecognition;
 using System.Collections.ObjectModel;
@@ -161,7 +162,7 @@ namespace System.Windows.Ink
             ArgumentNullException.ThrowIfNull(strokes);
             if (strokes.Count > 2)
             {
-                throw new ArgumentException(SR.StrokeCollectionCountTooBig, nameof(strokes));
+                throw new ArgumentException(SR.StrokeCollectionCountTooBig, "strokes");
             }
             VerifyAccess();
             VerifyDisposed();

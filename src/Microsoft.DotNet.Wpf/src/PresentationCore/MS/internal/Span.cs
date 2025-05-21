@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //+-----------------------------------------------------------------------
 //
@@ -437,11 +438,11 @@ namespace MS.Internal
             return true;
         }
 
-        private static Equals _referenceEquals = new Equals(Object.ReferenceEquals);
-        private static Equals _equals = new Equals(Object.Equals);
+        static private Equals _referenceEquals = new Equals(Object.ReferenceEquals);
+        static private Equals _equals = new Equals(Object.Equals);
 
-        private FrugalStructList<Span>  _spans;
-        private object                  _defaultObject;
+        FrugalStructList<Span>  _spans;
+        object                  _defaultObject;
         #endregion
     }
 
@@ -488,8 +489,8 @@ namespace MS.Internal
             _current = -1;
         }
 
-        private SpanVector  _spans;
-        private int         _current;    // current span
+        SpanVector  _spans;
+        int         _current;    // current span
     }
 
 
@@ -625,10 +626,10 @@ namespace MS.Internal
         #endregion
 
         #region Private members
-        private SpanVector      _spans;         // vector of spans
-        private SpanPosition    _spanPosition;  // index and cp of current span
-        private int             _cp;            // current cp (may be greater than start of span)
-        private int _cch;           // distance from current cp to end of current span
+        SpanVector      _spans;         // vector of spans
+        SpanPosition    _spanPosition;  // index and cp of current span
+        int             _cp;            // current cp (may be greater than start of span)
+        int             _cch;           // distance from current cp to end of current span
         #endregion
     }
 }

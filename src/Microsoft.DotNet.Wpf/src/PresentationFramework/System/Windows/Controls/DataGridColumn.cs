@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
@@ -869,7 +870,10 @@ namespace System.Windows.Controls
                 // to the targets that need notification.
                 DataGridColumn column = (DataGridColumn)d;
                 DataGrid dataGridOwner = column.DataGridOwner;
-                dataGridOwner?.NotifyPropertyChanged(d, e, target);
+                if (dataGridOwner != null)
+                {
+                    dataGridOwner.NotifyPropertyChanged(d, e, target);
+                }
             }
         }
 
@@ -879,7 +883,10 @@ namespace System.Windows.Controls
         /// <param name="propertyName"></param>
         protected void NotifyPropertyChanged(string propertyName)
         {
-            DataGridOwner?.NotifyPropertyChanged(this, propertyName, new DependencyPropertyChangedEventArgs(), DataGridNotificationTarget.RefreshCellContent);
+            if (DataGridOwner != null)
+            {
+                DataGridOwner.NotifyPropertyChanged(this, propertyName, new DependencyPropertyChangedEventArgs(), DataGridNotificationTarget.RefreshCellContent);
+            }
         }
 
         /// <summary>
@@ -966,7 +973,10 @@ namespace System.Windows.Controls
         {
             DataGridColumn column = (DataGridColumn)d;
 
-            column.DataGridOwner?.ValidateDisplayIndex(column, (int)baseValue);
+            if (column.DataGridOwner != null)
+            {
+                column.DataGridOwner.ValidateDisplayIndex(column, (int)baseValue);
+            }
 
             return baseValue;
         }

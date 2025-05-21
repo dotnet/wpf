@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;            // DesignerSerializationVisibility
@@ -94,7 +95,7 @@ namespace System.Windows.Controls
         /// </summary>
         /// <param name="parent">listview reference</param>
         /// <returns>GridView automation peer</returns>
-        protected internal override IViewAutomationPeer GetAutomationPeer(ListView parent)
+        internal protected override IViewAutomationPeer GetAutomationPeer(ListView parent)
         {
             return new GridViewAutomationPeer(this, parent);
         }

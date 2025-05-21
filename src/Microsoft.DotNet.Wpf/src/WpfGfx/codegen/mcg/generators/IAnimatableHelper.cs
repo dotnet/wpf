@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //------------------------------------------------------------------------------
@@ -71,17 +72,20 @@ namespace MS.Internal.MilCodeGen.Helpers
                         AnimationClock clock,
                         HandoffBehavior handoffBehavior)
                     {
-                        ArgumentNullException.ThrowIfNull(dp);
+                        if (dp == null)
+                        {
+                            throw new ArgumentNullException("dp");
+                        }
 
                         if (!AnimationStorage.IsPropertyAnimatable(this, dp))
                         {
-                            throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), nameof(dp));
+                            throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
                         }
 
                         if (clock != null
                             && !AnimationStorage.IsAnimationValid(dp, clock.Timeline))
                         {
-                            throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, clock.Timeline.GetType(), dp.Name, dp.PropertyType), nameof(clock));
+                            throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, clock.Timeline.GetType(), dp.Name, dp.PropertyType), "clock");
                         }
 
                         if (!HandoffBehaviorEnum.IsDefined(handoffBehavior))
@@ -92,7 +96,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                         if (IsSealed)
                         {
                             throw new InvalidOperationException(SR.Format(SR.IAnimatable_CantAnimateSealedDO, dp, this.GetType()));
-                        }
+                        }                    
                         
                         AnimationStorage.ApplyAnimationClock(this, dp, clock, handoffBehavior);
                     }
@@ -136,17 +140,20 @@ namespace MS.Internal.MilCodeGen.Helpers
                     /// </param>
                     public void BeginAnimation(DependencyProperty dp, AnimationTimeline animation, HandoffBehavior handoffBehavior)
                     {
-                        ArgumentNullException.ThrowIfNull(dp);
+                        if (dp == null)
+                        {
+                            throw new ArgumentNullException("dp");
+                        }
 
                         if (!AnimationStorage.IsPropertyAnimatable(this, dp))
                         {
-                            throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), nameof(dp));
+                            throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
                         }
 
-                        if (animation != null
+                        if (   animation != null
                             && !AnimationStorage.IsAnimationValid(dp, animation))
                         {
-                            throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, animation.GetType(), dp.Name, dp.PropertyType), nameof(animation));
+                            throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, animation.GetType(), dp.Name, dp.PropertyType), "animation");
                         }
 
                         if (!HandoffBehaviorEnum.IsDefined(handoffBehavior))
@@ -157,7 +164,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                         if (IsSealed)
                         {
                             throw new InvalidOperationException(SR.Format(SR.IAnimatable_CantAnimateSealedDO, dp, this.GetType()));
-                        }
+                        }                    
                         
                         AnimationStorage.BeginAnimation(this, dp, animation, handoffBehavior);
                     }
@@ -190,7 +197,10 @@ namespace MS.Internal.MilCodeGen.Helpers
                     /// </returns>
                     public object GetAnimationBaseValue(DependencyProperty dp)
                     {
-                        ArgumentNullException.ThrowIfNull(dp);
+                        if (dp == null)
+                        {
+                            throw new ArgumentNullException("dp");
+                        }
                     
                         return this.GetValueEntry(
                                 LookupEntry(dp.GlobalIndex),
@@ -209,6 +219,12 @@ namespace MS.Internal.MilCodeGen.Helpers
                     /// <param name="dp"></param>
                     /// <param name="metadata"></param>
                     /// <param name="entry">EffectiveValueEntry computed by base</param>
+                    /// <SecurityNote>
+                    ///     Putting an InheritanceDemand as a defense-in-depth measure,
+                    ///     as this provides a hook to the property system that we don't
+                    ///     want exposed under PartialTrust.
+                    /// </SecurityNote>
+                    [UIPermissionAttribute(SecurityAction.InheritanceDemand, Window=UIPermissionWindow.AllWindows)]
                     internal sealed override void EvaluateAnimatedValueCore(
                             DependencyProperty  dp,
                             PropertyMetadata    metadata,
@@ -218,7 +234,10 @@ namespace MS.Internal.MilCodeGen.Helpers
                         {
                             AnimationStorage storage = AnimationStorage.GetStorage(this, dp);
 
-                            storage?.EvaluateAnimatedValue(metadata, ref entry);
+                            if (storage != null)
+                            {
+                                storage.EvaluateAnimatedValue(metadata, ref entry);                      
+                            }
                         }
                     }
 

@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //  Abstract:
 //     Media system holds the relation between an application
@@ -8,7 +9,6 @@
 using System.Collections;
 using System.Windows.Media.Composition;
 using System.Windows.Threading;
-using System.Threading;
 using MS.Internal;
 
 using SafeNativeMethods = MS.Win32.PresentationCore.SafeNativeMethods;
@@ -144,12 +144,12 @@ namespace System.Windows.Media
         /// </summary>
         internal static void PropagateDirtyRectangleSettings()
         {
-            bool oldValue = s_disableDirtyRectangles;
-            bool disableDirtyRectangles = CoreAppContextSwitches.DisableDirtyRectangles;
+            int oldValue = s_DisableDirtyRectangles;
+            int disableDirtyRectangles = CoreAppContextSwitches.DisableDirtyRectangles ? 1 : 0;
 
             if (disableDirtyRectangles != oldValue)
             {
-                if (Interlocked.CompareExchange(ref s_disableDirtyRectangles, disableDirtyRectangles, oldValue) == oldValue)
+                if (System.Threading.Interlocked.CompareExchange(ref s_DisableDirtyRectangles, disableDirtyRectangles, oldValue) == oldValue)
                 {
                     NotifyRedirectionEnvironmentChanged();
                 }
@@ -158,7 +158,7 @@ namespace System.Windows.Media
 
         internal static bool DisableDirtyRectangles
         {
-            get => s_disableDirtyRectangles;
+            get { return (s_DisableDirtyRectangles != 0); }
         }
 
         /// <summary>
@@ -355,10 +355,9 @@ namespace System.Windows.Media
         /// </summary>
         private static bool s_forceSoftareForGraphicsStreamMagnifier;
 
-        /// <summary>
-        /// <see langword="true"/> if the app is requesting to disable D3D dirty rectangle work, <see langword="false"/> otherwise.
-        /// </summary>
-        private static bool s_disableDirtyRectangles = false;
+        // 1 if app is requesting to disable D3D dirty rectangle work, 0 otherwise.
+        // We use Interlocked.CompareExchange to change this, which supports int but not bool.
+        private static int s_DisableDirtyRectangles = 0;
      }
 }
 

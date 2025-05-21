@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description:
 // Exposes the basic operations that can be performed on documents. (Open,
@@ -130,7 +131,10 @@ namespace MS.Internal.Documents.Application
         {
             IDisposable disposable = controller as IDisposable;
 
-            disposable?.Dispose();
+            if (disposable != null)
+            {
+                disposable.Dispose();
+            }
         }
     }
 

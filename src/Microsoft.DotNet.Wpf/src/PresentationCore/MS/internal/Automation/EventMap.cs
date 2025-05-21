@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows;
 using System.Windows.Automation;
@@ -107,7 +108,7 @@ namespace MS.Internal.Automation
                 case AutomationEvents.ActiveTextPositionChanged:                            eventObject = AutomationElementIdentifiers.ActiveTextPositionChangedEvent; break;
 
                 default:
-                    throw new ArgumentException(SR.Automation_InvalidEventId, nameof(eventId));
+                    throw new ArgumentException(SR.Automation_InvalidEventId, "eventId");
             }
 
             if ((eventObject != null) && (!_eventsTable.ContainsKey(eventObject.Id)))
@@ -270,7 +271,7 @@ namespace MS.Internal.Automation
         }
 
         private static Dictionary<int, EventInfo> _eventsTable;        // key=event id, data=listener count
-        private static readonly object _lock = new object();
+        private readonly static object _lock = new object();
     }
 }
 

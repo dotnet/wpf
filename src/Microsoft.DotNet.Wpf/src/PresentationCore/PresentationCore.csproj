@@ -22,7 +22,6 @@
   <ItemGroup>
     <Compile Include="$(WpfCommonDir)\src\System\LocalAppContext.cs" />
     <Compile Include="$(WpfCommonDir)\src\System\AppContextDefaultValues.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GlobalUsings.cs" />
     <Compile Include="System\AppContextDefaultValues.cs" />
   </ItemGroup>
@@ -84,6 +83,7 @@
     <Compile Include="$(WpfSharedDir)\MS\Internal\Ink\BitStream.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\Ink\Native.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\IO\SynchronizingStream.cs" />
+    <Compile Include="$(WpfSharedDir)\MS\Internal\WindowsRuntime\ReflectionHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Win32\SafeSystemMetrics.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Win32\UnsafeNativeMethodsCompiler.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Win32\WinInet.cs" />
@@ -272,12 +272,9 @@
     <Compile Include="MS\Internal\Shaping\Substitution.cs" />
     <Compile Include="MS\Internal\Shaping\TypefaceMap.cs" />
     <Compile Include="MS\Internal\Shaping\UshortList2.cs" />
-    <Compile Include="MS\Internal\Text\TextInterface\DWriteInterfaces.cs" />
     <Compile Include="MS\Internal\Text\TextInterface\DWriteLoader.cs" />
     <Compile Include="MS\Internal\Text\TextInterface\DWriteUtil.cs" />
     <Compile Include="MS\Internal\Text\TextInterface\Factory.cs" />
-    <Compile Include="MS\Internal\Text\TextInterface\FontCollectionLoader.cs" />
-    <Compile Include="MS\Internal\Text\TextInterface\IFontSourceCollection.cs" />
     <Compile Include="MS\Internal\TextFormatting\Bidi.cs" />
     <Compile Include="MS\Internal\TextFormatting\CultureMapper.cs" />
     <Compile Include="MS\Internal\TextFormatting\DrawingState.cs" />
@@ -318,7 +315,6 @@
     <Compile Include="System\IO\Packaging\PackWebRequest.cs" />
     <Compile Include="System\IO\Packaging\PackWebRequestFactory.cs" />
     <Compile Include="System\IO\Packaging\PackWebResponse.cs" />
-    <Compile Include="System\Windows\DataObjectExtensions.cs" />
     <Compile Include="System\Windows\Generated\ContentElement.cs" />
     <Compile Include="System\Windows\Generated\TextDecoration.cs" />
     <Compile Include="System\Windows\Generated\TextDecorationCollection.cs" />
@@ -336,8 +332,48 @@
     <Compile Include="System\Windows\DataFormat.cs" />
     <Compile Include="System\Windows\DataFormats.cs" />
     <Compile Include="System\Windows\dataobject.cs" />
-    <Compile Include="System\Windows\ITypedDataObject.cs" />
+    <Compile Include="System\Windows\BinaryFormat\BinaryFormatWriter.cs" />
+    <Compile Include="System\Windows\BinaryFormat\BinaryFormatWriterScope.cs" />
+    <Compile Include="System\Windows\BinaryFormat\ExceptionExtensions.cs" />
+    <Compile Include="System\Windows\BinaryFormat\BinaryObjectString.cs" />
+    <Compile Include="System\Windows\BinaryFormat\IBinaryWriteable.cs" />
+    <Compile Include="System\Windows\BinaryFormat\MemberTypeInfo.cs" />
+    <Compile Include="System\Windows\BinaryFormat\Id.cs" />
+    <Compile Include="System\Windows\BinaryFormat\IRecord.cs" />
+    <Compile Include="System\Windows\BinaryFormat\RecordType.cs" />
+    <Compile Include="System\Windows\BinaryFormat\ListConverterHelper.cs" />
+    <Compile Include="System\Windows\BinaryFormat\FormatterConverterStub.cs" />
+    <Compile Include="System\Windows\BinaryFormat\SerializationExtensions.cs" />
     <Compile Include="System\Windows\Nrbf\SerializationRecordExtensions.cs" />
+    <Compile Include="System\Windows\BinaryFormat\MessageEnd.cs" />
+    <Compile Include="System\Windows\BinaryFormat\Record.cs" />
+    <Compile Include="System\Windows\BinaryFormat\BinaryType.cs" />
+    <Compile Include="System\Windows\BinaryFormat\PrimitiveType.cs" />
+    <Compile Include="System\Windows\BinaryFormat\Count.cs" />
+    <Compile Include="System\Windows\BinaryFormat\NullRecord.cs" />
+    <Compile Include="System\Windows\BinaryFormat\ObjectNull.cs" />
+    <Compile Include="System\Windows\BinaryFormat\ArraySingleString.cs" />
+    <Compile Include="System\Windows\BinaryFormat\ArrayRecord.cs" />
+    <Compile Include="System\Windows\BinaryFormat\ArrayInfo.cs" />
+    <Compile Include="System\Windows\BinaryFormat\ArraySingleObject.cs" />
+    <Compile Include="System\Windows\BinaryFormat\ArraySinglePrimitive.cs" />
+    <Compile Include="System\Windows\BinaryFormat\BinaryLibrary.cs" />
+    <Compile Include="System\Windows\BinaryFormat\MemberReference.cs" />
+    <Compile Include="System\Windows\BinaryFormat\MemberPrimitiveTyped.cs" />
+    <Compile Include="System\Windows\BinaryFormat\ClassWithMembersAndTypes.cs" />
+    <Compile Include="System\Windows\BinaryFormat\SystemClassWithMembersAndTypes.cs" />
+    <Compile Include="System\Windows\BinaryFormat\ClassInfo.cs" />
+    <Compile Include="System\Windows\BinaryFormat\ClassRecord.cs" />
+    <Compile Include="System\Windows\BinaryFormat\ClassWithId.cs" />
+    <Compile Include="System\Windows\BinaryFormat\TypeInfo.cs" />
+    <Compile Include="System\Windows\BinaryFormat\SerializationHeader.cs" />
+    <Compile Include="System\Windows\BinaryFormat\ClassTypeInfo.cs" />
+    <Compile Include="System\Windows\BinaryFormat\BinaryWriterExtensions.cs" />
+    <Compile Include="System\Windows\BinaryFormat\IntrinsicExtensions.cs" />
+    <Compile Include="System\Windows\BinaryFormat\NullRecord.ObjectNullMultiple.cs" />
+    <Compile Include="System\Windows\BinaryFormat\NullRecord.ObjectNullMultiple256.cs" />
+    <Compile Include="System\Windows\BinaryFormat\StringRecordsCollection.cs" />
+    <Compile Include="System\Windows\BinaryFormat\ListConverter.cs" />
     <Compile Include="System\Windows\DataObjectCopyingEventArgs.cs" />
     <Compile Include="System\Windows\DataObjectEventArgs.cs" />
     <Compile Include="System\Windows\DataObjectPastingEventArgs.cs" />
@@ -382,10 +418,7 @@
     <Compile Include="System\Windows\Modifiability.cs" />
     <Compile Include="System\Windows\MouseCaptureWithinProperty.cs" />
     <Compile Include="System\Windows\MouseOverProperty.cs" />
-    <Compile Include="System\Windows\Nrbf\WpfNrbfSerializer.cs" />
     <Compile Include="System\Windows\OleServicesContext.cs" />
-    <Compile Include="System\Windows\Ole\DataObjectAdapter.cs" />
-    <Compile Include="System\Windows\Ole\WpfOleServices.cs" />
     <Compile Include="System\Windows\PresentationSource.cs" />
     <Compile Include="System\Windows\QueryContinueDragEventArgs.cs" />
     <Compile Include="System\Windows\QueryContinueDragEventHandler.cs" />
@@ -1398,16 +1431,11 @@
     </ProjectReference>
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
     <ProjectReference Include="$(WpfSourceDir)System.Windows.Input.Manipulations\System.Windows.Input.Manipulations.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)System.Windows.Primitives\System.Windows.Primitives.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
     <ProjectReference Include="$(WpfSourceDir)PresentationCore\ref\PresentationCore-ref.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <MicrosoftPrivateWinFormsReference Include="System.Private.Windows.Core" />
   </ItemGroup>
 
   <!--

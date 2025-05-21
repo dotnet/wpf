@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //---------------------------------------------------------------------------
 //
@@ -146,7 +147,7 @@ namespace Microsoft.Build.Tasks.Windows
             // Validate the property settings
             //
 
-            if (!ValidResourceFiles(ResourceFiles))
+            if (ValidResourceFiles(ResourceFiles) == false)
             {
                // ValidResourceFiles has already showed up error message.
                // Just stop here.

@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /*++
 
@@ -154,7 +155,7 @@ namespace System.Windows.Xps.Serialization
             {
                 colorString = color.ToString(culture);
 
-                if (colorString.StartsWith("sc#", StringComparison.Ordinal) && colorString.Contains('E'))
+                if (colorString.StartsWith("sc#", StringComparison.Ordinal) && colorString.Contains("E"))
                 {
                     //
                     // Fix bug 1588888: Serialization produces non-compliant scRGB color string.

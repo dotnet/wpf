@@ -1,9 +1,9 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Reflection;
 using System.Threading;
@@ -358,7 +358,7 @@ namespace System.Xaml
                 EnsureReflector();
                 if (_reflector.DependsOn is null)
                 {
-                    _reflector.DependsOn = LookupDependsOn() ?? ReadOnlyCollection<XamlMember>.Empty;
+                    _reflector.DependsOn = LookupDependsOn() ?? XamlType.EmptyList<XamlMember>.Value;
                 }
 
                 return _reflector.DependsOn;
@@ -771,7 +771,7 @@ namespace System.Xaml
             }
 
             PropertyInfo pi = UnderlyingMember as PropertyInfo;
-            return pi?.GetGetMethod(true);
+            return (pi is not null) ? pi.GetGetMethod(true) : null;
         }
 
         protected virtual MethodInfo LookupUnderlyingSetter()
@@ -792,7 +792,7 @@ namespace System.Xaml
             else
             {
                 EventInfo ei = UnderlyingMember as EventInfo;
-                return ei?.GetAddMethod(true);
+                return (ei is not null) ? ei.GetAddMethod(true) : null;
             }
         }
 
@@ -1090,7 +1090,7 @@ namespace System.Xaml
 
         #endregion
 
-        private enum MemberType : byte
+        enum MemberType : byte
         {
             Instance,
             Attachable,

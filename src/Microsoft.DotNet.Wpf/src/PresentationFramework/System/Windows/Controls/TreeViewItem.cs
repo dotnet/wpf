@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.Collections.Specialized;
@@ -109,7 +110,10 @@ namespace System.Windows.Controls
             }
 
             TreeViewItemAutomationPeer peer = UIElementAutomationPeer.FromElement(item) as TreeViewItemAutomationPeer;
-            peer?.RaiseExpandCollapseAutomationEvent((bool)e.OldValue, isExpanded);
+            if (peer != null)
+            {
+                peer.RaiseExpandCollapseAutomationEvent((bool)e.OldValue, isExpanded);
+            }
 
             if (isExpanded)
             {
@@ -154,7 +158,10 @@ namespace System.Windows.Controls
             item.Select(isSelected);
 
             TreeViewItemAutomationPeer peer = UIElementAutomationPeer.FromElement(item) as TreeViewItemAutomationPeer;
-            peer?.RaiseAutomationIsSelectedChanged(isSelected);
+            if (peer != null)
+            {
+                peer.RaiseAutomationIsSelectedChanged(isSelected);
+            }
 
             if (isSelected)
             {
@@ -679,7 +686,9 @@ namespace System.Windows.Controls
                         startingContainer = this;
                     }
                     ItemsControl parentItemsControl = ItemsControl.ItemsControlFromItemContainer(this);
-                    ItemInfo startingInfo = parentItemsControl?.ItemInfoFromContainer(this);
+                    ItemInfo startingInfo = (parentItemsControl != null)
+                        ? parentItemsControl.ItemInfoFromContainer(this)
+                        : null;
 
                     return treeView.NavigateByLine(
                         startingInfo,
@@ -729,7 +738,10 @@ namespace System.Windows.Controls
         {
             TreeViewItem tvi = (TreeViewItem)sender;
             TreeView tv = tvi.ParentTreeView;
-            tv?.HandleMouseButtonDown();
+            if (tv != null)
+            {
+                tv.HandleMouseButtonDown();
+            }
         }
         private static void OnRequestBringIntoView(object sender, RequestBringIntoViewEventArgs e)
         {
@@ -776,7 +788,10 @@ namespace System.Windows.Controls
         private object BringItemIntoView(object args)
         {
             FrameworkElement header = HeaderElement;
-            header?.BringIntoView();
+            if (header != null)
+            {
+                header.BringIntoView();
+            }
             return null;
         }
 
@@ -910,7 +925,10 @@ namespace System.Windows.Controls
                 // the ItemValueStorage DP for this container.
 
                 VirtualizingPanel vp = ItemsHost as VirtualizingPanel;
-                vp?.OnClearChildrenInternal();
+                if (vp != null)
+                {
+                    vp.OnClearChildrenInternal();
+                }
 
                 ItemContainerGenerator.RemoveAllInternal(true /*saveRecycleQueue*/);
             }

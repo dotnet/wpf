@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.Collections;
@@ -183,7 +184,7 @@ namespace System.Windows.Controls
         /// <param name="newBinding">The new binding.</param>
         protected virtual void OnSelectedValueBindingChanged(BindingBase oldBinding, BindingBase newBinding)
         {
-            NotifyPropertyChanged(nameof(SelectedValueBinding));
+            NotifyPropertyChanged("SelectedValueBinding");
         }
 
         /// <summary>
@@ -193,7 +194,7 @@ namespace System.Windows.Controls
         /// <param name="newBinding">The new binding.</param>
         protected virtual void OnSelectedItemBindingChanged(BindingBase oldBinding, BindingBase newBinding)
         {
-            NotifyPropertyChanged(nameof(SelectedItemBinding));
+            NotifyPropertyChanged("SelectedItemBinding");
         }
 
         /// <summary>
@@ -203,7 +204,7 @@ namespace System.Windows.Controls
         /// <param name="newBinding">The new binding.</param>
         protected virtual void OnTextBindingChanged(BindingBase oldBinding, BindingBase newBinding)
         {
-            NotifyPropertyChanged(nameof(TextBinding));
+            NotifyPropertyChanged("TextBinding");
         }
 
         #endregion

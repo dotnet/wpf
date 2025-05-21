@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using SC = System.Collections;
 
@@ -387,9 +388,9 @@ namespace System.Windows.Media
 
         private class Enumerator : IEnumerator<FamilyTypeface>, SC.IEnumerator
         {
-            private FamilyTypefaceCollection _list;
-            private int _index;
-            private FamilyTypeface _current;
+            FamilyTypefaceCollection _list;
+            int _index;
+            FamilyTypeface _current;
 
             internal Enumerator(FamilyTypefaceCollection list)
             {

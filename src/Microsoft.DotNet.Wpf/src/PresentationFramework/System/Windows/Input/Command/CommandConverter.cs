@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Type Converter implementation for RoutedCommand
@@ -799,8 +800,8 @@ namespace System.Windows.Input
             return null;
         }
 
-#if DEBUG
-        private static void VerifyCommandDoesntExist( Type type, string name )
+        #if DEBUG
+        static void VerifyCommandDoesntExist( Type type, string name )
         {
             PropertyInfo propertyInfo = type.GetProperty(name, BindingFlags.Public | BindingFlags.Static);
             System.Diagnostics.Debug.Assert( propertyInfo == null, "KnownCommand isn't known to CommandConverter.GetKnownCommand" );

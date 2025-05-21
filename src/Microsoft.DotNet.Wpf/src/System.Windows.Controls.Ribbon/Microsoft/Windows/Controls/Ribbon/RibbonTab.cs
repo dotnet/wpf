@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 
@@ -283,14 +284,20 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
 
             RibbonGroup ribbonGroup = element as RibbonGroup;
-            ribbonGroup?.PrepareRibbonGroup();
+            if (ribbonGroup != null)
+            {
+                ribbonGroup.PrepareRibbonGroup();
+            }
         }
 
         protected override void ClearContainerForItemOverride(DependencyObject element, object item)
         {
             base.ClearContainerForItemOverride(element, item);
             RibbonGroup ribbonGroup = element as RibbonGroup;
-            ribbonGroup?.ClearRibbonGroup();
+            if (ribbonGroup != null)
+            {
+                ribbonGroup.ClearRibbonGroup();
+            }
         }
 
         /// <summary>
@@ -559,7 +566,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         resizeSuccessful = group.DecreaseGroupSize();
                     }
 
-                    if (resizeSuccessful)
+                    if (resizeSuccessful == true)
                     {
                         _automaticResizeOrder.Add(_groupAutoResizeIndex.Value + 1);
                     }
@@ -571,7 +578,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         _groupAutoResizeIndex = Items.Count - 1;
                         break;
                     }
-                } while (!resizeSuccessful);
+                } while (resizeSuccessful == false);
 
                 // If we failed to resize during this pass, and we attempted to resize for every
                 // group, then there are no reamining groups to resize.
@@ -606,7 +613,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             CoerceValue(VisibilityProperty);
 
             RibbonTabHeader tabHeader = RibbonTabHeader;
-            tabHeader?.InitializeTransferProperties();
+            if (tabHeader != null)
+            {
+                tabHeader.InitializeTransferProperties();
+            }
         }
 
         internal void NotifyPropertyChanged(DependencyPropertyChangedEventArgs e)
@@ -663,7 +673,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void OnVisibilityChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             RibbonTab tab = (RibbonTab)sender;
-            tab.RibbonTabHeader?.CoerceValue(VisibilityProperty);
+            if (tab.RibbonTabHeader != null)
+            {
+                tab.RibbonTabHeader.CoerceValue(VisibilityProperty);
+            }
 
             // If the selected tab goes from visible to no longer visible, then reset the Ribbon's selected tab.
             Ribbon ribbon = tab.Ribbon;
@@ -683,7 +696,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             RibbonTab tab = (RibbonTab)d;
             Ribbon ribbon = tab.Ribbon;
-            ribbon?.NotifyTabHeaderChanged();
+            if (ribbon != null)
+            {
+                ribbon.NotifyTabHeaderChanged();
+            }
             OnNotifyHeaderPropertyChanged(d, e);
         }
 
@@ -702,14 +718,20 @@ namespace Microsoft.Windows.Controls.Ribbon
                 ribbonTab.OnUnselected(new RoutedEventArgs(Selector.UnselectedEvent, ribbonTab));
             }
             RibbonTabHeader header = ribbonTab.RibbonTabHeader;
-            header?.CoerceValue(RibbonTabHeader.IsRibbonTabSelectedProperty);
+            if (header != null)
+            {
+                header.CoerceValue(RibbonTabHeader.IsRibbonTabSelectedProperty);
+            }
 
             // Raise UI automation events on this RibbonTab
             if ( AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementSelected)
                 || AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection))
             {
                 RibbonTabAutomationPeer peer = RibbonTabAutomationPeer.CreatePeerForElement(ribbonTab) as RibbonTabAutomationPeer;
-                peer?.RaiseTabSelectionEvents();
+                if (peer != null)
+                {
+                    peer.RaiseTabSelectionEvents();
+                }
             }
         }
 
@@ -720,7 +742,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             RibbonTab ribbonTab = (RibbonTab)sender;
             RibbonTabHeader header = ribbonTab.RibbonTabHeader;
-            header?.CoerceValue(RibbonTabHeader.IsEnabledProperty);
+            if (header != null)
+            {
+                header.CoerceValue(RibbonTabHeader.IsEnabledProperty);
+            }
         }
 
         /// <summary>
@@ -774,7 +799,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonTab tab = (RibbonTab)d;
             tab.NotifyPropertyChanged(e);
             RibbonTabHeader tabHeader = tab.RibbonTabHeader;
-            tabHeader?.NotifyPropertyChanged(e);
+            if (tabHeader != null)
+            {
+                tabHeader.NotifyPropertyChanged(e);
+            }
         }
 
         private static object CoerceHeaderStyle(DependencyObject d, object baseValue)
@@ -814,7 +842,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             RibbonTab tab = (RibbonTab)d;
             RibbonTabHeader tabHeader = tab.RibbonTabHeader;
-            tabHeader?.CoerceValue(KeyTipService.KeyTipProperty);
+            if (tabHeader != null)
+            {
+                tabHeader.CoerceValue(KeyTipService.KeyTipProperty);
+            }
         }
 
         /// <summary>

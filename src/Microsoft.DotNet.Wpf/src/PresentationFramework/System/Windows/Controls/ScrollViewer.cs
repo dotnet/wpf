@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using MS.Internal;
@@ -1365,11 +1366,13 @@ namespace System.Windows.Controls
 
             ScrollBar scrollBar = GetTemplateChild(HorizontalScrollBarTemplateName) as ScrollBar;
 
-            scrollBar?.IsStandalone = false;
+            if (scrollBar != null)
+                scrollBar.IsStandalone = false;
 
             scrollBar = GetTemplateChild(VerticalScrollBarTemplateName) as ScrollBar;
 
-            scrollBar?.IsStandalone = false;
+            if (scrollBar != null)
+                scrollBar.IsStandalone = false;
 
             OnPanningModeChanged();
         }
@@ -1453,7 +1456,10 @@ namespace System.Windows.Controls
         private static void OnPanningModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ScrollViewer sv = d as ScrollViewer;
-            sv?.OnPanningModeChanged();
+            if (sv != null)
+            {
+                sv.OnPanningModeChanged();
+            }
         }
 
         /// <summary>
@@ -2410,12 +2416,15 @@ namespace System.Windows.Controls
 
                     // Fire automation events if automation is active.
                     ScrollViewerAutomationPeer peer = UIElementAutomationPeer.FromElement(this) as ScrollViewerAutomationPeer;
-                    peer?.RaiseAutomationEvents(oldExtentWidth,
+                    if(peer != null)
+                    {
+                        peer.RaiseAutomationEvents(oldExtentWidth,
                                                    oldExtentHeight,
                                                    oldViewportWidth,
                                                    oldViewportHeight,
                                                    oldActualHorizontalOffset,
                                                    oldActualVerticalOffset);
+                    }
                 }
                 finally
                 {
@@ -2561,10 +2570,13 @@ namespace System.Windows.Controls
             }
 
             ScrollViewer sv = target as ScrollViewer;
-            // If any of the ScrollBar scroll commands are raised while
-            // scroll manipulation is in its inertia, then the manipualtion
-            // should be completed.
-            sv?.CompleteScrollManipulation = true;
+            if (sv != null)
+            {
+                // If any of the ScrollBar scroll commands are raised while
+                // scroll manipulation is in its inertia, then the manipualtion
+                // should be completed.
+                sv.CompleteScrollManipulation = true;
+            }
         }
 
         private static void OnQueryScrollCommand(object target, CanExecuteRoutedEventArgs args)

@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Runtime.InteropServices;
 using MS.Internal.IO.Packaging.CompoundFile;
@@ -59,9 +60,9 @@ namespace System.IO.Packaging
     {
         /***********************************************************************/
         // Default values to use for shortcuts
-        private const FileMode   defaultFileOpenMode   = FileMode.OpenOrCreate;
-        private const FileMode   defaultFileCreateMode = FileMode.Create;
-        private const string     defaultDataSpace      = null; // Programmatic change-able?
+        const FileMode   defaultFileOpenMode   = FileMode.OpenOrCreate;
+        const FileMode   defaultFileCreateMode = FileMode.Create;
+        const string     defaultDataSpace      = null; // Programmatic change-able?
 
         /***********************************************************************/
         // Instance values
@@ -69,18 +70,18 @@ namespace System.IO.Packaging
         /// <summary>
         /// A reference back to the parent storage object
         /// </summary>
-        private StorageInfo parentStorage;
+        StorageInfo parentStorage;
 
         /// <summary>
         /// Reference to a class that contains our core information.  This is
         /// maintained by our parent storage.
         /// </summary>
-        private StreamInfoCore core;
+        StreamInfoCore core;
 
         /// <summary>
         /// CompoundFileStreamReference for this StreamInfo object
         /// </summary>
-        private CompoundFileStreamReference _streamReference;
+        CompoundFileStreamReference _streamReference;
 
         /// <summary>
         /// We need to rememeber the FileAccess that was used for openning 
@@ -534,7 +535,7 @@ namespace System.IO.Packaging
             return returnStream;
         }
 
-        private Stream BuildStreamOnUnderlyingIStream( 
+        Stream BuildStreamOnUnderlyingIStream( 
             IStream underlyingIStream,
             FileAccess access, 
             StreamInfo parent )
@@ -559,7 +560,7 @@ namespace System.IO.Packaging
         ///  the root container is read-only, or if we're pointlessly trying
         ///  to create a read-only stream.
         /// </summary>
-        private void CreateTimeReadOnlyCheck( FileAccess access )
+        void CreateTimeReadOnlyCheck( FileAccess access )
         {
             // Can't create a stream if the root container is read-only
             if( FileAccess.Read == parentStorage.Root.OpenAccess )
@@ -571,12 +572,12 @@ namespace System.IO.Packaging
                 throw new ArgumentException(
                     SR.CanNotCreateAsReadOnly);
         }
-
+        
         /// <summary>
         /// Shortcut macro - calls the IStorage::CreateStream method on the parent
         /// storage object.
         /// </summary>
-        private IStream CreateStreamOnParentIStorage(
+        IStream CreateStreamOnParentIStorage(
             string name, 
             int mode )
         {
@@ -619,7 +620,7 @@ namespace System.IO.Packaging
         /// Shortcut macro - calls the IStorage::OpenStream method on the parent
         /// storage object.
         /// </summary>
-        private IStream OpenStreamOnParentIStorage(
+        IStream OpenStreamOnParentIStorage(
             string name, 
             int mode )
         {
@@ -705,7 +706,7 @@ namespace System.IO.Packaging
         /// If it doesn't, abort with an exception.  This implements the little
         /// shortcut.
         /// </summary>
-        private void VerifyExists()
+        void VerifyExists()
         {
             if( !InternalExists() )
             {

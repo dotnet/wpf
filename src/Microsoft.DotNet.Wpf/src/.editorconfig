@@ -44,6 +44,9 @@ dotnet_diagnostic.CA1310.severity = suggestion
 # CA1419: Provide a parameterless constructor that is as visible as the containing type for concrete types derived from 'System.Runtime.InteropServices.SafeHandle'
 dotnet_diagnostic.CA1419.severity = suggestion
 
+# CA1507: Use nameof in place of string
+dotnet_diagnostic.CA1507.severity = suggestion
+
 # CA1510: Use ArgumentNullException throw helper
 dotnet_diagnostic.CA1510.severity = suggestion
 
@@ -52,6 +55,9 @@ dotnet_diagnostic.CA1510.severity = suggestion
 
 # CA2211: Non-constant fields should not be visible
 dotnet_diagnostic.CA2211.severity = suggestion
+
+# CA1512: Use ArgumentOutOfRangeException throw helper
+dotnet_diagnostic.CA1512.severity = suggestion
 
 # CA1513: Use ObjectDisposedException throw helper
 dotnet_diagnostic.CA1513.severity = suggestion
@@ -89,12 +95,24 @@ dotnet_diagnostic.CA1822.severity = suggestion
 # CA1823: Avoid unused private fields
 dotnet_diagnostic.CA1823.severity = suggestion
 
+# CA1825: Avoid zero-length array allocations
+dotnet_diagnostic.CA1825.severity = suggestion
+
 # CA1834: Use StringBuilder.Append(char) for single character strings
 dotnet_diagnostic.CA1834.severity = suggestion
 
 # This will go away as part of porting to CsWin32
 # CA1838: Avoid StringBuilder parameters for P/Invokes
 dotnet_diagnostic.CA1838.severity = suggestion
+
+# CA1845: Use span-based 'string.Concat'
+dotnet_diagnostic.CA1845.severity = suggestion
+
+# CA1846: Prefer AsSpan over Substring
+dotnet_diagnostic.CA1846.severity = suggestion
+
+# CA1847: Use string.Contains(char) instead of string.Contains(string) with single characters
+dotnet_diagnostic.CA1847.severity = suggestion
 
 # CA1851: Possible multiple enumerations of IEnumerable collection
 dotnet_diagnostic.CA1851.severity = suggestion
@@ -116,6 +134,9 @@ dotnet_diagnostic.CA1859.severity = suggestion
 
 # CA2011: Do not assign property within its setter
 dotnet_diagnostic.CA2011.severity = suggestion
+
+# CA2019: ThreadStatic fields should not use inline initialization
+dotnet_diagnostic.CA2019.severity = suggestion
 
 # Should change all internal IntPtr/UIntPtr to nint/uint. IntPtr/UIntPtr no
 # longer do checked operations so they are now equivalent.
@@ -140,6 +161,12 @@ dotnet_diagnostic.CA2219.severity = suggestion
 # CA2242: Test for NaN correctly
 dotnet_diagnostic.CA2242.severity = suggestion
 
+# CA2249: Consider using 'string.Contains' instead of 'string.IndexOf'
+dotnet_diagnostic.CA2249.severity = suggestion
+
+# CA2251: Use String.Equals over String.Compare
+dotnet_diagnostic.CA2251.severity = suggestion
+
 # CA2300: Do not use insecure deserializer BinaryFormatter
 dotnet_diagnostic.CA2300.severity = suggestion
 
@@ -158,8 +185,20 @@ dotnet_diagnostic.CA5362.severity = suggestion
 # IDE0005: Using directive is unnecessary.
 dotnet_diagnostic.IDE0005.severity = suggestion
 
+# IDE0030: Null check can be simplified
+dotnet_diagnostic.IDE0030.severity = suggestion
+
+# IDE0031: Use null propagation
+dotnet_diagnostic.IDE0031.severity = suggestion
+
 # IDE0034: Simplify 'default' expression
 dotnet_diagnostic.IDE0034.severity = suggestion
+
+# IDE0036: Order modifiers
+dotnet_diagnostic.IDE0036.severity = suggestion
+
+# IDE0040: Add accessibility modifiers
+dotnet_diagnostic.IDE0040.severity = suggestion
 
 # IDE0041: Use 'is null' check
 dotnet_diagnostic.IDE0041.severity = suggestion
@@ -188,8 +227,14 @@ dotnet_diagnostic.IDE0062.severity = suggestion
 # IDE0063: Use simple 'using' statement
 dotnet_diagnostic.IDE0063.severity = suggestion
 
+# IDE0065: Misplaced using directive
+dotnet_diagnostic.IDE0065.severity = suggestion
+
 # IDE0066: Convert switch statement to expression
 dotnet_diagnostic.IDE0066.severity = suggestion
+
+# IDE0073: The file header is missing or not located at the top of the file
+dotnet_diagnostic.IDE0073.severity = suggestion
 
 # IDE0074: Use compound assignment
 dotnet_diagnostic.IDE0074.severity = suggestion
@@ -197,11 +242,23 @@ dotnet_diagnostic.IDE0074.severity = suggestion
 # IDE0075: Simplify conditional expression
 dotnet_diagnostic.IDE0075.severity = suggestion
 
+# IDE0076: Invalid global 'SuppressMessageAttribute'
+dotnet_diagnostic.IDE0076.severity = suggestion
+
 # IDE0077: Avoid legacy global suppression format
 dotnet_diagnostic.IDE0077.severity = suggestion
 
 # IDE0078: Use pattern matching
 dotnet_diagnostic.IDE0078.severity = suggestion
+
+# IDE0082: 'typeof' can be converted  to 'nameof'
+dotnet_diagnostic.IDE0082.severity = suggestion
+
+# IDE0100: Remove redundant equality
+dotnet_diagnostic.IDE0100.severity = suggestion
+
+# IDE0150: Prefer 'null' check over type check
+dotnet_diagnostic.IDE0150.severity = suggestion
 
 # IDE0180: Use tuple to swap values
 dotnet_diagnostic.IDE0180.severity = suggestion
@@ -220,6 +277,12 @@ dotnet_diagnostic.IDE0300.severity = suggestion
 
 # IDE1006: Naming Styles
 dotnet_diagnostic.IDE1006.severity = suggestion
+
+# SA1400: Member should declare an access modifier
+dotnet_diagnostic.SA1400.severity = suggestion
+
+# SYSLIB1045: Convert to 'GeneratedRegexAttribute'.
+dotnet_diagnostic.SYSLIB1045.severity = suggestion
 
 # ---------------------
 # Ref specific C# files

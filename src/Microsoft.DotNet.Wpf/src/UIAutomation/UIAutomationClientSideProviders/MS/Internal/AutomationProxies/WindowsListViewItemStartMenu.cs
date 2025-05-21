@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Win32 ListView Item proxy for the Start Menu.
 //      The Start Menu has a special use of ListViews.  The items in the
@@ -44,7 +45,7 @@ namespace MS.Internal.AutomationProxies
             }
             else
             {
-                System.Diagnostics.Debug.Fail("The listview item on the Start Menu has an unexpected IAccessible role!");
+                System.Diagnostics.Debug.Assert(false, "The listview item on the Start Menu has an unexpected IAccessible role!");
             }
         }
 

@@ -1,15 +1,16 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.Win32;
 
 namespace MS.Internal
 {
     /// <summary>
-    ///  Provides methods that assert an application is in a valid state.
+    /// Provides methods that assert an application is in a valid state. 
     /// </summary>
-    internal static class Invariant
+    internal // DO NOT MAKE PUBLIC - See security notes on Assert
+        static class Invariant
     {
         //------------------------------------------------------
         //
@@ -67,18 +68,7 @@ namespace MS.Internal
         {
             if (!condition)
             {
-                FailFast(message: null, detailMessage: null);
-            }
-        }
-
-        /// <summary>
-        ///  Checks <paramref name="value"/> for <see langword="null"/> and shuts down the application if true.
-        /// </summary>
-        internal static void AssertNotNull([NotNull] object value)
-        {
-            if (value is null)
-            {
-                FailFast("Value should not be null", null);
+                FailFast(null, null);
             }
         }
 
@@ -188,10 +178,10 @@ namespace MS.Internal
         /// <param name="detailMessage">
         ///     Additional message to display before shutting down the application.
         /// </param>
-        [DoesNotReturn]
-        private static void FailFast(string message, string detailMessage)
+        private // DO NOT MAKE PUBLIC OR INTERNAL -- See security note
+            static void FailFast(string message, string detailMessage)
         {
-            if (IsDialogOverrideEnabled)
+            if (Invariant.IsDialogOverrideEnabled)
             {
                 // This is the override for stress and other automation.
                 // Automated systems can't handle a popup-dialog, so let
@@ -199,7 +189,8 @@ namespace MS.Internal
                 Debugger.Break();
             }
 
-            Debug.Fail($"Invariant failure: {message}", detailMessage);
+            Debug.Assert(false, "Invariant failure: " + message, detailMessage);
+
             Environment.FailFast(SR.InvariantFailure);
         }
 

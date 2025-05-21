@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -133,11 +134,11 @@ namespace System.Windows.Annotations
 
             if (id.Equals(Guid.Empty))
             {
-                throw new ArgumentException(SR.InvalidGuid, nameof(id));
+                throw new ArgumentException(SR.InvalidGuid, "id");
             }
             if (lastModificationTime.CompareTo(creationTime) < 0)
             {
-                throw new ArgumentException(SR.ModificationEarlierThanCreation, nameof(lastModificationTime));
+                throw new ArgumentException(SR.ModificationEarlierThanCreation, "lastModificationTime");
             }
             _id = id;
             _typeName = annotationType;
@@ -596,8 +597,6 @@ namespace System.Windows.Annotations
         {
             Invariant.Assert(reader != null, "No reader passed in.");
 
-            Span<Range> segments = stackalloc Range[3];
-
             // Read all the attributes
             while (reader.MoveToNextAttribute())
             {
@@ -605,7 +604,7 @@ namespace System.Windows.Annotations
 
                 // Skip null and empty values - they will be treated the
                 // same as if they weren't specified at all
-                if (string.IsNullOrEmpty(value))
+                if (String.IsNullOrEmpty(value))
                     continue;
 
                 switch (reader.LocalName)
@@ -628,29 +627,27 @@ namespace System.Windows.Annotations
                     #pragma warning restore 0618
 
                     case AnnotationXmlConstants.Attributes.TypeName:
-                        ReadOnlySpan<char> typeName = value.AsSpan();
-                        int segmentsLength = typeName.Split(segments, Colon, StringSplitOptions.TrimEntries);
-
-                        if (segmentsLength == 1) // Contains only name
+                        string[] typeName = value.Split(_Colon);
+                        if (typeName.Length == 1)
                         {
-                            ReadOnlySpan<char> name = typeName[segments[0]];
-                            if (name.IsEmpty)
+                            typeName[0] = typeName[0].Trim();
+                            if (String.IsNullOrEmpty(typeName[0]))
                             {
                                 // Just a string of whitespace (empty string doesn't get processed)
                                 throw new FormatException(SR.Format(SR.InvalidAttributeValue, AnnotationXmlConstants.Attributes.TypeName));
                             }
-                            _typeName = new XmlQualifiedName(name.ToString());
+                            _typeName = new XmlQualifiedName(typeName[0]);
                         }
-                        else if (segmentsLength == 2) //Contains both namespace:name
+                        else if (typeName.Length == 2)
                         {
-                            ReadOnlySpan<char> @namespace = typeName[segments[0]];
-                            ReadOnlySpan<char> name = typeName[segments[1]];
-                            if (@namespace.IsEmpty || name.IsEmpty)
+                            typeName[0] = typeName[0].Trim();
+                            typeName[1] = typeName[1].Trim();
+                            if (String.IsNullOrEmpty(typeName[0]) || String.IsNullOrEmpty(typeName[1]))
                             {
                                 // One colon, prefix or suffix is empty string or whitespace
                                 throw new FormatException(SR.Format(SR.InvalidAttributeValue, AnnotationXmlConstants.Attributes.TypeName));
                             }
-                            _typeName = new XmlQualifiedName(name.ToString(), reader.LookupNamespace(@namespace.ToString()));
+                            _typeName = new XmlQualifiedName(typeName[1], reader.LookupNamespace(typeName[0]));
                         }
                         else
                         {
@@ -950,7 +947,7 @@ namespace System.Windows.Annotations
         /// <summary>
         /// Colon used to split the parts of a qualified name attribute value
         /// </summary>
-        private const char Colon = ':';
+        private const char _Colon = ':';
 
         #endregion Private Fields
     }

@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -138,7 +139,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Re-exposes the Visual base class's corresponding VisualTreeHelper implementation as public method.
         /// </summary>
-        public new HitTestResult HitTest(Point point)
+        new public HitTestResult HitTest(Point point)
         {
             return base.HitTest(point);
         }
@@ -146,7 +147,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Re-exposes the Visual base class's corresponding VisualTreeHelper implementation as public method.
         /// </summary>
-        public new void HitTest(HitTestFilterCallback filterCallback, HitTestResultCallback resultCallback, HitTestParameters hitTestParameters)
+        new public void HitTest(HitTestFilterCallback filterCallback, HitTestResultCallback resultCallback, HitTestParameters hitTestParameters)
         {
             base.HitTest(filterCallback, resultCallback, hitTestParameters);
         }

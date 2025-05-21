@@ -5,9 +5,6 @@
 # CI mode - set to true on CI server for PR validation build or official build.
 ci=${ci:-false}
 
-# Build mode
-source_build=${source_build:-false}
-
 # Set to true to use the pipelines logger which will enable Azure logging output.
 # https://github.com/Microsoft/azure-pipelines-tasks/blob/master/docs/authoring/commands.md
 # This flag is meant as a temporary opt-opt for the feature while validate it across
@@ -57,12 +54,11 @@ warn_as_error=${warn_as_error:-true}
 use_installed_dotnet_cli=${use_installed_dotnet_cli:-true}
 
 # Enable repos to use a particular version of the on-line dotnet-install scripts.
-#    default URL: https://builds.dotnet.microsoft.com/dotnet/scripts/v1/dotnet-install.sh
+#    default URL: https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh
 dotnetInstallScriptVersion=${dotnetInstallScriptVersion:-'v1'}
 
 # True to use global NuGet cache instead of restoring packages to repository-local directory.
-# Keep in sync with NuGetPackageroot in Arcade SDK's RepositoryLayout.props.
-if [[ "$ci" == true || "$source_build" == true ]]; then
+if [[ "$ci" == true ]]; then
   use_global_nuget_cache=${use_global_nuget_cache:-false}
 else
   use_global_nuget_cache=${use_global_nuget_cache:-true}
@@ -299,7 +295,7 @@ function with_retries {
 function GetDotNetInstallScript {
   local root=$1
   local install_script="$root/dotnet-install.sh"
-  local install_script_url="https://builds.dotnet.microsoft.com/dotnet/scripts/$dotnetInstallScriptVersion/dotnet-install.sh"
+  local install_script_url="https://raw.githubusercontent.com/dotnet/install-scripts/4b17227b30fbbad567d4d4fba17c59da51bc817b/src/dotnet-install.sh"
 
   if [[ ! -a "$install_script" ]]; then
     mkdir -p "$root"
@@ -507,7 +503,7 @@ function MSBuild-Core {
 
       # When running on Azure Pipelines, override the returned exit code to avoid double logging.
       # Skip this when the build is a child of the VMR orchestrator build.
-      if [[ "$ci" == true && -n ${SYSTEM_TEAMPROJECT:-} && "$product_build" != true ]]; then
+      if [[ "$ci" == true && -n ${SYSTEM_TEAMPROJECT:-} && "$product_build" != true && "$properties" != *"DotNetBuildRepo=true"* ]]; then
         Write-PipelineSetResult -result "Failed" -message "msbuild execution failed."
         # Exiting with an exit code causes the azure pipelines task to log yet another "noise" error
         # The above Write-PipelineSetResult will cause the task to be marked as failure without adding yet another error
@@ -530,12 +526,6 @@ function GetDarc {
     fi
 
     "$eng_root/common/darc-init.sh" --toolpath "$darc_path" $version
-}
-
-# Returns a full path to an Arcade SDK task project file.
-function GetSdkTaskProject {
-  taskName=$1
-  echo "$(dirname $_InitializeToolset)/SdkTasks/$taskName.proj"
 }
 
 ResolvePath "${BASH_SOURCE[0]}"

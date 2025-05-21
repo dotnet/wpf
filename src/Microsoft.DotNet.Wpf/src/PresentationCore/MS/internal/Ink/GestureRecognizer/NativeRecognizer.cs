@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description:
 //      A wrapper class which interoperates with the unmanaged recognition APIS
@@ -122,7 +123,7 @@ namespace MS.Internal.Ink.GestureRecognition
             ArgumentNullException.ThrowIfNull(strokes);
             if (strokes.Count > 2)
             {
-                throw new ArgumentException(SR.StrokeCollectionCountTooBig, nameof(strokes));
+                throw new ArgumentException(SR.StrokeCollectionCountTooBig, "strokes");
             }
 
             // Create an empty result.
@@ -206,7 +207,7 @@ namespace MS.Internal.Ink.GestureRecognition
             if (count == 0)
             {
                 // An empty array is not allowed.
-                throw new ArgumentException(SR.ApplicationGestureArrayLengthIsZero, nameof(applicationGestures));
+                throw new ArgumentException(SR.ApplicationGestureArrayLengthIsZero, "applicationGestures");
             }
 
             bool foundAllGestures = false;
@@ -215,7 +216,7 @@ namespace MS.Internal.Ink.GestureRecognition
             {
                 if (!ApplicationGestureHelper.IsDefined(gesture))
                 {
-                    throw new ArgumentException(SR.ApplicationGestureIsInvalid, nameof(applicationGestures));
+                    throw new ArgumentException(SR.ApplicationGestureIsInvalid, "applicationGestures");
                 }
 
                 //check for allgestures
@@ -227,7 +228,7 @@ namespace MS.Internal.Ink.GestureRecognition
                 //check for dupes
                 if (gestures.Contains(gesture))
                 {
-                    throw new ArgumentException(SR.DuplicateApplicationGestureFound, nameof(applicationGestures));
+                    throw new ArgumentException(SR.DuplicateApplicationGestureFound, "applicationGestures");
                 }
 
                 gestures.Add(gesture);
@@ -237,7 +238,7 @@ namespace MS.Internal.Ink.GestureRecognition
             if (foundAllGestures && gestures.Count != 1)
             {
                 // no dupes allowed
-                throw new ArgumentException(SR.AllGesturesMustExistAlone, nameof(applicationGestures));
+                throw new ArgumentException(SR.AllGesturesMustExistAlone, "applicationGestures");
             }
 
             return gestures.ToArray();
@@ -760,7 +761,7 @@ namespace MS.Internal.Ink.GestureRecognition
             }
         }
 
-        private enum RECO_TYPE : ushort
+        enum RECO_TYPE : ushort
         {
             RECO_TYPE_WSTRING = 0,
             RECO_TYPE_WCHAR = 1

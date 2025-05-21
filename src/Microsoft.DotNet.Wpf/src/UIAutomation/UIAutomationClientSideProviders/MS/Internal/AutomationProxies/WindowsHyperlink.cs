@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Windows Hyperlink Proxy
 
@@ -13,7 +14,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Implementation of the Hyperlink (SysLink) proxy.
-    internal class WindowsHyperlink: ProxyHwnd
+    class WindowsHyperlink: ProxyHwnd
     {
         // ------------------------------------------------------
         //
@@ -22,8 +23,8 @@ namespace MS.Internal.AutomationProxies
         // ------------------------------------------------------
 
         #region Constructors
-
-        private WindowsHyperlink (IntPtr hwnd, ProxyFragment parent, int item)
+        
+        WindowsHyperlink (IntPtr hwnd, ProxyFragment parent, int item)
             : base( hwnd, parent, item)
         {
             // Set the strings to return properly the properties.
@@ -121,14 +122,18 @@ namespace MS.Internal.AutomationProxies
         #region ProxyHwnd Interface
 
         // Builds a list of Win32 WinEvents to process a UIAutomation Event.
-        protected override ReadOnlySpan<WinEventTracker.EvtIdProperty> EventToWinEvent(AutomationEvent idEvent)
+        // Param name="idEvent", UIAuotmation event
+        // Param name="cEvent"out, number of winevent set in the array
+        // Returns an array of Events to Set. The number of valid entries in this array pass back in cEvent
+        protected override WinEventTracker.EvtIdProperty[] EventToWinEvent(AutomationEvent idEvent, out int cEvent)
         {
             if (idEvent == InvokePattern.InvokedEvent)
             {
-                return new WinEventTracker.EvtIdProperty[1] { new(NativeMethods.EventSystemCaptureEnd, idEvent) };
+                cEvent = 1;
+                return new WinEventTracker.EvtIdProperty[1] { new WinEventTracker.EvtIdProperty(NativeMethods.EventSystemCaptureEnd, idEvent) };
             }
 
-            return base.EventToWinEvent(idEvent);
+            return base.EventToWinEvent(idEvent, out cEvent);
         }
 
         #endregion ProxyHwnd Interface
@@ -211,7 +216,7 @@ namespace MS.Internal.AutomationProxies
                 bGetItemResult = XSendMessage.XSend(_hwnd, NativeMethods.LM_HITTEST, IntPtr.Zero, new IntPtr(&HitTestInfo), Marshal.SizeOf(HitTestInfo.GetType()));
             }
 
-            if (bGetItemResult && HitTestInfo.item.iLink >= 0 && GetLinkItem (HitTestInfo.item.iLink))
+            if (bGetItemResult == true && HitTestInfo.item.iLink >= 0 && GetLinkItem (HitTestInfo.item.iLink))
             {
                 return CreateHyperlinkItem (_linkItem, HitTestInfo.item.iLink);
             }
@@ -339,7 +344,7 @@ namespace MS.Internal.AutomationProxies
     //------------------------------------------------------
 
     // Implementation of the PAW WindowsHyperlinkItem (SysLink) proxy.
-    internal class WindowsHyperlinkItem : ProxySimple, IInvokeProvider
+    class WindowsHyperlinkItem : ProxySimple, IInvokeProvider
     {
         // ------------------------------------------------------
         //
@@ -492,7 +497,7 @@ namespace MS.Internal.AutomationProxies
                             bGetItemResult = XSendMessage.XSend(_hwnd, NativeMethods.LM_HITTEST, IntPtr.Zero, new IntPtr(&HitTestInfo), Marshal.SizeOf(HitTestInfo.GetType()));
                         }
 
-                        if (bGetItemResult && HitTestInfo.item.iLink == _item)
+                        if (bGetItemResult == true && HitTestInfo.item.iLink == _item)
                         {
                             //
                             // N.B. [SEdmison]:

@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -132,7 +133,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             TextSelectionHelper.CheckSelection(selection, out start, out end, out textSegments);
             if (!(start is TextPointer))
-                throw new ArgumentException(SR.WrongSelectionType, nameof(selection));
+                throw new ArgumentException(SR.WrongSelectionType, "selection");
 
             ITextPointer elementStart;
             ITextPointer elementEnd;
@@ -142,10 +143,10 @@ namespace MS.Internal.Annotations.Anchoring
                 return null;
 
             if (elementStart.CompareTo(end) > 0)
-                throw new ArgumentException(SR.InvalidStartNodeForTextSelection, nameof(startNode));
+                throw new ArgumentException(SR.InvalidStartNodeForTextSelection, "startNode");
 
             if (elementEnd.CompareTo(start) < 0)
-                throw new ArgumentException(SR.InvalidStartNodeForTextSelection, nameof(startNode));
+                throw new ArgumentException(SR.InvalidStartNodeForTextSelection, "startNode");
 
             ContentLocatorPart part = new ContentLocatorPart(CharacterRangeElementName);
 
@@ -189,7 +190,7 @@ namespace MS.Internal.Annotations.Anchoring
             ArgumentNullException.ThrowIfNull(locatorPart);
 
             if (CharacterRangeElementName != locatorPart.PartType)
-                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), nameof(locatorPart));
+                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), "locatorPart");
 
             // First we extract the offset and length of the
             // text range from the locator part.
@@ -239,7 +240,7 @@ namespace MS.Internal.Annotations.Anchoring
             //we do not support 0 or negative length selection
             if (anchor.IsEmpty)
             {
-                throw new ArgumentException(SR.IncorrectAnchorLength, nameof(locatorPart));
+                throw new ArgumentException(SR.IncorrectAnchorLength, "locatorPart");
             }
 
             attachmentLevel = AttachmentLevel.Full;
@@ -431,18 +432,18 @@ namespace MS.Internal.Annotations.Anchoring
         private static void GetLocatorPartSegmentValues(ContentLocatorPart locatorPart, int segmentNumber, out int startOffset, out int endOffset)
         {
             if (segmentNumber < 0)
-                throw new ArgumentException(nameof(segmentNumber));
+                throw new ArgumentException("segmentNumber");
 
-            ReadOnlySpan<char> segmentString = locatorPart.NameValuePairs[SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)].AsSpan();
+            string segmentString = locatorPart.NameValuePairs[SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)];
 
-            Span<Range> splitRegions = stackalloc Range[3];
-            if (segmentString.Split(splitRegions, Separator) != 2)
+            string[] values = segmentString.Split(Separator);
+            if (values.Length != 2)
             {
                 throw new ArgumentException(SR.Format(SR.InvalidLocatorPart, SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)));
             }
 
-            startOffset = int.Parse(segmentString[splitRegions[0]], NumberFormatInfo.InvariantInfo);
-            endOffset = int.Parse(segmentString[splitRegions[1]], NumberFormatInfo.InvariantInfo);
+            startOffset = Int32.Parse(values[0], NumberFormatInfo.InvariantInfo);
+            endOffset = Int32.Parse(values[1], NumberFormatInfo.InvariantInfo);
         }
 
         /// <summary>

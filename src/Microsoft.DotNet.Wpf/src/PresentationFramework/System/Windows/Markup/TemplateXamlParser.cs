@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
 *
@@ -598,7 +599,10 @@ namespace System.Windows.Markup
         {
             if (xamlDefAttributeNode.Name == BamlMapTable.NameString)
             {
-                BamlRecordWriter?.WriteDefAttribute(xamlDefAttributeNode);
+                if (BamlRecordWriter != null)
+                {
+                    BamlRecordWriter.WriteDefAttribute(xamlDefAttributeNode);
+                }
             }
             else
             {
@@ -1724,9 +1728,9 @@ namespace System.Windows.Markup
 #endif
         }
 
-        #endregion Methods
+#endregion Methods
 
-        #region Properties
+#region Properties
 
 #if !PBTCOMPILER
         /// <summary>
@@ -1743,7 +1747,7 @@ namespace System.Windows.Markup
         /// Style, then don't consider it to be in a defer loaded section since
         /// this is used a cue to determine when to generate dictionary keys.
         /// </summary>
-        private bool InDeferLoadedSection
+        bool InDeferLoadedSection
         {
             get { return BamlRecordWriter != null &&
                          BamlRecordWriter.InDeferLoadedSection &&
@@ -1753,7 +1757,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Return true if this is pass one of a compile process.
         /// </summary>
-        private bool IsLocalPass1
+        bool IsLocalPass1
         {
             get { return BamlRecordWriter == null; }
         }
@@ -1794,61 +1798,61 @@ namespace System.Windows.Markup
 #endif
         // The XamlParser that the TokenReader was using when this instance of
         // the TemplateXamlParser was created.  This must be restored on exit
-        private XamlParser      _previousXamlParser;
+        XamlParser      _previousXamlParser;
 
         // Depth in the Xaml file when parsing of this template block started.
         // This is used to determine when to stop parsing
-        private int             _startingDepth;
+        int             _startingDepth;
 
         // Number of template root nodes encountered immediately under a Template.  Only 1
         // is allowed.
-        private int             _templateRootCount;
+        int             _templateRootCount;
 
-        private StyleModeStack  _styleModeStack = new StyleModeStack();
+        StyleModeStack  _styleModeStack = new StyleModeStack();
 
         // Depth in the element tree where a <Setter .../> has begun.
-        private int             _inSetterDepth = -1;
+        int             _inSetterDepth = -1;
 
         // The actual Type of the TargetType property on template.  This may be null.
-        private Type            _templateTargetTypeType;
+        Type            _templateTargetTypeType;
 
         // The default TargetType of the template to use when TargetType is not set.
-        private Type            _defaultTargetType;
+        Type            _defaultTargetType;
 
         // The XamlPropertyNode for the "Foo" Property attribute in <Setter Property="Foo" ... />
         // or <Trigger Property="Foo" .../>
-        private XamlPropertyNode _setterOrTriggerPropertyNode;
+        XamlPropertyNode _setterOrTriggerPropertyNode;
 
         // The Property node for Value attribute in <Setter Value="Bar" ... /> or
         // <Trigger Value="Bar" .../>
-        private XamlPropertyNode _setterOrTriggerValueNode;
+        XamlPropertyNode _setterOrTriggerValueNode;
 
         // Depth in the element tree where a Trigger or MultiTrigger
         // section has begun.  Set to -1 to indicate it is not within such a section.
-        private int             _inPropertyTriggerDepth = -1;
+        int             _inPropertyTriggerDepth = -1;
 
         // Depth of nested complex properties within a VisualTree.  This is used to
         // track when it is valid to have a clr property vs a dependency property
         // specified in the VisualTree;
-        private int             _visualTreeComplexPropertyDepth = -1;
+        int             _visualTreeComplexPropertyDepth = -1;
 
         // Depth of nested complex properties within the Triggers section.  This is used to
         // track when it is valid to have text.
-        private int             _triggerComplexPropertyDepth = -1;
+        int             _triggerComplexPropertyDepth = -1;
 #if PBTCOMPILER
         // True if x:Key property was found on the template tag
-        private bool            _defNameFound;
+        bool            _defNameFound;
 
         // During second pass, remember the info for the DataType property, so
         // that we can write out a key if no x:Key is present
-        private XamlPropertyWithTypeNode _dataTypePropertyNode;
-        private int                      _dataTypePropertyNodeDepth;
+        XamlPropertyWithTypeNode _dataTypePropertyNode;
+        int                      _dataTypePropertyNodeDepth;
 
         // True if event is in the same VisualTree FEF.
-        private bool            _isSameScope;
+        bool            _isSameScope;
 
         // Type to use for the implicit key in the dictionary
-        private Type            _templateKeyType;
+        Type            _templateKeyType;
 
         // Cached Type for ItemContainerTemplate
         private static Type _itemContainerTemplateType;
@@ -1861,19 +1865,19 @@ namespace System.Windows.Markup
 
 #endif
         // Stack to keep track of element types during compile.
-        private Stack           _elementTypeStack = new Stack(5);
+        Stack           _elementTypeStack = new Stack(5);
 
         // Dictionary of names, where the key is the name string and the value
         // is the element type that is using that name.
-        private Hashtable       _IDTypes = new Hashtable();
+        Hashtable       _IDTypes = new Hashtable();
 
         // The value of <Setter TargetName="foo" ... /> that identifies the target
         // of the set operation or the value of <Condition SourceName="bar" ... />
         // that identifies the source of a trigger condition.
-        private string          _setterTargetNameOrConditionSourceName;
+        string          _setterTargetNameOrConditionSourceName;
 
         // MemberInfo fo the DP Property value for the case where a Value is read as ComplexAsSimple.
-        private MemberInfo      _setterOrTriggerPropertyMemberInfo;
+        MemberInfo      _setterOrTriggerPropertyMemberInfo;
 
 #endregion Data
     }

@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.Collections;              // for ArrayList
@@ -167,7 +168,10 @@ namespace Microsoft.Internal.AlphaFlattener
                     }
 #endif
 
-                    opacityMask?.ApplyTransform(transform);
+                    if (opacityMask != null)
+                    {
+                        opacityMask.ApplyTransform(transform);
+                    }
 
                     // Flatten sub-tree structure into a new DisplayList
                     fl.TreeFlatten(ntree, clip, transform, 1.0, null);
@@ -219,7 +223,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
 
                 // Push transform/clip/opacity to leaf node
-                tree.Transform *= transform;
+                tree.Transform = tree.Transform * transform;
 
                 if (tree.Clip == null)
                 {
@@ -357,7 +361,10 @@ namespace Microsoft.Internal.AlphaFlattener
 #if DEBUG
             for (int i = 0; i < count; i ++)
             {
-                commands[i]?.SetID(i);
+                if (commands[i] != null)
+                {
+                    commands[i].SetID(i);
+                }
             }
 
             Console.WriteLine();
@@ -449,9 +456,9 @@ namespace Microsoft.Internal.AlphaFlattener
 
 #if DEBUG
 
-        private static int vipID; // = 0;
+        static int vipID; // = 0;
 
-        private static void SerializeVisual(Visual visual, double width, double height, String filename)
+        static void SerializeVisual(Visual visual, double width, double height, String filename)
         {
             FileStream    stream = new FileStream(filename, FileMode.Create, FileAccess.ReadWrite);
             XmlTextWriter writer = new System.Xml.XmlTextWriter(stream, System.Text.Encoding.UTF8)
@@ -534,7 +541,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="j">second command</param>
         /// <param name="pj">command[j]</param>
         /// <param name="disconnect">Disconnect (i,j) overlap/underlay relationship</param>
-        private static void SwitchCommands(List<PrimitiveInfo> commands, int i, PrimitiveInfo pi, int j, PrimitiveInfo pj, bool disconnect)
+        static private void SwitchCommands(List<PrimitiveInfo> commands, int i, PrimitiveInfo pi, int j, PrimitiveInfo pj, bool disconnect)
         {
             if ((pi != null) && (pj != null) && disconnect)
             {
@@ -689,7 +696,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     {
                         // Blend it with brush underneath
                         BrushProxy blendedBrush = gp.Brush;
-                        BrushProxy blendedPenBrush = gp.Pen?.StrokeBrush;
+                        BrushProxy blendedPenBrush = gp.Pen == null ? null : gp.Pen.StrokeBrush;
 
                         if (blendedBrush != null)
                         {
@@ -718,7 +725,10 @@ namespace Microsoft.Internal.AlphaFlattener
                         if (proceedBlending)
                         {
                             gp.Brush = blendedBrush;
-                            gp.Pen?.StrokeBrush = blendedPenBrush;
+                            if (gp.Pen != null)
+                            {
+                                gp.Pen.StrokeBrush = blendedPenBrush;
+                            }
                         }
 
                         if (proceedBlending && pi.primitive.IsOpaque)
@@ -951,7 +961,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
 #if DEBUG
 
-        private static bool HasUnmanagedCodePermission()
+        static bool HasUnmanagedCodePermission()
         {
             return true;
         }
@@ -1168,7 +1178,7 @@ namespace Microsoft.Internal.AlphaFlattener
             }
             else
             {
-                Debug.Fail("Wrong Primitive type");
+                Debug.Assert(false, "Wrong Primitive type");
             }
         }
 

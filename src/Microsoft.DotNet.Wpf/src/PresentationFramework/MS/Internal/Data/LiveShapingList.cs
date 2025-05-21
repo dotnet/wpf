@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: List data structure, used for live shaping.
@@ -56,10 +57,10 @@ namespace MS.Internal.Data
             _dp = dp;
         }
 
-        private string _path;
+        string _path;
         public string Path { get { return _path; } }
 
-        private DependencyProperty _dp;
+        DependencyProperty _dp;
         public DependencyProperty Property { get { return _dp; } }
     }
 
@@ -183,7 +184,7 @@ namespace MS.Internal.Data
                     // if no explicit list, use the group description properties
                     groupingProperties = new Collection<string>();
                     ICollectionView icv = View as ICollectionView;
-                    ObservableCollection<GroupDescription> groupDescriptions = icv?.GroupDescriptions;
+                    ObservableCollection<GroupDescription> groupDescriptions = (icv != null) ? icv.GroupDescriptions : null;
 
                     if (groupDescriptions != null)
                     {
@@ -214,7 +215,7 @@ namespace MS.Internal.Data
             _dpFromPath.EndReset();
         }
 
-        private bool TestLiveShapingFlag(LiveShapingFlags flags, LiveShapingFlags flag)
+        bool TestLiveShapingFlag(LiveShapingFlags flags, LiveShapingFlags flag)
         {
             return (flags & flag) != 0;
         }
@@ -404,7 +405,8 @@ namespace MS.Internal.Data
             }
         }
 
-        private string NormalizePath(string path)
+
+        string NormalizePath(string path)
         {
             return String.IsNullOrEmpty(path) ? String.Empty : path;
         }
@@ -463,13 +465,13 @@ namespace MS.Internal.Data
 
         internal event EventHandler LiveShapingDirty;
 
-        private void OnLiveShapingDirty()
+        void OnLiveShapingDirty()
         {
             if (LiveShapingDirty != null)
                 LiveShapingDirty(this, EventArgs.Empty);
         }
 
-        private bool ContainsDP(LivePropertyInfo[] infos, DependencyProperty dp)
+        bool ContainsDP(LivePropertyInfo[] infos, DependencyProperty dp)
         {
             for (int k = 0; k < infos.Length; ++k)
             {
@@ -645,12 +647,12 @@ namespace MS.Internal.Data
 
         #region Private Methods
 
-        private void ForEach(Action<LiveShapingItem> action)
+        void ForEach(Action<LiveShapingItem> action)
         {
             _root.ForEach(action);
         }
 
-        private void ForEachUntil(Func<LiveShapingItem, bool> action)
+        void ForEachUntil(Func<LiveShapingItem, bool> action)
         {
             _root.ForEachUntil(action);
         }
@@ -680,7 +682,7 @@ namespace MS.Internal.Data
 
         #region Private Types
 
-        private class DPFromPath : Dictionary<String, DependencyProperty>
+        class DPFromPath : Dictionary<String, DependencyProperty>
         {
             public void BeginReset()
             {
@@ -739,11 +741,11 @@ namespace MS.Internal.Data
                 }
             }
 
-            private List<string> _unusedKeys;
-            private int _dpIndex;
+            List<string> _unusedKeys;
+            int _dpIndex;
         }
 
-        private class ItemEnumerator : IEnumerator
+        class ItemEnumerator : IEnumerator
         {
             public ItemEnumerator(IEnumerator<LiveShapingItem> ie)
             {
@@ -765,35 +767,34 @@ namespace MS.Internal.Data
                 get { return _ie.Current.Item; }
             }
 
-            private IEnumerator<LiveShapingItem> _ie;
+            IEnumerator<LiveShapingItem> _ie;
         }
 
         #endregion
 
         #region Private Data
 
-        private ICollectionViewLiveShaping _view;          // my owner
-        private DPFromPath _dpFromPath;    // map of Path -> DP
-        private LivePropertyInfo[] _compInfos;     // properties for comparing
-        private LivePropertyInfo[] _sortInfos;     // properties for sorting
-        private LivePropertyInfo[] _filterInfos;   // properties for filtering
-        private LivePropertyInfo[] _groupInfos;    // properties for grouping
-        private IComparer _comparer;      // comparer - for sort/search
+        ICollectionViewLiveShaping _view;          // my owner
+        DPFromPath _dpFromPath;    // map of Path -> DP
+        LivePropertyInfo[] _compInfos;     // properties for comparing
+        LivePropertyInfo[] _sortInfos;     // properties for sorting
+        LivePropertyInfo[] _filterInfos;   // properties for filtering
+        LivePropertyInfo[] _groupInfos;    // properties for grouping
+        IComparer _comparer;      // comparer - for sort/search
 
-        private LiveShapingTree _root;          // root of the balanced tree
-        private LiveShapingTree _filterRoot;    // root of tree for filtered items
+        LiveShapingTree _root;          // root of the balanced tree
+        LiveShapingTree _filterRoot;    // root of tree for filtered items
 
-        private List<LiveShapingItem> _sortDirtyItems;    // list of items needing sorting fixup
-        private List<LiveShapingItem> _filterDirtyItems;  // list of items needing filtering fixup
-        private List<LiveShapingItem> _groupDirtyItems;   // list of items needing grouping fixup
+        List<LiveShapingItem> _sortDirtyItems;    // list of items needing sorting fixup
+        List<LiveShapingItem> _filterDirtyItems;  // list of items needing filtering fixup
+        List<LiveShapingItem> _groupDirtyItems;   // list of items needing grouping fixup
 
-        private bool _isRestoringLiveSorting;    // true while restoring order
-        private bool _isCustomSorting;   // true if not using SortFieldComparer
+        bool _isRestoringLiveSorting;    // true while restoring order
+        bool _isCustomSorting;   // true if not using SortFieldComparer
 
-        private static List<DependencyProperty> s_dpList = new List<DependencyProperty>();
-
+        static List<DependencyProperty> s_dpList = new List<DependencyProperty>();
         // static list of DPs, shared by all instances of lists
-        private static readonly object s_Sync = new object();  // lock for s_dpList
+        static readonly object s_Sync = new object();  // lock for s_dpList
 
         #endregion
     }

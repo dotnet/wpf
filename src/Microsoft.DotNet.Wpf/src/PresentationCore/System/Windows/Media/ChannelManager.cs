@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -16,7 +17,7 @@ using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods.MilCor
 
 namespace System.Windows.Media
 {
-    internal partial class MediaContext
+    partial class MediaContext
     {
         /// <summary>
         /// A helper structure that abstracts channel management.

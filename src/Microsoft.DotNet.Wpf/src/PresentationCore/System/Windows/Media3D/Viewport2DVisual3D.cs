@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using MS.Internal.Media3D;
@@ -55,7 +56,7 @@ namespace System.Windows.Media.Media3D
                 
                     // in this case we have a non-indexed mesh
                     int count = positions.Count;
-                    count -= count % 3;
+                    count = count - (count % 3);
 
                     for (int i = 0; i < count; i+=3)
                     {
@@ -373,7 +374,7 @@ namespace System.Windows.Media.Media3D
             // Visual(3D).AddVisualChild for the things they propagate on adding a new child
             
             // Fire notifications
-            this.OnVisualChildrenChanged(child, visualRemoved: null);
+            this.OnVisualChildrenChanged(child, null /* no removed child */);
             child.FireOnVisualParentChanged(null);
         }
 
@@ -405,7 +406,7 @@ namespace System.Windows.Media.Media3D
             
             // Fire notifications
             child.FireOnVisualParentChanged(this);
-            OnVisualChildrenChanged(visualAdded: null, child);
+            OnVisualChildrenChanged(null /* no child added */, child);
         }
 
         /// <summary>
@@ -501,7 +502,7 @@ namespace System.Windows.Media.Media3D
                     // the IsVisualHostMaterialProperty should not be set on a MaterialGroup - verify that
                     if ((Boolean)matGroup.GetValue(Viewport2DVisual3D.IsVisualHostMaterialProperty))
                     {
-                        throw new ArgumentException(SR.Viewport2DVisual3D_MaterialGroupIsInteractiveMaterial, nameof(material));
+                        throw new ArgumentException(SR.Viewport2DVisual3D_MaterialGroupIsInteractiveMaterial, "material");
                     }
 
                     // iterate over the children and put them on the stack of materials to modify
@@ -525,7 +526,7 @@ namespace System.Windows.Media.Media3D
             // throw if there is more than 1 interactive material
             if (numMaterialsSwapped > 1)
             {
-                throw new ArgumentException(SR.Viewport2DVisual3D_MultipleInteractiveMaterials, nameof(material));
+                throw new ArgumentException(SR.Viewport2DVisual3D_MultipleInteractiveMaterials, "material");
             }
         }
        
@@ -826,7 +827,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected override Visual3D GetVisual3DChild(int index)
         {
-           throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
+           throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
         }
 
         /// <summary>
@@ -858,7 +859,7 @@ namespace System.Windows.Media.Media3D
 
             if (index != 0 || visualChild == null)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
             
             return visualChild;

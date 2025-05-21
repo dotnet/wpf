@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows.Threading;
 using System.ComponentModel;
@@ -523,21 +524,21 @@ namespace System.Windows.Interop
             {
                 throw new ArgumentException(
                     SR.HwndTarget_InvalidWindowHandle,
-                    nameof(hwnd)
+                    "hwnd"
                     );
             }
             else if (processId != Environment.ProcessId)
             {
                 throw new ArgumentException(
                     SR.HwndTarget_InvalidWindowProcess,
-                    nameof(hwnd)
+                    "hwnd"
                     );
             }
             else if (threadId != SafeNativeMethods.GetCurrentThreadId())
             {
                 throw new ArgumentException(
                     SR.HwndTarget_InvalidWindowThread,
-                    nameof(hwnd)
+                    "hwnd"
                     );
             }
 
@@ -1300,7 +1301,7 @@ namespace System.Windows.Interop
 
         private void OnMonitorPowerEvent(object sender, MonitorPowerEventArgs eventArgs)
         {
-            OnMonitorPowerEvent(sender, eventArgs.PowerOn, paintOnWake: true);
+            OnMonitorPowerEvent(sender, eventArgs.PowerOn, /*paintOnWake*/true);
         }
 
         private void OnMonitorPowerEvent(object sender, bool powerOn, bool paintOnWake)
@@ -1413,7 +1414,8 @@ namespace System.Windows.Interop
                 if(peer == null)
                     peer = uiroot.CreateGenericRootAutomationPeer();
 
-                peer?.Hwnd = handle;
+                if(peer != null)
+                    peer.Hwnd = handle;
             }
 
             // This can happen if the root visual is not UIElement. In this case,
@@ -1423,7 +1425,10 @@ namespace System.Windows.Interop
                 peer = UIElementAutomationPeer.GetRootAutomationPeer(root, handle);
             }
 
-            peer?.AddToAutomationEventList();
+            if (peer != null)
+            {
+                peer.AddToAutomationEventList();
+            }
 
             return peer;
         }
@@ -1954,7 +1959,7 @@ namespace System.Windows.Interop
             }
         }
 
-        private bool _windowPosChanging;
+        bool _windowPosChanging;
 
         private void OnShowWindow(bool enableRenderTarget)
         {
@@ -2586,7 +2591,7 @@ namespace System.Windows.Interop
                     // behavior. It is too early for the hwnd to paint, hence
                     // pass paintOnWake=false assuming that it will soon get
                     // a WM_PAINT message.
-                    hwndTarget.OnMonitorPowerEvent(null, _monitorOn, paintOnWake: false);
+                    hwndTarget.OnMonitorPowerEvent(null, _monitorOn, /*paintOnWake*/ false);
                 }
                 _hwndTargetCount++;
             }

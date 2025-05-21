@@ -23,8 +23,10 @@
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         Padding="{TemplateBinding Padding}">
-                        <ItemsPresenter 
-                            ClipToBounds="True" />
+                        <StackPanel
+                            ClipToBounds="True"
+                            IsItemsHost="True"
+                            Orientation="Horizontal" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

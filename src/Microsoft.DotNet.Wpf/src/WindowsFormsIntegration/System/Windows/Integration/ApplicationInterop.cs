@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -196,7 +197,7 @@ namespace System.Windows.Forms.Integration
         /// </summary>
         /// <param name="window"></param>
         /// <returns></returns>
-        private static ModelessWindowFilter FindFilter(SW.Window window)
+        static ModelessWindowFilter FindFilter(SW.Window window)
         {
             ModelessWindowFilter windowFilter = null;
 
@@ -256,7 +257,7 @@ namespace System.Windows.Forms.Integration
 
         //Need a recursion guard for PreFilterMessage: the same message can come back to us via the 
         //ComponentDispatcher.
-        private bool _inPreFilterMessage;
+        bool _inPreFilterMessage;
         public bool PreFilterMessage(ref SWF.Message msg)
         {
             if (_window == null || !_window.IsActive)
@@ -304,8 +305,8 @@ namespace System.Windows.Forms.Integration
     /// </summary>
     internal class WeakReferenceList<T> where T : class
     {
-        private List<WeakReference> _internalList;
-        private readonly object _syncRoot = new object();
+        List<WeakReference> _internalList;
+        readonly object _syncRoot = new object();
 
         public WeakReferenceList()
             : base()

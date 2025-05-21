@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.Collections.ObjectModel;
@@ -325,7 +326,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 throw new ArgumentException(
                     SR.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed,
-                    nameof(user)
+                    "user"
                     );
             }
 
@@ -495,7 +496,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 if (!value.CanEncrypt && !value.CanDecrypt)
                 {
-                    throw new ArgumentException(SR.CryptoProviderIsNotReady, nameof(value));
+                    throw new ArgumentException(SR.CryptoProviderIsNotReady, "value");
                 }
 
                 _cryptoProvider = value;
@@ -749,7 +750,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             if (param is not LoadUseLicenseForUserParams lulfup)
             {
-                throw new ArgumentException(SR.CallbackParameterInvalid, nameof(param));
+                throw new ArgumentException(SR.CallbackParameterInvalid, "param");
             }
 
             ContentUser userDesired = lulfup.User;
@@ -803,7 +804,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             if (param is not ContentUser userToDelete)
             {
-                throw new ArgumentException(SR.CallbackParameterInvalid, nameof(param));
+                throw new ArgumentException(SR.CallbackParameterInvalid, "param");
             }
 
             ContentUser userFromStream = null;

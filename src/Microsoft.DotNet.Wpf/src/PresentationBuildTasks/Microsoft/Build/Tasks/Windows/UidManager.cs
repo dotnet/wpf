@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //---------------------------------------------------------------------------
 //
@@ -504,11 +505,7 @@ namespace Microsoft.Build.Tasks.Windows
                                 collector.RootElementLinePosition = reader.LinePosition;
                             }
 
-#if !NETFX
-                            if (reader.Name.Contains('.'))
-#else
-                            if (reader.Name.Contains("."))
-#endif
+                            if (reader.Name.IndexOf('.') >= 0)
                             {
                                 // the name has a dot, which suggests it is a property tag.
                                 // we will ignore adding uid
@@ -925,7 +922,7 @@ namespace Microsoft.Build.Tasks.Windows
 
 
     // writing to a file, removing or updating uid
-    internal sealed partial class UidWriter
+    internal sealed class UidWriter
     {
         internal UidWriter(UidCollector collector, Stream source, Stream target)
         {
@@ -1101,7 +1098,7 @@ namespace Microsoft.Build.Tasks.Windows
             // escape all the Xml entities in the value
             string attributeValue = EscapedXmlEntities.Replace(
                 uid.Value,
-                s_escapeMatchEvaluator
+                EscapeMatchEvaluator
                 );
 
             string clause = string.Format(
@@ -1128,6 +1125,11 @@ namespace Microsoft.Build.Tasks.Windows
 
         private void WriteNewAttributeValue(string value)
         {
+            string attributeValue = EscapedXmlEntities.Replace(
+                value,
+                EscapeMatchEvaluator
+                );
+
             _targetWriter.Write(
                 string.Format(
                     TypeConverterHelper.InvariantEnglishUS,
@@ -1303,13 +1305,8 @@ namespace Microsoft.Build.Tasks.Windows
             Skip  = 1,  // skip the content
         }
 
-#if !NETFX
-        [GeneratedRegex("(<|>|\"|'|&)", RegexOptions.CultureInvariant)]
-        private static partial Regex EscapedXmlEntities { get; }
-#else
-        private static readonly Regex EscapedXmlEntities = new("(<|>|\"|'|&)", RegexOptions.CultureInvariant | RegexOptions.Compiled);
-#endif
-        private static readonly MatchEvaluator s_escapeMatchEvaluator = new MatchEvaluator(EscapeMatch);
+        private static Regex          EscapedXmlEntities   = new Regex("(<|>|\"|'|&)", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+        private static MatchEvaluator EscapeMatchEvaluator = new MatchEvaluator(EscapeMatch);
 
         /// <summary>
         /// the delegate to escape the matched pattern

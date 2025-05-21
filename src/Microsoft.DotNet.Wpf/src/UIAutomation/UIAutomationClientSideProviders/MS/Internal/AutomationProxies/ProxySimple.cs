@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Base class for all the Win32 and office Controls.
 //
@@ -28,7 +29,7 @@
 using System;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Collections.Generic;
+using System.Collections;
 using Accessibility;
 using System.Windows;
 using MS.Win32;
@@ -40,7 +41,7 @@ namespace MS.Internal.AutomationProxies
     //
     // The distinction between Proxy siblings is made through an ID (called _item).
     // The underlying hwnd is kept, as the proxy parent and a flag to _fSubtree.
-    internal class ProxySimple : IRawElementProviderSimple, IRawElementProviderFragment
+    class ProxySimple : IRawElementProviderSimple, IRawElementProviderFragment
     {
         // ------------------------------------------------------
         //
@@ -584,21 +585,22 @@ namespace MS.Internal.AutomationProxies
                 }
             }
 
-            List<ClickablePoint.CPRect> listIn = new(100);
-            List<ClickablePoint.CPRect> listOut = new(100);
+            ArrayList alIn = new ArrayList(100);
+            ArrayList alOut = new ArrayList(100);
 
             // Get the mid point to start with
             pt.x = (rcItem.right - 1 + rcItem.left) / 2;
             pt.y = (rcItem.bottom - 1 + rcItem.top) / 2;
-            listOut.Add(new ClickablePoint.CPRect(ref rcItem, true));
+            alOut.Add(new ClickablePoint.CPRect(ref rcItem, true));
 
             // First go through all the children to exclude whatever is on top
-            if (this is ProxyFragment proxyFrag)
+            ProxyFragment proxyFrag = this as ProxyFragment;
+            if (proxyFrag != null)
             {
-                ClickablePoint.ExcludeChildren(proxyFrag, listIn, listOut);
+                ClickablePoint.ExcludeChildren(proxyFrag, alIn, alOut);
             }
 
-            return ClickablePoint.GetPoint(_hwnd, listIn, listOut, ref pt);
+            return ClickablePoint.GetPoint(_hwnd, alIn, alOut, ref pt);
         }
 
         internal string GetAccessibleName(int item)

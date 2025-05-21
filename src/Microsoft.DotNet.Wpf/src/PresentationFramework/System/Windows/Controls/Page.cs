@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Implements the Avalon Page class
@@ -168,7 +169,7 @@ namespace System.Windows.Controls
                     PageHelperObject._windowTitle = value;
                     PropertyIsSet(SetPropertyFlags.WindowTitle);
                 }
-                else if (_isTopLevel) // only top level page can set this property
+                else if (_isTopLevel == true) // only top level page can set this property
                 {
                     WindowService.Title = value;
                     PropertyIsSet(SetPropertyFlags.WindowTitle);
@@ -223,7 +224,7 @@ namespace System.Windows.Controls
                     PageHelperObject._windowHeight = value;
                     PropertyIsSet(SetPropertyFlags.WindowHeight);
                 }
-                else if (_isTopLevel)// only top level page can set this property
+                else if (_isTopLevel == true)// only top level page can set this property
                 {
                     if (!WindowService.UserResized)
                     {
@@ -275,7 +276,7 @@ namespace System.Windows.Controls
                     PageHelperObject._windowWidth = value;
                     PropertyIsSet(SetPropertyFlags.WindowWidth);
                 }
-                else if (_isTopLevel) // only top level page can set this property
+                else if (_isTopLevel == true) // only top level page can set this property
                 {
                     if (!WindowService.UserResized)
                     {
@@ -343,7 +344,7 @@ namespace System.Windows.Controls
         }
 
         // If the Title has changed we want to set the flag.
-        private static void OnTitleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static private void OnTitleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((Page)d).PropertyIsSet(SetPropertyFlags.Title);
         }
@@ -381,7 +382,7 @@ namespace System.Windows.Controls
                     PageHelperObject._showsNavigationUI = value;
                     PropertyIsSet(SetPropertyFlags.ShowsNavigationUI);
                 }
-                else if (_isTopLevel) // only top level page can set this property
+                else if (_isTopLevel == true) // only top level page can set this property
                 {
                     SetShowsNavigationUI(value);
                     PropertyIsSet(SetPropertyFlags.ShowsNavigationUI);
@@ -600,7 +601,10 @@ namespace System.Windows.Controls
             {
                 UIElement child = this.GetVisualChild(0) as UIElement;
 
-                child?.Arrange(new Rect(new Point(), arrangeBounds));
+                if (child != null)
+                {
+                    child.Arrange(new Rect(new Point(), arrangeBounds));
+                }
             }
             return arrangeBounds;
         }
@@ -692,7 +696,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            if (!isParentValid)
+            if (isParentValid == false)
             {
                 throw new InvalidOperationException(SR.ParentOfPageMustBeWindowOrFrame);
             }
@@ -744,7 +748,7 @@ namespace System.Windows.Controls
 
             if (_currentIws != null)
             {
-                if (_isTopLevel)
+                if (_isTopLevel == true)
                 {
                     PropagateProperties();
                 }
@@ -806,7 +810,10 @@ namespace System.Windows.Controls
         private void SetShowsNavigationUI(bool showsNavigationUI)
         {
             NavigationWindow navWin = _currentIws as NavigationWindow;
-            navWin?.ShowsNavigationUI = showsNavigationUI;
+            if (navWin != null)
+            {
+                navWin.ShowsNavigationUI = showsNavigationUI;
+            }
         }
 
         private bool IsPropertySet(SetPropertyFlags property)
@@ -943,7 +950,7 @@ namespace System.Windows.Controls
         #endregion Page Class
     }
 
-    internal class PageHelperObject
+    class PageHelperObject
     {
         //----------------------------------------------
         //

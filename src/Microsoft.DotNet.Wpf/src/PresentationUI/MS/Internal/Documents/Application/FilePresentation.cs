@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description:
 //  Interacts with user on file based information for XpsViewer.
@@ -86,7 +87,7 @@ namespace MS.Internal.Documents.Application
                 Path.GetExtension(filePath), 
                 StringComparison.OrdinalIgnoreCase))
             {
-                filePath += extension;
+                filePath = filePath + extension;
             }
 
             Uri file = new Uri(filePath);

@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows.Automation.Provider;
 using System.Windows.Controls;
@@ -205,7 +206,10 @@ namespace System.Windows.Automation.Peers
                 if (value)
                     return;
                 AutomationPeer wrapperPeer = OwningColumnHeaderPeer;
-                wrapperPeer?.AncestorsInvalid = false;
+                if (wrapperPeer != null)
+                {
+                    wrapperPeer.AncestorsInvalid = false;
+                }
             }
         }
 
@@ -241,7 +245,7 @@ namespace System.Windows.Automation.Peers
         #endregion
 
         #region Private Variables
-        private DataGridColumn _column;
+        DataGridColumn _column;
         #endregion
     }
 }

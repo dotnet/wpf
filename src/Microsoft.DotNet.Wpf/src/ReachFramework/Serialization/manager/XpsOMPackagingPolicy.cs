@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using MS.Internal.PrintWin32Thunk;
@@ -533,7 +534,7 @@ namespace System.Windows.Xps.Packaging
         /// Safe: Does not expose critical resources to the caller
         /// </SecurityNote>
         [SecuritySafeCritical]
-        private void ReleaseFontResource(Uri uri)
+        void ReleaseFontResource(Uri uri)
         {
             IXpsOMFontResourceCollection fontCollection = _xpsPartResources.GetFontResources();
             IOpcPartUri partUri = GenerateIOpcPartUri(uri);
@@ -733,17 +734,26 @@ namespace System.Windows.Xps.Packaging
             _currentFixedPageUri = null;
 
             _currentXpsImageRef = 0;
-            _imageResourceStream?.Stream.Dispose();
+            if (_imageResourceStream != null)
+            {
+                _imageResourceStream.Stream.Dispose();
+            }
             _imageResourceStream = null;
 
             _currentXpsColorContextRef = 0;
-            _colorContextResourceStream?.Stream.Dispose();
+            if (_colorContextResourceStream != null)
+            {
+                _colorContextResourceStream.Stream.Dispose();
+            }
             _colorContextResourceStream = null;
 
             _currentPageContentStream = null;
             _currentResourceStream = null;
 
-            _currentFixedPagePrintStream?.Dispose();
+            if (_currentFixedPagePrintStream != null)
+            {
+                _currentFixedPagePrintStream.Dispose();
+            }
             _currentFixedPagePrintStream = null;
             _currentPageContentXmlWriter = null;
             _currentResourceXmlWriter = null;

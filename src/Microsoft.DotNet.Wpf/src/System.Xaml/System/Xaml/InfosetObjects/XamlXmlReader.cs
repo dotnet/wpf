@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -15,14 +16,14 @@ namespace System.Xaml
 {
     public class XamlXmlReader : XamlReader, IXamlLineInfo
     {
-        private XamlParserContext _context;
-        private IEnumerator<XamlNode> _nodeStream;
+        XamlParserContext _context;
+        IEnumerator<XamlNode> _nodeStream;
 
-        private XamlNode _current;
-        private LineInfo _currentLineInfo;
-        private XamlNode _endOfStreamNode;
+        XamlNode _current;
+        LineInfo _currentLineInfo;
+        XamlNode _endOfStreamNode;
 
-        private XamlXmlReaderSettings _mergedSettings;
+        XamlXmlReaderSettings _mergedSettings;
 
         public XamlXmlReader(XmlReader xmlReader)
         {

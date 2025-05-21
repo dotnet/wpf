@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #region Using declarations
 
@@ -24,11 +25,11 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         #region Fields
 
         private double _cachedRemainingSpace; // A cached copy of the remaining space from the previous layout pass.
-        private WeakHashSet<IProvideStarLayoutInfo> _registeredStarLayoutProviders = new WeakHashSet<IProvideStarLayoutInfo>();
-        private double _nextGroupIncreaseWidth = double.NaN;
-        private int _cachedChildCount = 0;
-        private WeakDictionary<RibbonGroup, double> _changedWidthGroups = new WeakDictionary<RibbonGroup, double>();
-        private bool _processGroupWidthChangeQueued = false;
+        WeakHashSet<IProvideStarLayoutInfo> _registeredStarLayoutProviders = new WeakHashSet<IProvideStarLayoutInfo>();
+        double _nextGroupIncreaseWidth = double.NaN;
+        int _cachedChildCount = 0;
+        WeakDictionary<RibbonGroup, double> _changedWidthGroups = new WeakDictionary<RibbonGroup, double>();
+        bool _processGroupWidthChangeQueued = false;
 
         #endregion
 
@@ -52,7 +53,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             IProvideStarLayoutInfo provider = starLayoutInfoProvider as IProvideStarLayoutInfo;
             if (provider == null)
             {
-                throw new ArgumentException(Microsoft.Windows.Controls.SR.RibbonGroupsPanel_InvalidRegistrationParameter, nameof(starLayoutInfoProvider));
+                throw new ArgumentException(Microsoft.Windows.Controls.SR.RibbonGroupsPanel_InvalidRegistrationParameter, "starLayoutInfoProvider");
             }
             if (!_registeredStarLayoutProviders.Contains(provider))
             {
@@ -67,7 +68,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             IProvideStarLayoutInfo provider = starLayoutInfoProvider as IProvideStarLayoutInfo;
             if (provider == null)
             {
-                throw new ArgumentException(Microsoft.Windows.Controls.SR.RibbonGroupsPanel_InvalidRegistrationParameter, nameof(starLayoutInfoProvider));
+                throw new ArgumentException(Microsoft.Windows.Controls.SR.RibbonGroupsPanel_InvalidRegistrationParameter, "starLayoutInfoProvider");
             }
             if (_registeredStarLayoutProviders.Contains(provider))
             {

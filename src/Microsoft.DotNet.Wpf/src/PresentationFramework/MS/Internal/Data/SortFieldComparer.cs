@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: IComparer class to sort by class property value (using reflection).
@@ -134,7 +135,7 @@ namespace MS.Internal.Data
         }
 
         // private types
-        private struct SortPropertyInfo
+        struct SortPropertyInfo
         {
             internal int index;
             internal PropertyPath info;
@@ -152,7 +153,7 @@ namespace MS.Internal.Data
                 }
             }
 
-            private object GetValueFromCVI(CachedValueItem cvi)
+            object GetValueFromCVI(CachedValueItem cvi)
             {
                 object value = cvi[index];
 
@@ -165,7 +166,7 @@ namespace MS.Internal.Data
                 return value;
             }
 
-            private object GetValueCore(object o)
+            object GetValueCore(object o)
             {
                 object value;
                 if (info == null)
@@ -191,7 +192,7 @@ namespace MS.Internal.Data
             }
         }
 
-        private struct CachedValueItem
+        struct CachedValueItem
         {
             public object OriginalItem
             {
@@ -225,9 +226,9 @@ namespace MS.Internal.Data
         }
 
         // Private Fields
-        private SortPropertyInfo[] _fields;
-        private SortDescriptionCollection _sortFields;
-        private Comparer _comparer;
+        SortPropertyInfo[] _fields;
+        SortDescriptionCollection _sortFields;
+        Comparer _comparer;
     }
 }
 

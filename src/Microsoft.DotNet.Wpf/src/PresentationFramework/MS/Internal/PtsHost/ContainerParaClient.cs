@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //
@@ -329,7 +330,7 @@ namespace MS.Internal.PtsHost
 
             if (subtrackDetails.cParas == 0) 
             {
-                return ReadOnlyCollection<ParagraphResult>.Empty;
+                return new ReadOnlyCollection<ParagraphResult>(new List<ParagraphResult>(0));
             }
 
             // Get list of paragraphs

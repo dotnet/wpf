@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //---------------------------------------------------------------------------
@@ -196,10 +197,10 @@ namespace MS.Internal.MilCodeGen.ResourceModel
             // requiring that they be split across two namespaces.
             switch (moduleName)
             {
-                case @"PresentationCore":
+                case @"Core\CSharp":
                     moduleReference = "using MS.Internal.PresentationCore;";
                     break;
-                case "PresentationFramework":
+                case "Framework":
                     moduleReference = "using MS.Internal.PresentationFramework;";
                     break;
             }
@@ -214,6 +215,13 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 [[inline]]
                     [[Helpers.ManagedStyle.WriteFileHeader(fileName)]]
 
+                    using MS.Internal;
+
+                    using System;
+                    using System.Collections;
+                    using System.ComponentModel;
+                    using System.Diagnostics;
+                    using System.Windows.Media;
                     using System.Windows.Media.Media3D;
 
                     [[moduleReference]]

@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description:
 //  These are the internal helpers required to call into unmanaged 
@@ -129,7 +130,10 @@ namespace MS.Internal.Security.RightsManagement
                                 // Dispose call back handler 
                                 try
                                 {
-                                    _callbackHandler?.Dispose();
+                                    if (_callbackHandler != null)
+                                    {
+                                        _callbackHandler.Dispose();
+                                    }
                                 }
                                 finally
                                 {
@@ -326,7 +330,7 @@ namespace MS.Internal.Security.RightsManagement
                                     (certificateType != EnumerateLicenseFlags.RevocationListLid) &&
                                     (certificateType != EnumerateLicenseFlags.Expired))
             {
-                throw new ArgumentOutOfRangeException(nameof(certificateType));
+                throw new ArgumentOutOfRangeException("certificateType");
             }
 
             List<string> certificateIdList = new List<string>();
@@ -467,7 +471,7 @@ namespace MS.Internal.Security.RightsManagement
                 (enumerateLicenseFlags != EnumerateLicenseFlags.RevocationListLid) &&
                 (enumerateLicenseFlags != EnumerateLicenseFlags.Expired))
             {
-                throw new ArgumentOutOfRangeException(nameof(enumerateLicenseFlags));
+                throw new ArgumentOutOfRangeException("enumerateLicenseFlags");
             }
 
             int hr = 0;
@@ -862,7 +866,7 @@ namespace MS.Internal.Security.RightsManagement
             }
             else
             {
-                Debug.Fail("Invalid Authentication type");
+                Debug.Assert(false,"Invalid Authentication type");
                 return null;            // retail build might be ale to recover from SDK defaults                  
             }
         }
@@ -1052,7 +1056,7 @@ namespace MS.Internal.Security.RightsManagement
             return ownerLicense.ToString();
         }
 
-        private static string GetElementFromCertificateChain(
+        static private string GetElementFromCertificateChain(
             string certificateChain, int index)
         {
             Invariant.Assert(index >= 0);
@@ -1123,7 +1127,7 @@ namespace MS.Internal.Security.RightsManagement
         // in the CHK build only. So we should also preserve this method only in the CHK build.
         // Otherwise FxCop will complain: AvoidUncalledPrivateCode in the FREE built DLL.
 #if DEBUG
-        private static string GetBoundLicenseStringAttribute(
+        static private string GetBoundLicenseStringAttribute(
             SafeRightsManagementHandle queryHandle,
             string attributeType, 
             uint attributeIndex)
@@ -1160,7 +1164,7 @@ namespace MS.Internal.Security.RightsManagement
         }
 #endif
 
-        private static DateTime GetUnboundLicenseDateTimeAttribute(
+        static private DateTime GetUnboundLicenseDateTimeAttribute(
             SafeRightsManagementQueryHandle queryHandle,
             string attributeType,
             uint attributeIndex,
@@ -1197,7 +1201,7 @@ namespace MS.Internal.Security.RightsManagement
         // in the CHK build only. So we should also preserve this method only in the CHK build.
         // Otherwise FxCop will complain: AvoidUncalledPrivateCode in the FREE built DLL.
 #if DEBUG
-        private static DateTime GetBoundLicenseDateTimeAttribute(
+        static private DateTime GetBoundLicenseDateTimeAttribute(
             SafeRightsManagementHandle queryHandle,
             string attributeType,
             uint attributeIndex,
@@ -1447,7 +1451,7 @@ namespace MS.Internal.Security.RightsManagement
         }
 
         #region Debug
-        // We currently don’t use these two methods, but they may be useful in the future. 
+        // We currently don�t use these two methods, but they may be useful in the future. 
         // So we keep them in the debug build only, and changed them from internal methods 
         // to private methods to remove them from asmmeta files.
 #if DEBUG
@@ -1932,7 +1936,7 @@ namespace MS.Internal.Security.RightsManagement
                 }
             }
 
-            throw new ArgumentOutOfRangeException(nameof(right));
+            throw new ArgumentOutOfRangeException("right");
         }
 
         private List<CryptoProvider> CryptoProviderList
@@ -1969,7 +1973,7 @@ namespace MS.Internal.Security.RightsManagement
         private SafeRightsManagementSessionHandle _hSession = null; // if this is zero, we are disposed
 
         // we preserve this so ve can remove certificates in case of temp activation             
-        private UserActivationMode _userActivationMode = UserActivationMode.Permanent;
+        UserActivationMode _userActivationMode = UserActivationMode.Permanent;
 
         private SafeRightsManagementEnvironmentHandle _envHandle = null;  // if this is null, we are disposed
 
@@ -1979,7 +1983,7 @@ namespace MS.Internal.Security.RightsManagement
 
         // the following 2 arrays are used for parsing and converting between String and Enum; 
         // therefore, the entries in the _rightEnums and the _rightNames must be in the same order. 
-        private static ContentRight[] _rightEnums = {
+        static private ContentRight[] _rightEnums = {
                                         ContentRight.View,
                                         ContentRight.Edit,
                                         ContentRight.Print,
@@ -1995,7 +1999,7 @@ namespace MS.Internal.Security.RightsManagement
                                         ContentRight.Export};
 
         // entries in this array must be in UPPERCASE, as we make such assumption during parsing                                         
-        private static string[] _rightNames = {
+        static private string[] _rightNames = {
                                         "VIEW",
                                         "EDIT",
                                         "PRINT",

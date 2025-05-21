@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Implementation of the PTS paragraph corresponding to table.
@@ -550,7 +551,10 @@ namespace MS.Internal.PtsHost
                 DirtyTextRange dtr = new DirtyTextRange(Table.ContentStartOffset, charCount, charCount);
                 StructuralCache.AddDirtyTextRange(dtr);
             }
-            StructuralCache.FormattingOwner.Formatter?.OnContentInvalidated(true, Table.ContentStart, Table.ContentEnd);
+            if (StructuralCache.FormattingOwner.Formatter != null)
+            {
+                StructuralCache.FormattingOwner.Formatter.OnContentInvalidated(true, Table.ContentStart, Table.ContentEnd);
+            }
         }
 
         #endregion Private Methods
@@ -572,7 +576,7 @@ namespace MS.Internal.PtsHost
 
         #region Private Fields 
 
-        private BaseParagraph _firstChild;
+        BaseParagraph _firstChild;
 
         #endregion Private Fields 
 

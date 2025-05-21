@@ -149,7 +149,6 @@
                             <ContentPresenter
                                 x:Name="ContentPresenter"
                                 Grid.Column="1"
-                                RecognizesAccessKey="True"
                                 Margin="{TemplateBinding Padding}"
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"

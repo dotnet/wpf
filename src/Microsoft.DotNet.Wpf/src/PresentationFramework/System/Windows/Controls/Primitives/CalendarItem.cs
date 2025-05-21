@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.Globalization;
@@ -872,7 +873,10 @@ namespace System.Windows.Controls.Primitives
                 this._isMonthPressed = true;
                 Mouse.Capture(this, CaptureMode.SubTree);
 
-                this.Owner?.OnCalendarButtonPressed(b, false);
+                if (this.Owner != null)
+                {
+                    this.Owner.OnCalendarButtonPressed(b, false);
+                }
             }
         }
 
@@ -927,12 +931,18 @@ namespace System.Windows.Controls.Primitives
 
         private void PreviousButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Owner?.OnPreviousClick();
+            if (this.Owner != null)
+            {
+                this.Owner.OnPreviousClick();
+            }
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Owner?.OnNextClick();
+            if (this.Owner != null)
+            {
+                this.Owner.OnNextClick();
+            }
         }
 
         private void PopulateGrids()

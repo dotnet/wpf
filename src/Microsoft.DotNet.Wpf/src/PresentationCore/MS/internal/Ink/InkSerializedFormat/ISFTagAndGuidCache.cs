@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 namespace MS.Internal.Ink.InkSerializedFormat
 {
@@ -170,7 +171,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             MAXIMUM = 7
         }
 
-        internal static KnownTagCache.KnownTagIndex KnownGuidBaseIndex = (KnownTagCache.KnownTagIndex)KnownTagCache.MaximumPossibleKnownTags;
+        static internal KnownTagCache.KnownTagIndex KnownGuidBaseIndex = (KnownTagCache.KnownTagIndex)KnownTagCache.MaximumPossibleKnownTags;
 
             // The maximum value that can be encoded into a single byte is 127.
             // To improve the chances of storing all of the guids in the ISF guid table
@@ -182,8 +183,8 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
             // These values aren't currently used, so comment them out
         // static internal uint KnownGuidIndexLimit = MaximumPossibleKnownGuidIndex;
-        internal static uint MaximumPossibleKnownGuidIndex = 100;
-        internal static uint CustomGuidBaseIndex = MaximumPossibleKnownGuidIndex;
+        static internal uint MaximumPossibleKnownGuidIndex = 100;
+        static internal uint CustomGuidBaseIndex = MaximumPossibleKnownGuidIndex;
 
         // This id table includes the Guids that have been added to ISF as ExtendedProperties
         //      Note that they are visible to 3rd party applications
@@ -246,7 +247,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         }
 
             // See comments for KnownGuidBaseIndex to determine ranges of tags/guids/indices
-        internal static uint MaximumPossibleKnownTags = 50;
-        internal static uint KnownTagCount = (byte)MaximumPossibleKnownTags;
+        static internal uint MaximumPossibleKnownTags = 50;
+        static internal uint KnownTagCount = (byte)MaximumPossibleKnownTags;
     }
 }

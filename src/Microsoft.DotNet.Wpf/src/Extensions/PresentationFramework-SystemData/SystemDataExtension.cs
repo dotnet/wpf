@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Helper methods for code that uses types from System.Data.
 
@@ -219,11 +220,11 @@ namespace MS.Internal
                 dataTable.Initialized += OnInitialized;
             }
 
-            private void OnInitialized(object sender, EventArgs e)
+            void OnInitialized(object sender, EventArgs e)
             {
             }
 
-            private object _target;
+            object _target;
         }
 
         private class DataRowViewToRelatedViewLink
@@ -234,15 +235,15 @@ namespace MS.Internal
                 dataRowView.PropertyChanged += OnPropertyChanged;
             }
 
-            private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+            void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
             {
             }
 
-            private object _target;
+            object _target;
         }
 
-        private static Type s_DataTablePropertyDescriptorType;
-        private static Type s_DataRelationPropertyDescriptorType;
+        static Type s_DataTablePropertyDescriptorType;
+        static Type s_DataRelationPropertyDescriptorType;
     }
 }
 

@@ -1294,7 +1294,8 @@ dotnet_diagnostic.SA0001.severity = none
 dotnet_diagnostic.SA0002.severity = none
 
 # SA1000: Spacing around keywords
-dotnet_diagnostic.SA1000.severity = warning
+# suggestion until https://github.com/DotNetAnalyzers/StyleCopAnalyzers/issues/3478 is resolved
+dotnet_diagnostic.SA1000.severity = suggestion
 
 # SA1001: Commas should not be preceded by whitespace
 dotnet_diagnostic.SA1001.severity = warning
@@ -2283,6 +2284,3 @@ dotnet_diagnostic.IDE0251.severity = suggestion
 
 # IDE1006: Naming Styles
 dotnet_diagnostic.IDE1006.severity = suggestion
-
-[**/Generated/*.*]
-generated_code = true

@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -94,7 +95,7 @@ namespace System.Windows.Input
             }
 
             // Free up any remaining textstores.
-            if (_istimactivated)
+            if (_istimactivated == true)
             {
                 // Shut down the thread manager when the last TextStore goes away.
                 // On XP, if we're called on a worker thread (during AppDomain shutdown)
@@ -199,7 +200,7 @@ namespace System.Windows.Input
                 int editCookie = UnsafeNativeMethods.TF_INVALID_COOKIE;
 
                 // Activate TSF on this thread if this is the first TextStore.
-                if (!_istimactivated)
+                if (_istimactivated == false)
                 {
                     //temp variable created to retrieve the value
                     // which is then stored in the critical data.
@@ -211,7 +212,7 @@ namespace System.Windows.Input
 
                 // Create a TSF document.
                 threadManager.CreateDocumentMgr(out doc);
-                doc.CreateContext(_clientId, flags: 0, _defaultTextStore, out context, out editCookie);
+                doc.CreateContext(_clientId, 0 /* flags */, _defaultTextStore, out context, out editCookie);
                 doc.Push(context);
 
                 // Release any native resources we're done with.
@@ -324,7 +325,10 @@ namespace System.Windows.Input
         {
             UnsafeNativeMethods.ITfThreadMgr threadmgr = ThreadManager;
 
-            threadmgr?.SetFocus(dim);
+            if (threadmgr != null)
+            {
+                threadmgr.SetFocus(dim);
+            }
         }
 
         // Start the transitory extestion for Cicero Level1/Level2 composition window support.
@@ -367,8 +371,11 @@ namespace System.Windows.Input
             {
                 UnsafeNativeMethods.ITfSource source;
                 source = _defaultTextStore.DocumentManager as UnsafeNativeMethods.ITfSource;
-                // DocumentManager only supports ITfSource on Longhorn, XP does not support it
-                source?.UnadviseSink(_defaultTextStore.TransitoryExtensionSinkCookie);
+                if (source != null)
+                {
+                    // DocumentManager only supports ITfSource on Longhorn, XP does not support it
+                    source.UnadviseSink(_defaultTextStore.TransitoryExtensionSinkCookie);
+                }
                 _defaultTextStore.TransitoryExtensionSinkCookie = UnsafeNativeMethods.TF_INVALID_COOKIE;
             }
 
@@ -464,7 +471,7 @@ namespace System.Windows.Input
             internal override void OnShutDown(object target, object sender, EventArgs e)
             {
                 TextServicesContext textServicesContext = (TextServicesContext)target;
-                textServicesContext.Uninitialize(appDomainShutdown: !(sender is Dispatcher));
+                textServicesContext.Uninitialize(!(sender is Dispatcher) /*appDomainShutdown*/);
             }
         }
 

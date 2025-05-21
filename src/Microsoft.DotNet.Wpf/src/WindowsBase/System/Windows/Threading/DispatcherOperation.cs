@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Threading;
 using System.ComponentModel;
@@ -596,7 +597,10 @@ namespace System.Windows.Threading
             {
                 Continue = false;
 
-                _waitTimer?.Dispose();
+                if(_waitTimer != null)
+                {
+                    _waitTimer.Dispose();
+                }
 
                 _operation.Aborted -= new EventHandler(OnCompletedOrAborted);
                 _operation.Completed -= new EventHandler(OnCompletedOrAborted);
@@ -695,9 +699,9 @@ namespace System.Windows.Threading
         private Exception _exception;
 
         internal PriorityItem<DispatcherOperation> _item; // The Dispatcher sets this when it enques/deques the item.
-
-        private EventHandler _aborted;
-        private EventHandler _completed;
+        
+        EventHandler _aborted;
+        EventHandler _completed;
 
         internal readonly DispatcherOperationTaskSource _taskSource; // also used from Dispatcher
         private readonly bool _useAsyncSemantics;

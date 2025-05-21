@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
 *
@@ -1042,7 +1043,7 @@ namespace System.Windows.Markup
             {
                 Type declaringType = null;
                 _propertyDP = _bamlRecordReader.GetCustomDependencyPropertyValue(bamlRecord, out declaringType);
-                declaringType ??= _propertyDP.OwnerType;
+                declaringType = declaringType ?? _propertyDP.OwnerType;
                 info.Value = $"{declaringType.Name}.{_propertyDP.Name}";
 
                 string xmlns = _parserContext.XamlTypeMapper.GetXmlNamespace(declaringType.Namespace,
@@ -1514,10 +1515,13 @@ namespace System.Windows.Markup
                     case BamlRecordType.TextWithId:
 
                         BamlTextWithIdRecord textWithIdRecord = _currentBamlRecord as BamlTextWithIdRecord;
-                        // Get the value string from the string table, and cache it in the
-                        // record.
-                        textWithIdRecord?.Value = MapTable.GetStringFromStringId(
-                                                        textWithIdRecord.ValueId);
+                        if (textWithIdRecord != null)
+                        {
+                            // Get the value string from the string table, and cache it in the
+                            // record.
+                            textWithIdRecord.Value = MapTable.GetStringFromStringId(
+                                                            textWithIdRecord.ValueId);
+                        }
 
                         // If the text contains '{' or '}' then we have to escape these
                         // so that it won't be interpreted as a MarkupExtension
@@ -1766,7 +1770,10 @@ namespace System.Windows.Markup
                     }
                     builder.Append('\\');
                 }
-                builder?.Append(value[i]);
+                if (builder != null)
+                {
+                    builder.Append(value[i]);
+                }
             }
 
             if (builder == null)
@@ -2183,10 +2190,13 @@ namespace System.Windows.Markup
             ClearProperties();
 
             BamlTextWithIdRecord textWithIdRecord = _currentBamlRecord as BamlTextWithIdRecord;
-            // Get the value string from the string table, and cache it in the
-            // record.
-            textWithIdRecord?.Value = MapTable.GetStringFromStringId(
-                                            textWithIdRecord.ValueId);
+            if (textWithIdRecord != null)
+            {
+                // Get the value string from the string table, and cache it in the
+                // record.
+                textWithIdRecord.Value = MapTable.GetStringFromStringId(
+                                                textWithIdRecord.ValueId);
+            }
 
             BamlTextWithConverterRecord textWithConverter = _currentBamlRecord as BamlTextWithConverterRecord;
             if (textWithConverter != null)

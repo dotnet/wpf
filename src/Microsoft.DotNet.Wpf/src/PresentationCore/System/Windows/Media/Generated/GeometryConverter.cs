@@ -1,26 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
-//
-//
 // This file was generated, please do not edit it directly.
-//
 // Please see MilCodeGen.html for more information.
-//
 
-using MS.Internal;
-using MS.Internal.KnownBoxes;
-using MS.Internal.Collections;
-using MS.Utility;
-using System.Collections;
 using System.ComponentModel;
 using System.Globalization;
-using System.Text;
-using System.Windows.Media.Effects;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Markup;
-using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
@@ -64,7 +50,7 @@ namespace System.Windows.Media
                 {
                     if (!(context.Instance is Geometry))
                     {
-                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "Geometry"), nameof(context));
+                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "Geometry"), "context");
                     }
 
                     Geometry value = (Geometry)context.Instance;
@@ -98,8 +84,9 @@ namespace System.Windows.Media
                 throw GetConvertFromException(value);
             }
 
+            String source = value as string;
 
-            if (value is string source)
+            if (source != null)
             {
                 return Geometry.Parse(source);
             }

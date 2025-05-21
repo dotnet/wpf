@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //+-----------------------------------------------------------------------------
@@ -14,8 +15,8 @@
 // 
 // Description:
 //      This generator builds the CResourceFactory class (as found 
-//      in src\Microsoft.DotNet.Wpf\src\WpfGfx\core\uce\generated_resource_factory.h
-//      and src\Microsoft.DotNet.Wpf\src\WpfGfx\core\uce\generated_resource_factory.cpp).
+//      in %SDXROOT%\wpf\src\Graphics\core\uce\generated\resource-factory.h
+//      and %SDXROOT%\wpf\src\Graphics\core\uce\generated\resource-factory.cpp).
 // 
 //---------------------------------------------------------------------------
 
@@ -69,7 +70,7 @@ namespace MS.Internal.MilCodeGen.Generators
             string generatedPath = 
                 Path.Combine(
                     _resourceModel.OutputDirectory,
-                    "src\\WpfGfx\\core\\uce"
+                    "src\\Graphics\\core\\uce"
                     );
 
             FileCodeSink chFile = 

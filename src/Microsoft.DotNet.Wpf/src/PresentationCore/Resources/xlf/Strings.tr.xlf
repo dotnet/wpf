@@ -1217,11 +1217,6 @@
         <target state="translated">'{0}' dosyası açılırken G/Ç hatası oluştu.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ITypeDataObject_Not_Implemented">
-        <source>Data object '{0}' doesn't implement the 'ITypedDataObject' interface and can't be read using 'TryGetData&lt;T&gt;(string, out T)' methods.</source>
-        <target state="translated">'{0}' veri nesnesi 'ITypedDataObject' arayüzünü uygulamıyor ve 'TryGetData&lt;T&gt;(string, out T)' yöntemleri kullanılarak okunamıyor.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Image_AlphaThresholdOutOfRange">
         <source>Alpha threshold must be from 0 through 100.</source>
         <target state="translated">Alfa eşiği 0 ile 100 arasında olmalıdır.</target>
@@ -1785,6 +1780,16 @@
       <trans-unit id="InvalidPartName">
         <source>The part name does not correspond to its content type.</source>
         <target state="translated">Bölüm adı içerik türüyle uyumlu değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionStateValue">
+        <source>PermissionState value '{0}' is not valid for this Permission.</source>
+        <target state="translated">'{0}' PermissionState değeri bu İzin için geçerli değil.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="InvalidPermissionType">
+        <source>Permission type is not valid. Expected '{0}'.</source>
+        <target state="translated">İzin türü geçerli değil. Beklenen '{0}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidPressureValue">
@@ -2850,6 +2855,11 @@
       <trans-unit id="SearchText">
         <source>Search</source>
         <target state="translated">Arama</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
+        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
+        <target state="translated">Kısmi güvende SandboxExternalContent true olarak ayarlanamaz.</target>
         <note />
       </trans-unit>
       <trans-unit id="SeekNegative">

@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: common base class and contract for data source provider objects
 //
@@ -93,7 +94,7 @@ namespace System.Windows.Data
             set
             {
                 _isInitialLoadEnabled = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsInitialLoadEnabled)));
+                OnPropertyChanged(new PropertyChangedEventArgs("IsInitialLoadEnabled"));
             }
         }
 
@@ -376,13 +377,13 @@ namespace System.Windows.Data
                 completionWork(callbackArgs);
 
             // notify any listeners
-            OnPropertyChanged(new PropertyChangedEventArgs(nameof(Data)));
+            OnPropertyChanged(new PropertyChangedEventArgs("Data"));
             if (DataChanged != null)
             {
                 DataChanged(this, EventArgs.Empty);
             }
             if (errorChanged)
-                OnPropertyChanged(new PropertyChangedEventArgs(nameof(Error)));
+                OnPropertyChanged(new PropertyChangedEventArgs("Error"));
         }
 
         #endregion Private Methods
@@ -430,7 +431,7 @@ namespace System.Windows.Data
         private Exception _error;
         private Dispatcher _dispatcher;
 
-        private static readonly DispatcherOperationCallback UpdateWithNewResultCallback = new DispatcherOperationCallback(UpdateWithNewResult);
+        static readonly DispatcherOperationCallback UpdateWithNewResultCallback = new DispatcherOperationCallback(UpdateWithNewResult);
 }
 }
 

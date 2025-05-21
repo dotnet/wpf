@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -8,6 +9,10 @@
 // Please see MilCodeGen.html for more information.
 //
 
+#if PRESENTATION_CORE
+#else
+using SR=System.Windows.SR;
+#endif
 
 namespace System.Windows.Media.Effects
 {
@@ -17,7 +22,7 @@ namespace System.Windows.Media.Effects
     public enum KernelType
     {
         /// <summary>
-        ///     Gaussian - Use a Guassian filter
+        ///     Gaussian - Use a Gaussian filter
         /// </summary>
         Gaussian = 0,
 
@@ -25,5 +30,5 @@ namespace System.Windows.Media.Effects
         ///     Box - Use a Box filter
         /// </summary>
         Box = 1,
-    }
+    }   
 }

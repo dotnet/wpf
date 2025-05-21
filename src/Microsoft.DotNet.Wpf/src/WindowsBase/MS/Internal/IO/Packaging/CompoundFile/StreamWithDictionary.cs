@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description:
 //   The object for wrapping a data stream and its associated context
@@ -12,8 +13,8 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 {
     internal class StreamWithDictionary : Stream, IDictionary
     {
-        private Stream baseStream;
-        private IDictionary baseDictionary;
+        Stream baseStream;
+        IDictionary baseDictionary;
         private bool _disposed;         // keep track of if we are disposed
 
         internal StreamWithDictionary( Stream wrappedStream, IDictionary wrappedDictionary )

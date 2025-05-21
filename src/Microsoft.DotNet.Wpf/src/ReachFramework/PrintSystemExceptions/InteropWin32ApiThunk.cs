@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /*++
                                                                               
@@ -19,14 +20,14 @@ namespace MS
         {
             namespace Win32ApiThunk
             {
-                internal static class NativeMethodsForPrintExceptions
+                static internal class NativeMethodsForPrintExceptions
     {
         [DllImport("Kernel32.dll", EntryPoint="FormatMessageW",
                    CharSet=CharSet.Unicode,
                    SetLastError=true, 
                    CallingConvention = CallingConvention.Winapi)]
         
-        public static extern int InvokeFormatMessage(int a, IntPtr b , int c, int d, System.Text.StringBuilder e, int f, IntPtr g);
+        public extern static int InvokeFormatMessage(int a, IntPtr b , int c, int d, System.Text.StringBuilder e, int f, IntPtr g);
         
     };
 

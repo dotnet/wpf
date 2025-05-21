@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -54,7 +55,7 @@ namespace System.Windows.Automation.Peers
         }
             
          /// 
-        protected override List<AutomationPeer> GetChildrenCore()
+        override protected List<AutomationPeer> GetChildrenCore()
         {
             List<AutomationPeer> children = null;
 
@@ -83,7 +84,10 @@ namespace System.Windows.Automation.Peers
                         return (true);
                     });
 
-            root?.Hwnd = hwnd;
+            if (root != null)
+            {
+                root.Hwnd = hwnd;
+            }
 
             return root;
         }
@@ -126,7 +130,7 @@ namespace System.Windows.Automation.Peers
         }
 
         /// 
-        public override object GetPattern(PatternInterface patternInterface)
+        override public object GetPattern(PatternInterface patternInterface)
         {
             //Support synchronized input
             if (patternInterface == PatternInterface.SynchronizedInput)
@@ -169,7 +173,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        protected override Rect GetBoundingRectangleCore()
+        override protected Rect GetBoundingRectangleCore()
         {
             PresentationSource presentationSource = PresentationSource.CriticalFromVisual(_owner);
 
@@ -215,7 +219,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        protected override bool IsOffscreenCore()
+        override protected bool IsOffscreenCore()
         {
             IsOffscreenBehavior behavior = AutomationProperties.GetIsOffscreenBehavior(_owner);
 
@@ -295,73 +299,73 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        protected override AutomationOrientation GetOrientationCore()
+        override protected AutomationOrientation GetOrientationCore()
         {
             return (AutomationOrientation.None);
         }
         
         ///
-        protected override string GetItemTypeCore()
+        override protected string GetItemTypeCore()
         {
             return AutomationProperties.GetItemType(_owner);
         }
 
         ///
-        protected override string GetClassNameCore()
+        override protected string GetClassNameCore()
         {
             return string.Empty;
         }
 
         ///
-        protected override string GetItemStatusCore()
+        override protected string GetItemStatusCore()
         {
             return AutomationProperties.GetItemStatus(_owner);
         }
 
         ///
-        protected override bool IsRequiredForFormCore()
+        override protected bool IsRequiredForFormCore()
         {
             return AutomationProperties.GetIsRequiredForForm(_owner);
         }
 
         /// 
-        protected override bool IsKeyboardFocusableCore()
+        override protected bool IsKeyboardFocusableCore()
         {
             return Keyboard.IsFocusable(_owner);
         }
 
         ///
-        protected override bool HasKeyboardFocusCore()
+        override protected bool HasKeyboardFocusCore()
         {
             return _owner.IsKeyboardFocused;
         }
 
         ///
-        protected override bool IsEnabledCore()
+        override protected bool IsEnabledCore()
         {
             return _owner.IsEnabled;
         }
 
         ///
-        protected override bool IsDialogCore()
+        override protected bool IsDialogCore()
         {
             return AutomationProperties.GetIsDialog(_owner);
         }
 
         ///
-        protected override bool IsPasswordCore()
+        override protected bool IsPasswordCore()
         {
             return false;
         }
 
         ///
-        protected override bool IsContentElementCore()
+        override protected bool IsContentElementCore()
         {
             return true;
         }
 
         ///
-        protected override bool IsControlElementCore()
+        override protected bool IsControlElementCore()
         {
             // We only want this peer to show up in the Control view if it is visible
             // For compat we allow falling back to legacy behavior (returning true always)
@@ -370,7 +374,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        protected override AutomationPeer GetLabeledByCore()
+        override protected AutomationPeer GetLabeledByCore()
         {
             UIElement element = AutomationProperties.GetLabeledBy(_owner);
             if (element != null)
@@ -380,13 +384,13 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        protected override string GetAcceleratorKeyCore()
+        override protected string GetAcceleratorKeyCore()
         {
             return AutomationProperties.GetAcceleratorKey(_owner);
         }
 
         ///
-        protected override string GetAccessKeyCore()
+        override protected string GetAccessKeyCore()
         {
             string result = AutomationProperties.GetAccessKey(_owner);
             if (string.IsNullOrEmpty(result))
@@ -395,7 +399,7 @@ namespace System.Windows.Automation.Peers
             return string.Empty;
         }
         
-        protected override AutomationLiveSetting GetLiveSettingCore()
+        override protected AutomationLiveSetting GetLiveSettingCore()
         {
             return AutomationProperties.GetLiveSetting(_owner);
         }
@@ -405,7 +409,7 @@ namespace System.Windows.Automation.Peers
         /// Reads <see cref="AutomationProperties.PositionInSetProperty"/> and returns the value if one was provided,
         /// otherwise it attempts to calculate one.
         /// </summary>
-        protected override int GetPositionInSetCore()
+        override protected int GetPositionInSetCore()
         {
             int positionInSet = AutomationProperties.GetPositionInSet(_owner);
 
@@ -440,7 +444,7 @@ namespace System.Windows.Automation.Peers
         /// Reads <see cref="AutomationProperties.SizeOfSetProperty"/> and returns the value if one was provided,
         /// otherwise it attempts to calculate one.
         /// </summary>
-        protected override int GetSizeOfSetCore()
+        override protected int GetSizeOfSetCore()
         {
             int sizeOfSet = AutomationProperties.GetSizeOfSet(_owner);
 
@@ -474,7 +478,7 @@ namespace System.Windows.Automation.Peers
         /// Provides a value for UIAutomation's HeadingLevel property
         /// Reads <see cref="AutomationProperties.HeadingLevelProperty"/> and returns the value
         /// </summary>
-        protected override AutomationHeadingLevel GetHeadingLevelCore()
+        override protected AutomationHeadingLevel GetHeadingLevelCore()
         {
             return AutomationProperties.GetHeadingLevel(_owner);
         }
@@ -484,7 +488,7 @@ namespace System.Windows.Automation.Peers
         //
 
         ///
-        protected override Point GetClickablePointCore()
+        override protected Point GetClickablePointCore()
         {
             Point pt = new Point(double.NaN, double.NaN);
             
@@ -511,7 +515,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        protected override void SetFocusCore() 
+        override protected void SetFocusCore() 
         { 
             if (!_owner.Focus())
                 throw new InvalidOperationException(SR.SetFocusFailed);

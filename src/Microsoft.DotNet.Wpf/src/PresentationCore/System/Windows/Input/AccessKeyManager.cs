@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.Globalization;
@@ -263,7 +264,7 @@ namespace System.Windows.Input
 
                 if (invokeUIElement != null)
                 {
-                    AccessKeyEventArgs args = new AccessKeyEventArgs(key, isMultiple: !oneUIElement || existsElsewhere, userInitiated);
+                    AccessKeyEventArgs args = new AccessKeyEventArgs(key, !oneUIElement || existsElsewhere /* == isMultiple */,userInitiated);
                     try
                     {
                         invokeUIElement.InvokeAccessKey(args);
@@ -291,7 +292,7 @@ namespace System.Windows.Input
 
             if ((text != null) && (text.Length > 0))
             {
-                if (ProcessKeyForSender(e.OriginalSource, text, existsElsewhere: false,e.UserInitiated) != ProcessKeyResult.NoMatch)
+                if (ProcessKeyForSender(e.OriginalSource, text, false /* existsElsewhere */,e.UserInitiated) != ProcessKeyResult.NoMatch)
                 {
                     e.Handled = true;
                 }
@@ -316,7 +317,7 @@ namespace System.Windows.Input
 
             if (text != null)
             {
-                if (ProcessKeyForSender(e.OriginalSource, text, existsElsewhere: false,e.UserInitiated) != ProcessKeyResult.NoMatch)
+                if (ProcessKeyForSender(e.OriginalSource, text, false /* existsElsewhere */,e.UserInitiated) != ProcessKeyResult.NoMatch)
                 {
                     e.Handled = true;
                 }

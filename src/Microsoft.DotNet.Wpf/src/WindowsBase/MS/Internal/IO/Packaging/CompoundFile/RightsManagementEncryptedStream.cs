@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.IO;
 using System.Security.RightsManagement;
@@ -139,14 +140,14 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                         }
                     default:
                         {
-                            throw new ArgumentOutOfRangeException(nameof(origin), SR.SeekOriginInvalid);
+                            throw new ArgumentOutOfRangeException("origin", SR.SeekOriginInvalid);
                         }
                 }
             }
             
             if (temp < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(offset), SR.SeekNegative);
+                throw new ArgumentOutOfRangeException("offset", SR.SeekNegative);
             }
 
             _streamPosition = temp;
@@ -162,7 +163,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             
             if (newLength < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(newLength), SR.CannotMakeStreamLengthNegative);
+                throw new ArgumentOutOfRangeException("newLength", SR.CannotMakeStreamLengthNegative);
             }
 
             _streamCachedLength = newLength;
@@ -278,12 +279,12 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             if (!cryptoProvider.CanDecrypt )
             {
-                throw new ArgumentException(SR.CryptoProviderCanNotDecrypt, nameof(cryptoProvider));            
+                throw new ArgumentException(SR.CryptoProviderCanNotDecrypt, "cryptoProvider");            
             }
 
             if (!cryptoProvider.CanMergeBlocks)
             {
-                throw new ArgumentException(SR.CryptoProviderCanNotMergeBlocks, nameof(cryptoProvider));            
+                throw new ArgumentException(SR.CryptoProviderCanNotMergeBlocks, "cryptoProvider");            
             }
             
             _baseStream = baseStream;

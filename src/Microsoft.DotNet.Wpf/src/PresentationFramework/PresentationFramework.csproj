@@ -53,6 +53,7 @@
     <Compile Include="$(WpfSharedDir)\MS\Internal\SafeSecurityHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SafeSecurityHelperAvalon.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\Text\InternalEncoding.cs" />
+    <Compile Include="$(WpfSharedDir)\MS\Internal\WindowsRuntime\ReflectionHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\Xaml\Context\XamlContextStack.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\Xaml\Context\XamlFrame.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Utility\BindUriHelper.cs" />
@@ -1370,7 +1371,6 @@
 
   <ItemGroup>
     <MicrosoftPrivateWinFormsReference Include="Accessibility" />
-    <MicrosoftPrivateWinFormsReference Include="System.Private.Windows.Core" />
   </ItemGroup>
 
   <ItemGroup>

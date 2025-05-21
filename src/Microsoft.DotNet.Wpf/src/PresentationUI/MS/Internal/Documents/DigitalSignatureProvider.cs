@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System;
 using System.Collections.Generic;
@@ -772,29 +773,29 @@ namespace MS.Internal.Documents
         /// <summary>
         /// The XPS document from which to read signatures.
         /// </summary>
-        private XpsDocument _xpsDocument;
+        XpsDocument _xpsDocument;
 
         /// <summary>
         /// The fixed document sequence to which to write signature definitions.
         /// </summary>
-        private IXpsFixedDocumentSequenceReader _fixedDocumentSequence;
+        IXpsFixedDocumentSequenceReader _fixedDocumentSequence;
 
         /// <summary>
         /// The fixed document to which to write signature definitions.
         /// </summary>
-        private IXpsFixedDocumentReader _fixedDocument;
+        IXpsFixedDocumentReader _fixedDocument;
 
         /// <summary>
         /// A list of all the signatures in the package.
         /// </summary>
-        private IList<DigitalSignature> _digitalSignatureList;
+        IList<DigitalSignature> _digitalSignatureList;
 
         /// <summary>
         /// A cached read-only version of the signature list. This is a wrapper
         /// around _digitalSignatureList that is intended to be passed out by
         /// the Signatures property.
         /// </summary>
-        private ReadOnlyCollection<DigitalSignature> _readOnlySignatureList;
+        ReadOnlyCollection<DigitalSignature> _readOnlySignatureList;
 
         //Contains all known flags that don't convert to Corrupted.
         //(All flags except Cyclic and NotSignatureValid).  We will be looking for unknown flags using this

@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -179,7 +180,7 @@ namespace MS.Internal.Xaml.Parser
 
         // ===========================================================
 
-        private static bool IsWhitespace(string text)
+        static bool IsWhitespace(string text)
         {
             for (int i=0; i<text.Length; i++)
             {
@@ -190,7 +191,7 @@ namespace MS.Internal.Xaml.Parser
             return true;
         }
 
-        private static bool IsWhitespaceChar(char ch)
+        static bool IsWhitespaceChar(char ch)
         {
             return (ch == SPACE || ch == TAB || ch == NEWLINE || ch == RETURN);
         }
@@ -198,7 +199,7 @@ namespace MS.Internal.Xaml.Parser
         // This removes all leading and trailing whitespace, and it
         // collapses any internal runs of whitespace to a single space.
         //
-        private static string CollapseWhitespace(string text)
+        static string CollapseWhitespace(string text)
         {
             StringBuilder sb = new StringBuilder(text.Length);
             int firstIdx=0;
@@ -265,7 +266,7 @@ namespace MS.Internal.Xaml.Parser
         // ---- Asian newline suppression code ------
 
         // this code was modeled from the 3.5 XamlReaderHelper.cs
-        private static bool HasSurroundingEastAsianChars(int start, int end, string text)
+        static bool HasSurroundingEastAsianChars(int start, int end, string text)
         {
             Debug.Assert(start > 0);
             Debug.Assert(end < text.Length);
@@ -301,7 +302,7 @@ namespace MS.Internal.Xaml.Parser
             return false;
         }
 
-        private static int ComputeUnicodeScalarValue(int takeOneIdx, int takeTwoIdx, string text)
+        static int ComputeUnicodeScalarValue(int takeOneIdx, int takeTwoIdx, string text)
         {
             int unicodeScalarValue=0;
             bool isSurrogate = false;
@@ -325,7 +326,7 @@ namespace MS.Internal.Xaml.Parser
             return unicodeScalarValue;
         }
 
-        private struct CodePointRange
+        struct CodePointRange
         {
             public readonly int Min;
             public readonly int Max;
@@ -336,7 +337,7 @@ namespace MS.Internal.Xaml.Parser
             }
         }
 
-        private static CodePointRange[] EastAsianCodePointRanges = new CodePointRange[]
+        static CodePointRange[] EastAsianCodePointRanges = new CodePointRange[]
         {
             new CodePointRange ( 0x1100, 0x11FF ),     // Hangul
             new CodePointRange ( 0x2E80, 0x2FD5 ),     // CJK and KangXi Radicals
@@ -365,7 +366,7 @@ namespace MS.Internal.Xaml.Parser
         };
 
         // taken directly from WPF 3.5
-        private static bool IsEastAsianCodePoint(int unicodeScalarValue)
+        static bool IsEastAsianCodePoint(int unicodeScalarValue)
         {
             for (int i = 0; i < EastAsianCodePointRanges.Length; i++)
             {

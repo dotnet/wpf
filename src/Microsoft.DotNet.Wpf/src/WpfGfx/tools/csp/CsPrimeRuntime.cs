@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //------------------------------------------------------------------------------
@@ -14,10 +15,11 @@
 //        provided to the project that Csp.exe will execute.
 //
 
-using System.Text;
-
 namespace MS.Internal.Csp
 {
+    using System;
+    using System.Text;
+
     public sealed class CsPrimeRuntime
     {
         //------------------------------------------------------

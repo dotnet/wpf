@@ -42,7 +42,7 @@
 [bool]$useInstalledDotNetCli = if (Test-Path variable:useInstalledDotNetCli) { $useInstalledDotNetCli } else { $true }
 
 # Enable repos to use a particular version of the on-line dotnet-install scripts.
-#    default URL: https://builds.dotnet.microsoft.com/dotnet/scripts/v1/dotnet-install.ps1
+#    default URL: https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.ps1
 [string]$dotnetInstallScriptVersion = if (Test-Path variable:dotnetInstallScriptVersion) { $dotnetInstallScriptVersion } else { 'v1' }
 
 # True to use global NuGet cache instead of restoring packages to repository-local directory.
@@ -67,6 +67,8 @@ $ErrorActionPreference = 'Stop'
 
 # True if the build is a product build
 [bool]$productBuild = if (Test-Path variable:productBuild) { $productBuild } else { $false }
+
+[String[]]$properties = if (Test-Path variable:properties) { $properties } else { @() }
 
 function Create-Directory ([string[]] $path) {
     New-Item -Path $path -Force -ItemType 'Directory' | Out-Null
@@ -260,7 +262,7 @@ function GetDotNetInstallScript([string] $dotnetRoot) {
   if (!(Test-Path $installScript)) {
     Create-Directory $dotnetRoot
     $ProgressPreference = 'SilentlyContinue' # Don't display the console progress UI - it's a huge perf hit
-    $uri = "https://builds.dotnet.microsoft.com/dotnet/scripts/$dotnetInstallScriptVersion/dotnet-install.ps1"
+    $uri = "https://raw.githubusercontent.com/dotnet/install-scripts/4b17227b30fbbad567d4d4fba17c59da51bc817b/src/dotnet-install.ps1"
 
     Retry({
       Write-Host "GET $uri"
@@ -381,8 +383,8 @@ function InitializeVisualStudioMSBuild([bool]$install, [object]$vsRequirements =
 
   # If the version of msbuild is going to be xcopied,
   # use this version. Version matches a package here:
-  # https://dev.azure.com/dnceng/public/_artifacts/feed/dotnet-eng/NuGet/Microsoft.DotNet.Arcade.MSBuild.Xcopy/versions/17.13.0
-  $defaultXCopyMSBuildVersion = '17.13.0'
+  # https://dev.azure.com/dnceng/public/_artifacts/feed/dotnet-eng/NuGet/Microsoft.DotNet.Arcade.MSBuild.Xcopy/versions/17.12.0
+  $defaultXCopyMSBuildVersion = '17.12.0'
 
   if (!$vsRequirements) {
     if (Get-Member -InputObject $GlobalJson.tools -Name 'vs') {
@@ -851,7 +853,7 @@ function MSBuild-Core() {
 
     # When running on Azure Pipelines, override the returned exit code to avoid double logging.
     # Skip this when the build is a child of the VMR orchestrator build.
-    if ($ci -and $env:SYSTEM_TEAMPROJECT -ne $null -and !$productBuild) {
+    if ($ci -and $env:SYSTEM_TEAMPROJECT -ne $null -and !$productBuild -and -not($properties -like "*DotNetBuildRepo=true*")) {
       Write-PipelineSetResult -Result "Failed" -Message "msbuild execution failed."
       # Exiting with an exit code causes the azure pipelines task to log yet another "noise" error
       # The above Write-PipelineSetResult will cause the task to be marked as failure without adding yet another error

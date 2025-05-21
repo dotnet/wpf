@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -70,9 +71,10 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Scope = "member", Target = "System.Xaml.MS.Impl.SixItemList`1.Promote(System.Xaml.MS.Impl.ThreeItemList`1<T>):System.Void", Justification = "Kept for compatibility.")]
 [assembly: SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Scope = "member", Target = "System.Xaml.MS.Impl.SixItemList`1.SetCount(System.Int32):System.Void", Justification = "Kept for compatibility.")]
 [assembly: SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Scope = "member", Target = "System.Xaml.MS.Impl.SixItemList`1.Promote(System.Xaml.MS.Impl.FrugalListBase`1<T>):System.Void", Justification = "Kept for compatibility.")]
-
 #endregion
+
 #region Microsoft.Reliablity Suppressions
+[module: SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", Scope = "member", Target = "System.Xaml.Schema.ClrNamespace.#ParseClrNamespaceUri(System.String)", MessageId = "System.Reflection.Assembly.LoadWithPartialName", Justification = "Back compat.")]
 [module: SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadFile", Scope = "member", Target = "System.Xaml.ReflectionHelper.#LoadAssemblyHelper(System.String,System.String)", Justification = "Kept for compatibility.")]
 [module: SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadWithPartialName", Scope = "member", Target = "System.Xaml.XamlSchemaContext.#ResolveAssembly(System.String)", Justification = "Need to support load of assemblies from GAC by short name.")]
 #endregion

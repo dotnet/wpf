@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using System.Xml;
@@ -191,7 +192,7 @@ namespace System.Windows.Documents
             if (elementLevel == EmptyDocumentDepth && typeof(Run).IsAssignableFrom(rangeStart.ParentType))
             {
                 elementLevel++;
-                xmlWriter.WriteStartElement(nameof(Run));
+                xmlWriter.WriteStartElement(typeof(Run).Name);
             }
 
             // Create text navigator for reading the range's content
@@ -1184,8 +1185,8 @@ namespace System.Windows.Documents
                         // Write Source property as the complex property to specify the BitmapImage
                         // cache option as "OnLoad" instead of the default "OnDeman". Otherwise,
                         // we couldn't load the image by disposing WpfPayload package.
-                        xmlWriter.WriteStartElement($"{nameof(Image)}.{Image.SourceProperty.Name}");
-                        xmlWriter.WriteStartElement(nameof(Media.Imaging.BitmapImage));
+                        xmlWriter.WriteStartElement($"{typeof(Image).Name}.{Image.SourceProperty.Name}");
+                        xmlWriter.WriteStartElement(typeof(System.Windows.Media.Imaging.BitmapImage).Name);
                         xmlWriter.WriteAttributeString(System.Windows.Media.Imaging.BitmapImage.UriSourceProperty.Name, imageSource);
                         xmlWriter.WriteAttributeString(System.Windows.Media.Imaging.BitmapImage.CacheOptionProperty.Name, "OnLoad");
                         xmlWriter.WriteEndElement();

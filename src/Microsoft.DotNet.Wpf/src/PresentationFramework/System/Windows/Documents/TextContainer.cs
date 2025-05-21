@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Default Framework TextContainer implementation.
@@ -919,7 +920,10 @@ namespace System.Windows.Documents
 
             // Notify the TextElement of a content change.
             TextElement textElement = position.Parent as TextElement;
-            textElement?.OnTextUpdated();
+            if (textElement != null)
+            {
+                textElement.OnTextUpdated();
+            }
         }
 
         // InsertElement worker.  Adds a TextElement to the tree.
@@ -1253,7 +1257,10 @@ namespace System.Windows.Documents
 
             Invariant.Assert(symbolCount > 0);
 
-            undoUnit?.SetTreeHashCode();
+            if (undoUnit != null)
+            {
+                undoUnit.SetTreeHashCode();
+            }
 
             // Public tree event.
             deletePosition = new TextPointer(startPosition, LogicalDirection.Forward);
@@ -2086,7 +2093,10 @@ namespace System.Windows.Documents
                 }
 
                 TextElement textElement = logicalTreeNode as TextElement;
-                textElement?.BeforeLogicalTreeChange();
+                if (textElement != null)
+                {
+                    textElement.BeforeLogicalTreeChange();
+                }
 
                 try
                 {
@@ -2102,7 +2112,10 @@ namespace System.Windows.Documents
                 }
                 finally
                 {
-                    textElement?.AfterLogicalTreeChange();
+                    if (textElement != null)
+                    {
+                        textElement.AfterLogicalTreeChange();
+                    }
                 }
 
                 if (node == lastChildNode)
@@ -2338,8 +2351,14 @@ namespace System.Windows.Documents
 
                 // Make sure left/rightSubTree stay local roots, we might
                 // have inserted new elements in the AdjustRefCountsForContentDelete call.
-                leftSubTree?.Splay();
-                rightSubTree?.Splay();
+                if (leftSubTree != null)
+                {
+                    leftSubTree.Splay();
+                }
+                if (rightSubTree != null)
+                {
+                    rightSubTree.Splay();
+                }
                 // Similarly, middleSubtree might not be a local root any more,
                 // so splay it too.
                 middleSubTree.Splay();
@@ -2353,7 +2372,10 @@ namespace System.Windows.Documents
             // Put left/right sub trees back into the TextContainer.
             rootNode = TextTreeNode.Join(leftSubTree, rightSubTree);
             containingNode.ContainedNode = rootNode;
-            rootNode?.ParentNode = containingNode;
+            if (rootNode != null)
+            {
+                rootNode.ParentNode = containingNode;
+            }
 
             if (symbolCount > 0)
             {
@@ -2375,7 +2397,10 @@ namespace System.Windows.Documents
                 // their contents.
                 Invariant.Assert(startPosition.Parent == endPosition.Parent);
                 TextElement textElement = startPosition.Parent as TextElement;
-                textElement?.OnTextUpdated();
+                if (textElement != null)
+                {               
+                    textElement.OnTextUpdated();                    
+                }
             }
 
             return symbolCount;
@@ -2704,9 +2729,12 @@ namespace System.Windows.Documents
                 }
             }
 
-            // Make sure rightSubTree is a root before returning.
-            // We haven't done anything yet to ensure this.
-            rightSubTree?.Splay();
+            if (rightSubTree != null)
+            {
+                // Make sure rightSubTree is a root before returning.
+                // We haven't done anything yet to ensure this.
+                rightSubTree.Splay();
+            }
 
             Invariant.Assert(leftSubTree == null || leftSubTree.Role == SplayTreeNodeRole.LocalRoot);
             Invariant.Assert(middleSubTree == null || middleSubTree.Role == SplayTreeNodeRole.LocalRoot);
@@ -2876,7 +2904,10 @@ namespace System.Windows.Documents
 
             NextGeneration(true /* deletedContent */);
 
-            undoUnit?.SetTreeHashCode();
+            if (undoUnit != null)
+            {
+                undoUnit.SetTreeHashCode();
+            }
 
             // Raise the public event.
             if (deep)
@@ -3051,7 +3082,10 @@ namespace System.Windows.Documents
                     }
 
                     containingNode.ContainedNode = localRootNode;
-                    localRootNode?.ParentNode = containingNode;
+                    if (localRootNode != null)
+                    {
+                        localRootNode.ParentNode = containingNode;
+                    }
                 }
             }
         }
@@ -3441,7 +3475,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return this.Parent?.Dispatcher;
+                return (this.Parent != null) ? this.Parent.Dispatcher : null;
             }
         }
 

@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -107,14 +108,14 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        private void ValidateItem(BindingBase binding)
+        void ValidateItem(BindingBase binding)
         {
             // for V1, we only allow Binding as an item of BindingCollection.
             if (!(binding is Binding))
                 throw new NotSupportedException(SR.Format(SR.BindingCollectionContainsNonBinding, binding.GetType().Name));
         }
 
-        private void OnBindingCollectionChanged()
+        void OnBindingCollectionChanged()
         {
             if (_collectionChangedCallback != null)
                 _collectionChangedCallback();
@@ -126,7 +127,7 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        private BindingBase _owner;
+        BindingBase _owner;
         private BindingCollectionChangedCallback _collectionChangedCallback;
     }
 

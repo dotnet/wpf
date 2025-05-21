@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
 *
@@ -181,7 +182,7 @@ namespace System.Windows
 
         #endregion Data
 
-        private IEnumerator<KeyValuePair<string, object>> GetEnumerator()
+        IEnumerator<KeyValuePair<string, object>> GetEnumerator()
         {
             return new Enumerator(this._nameMap);
         }
@@ -258,11 +259,11 @@ namespace System.Windows
         {
             if (item.Key == null)
             {
-                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), nameof(item));
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), "item");
             }
             if (item.Value == null)
             {
-                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Value"), nameof(item));
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Value"), "item");
             }
 
             Add(item.Key, item.Value);
@@ -272,7 +273,7 @@ namespace System.Windows
         {
             if (item.Key == null)
             {
-                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), nameof(item));
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), "item");
             }
             return ContainsKey(item.Key);
         }
@@ -369,9 +370,9 @@ namespace System.Windows
         #endregion
 
         #region class Enumerator
-        private class Enumerator : IEnumerator<KeyValuePair<string, object>>
+        class Enumerator : IEnumerator<KeyValuePair<string, object>>
         {
-            private IDictionaryEnumerator _enumerator;
+            IDictionaryEnumerator _enumerator;
             
             public Enumerator(HybridDictionary nameMap)
             {
@@ -419,7 +420,10 @@ namespace System.Windows
 
             void IEnumerator.Reset()
             {
-                _enumerator?.Reset();
+                if (_enumerator != null)
+                {
+                    _enumerator.Reset();
+                }
             }
         }
         #endregion

@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /*++
 
@@ -109,7 +110,7 @@ namespace MS.Internal.Printing.Configuration
             return cap;
         }
 
-        internal sealed override bool AddOptionCallback(PrintCapabilityOption baseOption)
+        internal override sealed bool AddOptionCallback(PrintCapabilityOption baseOption)
         {
             bool added = false;
 
@@ -134,32 +135,32 @@ namespace MS.Internal.Printing.Configuration
             return added;
         }
 
-        internal sealed override void AddSubFeatureCallback(PrintCapabilityFeature subFeature)
+        internal override sealed void AddSubFeatureCallback(PrintCapabilityFeature subFeature)
         {
             // no sub-feature
             return;
         }
 
-        internal sealed override bool FeaturePropCallback(PrintCapabilityFeature feature, XmlPrintCapReader reader)
+        internal override sealed bool FeaturePropCallback(PrintCapabilityFeature feature, XmlPrintCapReader reader)
         {
             // no feature property to handle
             return false;
         }
 
-        internal sealed override PrintCapabilityOption NewOptionCallback(PrintCapabilityFeature baseFeature)
+        internal override sealed PrintCapabilityOption NewOptionCallback(PrintCapabilityFeature baseFeature)
         {
             BorderlessOption option = new BorderlessOption(baseFeature);
 
             return option;
         }
 
-        internal sealed override void OptionAttrCallback(PrintCapabilityOption baseOption, XmlPrintCapReader reader)
+        internal override sealed void OptionAttrCallback(PrintCapabilityOption baseOption, XmlPrintCapReader reader)
         {
             // no option attribute to handle
             return;
         }
 
-        internal sealed override bool OptionPropCallback(PrintCapabilityOption option, XmlPrintCapReader reader)
+        internal override sealed bool OptionPropCallback(PrintCapabilityOption option, XmlPrintCapReader reader)
         {
             // no option property to handle
             return false;
@@ -169,7 +170,7 @@ namespace MS.Internal.Printing.Configuration
 
         #region Internal Properties
 
-        internal sealed override bool IsValid
+        internal override sealed bool IsValid
         {
             get
             {
@@ -177,7 +178,7 @@ namespace MS.Internal.Printing.Configuration
             }
         }
 
-        internal sealed override string FeatureName
+        internal override sealed string FeatureName
         {
             get
             {
@@ -185,7 +186,7 @@ namespace MS.Internal.Printing.Configuration
             }
         }
 
-        internal sealed override bool HasSubFeature
+        internal override sealed bool HasSubFeature
         {
             get
             {
@@ -250,7 +251,7 @@ namespace MS.Internal.Printing.Configuration
                 if (value < PrintSchema.PageBorderlessEnumMin ||
                     value > PrintSchema.PageBorderlessEnumMax)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value));
+                    throw new ArgumentOutOfRangeException("value");
                 }
 
                 this[PrintSchemaTags.Framework.OptionNameProperty] = (int)value;

@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Contains the Track class.
@@ -108,38 +109,42 @@ namespace System.Windows.Controls.Primitives
         {
             if (oldValue != newValue)
             {
-                const int VisualChildrenCount = 3;
-                const int VisualChildrenMaxIndex = 2;
-                _visualChildren ??= new Visual[VisualChildrenCount];
+                if (_visualChildren == null)
+                {
+                    _visualChildren = new Visual[3];
+                }
 
-                // Notify the visual layer that the old component has been removed
                 if (oldValue != null)
+                {
+                    // notify the visual layer that the old component has been removed.
                     RemoveVisualChild(oldValue);
-
-                int itemIndex = 0;
-                int nullIndex = 0;
-
-                // Find the Count of the items
-                while (nullIndex < VisualChildrenCount && _visualChildren[nullIndex] != null)
-                    nullIndex++;
-
-                // Find the oldValue item index
-                while (itemIndex < VisualChildrenMaxIndex && _visualChildren[itemIndex] != oldValue)
-                    itemIndex++;
-
-                Debug.Assert(_visualChildren[itemIndex] == oldValue, "Attempt to add a 4th item into _visualChildren");
-
-                // In case we're replacing a value, we need to shift the items to the left first, and then append newValue as last
-                nullIndex--;
-                if (itemIndex < nullIndex)
-                {
-                    Array.Copy(_visualChildren, itemIndex + 1, _visualChildren, itemIndex, nullIndex - itemIndex);
-                    _visualChildren[nullIndex] = newValue;
                 }
-                else // In case there are still leftover NULL items (empty spots) or it is the last one, we just append
+
+                // Remove the old value from our z index list and add new value to end
+                int i = 0;
+                while (i < 3) 
                 {
-                    _visualChildren[itemIndex] = newValue;
+                    // Array isn't full, break
+                    if (_visualChildren[i] == null)
+                        break;
+
+                    // found the old value
+                    if (_visualChildren[i] == oldValue)
+                    {
+                        // Move values down until end of array or a null element
+                        while (i < 2 && _visualChildren[i + 1] != null)
+                        {
+                            _visualChildren[i] = _visualChildren[i + 1];
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        i++;
+                    }
                 }
+                // Add newValue at end of z-order
+                _visualChildren[i] = newValue;
 
                 AddVisualChild(newValue);
 
@@ -359,7 +364,11 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         protected override Visual GetVisualChild(int index)
         {
-            return _visualChildren?[index] ?? throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
+            if (_visualChildren == null || _visualChildren[index] == null)
+            {
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+            }
+            return _visualChildren[index];
         }
         
         /// <summary>
@@ -498,19 +507,22 @@ namespace System.Windows.Controls.Primitives
                 offset.Y = isDirectionReversed ? decreaseButtonLength + thumbLength : 0.0;
                 pieceSize.Height = increaseButtonLength;
                 
-                IncreaseRepeatButton?.Arrange(new Rect(offset, pieceSize));
+                if (IncreaseRepeatButton != null)
+                    IncreaseRepeatButton.Arrange(new Rect(offset, pieceSize));
 
 
                 offset.Y = isDirectionReversed ? 0.0 : increaseButtonLength + thumbLength;
                 pieceSize.Height = decreaseButtonLength;
 
-                DecreaseRepeatButton?.Arrange(new Rect(offset, pieceSize));
+                if (DecreaseRepeatButton != null)
+                    DecreaseRepeatButton.Arrange(new Rect(offset, pieceSize));
 
 
                 offset.Y = isDirectionReversed ? decreaseButtonLength : increaseButtonLength;
                 pieceSize.Height = thumbLength;
 
-                Thumb?.Arrange(new Rect(offset, pieceSize));
+                if (Thumb != null)
+                    Thumb.Arrange(new Rect(offset, pieceSize));
 
                 ThumbCenterOffset = offset.Y + (thumbLength * 0.5);
             }
@@ -526,19 +538,22 @@ namespace System.Windows.Controls.Primitives
                 offset.X = isDirectionReversed ? increaseButtonLength + thumbLength : 0.0;
                 pieceSize.Width = decreaseButtonLength;
 
-                DecreaseRepeatButton?.Arrange(new Rect(offset, pieceSize));
+                if (DecreaseRepeatButton != null)
+                    DecreaseRepeatButton.Arrange(new Rect(offset, pieceSize));
 
 
                 offset.X = isDirectionReversed ? 0.0 : decreaseButtonLength + thumbLength;
                 pieceSize.Width = increaseButtonLength;
 
-                IncreaseRepeatButton?.Arrange(new Rect(offset, pieceSize));
+                if (IncreaseRepeatButton != null)
+                    IncreaseRepeatButton.Arrange(new Rect(offset, pieceSize));
 
 
                 offset.X = isDirectionReversed ? increaseButtonLength : decreaseButtonLength;
                 pieceSize.Width = thumbLength;
                 
-                Thumb?.Arrange(new Rect(offset, pieceSize));
+                if (Thumb != null)
+                    Thumb.Arrange(new Rect(offset, pieceSize));
 
                 ThumbCenterOffset = offset.X + (thumbLength * 0.5);
             }

@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Lightweight class to wrap Win32 WinEvents.
 //
@@ -100,7 +101,10 @@ namespace MS.Internal.AutomationProxies
                     _hHooks[i] = IntPtr.Zero;
                 }
             }
-            _qEvents?.Clear();
+            if (_qEvents != null)
+            {
+                _qEvents.Clear();
+            }
             _fBusy = false;
         }
 

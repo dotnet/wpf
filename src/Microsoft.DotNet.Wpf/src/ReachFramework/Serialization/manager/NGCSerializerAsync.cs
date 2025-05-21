@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.Collections;
@@ -437,7 +438,10 @@ namespace System.Windows.Xps.Serialization
                 ReachSerializer serializer = SerializationManager.GetSerializer(serializablePropertyContext.Value);
 
                 // If there is no serializer for this type, we won't serialize this property
-                serializer?.SerializeObject(serializablePropertyContext);
+                if(serializer!=null)
+                {
+                    serializer.SerializeObject(serializablePropertyContext);
+                }
             }
         }
 
@@ -726,7 +730,10 @@ namespace System.Windows.Xps.Serialization
                     
                     ReachSerializer serializer = SerializationManager.GetSerializer(page);
 
-                    serializer?.SerializeObject(page);
+                    if (serializer != null)
+                    {
+                        serializer.SerializeObject(page);
+                    }
                 }
             }
             else
@@ -1302,12 +1309,18 @@ namespace System.Windows.Xps.Serialization
                 if (fixedDoc != null)
                 {
                     ReachSerializer serializer = NgcSerializationManager.GetSerializer(fixedDoc);
-                    serializer?.SerializeObject(fixedDoc);
+                    if (serializer != null)
+                    {
+                        serializer.SerializeObject(fixedDoc);
+                    }
                 }
                 else
                 {
                     ReachSerializer serializer = NgcSerializationManager.GetSerializer(idp.DocumentPaginator);
-                    serializer?.SerializeObject(idp);
+                    if (serializer != null)
+                    {
+                        serializer.SerializeObject(idp);
+                    }
                 }
             }
         }

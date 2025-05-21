@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description:  
@@ -167,7 +168,7 @@ namespace System.Windows.Controls
         {
             if (string.IsNullOrEmpty(text))
             {
-                throw new ArgumentNullException(nameof(text));
+                throw new ArgumentNullException("text");
             }
 
             MemoryStream ms = new MemoryStream(text.Length);
@@ -254,7 +255,7 @@ namespace System.Windows.Controls
 
             if (string.IsNullOrEmpty(scriptName))
             {
-                throw new ArgumentNullException(nameof(scriptName));
+                throw new ArgumentNullException("scriptName");
             }
 
             UnsafeNativeMethods.IDispatchEx scriptObjectEx = null;
@@ -870,7 +871,7 @@ namespace System.Windows.Controls
 
             if (!source.IsAbsoluteUri)
             {
-                throw new ArgumentException(SR.AbsoluteUriOnly, nameof(source));
+                throw new ArgumentException(SR.AbsoluteUriOnly, "source");
             }
 
             // Resolve Pack://siteoforigin.
@@ -981,7 +982,8 @@ namespace System.Windows.Controls
         // Do not reference this directly. Use the AxIWebBrowser2 property instead since that
         // will cause the object to be instantiated if it is not already created.
         private UnsafeNativeMethods.IWebBrowser2  _axIWebBrowser2;
-        private WebOCHostingAdaptor                       _hostingAdaptor;
+
+        WebOCHostingAdaptor                       _hostingAdaptor;
 
         // To hook up events from the native WebBrowser
         private ConnectionPointCookie             _cookie;

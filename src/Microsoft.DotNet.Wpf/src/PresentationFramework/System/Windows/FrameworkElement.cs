@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.Collections.Specialized;
@@ -92,7 +93,7 @@ namespace System.Windows
     [UsableDuringInitialization(true)]
     public partial class FrameworkElement : UIElement, IFrameworkInputElement, ISupportInitialize, IHaveResources, IQueryAmbient
     {
-        private static readonly Type _typeofThis = typeof(FrameworkElement);
+        static private readonly Type _typeofThis = typeof(FrameworkElement);
 
         /// <summary>
         ///     Default FrameworkElement constructor
@@ -578,7 +579,7 @@ namespace System.Windows
         /// <summary>
         /// Gets or sets the template child of the FrameworkElement.
         /// </summary>
-        internal virtual UIElement TemplateChild
+        virtual internal UIElement TemplateChild
         {
             get
             {
@@ -633,11 +634,11 @@ namespace System.Windows
         {
             if (_templateChild == null)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
             if (index != 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
             return _templateChild;
         }
@@ -704,10 +705,13 @@ namespace System.Windows
                 }
 
 
-                // This element is no longer an owner for the old RD
-                oldValue?.RemoveOwner(this);
+                if (oldValue != null)
+                {
+                    // This element is no longer an owner for the old RD
+                    oldValue.RemoveOwner(this);
+                }
 
-                if (this is Window window)
+                if(this is Window window)
                 {
                     window.AddFluentDictionary(value, out invalidateResources);
                 }
@@ -1947,7 +1951,7 @@ namespace System.Windows
             // Inheritance
             //
 
-            if (!TreeWalkHelper.SkipNext(InheritanceBehavior) || fmetadata.OverridesInheritanceBehavior)
+            if (!TreeWalkHelper.SkipNext(InheritanceBehavior) || fmetadata.OverridesInheritanceBehavior == true)
             {
                 // Used to terminate tree walk if a tree boundary is hit
                 InheritanceBehavior inheritanceBehavior = InheritanceBehavior.Default;
@@ -2459,7 +2463,7 @@ namespace System.Windows
             // Fire Loaded and Unloaded Events
             BroadcastEventHelper.BroadcastLoadedOrUnloadedEvent(this, oldParent, newParent);
 
-            if (newParent != null && newParent is not FrameworkElement)
+            if (newParent != null && (newParent is FrameworkElement) == false)
             {
                 // If you are being connected to a non-FE parent then start listening for VisualAncestor
                 // changes because otherwise you won't know about changes happening above you
@@ -2473,7 +2477,7 @@ namespace System.Windows
                     ((Visual3D)newParent).VisualAncestorChanged += new Visual.AncestorChangedEventHandler(OnVisualAncestorChanged);
                 }
             }
-            else if (oldParent != null && oldParent is not FrameworkElement)
+            else if (oldParent != null && (oldParent is FrameworkElement) == false)
             {
                 // If you are being disconnected from a non-FE parent then stop listening for
                 // VisualAncestor changes
@@ -3076,7 +3080,10 @@ namespace System.Windows
                     while (enumerator.MoveNext())
                     {
                         DependencyObject child = enumerator.Current as DependencyObject;
-                        child?.CoerceValue(property);
+                        if (child != null)
+                        {
+                            child.CoerceValue(property);
+                        }
                     }
                 }
             }
@@ -3163,7 +3170,7 @@ namespace System.Windows
         /// This will make the culture pertain to the scope of the element where it is applied.  The
         /// XmlLanguage names follow the RFC 3066 standard. For example, U.S. English is "en-US".
         /// </summary>
-        public static readonly DependencyProperty LanguageProperty =
+        static public readonly DependencyProperty LanguageProperty =
                     DependencyProperty.RegisterAttached(
                                 "Language",
                                 typeof(XmlLanguage),
@@ -3861,7 +3868,7 @@ namespace System.Windows
         }
 
         // If the cursor is changed, we may need to set the actual cursor.
-        private static void OnCursorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static private void OnCursorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             FrameworkElement fe = ((FrameworkElement)d);
 
@@ -3896,7 +3903,7 @@ namespace System.Windows
         }
 
         // If the ForceCursor property changed, we may need to set the actual cursor.
-        private static void OnForceCursorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static private void OnForceCursorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             FrameworkElement fe = ((FrameworkElement)d);
 
@@ -4451,7 +4458,10 @@ namespace System.Windows
                 }
 
                 // Set transformed, unrounded size on layout transform, if any.
-                ltd?.TransformedUnroundedDS = new Size(Math.Max(0, clippedDesiredWidth), Math.Max(0, clippedDesiredHeight));
+                if (ltd != null)
+                {
+                    ltd.TransformedUnroundedDS = new Size(Math.Max(0, clippedDesiredWidth), Math.Max(0, clippedDesiredHeight));
+                }
 
                 // If using layout rounding, round desired size.
                 if (useLayoutRounding)
@@ -5132,7 +5142,7 @@ namespace System.Windows
             FrameworkElement fe = element as FrameworkElement;
             element.InternalSetOffsetWorkaround(new Vector());
 
-            Transform additionalTransform = (fe?.GetFlowDirectionTransform()); //rtl
+            Transform additionalTransform = (fe == null ? null : fe.GetFlowDirectionTransform()); //rtl
 
             Transform renderTransform = element.RenderTransform;
             if(renderTransform == Transform.Identity)
@@ -5792,7 +5802,10 @@ namespace System.Windows
         internal override void AddSynchronizedInputPreOpportunityHandlerCore(EventRoute route, RoutedEventArgs args)
         {
             UIElement uiElement = this._templatedParent as UIElement;
-            uiElement?.AddSynchronizedInputPreOpportunityHandler(route, args);
+            if (uiElement != null)
+            {
+                uiElement.AddSynchronizedInputPreOpportunityHandler(route, args);
+            }
 
         }
 
@@ -6089,9 +6102,9 @@ namespace System.Windows
                         AddStyleHandlersToEventRoute(null, fce, route, args);
                     }
                 }
-                else
+                else if (uiElement3D != null)
                 {
-                    uiElement3D?.AddToEventRoute(route, args);
+                    uiElement3D.AddToEventRoute(route, args);
                 }
 
                 // Get model parent
@@ -6124,7 +6137,10 @@ namespace System.Windows
         internal void EventHandlersStoreRemove(EventPrivateKey key, Delegate handler)
         {
             EventHandlersStore store = EventHandlersStore;
-            store?.Remove(key, handler);
+            if (store != null)
+            {
+                store.Remove(key, handler);
+            }
         }
 
         // Gettor and Settor for flag that indicates if this
@@ -6235,7 +6251,7 @@ namespace System.Windows
                 // Thus we support any indices in the range [-1, 65535).
                 if (value < -1 || value >= 0xFFFF)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value), SR.TemplateChildIndexOutOfRange);
+                    throw new ArgumentOutOfRangeException("value", SR.TemplateChildIndexOutOfRange);
                 }
 
                 uint childIndex = (value == -1) ? 0xFFFF : (uint)value;

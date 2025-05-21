@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //------------------------------------------------------------------------------
@@ -187,7 +188,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     /// </returns>
                     /// <param name='[[lowerName]]1'>The first [[resource.Name]] to compare</param>
                     /// <param name='[[lowerName]]2'>The second [[resource.Name]] to compare</param>
-                    public static bool Equals([[resource.Name]] [[lowerName]]1, [[resource.Name]] [[lowerName]]2)
+                    public static bool Equals ([[resource.Name]] [[lowerName]]1, [[resource.Name]] [[lowerName]]2)
                     {
                         [[equalsBody]]
                     }
@@ -350,6 +351,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 {
                     cs.Write(
                         [[inline]]
+
                                 if (_collection.Count == 0)
                                 {
                                     return String.Empty;
@@ -361,7 +363,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                 // Helper to get the numeric list separator for a given culture.
                                 // char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(provider);
 
-                                for (int i = 0; i < _collection.Count; i++)
+                                for (int i=0; i<_collection.Count; i++)
                                 {
                                     str.AppendFormat(
                                         provider,
@@ -647,7 +649,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     /// </returns>
                     /// <param name='[[lowerName]]1'>The first [[resource.Name]] to compare</param>
                     /// <param name='[[lowerName]]2'>The second [[resource.Name]] to compare</param>
-                    public static bool operator ==([[resource.Name]] [[lowerName]]1, [[resource.Name]] [[lowerName]]2)
+                    public static bool operator == ([[resource.Name]] [[lowerName]]1, [[resource.Name]] [[lowerName]]2)
                     {
                         [[equalsBody]]
                     }
@@ -663,7 +665,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     /// </returns>
                     /// <param name='[[lowerName]]1'>The first [[resource.Name]] to compare</param>
                     /// <param name='[[lowerName]]2'>The second [[resource.Name]] to compare</param>
-                    public static bool operator !=([[resource.Name]] [[lowerName]]1, [[resource.Name]] [[lowerName]]2)
+                    public static bool operator != ([[resource.Name]] [[lowerName]]1, [[resource.Name]] [[lowerName]]2)
                     {
                         return !([[lowerName]]1 == [[lowerName]]2);
                     }
@@ -718,12 +720,13 @@ namespace MS.Internal.MilCodeGen.Generators
                     {
                         serializationContextCanConvertTo =
                             [[inline]]
+
                                 // When invoked by the serialization engine we can convert to string only for some instances
                                 if (context != null && context.Instance != null)
                                 {
                                     if (!(context.Instance is [[resource.Name]]))
                                     {
-                                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "[[resource.Name]]"), nameof(context));
+                                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "[[resource.Name]]"), "context");
                                     }
 
                                     [[resource.Name]] value = ([[resource.Name]])context.Instance;
@@ -737,6 +740,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                         serializationContextConvertTo =
                             [[inline]]
+
                                 // When invoked by the serialization engine we can convert to string only for some instances
                                 if (context != null && context.Instance != null)
                                 {
@@ -818,8 +822,9 @@ namespace MS.Internal.MilCodeGen.Generators
                                             throw GetConvertFromException(value);
                                         }
 
+                                        String source = value as string;
 
-                                        if (value is string source)
+                                        if (source != null)
                                         {
                                             return [[resource.Name]].Parse(source[[contextParam]]);
                                         }
@@ -850,6 +855,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                             if (destinationType == typeof(string))
                                             {
                                                 [[serializationContextConvertTo]]// Delegate to the formatting/culture-aware ConvertToString method.
+
                                                 return instance.ConvertToString(null, culture);
                                             }
                                         }
@@ -858,6 +864,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                         return base.ConvertTo(context, culture, value, destinationType);
                                     }
                                 }
+
                             }
                         [[/inline]]
                             );
@@ -898,6 +905,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     {
                         valueSerializerCanConvertTo =
                             [[inline]]
+
                                 // Validate the input type
                                 if (!(value is [[resource.Name]]))
                                 {
@@ -905,6 +913,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                 }
 
                                 return true;
+
                             [[/inline]]
                                 ;
                     }
@@ -914,6 +923,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     {
                         valueSerializerCanConvertTo =
                             [[inline]]
+
                                 // When invoked by the serialization engine we can convert to string only for some instances
                                 if (!(value is [[resource.Name]]))
                                 {
@@ -923,11 +933,14 @@ namespace MS.Internal.MilCodeGen.Generators
                                 [[resource.Name]] instance  = ([[resource.Name]]) value;
 
                                 return instance.CanSerializeToString();
+
+
                             [[/inline]]
                                 ;
 
                         valueSerializerConvertTo =
                             [[inline]]
+							
                                 // When invoked by the serialization engine we can convert to string only for some instances
                                 if (!instance.CanSerializeToString())
                                 {
@@ -981,6 +994,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                         {
                                             return base.ConvertFromString( value, context );
                                         }
+
                                     }
 
                                     /// <summary>
@@ -988,15 +1002,21 @@ namespace MS.Internal.MilCodeGen.Generators
                                     /// </summary>
                                     public override string ConvertToString(object value, IValueSerializerContext context)
                                     {
-                                        if (value is [[resource.Name]] instance)
+                                        if (value is [[resource.Name]])
                                         {
+                                            [[resource.Name]] instance = ([[resource.Name]]) value;
                                             [[valueSerializerConvertTo]]
+
                                             return instance.ConvertToString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
                                         }
 
                                         return base.ConvertToString(value, context);
                                     }
                                 }
+
+
+
+
                             }
                         [[/inline]]
                             );

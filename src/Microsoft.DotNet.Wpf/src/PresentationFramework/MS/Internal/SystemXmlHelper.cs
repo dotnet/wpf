@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Helper methods for code that uses types from System.Xml.
@@ -66,7 +67,7 @@ namespace MS.Internal
         internal static string GetXmlTagName(object item, DependencyObject target)
         {
             SystemXmlExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemXml();
-            return extensions?.GetXmlTagName(item, target);
+            return (extensions != null) ? extensions.GetXmlTagName(item, target) : null;
         }
 
         // find a node with the given string as its InnerText
@@ -81,7 +82,7 @@ namespace MS.Internal
         internal static object GetInnerText(object item)
         {
             SystemXmlExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemXml();
-            return extensions?.GetInnerText(item);
+            return (extensions != null) ? extensions.GetInnerText(item) : null;
         }
     }
 }

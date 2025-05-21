@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 // Description:
@@ -1077,7 +1078,7 @@ namespace MS.Internal.IO.Packaging
                 if (key is DSA)
                     keyInfo.AddClause(new DSAKeyValue((DSA)key));    // DSA
                 else
-                    throw new ArgumentException(SR.CertificateKeyTypeNotSupported, nameof(signer));
+                    throw new ArgumentException(SR.CertificateKeyTypeNotSupported, "signer");
             }
 
             // the actual X509 cert
@@ -1179,7 +1180,7 @@ namespace MS.Internal.IO.Packaging
                             throw new ArgumentException(SR.PackageSpecificReferenceTagMustBeUnique);
 
                         //If there are more than one package specific tags
-                        if (packageReferenceFound)
+                        if (packageReferenceFound == true)
                             throw new XmlException(SR.MoreThanOnePackageSpecificReference);
                         else
                             packageReferenceFound = true;

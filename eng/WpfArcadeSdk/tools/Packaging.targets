@@ -406,6 +406,33 @@ $(PreparePackageAssetsDependsOn):
     </PropertyGroup>
   </Target>
 
+  <!-- Create version.txt containing latest commit ID -->
+  <Target Name="GenerateVersionFileWithRepositoryCommit"
+          Condition="'$(IsPackable)'=='true' and '$(CreateArchNeutralPackage)'=='true' and !Exists('$(ArtifactsPackagingDir)$(NormalizedPackageName)\version.txt')"
+          BeforeTargets="CreateContentFolder"
+          Outputs="$(ArtifactsPackagingDir)$(NormalizedPackageName)\version.txt">
+    <!--
+      Workaround
+        Ensure that SourceRevisionId is obtained if it has not already been read in
+        Reuse tasks from Microsoft.Build.Tasks.Git.targets
+    -->
+    <Microsoft.Build.Tasks.Git.LocateRepository Path="$(MSBuildProjectDirectory)" Condition="'$(SourceRevisionId)' == ''" >
+      <Output TaskParameter="RevisionId" PropertyName="SourceRevisionId" />
+    </Microsoft.Build.Tasks.Git.LocateRepository>
+    <ItemGroup>
+      <RepoCommitVersionFileLines Remove="@(RepoCommitVersionFileLines)" />
+      <RepoCommitVersionFileLines Include="$(SourceRevisionId)" />
+    </ItemGroup>
+
+    <PropertyGroup>
+      <RepoCommitVersionFileDir>$(ArtifactsPackagingDir)$(NormalizedPackageName)\</RepoCommitVersionFileDir>
+      <RepoCommitVersionFile>$(RepoCommitVersionFileDir)version.txt</RepoCommitVersionFile>
+    </PropertyGroup>
+
+    <MakeDir Condition="!Exists('$(RepoCommitVersionFileDir)')" Directories="$(RepoCommitVersionFileDir)" />
+    <WriteLinesToFile Lines="@(RepoCommitVersionFileLines)" File="$(RepoCommitVersionFile)"/>
+  </Target>
+
   <!--  Generate runtime.json for embedding in the arch-neutral package that uses the Bait & Switch technique -->
   <Target Name="GenerateRuntimeJson"
           Condition="'$(IsPackable)'=='true' and '$(CreateArchNeutralPackage)'=='true' and '$(PlatformIndependentPackage)'!='true'"

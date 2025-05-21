@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using System.Globalization;
@@ -206,8 +207,14 @@ namespace System.Windows.Documents
                 // from false to true.
                 if (!_IsChanged && value)
                 {
-                    this.TextStore?.OnSelectionChange();
-                    this.ImmComposition?.OnSelectionChange();
+                    if (this.TextStore != null)
+                    {
+                        this.TextStore.OnSelectionChange();
+                    }
+                    if (this.ImmComposition != null)
+                    {
+                        this.ImmComposition.OnSelectionChange();
+                    }
                 }
 
                 _IsChanged = value;
@@ -219,9 +226,15 @@ namespace System.Windows.Documents
         void ITextRange.NotifyChanged(bool disableScroll, bool skipEvents)
         {
             // Notify text store about selection movement.
-            this.TextStore?.OnSelectionChanged();
+            if (this.TextStore != null)
+            {
+                this.TextStore.OnSelectionChanged();
+            }
             // Notify ImmComposition about selection movement.
-            this.ImmComposition?.OnSelectionChanged();
+            if (this.ImmComposition != null)
+            {
+                this.ImmComposition.OnSelectionChanged();
+            }
 
             if (!skipEvents)
             {
@@ -730,7 +743,10 @@ namespace System.Windows.Documents
                 // Stress bug#1583327 indicate that _caretElement can be set to null by
                 // detaching. So the below code is caching the caret element instance locally.
                 CaretElement caretElement = _caretElement;
-                caretElement?.OnTextViewUpdated();
+                if (caretElement != null)
+                {
+                    caretElement.OnTextViewUpdated();
+                }
             }
 
             if (_pendingUpdateCaretStateCallback)
@@ -886,7 +902,7 @@ namespace System.Windows.Documents
             else
             {
                 // Define whether word adjustment is allowed. Pressing Shift+Control prevents from auto-word expansion.
-                bool disableWordExpansion = !_textEditor.AutoWordSelection || ((Keyboard.Modifiers & ModifierKeys.Shift) != 0 && (Keyboard.Modifiers & ModifierKeys.Control) != 0);
+                bool disableWordExpansion = _textEditor.AutoWordSelection == false || ((Keyboard.Modifiers & ModifierKeys.Shift) != 0 && (Keyboard.Modifiers & ModifierKeys.Control) != 0);
 
                 if (disableWordExpansion)
                 {
@@ -2780,7 +2796,7 @@ namespace System.Windows.Documents
         // Flag set true after scheduling a callback to UpdateCaretStateWorker.
         // Used to prevent unbounded callback allocations on the Dispatcher queue --
         // we fold redundant update requests into a single queue item.
-        private bool _pendingUpdateCaretStateCallback;
+        bool _pendingUpdateCaretStateCallback;
 
         #endregion Private Fields
     }

@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 
@@ -91,7 +92,7 @@ namespace Microsoft.Windows.Automation.Peers
             get { return (RibbonGroup)Owner; }
         }
 
-        private RibbonGroupHeaderAutomationPeer HeaderPeer
+        RibbonGroupHeaderAutomationPeer HeaderPeer
         {
             get
             {
@@ -128,10 +129,13 @@ namespace Microsoft.Windows.Automation.Peers
         internal void RaiseExpandCollapseAutomationEvent(bool oldValue, bool newValue)
         {
             AutomationPeer dataPeer = EventsSource;
-            dataPeer?.RaisePropertyChangedEvent(
+            if (dataPeer != null)
+            {
+                dataPeer.RaisePropertyChangedEvent(
                 ExpandCollapsePatternIdentifiers.ExpandCollapseStateProperty,
                 oldValue ? ExpandCollapseState.Expanded : ExpandCollapseState.Collapsed,
                 newValue ? ExpandCollapseState.Expanded : ExpandCollapseState.Collapsed);
+            }
         }
 
         private RibbonGroupHeaderAutomationPeer _headerPeer;

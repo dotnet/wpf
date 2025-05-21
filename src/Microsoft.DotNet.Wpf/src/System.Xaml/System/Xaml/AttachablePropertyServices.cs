@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -10,7 +11,7 @@ namespace System.Xaml
 {
     public static class AttachablePropertyServices
     {
-        private static DefaultAttachedPropertyStore attachedProperties = new DefaultAttachedPropertyStore();
+        static DefaultAttachedPropertyStore attachedProperties = new DefaultAttachedPropertyStore();
 
         public static int GetAttachedPropertyCount(object instance)
         {
@@ -115,9 +116,9 @@ namespace System.Xaml
         // global attached properties for types which don't implement IAttachedProperties or DO/Dependency Property
         // integration for their attached properties.
 
-        private sealed class DefaultAttachedPropertyStore
+        sealed class DefaultAttachedPropertyStore
         {
-            private Lazy<ConditionalWeakTable<object, Dictionary<AttachableMemberIdentifier, object>>> instanceStorage =
+            Lazy<ConditionalWeakTable<object, Dictionary<AttachableMemberIdentifier, object>>> instanceStorage =
                 new Lazy<ConditionalWeakTable<object, Dictionary<AttachableMemberIdentifier, object>>>();
 
             public void CopyPropertiesTo(object instance, KeyValuePair<AttachableMemberIdentifier, object>[] array, int index)

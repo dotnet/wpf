@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //#define DEBUG_LASSO_FEEDBACK // DO NOT LEAVE ENABLED IN CHECKED IN CODE
 //
@@ -376,7 +377,7 @@ namespace System.Windows.Controls
             if (    (_localAdornerDecorator == null)
                 ||  (index != 0))
             {
-                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
 
             return _localAdornerDecorator;
@@ -1089,7 +1090,7 @@ namespace System.Windows.Controls
                             // now that we've raised the Gesture event and the developer
                             // has had a chance to change args.Cancel, see what their intent is.
                             //
-                            if (!args.Cancel)
+                            if (args.Cancel == false)
                             {
                                 //bail out and don't add
                                 //the stroke to InkCanvas.Strokes
@@ -1839,7 +1840,7 @@ namespace System.Windows.Controls
                 Double.IsInfinity(point.X)||
                 Double.IsInfinity(point.Y) )
             {
-                    throw new ArgumentException(SR.InvalidPoint, nameof(point));
+                    throw new ArgumentException(SR.InvalidPoint, "point");
             }
 
 
@@ -2308,7 +2309,7 @@ namespace System.Windows.Controls
             //
             // attempt to clear selection
             //
-            ChangeInkCanvasSelection(new StrokeCollection(), Array.Empty<UIElement>());
+            ChangeInkCanvasSelection(new StrokeCollection(), new UIElement[]{});
 
             return !InkCanvasSelection.HasSelection;
         }
@@ -2324,7 +2325,7 @@ namespace System.Windows.Controls
             if ( InkCanvasSelection.HasSelection )
             {
                 // Reset the current selection
-                CoreChangeSelection(new StrokeCollection(), Array.Empty<UIElement>(), raiseSelectionChangedEvent);
+                CoreChangeSelection(new StrokeCollection(), new UIElement[] { }, raiseSelectionChangedEvent);
             }
         }
 
@@ -2509,7 +2510,7 @@ namespace System.Windows.Controls
         {
             if (selectedElements == null)
             {
-                return Array.Empty<UIElement>();
+                return new UIElement[]{};
             }
 
             List<UIElement> elements = new List<UIElement>();

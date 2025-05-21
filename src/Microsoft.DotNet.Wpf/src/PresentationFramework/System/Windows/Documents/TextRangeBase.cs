@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using System.Collections;
@@ -62,7 +63,7 @@ namespace System.Windows.Documents
 
             if (textPointer.TextContainer != thisRange.Start.TextContainer)
             {
-                throw new ArgumentException(SR.NotInAssociatedTree, nameof(textPointer));
+                throw new ArgumentException(SR.NotInAssociatedTree, "textPointer");
             }
 
             // Correct position normalization on range boundary so that
@@ -158,8 +159,8 @@ namespace System.Windows.Documents
             }
             else
             {
-                ValidationHelper.VerifyPosition(thisRange.Start.TextContainer, position1, nameof(position1));
-                ValidationHelper.VerifyPosition(thisRange.Start.TextContainer, position2, nameof(position2));
+                ValidationHelper.VerifyPosition(thisRange.Start.TextContainer, position1, "position1");
+                ValidationHelper.VerifyPosition(thisRange.Start.TextContainer, position2, "position2");
 
                 TextRangeBase.BeginChange(thisRange);
                 try
@@ -1535,7 +1536,7 @@ namespace System.Windows.Documents
             else
             {
                 // Unsupported format - thows exception
-                throw new ArgumentException(SR.Format(SR.TextRange_UnsupportedDataFormat, dataFormat), nameof(dataFormat));
+                throw new ArgumentException(SR.Format(SR.TextRange_UnsupportedDataFormat, dataFormat), "dataFormat");
             }
         }
 
@@ -1569,7 +1570,7 @@ namespace System.Windows.Documents
                 object element = WpfPayload.LoadElement(stream);
                 if (!(element is Section) && !(element is Span))
                 {
-                    throw new ArgumentException(SR.Format(SR.TextRange_UnrecognizedStructureInDataFormat, dataFormat), nameof(stream));
+                    throw new ArgumentException(SR.Format(SR.TextRange_UnrecognizedStructureInDataFormat, dataFormat), "stream");
                 }
                 thisRange.SetXmlVirtual((TextElement)element);
             }
@@ -1581,19 +1582,19 @@ namespace System.Windows.Documents
                 MemoryStream memoryStream = TextEditorCopyPaste.ConvertRtfToXaml(rtfText);
                 if (memoryStream == null)
                 {
-                    throw new ArgumentException(SR.Format(SR.TextRange_UnrecognizedStructureInDataFormat, dataFormat), nameof(stream));
+                    throw new ArgumentException(SR.Format(SR.TextRange_UnrecognizedStructureInDataFormat, dataFormat), "stream");
                 }
                 TextElement textElement = WpfPayload.LoadElement(memoryStream) as TextElement;
                 if (!(textElement is Section) && !(textElement is Span))
                 {
-                    throw new ArgumentException(SR.Format(SR.TextRange_UnrecognizedStructureInDataFormat, dataFormat), nameof(stream));
+                    throw new ArgumentException(SR.Format(SR.TextRange_UnrecognizedStructureInDataFormat, dataFormat), "stream");
                 }
                 thisRange.SetXmlVirtual(textElement);
             }
             else
             {
                 // Unsupported format - thows exception
-                throw new ArgumentException(SR.Format(SR.TextRange_UnsupportedDataFormat, dataFormat), nameof(dataFormat));
+                throw new ArgumentException(SR.Format(SR.TextRange_UnsupportedDataFormat, dataFormat), "dataFormat");
             }
         }
 

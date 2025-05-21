@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: HWND-based Edit Box proxy
 
@@ -19,7 +20,7 @@ namespace MS.Internal.AutomationProxies
     // For example the EM_LINEINDEX message converts a line number to it's starting character position.
     // Perhaps not the best choice but we use it to be consistent.
 
-    internal class WindowsEditBox : ProxyHwnd, IValueProvider, ITextProvider
+    class WindowsEditBox : ProxyHwnd, IValueProvider, ITextProvider
     {
         // ------------------------------------------------------
         //
@@ -249,9 +250,9 @@ namespace MS.Internal.AutomationProxies
         #region ProxyHwnd Overrides
 
         // Builds a list of Win32 WinEvents to process a UIAutomation Event.
-        protected override ReadOnlySpan<WinEventTracker.EvtIdProperty> EventToWinEvent(AutomationEvent idEvent)
+        protected override WinEventTracker.EvtIdProperty[] EventToWinEvent(AutomationEvent idEvent, out int cEvent)
         {
-            return base.EventToWinEvent(idEvent);
+            return base.EventToWinEvent(idEvent, out cEvent);
         }
 
         #endregion
@@ -553,7 +554,7 @@ namespace MS.Internal.AutomationProxies
             int cb = Marshal.SizeOf(typeof(NativeMethods.LOGFONT));
             if (Misc.GetObjectW(hfont, cb, ref logfont) != cb)
             {
-                Debug.Fail("WindowsEditBox.GetObject unexpected return value");
+                Debug.Assert(false, "WindowsEditBox.GetObject unexpected return value");
             }
             return logfont;
         }

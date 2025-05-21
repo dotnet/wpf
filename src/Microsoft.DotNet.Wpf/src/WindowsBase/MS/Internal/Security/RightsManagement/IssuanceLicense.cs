@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description:
 //   This class wraps the issuance license publishing services
@@ -193,7 +194,7 @@ namespace MS.Internal.Security.RightsManagement
             }
         }
 
-        public override string ToString()
+        override public string ToString()
         {
             uint issuanceLicenseTemplateLength = 0;
             StringBuilder issuanceLicenseTemplate = null;
@@ -493,7 +494,7 @@ namespace MS.Internal.Security.RightsManagement
             return userHandle;
         }
 
-        private static Nullable<ContentRight> GetRightFromHandle(SafeRightsManagementPubHandle rightHandle,
+        static private Nullable<ContentRight> GetRightFromHandle(SafeRightsManagementPubHandle rightHandle,
                                                         out DateTime validFrom,
                                                         out DateTime validUntil)
         {
@@ -524,7 +525,7 @@ namespace MS.Internal.Security.RightsManagement
             return ClientSession.GetRightFromString(rightName.ToString());
         }
 
-        private static ContentUser GetUserFromHandle(SafeRightsManagementPubHandle userHandle)
+        static private ContentUser GetUserFromHandle(SafeRightsManagementPubHandle userHandle)
         {
             uint userNameLength = 0;
             StringBuilder userName = null;
@@ -693,8 +694,8 @@ namespace MS.Internal.Security.RightsManagement
             checked { localeId = (int)locId; }
 
             // now we can build a ContentUser
-            return new LocalizedNameDescriptionPair(name?.ToString(),
-                                                                          description?.ToString());
+            return new LocalizedNameDescriptionPair(name == null ? null : name.ToString(),
+                                                                          description == null ? null : description.ToString());
         }
 
         private Nullable<KeyValuePair<string, string>> GetApplicationSpecificData(int index)
@@ -751,8 +752,8 @@ namespace MS.Internal.Security.RightsManagement
             Errors.ThrowOnErrorCode(hr);
 
             // build strings from the StringBuilder  instances 
-            string name = tempName?.ToString();
-            string value = tempValue?.ToString();
+            string name = (tempName == null) ? null : tempName.ToString();
+            string value = (tempValue == null) ? null : tempValue.ToString();
 
             KeyValuePair<string, string> result = new KeyValuePair<string, string>(name, value);
 
@@ -996,11 +997,11 @@ namespace MS.Internal.Security.RightsManagement
 
             RevocationPoint resultRevocationPoint = new RevocationPoint
             {
-                Id = idTemp?.ToString(),
-                IdType = idTypeTemp?.ToString(),
+                Id = (idTemp == null) ? null : idTemp.ToString(),
+                IdType = (idTypeTemp == null) ? null : idTypeTemp.ToString(),
                 Url = (urlTemp == null) ? null : new Uri(urlTemp.ToString()),
-                Name = nameTemp?.ToString(),
-                PublicKey = publicKeyTemp?.ToString(),
+                Name = (nameTemp == null) ? null : nameTemp.ToString(),
+                PublicKey = (publicKeyTemp == null) ? null : publicKeyTemp.ToString(),
                 Frequency = frequency
             };
 

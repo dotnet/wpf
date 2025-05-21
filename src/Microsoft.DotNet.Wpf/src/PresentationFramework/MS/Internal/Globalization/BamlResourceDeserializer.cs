@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Internal class that build the baml tree for localization
 
@@ -301,7 +302,8 @@ namespace MS.Internal.Globalization
 
         private void PushNodeToStack(BamlTreeNode node)
         {
-            _currentParent?.AddChild(node);
+            if (_currentParent != null)
+                _currentParent.AddChild(node);
 
             _bamlTreeStack.Push(node);
             _currentParent = node;

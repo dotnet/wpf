@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using MS.Internal.TextFormatting;
@@ -385,7 +386,7 @@ namespace System.Windows.Media.TextFormatting
         }
 
 
-        internal static void ThrowExceptionFromLsError(string message, LsErr lserr)
+        static internal void ThrowExceptionFromLsError(string message, LsErr lserr)
         {
             if (lserr == LsErr.OutOfMemory)
                 throw new OutOfMemoryException (message);
@@ -394,12 +395,12 @@ namespace System.Windows.Media.TextFormatting
         }
 
 
-        internal static bool IsSpecialCharacter(char c)
+        static internal bool IsSpecialCharacter(char c)
         {
             return _specialCharacters.ContainsKey(c);
         }
 
-        private static void SetSpecialCharacters(ref LsContextInfo contextInfo)
+        static private void SetSpecialCharacters(ref LsContextInfo contextInfo)
         {
             Dictionary<char,bool> dict = new Dictionary<char,bool>();
 

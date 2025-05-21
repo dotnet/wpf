@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Implementation of StickyNoteControl's internal TextBox/RichTextBox and InkCanvas helper classes.
@@ -78,7 +79,7 @@ namespace MS.Internal.Controls.StickyNote
         /// <summary>
         /// Checks if the content is empty
         /// </summary>
-        public abstract bool IsEmpty
+        abstract public bool IsEmpty
         {
             get;
         }
@@ -86,7 +87,7 @@ namespace MS.Internal.Controls.StickyNote
         /// <summary>
         /// Returns the content type
         /// </summary>
-        public abstract StickyNoteType Type
+        abstract public StickyNoteType Type
         {
             get;
         }

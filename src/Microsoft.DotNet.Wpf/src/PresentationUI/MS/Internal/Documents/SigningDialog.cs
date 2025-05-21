@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: 
 //    SigningDialog is the Forms dialog that allows users to select signing parameters.
@@ -211,7 +212,7 @@ namespace MS.Internal.Documents
             // then we should disable the checkbox option that says additional signatures 
             // will break this signature.   This covers ad hoc signing when signatures requests
             // also exist.
-            _addDigSigCheckBox.Enabled &= !_docSigManager.HasRequests;
+            _addDigSigCheckBox.Enabled = _addDigSigCheckBox.Enabled & !_docSigManager.HasRequests;
         }
 
         #endregion Private Methods

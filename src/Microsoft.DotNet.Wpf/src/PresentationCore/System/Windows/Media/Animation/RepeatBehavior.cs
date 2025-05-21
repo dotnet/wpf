@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Text;
@@ -21,11 +22,11 @@ namespace System.Windows.Media.Animation
     /// <para>A Forever RepeatBehavior specifies that a Timeline will repeat forever.</para>
     /// </summary>
     [TypeConverter(typeof(RepeatBehaviorConverter))]
-    public readonly struct RepeatBehavior : IFormattable
+    public struct RepeatBehavior : IFormattable
     {
-        private readonly double _iterationCount;
-        private readonly TimeSpan _repeatDuration;
-        private readonly RepeatBehaviorType _type;
+        private double _iterationCount;
+        private TimeSpan _repeatDuration;
+        private RepeatBehaviorType _type;
 
         #region Constructors
 
@@ -35,10 +36,14 @@ namespace System.Windows.Media.Animation
         /// <param name="count">The number of iterations specified by this RepeatBehavior.</param>
         public RepeatBehavior(double count)
         {
-            if (double.IsInfinity(count) || double.IsNaN(count) || count < 0.0)
-                throw new ArgumentOutOfRangeException(nameof(count), SR.Format(SR.Timing_RepeatBehaviorInvalidIterationCount, count));
+            if (   Double.IsInfinity(count)
+                || double.IsNaN(count)
+                || count < 0.0)
+            {
+                throw new ArgumentOutOfRangeException("count", SR.Format(SR.Timing_RepeatBehaviorInvalidIterationCount, count));
+            }
 
-            _repeatDuration = TimeSpan.Zero;
+            _repeatDuration = new TimeSpan(0);
             _iterationCount = count;
             _type = RepeatBehaviorType.IterationCount;
         }
@@ -50,8 +55,10 @@ namespace System.Windows.Media.Animation
         /// <param name="duration">A TimeSpan representing the repeat duration specified by this RepeatBehavior.</param>
         public RepeatBehavior(TimeSpan duration)
         {
-            if (duration < TimeSpan.Zero)
-                throw new ArgumentOutOfRangeException(nameof(duration), SR.Format(SR.Timing_RepeatBehaviorInvalidRepeatDuration, duration));
+            if (duration < new TimeSpan(0))
+            {
+                throw new ArgumentOutOfRangeException("duration", SR.Format(SR.Timing_RepeatBehaviorInvalidRepeatDuration, duration));
+            }
 
             _iterationCount = 0.0;
             _repeatDuration = duration;
@@ -59,14 +66,22 @@ namespace System.Windows.Media.Animation
         }
 
         /// <summary>
-        /// Private constructor, serves for creation of <see cref="RepeatBehavior.Forever"/> only.
+        /// Creates and returns a RepeatBehavior that indicates that a Timeline should repeat its
+        /// simple duration forever.
         /// </summary>
-        /// <param name="behaviorType">Only <see cref="RepeatBehaviorType.Forever"/> value is permitted.</param>
-        private RepeatBehavior(RepeatBehaviorType behaviorType)
+        /// <value>A RepeatBehavior that indicates that a Timeline should repeat its simple duration
+        /// forever.</value>
+        public static RepeatBehavior Forever
         {
-            Debug.Assert(behaviorType == RepeatBehaviorType.Forever);
+            get
+            {
+                RepeatBehavior forever = new RepeatBehavior
+                {
+                    _type = RepeatBehaviorType.Forever
+                };
 
-            _type = behaviorType;
+                return forever;
+            }
         }
 
         #endregion // Constructors
@@ -101,13 +116,15 @@ namespace System.Windows.Media.Animation
         /// Returns the iteration count specified by this RepeatBehavior.
         /// </summary>
         /// <value>The iteration count specified by this RepeatBehavior.</value>
-        /// <exception cref="InvalidOperationException">Thrown if this RepeatBehavior does not represent an iteration count.</exception>
+        /// <exception cref="System.InvalidOperationException">Thrown if this RepeatBehavior does not represent an iteration count.</exception>
         public double Count
         {
             get
             {
-                if (!HasCount)
+                if (_type != RepeatBehaviorType.IterationCount)
+                {
                     throw new InvalidOperationException(SR.Format(SR.Timing_RepeatBehaviorNotIterationCount, this));
+                }
 
                 return _iterationCount;
             }
@@ -117,29 +134,17 @@ namespace System.Windows.Media.Animation
         /// Returns the repeat duration specified by this RepeatBehavior.
         /// </summary>
         /// <value>A TimeSpan representing the repeat duration specified by this RepeatBehavior.</value>
-        /// <exception cref="InvalidOperationException">Thrown if this RepeatBehavior does not represent a repeat duration.</exception>
+        /// <exception cref="System.InvalidOperationException">Thrown if this RepeatBehavior does not represent a repeat duration.</exception>
         public TimeSpan Duration
         {
             get
             {
-                if (!HasDuration)
+                if (_type != RepeatBehaviorType.RepeatDuration)
+                {
                     throw new InvalidOperationException(SR.Format(SR.Timing_RepeatBehaviorNotRepeatDuration, this));
+                }
 
                 return _repeatDuration;
-            }
-        }
-
-        /// <summary>
-        /// Creates and returns a <see cref="RepeatBehavior"/> that indicates that a <see cref="Timeline"/>
-        /// should repeat its simple duration forever.
-        /// </summary>
-        /// <value>A <see cref="RepeatBehavior"/> that indicates that a <see cref="Timeline"/>
-        /// should repeat its simple duration forever.</value>
-        public static RepeatBehavior Forever
-        {
-            get
-            {
-                return new RepeatBehavior(RepeatBehaviorType.Forever);
             }
         }
 
@@ -152,9 +157,16 @@ namespace System.Windows.Media.Animation
         /// </summary>
         /// <param name="value"></param>
         /// <returns>true if value is a RepeatBehavior and is equal to this instance; otherwise false.</returns>
-        public override bool Equals(object value)
+        public override bool Equals(Object value)
         {
-            return value is RepeatBehavior behavior && Equals(behavior);
+            if (value is RepeatBehavior)
+            {
+                return this.Equals((RepeatBehavior)value);
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -222,7 +234,7 @@ namespace System.Windows.Media.Animation
                 case RepeatBehaviorType.Forever:
 
                     // We try to choose an unlikely hash code value for Forever.
-                    // All Forever instances need to return the same hash code value.
+                    // All Forevers need to return the same hash code value.
                     return int.MaxValue - 42;
 
                 default:

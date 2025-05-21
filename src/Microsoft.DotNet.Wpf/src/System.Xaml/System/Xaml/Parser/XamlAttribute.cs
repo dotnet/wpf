@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -59,7 +60,7 @@ namespace MS.Internal.Xaml.Parser
             }
             else if (Property.IsDirective)
             {
-                if (Property == XamlLanguage.Space)
+                if(Property == XamlLanguage.Space)
                 {
                     Kind = ScannerAttributeKind.XmlSpace;
                 }
@@ -78,7 +79,7 @@ namespace MS.Internal.Xaml.Parser
                     Kind = ScannerAttributeKind.Directive;
                 }
             }
-            else if (Property.IsAttachable)
+            else if(Property.IsAttachable)
             {
                 Kind = ScannerAttributeKind.AttachableProperty;
             }

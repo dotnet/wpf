@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -19,19 +20,19 @@ namespace System.Windows.Automation.Peers
         }
     
         ///
-        protected override string GetClassNameCore()
+        override protected string GetClassNameCore()
         {
             return "RichTextBox";
         }
 
         ///
-        protected override AutomationControlType GetAutomationControlTypeCore()
+        override protected AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.Document;
         }
 
         /// 
-        public override object GetPattern(PatternInterface patternInterface)
+        override public object GetPattern(PatternInterface patternInterface)
         {
             object returnValue = null;
             RichTextBox owner = (RichTextBox)Owner;

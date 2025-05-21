@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.ComponentModel;
@@ -18,7 +19,7 @@ namespace MS.Internal.Annotations.Anchoring
     ///     controller for the Anchoring algorithms.  Most of the work is delegated
     ///     to processors.  LocatorManager maintains a registry of processors.
     /// </summary>
-    internal sealed class LocatorManager : DispatcherObject
+    sealed internal class LocatorManager : DispatcherObject
     {
         //------------------------------------------------------
         //
@@ -345,7 +346,7 @@ namespace MS.Internal.Annotations.Anchoring
             }
             else
             {
-                throw new ArgumentException("Unsupported Selection", nameof(selection));
+                throw new ArgumentException("Unsupported Selection", "selection");
             }
 
             IList<ContentLocatorBase> returnLocators = null;

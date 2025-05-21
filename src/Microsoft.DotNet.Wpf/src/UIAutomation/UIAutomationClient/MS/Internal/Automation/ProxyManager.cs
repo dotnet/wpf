@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Manages Win32 proxies
 
@@ -544,7 +545,7 @@ namespace MS.Internal.Automation
         }
 
 
-        private static IRawElementProviderSimple FindProxyFromImageFallback(ref string imageName, NativeMethods.HWND hwnd, int idChild, int idObject)
+        static private IRawElementProviderSimple FindProxyFromImageFallback(ref string imageName, NativeMethods.HWND hwnd, int idChild, int idObject)
         {
             int count;
             lock (_lockObj)
@@ -577,7 +578,7 @@ namespace MS.Internal.Automation
 
         // Given a single entry or arraylist, check if it or each object in it matches.
         // This just handles the arraylist iteration, and calls through to GetProxyFromEntry to do the actual entry checking.
-        private static IRawElementProviderSimple FindProxyInEntryOrArrayList(ProxyScoping findType, object entryOrArrayList, ref string imageName, NativeMethods.HWND hwnd, int idChild, int idObject, string classNameForPartialMatch)
+        static private IRawElementProviderSimple FindProxyInEntryOrArrayList(ProxyScoping findType, object entryOrArrayList, ref string imageName, NativeMethods.HWND hwnd, int idChild, int idObject, string classNameForPartialMatch)
         {
             if (entryOrArrayList == null)
                 return null;
@@ -622,7 +623,7 @@ namespace MS.Internal.Automation
         // factory method to create the proxy.
         // (Because full classname matching is done via hash-table lookup, this only needs to do string comparisons
         // for partial classname matches.)
-        private static IRawElementProviderSimple GetProxyFromEntry(ProxyScoping findType, object entry, ref string imageName, NativeMethods.HWND hwnd, int idChild, int idObject, string classNameForPartialMatch)
+        static private IRawElementProviderSimple GetProxyFromEntry(ProxyScoping findType, object entry, ref string imageName, NativeMethods.HWND hwnd, int idChild, int idObject, string classNameForPartialMatch)
         {
             // First, determine if the entry matches, and if so, extract the factory callback...
             ClientSideProviderFactoryCallback factoryCallback = null;
@@ -663,14 +664,14 @@ namespace MS.Internal.Automation
                             break;
 
                         case ProxyScoping.PartialMatchApparentClassName:
-                            if (classNameForPartialMatch.Contains(pi.ClassName, StringComparison.Ordinal))
+                            if (classNameForPartialMatch.IndexOf(pi.ClassName, StringComparison.Ordinal) >= 0)
                             {
                                 factoryCallback = pi.ClientSideProviderFactoryCallback;
                             }
                             break;
 
                         case ProxyScoping.PartialMatchRealClassName:
-                            if (classNameForPartialMatch.Contains(pi.ClassName, StringComparison.Ordinal)
+                            if (classNameForPartialMatch.IndexOf(pi.ClassName, StringComparison.Ordinal) >= 0
                                 && ((pi.Flags & ClientSideProviderMatchIndicator.DisallowBaseClassNameMatch) == 0))
                             {
                                 factoryCallback = pi.ClientSideProviderFactoryCallback;
@@ -678,7 +679,7 @@ namespace MS.Internal.Automation
                             break;
 
                         default:
-                            Debug.Fail("unexpected switch() case:");
+                            Debug.Assert(false, "unexpected switch() case:");
                             break;
                     }
                 }

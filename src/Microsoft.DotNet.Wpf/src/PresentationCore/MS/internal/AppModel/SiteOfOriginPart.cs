@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -216,9 +217,9 @@ namespace MS.Internal.AppModel
 
         #region Private Members
 
-        private Uri _absoluteLocation = null;
-        private ContentType _contentType = MS.Internal.ContentType.Empty;
-        private Stream _cacheStream = null;
+        Uri _absoluteLocation = null;
+        ContentType _contentType = MS.Internal.ContentType.Empty;
+        Stream _cacheStream = null;
         private Object _globalLock = new Object();
 
         #endregion Private Members

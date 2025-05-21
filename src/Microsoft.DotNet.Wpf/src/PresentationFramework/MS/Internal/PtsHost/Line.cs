@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Globalization;
 using System.Windows;
@@ -58,7 +59,10 @@ namespace MS.Internal.PtsHost
             Debug.Assert(_line != null, "Line has been already disposed.");
             try
             {
-                _line?.Dispose();
+                if (_line != null)
+                {
+                    _line.Dispose();
+                }
             }
             finally
             {
@@ -1011,7 +1015,7 @@ namespace MS.Internal.PtsHost
             }
 
             flowDirection = textBounds[0].FlowDirection;           
-            rect.X += delta;
+            rect.X = rect.X + delta;
             return rect;
         }
 

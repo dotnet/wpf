@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal.Documents;
 
@@ -75,7 +76,10 @@ namespace System.Windows.Documents
             newBlock._previousBlock = this;
 
             // Link old next block to the new block
-            this._nextBlock?._previousBlock = newBlock;
+            if (this._nextBlock != null)
+            {
+                this._nextBlock._previousBlock = newBlock;
+            }
 
             // Link this block to new block
             this._nextBlock = newBlock;

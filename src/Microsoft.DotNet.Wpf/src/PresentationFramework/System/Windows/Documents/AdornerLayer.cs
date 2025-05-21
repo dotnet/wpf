@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: 
@@ -304,7 +305,7 @@ namespace System.Windows.Documents
         /// </summary>
         /// <param name="visual">Visual from which the treewalk begins</param>
         /// <returns>First AdornerLayer above given element, or null</returns>
-        public static AdornerLayer GetAdornerLayer(Visual visual)
+        static public AdornerLayer GetAdornerLayer(Visual visual)
         {
             ArgumentNullException.ThrowIfNull(visual);
 
@@ -471,7 +472,7 @@ namespace System.Windows.Documents
                         if (index >= 0)
                         {
                             // Get the matrix transform out, skip all non affine transforms
-                            Transform transform = adornerTransform?.AffineTransform;
+                            Transform transform = (adornerTransform != null) ? adornerTransform.AffineTransform : null;
                             
                             ((Adorner)(_children[index])).AdornerTransform = transform;
                         }
@@ -963,7 +964,7 @@ namespace System.Windows.Documents
             get { return 4; }
         }
 
-        private GeneralTransform GetProposedTransform(Adorner adorner, GeneralTransform sourceTransform)
+        GeneralTransform GetProposedTransform(Adorner adorner, GeneralTransform sourceTransform)
         {
             // Flip horizontally if Right to Left.
             if (adorner.FlowDirection != this.FlowDirection)

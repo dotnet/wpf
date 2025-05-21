@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Text;
 using System.Windows.Navigation; // BaseUriHelper
@@ -63,7 +64,7 @@ namespace MS.Internal.Utility
         
 #if PRESENTATION_CORE || PRESENTATIONFRAMEWORK
         // Base Uri.
-        internal static Uri BaseUri
+        static internal Uri BaseUri
         {
             get
             {
@@ -75,13 +76,13 @@ namespace MS.Internal.Utility
             }
         }
 
-        internal static bool DoSchemeAndHostMatch(Uri first, Uri second)
+        static internal bool DoSchemeAndHostMatch(Uri first, Uri second)
         {
             // Check that both the scheme and the host match. 
             return string.Equals(first.Scheme, second.Scheme, StringComparison.OrdinalIgnoreCase) && string.Equals(first.Host, second.Host);
         }
 
-        internal static Uri GetResolvedUri(Uri baseUri, Uri orgUri)
+        static internal Uri GetResolvedUri(Uri baseUri, Uri orgUri)
         {
             Uri newUri;
             
@@ -89,7 +90,7 @@ namespace MS.Internal.Utility
             {
                 newUri = null;
             }
-            else if (!orgUri.IsAbsoluteUri)
+            else if (orgUri.IsAbsoluteUri == false)
             {
                 // if the orgUri is an absolute Uri, don't need to resolve it again.
                 

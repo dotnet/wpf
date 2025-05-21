@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -27,8 +28,8 @@ namespace System.Xaml
     {
         internal enum InternalNodeType:byte { None, StartOfStream, EndOfStream, EndOfAttributes, LineInfo }
 
-        private XamlNodeType _nodeType;
-        private InternalNodeType _internalNodeType;
+        XamlNodeType _nodeType;
+        InternalNodeType _internalNodeType;
         private object _data;
 
         public XamlNodeType NodeType
@@ -47,7 +48,7 @@ namespace System.Xaml
                 break;
 
             default:
-                Debug.Fail("XamlNode Ctor missing data argument");
+                Debug.Assert(false, "XamlNode Ctor missing data argument");
                 break;
             }
 #endif
@@ -59,7 +60,7 @@ namespace System.Xaml
         public XamlNode(XamlNodeType nodeType, object data)
         {
 #if DEBUG
-            switch (nodeType)
+            switch(nodeType)
             {
             case XamlNodeType.StartObject:
                 Debug.Assert(data is XamlType, "XamlNode ctor, StartObject data is not a XamlType");
@@ -84,7 +85,7 @@ namespace System.Xaml
                 break;
 
             default:
-                Debug.Fail("XamlNode ctor, incorrect ctor called.");
+                Debug.Assert(false, "XamlNode ctor, incorrect ctor called.");
                 break;
             }
 #endif
@@ -113,7 +114,7 @@ namespace System.Xaml
         public override string ToString()
         {
             string str = string.Create(TypeConverterHelper.InvariantEnglishUS, $"{NodeType}: ");
-            switch (NodeType)
+            switch(NodeType)
             {
             case XamlNodeType.StartObject:
                 str += XamlType.Name;
@@ -132,7 +133,7 @@ namespace System.Xaml
                 break;
 
             case XamlNodeType.None:
-                switch (_internalNodeType)
+                switch(_internalNodeType)
                 {
                 case InternalNodeType.EndOfAttributes:
                     str += "End Of Attributes";

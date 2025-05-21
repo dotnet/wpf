@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -100,7 +101,10 @@ namespace System.Windows.Controls
 
             // Invalidate automation peer
             ProgressBarAutomationPeer peer = UIElementAutomationPeer.FromElement(progressBar) as ProgressBarAutomationPeer;
-            peer?.InvalidatePeer();
+            if (peer != null)
+            {
+                peer.InvalidatePeer();
+            }
 
             progressBar.SetProgressBarGlowElementBrush();
 

@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //---------------------------------------------------------------------------
@@ -179,4 +180,6 @@ static MILCOMMAND MarshalCommands[] =
     /* 0x8c */ { "MILCMD_GUIDELINESET", "milcore!MILCMD_GUIDELINESET", true, false, 0, 0, 0 }, // MilCmdGuidelineSet
     /* 0x8d */ { "MILCMD_BITMAPCACHE", "milcore!MILCMD_BITMAPCACHE", false, false, 0, 0, 0 }, // MilCmdBitmapCache
 };
+
+
 

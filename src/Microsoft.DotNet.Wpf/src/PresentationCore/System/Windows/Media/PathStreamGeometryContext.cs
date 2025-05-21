@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -83,7 +84,7 @@ namespace System.Windows.Media
         /// <summary>
         /// SetClosed - Sets the current closed state of the figure. 
         /// </summary>
-        internal override void SetClosedState(bool isClosed)
+        override internal void SetClosedState(bool isClosed)
         {
             Debug.Assert(_currentFigure != null);
 
@@ -150,7 +151,7 @@ namespace System.Windows.Media
         public override void LineTo(Point point, bool isStroked, bool isSmoothJoin)
         {
             PrepareToAddPoints(
-                        count: 1,
+                        1 /*count*/,
                         isStroked,
                         isSmoothJoin,
                         MIL_SEGMENT_TYPE.MilSegmentPolyLine);
@@ -164,7 +165,7 @@ namespace System.Windows.Media
         public override void QuadraticBezierTo(Point point1, Point point2, bool isStroked, bool isSmoothJoin)
         {
             PrepareToAddPoints(
-                        count: 2,
+                        2 /*count*/,
                         isStroked,
                         isSmoothJoin,
                         MIL_SEGMENT_TYPE.MilSegmentPolyQuadraticBezier);
@@ -179,7 +180,7 @@ namespace System.Windows.Media
         public override void BezierTo(Point point1, Point point2, Point point3, bool isStroked, bool isSmoothJoin)
         {
             PrepareToAddPoints(
-                        count: 3,
+                        3 /*count*/,
                         isStroked,
                         isSmoothJoin,
                         MIL_SEGMENT_TYPE.MilSegmentPolyBezier);

@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -10,17 +11,16 @@
 
 using MS.Internal;
 using System.ComponentModel;
-using System.Globalization;
 using System.Windows.Markup;
 using System.Windows.Converters;
+// These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows
 {
-
     [Serializable]
     [TypeConverter(typeof(VectorConverter))]
     [ValueSerializer(typeof(VectorValueSerializer))] // Used by MarkupWriter
-    public partial struct Vector : IFormattable
+    partial struct Vector : IFormattable
     {
         //------------------------------------------------------
         //
@@ -44,7 +44,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='vector1'>The first Vector to compare</param>
         /// <param name='vector2'>The second Vector to compare</param>
-        public static bool operator ==(Vector vector1, Vector vector2)
+        public static bool operator == (Vector vector1, Vector vector2)
         {
             return vector1.X == vector2.X &&
                    vector1.Y == vector2.Y;
@@ -61,7 +61,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='vector1'>The first Vector to compare</param>
         /// <param name='vector2'>The second Vector to compare</param>
-        public static bool operator !=(Vector vector1, Vector vector2)
+        public static bool operator != (Vector vector1, Vector vector2)
         {
             return !(vector1 == vector2);
         }
@@ -77,7 +77,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='vector1'>The first Vector to compare</param>
         /// <param name='vector2'>The second Vector to compare</param>
-        public static bool Equals(Vector vector1, Vector vector2)
+        public static bool Equals (Vector vector1, Vector vector2)
         {
             return vector1.X.Equals(vector2.X) &&
                    vector1.Y.Equals(vector2.Y);
@@ -185,8 +185,7 @@ namespace System.Windows
             {
                 _x = value;
             }
-
-        }
+}
 
         /// <summary>
         ///     Y - double.  Default value is 0.
@@ -202,8 +201,7 @@ namespace System.Windows
             {
                 _y = value;
             }
-
-        }
+}
 
         #endregion Public Properties
 
@@ -256,7 +254,6 @@ namespace System.Windows
         /// </returns>
         public override string ToString()
         {
-
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, null /* format provider */);
         }
@@ -270,7 +267,6 @@ namespace System.Windows
         /// </returns>
         public string ToString(IFormatProvider provider)
         {
-
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, provider);
         }
@@ -286,7 +282,6 @@ namespace System.Windows
         /// </returns>
         string IFormattable.ToString(string format, IFormatProvider provider)
         {
-
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(format, provider);
         }
@@ -338,9 +333,6 @@ namespace System.Windows
 
         internal double _x;
         internal double _y;
-
-
-
 
         #endregion Internal Fields
 

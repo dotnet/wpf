@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description:
 //  Responsible for the lifecycle of the FileDocument and the actions that can
@@ -40,7 +41,10 @@ namespace MS.Internal.Documents.Application
             DocumentManager documentManager = DocumentManager.CreateDefault();
             
             // We can save to the source file if we could reopen it for write
-            documentManager?.CanSave = canWriteToSource;
+            if (documentManager != null)
+            { 
+                documentManager.CanSave = canWriteToSource;
+            }
 
             doc.WorkspaceProxy = doc.SourceProxy.CreateTemporary(false);
 

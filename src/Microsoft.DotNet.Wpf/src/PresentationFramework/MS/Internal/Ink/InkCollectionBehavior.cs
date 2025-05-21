@@ -1,5 +1,6 @@
-ï»¿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //
@@ -62,9 +63,9 @@ namespace MS.Internal.Ink
         /// Overrides SwitchToMode 
         /// As the following expected results
         ///  1. From Ink To InkAndGesture
-        ///     Packets between StylusDown and StylusUp are sent to the gesture reco. On StylusUp gesture event fires. If itâ€™s not a gesture, StrokeCollected event fires.
+        ///     Packets between StylusDown and StylusUp are sent to the gesture reco. On StylusUp gesture event fires. If it’s not a gesture, StrokeCollected event fires.
         ///  2. From Ink To GestureOnly
-        ///     Packets between StylusDown and StylusUp are send to the gesture reco. On StylusUp gesture event fires. Stroke gets removed on StylusUp even if itâ€™s not a gesture.
+        ///     Packets between StylusDown and StylusUp are send to the gesture reco. On StylusUp gesture event fires. Stroke gets removed on StylusUp even if it’s not a gesture.
         ///  3. From Ink To EraseByPoint
         ///     Stroke is discarded. PointErasing is performed after changing the mode.
         ///  4. From Ink To EraseByStroke
@@ -76,7 +77,7 @@ namespace MS.Internal.Ink
         ///  7. From InkAndGesture To Ink
         ///     Stroke is collected for all packets between StylusDown and StylusUp. Gesture event does not fire.
         ///  8. From InkAndGesture To GestureOnly
-        ///     Packets between StylusDown and StylusUp are sent to the gesture reco. Stroke gets removed on StylusUp even if itâ€™s not a gesture.
+        ///     Packets between StylusDown and StylusUp are sent to the gesture reco. Stroke gets removed on StylusUp even if it’s not a gesture.
         ///  9. From InkAndGesture To EraseByPoint
         ///     Stroke is discarded. PointErasing is performed after changing the mode, gesture event does not fire.
         /// 10. From InkAndGesture To EraseByStroke
@@ -86,7 +87,7 @@ namespace MS.Internal.Ink
         /// 12. From InkAndGesture To None
         ///     Stroke is discarded, no gesture is recognized.
         /// 13. From GestureOnly To InkAndGesture
-        ///     Packets between StylusDown and StylusUp are sent to the gesture reco. On StylusUp gesture event fires. If itâ€™s not a gesture, StrokeCollected event fires.
+        ///     Packets between StylusDown and StylusUp are sent to the gesture reco. On StylusUp gesture event fires. If it’s not a gesture, StrokeCollected event fires.
         /// 14. From GestureOnly To Ink
         ///     Stroke is collected. Gesture event does not fire.
         /// 15. From GestureOnly To EraseByPoint
@@ -126,7 +127,8 @@ namespace MS.Internal.Ink
                 case InkCanvasEditingMode.Select:
                     {
                         // Make a copy of the current cached points.
-                        StylusPointCollection cachedPoints = _stylusPoints?.Clone();
+                        StylusPointCollection cachedPoints = _stylusPoints != null ? 
+                                                                _stylusPoints.Clone() : null;
 
                         // Discard the collected ink.
                         Commit(false);
@@ -159,7 +161,7 @@ namespace MS.Internal.Ink
                         break;
                     }
                 default:
-                    Debug.Fail("Unknown InkCanvasEditingMode!");
+                    Debug.Assert(false, "Unknown InkCanvasEditingMode!");
                     break;
             }
         }
@@ -204,7 +206,7 @@ namespace MS.Internal.Ink
         /// <returns></returns>
         protected override Cursor GetCurrentCursor()
         {
-            if ( EditingCoordinator.UserIsEditing)
+            if ( EditingCoordinator.UserIsEditing == true )
             {
                 return Cursors.None;
             }

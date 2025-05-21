@@ -1,6 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-
+// See the LICENSE file in the project root for more information.
 using System.Collections.Concurrent;
 using System.Reflection;
 using WinRT.Interop;
@@ -16,9 +16,9 @@ namespace WinRT
 {
     internal static partial class ComWrappersSupport
     {
-        private static readonly ConcurrentDictionary<string, Func<IInspectable, object>> TypedObjectFactoryCache = new ConcurrentDictionary<string, Func<IInspectable, object>>();
+        private readonly static ConcurrentDictionary<string, Func<IInspectable, object>> TypedObjectFactoryCache = new ConcurrentDictionary<string, Func<IInspectable, object>>();
 
-        private static readonly Guid IID_IAgileObject = Guid.Parse("94ea2b94-e9cc-49e0-c0ff-ee64ca8f5b90");
+        private readonly static Guid IID_IAgileObject = Guid.Parse("94ea2b94-e9cc-49e0-c0ff-ee64ca8f5b90");
 
         static ComWrappersSupport()
         {
@@ -61,7 +61,7 @@ namespace WinRT
 
             Type type = o.GetType();
             ObjectReferenceWrapperAttribute objRefWrapper = type.GetCustomAttribute<ObjectReferenceWrapperAttribute>();
-            if (objRefWrapper is not null)
+            if (objRefWrapper is object)
             {
                 objRef = (IObjectReference)type.GetField(objRefWrapper.ObjectReferenceField, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly).GetValue(o);
                 return true;
@@ -69,7 +69,7 @@ namespace WinRT
 
             ProjectedRuntimeClassAttribute projectedClass = type.GetCustomAttribute<ProjectedRuntimeClassAttribute>();
 
-            if (projectedClass is not null)
+            if (projectedClass is object)
             {
                 return TryUnwrapObject(
                     type.GetProperty(projectedClass.DefaultInterfaceProperty, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly).GetValue(o),

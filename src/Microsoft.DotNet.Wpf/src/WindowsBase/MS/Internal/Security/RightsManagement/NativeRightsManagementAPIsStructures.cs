@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /// Description:
 //  These are the Structure declarations for interop services required to call into unmanaged 
@@ -36,7 +37,7 @@ namespace MS.Internal.Security.RightsManagement
             Milliseconds =  (ushort)dateTime.Millisecond; 
         }
 
-        internal static uint Size
+        static internal uint Size
         {
             get
             {
@@ -78,14 +79,14 @@ namespace MS.Internal.Security.RightsManagement
             }
         }
        
-       private ushort Year =0; 
-       private ushort Month =0; 
-       private ushort DayOfWeek =0; 
-       private ushort Day =0; 
-       private ushort Hour =0; 
-       private ushort Minute =0; 
-       private ushort Second =0; 
-       private ushort Milliseconds =0; 
+       ushort Year =0; 
+       ushort Month =0; 
+       ushort DayOfWeek =0; 
+       ushort Day =0; 
+       ushort Hour =0; 
+       ushort Minute =0; 
+       ushort Second =0; 
+       ushort Milliseconds =0; 
     }
 
     [StructLayout(LayoutKind.Sequential)]

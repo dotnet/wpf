@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.Collections.ObjectModel;
@@ -134,7 +135,7 @@ namespace System.ComponentModel
             {
                 _customSort = value;
                 SetSortDescriptions(null);
-                OnPropertyChanged(new PropertyChangedEventArgs(nameof(CustomSort)));
+                OnPropertyChanged(new PropertyChangedEventArgs("CustomSort"));
             }
         }
 
@@ -189,9 +190,9 @@ namespace System.ComponentModel
         //
         //------------------------------------------------------
 
-        private void OnGroupNamesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        void OnGroupNamesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            OnPropertyChanged(new PropertyChangedEventArgs(nameof(GroupNames)));
+            OnPropertyChanged(new PropertyChangedEventArgs("GroupNames"));
         }
 
         // set new SortDescription collection; rehook collection change notification handler
@@ -214,7 +215,7 @@ namespace System.ComponentModel
 
             if (raiseChangeEvent)
             {
-                OnPropertyChanged(new PropertyChangedEventArgs(nameof(SortDescriptions)));
+                OnPropertyChanged(new PropertyChangedEventArgs("SortDescriptions"));
             }
         }
 
@@ -227,11 +228,11 @@ namespace System.ComponentModel
                 if (_customSort != null)
                 {
                     _customSort = null;
-                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(CustomSort)));
+                    OnPropertyChanged(new PropertyChangedEventArgs("CustomSort"));
                 }
             }
 
-            OnPropertyChanged(new PropertyChangedEventArgs(nameof(SortDescriptions)));
+            OnPropertyChanged(new PropertyChangedEventArgs("SortDescriptions"));
         }
 
 
@@ -245,9 +246,9 @@ namespace System.ComponentModel
         //
         //------------------------------------------------------
 
-        private ObservableCollection<object> _explicitGroupNames;
-        private SortDescriptionCollection _sort;
-        private IComparer _customSort;
+        ObservableCollection<object> _explicitGroupNames;
+        SortDescriptionCollection _sort;
+        IComparer _customSort;
 
         #endregion Private fields
     }

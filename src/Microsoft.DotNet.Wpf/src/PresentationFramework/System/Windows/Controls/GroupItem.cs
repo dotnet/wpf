@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: GroupItem object - root of the UI subtree generated for a CollectionViewGroup
@@ -146,7 +147,10 @@ namespace System.Windows.Controls
                 return;     // user-declared GroupItem - ignore (bug 108423)
 
             // If a GroupItem is being recycled set back IsItemsHost
-            _itemsHost?.IsItemsHost = true;
+            if (_itemsHost != null)
+            {
+                _itemsHost.IsItemsHost = true;
+            }
 
             bool isVirtualizingWhenGrouping = (parentItemsControl != null && VirtualizingPanel.GetIsVirtualizingWhenGrouping(parentItemsControl));
 
@@ -243,7 +247,10 @@ namespace System.Windows.Controls
                 // the ItemValueStorage DP for this container.
 
                 VirtualizingPanel vp = _itemsHost as VirtualizingPanel;
-                vp?.OnClearChildrenInternal();
+                if (vp != null)
+                {
+                    vp.OnClearChildrenInternal();
+                }
 
                 Generator.RemoveAllInternal(true /*saveRecycleQueue*/);
             }
@@ -452,10 +459,10 @@ namespace System.Windows.Controls
         //
         //------------------------------------------------------
 
-        private ItemContainerGenerator _generator;
+        ItemContainerGenerator _generator;
         private Panel _itemsHost;
-        private FrameworkElement _header;
-        private Expander _expander;
+        FrameworkElement _header;
+        Expander _expander;
 
         internal static readonly UncommonField<bool> MustDisableVirtualizationField = new UncommonField<bool>();
         internal static readonly UncommonField<bool> InBackgroundLayoutField = new UncommonField<bool>();

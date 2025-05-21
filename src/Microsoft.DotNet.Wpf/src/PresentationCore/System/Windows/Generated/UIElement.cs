@@ -1,5 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -10,6 +11,7 @@
 
 using MS.Internal;
 using MS.Internal.KnownBoxes;
+using MS.Internal.PresentationCore;
 using MS.Utility;
 using System.ComponentModel;
 using System.Windows.Input;
@@ -17,7 +19,7 @@ using System.Windows.Media.Animation;
 
 namespace System.Windows
 {
-    public partial class UIElement : IAnimatable
+    partial class UIElement : IAnimatable
     {
         static private readonly Type _typeofThis = typeof(UIElement);
 
@@ -68,13 +70,13 @@ namespace System.Windows
 
             if (!AnimationStorage.IsPropertyAnimatable(this, dp))
             {
-                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), nameof(dp));
+                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
             }
 
             if (clock != null
                 && !AnimationStorage.IsAnimationValid(dp, clock.Timeline))
             {
-                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, clock.Timeline.GetType(), dp.Name, dp.PropertyType), nameof(clock));
+                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, clock.Timeline.GetType(), dp.Name, dp.PropertyType), "clock");
             }
 
             if (!HandoffBehaviorEnum.IsDefined(handoffBehavior))
@@ -85,7 +87,7 @@ namespace System.Windows
             if (IsSealed)
             {
                 throw new InvalidOperationException(SR.Format(SR.IAnimatable_CantAnimateSealedDO, dp, this.GetType()));
-            }
+            }                    
 
             AnimationStorage.ApplyAnimationClock(this, dp, clock, handoffBehavior);
         }
@@ -133,13 +135,13 @@ namespace System.Windows
 
             if (!AnimationStorage.IsPropertyAnimatable(this, dp))
             {
-                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), nameof(dp));
+                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
             }
 
-            if (animation != null
+            if (   animation != null
                 && !AnimationStorage.IsAnimationValid(dp, animation))
             {
-                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, animation.GetType(), dp.Name, dp.PropertyType), nameof(animation));
+                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, animation.GetType(), dp.Name, dp.PropertyType), "animation");
             }
 
             if (!HandoffBehaviorEnum.IsDefined(handoffBehavior))
@@ -150,7 +152,7 @@ namespace System.Windows
             if (IsSealed)
             {
                 throw new InvalidOperationException(SR.Format(SR.IAnimatable_CantAnimateSealedDO, dp, this.GetType()));
-            }
+            }                    
 
             AnimationStorage.BeginAnimation(this, dp, animation, handoffBehavior);
         }
@@ -211,7 +213,10 @@ namespace System.Windows
             {
                 AnimationStorage storage = AnimationStorage.GetStorage(this, dp);
 
-                storage?.EvaluateAnimatedValue(metadata, ref entry);
+                if (storage != null)
+                {
+                    storage.EvaluateAnimatedValue(metadata, ref entry);                      
+                }
             }
         }
 
@@ -524,7 +529,7 @@ namespace System.Windows
             EnsureEventHandlersStore();
             EventHandlersStore.AddRoutedEventHandler(routedEvent, handler, handledEventsToo);
 
-            OnAddHandler(routedEvent, handler);
+            OnAddHandler (routedEvent, handler);
         }
 
         /// <summary>
@@ -581,7 +586,7 @@ namespace System.Windows
             {
                 store.RemoveRoutedEventHandler(routedEvent, handler);
 
-                OnRemoveHandler(routedEvent, handler);
+                OnRemoveHandler (routedEvent, handler);
 
                 if (store.Count == 0)
                 {
@@ -589,8 +594,7 @@ namespace System.Windows
                     EventHandlersStoreField.ClearValue(this);
                     WriteFlag(CoreFlags.ExistsEventHandlersStore, false);
                 }
-
-            }
+}
         }
 
         /// <summary>
@@ -638,7 +642,7 @@ namespace System.Windows
             // Add all class listeners for this UIElement
             while (classListeners != null)
             {
-                for (int i = 0; i < classListeners.Handlers.Length; i++)
+                for(int i = 0; i < classListeners.Handlers.Length; i++)
                 {
                     route.Add(this, classListeners.Handlers[i].Handler, classListeners.Handlers[i].InvokeHandledEventsToo);
                 }
@@ -687,7 +691,7 @@ namespace System.Windows
         {
             get
             {
-                if (!ReadFlag(CoreFlags.ExistsEventHandlersStore))
+                if(!ReadFlag(CoreFlags.ExistsEventHandlersStore))
                 {
                     return null;
                 }
@@ -807,7 +811,7 @@ namespace System.Windows
 
         private static void OnPreviewMouseDownThunk(object sender, MouseButtonEventArgs e)
         {
-            if (!e.Handled)
+            if(!e.Handled)
             {
                 UIElement uie = sender as UIElement;
 
@@ -836,12 +840,12 @@ namespace System.Windows
 
         private static void OnMouseDownThunk(object sender, MouseButtonEventArgs e)
         {
-            if (!e.Handled)
+            if(!e.Handled)
             {
                 CommandManager.TranslateInput((IInputElement)sender, e);
             }
 
-            if (!e.Handled)
+            if(!e.Handled)
             {
                 UIElement uie = sender as UIElement;
 
@@ -870,7 +874,7 @@ namespace System.Windows
 
         private static void OnPreviewMouseUpThunk(object sender, MouseButtonEventArgs e)
         {
-            if (!e.Handled)
+            if(!e.Handled)
             {
                 UIElement uie = sender as UIElement;
 
@@ -899,7 +903,7 @@ namespace System.Windows
 
         private static void OnMouseUpThunk(object sender, MouseButtonEventArgs e)
         {
-            if (!e.Handled)
+            if(!e.Handled)
             {
                 UIElement uie = sender as UIElement;
 
@@ -1207,7 +1211,7 @@ namespace System.Windows
 
             CommandManager.TranslateInput((IInputElement)sender, e);
 
-            if (!e.Handled)
+            if(!e.Handled)
             {
                 UIElement uie = sender as UIElement;
 
@@ -1937,7 +1941,7 @@ namespace System.Windows
 
             CommandManager.TranslateInput((IInputElement)sender, e);
 
-            if (!e.Handled)
+            if(!e.Handled)
             {
                 UIElement uie = sender as UIElement;
 
@@ -4206,7 +4210,7 @@ namespace System.Windows
 
         private static void IsMouseDirectlyOver_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((UIElement)d).RaiseIsMouseDirectlyOverChanged(e);
+            ((UIElement) d).RaiseIsMouseDirectlyOverChanged(e);
         }
 
         /// <summary>
@@ -4342,7 +4346,7 @@ namespace System.Windows
 
         private static void IsMouseCaptured_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((UIElement)d).RaiseIsMouseCapturedChanged(e);
+            ((UIElement) d).RaiseIsMouseCapturedChanged(e);
         }
 
         /// <summary>
@@ -4444,7 +4448,7 @@ namespace System.Windows
 
         private static void IsStylusDirectlyOver_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((UIElement)d).RaiseIsStylusDirectlyOverChanged(e);
+            ((UIElement) d).RaiseIsStylusDirectlyOverChanged(e);
         }
 
         /// <summary>
@@ -4498,7 +4502,7 @@ namespace System.Windows
 
         private static void IsStylusCaptured_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((UIElement)d).RaiseIsStylusCapturedChanged(e);
+            ((UIElement) d).RaiseIsStylusCapturedChanged(e);
         }
 
         /// <summary>
@@ -4600,7 +4604,7 @@ namespace System.Windows
 
         private static void IsKeyboardFocused_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((UIElement)d).RaiseIsKeyboardFocusedChanged(e);
+            ((UIElement) d).RaiseIsKeyboardFocusedChanged(e);
         }
 
         /// <summary>

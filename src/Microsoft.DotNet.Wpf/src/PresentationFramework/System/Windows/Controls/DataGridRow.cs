@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.Collections.ObjectModel;
@@ -143,7 +144,10 @@ namespace System.Windows.Controls
         protected virtual void OnItemChanged(object oldItem, object newItem)
         {
             DataGridCellsPresenter cellsPresenter = CellsPresenter;
-            cellsPresenter?.Item = newItem;
+            if (cellsPresenter != null)
+            {
+                cellsPresenter.Item = newItem;
+            }
         }
 
         #endregion
@@ -485,7 +489,10 @@ namespace System.Windows.Controls
 
             Item = BindingExpressionBase.DisconnectedItem;
             DataGridDetailsPresenter detailsPresenter = DetailsPresenter;
-            detailsPresenter?.Content = BindingExpressionBase.DisconnectedItem;
+            if (detailsPresenter != null)
+            {
+                detailsPresenter.Content = BindingExpressionBase.DisconnectedItem;
+            }
 
             _owner = null;
         }
@@ -571,7 +578,10 @@ namespace System.Windows.Controls
             if (cellsPresenter != null)
             {
                 cellsPresenter.ClearValue(DataGridCellsPresenter.HeightProperty);
-                _owner?.ItemAttachedStorage.ClearValue(Item, DataGridCellsPresenter.HeightProperty);
+                if (_owner != null)
+                {
+                    _owner.ItemAttachedStorage.ClearValue(Item, DataGridCellsPresenter.HeightProperty);
+                }
             }
         }
 
@@ -587,7 +597,10 @@ namespace System.Windows.Controls
         protected internal virtual void OnColumnsChanged(ObservableCollection<DataGridColumn> columns, NotifyCollectionChangedEventArgs e)
         {
             DataGridCellsPresenter cellsPresenter = CellsPresenter;
-            cellsPresenter?.OnColumnsChanged(columns, e);
+            if (cellsPresenter != null)
+            {
+                cellsPresenter.OnColumnsChanged(columns, e);
+            }
         }
 
         #endregion
@@ -781,7 +794,10 @@ namespace System.Windows.Controls
             if (row.DetailsLoaded &&
                 d.GetValue(e.Property) == e.NewValue)
             {
-                row.DataGridOwner?.OnUnloadingRowDetailsWrapper(row);
+                if (row.DataGridOwner != null)
+                {
+                    row.DataGridOwner.OnUnloadingRowDetailsWrapper(row);
+                }
                 if (e.NewValue != null)
                 {
                     // Invoke LoadingRowDetails, but only after the details template is expanded (so DetailsElement will be available).
@@ -806,7 +822,7 @@ namespace System.Windows.Controls
         {
             var row = (DataGridRow)arg;
             var dataGrid = row.DataGridOwner;
-            var detailsElement = row.DetailsPresenter?.DetailsElement;
+            var detailsElement = row.DetailsPresenter != null ? row.DetailsPresenter.DetailsElement : null;
             if (dataGrid != null)
             {
                 var detailsEventArgs = new DataGridRowDetailsEventArgs(row, detailsElement);
@@ -916,7 +932,10 @@ namespace System.Windows.Controls
 
             if (DataGridHelper.ShouldNotifyDetailsPresenter(target))
             {
-                DetailsPresenter?.NotifyPropertyChanged(d, e);
+                if (DetailsPresenter != null)
+                {
+                    DetailsPresenter.NotifyPropertyChanged(d, e);
+                }
             }
 
             if (DataGridHelper.ShouldNotifyCellsPresenter(target) ||
@@ -924,7 +943,10 @@ namespace System.Windows.Controls
                 DataGridHelper.ShouldRefreshCellContent(target))
             {
                 DataGridCellsPresenter cellsPresenter = CellsPresenter;
-                cellsPresenter?.NotifyPropertyChanged(d, propertyName, e, target);
+                if (cellsPresenter != null)
+                {
+                    cellsPresenter.NotifyPropertyChanged(d, propertyName, e, target);
+                }
             }
 
             if (DataGridHelper.ShouldNotifyRowHeaders(target) && RowHeader != null)
@@ -987,9 +1009,15 @@ namespace System.Windows.Controls
                 RestoreAttachedItemValue(cellsPresenter, DataGridCellsPresenter.HeightProperty);
             }
 
-            DetailsPresenter?.SyncProperties();
+            if (DetailsPresenter != null)
+            {
+                DetailsPresenter.SyncProperties();
+            }
 
-            RowHeader?.SyncProperties();
+            if (RowHeader != null)
+            {
+                RowHeader.SyncProperties();
+            }
         }
 
         #endregion
@@ -1061,10 +1089,13 @@ namespace System.Windows.Controls
                 if (gridPeer != null)
                 {
                     DataGridItemAutomationPeer rowItemPeer = gridPeer.FindOrCreateItemAutomationPeer(row.DataContext) as DataGridItemAutomationPeer;
-                    rowItemPeer?.RaisePropertyChangedEvent(
+                    if (rowItemPeer != null)
+                    {
+                        rowItemPeer.RaisePropertyChangedEvent(
                             System.Windows.Automation.SelectionItemPatternIdentifiers.IsSelectedProperty,
                             (bool)e.OldValue,
                             isSelected);
+                    }
                 }
             }
 
@@ -1214,7 +1245,10 @@ namespace System.Windows.Controls
         internal void ScrollCellIntoView(int index)
         {
             DataGridCellsPresenter cellsPresenter = CellsPresenter;
-            cellsPresenter?.ScrollCellIntoView(index);
+            if (cellsPresenter != null)
+            {
+                cellsPresenter.ScrollCellIntoView(index);
+            }
         }
 
         #endregion
@@ -1227,7 +1261,10 @@ namespace System.Windows.Controls
         protected override Size ArrangeOverride(Size arrangeBounds)
         {
             DataGrid dataGrid = DataGridOwner;
-            dataGrid?.QueueInvalidateCellsPanelHorizontalOffset();
+            if (dataGrid != null)
+            {
+                dataGrid.QueueInvalidateCellsPanelHorizontalOffset();
+            }
 
             return base.ArrangeOverride(arrangeBounds);
         }

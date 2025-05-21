@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Extension methods used by Data Services code
@@ -30,7 +31,7 @@ namespace MS.Internal.Data
             }
 
             // we should never get here, but the compiler doesn't know that
-            Debug.Fail("Unsupported list passed to Search");
+            Debug.Assert(false, "Unsupported list passed to Search");
             return 0;
         }
 

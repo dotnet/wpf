@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -8,16 +9,10 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-using MS.Utility;
-using System.Collections;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Media.Imaging;
-
+// These types are aliased to match the unamanaged names used in interop
 namespace System.Windows.Media.Effects
 {
-    public sealed partial class DropShadowBitmapEffect : BitmapEffect
+    sealed partial class DropShadowBitmapEffect : BitmapEffect
     {
         //------------------------------------------------------
         //
@@ -109,7 +104,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double)GetValue(ShadowDepthProperty);
+                return (double) GetValue(ShadowDepthProperty);
             }
             set
             {
@@ -124,7 +119,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (Color)GetValue(ColorProperty);
+                return (Color) GetValue(ColorProperty);
             }
             set
             {
@@ -139,7 +134,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double)GetValue(DirectionProperty);
+                return (double) GetValue(DirectionProperty);
             }
             set
             {
@@ -154,7 +149,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double)GetValue(NoiseProperty);
+                return (double) GetValue(NoiseProperty);
             }
             set
             {
@@ -169,7 +164,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double)GetValue(OpacityProperty);
+                return (double) GetValue(OpacityProperty);
             }
             set
             {
@@ -184,7 +179,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double)GetValue(SoftnessProperty);
+                return (double) GetValue(SoftnessProperty);
             }
             set
             {
@@ -321,6 +316,7 @@ namespace System.Windows.Media.Effects
             // of your app.
 
 
+
             // Initializations
             Type typeofThis = typeof(DropShadowBitmapEffect);
             ShadowDepthProperty =
@@ -378,8 +374,6 @@ namespace System.Windows.Media.Effects
                                    /* isIndependentlyAnimated  = */ true,
                                    /* coerceValueCallback */ null);
         }
-
-
 
         #endregion Constructors
     }

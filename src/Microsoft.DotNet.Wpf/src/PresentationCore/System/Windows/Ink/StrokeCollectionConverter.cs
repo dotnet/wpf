@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.IO;
@@ -132,7 +133,7 @@ namespace System.Windows
                     // in this case, we can't call Dispose since it will also close the underlying stream
                     // which strokecollection needs open to read in the constructor
                     MemoryStream stream = new MemoryStream();
-                    strokes.Save(stream, compress: true);
+                    strokes.Save(stream, true/*compress*/);
                     stream.Position = 0;
                     return new InstanceDescriptor(ci, new object[] { stream });
                 }

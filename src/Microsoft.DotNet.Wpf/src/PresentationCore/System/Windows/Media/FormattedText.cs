@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.ComponentModel;
@@ -289,7 +290,7 @@ namespace System.Windows.Media
             int limit = startIndex + count;
 
             if (count < 0 || limit < startIndex || limit > _text.Length)
-                throw new ArgumentOutOfRangeException(nameof(count));
+                throw new ArgumentOutOfRangeException("count");
 
             return limit;
         }
@@ -857,20 +858,20 @@ namespace System.Windows.Media
         /// </summary>
         private struct LineEnumerator : IEnumerator, IDisposable
         {
-            private int             _textStorePosition;
-            private int             _lineCount;
-            private double          _totalHeight;
-            private TextLine        _currentLine;
-            private TextLine        _nextLine;
-            private TextFormatter   _formatter;
-            private FormattedText   _that;
+            int             _textStorePosition;
+            int             _lineCount;
+            double          _totalHeight;
+            TextLine        _currentLine;
+            TextLine        _nextLine;
+            TextFormatter   _formatter;
+            FormattedText   _that;
 
             // these are needed because _currentLine can be disposed before the next MoveNext() call
-            private double          _previousHeight;
-            private int             _previousLength;
+            double          _previousHeight;
+            int             _previousLength;
 
             // line break before _currentLine, needed in case we have to reformat it with collapsing symbol
-            private TextLineBreak       _previousLineBreak;
+            TextLineBreak       _previousLineBreak;
 
             internal LineEnumerator(FormattedText text)
             {
@@ -1049,7 +1050,8 @@ namespace System.Windows.Media
                             TextWrapping currentWrap = _that._defaultParaProps.TextWrapping;
                             _that._defaultParaProps.SetTextWrapping(TextWrapping.NoWrap);
 
-                            currentLineBreak?.Dispose();
+                            if (currentLineBreak != null)
+                                currentLineBreak.Dispose();
 
                             _currentLine.Dispose();
                             _currentLine = FormatLine(
@@ -1068,7 +1070,8 @@ namespace System.Windows.Media
                 _previousHeight = _currentLine.Height;
                 _previousLength = _currentLine.Length;
 
-                _previousLineBreak?.Dispose();
+                if (_previousLineBreak != null)
+                    _previousLineBreak.Dispose();
 
                 _previousLineBreak = currentLineBreak;
 
@@ -1278,7 +1281,7 @@ namespace System.Windows.Media
         public void SetMaxTextWidths(double [] maxTextWidths)
         {
             if (maxTextWidths == null || maxTextWidths.Length <= 0)
-                throw new ArgumentNullException(nameof(maxTextWidths));
+                throw new ArgumentNullException("maxTextWidths");
             _maxTextWidths = maxTextWidths;
             InvalidateMetrics();
         }
@@ -1307,10 +1310,10 @@ namespace System.Windows.Media
             set
             {
                 if (value <= 0)
-                    throw new ArgumentOutOfRangeException(nameof(value), SR.Format(SR.PropertyMustBeGreaterThanZero, "MaxTextHeight"));
+                    throw new ArgumentOutOfRangeException("value", SR.Format(SR.PropertyMustBeGreaterThanZero, "MaxTextHeight"));
 
                 if (double.IsNaN(value))
-                    throw new ArgumentOutOfRangeException(nameof(value), SR.Format(SR.PropertyValueCannotBeNaN, "MaxTextHeight"));
+                    throw new ArgumentOutOfRangeException("value", SR.Format(SR.PropertyValueCannotBeNaN, "MaxTextHeight"));
 
                 _maxTextHeight = value;
                 InvalidateMetrics();
@@ -2005,7 +2008,7 @@ namespace System.Windows.Media
 
         #region Constants
 
-        private const double MaxFontEmSize = Constants.RealInfiniteWidth / Constants.GreatestMutiplierOfEm;
+        const double MaxFontEmSize = Constants.RealInfiniteWidth / Constants.GreatestMutiplierOfEm;
 
         #endregion
     }

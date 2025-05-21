@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
 *
@@ -280,7 +281,6 @@ namespace System.Windows
         {
             DependencyObject d = fe;
 
-#pragma warning disable IDE0031
             if (newTemplate != null)
             {
                 newTemplate.Seal();
@@ -299,7 +299,6 @@ namespace System.Windows
                     StyleHelper.CheckForCyclicReferencesInStyleAndTemplateTriggers(templateProperty, newTemplate, style, themeStyle);
                 }
 #endif
-#pragma warning restore IDE0031
             }
 
             // Update the template cache
@@ -356,7 +355,10 @@ namespace System.Windows
             // Seal template nodes (if exists)
 
 
-            frameworkTemplate?.ProcessTemplateBeforeSeal();
+            if (frameworkTemplate != null)
+            {
+                frameworkTemplate.ProcessTemplateBeforeSeal();
+            }
 
 
             if (templateRoot != null)
@@ -371,10 +373,16 @@ namespace System.Windows
             }
 
             // Seal triggers
-            triggers?.Seal();
+            if (triggers != null)
+            {
+                triggers.Seal();
+            }
 
             // Seal Resource Dictionary
-            resources?.IsReadOnly = true;
+            if (resources != null)
+            {
+                resources.IsReadOnly = true;
+            }
 
             //  Build shared tables
 
@@ -659,18 +667,17 @@ namespace System.Windows
                 Type valueType = deferredReference.GetValueType();
                 if (valueType != null)
                 {
-                    // Check for Freezable first, as that's way more common than MarkupExtension
-                    if (typeof(Freezable).IsAssignableFrom(valueType))
-                    {
-                        freezable = (Freezable)deferredReference.GetValue(BaseValueSourceInternal.Style);
-                    }
-                    else if (typeof(MarkupExtension).IsAssignableFrom(valueType))
+                    if (typeof(MarkupExtension).IsAssignableFrom(valueType))
                     {
                         value = deferredReference.GetValue(BaseValueSourceInternal.Style);
                         if ((markupExtension = value as MarkupExtension) == null)
                         {
                             freezable = value as Freezable;
                         }
+                    }
+                    else if (typeof(Freezable).IsAssignableFrom(valueType))
+                    {
+                        freezable = (Freezable)deferredReference.GetValue(BaseValueSourceInternal.Style);
                     }
                 }
 
@@ -1436,7 +1443,7 @@ namespace System.Windows
 
             if (oldStyle != null)
             {
-                HybridDictionary instanceValues = styleData?[(int)InstanceStyleData.InstanceValues];
+                HybridDictionary instanceValues = (styleData != null) ? styleData[(int)InstanceStyleData.InstanceValues] : null;
                 ReleaseInstanceDataForDataTriggers(dataField, instanceValues, oldStyle, oldFrameworkTemplate );
                 if (oldStyle.HasInstanceValues)
                 {
@@ -1447,7 +1454,7 @@ namespace System.Windows
             }
             else if (oldFrameworkTemplate != null)
             {
-                HybridDictionary instanceValues = styleData?[(int)InstanceStyleData.InstanceValues];
+                HybridDictionary instanceValues = (styleData != null) ? styleData[(int)InstanceStyleData.InstanceValues] : null;
                 ReleaseInstanceDataForDataTriggers(dataField, instanceValues, oldStyle, oldFrameworkTemplate );
                 if (oldFrameworkTemplate.HasInstanceValues)
                 {
@@ -1458,7 +1465,7 @@ namespace System.Windows
             }
             else
             {
-                HybridDictionary instanceValues = styleData?[(int)InstanceStyleData.InstanceValues];
+                HybridDictionary instanceValues = (styleData != null) ? styleData[(int)InstanceStyleData.InstanceValues] : null;
                 ReleaseInstanceDataForDataTriggers(dataField, instanceValues, oldStyle, oldFrameworkTemplate );
             }
         }
@@ -2067,7 +2074,7 @@ namespace System.Windows
                 if( walkNode != container && nextParent != null ) // Only interested in nodes that are "Not me" and not auto-generated (== no TemplatedParent)
                 {
                     // Do the cheaper comparison first - the Style reference should be cached
-                    if ((frameworkTemplate != null && walkNodeIsFE && feWalkNode.TemplateInternal == frameworkTemplate) )
+                    if ((frameworkTemplate != null && walkNodeIsFE == true && feWalkNode.TemplateInternal == frameworkTemplate) )
                     {
                         // Then the expensive one - pulling in reflection to check if they're also the same types.
                         if( walkNode.GetType() == container.GetType() )
@@ -2157,7 +2164,10 @@ namespace System.Windows
             }
 
             // Clear the NameMap property on the root of the generated subtree
-            rootNode?.ClearValue(NameScope.NameScopeProperty);
+            if (rootNode != null)
+            {
+                rootNode.ClearValue(NameScope.NameScopeProperty);
+            }
 
             // Detach the generated tree from the conatiner
             DetachGeneratedSubTree(feContainer, fceContainer);
@@ -2211,7 +2221,7 @@ namespace System.Windows
 
             FrameworkObject container = new FrameworkObject(feContainer, fceContainer);
 
-            HybridDictionary instanceValues = instanceData?[(int)InstanceStyleData.InstanceValues];
+            HybridDictionary instanceValues = (instanceData != null) ? instanceData[(int)InstanceStyleData.InstanceValues] : null;
             int[] childIndices = new int[templateChain.Count];
 
             // Assumes that styleChain[0] is the root of the templated subtree
@@ -2907,11 +2917,11 @@ namespace System.Windows
             FrameworkContentElement fceContainer;
             Helper.DowncastToFEorFCE(container, out feContainer, out fceContainer, true);
 
-            HybridDictionary[] styleData = dataField?.GetValue(container);
-            HybridDictionary instanceValues = styleData?[(int)InstanceStyleData.InstanceValues];
+            HybridDictionary[] styleData = (dataField != null) ? dataField.GetValue(container) : null;
+            HybridDictionary instanceValues = (styleData != null) ? styleData[(int)InstanceStyleData.InstanceValues] : null;
             InstanceValueKey key = new InstanceValueKey(childIndex, dp.GlobalIndex, i);
 
-            object value = instanceValues?[key];
+            object value = (instanceValues != null)? instanceValues[key] : null;
             bool isRequestingExpression = (feChild != null) ? feChild.IsRequestingExpression : fceChild.IsRequestingExpression;
 
             if (value == null)
@@ -2968,7 +2978,10 @@ namespace System.Windows
                 {
                     expr = value as Expression;
                     // if the instance value is an expression, attach it
-                    expr?.OnAttach(child, dp);
+                    if (expr != null)
+                    {
+                        expr.OnAttach(child, dp);
+                    }
                 }
             }
 
@@ -3366,8 +3379,8 @@ namespace System.Windows
                 FrugalStructList<ContainerDependent> newContainerDependents;
 
                 Debug.Assert(feContainer != null);
-                oldFactory = oldFrameworkTemplate?.VisualTree;
-                newFactory = newFrameworkTemplate?.VisualTree;
+                oldFactory = (oldFrameworkTemplate != null) ? oldFrameworkTemplate.VisualTree : null;
+                newFactory = (newFrameworkTemplate != null) ? newFrameworkTemplate.VisualTree : null;
 
                 canBuildVisualTree = (oldFrameworkTemplate != null) ? oldFrameworkTemplate.CanBuildVisualTree : false;
                 hasTemplateGeneratedSubTree = feContainer.HasTemplateGeneratedSubTree;
@@ -5505,8 +5518,8 @@ namespace System.Windows
             {
                 if (fe != null)
                     fe.WriteInternalFlag(InternalFlags.IsInitialized, true);
-                else
-                    fce?.WriteInternalFlag(InternalFlags.IsInitialized, true);
+                else if (fce != null)
+                    fce.WriteInternalFlag(InternalFlags.IsInitialized, true);
             }
 
             // get the desired expression
@@ -5517,8 +5530,8 @@ namespace System.Windows
             {
                 if (fe != null)
                     fe.WriteInternalFlag(InternalFlags.IsInitialized, false);
-                else
-                    fce?.WriteInternalFlag(InternalFlags.IsInitialized, false);
+                else if (fce != null)
+                    fce.WriteInternalFlag(InternalFlags.IsInitialized, false);
             }
 
             return result;
@@ -5797,7 +5810,7 @@ namespace System.Windows
         // GetHashCode, ==, and != are required when Equals is overridden, even though we don't expect to need them.
         public override int GetHashCode()
         {
-            Debug.Fail("GetHashCode for value types will use reflection to generate the hashcode.  Write a better hash code generation algorithm if this struct is to be used in a hashtable, or remove this assert if it's decided that reflection is OK.");
+            Debug.Assert(false, "GetHashCode for value types will use reflection to generate the hashcode.  Write a better hash code generation algorithm if this struct is to be used in a hashtable, or remove this assert if it's decided that reflection is OK.");
 
             return base.GetHashCode();
         }
@@ -5877,7 +5890,7 @@ namespace System.Windows
             // compare the state and reference values directly.)
             object referenceValue = Value;
             string referenceString = referenceValue as String;
-            Type stateType = state?.GetType();
+            Type stateType = (state != null) ? state.GetType() : null;
 
             if (referenceString != null && stateType != null &&
                 stateType != typeof(String))
@@ -6121,9 +6134,9 @@ namespace System.Windows
         }
 
         // the origin of the instance value in the container's style:
-        private int _childIndex;    // the childIndex of the target element
-        private int _dpIndex;       // the global index of the target DP
-        private int _index;         // the index in the ItemStructList<ChildValueLookup>
+        int _childIndex;    // the childIndex of the target element
+        int _dpIndex;       // the global index of the target DP
+        int _index;         // the index in the ItemStructList<ChildValueLookup>
     }
 
     #endregion DataStructures

@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: FlowDocumentPageViewer provides a simple user experience for viewing
@@ -1458,7 +1459,10 @@ namespace System.Windows.Controls
             if (viewer.Selection != null)
             {
                 CaretElement caretElement = viewer.Selection.CaretElement;
-                caretElement?.InvalidateVisual();
+                if (caretElement != null)
+                {
+                    caretElement.InvalidateVisual();
+                }
             }
         }
 

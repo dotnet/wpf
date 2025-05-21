@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //---------------------------------------------------------------------------
@@ -55,14 +56,20 @@ namespace MS.Internal.MilCodeGen.Generators
                         [[inline]]
                             using MS.Internal;
                             using MS.Internal.KnownBoxes;
+                            using MS.Internal.PresentationCore;
                             using MS.Utility;
+                            using System;
+                            using System.Collections.Generic;
                             using System.ComponentModel;
+                            using System.Diagnostics;
+                            using System.Security;
+                            using System.Security.Permissions;
                             using System.Windows.Input;
                             using System.Windows.Media.Animation;
 
                             namespace [[e.Namespace]]
                             {
-                                public partial class [[e.Name]] [[(e.ImplementsIAnimatable ? ": IAnimatable" : "")]]
+                                partial class [[e.Name]] [[(e.ImplementsIAnimatable ? ": IAnimatable" : "")]]
                                 {
                                     static private readonly Type _typeofThis = typeof([[e.Name]]);
 
@@ -241,11 +248,18 @@ namespace MS.Internal.MilCodeGen.Generators
                     ///     <see cref="RoutedEventArgs"/> for the event to
                     ///     be raised
                     /// </param>
+                    ///<SecurityNote>
+                    ///     By default clears the user initiated bit.
+                    ///     To guard against "replay" attacks.
+                    ///</SecurityNote>
                     public void RaiseEvent(RoutedEventArgs e)
                     {
                         // VerifyAccess();
 
-                        ArgumentNullException.ThrowIfNull(e);
+                        if (e == null)
+                        {
+                            throw new ArgumentNullException("e");
+                        }
                         e.ClearUserInitiated();
 
                         UIElement.RaiseEventImpl(this, e);
@@ -255,9 +269,16 @@ namespace MS.Internal.MilCodeGen.Generators
                     ///     "Trusted" internal flavor of RaiseEvent.
                     ///     Used to set the User-initated RaiseEvent.
                     /// </summary>
+                    ///<SecurityNote>
+                    ///     Critical - sets the MarkAsUserInitiated bit.
+                    ///</SecurityNote>
+                    [SecurityCritical]
                     internal void RaiseEvent(RoutedEventArgs args, bool trusted)
                     {
-                        ArgumentNullException.ThrowIfNull(args);
+                        if (args == null)
+                        {
+                            throw new ArgumentNullException("args");
+                        }
 
                         if (trusted)
                         {
@@ -271,9 +292,17 @@ namespace MS.Internal.MilCodeGen.Generators
                         }
                     }
 
+                    ///<SecurityNote>
+                    ///     Critical - sets the MarkAsUserInitiated bit.
+                    ///</SecurityNote>
+                    [SecurityCritical]
+                    [MS.Internal.Permissions.UserInitiatedRoutedEventPermissionAttribute(SecurityAction.Assert)]
                     internal void RaiseTrustedEvent(RoutedEventArgs args)
                     {
-                        ArgumentNullException.ThrowIfNull(args);
+                        if (args == null)
+                        {
+                            throw new ArgumentNullException("args");
+                        }
 
                         // Try/finally to ensure that UserInitiated bit is cleared.
                         args.MarkAsUserInitiated();
@@ -373,9 +402,15 @@ namespace MS.Internal.MilCodeGen.Generators
                     {
                         // VerifyAccess();
 
-                        ArgumentNullException.ThrowIfNull(routedEvent);
+                        if (routedEvent == null)
+                        {
+                            throw new ArgumentNullException("routedEvent");
+                        }
 
-                        ArgumentNullException.ThrowIfNull(handler);
+                        if (handler == null)
+                        {
+                            throw new ArgumentNullException("handler");
+                        }
 
                         if (!routedEvent.IsLegalHandler(handler))
                         {
@@ -385,7 +420,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         EnsureEventHandlersStore();
                         EventHandlersStore.AddRoutedEventHandler(routedEvent, handler, handledEventsToo);
 
-                        OnAddHandler(routedEvent, handler);
+                        OnAddHandler (routedEvent, handler);
                     }
 
                     /// <summary>
@@ -428,9 +463,15 @@ namespace MS.Internal.MilCodeGen.Generators
                     {
                         // VerifyAccess();
 
-                        ArgumentNullException.ThrowIfNull(routedEvent);
+                        if (routedEvent == null)
+                        {
+                            throw new ArgumentNullException("routedEvent");
+                        }
 
-                        ArgumentNullException.ThrowIfNull(handler);
+                        if (handler == null)
+                        {
+                            throw new ArgumentNullException("handler");
+                        }
 
                         if (!routedEvent.IsLegalHandler(handler))
                         {
@@ -442,7 +483,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         {
                             store.RemoveRoutedEventHandler(routedEvent, handler);
 
-                            OnRemoveHandler(routedEvent, handler);
+                            OnRemoveHandler (routedEvent, handler);
 
                             if (store.Count == 0)
                             {
@@ -489,8 +530,14 @@ namespace MS.Internal.MilCodeGen.Generators
                     /// </summary>
                     public void AddToEventRoute(EventRoute route, RoutedEventArgs e)
                     {
-                        ArgumentNullException.ThrowIfNull(route);
-                        ArgumentNullException.ThrowIfNull(e);
+                        if (route == null)
+                        {
+                            throw new ArgumentNullException("route");
+                        }
+                        if (e == null)
+                        {
+                            throw new ArgumentNullException("e");
+                        }
 
                         // Get class listeners for this [[element.Name]]
                         RoutedEventHandlerInfoList classListeners =
@@ -499,7 +546,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         // Add all class listeners for this [[element.Name]]
                         while (classListeners != null)
                         {
-                            for (int i = 0; i < classListeners.Handlers.Length; i++)
+                            for(int i = 0; i < classListeners.Handlers.Length; i++)
                             {
                                 route.Add(this, classListeners.Handlers[i].Handler, classListeners.Handlers[i].InvokeHandledEventsToo);
                             }
@@ -548,7 +595,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     {
                         get
                         {
-                            if (!ReadFlag(CoreFlags.ExistsEventHandlersStore))
+                            if(!ReadFlag(CoreFlags.ExistsEventHandlersStore))
                             {
                                 return null;
                             }
@@ -603,6 +650,11 @@ namespace MS.Internal.MilCodeGen.Generators
                     /// <summary>
                     /// Used by UIElement, ContentElement, and UIElement3D to register common Events.
                     /// </summary>
+                    /// <SecurityNote>
+                    ///  Critical: This code is used to register various thunks that are used to send input to the tree
+                    ///  TreatAsSafe: This code attaches handlers that are inside the class and private. Not configurable or overridable
+                    /// </SecurityNote>
+                    [SecurityCritical,SecurityTreatAsSafe]
                     internal static void RegisterEvents(Type type)
                     {
                         [[cs]]
@@ -739,6 +791,10 @@ namespace MS.Internal.MilCodeGen.Generators
 
                 cs.WriteBlock(
                     [[inline]]
+                        /// <SecurityNote>
+                        ///     Critical: This code can be used to spoof input
+                        /// </SecurityNote>
+                        [SecurityCritical]
                         private static void [[evt.ThunkName]](object sender, [[evt.ArgsType]] e)
                         {
                             [[body]]
@@ -753,7 +809,7 @@ namespace MS.Internal.MilCodeGen.Generators
         {
             return
                 [[inline]]
-                    if (!e.Handled)
+                    if(!e.Handled)
                     {
                         [[body]]
                     }
@@ -955,7 +1011,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     [[inline]]
                         private static void [[property.PropertyName]]_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
                         {
-                            (([[element.Name]])d).Raise[[property.PropertyName]]Changed(e);
+                            (([[element.Name]]) d).Raise[[property.PropertyName]]Changed(e);
                         }
                     [[/inline]]);
             }

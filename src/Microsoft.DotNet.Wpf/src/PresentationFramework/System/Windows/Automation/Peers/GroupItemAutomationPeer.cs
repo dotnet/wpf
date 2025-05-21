@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.Windows.Automation.Provider;
@@ -18,7 +19,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        protected override string GetClassNameCore()
+        override protected string GetClassNameCore()
         {
             return "GroupItem";
         }
@@ -31,7 +32,7 @@ namespace System.Windows.Automation.Peers
         /// this collection describes the elements belonging to this GroupItem, we need the collection this
         /// GroupItem belongs to, so we look one level up using Parent.
         /// </remarks>
-        protected override int GetPositionInSetCore()
+        override protected int GetPositionInSetCore()
         {
             int positionInSet = base.GetPositionInSetCore();
 
@@ -60,7 +61,7 @@ namespace System.Windows.Automation.Peers
         /// this collection describes the elements belonging to this GroupItem, we need the collection this
         /// GroupItem belongs to, so we look one level up using Parent.
         /// </remarks>
-        protected override int GetSizeOfSetCore()
+        override protected int GetSizeOfSetCore()
         {
             int sizeOfSet = base.GetSizeOfSetCore();
 
@@ -82,13 +83,13 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        protected override AutomationControlType GetAutomationControlTypeCore()
+        override protected AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.Group;
         }
 
         ///
-        public override object GetPattern(PatternInterface patternInterface)
+        override public object GetPattern(PatternInterface patternInterface)
         {
             if(patternInterface == PatternInterface.ExpandCollapse)
             {
@@ -171,7 +172,10 @@ namespace System.Windows.Automation.Peers
                                     if (itemsControlAP.RecentlyRealizedPeers.Count > 0 && this.AncestorsInvalid)
                                     {
                                         GroupItemAutomationPeer groupItemPeer = peer as GroupItemAutomationPeer;
-                                        groupItemPeer?.InvalidateGroupItemPeersContainingRecentlyRealizedPeers(itemsControlAP.RecentlyRealizedPeers);
+                                        if (groupItemPeer != null)
+                                        {
+                                            groupItemPeer.InvalidateGroupItemPeersContainingRecentlyRealizedPeers(itemsControlAP.RecentlyRealizedPeers);
+                                        }
                                     }
                                 }
                                 else
@@ -304,7 +308,7 @@ namespace System.Windows.Automation.Peers
         }
 
 
-        protected override void SetFocusCore()
+        override protected void SetFocusCore()
         {
             GroupItem owner = (GroupItem)Owner;
             if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && owner.Expander != null)
@@ -333,7 +337,7 @@ namespace System.Windows.Automation.Peers
             }
         }
 
-        protected override bool HasKeyboardFocusCore()
+        override protected bool HasKeyboardFocusCore()
         {
             if (_expanderPeer != null)
             {

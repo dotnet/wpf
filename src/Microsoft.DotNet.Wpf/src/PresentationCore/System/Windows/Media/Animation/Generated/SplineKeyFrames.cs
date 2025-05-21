@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -8,19 +9,12 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-
-using System.Collections;
-using System.ComponentModel;
-using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
 using MS.Internal.PresentationCore;
 
 namespace System.Windows.Media.Animation
 {
-
-
     /// <summary>
     /// This class is used as part of a ByteKeyFrameCollection in
     /// conjunction with a KeyFrameByteAnimation to animate a
@@ -2050,6 +2044,4 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
-
 }

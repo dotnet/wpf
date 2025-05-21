@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
 *
@@ -679,7 +680,7 @@ namespace System.Windows.Markup
             // specific XmlNamespace. Add the relevant assemblies into MapTable.
             //
 
-            if (!xamlXmlnsPropertyNode.XmlNamespace.StartsWith(XamlReaderHelper.MappingProtocol, StringComparison.Ordinal))
+            if (xamlXmlnsPropertyNode.XmlNamespace.StartsWith(XamlReaderHelper.MappingProtocol, StringComparison.Ordinal) == false)
             {
                 NamespaceMapEntry[] nsMapEntry = _xamlTypeMapper.GetNamespaceMapEntries(xamlXmlnsPropertyNode.XmlNamespace);
 
@@ -1624,7 +1625,10 @@ namespace System.Windows.Markup
                         keyRecord = (IBamlDictionaryKey)deferKeyRecord.Record;
                     }
                     Debug.Assert(keyRecord != null, "Unknown key record type in defer load dictionary");
-                    keyRecord?.UpdateValuePosition((Int32)(position-endOfKeys), BinaryWriter);
+                    if (keyRecord != null)
+                    {
+                        keyRecord.UpdateValuePosition((Int32)(position-endOfKeys), BinaryWriter);
+                    }
                 }
                 WriteBamlRecord(deferRecord.Record,
                                 deferRecord.LineNumber,
@@ -1835,7 +1839,7 @@ namespace System.Windows.Markup
             get { return _bamlRecordManager; }
         }
 
-        private BamlDocumentStartRecord DocumentStartRecord
+        BamlDocumentStartRecord DocumentStartRecord
         {
             get { return _startDocumentRecord; }
             set {  _startDocumentRecord = value; }
@@ -1848,7 +1852,7 @@ namespace System.Windows.Markup
 
         // ITypeDescriptorContext used when running type convertors on serializable
         // DP values.
-        private ITypeDescriptorContext TypeConvertContext
+        ITypeDescriptorContext TypeConvertContext
         {
             get
             {
@@ -1886,54 +1890,54 @@ namespace System.Windows.Markup
 
 
 #region Data
-        private XamlTypeMapper          _xamlTypeMapper;
-        private Stream                  _bamlStream;
-        private BamlBinaryWriter        _bamlBinaryWriter;
+        XamlTypeMapper          _xamlTypeMapper;
+        Stream                  _bamlStream;
+        BamlBinaryWriter        _bamlBinaryWriter;
 
-        private BamlDocumentStartRecord _startDocumentRecord;
-        private ParserContext           _parserContext;
-        private BamlMapTable            _bamlMapTable;
-        private BamlRecordManager       _bamlRecordManager;
-        private ITypeDescriptorContext  _typeConvertContext;
+        BamlDocumentStartRecord _startDocumentRecord;
+        ParserContext           _parserContext;
+        BamlMapTable            _bamlMapTable;
+        BamlRecordManager       _bamlRecordManager;
+        ITypeDescriptorContext  _typeConvertContext;
 
-        private bool                    _deferLoadingSupport;  // true if defer load of ResourceDictionary
+        bool                    _deferLoadingSupport;  // true if defer load of ResourceDictionary
                                                        // is enabled.
-        private int                     _deferElementDepth = 0;
+        int                     _deferElementDepth = 0;
 
         // True if we are processing a defered content element and we have reached the end
         // end of the start record for the element.  At this point all properties for that
         // element have been collected.
-        private bool                    _deferEndOfStartReached = false;
+        bool                    _deferEndOfStartReached = false;
 
         // How deep are we in a complex property of a defered type?
-        private int                    _deferComplexPropertyDepth = 0;
+        int                    _deferComplexPropertyDepth = 0;
 
         // True if we are processing a defered content block and we are collecting all the
         // baml records that make up a single key for the keys section of defered content
-        private bool                    _deferKeyCollecting = false;
+        bool                    _deferKeyCollecting = false;
 
         // List of keys for a defered content section.  Each item is a KeyDeferRecord
-        private ArrayList               _deferKeys;
+        ArrayList               _deferKeys;
 
         // List of values for a defered content section.  Each item is a ValueDeferRecord
-        private ArrayList               _deferValues;       // Values in the dictionary
+        ArrayList               _deferValues;       // Values in the dictionary
 
         // List of properties set on an element that is the root of a defered content
         // section.  Each item is a ValueDeferRecord.
-        private ArrayList               _deferElement;      // Start tag and properties
+        ArrayList               _deferElement;      // Start tag and properties
                                                     // of deferable content
 
-        private short                   _staticResourceElementDepth = 0; // Used to identify the StaticResource EndRecord
+        short                   _staticResourceElementDepth = 0; // Used to identify the StaticResource EndRecord
 
-        private short                   _dynamicResourceElementDepth = 0; // Used to identify the DynamicResource EndRecord
+        short                   _dynamicResourceElementDepth = 0; // Used to identify the DynamicResource EndRecord
 
-        private List<ValueDeferRecord>  _staticResourceRecordList;  // List of BamlRecords between the start and end of a StaticResource definition (both ends inclusive).
+        List<ValueDeferRecord>  _staticResourceRecordList;  // List of BamlRecords between the start and end of a StaticResource definition (both ends inclusive).
 
-        private bool                    _debugBamlStream;
-        private int                     _lineNumber;
-        private int                     _linePosition;
-        private BamlLineAndPositionRecord  _bamlLineAndPositionRecord;
-        private BamlLinePositionRecord     _bamlLinePositionRecord;
+        bool                    _debugBamlStream;
+        int                     _lineNumber;
+        int                     _linePosition;
+        BamlLineAndPositionRecord  _bamlLineAndPositionRecord;
+        BamlLinePositionRecord     _bamlLinePositionRecord;
 
 #endregion Data
     }

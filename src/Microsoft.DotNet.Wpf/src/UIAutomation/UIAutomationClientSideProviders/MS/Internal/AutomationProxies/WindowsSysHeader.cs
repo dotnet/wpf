@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Win32 SysHeader32 proxy
 //
@@ -19,7 +20,7 @@ namespace MS.Internal.AutomationProxies
     // NOTE: Since this proxy has its own HWND, it will be always discovered by UIAutomation
     // and placed where it should be
     // we MUST NEVER create a hard connection between us and header (via _parent) ourselves
-    internal class WindowsSysHeader: ProxyHwnd
+    class WindowsSysHeader: ProxyHwnd
     {
         //------------------------------------------------------
         //
@@ -75,11 +76,14 @@ namespace MS.Internal.AutomationProxies
                     IntPtr hwndParent = NativeMethodsSetLastError.GetAncestor (hwnd, NativeMethods.GA_PARENT);
                     if (hwndParent != IntPtr.Zero)
                     {
-                        if (Misc.GetClassName(hwndParent).Contains("SysListView32", StringComparison.Ordinal))
+                        if (Misc.GetClassName(hwndParent).IndexOf("SysListView32", StringComparison.Ordinal) >= 0)
                         {
                             // Notify the Listview that the header Change
                             WindowsListView wlv = (WindowsListView) WindowsListView.Create (hwndParent, 0);
-                            wlv?.DispatchEvents (eventId, idProp, idObject, idChild);
+                            if (wlv != null)
+                            {
+                                wlv.DispatchEvents (eventId, idProp, idObject, idChild);
+                            }
                         }
                     }
                 }
@@ -244,7 +248,7 @@ namespace MS.Internal.AutomationProxies
             IntPtr hwndParent = NativeMethodsSetLastError.GetAncestor (_hwnd, NativeMethods.GA_PARENT);
             if (hwndParent != IntPtr.Zero)
             {
-                if (Misc.GetClassName(hwndParent).Contains("SysListView32", StringComparison.Ordinal))
+                if (Misc.GetClassName(hwndParent).IndexOf("SysListView32", StringComparison.Ordinal) >= 0)
                 {
                     // Determine the number of pixels or columns to scroll horizontally.
                     int pixels = 0;
@@ -293,12 +297,12 @@ namespace MS.Internal.AutomationProxies
         }
 
         // Map a header item
-        private static int OrderToIndex (IntPtr hwnd, int order)
+        static private int OrderToIndex (IntPtr hwnd, int order)
         {
             return Misc.ProxySendMessageInt(hwnd, NativeMethods.HDM_ORDERTOINDEX, new IntPtr(order), IntPtr.Zero);
         }
         // retrieve count of header items
-        private static int HeaderItemCount (IntPtr hwnd)
+        static private int HeaderItemCount (IntPtr hwnd)
         {
             return Misc.ProxySendMessageInt(hwnd, NativeMethods.HDM_GETITEMCOUNT, IntPtr.Zero, IntPtr.Zero);
         }
@@ -466,7 +470,10 @@ namespace MS.Internal.AutomationProxies
                 }
 
                 WindowsSysHeader parent = _parent as WindowsSysHeader;
-                parent?.ScrollIntoView(this);
+                if (parent != null)
+                {
+                    parent.ScrollIntoView(this);
+                }
 
                 NativeMethods.Win32Point pt;
 
@@ -711,7 +718,10 @@ namespace MS.Internal.AutomationProxies
                 }
 
                 WindowsSysHeader parent = _parent as WindowsSysHeader;
-                parent?.ScrollIntoView(this);
+                if (parent != null)
+                {
+                    parent.ScrollIntoView(this);
+                }
 
 
                 Rect rect = XSendMessage.GetItemRect(_hwnd, NativeMethods.HDM_GETITEMDROPDOWNRECT, _item);

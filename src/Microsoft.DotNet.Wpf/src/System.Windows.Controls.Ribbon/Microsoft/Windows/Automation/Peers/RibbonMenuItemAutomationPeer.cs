@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 #region Using declarations
@@ -97,10 +98,13 @@ namespace Microsoft.Windows.Automation.Peers
         {
             AutomationPeer dataPeer = EventsSource;
 
-            dataPeer?.RaisePropertyChangedEvent(
+            if (dataPeer != null)
+            {
+                dataPeer.RaisePropertyChangedEvent(
                     ExpandCollapsePatternIdentifiers.ExpandCollapseStateProperty,
                     oldValue ? ExpandCollapseState.Expanded : ExpandCollapseState.Collapsed,
                     newValue ? ExpandCollapseState.Expanded : ExpandCollapseState.Collapsed);
+            }
         }
 
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
@@ -108,7 +112,10 @@ namespace Microsoft.Windows.Automation.Peers
         {
             AutomationPeer dataPeer = EventsSource;
 
-            dataPeer?.RaisePropertyChangedEvent(TogglePatternIdentifiers.ToggleStateProperty, ConvertToToggleState(oldValue), ConvertToToggleState(newValue));
+            if (dataPeer != null)
+            {
+                dataPeer.RaisePropertyChangedEvent(TogglePatternIdentifiers.ToggleStateProperty, ConvertToToggleState(oldValue), ConvertToToggleState(newValue));
+            }
         }
 
         private static ToggleState ConvertToToggleState(bool value)

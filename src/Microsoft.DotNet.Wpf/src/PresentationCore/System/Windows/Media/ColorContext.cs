@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using MS.Win32;
@@ -58,7 +59,7 @@ namespace System.Windows.Media
                             return;
                         }
                         
-                        FromRawBytes(profileData, (int)cbProfileActual, dontThrowException: true);
+                        FromRawBytes(profileData, (int)cbProfileActual, /* dontThrowException = */ true);
                     }
 
                     break;
@@ -128,7 +129,7 @@ namespace System.Windows.Media
                         }
 
                         // Finally, fill in _colorContextHelper
-                        FromRawBytes(sRGBProfile, sRGBProfile.Length, dontThrowException: true);
+                        FromRawBytes(sRGBProfile, sRGBProfile.Length, /* dontThrowException = */ true);
                     }
                     else if (Invariant.Strict)
                     {
@@ -155,7 +156,7 @@ namespace System.Windows.Media
         /// <param name="profileUri">Specifies the URI of a color profile used by the newly created ColorContext.</param>
         public ColorContext(Uri profileUri)
         {
-            Initialize(profileUri, isStandardProfileUriNotFromUser: false);
+            Initialize(profileUri, /* isStandardProfileUriNotFromUser = */ false);
         }
 
         /// <summary>
@@ -178,7 +179,7 @@ namespace System.Windows.Media
                 case PixelFormatEnum.Bgra32:
                 case PixelFormatEnum.Pbgra32:
                 default:
-                    Initialize(GetStandardColorSpaceProfile(), isStandardProfileUriNotFromUser: true);
+                    Initialize(GetStandardColorSpaceProfile(), /* isStandardProfileUriNotFromUser = */ true);
                     break;
 
                 case PixelFormatEnum.Rgba64:
@@ -398,7 +399,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Equals method
         /// </summary>
-        public override bool Equals(object obj)
+        override public bool Equals(object obj)
         {
             ColorContext context = obj as ColorContext;
 
@@ -408,7 +409,7 @@ namespace System.Windows.Media
         /// <summary>
         /// GetHashCode
         /// </summary>
-        public override int GetHashCode()
+        override public int GetHashCode()
         {
             // phDateTime_2 contains the minute and second that the profile was created. Obviously this 
             // is not a great hash, but the compiler forces us to implement this due to us implementing
@@ -484,7 +485,7 @@ namespace System.Windows.Media
 
             if (!profileUri.IsAbsoluteUri)
             {
-                throw new ArgumentException(SR.UriNotAbsolute, nameof(profileUri));
+                throw new ArgumentException(SR.UriNotAbsolute, "profileUri");
             }
 
             _profileUri = profileUri;
@@ -591,7 +592,7 @@ namespace System.Windows.Media
 
                 if (numBytesRead < bufferSize)
                 {
-                    FromRawBytes(rawBytes, numBytesRead, dontThrowException: false);
+                    FromRawBytes(rawBytes, numBytesRead, /* dontThrowException = */ false);
 
                     using (FactoryMaker factoryMaker = new FactoryMaker())
                     {
@@ -794,7 +795,7 @@ namespace System.Windows.Media
 
         private const int _maximumColorContextLength = _bufferSizeIncrement * 32; // 32 Mb
 
-        private static readonly NativeMethods.COLORTYPE[] _colorTypeFromChannels =
+        private readonly static NativeMethods.COLORTYPE[] _colorTypeFromChannels =
             new NativeMethods.COLORTYPE[9] {
                 NativeMethods.COLORTYPE.COLOR_UNDEFINED,
                 NativeMethods.COLORTYPE.COLOR_UNDEFINED,

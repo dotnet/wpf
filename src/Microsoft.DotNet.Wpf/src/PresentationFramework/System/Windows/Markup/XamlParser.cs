@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
 *
@@ -520,7 +521,7 @@ namespace System.Windows.Markup
                     WriteConstructorParameterType(xamlConstructorParameterTypeNode);
                     break;
                 default:
-                    Debug.Fail("Unknown Xaml Token.");
+                    Debug.Assert(false,"Unknown Xaml Token.");
                     break;
             }
 
@@ -535,7 +536,10 @@ namespace System.Windows.Markup
         /// </summary>
         public virtual void WriteDocumentStart(XamlDocumentStartNode XamlDocumentStartNode)
         {
-            BamlRecordWriter?.WriteDocumentStart(XamlDocumentStartNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WriteDocumentStart(XamlDocumentStartNode);
+            }
         }
 
         /// <summary>
@@ -543,7 +547,10 @@ namespace System.Windows.Markup
         /// </summary>
         public virtual void WriteDocumentEnd(XamlDocumentEndNode xamlEndDocumentNode)
         {
-            BamlRecordWriter?.WriteDocumentEnd(xamlEndDocumentNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WriteDocumentEnd(xamlEndDocumentNode);
+            }
         }
 
         /// <summary>
@@ -551,7 +558,10 @@ namespace System.Windows.Markup
         /// </summary>
         public virtual void WriteElementStart(XamlElementStartNode xamlElementStartNode)
         {
-            BamlRecordWriter?.WriteElementStart(xamlElementStartNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WriteElementStart(xamlElementStartNode);
+            }
         }
 
         /// <summary>
@@ -586,7 +596,10 @@ namespace System.Windows.Markup
         /// </summary>
         public virtual void WriteElementEnd(XamlElementEndNode xamlElementEndNode)
         {
-            BamlRecordWriter?.WriteElementEnd(xamlElementEndNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WriteElementEnd(xamlElementEndNode);
+            }
         }
 
         /// <summary>
@@ -594,7 +607,10 @@ namespace System.Windows.Markup
         /// </summary>
         public virtual void WriteLiteralContent(XamlLiteralContentNode xamlLiteralContentNode)
         {
-            BamlRecordWriter?.WriteLiteralContent(xamlLiteralContentNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WriteLiteralContent(xamlLiteralContentNode);
+            }
         }
 
         /// <summary>
@@ -604,7 +620,10 @@ namespace System.Windows.Markup
         public virtual void WritePropertyComplexStart(
             XamlPropertyComplexStartNode xamlPropertyComplexStartNode)
         {
-            BamlRecordWriter?.WritePropertyComplexStart(xamlPropertyComplexStartNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WritePropertyComplexStart(xamlPropertyComplexStartNode);
+            }
         }
 
 
@@ -615,7 +634,10 @@ namespace System.Windows.Markup
         public virtual void WritePropertyComplexEnd(
             XamlPropertyComplexEndNode xamlPropertyComplexEndNode)
         {
-            BamlRecordWriter?.WritePropertyComplexEnd(xamlPropertyComplexEndNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WritePropertyComplexEnd(xamlPropertyComplexEndNode);
+            }
         }
 
         /// <summary>
@@ -624,7 +646,10 @@ namespace System.Windows.Markup
         public virtual void WriteKeyElementStart(
             XamlElementStartNode xamlKeyElementStartNode)
         {
-            BamlRecordWriter?.WriteKeyElementStart(xamlKeyElementStartNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WriteKeyElementStart(xamlKeyElementStartNode);
+            }
         }
 
         /// <summary>
@@ -633,7 +658,10 @@ namespace System.Windows.Markup
         public virtual void WriteKeyElementEnd(
             XamlElementEndNode xamlKeyElementEndNode)
         {
-            BamlRecordWriter?.WriteKeyElementEnd(xamlKeyElementEndNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WriteKeyElementEnd(xamlKeyElementEndNode);
+            }
         }
 
         /// <summary>
@@ -662,12 +690,18 @@ namespace System.Windows.Markup
         /// </remarks>
         public virtual void WriteProperty(XamlPropertyNode xamlPropertyNode)
         {
-            BamlRecordWriter?.WriteProperty(xamlPropertyNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WriteProperty(xamlPropertyNode);
+            }
         }
 
         internal void WriteBaseProperty(XamlPropertyNode xamlPropertyNode)
         {
-            BamlRecordWriter?.BaseWriteProperty(xamlPropertyNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.BaseWriteProperty(xamlPropertyNode);
+            }
         }
 
         /// <summary>
@@ -699,7 +733,10 @@ namespace System.Windows.Markup
 
         public virtual void WritePropertyWithExtension(XamlPropertyWithExtensionNode xamlPropertyWithExtensionNode)
         {
-            BamlRecordWriter?.WritePropertyWithExtension(xamlPropertyWithExtensionNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WritePropertyWithExtension(xamlPropertyWithExtensionNode);
+            }
         }
 
 
@@ -708,7 +745,10 @@ namespace System.Windows.Markup
         /// </summary>
         public virtual void WriteText(XamlTextNode xamlTextNode)
         {
-            BamlRecordWriter?.WriteText(xamlTextNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WriteText(xamlTextNode);
+            }
         }
 
 
@@ -717,7 +757,10 @@ namespace System.Windows.Markup
         /// </summary>
         public virtual void WriteNamespacePrefix(XamlXmlnsPropertyNode xamlXmlnsPropertyNode)
         {
-            BamlRecordWriter?.WriteNamespacePrefix(xamlXmlnsPropertyNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WriteNamespacePrefix(xamlXmlnsPropertyNode);
+            }
         }
 
 
@@ -735,7 +778,10 @@ namespace System.Windows.Markup
                 ThrowException(nameof(SR.ParserMapPIMissingKey), xamlPIMappingNode.LineNumber, xamlPIMappingNode.LinePosition);
             }
 
-            BamlRecordWriter?.WritePIMapping(xamlPIMappingNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WritePIMapping(xamlPIMappingNode);
+            }
         }
 
         /// <summary>
@@ -753,9 +799,9 @@ namespace System.Windows.Markup
                     xamlClrEventNode.LineNumber,
                     xamlClrEventNode.LinePosition);
             }
-            else
+            else if (BamlRecordWriter != null)
             {
-                BamlRecordWriter?.WriteClrEvent(xamlClrEventNode);
+                BamlRecordWriter.WriteClrEvent(xamlClrEventNode);
             }
         }
 
@@ -764,7 +810,10 @@ namespace System.Windows.Markup
         /// </summary>
         public virtual void WritePropertyArrayStart(XamlPropertyArrayStartNode xamlPropertyArrayStartNode)
         {
-            BamlRecordWriter?.WritePropertyArrayStart(xamlPropertyArrayStartNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WritePropertyArrayStart(xamlPropertyArrayStartNode);
+            }
         }
 
 
@@ -773,7 +822,10 @@ namespace System.Windows.Markup
         /// </summary>
         public virtual void WritePropertyArrayEnd(XamlPropertyArrayEndNode xamlPropertyArrayEndNode)
         {
-            BamlRecordWriter?.WritePropertyArrayEnd(xamlPropertyArrayEndNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WritePropertyArrayEnd(xamlPropertyArrayEndNode);
+            }
         }
 
 
@@ -782,7 +834,10 @@ namespace System.Windows.Markup
         /// </summary>
         public virtual void WritePropertyIListStart(XamlPropertyIListStartNode xamlPropertyIListStartNode)
         {
-            BamlRecordWriter?.WritePropertyIListStart(xamlPropertyIListStartNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WritePropertyIListStart(xamlPropertyIListStartNode);
+            }
         }
 
 
@@ -791,7 +846,10 @@ namespace System.Windows.Markup
         /// </summary>
         public virtual void WritePropertyIListEnd(XamlPropertyIListEndNode xamlPropertyIListEndNode)
         {
-            BamlRecordWriter?.WritePropertyIListEnd(xamlPropertyIListEndNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WritePropertyIListEnd(xamlPropertyIListEndNode);
+            }
         }
 
         /// <summary>
@@ -799,7 +857,10 @@ namespace System.Windows.Markup
         /// </summary>
         public virtual void WritePropertyIDictionaryStart(XamlPropertyIDictionaryStartNode xamlPropertyIDictionaryStartNode)
         {
-            BamlRecordWriter?.WritePropertyIDictionaryStart(xamlPropertyIDictionaryStartNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WritePropertyIDictionaryStart(xamlPropertyIDictionaryStartNode);
+            }
         }
 
 
@@ -808,7 +869,10 @@ namespace System.Windows.Markup
         /// </summary>
         public virtual void WritePropertyIDictionaryEnd(XamlPropertyIDictionaryEndNode xamlPropertyIDictionaryEndNode)
         {
-            BamlRecordWriter?.WritePropertyIDictionaryEnd(xamlPropertyIDictionaryEndNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WritePropertyIDictionaryEnd(xamlPropertyIDictionaryEndNode);
+            }
         }
 
 
@@ -819,7 +883,10 @@ namespace System.Windows.Markup
         /// </summary>
         public virtual void WriteEndAttributes(XamlEndAttributesNode xamlEndAttributesNode)
         {
-            BamlRecordWriter?.WriteEndAttributes(xamlEndAttributesNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WriteEndAttributes(xamlEndAttributesNode);
+            }
         }
 
         /// <summary>
@@ -841,7 +908,10 @@ namespace System.Windows.Markup
         /// </summary>
         public virtual void WriteDefAttributeKeyType(XamlDefAttributeKeyTypeNode xamlDefNode)
         {
-            BamlRecordWriter?.WriteDefAttributeKeyType(xamlDefNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WriteDefAttributeKeyType(xamlDefNode);
+            }
         }
 
         /// <summary>
@@ -876,7 +946,10 @@ namespace System.Windows.Markup
 
                 case XamlReaderHelper.DefinitionShared:
                     Boolean.Parse(attributeValue);   // For validation only.
-                    BamlRecordWriter?.WriteDefAttribute(xamlDefAttributeNode);
+                    if (BamlRecordWriter != null)
+                    {
+                        BamlRecordWriter.WriteDefAttribute(xamlDefAttributeNode);
+                    }
                     break;
 
                 case XamlReaderHelper.DefinitionUid:
@@ -896,11 +969,17 @@ namespace System.Windows.Markup
                         throw parseException;
                     }
 
-                    BamlRecordWriter?.WriteDefAttribute(xamlDefAttributeNode);
+                    if (BamlRecordWriter != null)
+                    {
+                        BamlRecordWriter.WriteDefAttribute(xamlDefAttributeNode);
+                    }
                     break;
 
                 case XamlReaderHelper.DefinitionName:
-                    BamlRecordWriter?.WriteDefAttribute(xamlDefAttributeNode);
+                    if (BamlRecordWriter != null)
+                    {
+                        BamlRecordWriter.WriteDefAttribute(xamlDefAttributeNode);
+                    }
                     break;
 
                 default:
@@ -919,7 +998,10 @@ namespace System.Windows.Markup
         /// </summary>
         public virtual void WritePresentationOptionsAttribute(XamlPresentationOptionsAttributeNode xamlPresentationOptionsAttributeNode)
         {
-            BamlRecordWriter?.WritePresentationOptionsAttribute(xamlPresentationOptionsAttributeNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WritePresentationOptionsAttribute(xamlPresentationOptionsAttributeNode);
+            }
         }
 
         /// <summary>
@@ -927,12 +1009,18 @@ namespace System.Windows.Markup
         /// </summary>
         public virtual void WriteConstructorParametersStart(XamlConstructorParametersStartNode xamlConstructorParametersStartNode)
         {
-            BamlRecordWriter?.WriteConstructorParametersStart(xamlConstructorParametersStartNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WriteConstructorParametersStart(xamlConstructorParametersStartNode);
+            }
         }
 
         public virtual void WriteContentProperty(XamlContentPropertyNode xamlContentPropertyNode)
         {
-            BamlRecordWriter?.WriteContentProperty(xamlContentPropertyNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WriteContentProperty(xamlContentPropertyNode);
+            }
         }
 
         /// <summary>
@@ -942,7 +1030,10 @@ namespace System.Windows.Markup
         public virtual void WriteConstructorParameterType(
              XamlConstructorParameterTypeNode xamlConstructorParameterTypeNode)
         {
-            BamlRecordWriter?.WriteConstructorParameterType(xamlConstructorParameterTypeNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WriteConstructorParameterType(xamlConstructorParameterTypeNode);
+            }
         }
 
         /// <summary>
@@ -950,7 +1041,10 @@ namespace System.Windows.Markup
         /// </summary>
         public virtual void WriteConstructorParametersEnd(XamlConstructorParametersEndNode xamlConstructorParametersEndNode)
         {
-            BamlRecordWriter?.WriteConstructorParametersEnd(xamlConstructorParametersEndNode);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WriteConstructorParametersEnd(xamlConstructorParametersEndNode);
+            }
         }
 
         /// <summary>
@@ -1009,14 +1103,17 @@ namespace System.Windows.Markup
         /// </summary>
         protected internal void WriteConnectionId(Int32 connectionId)
         {
-            BamlRecordWriter?.WriteConnectionId(connectionId);
+            if (BamlRecordWriter != null)
+            {
+                BamlRecordWriter.WriteConnectionId(connectionId);
+            }
         }
 
         /// <summary>
         /// A def attribute was encountered.  Perform synchonous mode checking
         /// prior to calling the virtual that may be overridden.
         /// </summary>
-        private void WriteDefAttributeCore(XamlDefAttributeNode xamlDefAttributeNode)
+        void WriteDefAttributeCore(XamlDefAttributeNode xamlDefAttributeNode)
         {
 
             string attributeValue = xamlDefAttributeNode.Value;
@@ -1196,7 +1293,7 @@ namespace System.Windows.Markup
 
         // Set the depth count for how deep we are within
         // a ParserAction.Skip reference.
-        private int SkipActionDepthCount
+        int SkipActionDepthCount
         {
             get { return _skipActionDepthCount; }
             set {  _skipActionDepthCount = value; }
@@ -1204,7 +1301,7 @@ namespace System.Windows.Markup
 
         // Set and get the token to watch for when skipping a
         // section of a xaml file
-        private XamlNodeType SkipActionToken
+        XamlNodeType SkipActionToken
         {
             get { return _skipActionToken; }
             set {  _skipActionToken = value; }
@@ -1212,7 +1309,7 @@ namespace System.Windows.Markup
 
         // set the operation mode of the parser as determined
         // by attached ParserHooks
-        private ParserAction ParserAction
+        ParserAction ParserAction
         {
             get { return _parserAction; }
             set {  _parserAction = value; }
@@ -1288,20 +1385,20 @@ namespace System.Windows.Markup
 
         // private Data
 
-        private XamlReaderHelper             _xamlTokenReader;
-         
-        private ParserContext                _parserContext; 
-         
-        private XamlParseMode                _xamlParseMode;
-        private BamlRecordWriter             _bamlWriter;
-         
-        // ParserHooks related
-        private ParserHooks                  _parserHooks;
-        private ParserAction                 _parserAction = ParserAction.Normal;
-        private int                          _skipActionDepthCount = -1; // skip mode depth count.
-        private XamlNodeType                 _skipActionToken = XamlNodeType.Unknown;
+        XamlReaderHelper             _xamlTokenReader;
 
-        private static string []     _predefinedNamespaces = new string [3] {
+        ParserContext                _parserContext; 
+
+        XamlParseMode                _xamlParseMode;
+        BamlRecordWriter             _bamlWriter;
+
+        // ParserHooks related
+        ParserHooks                  _parserHooks;
+        ParserAction                 _parserAction = ParserAction.Normal;
+        int                          _skipActionDepthCount = -1; // skip mode depth count.
+        XamlNodeType                 _skipActionToken = XamlNodeType.Unknown;
+
+        static private string []     _predefinedNamespaces = new string [3] {
             XamlReaderHelper.DefinitionNamespaceURI,
             XamlReaderHelper.DefaultNamespaceURI,
             XamlReaderHelper.DefinitionMetroNamespaceURI

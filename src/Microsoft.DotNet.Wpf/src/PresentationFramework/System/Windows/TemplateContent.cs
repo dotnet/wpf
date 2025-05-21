@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Xaml;
 using System.Xaml.Schema;
@@ -371,7 +372,10 @@ namespace System.Windows
 
             while (reader.Read())
             {
-                lineInfoConsumer?.SetLineInfo(lineInfo.LineNumber, lineInfo.LinePosition);
+                if (lineInfoConsumer != null)
+                {
+                    lineInfoConsumer.SetLineInfo(lineInfo.LineNumber, lineInfo.LinePosition);
+                }
 
                 object newValue;
                 bool reProcessOnApply = ParseNode(reader, stack, sharedProperties, ref nameNumber, out newValue);
@@ -422,7 +426,7 @@ namespace System.Windows
 
                         // Check to see if the parent object needs to have the name set
                         if (stack.Depth > 0 &&
-!stack.CurrentFrame.NameSet &&
+                            stack.CurrentFrame.NameSet == false &&
                             stack.CurrentFrame.Type != null &&
                             !stack.CurrentFrame.IsInNameScope &&
                             !stack.CurrentFrame.IsInStyleOrTemplate)
@@ -450,7 +454,7 @@ namespace System.Windows
                     {
                         // Check to see if the parent object needs to have the name set
                         if (stack.Depth > 0 &&
-                            !stack.CurrentFrame.NameSet &&
+                            stack.CurrentFrame.NameSet == false &&
                             stack.CurrentFrame.Type != null &&
                             !stack.CurrentFrame.IsInNameScope &&
                             !stack.CurrentFrame.IsInStyleOrTemplate)
@@ -478,7 +482,7 @@ namespace System.Windows
                 case System.Xaml.XamlNodeType.EndObject:
                     if (!stack.CurrentFrame.IsInStyleOrTemplate)
                     {
-                        if (!stack.CurrentFrame.NameSet && !stack.CurrentFrame.IsInNameScope)
+                        if (stack.CurrentFrame.NameSet == false && !stack.CurrentFrame.IsInNameScope)
                         {
                             // FEs and FCEs need to be added to the name to index map
                             if (typeof(FrameworkElement).IsAssignableFrom(stack.CurrentFrame.Type.UnderlyingType) ||
@@ -569,8 +573,10 @@ namespace System.Windows
                                 stack.CurrentFrame.ContentSourceSet = true;
                         }
 
-                        if (!stack.CurrentFrame.IsInNameScope && !xamlReader.Member.IsDirective)
+                        if (!stack.CurrentFrame.IsInNameScope &&
+                            xamlReader.Member.IsDirective == false)
                         {
+
                             // Try to see if the property is shareable
                             PropertyValue? sharedValue;
                             var iReader = xamlReader as IXamlIndexingReader;
@@ -720,7 +726,7 @@ namespace System.Windows
                     if (!stack.CurrentFrame.IsInStyleOrTemplate)
                     {
                         // Check to see if the parent object needs to have the name set
-                        if (stack.Depth > 0 && !stack.CurrentFrame.NameSet && stack.CurrentFrame.Type != null && !stack.CurrentFrame.IsInNameScope)
+                        if (stack.Depth > 0 && stack.CurrentFrame.NameSet == false && stack.CurrentFrame.Type != null && !stack.CurrentFrame.IsInNameScope)
                         {
                             // FEs and FCEs need to be added to the name to index map
                             if (typeof(FrameworkElement).IsAssignableFrom(stack.CurrentFrame.Type.UnderlyingType) ||
@@ -980,7 +986,10 @@ namespace System.Windows
                                     // events inside of a FramewokrTemplate
                                     if (!insideTemplate && frames.CurrentFrame.Property == XamlLanguage.ConnectionId)
                                     {
-                                        OwnerTemplate.StyleConnector?.Connect((int)xamlReader.Value, frames.CurrentFrame.Instance);
+                                        if (OwnerTemplate.StyleConnector != null)
+                                        {
+                                            OwnerTemplate.StyleConnector.Connect((int)xamlReader.Value, frames.CurrentFrame.Instance);
+                                        }
                                     }
                                     break;
                             }
@@ -1218,7 +1227,7 @@ namespace System.Windows
             bool isContentStringFormatPropertyDefined
             )
         {
-            if (String.IsNullOrEmpty(contentSource) && !isContentSourceSet)
+            if (String.IsNullOrEmpty(contentSource) && isContentSourceSet == false)
                 contentSource = "Content";
 
             if (!String.IsNullOrEmpty(contentSource) && !isContentPropertyDefined)

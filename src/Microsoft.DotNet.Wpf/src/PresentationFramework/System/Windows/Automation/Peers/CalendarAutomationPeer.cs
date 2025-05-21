@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.Globalization;
@@ -238,12 +239,16 @@ namespace System.Windows.Automation.Peers
                 // Sets hwnd and parent info
                 if (addParentInfo)
                 {
-                    peer?.TrySetParentInfo(this);
+                    if(peer != null)
+                        peer.TrySetParentInfo(this);
                 }
             }
             // Set EventsSource if visual exists
             AutomationPeer wrapperPeer = peer.WrapperPeer;
-            wrapperPeer?.EventsSource = peer;
+            if (wrapperPeer != null)
+            {
+                wrapperPeer.EventsSource = peer;
+            }
 
             return peer;
         }
@@ -289,7 +294,10 @@ namespace System.Windows.Automation.Peers
             if (AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementSelected) && numSelected == 1 && numAdded == 1)
             {
                 DateTimeAutomationPeer peer = GetOrCreateDateTimeAutomationPeer((DateTime)e.AddedItems[0], CalendarMode.Month);
-                peer?.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementSelected);
+                if (peer != null)
+                {
+                    peer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementSelected);
+                }
             }
             else
             {
@@ -298,7 +306,10 @@ namespace System.Windows.Automation.Peers
                     foreach (DateTime date in e.AddedItems)
                     {
                         DateTimeAutomationPeer peer = GetOrCreateDateTimeAutomationPeer(date, CalendarMode.Month);
-                        peer?.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementAddedToSelection);
+                        if (peer != null)
+                        {
+                            peer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementAddedToSelection);
+                        }
                     }
                 }
             }
@@ -308,7 +319,10 @@ namespace System.Windows.Automation.Peers
                 foreach (DateTime date in e.RemovedItems)
                 {
                     DateTimeAutomationPeer peer = GetOrCreateDateTimeAutomationPeer(date, CalendarMode.Month);
-                    peer?.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection);
+                    if (peer != null)
+                    {
+                        peer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection);
+                    }
                 }
             }
         }
@@ -666,7 +680,7 @@ namespace System.Windows.Automation.Peers
             Date = date;
         }
 
-        private CalendarMode ButtonMode;
-        private DateTime Date;
+       CalendarMode ButtonMode;
+       DateTime Date;
     }
 }

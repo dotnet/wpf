@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using MS.Internal.Documents;
@@ -72,7 +73,10 @@ namespace System.Windows.Documents
 #endif
 
 //             VerifyAccess();
-            _asyncOp?.Wait();
+            if (_asyncOp != null)
+            {
+                _asyncOp.Wait();
+            }
 
             FixedPage p = null;
 
@@ -170,7 +174,7 @@ namespace System.Windows.Documents
             FixedPage fp = value as FixedPage;
             if (fp == null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(FixedPage)), nameof(value));
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(FixedPage)), "value");
             }
 
             if (_child != null)
@@ -216,7 +220,7 @@ namespace System.Windows.Documents
                                 (Uri) null,
                                 new PropertyChangedCallback(OnSourceChanged)));
 
-        private static void OnSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static void OnSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             PageContent p = (PageContent) d;
             p._pageRef = null;

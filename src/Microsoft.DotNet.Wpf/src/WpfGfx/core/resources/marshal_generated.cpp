@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //---------------------------------------------------------------------------
@@ -3188,7 +3189,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilPixelShaderDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilPixelShaderDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -3305,7 +3306,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilImplicitInputBrushDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilImplicitInputBrushDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -3383,7 +3384,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilBlurEffectDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilBlurEffectDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -3536,7 +3537,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilDropShadowEffectDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilDropShadowEffectDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -3864,7 +3865,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilShaderEffectDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilShaderEffectDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -4077,7 +4078,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilTransformGroupDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilTransformGroupDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -4181,7 +4182,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilTranslateTransformDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilTranslateTransformDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -4333,7 +4334,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilScaleTransformDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilScaleTransformDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -4497,7 +4498,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilSkewTransformDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilSkewTransformDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -4641,7 +4642,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilRotateTransformDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilRotateTransformDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -4739,7 +4740,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilMatrixTransformDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilMatrixTransformDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -4851,7 +4852,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilLineGeometryDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilLineGeometryDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -4987,7 +4988,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilRectangleGeometryDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilRectangleGeometryDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -5125,7 +5126,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilEllipseGeometryDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilEllipseGeometryDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -5221,7 +5222,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilGeometryGroupDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilGeometryGroupDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -5348,7 +5349,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilCombinedGeometryDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilCombinedGeometryDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -5604,7 +5605,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilSolidColorBrushDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilSolidColorBrushDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -5798,7 +5799,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilLinearGradientBrushDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilLinearGradientBrushDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -6043,7 +6044,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilRadialGradientBrushDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilRadialGradientBrushDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -6245,7 +6246,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilImageBrushDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilImageBrushDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -6436,7 +6437,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilDrawingBrushDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilDrawingBrushDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -6627,7 +6628,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilVisualBrushDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilVisualBrushDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -6794,7 +6795,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilBitmapCacheBrushDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilBitmapCacheBrushDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -6912,7 +6913,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilDashStyleDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilDashStyleDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -7038,7 +7039,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilPenDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilPenDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -7154,7 +7155,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilGeometryDrawingDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilGeometryDrawingDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -7250,7 +7251,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilGlyphRunDrawingDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilGlyphRunDrawingDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -7344,7 +7345,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilImageDrawingDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilImageDrawingDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -7612,7 +7613,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilDrawingGroupDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilDrawingGroupDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -7750,7 +7751,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilGuidelineSetDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilGuidelineSetDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -7838,7 +7839,7 @@ Cleanup:
     RRETURN(hr);
 }
 
-HRESULT CMilBitmapCacheDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+HRESULT CMilBitmapCacheDuce::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
 {
     HRESULT hr = S_OK;
 
@@ -7853,3 +7854,5 @@ Cleanup:
 {
     UnRegisterNotifier(m_data.m_pRenderAtScaleAnimation);
 }
+
+

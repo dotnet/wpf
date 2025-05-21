@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Tooltip Proxy
 
@@ -12,7 +13,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Class definition for the WindowsTooltip proxy. 
-    internal class WindowsTooltip : ProxyHwnd
+    class WindowsTooltip : ProxyHwnd
     {
         // ------------------------------------------------------
         //
@@ -23,7 +24,7 @@ namespace MS.Internal.AutomationProxies
         #region Constructors
 
         // Contructor for the tooltip proxy class.
-        private WindowsTooltip (IntPtr hwnd, ProxyFragment parent, int item)
+        WindowsTooltip (IntPtr hwnd, ProxyFragment parent, int item)
             : base( hwnd, parent, item)
         {
             // Set the control type string to return properly the properties.
@@ -86,7 +87,7 @@ namespace MS.Internal.AutomationProxies
             else if( eventId == AutomationElement.ToolTipClosedEvent )
             {
                 // subscribe to ToolTip specific events, keeping track of how many times the event has been added
-                WinEventTracker.AddToNotificationList(IntPtr.Zero, new WinEventTracker.ProxyRaiseEvents(OnToolTipEvents), _toolTipEventIds);
+                WinEventTracker.AddToNotificationList( IntPtr.Zero, new WinEventTracker.ProxyRaiseEvents( OnToolTipEvents ), _toolTipEventIds, _toolTipEventIds.Length );
                 _listenerCount++;
             }
         }
@@ -103,7 +104,7 @@ namespace MS.Internal.AutomationProxies
             {
                 // decrement the event counter
                 --_listenerCount;
-                WinEventTracker.RemoveToNotificationList(IntPtr.Zero, _toolTipEventIds, new WinEventTracker.ProxyRaiseEvents(OnToolTipEvents));
+                WinEventTracker.RemoveToNotificationList( IntPtr.Zero, _toolTipEventIds, new WinEventTracker.ProxyRaiseEvents( OnToolTipEvents ), _toolTipEventIds.Length );
             }
         }
 
@@ -349,7 +350,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Private Fields
 
-        private static readonly WinEventTracker.EvtIdProperty[] _toolTipEventIds = new WinEventTracker.EvtIdProperty[] 
+        private readonly static WinEventTracker.EvtIdProperty[] _toolTipEventIds = new WinEventTracker.EvtIdProperty[] 
         {
             new WinEventTracker.EvtIdProperty(NativeMethods.EVENT_OBJECT_HIDE, 0), 
             //see comment in OnToolTipEvents

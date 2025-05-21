@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //+-----------------------------------------------------------------------------
@@ -78,13 +79,13 @@ namespace MS.Internal.MilCodeGen.Generators
             string generatedPath = 
                 Path.Combine(
                     _resourceModel.OutputDirectory,
-                    "src\\WpfGfx\\Include\\Generated"
+                    "src\\Graphics\\Include\\Generated"
                     );
 
             string extensionPath =
                 Path.Combine(
                     _resourceModel.OutputDirectory,
-                    "src\\WpfGfx\\exts"
+                    "src\\Graphics\\exts"
                     );
 
             FileCodeSink enumFile = 
@@ -610,7 +611,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
             m_enum.Write(
                 [[inline]]
-                    /* [[MilTypeAsHex(value)]] */ [[PadWithSpaces(command.TypeName, 55)]] = 0x[[value.ToString("x02")]],
+                    /* [[MilTypeAsHex(value)]] */ [[PadWithSpaces(command.TypeName, 45)]] = 0x[[value.ToString("x02")]],
                 [[/inline]]
                 );
 

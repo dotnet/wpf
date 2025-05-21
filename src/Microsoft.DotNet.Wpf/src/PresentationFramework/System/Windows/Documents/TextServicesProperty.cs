@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: TextServicesProperty implementation.
@@ -74,7 +75,10 @@ namespace System.Windows.Documents
         {
             TextServicesDisplayAttributePropertyRanges displayAttributes = _propertyRanges as TextServicesDisplayAttributePropertyRanges;
 
-            displayAttributes?.OnLayoutUpdated();
+            if (displayAttributes != null)
+            {
+                displayAttributes.OnLayoutUpdated();
+            }
         }
 
         #endregion Internal Methods

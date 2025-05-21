@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.Collections.ObjectModel;   // ObservableCollection<T>
@@ -137,7 +138,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal void BlockWrite()
         {
-            Debug.Assert(!IsImmutable, "IsImmutable is true before BlockWrite");
+            Debug.Assert(IsImmutable != true, "IsImmutable is true before BlockWrite");
             IsImmutable = true;
         }
 
@@ -146,7 +147,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal void UnblockWrite()
         {
-            Debug.Assert(IsImmutable, "IsImmutable is flase before UnblockWrite");
+            Debug.Assert(IsImmutable != false, "IsImmutable is flase before UnblockWrite");
             IsImmutable = false;
         }
 

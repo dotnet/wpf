@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // 
 // Description: Run class - Text node in Flow content (text run)
@@ -55,11 +56,17 @@ namespace System.Windows.Documents
         /// </param>
         public Run(string text, TextPointer insertionPosition)
         {
-            insertionPosition?.TextContainer.BeginChange();
+            if (insertionPosition != null)
+            {
+                insertionPosition.TextContainer.BeginChange();
+            }
             try
             {
-                // This will throw InvalidOperationException if schema validity is violated.
-                insertionPosition?.InsertInline(this);
+                if (insertionPosition != null)
+                {
+                    // This will throw InvalidOperationException if schema validity is violated.
+                    insertionPosition.InsertInline(this);
+                }
 
                 if (text != null)
                 {
@@ -70,7 +77,10 @@ namespace System.Windows.Documents
             }
             finally
             {
-                insertionPosition?.TextContainer.EndChange();
+                if (insertionPosition != null)
+                {
+                    insertionPosition.TextContainer.EndChange();
+                }
             }
         }
 

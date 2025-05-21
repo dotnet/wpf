@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal.Automation;
 
@@ -77,8 +78,8 @@ namespace System.Windows.Automation
  
         #region Private Fields
 
-        private Condition [ ] _conditions;
-        private SafeConditionMemoryHandle _conditionArrayHandle;
+        Condition [ ] _conditions;
+        SafeConditionMemoryHandle _conditionArrayHandle;
 
         #endregion Private Fields
     }

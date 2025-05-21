@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Win32 ListView Item proxy
 //
@@ -724,7 +725,7 @@ namespace MS.Internal.AutomationProxies
 
         // retrieve an id of the group to which this lvitem belongs
         // valid only if lv has groups enabled
-        internal static int GetGroupID (IntPtr hwnd, int lvItem)
+        static internal int GetGroupID (IntPtr hwnd, int lvItem)
         {
             System.Diagnostics.Debug.Assert (WindowsListView.IsGroupViewEnabled (hwnd), "GetGroupID: called when lv does not have groups");
 
@@ -892,7 +893,7 @@ namespace MS.Internal.AutomationProxies
         }
 
         // detect if this listviewitem needs to support GridItem pattern
-        private static bool IsImplementingGrid (IntPtr hwnd)
+        static private bool IsImplementingGrid (IntPtr hwnd)
         {
             // in the detail mode, GridItem will be implemented on the subitem
             // and not item
@@ -1047,7 +1048,7 @@ namespace MS.Internal.AutomationProxies
         #region Private Fields
 
         private const int _checkbox = -1;
-        private bool _isComctrlV6OnOsVerV6orHigher;
+        bool _isComctrlV6OnOsVerV6orHigher;
         #endregion Private Fields
     }
 }

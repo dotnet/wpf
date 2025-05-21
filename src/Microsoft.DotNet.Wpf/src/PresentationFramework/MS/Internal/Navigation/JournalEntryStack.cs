@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.Collections.Specialized;
@@ -40,7 +41,7 @@ namespace System.Windows.Navigation
             return _ljese;
         }
 
-        private LimitedJournalEntryStackEnumerable _ljese;
+        LimitedJournalEntryStackEnumerable _ljese;
         protected JournalEntryFilter _filter;
         public event NotifyCollectionChangedEventHandler CollectionChanged;
         public abstract IEnumerator GetEnumerator();
@@ -139,13 +140,13 @@ namespace System.Windows.Navigation
             }
         }
 
-        private Journal _journal;
-        private int _start;
-        private int _delta;
-        private int _next;
-        private JournalEntry _current;
-        private JournalEntryFilter _filter;
-        private int _version;
+        Journal _journal;
+        int _start;
+        int _delta;
+        int _next;
+        JournalEntry _current;
+        JournalEntryFilter _filter;
+        int _version;
     }
 
     internal class LimitedJournalEntryStackEnumerable : IEnumerable, INotifyCollectionChanged

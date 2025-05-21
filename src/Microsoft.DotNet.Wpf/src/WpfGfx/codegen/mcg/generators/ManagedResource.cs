@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //------------------------------------------------------------------------------
@@ -71,13 +72,8 @@ namespace MS.Internal.MilCodeGen.Generators
                     
                     List<string> modifiers = new List<string>();
                     List<string> extends = new List<string>();
+                    string typeconverter = String.Empty;
                     string attributes = String.Empty;
-
-					// TODO: Add accessibility modifiers in McgType data model
-					if (resource.Name != "ImplicitInputBrush")
-						modifiers.Add("public");
-					else
-						modifiers.Add("internal");
 
                     if (resource.IsAbstract)
                     {
@@ -122,6 +118,8 @@ namespace MS.Internal.MilCodeGen.Generators
                         extends.Add("IList");
                         extends.Add("IList<" + resource.CollectionType.ManagedName + ">");
 
+                        modifiers.Add("public");
+
                         if (resource.GenerateSerializerAttribute)
                         {
                             attributes = attributes +
@@ -160,10 +158,15 @@ namespace MS.Internal.MilCodeGen.Generators
 
                     csFile.WriteBlock(
                         [[inline]]
+                            // These types are aliased to match the unamanaged names used in interop
+                            using BOOL = System.UInt32;
+                            using WORD = System.UInt16;
+                            using Float = System.Single;
 
                             namespace [[resource.ManagedNamespace]]
                             {
                                 [[Helpers.CollectionHelper.WriteCollectionSummary(resource)]]
+                                [[typeconverter]]
                                 [[attributes]]
                                 [[WriteClassDeclaration(resource.Name, !resource.IsValueType, modifiers, extends)]]
                                 {
@@ -253,6 +256,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                     [[Helpers.CollectionHelper.WriteCollectionConstructors(resource)]]
 
                                     #endregion Constructors
+
                                 }
                             }
                         [[/inline]]
@@ -365,7 +369,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     /// </summary>
                     protected override void [[method]]Core([[argType]] source)
                     {
-                        [[sourceType]] [[source]] = ([[sourceType]])source;
+                        [[sourceType]] [[source]] = ([[sourceType]]) source;
 
                         [[body]]
                     }
@@ -839,7 +843,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                     if (NeedsDucePropertyUpdate(resource, field))
                     {
-                        if (   (resource.Name == "VisualBrush" || resource.Name == "BitmapCacheBrush") 
+                        if(   (resource.Name == "VisualBrush" || resource.Name == "BitmapCacheBrush") 
                            && field.Type.ManagedName == "Visual")
                         {
                             cs.Write(
@@ -1199,7 +1203,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         cs.WriteBlock(
                             [[inline]]
                                 Debug.Assert([[GetDefaultFieldName(field)]] == null || [[GetDefaultFieldName(field)]].IsFrozen,
-                                    "Detected context bound default value [[resource.Name]].[[GetDefaultFieldName(field)]] (See OS Bug #947272).");
+                                    "Detected context bound default value [[resource.Name]].[[GetDefaultFieldName(field)]].");
 
                             [[/inline]]
                         );
@@ -1237,6 +1241,7 @@ namespace MS.Internal.MilCodeGen.Generators
                             // to make sure that they are not mutable, otherwise we will throw
                             // if these get touched by more than one thread in the lifetime
                             // of your app.
+                            //
                             [[cs]]
 
                             // Initializations
@@ -1391,7 +1396,7 @@ namespace MS.Internal.MilCodeGen.Generators
             {
                 getValue =
                     [[inline]]
-                        return ([[field.Type.ManagedName]])GetValue([[field.DPPropertyName]]);
+                        return ([[field.Type.ManagedName]]) GetValue([[field.DPPropertyName]]);
                     [[/inline]];
             }
             else
@@ -1591,7 +1596,7 @@ namespace MS.Internal.MilCodeGen.Generators
         /// <summary>
         /// WriteCollectionMarshal - this method produces a string in the form of:
         ///
-        /// for (int i = 0; i < pointCollectionCount; i++)
+        /// for(int i = 0; i < pointCollectionCount; i++)
         /// {
         ///     *((Point*)(pBuffer + cbPos)) = pointCollection.Internal_GetItem(i);
         ///     cbPos += sizeof(Point);
@@ -1657,7 +1662,7 @@ namespace MS.Internal.MilCodeGen.Generators
             return
                 [[inline]]
                         // Copy this collection's elements (or their handles) to reserved data
-                        for (int i = 0; i < [[countVariable]]; i++)
+                        for(int i = 0; i < [[countVariable]]; i++)
                         {
                             [[GetMarshalType(collectionType)]] resource = [[marshaledCollectionElement]];
                             channel.AppendCommandData(
@@ -1683,6 +1688,12 @@ namespace MS.Internal.MilCodeGen.Generators
                 {
                     cs.WriteBlock(
                         [[inline]]
+                            /// <SecurityNote>
+                            ///     Critical: This code calls into an unsafe code block
+                            ///     TreatAsSafe: This code does not return any critical data.It is ok to expose
+                            ///     Channels are safe to call into and do not go cross domain and cross process
+                            /// </SecurityNote>
+                            [SecurityCritical,SecurityTreatAsSafe]
                             internal override void UpdateResource(DUCE.Channel channel, bool skipOnChannelCheck)
                             {
                                 ManualUpdateResource(channel, skipOnChannelCheck);
@@ -2045,6 +2056,12 @@ namespace MS.Internal.MilCodeGen.Generators
 
                 cs.WriteBlock(
                     [[inline]]
+                        /// <SecurityNote>
+                        ///     Critical: This code calls into an unsafe code block
+                        ///     TreatAsSafe: This code does not return any critical data.It is ok to expose
+                        ///     Channels are safe to call into and do not go cross domain and cross process
+                        /// </SecurityNote>
+                        [SecurityCritical,SecurityTreatAsSafe]
                         internal override void UpdateResource(DUCE.Channel channel, bool skipOnChannelCheck)
                         {
                             // If we're told we can skip the channel check, then we must be on channel
@@ -2151,7 +2168,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
             string visualAddRef = Helpers.CodeGenHelpers.WriteFieldStatements(visualFields,
                                                           "{managedType} v{propertyName} = {propertyName};\n" +
-                                                          "v{propertyName}?.AddRefOnChannelForCyclicBrush(this, channel);");
+                                                          "if (v{propertyName} != null) v{propertyName}.AddRefOnChannelForCyclicBrush(this, channel);");
             if (visualAddRef != String.Empty)
             {
                 duceAddRef = duceAddRef + visualAddRef;
@@ -2176,7 +2193,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 {
                     addRefCollection =
                         [[inline]]
-                            for (int i = 0; i < _collection.Count; i++)
+                            for (int i=0; i<_collection.Count; i++)
                             {
                                 ((DUCE.IResource) _collection[i]).AddRefOnChannel(channel);
                             }
@@ -2294,7 +2311,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
             string visualRelease = Helpers.CodeGenHelpers.WriteFieldStatements(visualFields,
                                                           "{managedType} v{propertyName} = {propertyName};\n" +
-                                                          "v{propertyName}?.ReleaseOnChannelForCyclicBrush(this, channel);");
+                                                          "if (v{propertyName} != null) v{propertyName}.ReleaseOnChannelForCyclicBrush(this, channel);");
 
             if (visualRelease != String.Empty)
             {
@@ -2319,7 +2336,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 {
                     releaseCollection =
                         [[inline]]
-                            for (int i = 0; i < _collection.Count; i++)
+                            for (int i=0; i<_collection.Count; i++)
                             {
                                 ((DUCE.IResource) _collection[i]).ReleaseOnChannel(channel);
                             }
@@ -2591,7 +2608,10 @@ namespace MS.Internal.MilCodeGen.Generators
 
                                             // We're on a channel, which means our dependents are also on the channel.
                                             DUCE.IResource addResource = item as DUCE.IResource;
-                                            addResource?.AddRefOnChannel(channel);
+                                            if (addResource != null)
+                                            {
+                                                addResource.AddRefOnChannel(channel);
+                                            }
 
                                             UpdateResource(channel, true /* skip on channel check */);
                                         }
@@ -2618,7 +2638,10 @@ namespace MS.Internal.MilCodeGen.Generators
 
                                             // We're on a channel, which means our dependents are also on the channel.
                                             DUCE.IResource releaseResource = item as DUCE.IResource;
-                                            releaseResource?.ReleaseOnChannel(channel);
+                                            if (releaseResource != null)
+                                            {
+                                                releaseResource.ReleaseOnChannel(channel);
+                                            }
                                         }
                                     }
                                 }

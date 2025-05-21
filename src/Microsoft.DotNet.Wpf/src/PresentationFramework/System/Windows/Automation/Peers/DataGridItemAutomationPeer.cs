@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.ComponentModel;
@@ -496,7 +497,10 @@ namespace System.Windows.Automation.Peers
 
             //perform hookup so the events sourced from wrapper peer are fired as if from the data item
             AutomationPeer wrapperPeer = peer.OwningCellPeer;
-            wrapperPeer?.EventsSource = peer;
+            if (wrapperPeer != null)
+            {
+                wrapperPeer.EventsSource = peer;
+            }
 
             return peer;
         }
@@ -569,7 +573,7 @@ namespace System.Windows.Automation.Peers
             get
             {
                 DataGridRowAutomationPeer owningRowPeer = GetWrapperPeer() as DataGridRowAutomationPeer;
-                return owningRowPeer?.RowHeaderAutomationPeer;
+                return (owningRowPeer != null) ? owningRowPeer.RowHeaderAutomationPeer : null;
             }
         }
 

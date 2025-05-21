@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections.ObjectModel;
 using System.Windows.Automation.Provider;
@@ -35,12 +36,15 @@ namespace System.Windows.Automation.Peers
                 if (value)
                     return;
                 AutomationPeer wrapperPeer = GetWrapperPeer();
-                wrapperPeer?.AncestorsInvalid = false;
+                if (wrapperPeer != null)
+                {
+                    wrapperPeer.AncestorsInvalid = false;
+                }
             }
         }
 
         ///
-        public override object GetPattern(PatternInterface patternInterface)
+        override public object GetPattern(PatternInterface patternInterface)
         {
             if (patternInterface == PatternInterface.VirtualizedItem)
             {
@@ -97,7 +101,7 @@ namespace System.Windows.Automation.Peers
             return wrapper;
         }
 
-        internal virtual AutomationPeer GetWrapperPeer()
+        virtual internal AutomationPeer GetWrapperPeer()
         {
             AutomationPeer wrapperPeer = null;
             UIElement wrapper = GetWrapper();
@@ -135,7 +139,7 @@ namespace System.Windows.Automation.Peers
 
 
         ///
-        internal override bool IgnoreUpdatePeer()
+        override internal bool IgnoreUpdatePeer()
         {
             // Ignore UpdatePeer if the we're no longer in the automation tree.
             // There's no need to update such a peer, as it no longer
@@ -150,19 +154,22 @@ namespace System.Windows.Automation.Peers
             return base.IgnoreUpdatePeer();
         }
 
-        internal override bool IsDataItemAutomationPeer()
+        override internal bool IsDataItemAutomationPeer()
         {
             return true;
         }
 
-        internal override void AddToParentProxyWeakRefCache()
+        override internal void AddToParentProxyWeakRefCache()
         {
             ItemsControlAutomationPeer itemsControlAutomationPeer = ItemsControlAutomationPeer;
-            itemsControlAutomationPeer?.AddProxyToWeakRefStorage(this.ElementProxyWeakReference, this);
+            if(itemsControlAutomationPeer != null)
+            {
+                itemsControlAutomationPeer.AddProxyToWeakRefStorage(this.ElementProxyWeakReference, this);
+            }
         }
 
         /// <summary>
-        internal override Rect GetVisibleBoundingRectCore()
+        override internal Rect GetVisibleBoundingRectCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
             if (wrapperPeer != null)
@@ -173,7 +180,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        protected override string GetItemTypeCore()
+        override protected string GetItemTypeCore()
         {
             return string.Empty;
         }
@@ -232,7 +239,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        protected override AutomationHeadingLevel GetHeadingLevelCore()
+        override protected AutomationHeadingLevel GetHeadingLevelCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
             AutomationHeadingLevel headingLevel = AutomationHeadingLevel.None;
@@ -635,7 +642,7 @@ namespace System.Windows.Automation.Peers
                 ThrowElementNotAvailableException();
         }
 
-        internal virtual ItemsControlAutomationPeer GetItemsControlAutomationPeer()
+        virtual internal ItemsControlAutomationPeer GetItemsControlAutomationPeer()
         {
             return _itemsControlAutomationPeer;
         }
@@ -721,7 +728,7 @@ namespace System.Windows.Automation.Peers
             RealizeCore();
         }
 
-        internal virtual void RealizeCore()
+        virtual internal void RealizeCore()
         {
             ItemsControlAutomationPeer itemsControlAutomationPeer = ItemsControlAutomationPeer;
             if (itemsControlAutomationPeer != null)

@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Some applications implement menus with toolbars.  This proxy
 //              will used the IAccessible to expose these toolbar items as
@@ -15,7 +16,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    internal class ToolbarItemAsMenuItem : ToolbarItem
+    class ToolbarItemAsMenuItem : ToolbarItem
     {
         // ------------------------------------------------------
         //
@@ -38,7 +39,7 @@ namespace MS.Internal.AutomationProxies
             }
             else
             {
-                System.Diagnostics.Debug.Fail("Unexpected role " + role);
+                System.Diagnostics.Debug.Assert(false, "Unexpected role " + role);
 
             }
 
@@ -114,7 +115,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Private Fields
 
-        private Accessible _acc;
+        Accessible _acc;
 
         #endregion
     }

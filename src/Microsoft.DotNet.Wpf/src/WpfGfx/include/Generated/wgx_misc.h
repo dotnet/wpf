@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //---------------------------------------------------------------------------
@@ -175,8 +176,8 @@ BEGIN_MILENUM( MilTileMode )
 
     //
     // The basic tile mode  the base tile is drawn and the remaining area is filled by 
-    // repeating the base tile such that the right edge of one tile is adjacent to the 
-    // left edge of the next, and similarly for bottom and top
+    // repeating the base tile such that the right edge of one tile butts the left 
+    // edge of the next, and similarly for bottom and top
     //
     Tile = 4,
 
@@ -737,7 +738,7 @@ BEGIN_MILFLAGENUM( MilRTInitialization )
     // useful for when the window position may be faked or the system may try
     // to make use of window contents that are not recognized as visible.  For
     // example DWM thumbnails expect a fully rendered and presented window.
-    // Note: This does not guarantee that some clipping will not be used.
+    // Note: This does not guarantee that some clipping will not be used.  See
     //
     DisableDisplayClipping = 0x00001000,
 
@@ -1591,3 +1592,6 @@ typedef struct
 #pragma pack(pop)
 
 #endif // MILCORE_KERNEL_COMPONENT
+
+
+

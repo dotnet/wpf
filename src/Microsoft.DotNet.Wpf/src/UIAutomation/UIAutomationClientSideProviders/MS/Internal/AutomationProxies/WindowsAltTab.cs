@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: HWND-based Alt-Tab (Task Switch) Window Proxy
 
@@ -14,7 +15,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // This class represents the Alt-Tab (task switch) window.
-    internal class WindowsAltTab : ProxyHwnd
+    class WindowsAltTab : ProxyHwnd
     {
         // ------------------------------------------------------
         //
@@ -78,7 +79,10 @@ namespace MS.Internal.AutomationProxies
             if (idObject != NativeMethods.OBJID_VSCROLL && idObject != NativeMethods.OBJID_HSCROLL)
             {
                 ProxySimple el = (ProxyHwnd) WindowsAltTab.Create(hwnd, 0);
-                el?.DispatchEvents(eventId, idProp, idObject, idChild);
+                if (el != null)
+                {
+                    el.DispatchEvents(eventId, idProp, idObject, idChild);
+                }
             }
         }
 
@@ -304,7 +308,7 @@ namespace MS.Internal.AutomationProxies
 
         // Proxy class for an entry in the Alt-Tab window, representing
         // a single running program.
-        private class WindowsAltTabItem : ProxySimple
+        class WindowsAltTabItem : ProxySimple
         {
             // ------------------------------------------------------
             //

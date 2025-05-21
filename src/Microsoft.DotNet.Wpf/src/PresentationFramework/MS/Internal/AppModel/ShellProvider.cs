@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
@@ -23,18 +24,12 @@ namespace MS.Internal.AppModel
     #region Structs
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    internal readonly struct COMDLG_FILTERSPEC
+    internal struct COMDLG_FILTERSPEC
     {
         [MarshalAs(UnmanagedType.LPWStr)]
-        public readonly string pszName;
+        public string pszName;
         [MarshalAs(UnmanagedType.LPWStr)]
-        public readonly string pszSpec;
-
-        public COMDLG_FILTERSPEC(string name, string spec)
-        {
-            pszName = name;
-            pszSpec = spec;
-        }
+        public string pszSpec;
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
@@ -120,7 +115,7 @@ namespace MS.Internal.AppModel
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
         Guid(IID.ObjectArray),
     ]
-    internal interface IObjectCollection : IObjectArray
+    interface IObjectCollection : IObjectArray
     {
         #region IObjectArray redeclarations
         new uint GetCount();
@@ -273,7 +268,7 @@ namespace MS.Internal.AppModel
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
         Guid(IID.ShellItem2),
     ]
-    internal interface IShellItem2 : IShellItem
+    interface IShellItem2 : IShellItem
     {
         #region IShellItem redeclarations
         [return: MarshalAs(UnmanagedType.Interface)]

@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows.Markup; // ContentWrapper
 using System.Windows.Controls; // TextBlock
@@ -192,7 +193,7 @@ namespace System.Windows.Documents
             {
                 if (!textBlock.HasComplexContent)
                 {
-                    textBlock.Text += text;
+                    textBlock.Text = textBlock.Text + text;
                     return 0; // There's always one implicit Run with simple content, at index 0.
                 }
             }

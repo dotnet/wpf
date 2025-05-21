@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // 
@@ -177,7 +178,7 @@ namespace System.Windows
         /// <param name="fl">FigureLength instance to convert.</param>
         /// <param name="cultureInfo">Culture Info.</param>
         /// <returns>String representation of the object.</returns>
-        internal static string ToString(FigureLength fl, CultureInfo cultureInfo)
+        static internal string ToString(FigureLength fl, CultureInfo cultureInfo)
         {
             switch (fl.FigureUnitType)
             {
@@ -210,7 +211,7 @@ namespace System.Windows
         ///     As above, but the value is assumed to be 1.0
         ///     This is only acceptable for a subset of FigureUnitType: Auto
         /// </remarks>
-        internal static FigureLength FromString(string s, CultureInfo cultureInfo)
+        static internal FigureLength FromString(string s, CultureInfo cultureInfo)
         {
             double value;
             FigureUnitType unit;

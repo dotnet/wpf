@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows;
 using System.Windows.Documents;
@@ -384,7 +385,10 @@ namespace MS.Internal.PtsHost
                             dcpPara += para.Cch;
                             para = para.Next;
                         }
-                        para?.SetUpdateInfo(PTS.FSKCHANGE.fskchInside, false);
+                        if (para != null)
+                        {
+                            para.SetUpdateInfo(PTS.FSKCHANGE.fskchInside, false);
+                        }
                     }
                     else
                     {
@@ -1189,8 +1193,14 @@ namespace MS.Internal.PtsHost
                 }
                 while (paraInvalid != ur.SyncPara)
                 {
-                    paraInvalid.Next?.Previous = null;
-                    paraInvalid.Previous?.Next = null;
+                    if (paraInvalid.Next != null)
+                    {
+                        paraInvalid.Next.Previous = null;
+                    }
+                    if (paraInvalid.Previous != null)
+                    {
+                        paraInvalid.Previous.Next = null;
+                    }
                     paraInvalid.Dispose();
                     paraInvalid = paraInvalid.Next;
                 }

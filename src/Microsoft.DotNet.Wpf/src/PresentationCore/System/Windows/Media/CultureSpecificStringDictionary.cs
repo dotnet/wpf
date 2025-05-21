@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using SC = System.Collections;
 using System.Windows.Markup;
@@ -309,7 +310,7 @@ namespace System.Windows.Media
             {
                 ArgumentNullException.ThrowIfNull(value);
 
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(string)), nameof(value));
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(string)), "value");
             }
             return s;
         }
@@ -322,7 +323,7 @@ namespace System.Windows.Media
             {
                 ArgumentNullException.ThrowIfNull(key);
 
-                throw new ArgumentException(SR.Format(SR.CannotConvertType, key.GetType(), typeof(XmlLanguage)), nameof(key));
+                throw new ArgumentException(SR.Format(SR.CannotConvertType, key.GetType(), typeof(XmlLanguage)), "key");
             }
             return language;
         }

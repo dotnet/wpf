@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.Windows;
@@ -115,7 +116,7 @@ namespace MS.Internal.Ink
         /// <returns>contour segments enumerator</returns>
         internal virtual IEnumerable<ContourSegment> GetContourSegments(StrokeNodeData node, Quad quad)
         {
-            System.Diagnostics.Debug.Assert(!node.IsEmpty);
+            System.Diagnostics.Debug.Assert(node.IsEmpty == false);
 
             if (quad.IsEmpty)
             {
@@ -223,7 +224,7 @@ namespace MS.Internal.Ink
 
                 if (goingTo == HitResult.Left)
                 {
-                    if (!foundAB)
+                    if (false == foundAB)
                     {
                         // Find out where the node edge [i-1][i] is about the connecting vector 
                         HitResult comingFrom = WhereIsVectorAboutVector(_vertices[i] - _vertices[j], connection);
@@ -232,7 +233,7 @@ namespace MS.Internal.Ink
                             foundAB = true;
                             quad.A = beginNode.Position + _vertices[i] * beginNode.PressureFactor;
                             quad.B = endNode.Position + _vertices[i] * endNode.PressureFactor;
-                            if (foundCD)
+                            if (true == foundCD)
                             {
                                 // Found all 4 points. Break out from the 'for' loop.
                                 break;
@@ -242,7 +243,7 @@ namespace MS.Internal.Ink
                 }
                 else
                 {
-                    if (!foundCD)
+                    if (false == foundCD)
                     {
                         // Find out where the node edge [i-1][i] is about the connecting vector 
                         HitResult comingFrom = WhereIsVectorAboutVector(_vertices[i] - _vertices[j], connection);
@@ -251,7 +252,7 @@ namespace MS.Internal.Ink
                             foundCD = true;
                             quad.C = endNode.Position + _vertices[i] * endNode.PressureFactor;
                             quad.D = beginNode.Position + _vertices[i] * beginNode.PressureFactor;
-                            if (foundAB)
+                            if (true == foundAB)
                             {
                                 // Found all 4 points. Break out from the 'for' loop.
                                 break;
@@ -313,7 +314,7 @@ namespace MS.Internal.Ink
                     // Instead of applying pressure to the node, do reverse scaling on
                     // the hitting segment. This allows us use the original array of vertices 
                     // in hit-testing.
-                    System.Diagnostics.Debug.Assert(!DoubleUtil.IsZero(pressureFactor));
+                    System.Diagnostics.Debug.Assert(DoubleUtil.IsZero(pressureFactor) == false);
                     hitBegin /= pressureFactor;
                     hitEnd /= pressureFactor;
                 }
@@ -382,7 +383,7 @@ namespace MS.Internal.Ink
                         {
                             return true;
                         }
-                        if (IsOutside(hitResult, lastResult))
+                        if (true == IsOutside(hitResult, lastResult))
                         {
                             return false;
                         }
@@ -416,7 +417,7 @@ namespace MS.Internal.Ink
                         i--;
                     }
                 }
-                return (!IsOutside(firstResult, hitResult));
+                return (false == IsOutside(firstResult, hitResult));
             }
         }
 
@@ -473,12 +474,12 @@ namespace MS.Internal.Ink
                 Vector hitEnd = hitEndPoint - position;
                 if (pressureFactor != 1)
                 {
-                    System.Diagnostics.Debug.Assert(!DoubleUtil.IsZero(pressureFactor));
+                    System.Diagnostics.Debug.Assert(DoubleUtil.IsZero(pressureFactor) == false);
                     hitBegin /= pressureFactor;
                     hitEnd /= pressureFactor;
                 }
                 // Hit-test the node against the segment
-                if (HitTestPolygonSegment(_vertices, hitBegin, hitEnd))
+                if (true == HitTestPolygonSegment(_vertices, hitBegin, hitEnd))
                 {
                     if (node == 0)
                     {
@@ -554,7 +555,7 @@ namespace MS.Internal.Ink
         {
             if (beginNode.IsEmpty)
             {
-                if (HitTest(beginNode, endNode, quad, hitContour))
+                if (HitTest(beginNode, endNode, quad, hitContour) == true)
                 {
                     return StrokeFIndices.Full;
                 }
@@ -581,7 +582,7 @@ namespace MS.Internal.Ink
                 }
 
                 // If neither of the nodes is hit, hit-test the connecting quad
-                if (!isHit)
+                if (isHit == false)
                 {
                     // If neither of the nodes is hit and the contour of one node is entirely 
                     // inside the contour of the other node, then done with this hitting segment
@@ -592,9 +593,9 @@ namespace MS.Internal.Ink
                              : HitTestQuadSegment(quad, hitSegment.Begin, hitSegment.End);
                     }
                     
-                    if (!isHit)
+                    if (isHit == false)
                     {
-                        if (isInside)
+                        if (isInside == true)
                         {
                             isInside = hitSegment.IsArc
                                 ? (WhereIsVectorAboutArc(endNode.Position - hitSegment.Begin - hitSegment.Radius,
@@ -765,13 +766,13 @@ namespace MS.Internal.Ink
                     {
                         // This segment is collinear with the edge connecting the nodes, 
                         // no need to hit-test the other edges.
-                        System.Diagnostics.Debug.Assert(DoubleUtil.IsBetweenZeroAndOne(findex));
+                        System.Diagnostics.Debug.Assert(true == DoubleUtil.IsBetweenZeroAndOne(findex));
                         break;
                     }
                     // The hitting segment intersects the line of the edge connecting 
                     // the nodes. Find the findex of the intersection point.
                     double det = -Vector.Determinant(nextNode, hitVector);
-                    if (!DoubleUtil.IsZero(det))
+                    if (DoubleUtil.IsZero(det) == false)
                     {
                         double s = Vector.Determinant(hitVector, hitBegin - lastVertex) / det;
                         if ((findex > s) && DoubleUtil.IsBetweenZeroAndOne(s))
@@ -953,12 +954,12 @@ namespace MS.Internal.Ink
                     Vector hitRadius = hitSegment.Radius;
                     if (!DoubleUtil.AreClose(pressureFactor, 1d))
                     {
-                        System.Diagnostics.Debug.Assert(!DoubleUtil.IsZero(pressureFactor));
+                        System.Diagnostics.Debug.Assert(DoubleUtil.IsZero(pressureFactor) == false);
                         hitCenter /= pressureFactor;
                         hitRadius /= pressureFactor;
                     }
                     // If the segment is an arc, hit-test against the entire circle the arc is part of.
-                    if (HitTestPolygonCircle(_vertices, hitCenter, hitRadius))
+                    if (true == HitTestPolygonCircle(_vertices, hitCenter, hitRadius))
                     {
                         isHit = true;
                         break;
@@ -978,12 +979,12 @@ namespace MS.Internal.Ink
                     Vector hitEnd = hitBegin + hitSegment.Vector;
                     if (!DoubleUtil.AreClose(pressureFactor, 1d))
                     {
-                        System.Diagnostics.Debug.Assert(!DoubleUtil.IsZero(pressureFactor));
+                        System.Diagnostics.Debug.Assert(DoubleUtil.IsZero(pressureFactor) == false);
                         hitBegin /= pressureFactor;
                         hitEnd /= pressureFactor;
                     }
                     // Hit-test the node against the segment
-                    if (HitTestPolygonSegment(_vertices, hitBegin, hitEnd))
+                    if (true == HitTestPolygonSegment(_vertices, hitBegin, hitEnd))
                     {
                         isHit = true;
                         break;
@@ -1108,7 +1109,7 @@ namespace MS.Internal.Ink
                         {
                             return true;  //Got a hit
                         }
-                        if (IsOutside(hitResult, lastResult))
+                        if (true == IsOutside(hitResult, lastResult))
                         {
                             // This hitSegment is definitely outside the ink contour, drop it.
                             // Change k to something > 2 to leave the for loop and skip 
@@ -1130,7 +1131,7 @@ namespace MS.Internal.Ink
                         Vector spineVector = endNode.Position - beginNode.Position;
                         vertex -= spineVector; // now vertex = quad.A - spineVector
                         hitBegin -= spineVector; // adjust hitBegin to the space of endNode
-                        if (!hitSegment.IsArc)
+                        if (hitSegment.IsArc == false)
                         {
                             hitEnd -= spineVector;
                         }
@@ -1146,7 +1147,7 @@ namespace MS.Internal.Ink
                         i--;
                     }
                 }
-                if ((k == 2) && (!IsOutside(firstResult, hitResult)))
+                if ((k == 2) && (false == IsOutside(firstResult, hitResult)))
                 {
                     isHit = true;
                     break;
@@ -1215,7 +1216,7 @@ namespace MS.Internal.Ink
 
                 if (pressureFactor != 1)
                 {
-                    System.Diagnostics.Debug.Assert(!DoubleUtil.IsZero(pressureFactor));
+                    System.Diagnostics.Debug.Assert(DoubleUtil.IsZero(pressureFactor) == false);
                     hitBegin /= pressureFactor;
                     hitEnd /= pressureFactor;
                 }

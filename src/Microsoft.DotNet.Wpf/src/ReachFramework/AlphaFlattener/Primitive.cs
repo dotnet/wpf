@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.Collections;              // for ArrayList
@@ -1096,7 +1097,10 @@ namespace Microsoft.Internal.AlphaFlattener
                     Brush = Brush.PushOpacity(Opacity, OpacityMask);
                 }
 
-                Pen?.PushOpacity(Opacity, OpacityMask);
+                if (Pen != null)
+                {
+                    Pen.PushOpacity(Opacity, OpacityMask);
+                }
 
                 Opacity = 1;
                 OpacityMask = null;
@@ -1331,7 +1335,10 @@ namespace Microsoft.Internal.AlphaFlattener
                 // Clip     = Utility.TransformGeometry(Clip, Transform);
                 Geometry = Utility.TransformGeometry(Geometry, Transform);
 
-                Brush?.ApplyTransform(Transform);
+                if (Brush != null)
+                {
+                    Brush.ApplyTransform(Transform);
+                }
 
                 Transform = Matrix.Identity; // Reset transform
                 _widenGeometry = null;  // Reset cached widen geometry if any
@@ -1853,7 +1860,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public override BrushProxy BlendBrush(BrushProxy brush)
         {
-            Debug.Fail("Image over Brush?");
+            Debug.Assert(false, "Image over Brush?");
             
             return brush;
         }
@@ -2024,25 +2031,25 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public override Geometry GetShapeGeometry()
         {
-            Debug.Fail("GetShapeGeometry on Canvas");
+            Debug.Assert(false, "GetShapeGeometry on Canvas");
             return null;
         }
 
         public override void Exclude(Geometry g)
         {
-            Debug.Fail("Exclude on Canvas");
+            Debug.Assert(false, "Exclude on Canvas");
         }
 
         public override BrushProxy BlendBrush(BrushProxy brush)
         {
-            Debug.Fail("BlendBrush on Canvas");
+            Debug.Assert(false, "BlendBrush on Canvas");
 
             return brush;
         }
 
         public override void BlendOverImage(ImageProxy image, Matrix trans)
         {
-            Debug.Fail("BlendOverImage on Canvas");
+            Debug.Assert(false, "BlendOverImage on Canvas");
         }
 
         public override Primitive BlendOpacityMaskWithColor(BrushProxy color)

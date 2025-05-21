@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //                                             
 
@@ -243,8 +244,8 @@ namespace System.Windows.Media
 
             ByteStreamGeometryContext ctx = new ByteStreamGeometryContext();
 
-            ctx.BeginFigure(StartPoint, isFilled: true, isClosed: false);
-            ctx.LineTo(EndPoint, isStroked: true, isSmoothJoin: false);
+            ctx.BeginFigure(StartPoint, true /* is filled */, false /* is closed */);
+            ctx.LineTo(EndPoint, true /* is stroked */, false /* is smooth join */);
             
             ctx.Close();
             data.SerializedData = ctx.GetData();

@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //---------------------------------------------------------------------------
@@ -61,8 +62,17 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                         [[inline]]
                             [[Helpers.ManagedStyle.WriteFileHeader(fileName, @"wpf\src\Graphics\codegen\mcg\generators\AnimationResourceTemplate.cs")]]
 
+                            using System;
+                            using MS.Internal;
+                            using System.Diagnostics;
+                            using System.Runtime.InteropServices;
+                            using System.Threading;
+
+                            using System.Windows.Media;
                             using System.Windows.Media.Composition;
                             using System.Windows.Media.Media3D;
+                            using System.Security;
+                            using System.Security.Permissions;
 
                             namespace System.Windows.Media.Animation
                             {
@@ -81,6 +91,11 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         }
                                     }
 
+                                    /// <SecurityNote>
+                                    ///    Critical: This code is critical because it has unsafe code blocks
+                                    ///    TreatAsSafe: This call is ok to expose. Channels can handle bad pointers
+                                    ///  </SecurityNote>
+                                    [SecurityCritical,SecurityTreatAsSafe]
                                     protected override void UpdateResourceCore(DUCE.Channel channel)
                                     {
                                         Debug.Assert(_duceResource.IsOnChannel(channel));

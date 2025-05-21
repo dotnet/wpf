@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.Windows.Threading;
@@ -482,9 +483,12 @@ namespace System.Windows.Input
         {
             // It turns out that somehow we get here after the DispatcherOperation has been dispatched and we 
             // need to no-op on that.
+            if (_hitTestInvalidatedAsyncOperation != null)
+            {
+                // Promote the pending DispatcherOperation to Input Priority
 
-            // Promote the pending DispatcherOperation to Input Priority
-            _hitTestInvalidatedAsyncOperation?.Priority = DispatcherPriority.Input;
+                _hitTestInvalidatedAsyncOperation.Priority = DispatcherPriority.Input;
+}
 
             // Stop the input timer
 

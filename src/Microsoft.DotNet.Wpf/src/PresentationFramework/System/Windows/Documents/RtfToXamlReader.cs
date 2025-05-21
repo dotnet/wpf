@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Rtf reader to convert the rtf content into Xaml content.
@@ -519,7 +520,7 @@ namespace System.Windows.Documents
                 case 0:
                     break;
             }
-            nCount %= 100;
+            nCount = nCount % 100;
 
             // 10's
             switch (nCount / 10)
@@ -545,7 +546,7 @@ namespace System.Windows.Documents
                 case 0:
                     break;
             }
-            nCount %= 10;
+            nCount = nCount % 10;
 
             // 1's
             switch (nCount)
@@ -932,7 +933,7 @@ namespace System.Windows.Documents
                 && UnicodeSkip == formatState.UnicodeSkip;
         }
 
-        internal static FormatState EmptyFormatState
+        static internal FormatState EmptyFormatState
         {
             get
             {
@@ -1960,7 +1961,7 @@ namespace System.Windows.Documents
             CF < 0 ? string.Create(CultureInfo.InvariantCulture, stackalloc char[128], $"\\brdrs\\brdrw{EffectiveWidth}") :
             string.Create(CultureInfo.InvariantCulture, stackalloc char[128], $"\\brdrs\\brdrw{EffectiveWidth}\\brdrcf{CF}");
 
-        internal static BorderFormat EmptyBorderFormat
+        static internal BorderFormat EmptyBorderFormat
         {
             get
             {
@@ -1994,7 +1995,7 @@ namespace System.Windows.Documents
         private long _cf;
         private long _width;
         private BorderType _type;
-        private static BorderFormat _emptyBorderFormat = null;
+        static private BorderFormat _emptyBorderFormat = null;
     }
 
     internal class ParaBorder
@@ -3794,7 +3795,7 @@ namespace System.Windows.Documents
 
         #region Private Fields
 
-        private Hashtable _fontMappings;
+        Hashtable _fontMappings;
 
         #endregion Private Fields
     }
@@ -3995,7 +3996,10 @@ namespace System.Windows.Documents
             set
             {
                 ColorTableEntry entry = GetInProgressEntry();
-                entry?.Red = value;
+                if (entry != null)
+                {
+                    entry.Red = value;
+                }
             }
         }
 
@@ -4004,7 +4008,10 @@ namespace System.Windows.Documents
             set
             {
                 ColorTableEntry entry = GetInProgressEntry();
-                entry?.Green = value;
+                if (entry != null)
+                {
+                    entry.Green = value;
+                }
             }
         }
 
@@ -4013,7 +4020,10 @@ namespace System.Windows.Documents
             set
             {
                 ColorTableEntry entry = GetInProgressEntry();
-                entry?.Blue = value;
+                if (entry != null)
+                {
+                    entry.Blue = value;
+                }
             }
         }
 
@@ -7136,7 +7146,7 @@ namespace System.Windows.Documents
                     if (!dnPa.IsPending)
                     {
                         Debug.Assert(dnPa.LastChildIndex >= nAt + nExcise - 1);
-                        dnPa.ChildCount -= nExcise;
+                        dnPa.ChildCount = dnPa.ChildCount - nExcise;
                     }
                 }
 
@@ -7221,7 +7231,7 @@ namespace System.Windows.Documents
 
                 if (ddn.Type == DocumentNodeType.dnParagraph)
                 {
-                    ddn.NearMargin -= nMargin;
+                    ddn.NearMargin = ddn.NearMargin - nMargin;
                 }
             }
         }
@@ -7311,7 +7321,7 @@ namespace System.Windows.Documents
                 dnNewTable.Parent = dn.ClosedParent;
                 for (DocumentNode dnPa = dnNewTable.ClosedParent; dnPa != null; dnPa = dnPa.ClosedParent)
                 {
-                    dnPa.ChildCount += 2;
+                    dnPa.ChildCount = dnPa.ChildCount + 2;
                 }
 
                 // Adjust the loop end to account for the newly inserted elements
@@ -7333,7 +7343,7 @@ namespace System.Windows.Documents
             DocumentNodeArray dnaCells = dn.GetRowsCells();
             RowFormat rf = dn.FormatState.RowFormat;
             DocumentNode dnTable = dn.GetParentOfType(DocumentNodeType.dnTable);
-            ColumnStateArray csa = dnTable?.ColumnStateArray;
+            ColumnStateArray csa = (dnTable != null) ? dnTable.ColumnStateArray : null;
 
             // Normally number of cells and cell definitions are equal, but be careful.
             int nCount = dnaCells.Count < rf.CellCount ? dnaCells.Count : rf.CellCount;
@@ -7460,7 +7470,7 @@ namespace System.Windows.Documents
                             DocumentNode dnSpanningCell = dnaSpanCells.EntryAt(kCSA);
                             if (dnSpanningCell != null)
                             {
-                                dnSpanningCell.RowSpan += 1;
+                                dnSpanningCell.RowSpan = dnSpanningCell.RowSpan + 1;
                             }
                             kCSA += dnCell.ColSpan;
                             dnCell.ColSpan = 0;
@@ -8710,7 +8720,7 @@ namespace System.Windows.Documents
                 imageStringBuilder.Append('"');
 
                 // Add the xaml image baseline offset property
-                if (formatState.IncludeImageBaselineOffset)
+                if (formatState.IncludeImageBaselineOffset == true)
                 {
                     double baselineOffset = height - formatState.ImageBaselineOffset;
                     imageStringBuilder.Append(" TextBlock.BaselineOffset=\"");
@@ -8953,7 +8963,10 @@ namespace System.Windows.Documents
                 else if (fsNew.RtfDestination == RtfDestination.DestFontTable)
                 {
                     FontTableEntry entry = _converterState.FontTable.CurrentEntry;
-                    entry?.IsPending = false;
+                    if (entry != null)
+                    {
+                        entry.IsPending = false;
+                    }
                 }
 
                 _converterState.RtfFormatStack.Pop();
@@ -9117,7 +9130,10 @@ namespace System.Windows.Documents
                         {
                             formatState.RtfDestination = RtfDestination.DestFontName;
                             FontTableEntry entry = _converterState.FontTable.CurrentEntry;
-                            entry?.Name = null;
+                            if (entry != null)
+                            {
+                                entry.Name = null;
+                            }
                         }
                     }
                     break;
@@ -10133,7 +10149,10 @@ namespace System.Windows.Documents
                 case RtfControlWord.Ctrl_LISTTEMPLATEID:
                     {
                         ListTableEntry listTableEntry = listTable.CurrentEntry;
-                        listTableEntry?.TemplateID = token.Parameter;
+                        if (listTableEntry != null)
+                        {
+                            listTableEntry.TemplateID = token.Parameter;
+                        }
                     }
                     break;
 
@@ -10141,7 +10160,10 @@ namespace System.Windows.Documents
                 case RtfControlWord.Ctrl_LISTSIMPLE:
                     {
                         ListTableEntry listTableEntry = listTable.CurrentEntry;
-                        listTableEntry?.Simple = token.RtfControlWordInfo.Control == RtfControlWord.Ctrl_LISTSIMPLE;
+                        if (listTableEntry != null)
+                        {
+                            listTableEntry.Simple = token.RtfControlWordInfo.Control == RtfControlWord.Ctrl_LISTSIMPLE;
+                        }
                     }
                     break;
 
@@ -10176,7 +10198,10 @@ namespace System.Windows.Documents
                         if (levels != null)
                         {
                             ListLevel listLevel = levels.CurrentEntry;
-                            listLevel?.Marker = (MarkerStyle)token.Parameter;
+                            if (listLevel != null)
+                            {
+                                listLevel.Marker = (MarkerStyle)token.Parameter;
+                            }
                         }
                     }
                     break;
@@ -10203,7 +10228,10 @@ namespace System.Windows.Documents
                                 // This is the case where the list override *only* specifies startat override.
                                 ListOverride lo = GetControllingListOverride();
 
-                                lo?.StartIndex = token.Parameter;
+                                if (lo != null)
+                                {
+                                    lo.StartIndex = token.Parameter;
+                                }
                             }
                         }
                     }
@@ -10223,12 +10251,18 @@ namespace System.Windows.Documents
                         if (formatState.RtfDestination == RtfDestination.DestListOverride)
                         {
                             ListOverride listOverride = listOverrideTable.CurrentEntry;
-                            listOverride?.ID = token.Parameter;
+                            if (listOverride != null)
+                            {
+                                listOverride.ID = token.Parameter;
+                            }
                         }
                         else
                         {
                             ListTableEntry listTableEntry = listTable.CurrentEntry;
-                            listTableEntry?.ID = token.Parameter;
+                            if (listTableEntry != null)
+                            {
+                                listTableEntry.ID = token.Parameter;
+                            }
                         }
                     }
                     break;
@@ -10253,7 +10287,10 @@ namespace System.Windows.Documents
                     if (formatState.RtfDestination == RtfDestination.DestListOverride)
                     {
                         ListOverride listOverride = listOverrideTable.CurrentEntry;
-                        listOverride?.Index = token.Parameter;
+                        if (listOverride != null)
+                        {
+                            listOverride.Index = token.Parameter;
+                        }
                     }
                     break;
             }
@@ -10712,11 +10749,17 @@ namespace System.Windows.Documents
                     break;
                 case RtfControlWord.Ctrl_BRDRTBL:
                     // No cell borders
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderNone;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderNone;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRART:
                     // Art border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRBAR:
                     // Border on outside edge of page (treat as BRDRL for XAML)
@@ -10724,127 +10767,220 @@ namespace System.Windows.Documents
                 case RtfControlWord.Ctrl_BRDRBTW:
                     break;
                 case RtfControlWord.Ctrl_BRDRCF:
-                    ConverterState.CurrentBorder?.CF = token.Parameter;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.CF = token.Parameter;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRDASH:
                     // Dashed border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRDASHD:
                     // Dash dot border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRDASHDD:
                     // Dot dot dash border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRDASHDOTSTR:
                     // Dash-dot border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRDASHSM:
                     // Small dash border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRDB:
                     // Double border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderDouble;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderDouble;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRDOT:
                     // Dotted border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDREMBOSS:
                     // Emboss-style border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRENGRAVE:
                     // Engrave-style border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRFRAME:
                     // Frame-style border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRHAIR:
                     // Hairline border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRINSET:
                     // Inset border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDROUTSET:
                     // Outset border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRS:
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRSH:
                     // Shadow border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRTH:
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderDouble;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderDouble;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRTHTNLG:
                     // Thick-thin (large) border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRTHTNMG:
                     // Thick-thin (medium) border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRTHTNSG:
                     // Thick-thin-thin (thin) border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRTNTHLG:
                     // Thin-thick (large) border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRTNTHMG:
                     // Thick-thin-thin (medium) border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRTNTHSG:
                     // Thick-thin-thin (small) border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRTNTHTNLG:
                     // Thick-thin-thin (large) border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRTNTHTNMG:
                     // Thin-thick-thin (medium) border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRTNTHTNSG:
                     // Thick-thin-thin (small) border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRTRIPLE:
                     // Triple border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRW:
                     // Border thickness
-                    // Note that propset does validation
-                    ConverterState.CurrentBorder?.Width = token.Parameter;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        // Note that propset does validation
+                        ConverterState.CurrentBorder.Width = token.Parameter;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRNONE:
                     // No borders
-                    // Note that propset does validation
-                    ConverterState.CurrentBorder?.SetDefaults();
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        // Note that propset does validation
+                        ConverterState.CurrentBorder.SetDefaults();
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRWAVY:
                     // Wavy border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderSingle;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderSingle;
+                    }
                     break;
                 case RtfControlWord.Ctrl_BRDRWAVYDB:
                     // Double border
-                    ConverterState.CurrentBorder?.Type = BorderType.BorderDouble;
+                    if (ConverterState.CurrentBorder != null)
+                    {
+                        ConverterState.CurrentBorder.Type = BorderType.BorderDouble;
+                    }
                     break;
             }
         }

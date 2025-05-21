@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 namespace System.Windows
 {
@@ -90,8 +91,8 @@ namespace System.Windows
         //there could be several size changes before it will actually fire.
         internal void Update(bool widthChanged, bool heightChanged)
         {
-            _widthChanged |= widthChanged;
-            _heightChanged |= heightChanged;
+            _widthChanged = _widthChanged | widthChanged;
+            _heightChanged = _heightChanged | heightChanged;
         }
 
         internal UIElement Element

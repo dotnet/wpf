@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: The main DocumentViewer subclass that drives the MongooseUI
 
@@ -299,7 +300,10 @@ namespace MS.Internal.Documents
         protected override void OnCancelPrintCommand()
         {
 #if !DONOTREFPRINTINGASMMETA
-            _documentWriter?.CancelAsync();
+            if (_documentWriter != null)
+            {
+                _documentWriter.CancelAsync();
+            }
 #endif // DONOTREFPRINTINGASMMETA
         }
 

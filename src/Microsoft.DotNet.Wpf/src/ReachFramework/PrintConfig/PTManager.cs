@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /*++
 
@@ -373,7 +374,7 @@ namespace System.Printing
                 (scope != PrintTicketScope.DocumentScope) &&
                 (scope != PrintTicketScope.JobScope))
             {
-                throw new ArgumentOutOfRangeException(nameof(scope));
+                throw new ArgumentOutOfRangeException("scope");
             }
 
             MemoryStream baseStream = null, deltaStream = null, resultStream = null;

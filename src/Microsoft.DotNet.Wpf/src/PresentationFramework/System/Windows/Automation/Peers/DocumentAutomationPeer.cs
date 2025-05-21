@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: AutomationPeer associated with flow and fixed documents.
@@ -216,7 +217,7 @@ namespace System.Windows.Automation.Peers
             if (Owner is IServiceProvider)
             {
                 ITextContainer textContainer = ((IServiceProvider)Owner).GetService(typeof(ITextContainer)) as ITextContainer;
-                ITextView textView = textContainer?.TextView;
+                ITextView textView = (textContainer != null) ? textContainer.TextView : null;
                 if (textView != null)
                 {
                     // Make sure TextView is updated

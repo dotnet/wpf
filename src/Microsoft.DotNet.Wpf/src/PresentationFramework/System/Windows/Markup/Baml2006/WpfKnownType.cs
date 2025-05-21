@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Reflection;
@@ -11,7 +12,7 @@ namespace System.Windows.Baml2006
 {
     // XamlType for WPF Known BAML types.
     //
-    internal class WpfKnownType : WpfXamlType, ICustomAttributeProvider
+    class WpfKnownType : WpfXamlType, ICustomAttributeProvider
     {
         // We use the same bitField as in WpfXamlType.  If we change WpfXamlType, we need to update the enum here
         [Flags]
@@ -24,20 +25,20 @@ namespace System.Windows.Baml2006
         }
 
         private static Attribute[] s_EmptyAttributes;
-        private short _bamlNumber;
-        private string _name;
-        private Type _underlyingType;       
-        private string _contentPropertyName;
-        private string _runtimeNamePropertyName;
-        private string _dictionaryKeyPropertyName;
-        private string _xmlLangPropertyName;
-        private string _uidPropertyName;
-        private Func<object> _defaultConstructor;
-        private Type _deferringLoader;
-        private Type _typeConverterType;
-        private XamlCollectionKind _collectionKind;
+        short _bamlNumber;
+        string _name;
+        Type _underlyingType;       
+        string _contentPropertyName;
+        string _runtimeNamePropertyName;
+        string _dictionaryKeyPropertyName;
+        string _xmlLangPropertyName;
+        string _uidPropertyName;
+        Func<object> _defaultConstructor;
+        Type _deferringLoader;
+        Type _typeConverterType;
+        XamlCollectionKind _collectionKind;
 
-        private bool Frozen
+        bool Frozen
         {
             get { return WpfXamlType.GetFlag(ref _bitField, (byte)BoolTypeBits.Frozen); }
             set { WpfXamlType.SetFlag(ref _bitField, (byte)BoolTypeBits.Frozen, value); }

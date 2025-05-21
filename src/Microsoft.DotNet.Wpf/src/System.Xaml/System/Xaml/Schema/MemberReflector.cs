@@ -1,9 +1,9 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Markup;
@@ -94,7 +94,7 @@ namespace System.Xaml.Schema
                     s_UnknownReflector._typeConverter.Value = null;
                     s_UnknownReflector._valueSerializer.Value = null;
 
-                    s_UnknownReflector.DependsOn = ReadOnlyCollection<XamlMember>.Empty;
+                    s_UnknownReflector.DependsOn = XamlType.EmptyList<XamlMember>.Value;
                     s_UnknownReflector.Invoker = XamlMemberInvoker.UnknownInvoker;
                     s_UnknownReflector.Type = XamlLanguage.Object;
                 }

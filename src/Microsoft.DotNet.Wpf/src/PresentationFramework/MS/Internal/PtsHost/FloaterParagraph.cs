@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows;
 using System.Windows.Documents;
@@ -586,7 +587,10 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal override void ClearUpdateInfo()
         {
-            _mainTextSegment?.ClearUpdateInfo();
+            if (_mainTextSegment != null)
+            {
+                _mainTextSegment.ClearUpdateInfo();
+            }
             base.ClearUpdateInfo();
         }
 
@@ -616,7 +620,10 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal override void InvalidateFormatCache()
         {
-            _mainTextSegment?.InvalidateFormatCache();
+            if (_mainTextSegment != null)
+            {
+                _mainTextSegment.InvalidateFormatCache();
+            }
         }
 
         /// <summary>
@@ -809,7 +816,7 @@ namespace MS.Internal.PtsHost
                 }
                 else
                 {
-                    Debug.Fail("Unknown type of anchor.");
+                    Debug.Assert(false, "Unknown type of anchor.");
                     return HorizontalAlignment.Center;
                 }
             }

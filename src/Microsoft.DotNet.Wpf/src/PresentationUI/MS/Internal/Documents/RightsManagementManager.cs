@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: 
 //    DocumentRightsManagementManager is an internal API for Mongoose to deal
@@ -260,7 +261,10 @@ namespace MS.Internal.Documents
             _credManagerDialog = new CredentialManagerDialog(accountList, userAccount, this);
             result = _credManagerDialog.ShowDialog();
 
-            _credManagerDialog?.Dispose();
+            if (_credManagerDialog != null)
+            {
+                _credManagerDialog.Dispose();
+            }
 
             RightsManagementUser newDefaultUser = _rmProvider.GetDefaultCredentials();
 
@@ -399,7 +403,10 @@ namespace MS.Internal.Documents
                 RMPermissionsDialog rmPermissionsPage = new RMPermissionsDialog(rmLicense);
                 rmPermissionsPage.ShowDialog();
 
-                rmPermissionsPage?.Dispose();
+                if (rmPermissionsPage != null)
+                {
+                    rmPermissionsPage.Dispose();
+                }
             }
         }
 
@@ -537,7 +544,10 @@ namespace MS.Internal.Documents
             }
             finally
             {
-                rmPublish?.Dispose();
+                if (rmPublish != null)
+                {
+                    rmPublish.Dispose();
+                }
             }
 
             // If the status changed, call Evaluate to re-evaluate the RM
@@ -578,10 +588,13 @@ namespace MS.Internal.Documents
                 {
                     _rmProvider.RemoveCredentials(user);
 
-                    //Set the data source for the listbox
-                    _credManagerDialog?.SetCredentialManagementList(
-                        GetCredentialManagementResourceList(),
-                        GetDefaultCredentialManagementResource());
+                    if (_credManagerDialog != null)
+                    {
+                        //Set the data source for the listbox
+                        _credManagerDialog.SetCredentialManagementList(
+                            GetCredentialManagementResourceList(),
+                            GetDefaultCredentialManagementResource());
+                    }
                 }
                 catch (RightsManagementException exception)
                 {
@@ -611,10 +624,13 @@ namespace MS.Internal.Documents
         {
             ShowEnrollment();
 
-            //Set the data source for the listbox
-            _credManagerDialog?.SetCredentialManagementList(
-                GetCredentialManagementResourceList(),
-                GetDefaultCredentialManagementResource());
+            if (_credManagerDialog != null)
+            {
+                //Set the data source for the listbox
+                _credManagerDialog.SetCredentialManagementList(
+                    GetCredentialManagementResourceList(),
+                    GetDefaultCredentialManagementResource());
+            }
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Windows ListView Group helper classes
 //
@@ -13,7 +14,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Class representing collection of ListView GroupManagers
-    internal class GroupManagerCollection
+    class GroupManagerCollection
     {
         //------------------------------------------------------
         //
@@ -88,13 +89,13 @@ namespace MS.Internal.AutomationProxies
 
         #region Private Fields
 
-        private static Hashtable _groupManagers = new Hashtable(10);
+        static private Hashtable _groupManagers = new Hashtable(10);
 
         #endregion Private Fields
     }
 
     // Class responsible for managing listview groups
-    internal class GroupManager
+    class GroupManager
     {
         // ------------------------------------------------------
         //
@@ -272,15 +273,15 @@ namespace MS.Internal.AutomationProxies
             //------------------------------------------------------
 
             #region Public Methods
-            public static bool operator true(GroupInfo info)
+            static public bool operator true(GroupInfo info)
             {
                 return info._items != null;
             }
-            public static bool operator false(GroupInfo info)
+            static public bool operator false(GroupInfo info)
             {
                 return info._items == null;
             }
-            public static bool operator !(GroupInfo info)
+            static public bool operator !(GroupInfo info)
             {
                 if (info)
                 {
@@ -326,7 +327,7 @@ namespace MS.Internal.AutomationProxies
 
             internal int[] _items;
             internal int _count;
-            internal static readonly GroupInfo Null = new GroupInfo(null, -1);
+            static readonly internal GroupInfo Null = new GroupInfo(null, -1);
 
             #endregion Internal Fields
         }
@@ -408,7 +409,7 @@ namespace MS.Internal.AutomationProxies
                     {
                         // we had problem adding item to the needed group at this point it makes no
                         // sense to continue
-                        System.Diagnostics.Debug.Fail("Cannot add item to the needed group");
+                        System.Diagnostics.Debug.Assert(false, "Cannot add item to the needed group");
                         return null;
                     }
                 }
@@ -433,7 +434,7 @@ namespace MS.Internal.AutomationProxies
                     {
                         // we had problem adding item to the needed group at this point it makes no
                         // sense to continue
-                        System.Diagnostics.Debug.Fail("Cannot add item to the needed group");
+                        System.Diagnostics.Debug.Assert(false, "Cannot add item to the needed group");
                         return null;
                     }
                 }

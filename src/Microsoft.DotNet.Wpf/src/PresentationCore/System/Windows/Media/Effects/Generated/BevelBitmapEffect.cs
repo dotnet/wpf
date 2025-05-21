@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -8,16 +9,10 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-using MS.Utility;
-using System.Collections;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Media.Imaging;
-
+// These types are aliased to match the unamanaged names used in interop
 namespace System.Windows.Media.Effects
 {
-    public sealed partial class BevelBitmapEffect : BitmapEffect
+    sealed partial class BevelBitmapEffect : BitmapEffect
     {
         //------------------------------------------------------
         //
@@ -95,7 +90,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double)GetValue(BevelWidthProperty);
+                return (double) GetValue(BevelWidthProperty);
             }
             set
             {
@@ -110,7 +105,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double)GetValue(ReliefProperty);
+                return (double) GetValue(ReliefProperty);
             }
             set
             {
@@ -125,7 +120,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double)GetValue(LightAngleProperty);
+                return (double) GetValue(LightAngleProperty);
             }
             set
             {
@@ -140,7 +135,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double)GetValue(SmoothnessProperty);
+                return (double) GetValue(SmoothnessProperty);
             }
             set
             {
@@ -155,7 +150,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (EdgeProfile)GetValue(EdgeProfileProperty);
+                return (EdgeProfile) GetValue(EdgeProfileProperty);
             }
             set
             {
@@ -284,7 +279,8 @@ namespace System.Windows.Media.Effects
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app.
+            // of your app.  (Windows OS 
+
 
 
             // Initializations
@@ -335,8 +331,6 @@ namespace System.Windows.Media.Effects
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
-
 
         #endregion Constructors
     }

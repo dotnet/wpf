@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description:
 //  Handles serialization to/from X509 Certificate part (X509v3 = ASN.1 DER format)
@@ -25,7 +26,7 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Type of relationship to a Certificate Part
         /// </summary>
-        internal static string RelationshipType
+        static internal string RelationshipType
         {
             get
             {
@@ -36,7 +37,7 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Prefix of auto-generated Certificate Part names
         /// </summary>
-        internal static string PartNamePrefix
+        static internal string PartNamePrefix
         {
             get
             {
@@ -47,7 +48,7 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Extension of Certificate Part file names
         /// </summary>
-        internal static string PartNameExtension
+        static internal string PartNameExtension
         {
             get
             {
@@ -58,7 +59,7 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// ContentType of Certificate Parts
         /// </summary>
-        internal static ContentType ContentType
+        static internal ContentType ContentType
         {
             get
             {
@@ -141,7 +142,7 @@ namespace MS.Internal.IO.Packaging
                 _part = container.GetPart(partName);
 
                 // ensure the part is of the expected type
-                if (!_part.ValidatedContentType().AreTypeAndSubTypeEqual(_certificatePartContentType))
+                if (_part.ValidatedContentType().AreTypeAndSubTypeEqual(_certificatePartContentType) == false)
                     throw new FileFormatException(SR.CertificatePartContentTypeMismatch);
             }
             else

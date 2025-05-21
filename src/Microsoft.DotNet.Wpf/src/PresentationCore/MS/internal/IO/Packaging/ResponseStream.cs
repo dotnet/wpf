@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -238,8 +239,11 @@ namespace MS.Internal.IO.Packaging
                     // close the Part or NetStream
                     _innerStream.Close();
 
-                    // in this case, the innerStream was the part so this is the NetStream
-                    _owningStream?.Close();
+                    if (_owningStream != null)
+                    {
+                        // in this case, the innerStream was the part so this is the NetStream
+                        _owningStream.Close();
+                    }
                 }
             }
             finally

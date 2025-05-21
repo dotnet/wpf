@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //
@@ -122,7 +123,7 @@ namespace System.Windows.Data
             set
             {
                 UpdatePropertyName(value);
-                OnPropertyChanged(nameof(PropertyName));
+                OnPropertyChanged("PropertyName");
             }
         }
 
@@ -137,7 +138,7 @@ namespace System.Windows.Data
         public IValueConverter Converter
         {
             get { return _converter; }
-            set { _converter = value; OnPropertyChanged(nameof(Converter)); }
+            set { _converter = value; OnPropertyChanged("Converter"); }
         }
 
         /// <summary>
@@ -150,7 +151,7 @@ namespace System.Windows.Data
         public StringComparison StringComparison
         {
             get { return _stringComparison; }
-            set { _stringComparison = value; OnPropertyChanged(nameof(StringComparison)); }
+            set { _stringComparison = value; OnPropertyChanged("StringComparison"); }
         }
 
         /// <summary>
@@ -262,12 +263,12 @@ namespace System.Windows.Data
         //
         //------------------------------------------------------
 
-        private string              _propertyName;
-        private PropertyPath        _propertyPath;
-        private IValueConverter     _converter;
-        private StringComparison    _stringComparison = StringComparison.Ordinal;
-        private static readonly IComparer _compareNameAscending = new NameComparer(ListSortDirection.Ascending);
-        private static readonly IComparer _compareNameDescending = new NameComparer(ListSortDirection.Descending);
+        string              _propertyName;
+        PropertyPath        _propertyPath;
+        IValueConverter     _converter;
+        StringComparison    _stringComparison = StringComparison.Ordinal;
+        static readonly IComparer _compareNameAscending = new NameComparer(ListSortDirection.Ascending);
+        static readonly IComparer _compareNameDescending = new NameComparer(ListSortDirection.Descending);
 
         #endregion Private Fields
 
@@ -279,7 +280,7 @@ namespace System.Windows.Data
         //
         //------------------------------------------------------
 
-        private class NameComparer : IComparer
+        class NameComparer : IComparer
         {
             public NameComparer(ListSortDirection direction)
             {
@@ -301,7 +302,7 @@ namespace System.Windows.Data
                 return (_direction == ListSortDirection.Ascending) ? value : -value;
             }
 
-            private ListSortDirection _direction;
+            ListSortDirection _direction;
         }
 
         #endregion Private Types

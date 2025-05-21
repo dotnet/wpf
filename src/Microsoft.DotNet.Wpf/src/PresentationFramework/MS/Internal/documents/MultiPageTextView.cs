@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: TextView implementation for collection of DocumentPageTextViews. 
@@ -759,7 +760,7 @@ namespace MS.Internal.Documents
             Invariant.Assert(Math.Abs(request.NewCount) >= Math.Abs(linesMoved));
             request.NewPosition = newPosition;
             request.NewSuggestedX = newSuggestedX;
-            request.NewCount -= linesMoved;
+            request.NewCount = request.NewCount - linesMoved;
             request.NewPageNumber = pageNumber;
 
             if (request.NewCount == 0)
@@ -831,7 +832,7 @@ namespace MS.Internal.Documents
             Invariant.Assert(Math.Abs(request.NewCount) >= Math.Abs(pagesMoved));
             request.NewPosition = newPosition;
             request.NewSuggestedOffset = newSuggestedOffset;
-            request.NewCount -= pagesMoved;
+            request.NewCount = request.NewCount - pagesMoved;
 
             if (request.NewCount == 0 || newPageNumber == -1)
             {
@@ -1384,7 +1385,7 @@ namespace MS.Internal.Documents
                             newPosition = pageTextView.GetTextPositionFromPoint(new Point(-1, -1), true);
                             if (newPosition != null)
                             {
-                                lineRequest.NewCount -= 1;
+                                lineRequest.NewCount = lineRequest.NewCount - 1;
                             }
                         }
                         else
@@ -1392,7 +1393,7 @@ namespace MS.Internal.Documents
                             newPosition = pageTextView.GetTextPositionFromPoint((Point)pageTextView.RenderScope.RenderSize, true);
                             if (newPosition != null)
                             {
-                                lineRequest.NewCount += 1;
+                                lineRequest.NewCount = lineRequest.NewCount + 1;
                             }
                         }
 

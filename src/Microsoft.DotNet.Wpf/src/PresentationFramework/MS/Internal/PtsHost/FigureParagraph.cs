@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //
@@ -302,7 +303,7 @@ namespace MS.Internal.PtsHost
             out int cfspt,                      // OUT: actual total number of vertices in all polygons
             out int fWrapThrough)               // OUT: fill text in empty areas within obstacles?
         {
-            Debug.Fail("Tight wrap is not currently supported.");
+            Debug.Assert(false, "Tight wrap is not currently supported.");
             ccVertices = cfspt = fWrapThrough = 0;
         }
 
@@ -412,7 +413,10 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal override void ClearUpdateInfo()
         {
-            _mainTextSegment?.ClearUpdateInfo();
+            if (_mainTextSegment != null)
+            {
+                _mainTextSegment.ClearUpdateInfo();
+            }
             base.ClearUpdateInfo();
         }
 
@@ -442,7 +446,10 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal override void InvalidateFormatCache()
         {
-            _mainTextSegment?.InvalidateFormatCache();
+            if (_mainTextSegment != null)
+            {
+                _mainTextSegment.InvalidateFormatCache();
+            }
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
@@ -14,7 +15,7 @@ namespace System.Windows.Markup
     /// </summary>
     public sealed class EventSetterHandlerConverter : TypeConverter
     {
-        private static Type s_ServiceProviderContextType;
+        static Type s_ServiceProviderContextType;
 
         /// <summary>
         ///     Whether we can convert from a given type - this class only converts from string
@@ -59,7 +60,7 @@ namespace System.Windows.Markup
             {
                 // if the caller is not the XAML parser, don't answer.   This avoids
                 // returning an arbitrary delegate to a (possibly malicious) caller.
-                throw new ArgumentException(SR.TextRange_InvalidParameterValue, nameof(typeDescriptorContext));
+                throw new ArgumentException(SR.TextRange_InvalidParameterValue, "typeDescriptorContext");
             }
             IRootObjectProvider rootProvider = typeDescriptorContext.GetService(typeof(IRootObjectProvider)) as IRootObjectProvider;
             if (rootProvider != null && source is String)

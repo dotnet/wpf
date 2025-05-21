@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
 *
@@ -573,7 +574,10 @@ namespace System.Windows.Markup
         {
             if (xamlDefAttributeNode.Name == BamlMapTable.NameString)
             {
-                BamlRecordWriter?.WriteDefAttribute(xamlDefAttributeNode);
+                if (BamlRecordWriter != null)
+                {
+                    BamlRecordWriter.WriteDefAttribute(xamlDefAttributeNode);
+                }
             }
             else
             {
@@ -1510,9 +1514,9 @@ namespace System.Windows.Markup
 #endif
         }
 
-        #endregion Methods
+#endregion Methods
 
-        #region Properties
+#region Properties
 
 #if !PBTCOMPILER
         /// <summary>
@@ -1527,7 +1531,7 @@ namespace System.Windows.Markup
         /// Return true if we are not in pass one of a compile and we are parsing a
         /// defer load section of markup.
         /// </summary>
-        private bool InDeferLoadedSection
+        bool InDeferLoadedSection
         {
             get { return BamlRecordWriter != null && BamlRecordWriter.InDeferLoadedSection; }
         }
@@ -1535,7 +1539,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Return true if this is pass one of a compile process.
         /// </summary>
-        private bool IsLocalPass1
+        bool IsLocalPass1
         {
             get { return BamlRecordWriter == null; }
         }
@@ -1551,64 +1555,64 @@ namespace System.Windows.Markup
 #endif
         // The XamlParser that the TokenReader was using when this instance of
         // the StyleXamlParser was created.  This must be restored on exit
-        private XamlParser      _previousXamlParser;
+        XamlParser      _previousXamlParser;
 
         // Depth in the Xaml file when parsing of this style block started.
         // This is used to determine when to stop parsing
-        private int             _startingDepth;
+        int             _startingDepth;
 
-        private StyleModeStack _styleModeStack = new StyleModeStack();
+        StyleModeStack  _styleModeStack = new StyleModeStack();
 
         // Depth in the element tree where a <Setter .../> element has begun.
-        private int             _inSetterDepth = -1;
+        int             _inSetterDepth = -1;
 
         // Depth in the element tree where a Trigger or MultiTrigger
         // section has begun.  Set to -1 to indicate it is not within such a section.
-        private int             _inPropertyTriggerDepth = -1;
+        int             _inPropertyTriggerDepth = -1;
 
         // Depth of nested complex property ina TriggerBase section.  This is
         // used to determine when text content is valid inside a visual trigger.
-        private int             _visualTriggerComplexPropertyDepth = -1;
+        int             _visualTriggerComplexPropertyDepth = -1;
 
         // The string name for TypeExtension within the TargetType property on style.  This may be null.
-        private string          _styleTargetTypeString;
+        string          _styleTargetTypeString;
 
         // The actual Type of the TargetType property on style.  This may be null.
-        private Type            _styleTargetTypeType;
+        Type            _styleTargetTypeType;
 
         // True if we are parsing the properties of an <EventSetter ... > tag
-        private bool            _inEventSetter;
+        bool            _inEventSetter;
 
         // True if a <Setter .../> or <EventSetter .../> was encountered
-        private bool            _setterElementEncountered;
+        bool            _setterElementEncountered;
 
         // True if a <Style.Setter> complex property tag was encountered
-        private bool            _setterPropertyEncountered;
+        bool            _setterPropertyEncountered;
 
         // The PropertyInfo for the "Foo" Property attribute in <Setter Property="Foo" ... />
         // or <Trigger Property="Foo" .../>
-        private MemberInfo      _setterOrTriggerPropertyInfo;
+        MemberInfo      _setterOrTriggerPropertyInfo;
 
         // The Property node for Value attribute in <Setter Value="Bar" ... /> or
         // <Trigger Value="Bar" .../>
-        private XamlPropertyNode _setterOrTriggerValueNode;
+        XamlPropertyNode _setterOrTriggerValueNode;
 
 #if PBTCOMPILER
         // The event in the EventSetter tag
-        private string          _event;
+        string          _event;
 
         // True if x:Key property was found on the style tag
-        private bool            _defNameFound;
+        bool            _defNameFound;
 
         // The handler name in the EventSetter tag
-        private string          _handler;
+        string          _handler;
 
 #if HANDLEDEVENTSTOO
         // The handledEventsToo flag in the EventSetter tag
-        private bool            _handledEventsToo;
+        bool            _handledEventsToo;
 #endif
         // True if event is in the same setters collecton.
-        private bool            _isSameScope;
+        bool            _isSameScope;
 #endif
 
         #endregion Data

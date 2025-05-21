@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 namespace System.Windows.Media.Media3D
 {
@@ -564,7 +565,7 @@ namespace System.Windows.Media.Media3D
         
         #region Internal Fields
 
-        internal static readonly Rect3D Infinite = CreateInfiniteRect3D();
+        internal readonly static Rect3D Infinite = CreateInfiniteRect3D();
         
         #endregion Internal Fields
         
@@ -653,7 +654,7 @@ namespace System.Windows.Media.Media3D
 
         #region Private Fields
 
-        private static readonly Rect3D s_empty = CreateEmptyRect3D();
+        private readonly static Rect3D s_empty = CreateEmptyRect3D();
 
         #endregion Private Fields
     }

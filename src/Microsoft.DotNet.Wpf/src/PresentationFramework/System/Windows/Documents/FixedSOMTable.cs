@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows.Media;
 
@@ -276,7 +277,7 @@ namespace System.Windows.Documents
             }
         }
 
-
+          
 
         #endregion Internal methods
 
@@ -286,12 +287,13 @@ namespace System.Windows.Documents
         //
         //---------------------------------------------------------------------
         #region Private Fields
-        private const double _minColumnWidth = 5; // empty columns narrower than this will be deleted
-        private const double _minRowHeight = 10; //empty rows smaller than this will be deleted
+        const double _minColumnWidth = 5; // empty columns narrower than this will be deleted
+        const double _minRowHeight = 10; //empty rows smaller than this will be deleted
 
         private int _RTLCount;
         private int _LTRCount;
-        private int _numCols;
+
+        int _numCols;
 
         #endregion Private Fields
     }

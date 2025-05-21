@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -8,26 +9,18 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-using MS.Internal.KnownBoxes;
-using MS.Internal.Collections;
-using MS.Utility;
-using System.Collections;
 using System.ComponentModel;
-using System.Globalization;
-using System.Text;
-using System.Windows.Media.Effects;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using System.Windows.Markup;
 using System.Windows.Media.Converters;
+// These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media
 {
-
     [TypeConverter(typeof(BrushConverter))]
     [ValueSerializer(typeof(BrushValueSerializer))] // Used by MarkupWriter
-    public abstract partial class Brush : Animatable, IFormattable, DUCE.IResource
+    abstract partial class Brush : Animatable, IFormattable, DUCE.IResource
     {
         //------------------------------------------------------
         //
@@ -75,10 +68,6 @@ namespace System.Windows.Media
         }
         private static void TransformPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
-
-
-
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -123,10 +112,6 @@ namespace System.Windows.Media
         }
         private static void RelativeTransformPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
-
-
-
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -180,7 +165,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double)GetValue(OpacityProperty);
+                return (double) GetValue(OpacityProperty);
             }
             set
             {
@@ -195,7 +180,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Transform)GetValue(TransformProperty);
+                return (Transform) GetValue(TransformProperty);
             }
             set
             {
@@ -210,7 +195,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Transform)GetValue(RelativeTransformProperty);
+                return (Transform) GetValue(RelativeTransformProperty);
             }
             set
             {
@@ -434,7 +419,8 @@ namespace System.Windows.Media
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app.
+            // of your app.  (Windows OS 
+
             Debug.Assert(s_Transform == null || s_Transform.IsFrozen,
                 "Detected context bound default value Brush.s_Transform (See OS Bug #947272).");
 
@@ -473,8 +459,6 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
-
 
         #endregion Constructors
     }

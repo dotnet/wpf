@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //#define OLD_ISF
 
@@ -117,7 +118,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="stylusPoints"></param>
         /// <param name="extendedProperties"></param>
 #endif
-        private static uint DecodeISFIntoStroke(
+        static uint DecodeISFIntoStroke(
 #if OLD_ISF
             Compressor compressor, 
 #endif
@@ -288,7 +289,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                                 byte[] out_buffer = Compressor.DecompressPropertyData(in_buffer);
 
-                                System.Diagnostics.Debug.Fail("ExtendedProperties for points are not supported");
+                                System.Diagnostics.Debug.Assert(false, "ExtendedProperties for points are not supported");
 
                                 // skip the bytes in both success & failure cases
                                 // Note: Point ExtendedProperties are discarded
@@ -340,7 +341,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// Loads packets from the input stream.  For example, packets are all of the x's in a stroke
         /// </summary>
 #endif
-        private static uint LoadPackets(Stream inputStream, 
+        static uint LoadPackets(Stream inputStream, 
                                 uint totalBytesInStrokeBlockOfIsfStream, 
 #if OLD_ISF
                                 Compressor compressor, 
@@ -793,7 +794,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="stream">null to calculate size only</param>
         /// <param name="strokeLookupEntry"></param>
 #endif
-        private static uint SavePackets(
+        static uint SavePackets(
             Stroke stroke,
             Stream stream, 
 #if OLD_ISF
@@ -934,7 +935,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="guid"></param>
         /// <param name="algo"></param>
 #endif
-        private static uint SavePacketPropertyData(
+        static uint SavePacketPropertyData(
             int[] packetdata, 
             Stream stream, 
 #if OLD_ISF

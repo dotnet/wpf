@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -232,7 +233,7 @@ namespace MS.Internal.Annotations.Component
 
             if (attachedAnnotation != _attachedAnnotation)
             {
-                throw new ArgumentException(SR.InvalidAttachedAnnotation, nameof(attachedAnnotation));
+                throw new ArgumentException(SR.InvalidAttachedAnnotation, "attachedAnnotation");
             }
 
             //fire trace event
@@ -407,10 +408,13 @@ namespace MS.Internal.Annotations.Component
             topTailTransform.Children.Add(tailScale);
             topTailTransform.Children.Add(topOffset);
 
-            geometry.Children[0]?.Transform = topTailTransform;
+            if (geometry.Children[0] != null)
+                geometry.Children[0].Transform = topTailTransform;
 
-            geometry.Children[1]?.Transform = bodyTransform;
-            geometry.Children[2]?.Transform = bottomTailTransform;
+            if (geometry.Children[1] != null)
+                geometry.Children[1].Transform = bodyTransform;
+            if (geometry.Children[2] != null)
+                geometry.Children[2].Transform = bottomTailTransform;
 
             //add transform to base anchor if needed
             if (baseAnchor != null)
@@ -546,14 +550,16 @@ namespace MS.Internal.Annotations.Component
         {
             if (_state == 0)
             {
-                _highlightAnchor?.Activate(false);
+                if (_highlightAnchor != null)
+                    _highlightAnchor.Activate(false);
                 MarkerBrush = new SolidColorBrush(DefaultMarkerColor);
                 StrokeThickness = MarkerStrokeThickness;
                 _DPHost.SetValue(StickyNoteControl.IsActiveProperty, false);
             }
             else
             {
-                _highlightAnchor?.Activate(true);
+                if (_highlightAnchor != null)
+                    _highlightAnchor.Activate(true);
                 MarkerBrush = new SolidColorBrush(DefaultActiveMarkerColor);
                 StrokeThickness = ActiveMarkerStrokeThickness;
                 _DPHost.SetValue(StickyNoteControl.IsActiveProperty, true);

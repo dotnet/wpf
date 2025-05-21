@@ -1,15 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
-//
-//
 // This file was generated, please do not edit it directly.
 // 
 // This file was generated from the codegen template located at:
 //     wpf\src\Graphics\codegen\mcg\generators\AnimatableTemplate.cs
 //
 // Please see MilCodeGen.html for more information.
-//
 
 using System.Windows.Media.Animation;
 
@@ -67,13 +65,13 @@ namespace System.Windows.Media.Media3D
 
             if (!AnimationStorage.IsPropertyAnimatable(this, dp))
             {
-                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), nameof(dp));
+                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
             }
 
             if (clock != null
                 && !AnimationStorage.IsAnimationValid(dp, clock.Timeline))
             {
-                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, clock.Timeline.GetType(), dp.Name, dp.PropertyType), nameof(clock));
+                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, clock.Timeline.GetType(), dp.Name, dp.PropertyType), "clock");
             }
 
             if (!HandoffBehaviorEnum.IsDefined(handoffBehavior))
@@ -84,7 +82,7 @@ namespace System.Windows.Media.Media3D
             if (IsSealed)
             {
                 throw new InvalidOperationException(SR.Format(SR.IAnimatable_CantAnimateSealedDO, dp, this.GetType()));
-            }
+            }                    
 
             AnimationStorage.ApplyAnimationClock(this, dp, clock, handoffBehavior);
         }
@@ -132,13 +130,13 @@ namespace System.Windows.Media.Media3D
 
             if (!AnimationStorage.IsPropertyAnimatable(this, dp))
             {
-                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), nameof(dp));
+                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
             }
 
-            if (animation != null
+            if (   animation != null
                 && !AnimationStorage.IsAnimationValid(dp, animation))
             {
-                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, animation.GetType(), dp.Name, dp.PropertyType), nameof(animation));
+                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, animation.GetType(), dp.Name, dp.PropertyType), "animation");
             }
 
             if (!HandoffBehaviorEnum.IsDefined(handoffBehavior))
@@ -149,7 +147,7 @@ namespace System.Windows.Media.Media3D
             if (IsSealed)
             {
                 throw new InvalidOperationException(SR.Format(SR.IAnimatable_CantAnimateSealedDO, dp, this.GetType()));
-            }
+            }                    
 
             AnimationStorage.BeginAnimation(this, dp, animation, handoffBehavior);
         }
@@ -210,7 +208,10 @@ namespace System.Windows.Media.Media3D
             {
                 AnimationStorage storage = AnimationStorage.GetStorage(this, dp);
 
-                storage?.EvaluateAnimatedValue(metadata, ref entry);
+                if (storage != null)
+                {
+                    storage.EvaluateAnimatedValue(metadata, ref entry);                      
+                }
             }
         }
 

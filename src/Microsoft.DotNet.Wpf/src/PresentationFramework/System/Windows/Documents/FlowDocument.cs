@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Hosts and formats text with advanced document features.
@@ -62,7 +63,7 @@ namespace System.Windows.Documents
     [ContentProperty("Blocks")]
     public class FlowDocument : FrameworkContentElement, IDocumentPaginatorSource, IServiceProvider, IAddChild
     {
-        private static readonly Type _typeofThis = typeof(FlowDocument);
+        static private readonly Type _typeofThis = typeof(FlowDocument);
 
         //-------------------------------------------------------------------
         //
@@ -802,7 +803,10 @@ namespace System.Windows.Documents
                             _structuralCache.InvalidateFormatCache(!affectsRender);
 
                             // Notify formatter about content invalidation.
-                            _formatter?.OnContentInvalidated(!affectsRender);
+                            if (_formatter != null)
+                            {
+                                _formatter.OnContentInvalidated(!affectsRender);
+                            }
                         }
                     }
                 }
@@ -964,7 +968,10 @@ namespace System.Windows.Documents
                 _structuralCache.AddDirtyTextRange(dtr);
 
                 // Notify formatter about content invalidation.
-                _formatter?.OnContentInvalidated(true, childStart, childEnd);
+                if (_formatter != null)
+                {
+                    _formatter.OnContentInvalidated(true, childStart, childEnd);
+                }
             }
         }
 
@@ -1235,10 +1242,13 @@ namespace System.Windows.Documents
             if (fd._structuralCache != null && fd._structuralCache.IsFormattedOnce)
             {
                 // Notify formatter about content invalidation.
-                // Any change of page metrics invalidates the layout.
-                // Hence page metrics change is treated in the same way as ContentChanged
-                // spanning entire content.
-                fd._formatter?.OnContentInvalidated(true);
+                if (fd._formatter != null)
+                {
+                    // Any change of page metrics invalidates the layout.
+                    // Hence page metrics change is treated in the same way as ContentChanged
+                    // spanning entire content.
+                    fd._formatter.OnContentInvalidated(true);
+                }
 
                 // Fire notification about the PageSize change - needed in RichTextBox
                 if (fd.PageSizeChanged != null)
@@ -1409,7 +1419,7 @@ namespace System.Windows.Documents
                 {
                     for (i = 0; i < args.Ranges.Count; i++)
                     {
-                        textSegment = args.Ranges[i];
+                        textSegment = (TextSegment)args.Ranges[i];
                         _formatter.OnContentInvalidated(false, textSegment.Start, textSegment.End);
 
                         if (_formatter is FlowDocumentFormatter)
@@ -1500,7 +1510,10 @@ namespace System.Windows.Documents
                 }
 
                 // Notify formatter about content invalidation.
-                _formatter?.OnContentInvalidated(!args.AffectsRenderOnly, args.ITextPosition, segmentEnd);
+                if (_formatter != null)
+                {
+                    _formatter.OnContentInvalidated(!args.AffectsRenderOnly, args.ITextPosition, segmentEnd);
+                }
             }
             finally
             {

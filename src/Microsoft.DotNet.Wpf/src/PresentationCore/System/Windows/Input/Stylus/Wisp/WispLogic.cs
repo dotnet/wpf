@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using MS.Internal.Interop;
@@ -52,7 +53,7 @@ namespace System.Windows.Input.StylusWisp
             _dlgInputManagerProcessInput = new DispatcherOperationCallback(InputManagerProcessInput);
         }
 
-        private void OnDispatcherShutdown(object sender, EventArgs e)
+        void OnDispatcherShutdown(object sender, EventArgs e)
         {
             if (_shutdownHandler != null)
                 _inputManager.Dispatcher.ShutdownFinished -= _shutdownHandler;
@@ -148,7 +149,7 @@ namespace System.Windows.Input.StylusWisp
         /// This ensures both the responsiveness and consistency of the stack.
         /// </summary>
         /// <param name="inputReport">The report to queue</param>
-        private void CoalesceAndQueueStylusEvent(RawStylusInputReport inputReport)
+        void CoalesceAndQueueStylusEvent(RawStylusInputReport inputReport)
         {
             StylusDeviceBase stylusDevice = inputReport?.StylusDevice?.StylusDeviceImpl;
 
@@ -254,7 +255,7 @@ namespace System.Windows.Input.StylusWisp
         }
 
         /////////////////////////////////////////////////////////////////////
-        private void ProcessInputReport(RawStylusInputReport inputReport)
+        void ProcessInputReport(RawStylusInputReport inputReport)
         {
             // First, assign the StylusDevice (note it may still be null for new StylusDevice)
             inputReport.StylusDevice = FindStylusDeviceWithLock(inputReport.StylusDeviceId)?.StylusDevice;
@@ -1369,7 +1370,7 @@ namespace System.Windows.Input.StylusWisp
 
         /////////////////////////////////////////////////////////////////////
 
-        private void PromoteRawToPreview(RawStylusInputReport report, ProcessInputEventArgs e)
+        void PromoteRawToPreview(RawStylusInputReport report, ProcessInputEventArgs e)
         {
             RoutedEvent routedEvent = StylusLogic.GetPreviewEventFromRawStylusActions(report.Actions);
             if (routedEvent != null && report.StylusDevice != null && !report.StylusDevice.As<WispStylusDevice>().IgnoreStroke)
@@ -1404,7 +1405,7 @@ namespace System.Windows.Input.StylusWisp
 
         /////////////////////////////////////////////////////////////////////
 
-        private void PromotePreviewToMain(ProcessInputEventArgs e)
+        void PromotePreviewToMain(ProcessInputEventArgs e)
         {
             if (!e.StagingItem.Input.Handled)
             {
@@ -1800,7 +1801,7 @@ namespace System.Windows.Input.StylusWisp
 
         /////////////////////////////////////////////////////////////////////
 
-        private void CallPlugInsForMouse(ProcessInputEventArgs e)
+        void CallPlugInsForMouse(ProcessInputEventArgs e)
         {
             if (!e.StagingItem.Input.Handled)
             {
@@ -2007,7 +2008,7 @@ namespace System.Windows.Input.StylusWisp
             return updated;
         }
 
-        private void UpdateMouseState()
+        void UpdateMouseState()
         {
             MouseDevice mouseDevice = _inputManager.PrimaryMouseDevice;
             _mouseLeftButtonState = mouseDevice.GetButtonStateFromSystem(MouseButton.Left);
@@ -2448,7 +2449,7 @@ namespace System.Windows.Input.StylusWisp
             // Second, if we still haven't thought of a reason to kill capture, validate
             // it on a Visual basis for things like still being in the right tree.
             //
-            if (!killCapture)
+            if (killCapture == false)
             {
                 DependencyObject containingVisual = InputElement.GetContainingVisual(dependencyObject);
                 killCapture = !ValidateVisualForCapture(containingVisual, CurrentStylusDevice);
@@ -2488,7 +2489,7 @@ namespace System.Windows.Input.StylusWisp
         // notifications we can get when moving between two windows (penContexts).  Wisptis
         // can send these in an overlapped manner which can mess up our InRange state if
         // we don't special case it.
-        private bool IsValidStylusAction(RawStylusInputReport rawStylusInputReport)
+        bool IsValidStylusAction(RawStylusInputReport rawStylusInputReport)
         {
             bool allowEvent = true;
             WispStylusDevice stylusDevice = rawStylusInputReport.StylusDevice.As<WispStylusDevice>();
@@ -2656,7 +2657,7 @@ namespace System.Windows.Input.StylusWisp
             RawStylusInput originalRSI = rawStylusInputReport.RawStylusInput;
             // See if we have a plugin for the target of this input.
             StylusPlugInCollection targetPIC = null;
-            StylusPlugInCollection targetRtiPIC = originalRSI?.Target;
+            StylusPlugInCollection targetRtiPIC = (originalRSI != null) ? originalRSI.Target : null;
             bool updateEventPoints = false;
 
             // Make sure we use UIElement for target if non NULL and hit ContentElement.
@@ -3539,7 +3540,10 @@ namespace System.Windows.Input.StylusWisp
             {
                 // Find the pencontexts for this window and update it's disabled window state
                 PenContexts penContexts = GetPenContextsFromHwnd(sourceHit);
-                penContexts?.IsWindowDisabled = disabled;
+                if (penContexts != null)
+                {
+                    penContexts.IsWindowDisabled = disabled;
+                }
             }
 
             // See if we need to update the mouse state when going enabled.
@@ -3662,21 +3666,21 @@ namespace System.Windows.Input.StylusWisp
             {
                 return unchecked(++_version);
             }
-            private long _version;
+            long _version;
         }
 
         /////////////////////////////////////////////////////////////////////
 
         private readonly InputManager _inputManager;
 
-        private DispatcherOperationCallback _dlgInputManagerProcessInput;
+        DispatcherOperationCallback _dlgInputManagerProcessInput;
 
-        private object _stylusEventQueueLock = new object();
+        object _stylusEventQueueLock = new object();
 
-        private Queue<RawStylusInputReport> _queueStylusEvents = new Queue<RawStylusInputReport>();
+        Queue<RawStylusInputReport> _queueStylusEvents = new Queue<RawStylusInputReport>();
 
-        private int _lastStylusDeviceId;
-        private bool _lastMouseMoveFromStylus = true; // Default to true to help first time use issues.   
+        int _lastStylusDeviceId;
+        bool _lastMouseMoveFromStylus = true; // Default to true to help first time use issues.   
 
         private MouseButtonState _mouseLeftButtonState = MouseButtonState.Released;
         private MouseButtonState _mouseRightButtonState = MouseButtonState.Released;
@@ -3687,35 +3691,35 @@ namespace System.Windows.Input.StylusWisp
         // From old instanced Stylus class
         private EventHandler _shutdownHandler;
 
-        private bool _tabletDeviceCollectionDisposed;
-        private WispTabletDeviceCollection _tabletDeviceCollection;
-        private WispStylusDevice _currentStylusDevice;
+        bool _tabletDeviceCollectionDisposed;
+        WispTabletDeviceCollection _tabletDeviceCollection;
+        WispStylusDevice _currentStylusDevice;
 
-        private int _lastInRangeTime;
-        private bool _triedDeferringMouseMove;
-        private RawMouseInputReport _deferredMouseMove;
+        int _lastInRangeTime;
+        bool _triedDeferringMouseMove;
+        RawMouseInputReport _deferredMouseMove;
 
-        private DispatcherOperationCallback _processDeferredMouseMove;
+        DispatcherOperationCallback _processDeferredMouseMove;
 
-        private RawMouseInputReport _mouseDeactivateInputReport;
+        RawMouseInputReport _mouseDeactivateInputReport;
 
-        private bool _inputEnabled = false;
-        private bool _updatingScreenMeasurements = false;
-        private DispatcherOperationCallback _processDisplayChanged;
-        private readonly object __penContextsLock = new object();
+        bool _inputEnabled = false;
+        bool _updatingScreenMeasurements = false;
+        DispatcherOperationCallback _processDisplayChanged;
+        readonly object __penContextsLock = new object();
 
-        private Dictionary<object, PenContexts> __penContextsMap = new Dictionary<object, PenContexts>(2);
+        Dictionary<object, PenContexts> __penContextsMap = new Dictionary<object, PenContexts>(2);
 
-        private readonly object __stylusDeviceLock = new object();
-        private Dictionary<int, StylusDevice> __stylusDeviceMap = new Dictionary<int, StylusDevice>(2);
+        readonly object __stylusDeviceLock = new object();
+        Dictionary<int, StylusDevice> __stylusDeviceMap = new Dictionary<int, StylusDevice>(2);
 
-        private bool _inDragDrop;
-        private bool _leavingDragDrop;
-        private bool _processingQueuedEvent;
+        bool _inDragDrop;
+        bool _leavingDragDrop;
+        bool _processingQueuedEvent;
 
-        private bool _stylusDeviceInRange;
+        bool _stylusDeviceInRange;
 
-        private bool _seenRealMouseActivate;
+        bool _seenRealMouseActivate;
 
         //  The wParam index to WM_TABLET_ADDED/DELETED may be invalid, since Windows
         // sometimes sends these messages out of order.  As a result, we can't trust that these values
@@ -3730,11 +3734,11 @@ namespace System.Windows.Input.StylusWisp
 
         // DevDiv: 652804
         // Stores the last move report that was added to the stylus event queue per device
-        private Dictionary<StylusDeviceBase, RawStylusInputReport> _lastMovesQueued = new Dictionary<StylusDeviceBase, RawStylusInputReport>();
+        Dictionary<StylusDeviceBase, RawStylusInputReport> _lastMovesQueued = new Dictionary<StylusDeviceBase, RawStylusInputReport>();
 
         // DevDiv: 652804
         // Stores the move report that is currently being used to coalesce subsequent moves
-        private Dictionary<StylusDeviceBase, RawStylusInputReport> _coalescedMoves = new Dictionary<StylusDeviceBase, RawStylusInputReport>();
+        Dictionary<StylusDeviceBase, RawStylusInputReport> _coalescedMoves = new Dictionary<StylusDeviceBase, RawStylusInputReport>();
 
         /// <summary>
         /// Lock the access to coalesced moves as it's possible it can be accessed simultaneously from two
@@ -3743,10 +3747,10 @@ namespace System.Windows.Input.StylusWisp
         private readonly object _coalesceLock = new object();
 
 #if !MULTICAPTURE
-        private IInputElement _stylusCapture;
-        private IInputElement _stylusOver;
-        private DeferredElementTreeState _stylusOverTreeState;
-        private DeferredElementTreeState _stylusCaptureWithinTreeState;
+        IInputElement _stylusCapture;
+        IInputElement _stylusOver;
+        DeferredElementTreeState _stylusOverTreeState;
+        DeferredElementTreeState _stylusCaptureWithinTreeState;
 
         private DependencyPropertyChangedEventHandler _overIsEnabledChangedEventHandler;
         private DependencyPropertyChangedEventHandler _overIsVisibleChangedEventHandler;

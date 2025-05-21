@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using MS.Internal.Interop;
@@ -146,7 +147,10 @@ namespace System.Windows.Documents
         {
             TextEditorThreadLocalStore threadLocalStore;
 
-            This.TextView?.ThrottleBackgroundTasksForUserInput();
+            if (This.TextView != null)
+            {
+                This.TextView.ThrottleBackgroundTasksForUserInput();
+            }
 
             threadLocalStore = TextEditor._ThreadLocalStore;
 
@@ -372,7 +376,10 @@ namespace System.Windows.Documents
             // Consider event handled
             e.Handled = true;
 
-            This.TextView?.ThrottleBackgroundTasksForUserInput();
+            if (This.TextView != null)
+            {
+                This.TextView.ThrottleBackgroundTasksForUserInput();
+            }
 
             // If this event is our Cicero TextStore composition, we always handles through ITextStore::SetText.
             if (composition != null)
@@ -448,7 +455,10 @@ namespace System.Windows.Documents
                 return;
             }
 
-            This.TextStore?.QueryRangeOrReconvertSelection( /*fDoReconvert:*/ true);
+            if (This.TextStore != null)
+            {
+                This.TextStore.QueryRangeOrReconvertSelection( /*fDoReconvert:*/ true);
+            }
         }
 
         /// <summary>
@@ -1273,7 +1283,10 @@ namespace System.Windows.Documents
             // Consider event handled
             e.Handled = true;
 
-            This.TextView?.ThrottleBackgroundTasksForUserInput();
+            if (This.TextView != null)
+            {
+                This.TextView.ThrottleBackgroundTasksForUserInput();
+            }
 
             ScheduleInput(This, new TextInputItem(This, " ", /*isInsertKeyToggled:*/!This._OvertypeMode));
         }
@@ -1672,7 +1685,7 @@ namespace System.Windows.Documents
             internal abstract void Do();
 
             // The TextEditor instance on which this input item applies.
-            private TextEditor _textEditor;
+            TextEditor _textEditor;
 
             protected TextEditor TextEditor
             {
@@ -1737,7 +1750,7 @@ namespace System.Windows.Documents
                     case Key.RightShift:
                         // Only support RTL flow direction in case of having the installed
                         // bidi input language.
-                        if (TextSelection.IsBidiInputLanguageInstalled())
+                        if (TextSelection.IsBidiInputLanguageInstalled() == true)
                         {
                             TextEditorTyping.OnFlowDirectionCommand(TextEditor, _key);
                         }

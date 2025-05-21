@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -107,7 +108,7 @@ namespace System.Windows.Media.Media3D
                                                      HitTestFilterCallback filterCallback,
                                                      HitTestResultBehavior lastResult)
         {
-            return RaiseCallback(resultCallback, filterCallback, lastResult, distanceAdjustment: 0.0);
+            return RaiseCallback(resultCallback, filterCallback, lastResult, 0.0 /* distance adjustment */);
         }
 
         internal HitTestResultBehavior RaiseCallback(HitTestResultCallback resultCallback, 
@@ -185,7 +186,10 @@ namespace System.Windows.Media.Media3D
 
         internal void ClearResults()
         {
-            results?.Clear();
+            if (results != null)
+            {
+                results.Clear();
+            }
         }
 
         #endregion Internal Methods

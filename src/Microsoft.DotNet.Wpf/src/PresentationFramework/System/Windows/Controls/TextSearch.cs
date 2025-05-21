@@ -1,5 +1,6 @@
-Ôªø// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.Windows.Threading;
@@ -282,16 +283,16 @@ namespace System.Windows.Controls
         /// <summary>
         /// Gets the length of the prefix (the prefix of matchedText matched by newText) and the rest of the string from the matchedText
         /// It takes care of compressions or expansions in both matchedText and newText  which could be impacting the length of the string
-        /// For example: length of prefix would be 5 and the rest would be 2 if matchedText is "Grosses" and newText is ""Gro√ü"
-        /// length of prefix would be 4 and the rest would be 2 if matchedText is ""Gro√ües" and newText is "Gross" as "√ü" = "ss"
+        /// For example: length of prefix would be 5 and the rest would be 2 if matchedText is "Grosses" and newText is ""Groﬂ"
+        /// length of prefix would be 4 and the rest would be 2 if matchedText is ""Groﬂes" and newText is "Gross" as "ﬂ" = "ss"
         /// </summary>
         /// /// <param name="matchedText">string that is assumed to contain prefix which matches newText</param>
         /// <param name="newText">string that is assumed to match a prefix of matchedText</param>
         private static void GetMatchingPrefixAndRemainingTextLength(string matchedText, string newText, CultureInfo cultureInfo,
                                                                 bool ignoreCase, out int matchedPrefixLength, out int textExcludingPrefixLength)
         {
-            Debug.Assert(!String.IsNullOrEmpty(matchedText), "matchedText cannot be null or empty");
-            Debug.Assert(!String.IsNullOrEmpty(newText), "newText cannot be null or empty");
+            Debug.Assert(String.IsNullOrEmpty(matchedText) == false, "matchedText cannot be null or empty");
+            Debug.Assert(String.IsNullOrEmpty(newText) == false, "newText cannot be null or empty");
             Debug.Assert(matchedText.StartsWith(newText, ignoreCase, cultureInfo), "matchedText should start with newText");
             
             matchedPrefixLength = 0;
@@ -502,9 +503,9 @@ namespace System.Windows.Controls
 
             // There could be compressions or expansions in either matched text or inputted text which means
             // length of the prefix in the matched text and length of the inputted text could be different
-            // for example: "Grosses" would match for the input text "Gro√ü" where the prefix length in matched text is 5
+            // for example: "Grosses" would match for the input text "Groﬂ" where the prefix length in matched text is 5
             // whereas the length of the inputted text is 4. Same matching rule applies for the other way as well with
-            // "Gro√ü" in matched text for the inputted text "Gross"
+            // "Groﬂ" in matched text for the inputted text "Gross"
             if (matchedItemIndex >= 0)
             {
                 int matchedPrefixLength;
@@ -679,7 +680,10 @@ namespace System.Windows.Controls
                 _charsEntered.Clear();
             }
 
-            _timeoutTimer?.Stop();
+            if(_timeoutTimer != null)
+            {
+                _timeoutTimer.Stop();
+            }
             _timeoutTimer = null;
         }
 

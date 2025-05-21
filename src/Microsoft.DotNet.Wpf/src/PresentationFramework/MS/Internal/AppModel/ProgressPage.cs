@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //  Description:
@@ -18,7 +19,7 @@ namespace MS.Internal.AppModel
 {
     [ComImport, Guid("1f681651-1024-4798-af36-119bbe5e5665")]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    internal interface INativeProgressPage
+    interface INativeProgressPage
     {
         [PreserveSig]
         HR Show();
@@ -38,12 +39,12 @@ namespace MS.Internal.AppModel
     /// IProgressPage is public. It was introduced for the Media Center integration, which is now considered
     /// deprecated, but we have to support it at least for as long as we keep doing in-place upgrades.
     /// </remarks>
-    internal interface IProgressPage2 : IProgressPage
+    interface IProgressPage2 : IProgressPage
     {
         void ShowProgressMessage(string message);
     };
 
-    internal class NativeProgressPageProxy : IProgressPage2
+    class NativeProgressPageProxy : IProgressPage2
     {
         internal NativeProgressPageProxy(INativeProgressPage npp)
         {
@@ -119,6 +120,6 @@ namespace MS.Internal.AppModel
             HR hr = _npp.OnDownloadProgress((ulong)bytesDownloaded, (ulong)bytesTotal);
         }
 
-        private INativeProgressPage _npp;
+        INativeProgressPage _npp;
     };
 }

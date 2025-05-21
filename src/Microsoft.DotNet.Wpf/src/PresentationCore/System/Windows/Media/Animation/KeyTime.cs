@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 
@@ -27,7 +28,7 @@ namespace System.Windows.Media.Animation
         {
             if (percent < 0.0 || percent > 1.0)
             {
-                throw new ArgumentOutOfRangeException(nameof(percent), SR.Format(SR.Animation_KeyTime_InvalidPercentValue, percent));
+                throw new ArgumentOutOfRangeException("percent", SR.Format(SR.Animation_KeyTime_InvalidPercentValue, percent));
             }
 
             KeyTime keyTime = new KeyTime
@@ -47,7 +48,7 @@ namespace System.Windows.Media.Animation
         {
             if (timeSpan < TimeSpan.Zero)
             {
-                throw new ArgumentOutOfRangeException(nameof(timeSpan), SR.Format(SR.Animation_KeyTime_LessThanZero, timeSpan));
+                throw new ArgumentOutOfRangeException("timeSpan", SR.Format(SR.Animation_KeyTime_LessThanZero, timeSpan));
             }
 
             KeyTime keyTime = new KeyTime

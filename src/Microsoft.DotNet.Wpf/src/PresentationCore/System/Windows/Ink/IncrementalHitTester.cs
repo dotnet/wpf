@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Windows;
 using System.Windows.Input;
@@ -38,10 +39,10 @@ namespace System.Windows.Ink
 
             if (IEnumerablePointHelper.GetCount(points) == 0)
             {
-                throw new System.ArgumentException(SR.EmptyArrayNotAllowedAsArgument, nameof(points));
+                throw new System.ArgumentException(SR.EmptyArrayNotAllowedAsArgument, "points");
             }
 
-            if (!_fValid)
+            if (false == _fValid)
             {
                 throw new System.InvalidOperationException(SR.EndHitTestingCalled);
             }
@@ -61,10 +62,10 @@ namespace System.Windows.Ink
 
             if (stylusPoints.Count == 0)
             {
-                throw new System.ArgumentException(SR.EmptyArrayNotAllowedAsArgument, nameof(stylusPoints));
+                throw new System.ArgumentException(SR.EmptyArrayNotAllowedAsArgument, "stylusPoints");
             }
 
-            if (!_fValid)
+            if (false == _fValid)
             {
                 throw new System.InvalidOperationException(SR.EndHitTestingCalled);
             }
@@ -201,7 +202,7 @@ namespace System.Windows.Ink
             //validate our cache
             if (_strokes.Count != _strokeInfos.Count)
             {
-                Debug.Fail("Benign assert.  IncrementalHitTester's _strokeInfos cache is out of sync, rebuilding.");
+                Debug.Assert(false, "Benign assert.  IncrementalHitTester's _strokeInfos cache is out of sync, rebuilding.");
                 RebuildStrokeInfoCache();
                 return;
             }
@@ -209,7 +210,7 @@ namespace System.Windows.Ink
             {
                 if (_strokeInfos[i].Stroke != _strokes[i])
                 {
-                    Debug.Fail("Benign assert.  IncrementalHitTester's _strokeInfos cache is out of sync, rebuilding.");
+                    Debug.Assert(false, "Benign assert.  IncrementalHitTester's _strokeInfos cache is out of sync, rebuilding.");
                     RebuildStrokeInfoCache();
                     return;
                 }
@@ -252,7 +253,10 @@ namespace System.Windows.Ink
             {
                 StrokeInfo strokeInfo = _strokeInfos[x];
             
-                strokeInfo?.Detach();
+                if (strokeInfo != null)
+                {
+                    strokeInfo.Detach();
+                }
             }
 
             _strokeInfos = newStrokeInfos;
@@ -326,7 +330,7 @@ namespace System.Windows.Ink
             // Do nothing if there's not enough points, or there's nobody listening
             // The points may be filtered out, so if all the points are filtered out, (lastPointIndex == (_lasso.PointCount - 1).
             // For this case, check if the incremental lasso is disabled (i.e., points modified).
-            if ((_lasso.IsEmpty) || (lastPointIndex == (_lasso.PointCount - 1) && !_lasso.IsIncrementalLassoDirty)
+            if ((_lasso.IsEmpty) || (lastPointIndex == (_lasso.PointCount - 1) && false == _lasso.IsIncrementalLassoDirty)
                 || (SelectionChanged == null))
             {
                 return;
@@ -339,7 +343,7 @@ namespace System.Windows.Ink
             // Create a lasso that represents the current increment
             Lasso lassoUpdate = new Lasso();
 
-            if (!_lasso.IsIncrementalLassoDirty)
+            if (false == _lasso.IsIncrementalLassoDirty)
             {
                 if (0 < lastPointIndex)
                 {
@@ -358,7 +362,7 @@ namespace System.Windows.Ink
             foreach (StrokeInfo strokeInfo in this.StrokeInfos)
             {
                 Lasso lasso;
-                if (strokeInfo.IsDirty || _lasso.IsIncrementalLassoDirty)
+                if (true == strokeInfo.IsDirty || true == _lasso.IsIncrementalLassoDirty)
                 {
                     // If this is the first time this stroke gets hit-tested with this lasso,
                     // or if the stroke (or its DAs) has changed since the last hit-testing,
@@ -389,7 +393,7 @@ namespace System.Windows.Ink
                     for (int i = 0; i < stylusPoints.Count; i++)
                     {
                         // Consider only the points that become captured/released with this particular update
-                        if (lasso.Contains((Point)stylusPoints[i]))
+                        if (true == lasso.Contains((Point)stylusPoints[i]))
                         {
                             double weight = strokeInfo.GetPointWeight(i);
 
@@ -531,8 +535,8 @@ namespace System.Windows.Ink
                     StrokeInfo strokeInfo = this.StrokeInfos[x];
 
                     // Skip the stroke if its bounding box doesn't intersect with the one of the hitting shape.
-                    if ((!erasingBounds.IntersectsWith(strokeInfo.StrokeBounds)) ||
-                        (!_erasingStroke.EraseTest(StrokeNodeIterator.GetIterator(strokeInfo.Stroke, strokeInfo.Stroke.DrawingAttributes), eraseAt)))
+                    if ((erasingBounds.IntersectsWith(strokeInfo.StrokeBounds) == false) ||
+                        (_erasingStroke.EraseTest(StrokeNodeIterator.GetIterator(strokeInfo.Stroke, strokeInfo.Stroke.DrawingAttributes), eraseAt) == false))
                     {
                         continue;
                     }
@@ -892,7 +896,7 @@ namespace MS.Internal.Ink
         {
             // If the drawing attributes change involves Width, Height, StylusTipTransform, IgnorePressure, or FitToCurve,
             // we need to invalidate
-            if (!DrawingAttributes.GeometricallyEqual(args.NewDrawingAttributes, args.PreviousDrawingAttributes))
+            if (false == DrawingAttributes.GeometricallyEqual(args.NewDrawingAttributes, args.PreviousDrawingAttributes))
             {
                 Invalidate();
             }

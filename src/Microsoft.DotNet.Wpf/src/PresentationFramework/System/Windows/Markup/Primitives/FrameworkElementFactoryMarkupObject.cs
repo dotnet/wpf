@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //  Contents:  MarkupObject and MarkupProperty implementations for
@@ -280,8 +281,8 @@ namespace System.Windows.Markup.Primitives
             get { return _factory; }
         }
 
-        private FrameworkElementFactoryMarkupObject _item;
-        private FrameworkElementFactory _factory;
+        FrameworkElementFactoryMarkupObject _item;
+        FrameworkElementFactory _factory;
     }
 
     /// <summary>
@@ -349,7 +350,7 @@ namespace System.Windows.Markup.Primitives
             get { return _factory.Text; }
         }
 
-        private FrameworkElementFactoryMarkupObject _item;
-        private FrameworkElementFactory _factory;
+        FrameworkElementFactoryMarkupObject _item;
+        FrameworkElementFactory _factory;
     }
 }

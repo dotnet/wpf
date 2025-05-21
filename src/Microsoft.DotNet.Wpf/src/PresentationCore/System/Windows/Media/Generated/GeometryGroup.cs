@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -10,21 +11,12 @@
 
 using MS.Internal;
 using MS.Internal.KnownBoxes;
-using MS.Internal.Collections;
-using MS.Utility;
-using System.Collections;
-using System.ComponentModel;
-using System.Globalization;
-using System.Text;
-using System.Windows.Media.Effects;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using System.Windows.Markup;
-using System.Windows.Media.Converters;
+// These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media
 {
-    public sealed partial class GeometryGroup : Geometry
+    sealed partial class GeometryGroup : Geometry
     {
         //------------------------------------------------------
         //
@@ -72,10 +64,6 @@ namespace System.Windows.Media
         }
         private static void ChildrenPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
-
-
-
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -172,7 +160,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (FillRule)GetValue(FillRuleProperty);
+                return (FillRule) GetValue(FillRuleProperty);
             }
             set
             {
@@ -187,7 +175,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (GeometryCollection)GetValue(ChildrenProperty);
+                return (GeometryCollection) GetValue(ChildrenProperty);
             }
             set
             {
@@ -273,7 +261,7 @@ namespace System.Windows.Media
 
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for (int i = 0; i < ChildrenCount; i++)
+                    for(int i = 0; i < ChildrenCount; i++)
                     {
                         DUCE.ResourceHandle resource = ((DUCE.IResource)vChildren.Internal_GetItem(i)).GetHandle(channel);;
                         channel.AppendCommandData(
@@ -288,7 +276,6 @@ namespace System.Windows.Media
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_GEOMETRYGROUP))
                 {
                     Transform vTransform = Transform;
@@ -311,11 +298,9 @@ namespace System.Windows.Media
                 }
 
                 return _duceResource.GetHandle(channel);
-
-        }
+}
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
@@ -334,10 +319,8 @@ namespace System.Windows.Media
                         }
                     }
                     ReleaseOnChannelAnimations(channel);
-
-                }
-
-        }
+}
+}
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.
@@ -371,7 +354,10 @@ namespace System.Windows.Media
 
                         // We're on a channel, which means our dependents are also on the channel.
                         DUCE.IResource addResource = item as DUCE.IResource;
-                        addResource?.AddRefOnChannel(channel);
+                        if (addResource != null)
+                        {
+                            addResource.AddRefOnChannel(channel);
+                        }
 
                         UpdateResource(channel, true /* skip on channel check */);
                     }
@@ -398,7 +384,10 @@ namespace System.Windows.Media
 
                         // We're on a channel, which means our dependents are also on the channel.
                         DUCE.IResource releaseResource = item as DUCE.IResource;
-                        releaseResource?.ReleaseOnChannel(channel);
+                        if (releaseResource != null)
+                        {
+                            releaseResource.ReleaseOnChannel(channel);
+                        }
                     }
                 }
             }
@@ -484,7 +473,8 @@ namespace System.Windows.Media
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app.
+            // of your app. 
+
             Debug.Assert(s_Children == null || s_Children.IsFrozen,
                 "Detected context bound default value GeometryGroup.s_Children (See OS Bug #947272).");
 
@@ -510,8 +500,6 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
-
 
         #endregion Constructors
     }

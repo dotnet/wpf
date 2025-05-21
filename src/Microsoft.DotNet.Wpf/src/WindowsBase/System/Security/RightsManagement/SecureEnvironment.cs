@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections.ObjectModel;
 using MS.Internal.Security.RightsManagement;
@@ -63,7 +64,7 @@ namespace System.Security.RightsManagement
             if ((user.AuthenticationType != AuthenticationType.Windows) && 
                  (user.AuthenticationType != AuthenticationType.Passport))
             {
-                throw new ArgumentOutOfRangeException(nameof(user), SR.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed);
+                throw new ArgumentOutOfRangeException("user", SR.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed);
             }
             
             using (ClientSession userClientSession = new ClientSession(user))
@@ -85,7 +86,7 @@ namespace System.Security.RightsManagement
             if ((user.AuthenticationType != AuthenticationType.Windows) && 
                  (user.AuthenticationType != AuthenticationType.Passport))
             {
-                throw new ArgumentOutOfRangeException(nameof(user), SR.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed);
+                throw new ArgumentOutOfRangeException("user", SR.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed);
             }
 
             // Generic client session to enumerate user certificates 
@@ -116,7 +117,7 @@ namespace System.Security.RightsManagement
         /// <summary>
         /// This function returns a read only collection of the activated users.
         /// </summary>
-        public static  ReadOnlyCollection<ContentUser>  GetActivatedUsers()
+        static public  ReadOnlyCollection<ContentUser>  GetActivatedUsers()
         {
             
             //build user with the default authentication type and a default name 
@@ -239,7 +240,7 @@ namespace System.Security.RightsManagement
             if ((user.AuthenticationType != AuthenticationType.Windows) && 
                  (user.AuthenticationType != AuthenticationType.Passport))
             {
-                throw new ArgumentOutOfRangeException(nameof(user));
+                throw new ArgumentOutOfRangeException("user");
             }
 
             if (!IsUserActivated(user))
@@ -272,13 +273,13 @@ namespace System.Security.RightsManagement
             if ((authentication != AuthenticationType.Windows) && 
                  (authentication != AuthenticationType.Passport))
             {
-                throw new ArgumentOutOfRangeException(nameof(authentication));
+                throw new ArgumentOutOfRangeException("authentication");
             }
 
             if ((userActivationMode != UserActivationMode.Permanent) &&
                  (userActivationMode != UserActivationMode.Temporary))
             {
-                throw new ArgumentOutOfRangeException(nameof(userActivationMode));            
+                throw new ArgumentOutOfRangeException("userActivationMode");            
             }
 
             //build user with the given authnetication type and a default name 

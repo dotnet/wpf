@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -8,16 +9,12 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-using MS.Utility;
-using System.Collections;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Media.Imaging;
+// These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media.Effects
 {
-    public abstract partial class BitmapEffect : Animatable
+    abstract partial class BitmapEffect : Animatable
     {
         //------------------------------------------------------
         //
@@ -44,9 +41,6 @@ namespace System.Windows.Media.Effects
         {
             return (BitmapEffect)base.CloneCurrentValue();
         }
-
-
-
 
         #endregion Public Methods
 

@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Class that describes the data to be pre-fected in Automation
 //              element operations, and manange the current request.
@@ -406,7 +407,7 @@ namespace System.Windows.Automation
             {
                 if(_defaultUiaCacheRequest == null)
                 {
-                    _defaultUiaCacheRequest = new UiaCoreApi.UiaCacheRequest(Automation.ControlViewCondition, TreeScope.Element, new AutomationProperty[] { AutomationElement.RuntimeIdProperty }, Array.Empty<AutomationPattern>(), AutomationElementMode.Full);
+                    _defaultUiaCacheRequest = new UiaCoreApi.UiaCacheRequest(Automation.ControlViewCondition, TreeScope.Element, new AutomationProperty[] { AutomationElement.RuntimeIdProperty }, new AutomationPattern[] { }, AutomationElementMode.Full);
                 }
                 return _defaultUiaCacheRequest;
             }
@@ -437,7 +438,7 @@ namespace System.Windows.Automation
             return _uiaCacheRequest;
         }
 
-        internal static UiaCoreApi.UiaCacheRequest CurrentUiaCacheRequest
+        static internal UiaCoreApi.UiaCacheRequest CurrentUiaCacheRequest
         {
             get
             {
@@ -461,7 +462,7 @@ namespace System.Windows.Automation
         // Ensure that this CacheRequest isn't currently in use
         // Must be called within a lock(_instanceLock) to ensure
         // thread consistency
-        private void CheckAccess()
+        void CheckAccess()
         {
             // Make sure this isn't being used by any thread's
             // CacheRequest stacks by using a refcount:
@@ -475,7 +476,7 @@ namespace System.Windows.Automation
 
         // Called when state changes - sets _uiaCacheRequest to null
         // to ensure that a clean one is generated next time Push is called
-        private void Invalidate()
+        void Invalidate()
         {
             _uiaCacheRequest = null;
         }
@@ -494,22 +495,22 @@ namespace System.Windows.Automation
         //--- Instance state ---
 
         // Current mutable state...
-        private Condition _viewCondition;
-        private TreeScope _scope;
-        private ArrayList _properties;
-        private ArrayList _patterns;
-        private AutomationElementMode _automationElementMode;
+        Condition _viewCondition;
+        TreeScope _scope;
+        ArrayList _properties;
+        ArrayList _patterns;
+        AutomationElementMode _automationElementMode;
 
         // When we Push, the current state is bundled into this, which is
         // immutable. This is what the underlying requesting mechanism uses
-        private UiaCoreApi.UiaCacheRequest _uiaCacheRequest;
+        UiaCoreApi.UiaCacheRequest _uiaCacheRequest;
 
         // Used to track whether this instance is in use - inc'd on Push,
         // dec'd on Pop...
-        private int _refCount = 0;
+        int _refCount = 0;
 
         // Used to lock on this instance...
-        private readonly object _instanceLock = null;
+        readonly object _instanceLock = null;
 
         //--- Per-Thread state ---
 

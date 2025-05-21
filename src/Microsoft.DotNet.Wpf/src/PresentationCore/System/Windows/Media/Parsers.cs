@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //  Synopsis: Implements class Parsers for internal use of type converters
 
@@ -14,7 +15,7 @@ namespace MS.Internal
         private const int s_aLower   = (int) 'a';
         private const int s_aUpper   = (int) 'A';
 
-        private static int ParseHexChar(char c )
+        static private int ParseHexChar(char c )
         {
             int intChar = (int) c;
 
@@ -35,7 +36,7 @@ namespace MS.Internal
             throw new FormatException(SR.Parsers_IllegalToken);
         }
 
-        private static Color ParseHexColor(string trimmedColor)
+        static private Color ParseHexColor(string trimmedColor)
         {
             int a,r,g,b;
             a = 255;
@@ -56,22 +57,22 @@ namespace MS.Internal
             else if (trimmedColor.Length > 4)
             {
                 a = ParseHexChar(trimmedColor[1]);
-                a += a*16;
+                a = a + a*16;
                 r = ParseHexChar(trimmedColor[2]);
-                r += r*16;
+                r = r + r*16;
                 g = ParseHexChar(trimmedColor[3]);
-                g += g*16;
+                g = g + g*16;
                 b = ParseHexChar(trimmedColor[4]);
-                b += b*16;
+                b = b + b*16;
             }
             else
             {
                 r = ParseHexChar(trimmedColor[1]);
-                r += r*16;
+                r = r + r*16;
                 g = ParseHexChar(trimmedColor[2]);
-                g += g*16;
+                g = g + g*16;
                 b = ParseHexChar(trimmedColor[3]);
-                b += b*16;
+                b = b + b*16;
             }
 
             return ( Color.FromArgb ((byte)a, (byte)r, (byte)g, (byte)b) );
@@ -80,7 +81,7 @@ namespace MS.Internal
     internal const string s_ContextColor = "ContextColor ";
     internal const string s_ContextColorNoSpace = "ContextColor";
 
-    private static Color ParseContextColor(string trimmedColor, IFormatProvider formatProvider, ITypeDescriptorContext context)
+    static private Color ParseContextColor(string trimmedColor, IFormatProvider formatProvider, ITypeDescriptorContext context)
         {
             if (!trimmedColor.StartsWith(s_ContextColor, StringComparison.OrdinalIgnoreCase))
             {
@@ -136,7 +137,7 @@ namespace MS.Internal
             return result;
         }
 
-        private static Color ParseScRgbColor(string trimmedColor, IFormatProvider formatProvider)
+        static private Color ParseScRgbColor(string trimmedColor, IFormatProvider formatProvider)
         {
             if (!trimmedColor.StartsWith("sc#", StringComparison.Ordinal))
             {
@@ -196,10 +197,10 @@ namespace MS.Internal
             bool isContextColor;
             string trimmedColor = KnownColors.MatchColor(color, out isPossibleKnowColor, out isNumericColor, out isContextColor, out isScRgbColor);
 
-            if ((!isPossibleKnowColor) &&
-                (!isNumericColor) &&
-                (!isScRgbColor) &&
-                (!isContextColor))
+            if ((isPossibleKnowColor == false) &&
+                (isNumericColor == false) &&
+                (isScRgbColor == false) &&
+                (isContextColor== false))
             {
                 throw new FormatException(SR.Parsers_IllegalToken);
             }
@@ -306,7 +307,7 @@ namespace MS.Internal
 
             AbbreviatedGeometryParser parser = new AbbreviatedGeometryParser();
 
-            parser.ParseToGeometryContext(context, pathString, startIndex: 0);
+            parser.ParseToGeometryContext(context, pathString, 0 /* curIndex */);
             
             PathGeometry pathGeometry = context.GetPathGeometry();
 

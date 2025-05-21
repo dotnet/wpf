@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Runtime.InteropServices;
@@ -37,7 +37,7 @@ namespace System.Windows.Media.Imaging
 
         /// <summary>
         /// </summary>
-        internal unsafe CachedBitmap(
+        unsafe internal CachedBitmap(
                     int pixelWidth,
                     int pixelHeight,
                     double dpiX,
@@ -98,7 +98,7 @@ namespace System.Windows.Media.Imaging
 
         /// <summary>
         /// </summary>
-        internal unsafe CachedBitmap(
+        unsafe internal CachedBitmap(
             int pixelWidth,
             int pixelHeight,
             double dpiX,
@@ -340,14 +340,14 @@ namespace System.Windows.Media.Imaging
                     int stride
                     )
         {
-            if (pixelFormat.Palettized && palette == null)
+            if (pixelFormat.Palettized == true && palette == null)
                 throw new InvalidOperationException(SR.Image_IndexedPixelFormatRequiresPalette);
 
             if (pixelFormat.Format == PixelFormatEnum.Default && pixelFormat.Guid == WICPixelFormatGUIDs.WICPixelFormatDontCare)
             {
                 throw new System.ArgumentException(
                         SR.Format(SR.Effect_PixelFormat, pixelFormat),
-                        nameof(pixelFormat)
+                        "pixelFormat"
                         );
             }
 
@@ -403,9 +403,9 @@ namespace System.Windows.Media.Imaging
             UpdateCachedSettings();
         }
 
-        private BitmapSource        _source;
-        private BitmapCreateOptions _createOptions = BitmapCreateOptions.None;
-        private BitmapCacheOption   _cacheOption = BitmapCacheOption.Default;
+        BitmapSource        _source;
+        BitmapCreateOptions _createOptions = BitmapCreateOptions.None;
+        BitmapCacheOption   _cacheOption = BitmapCacheOption.Default;
     }
     #endregion // CachedBitmap
 }

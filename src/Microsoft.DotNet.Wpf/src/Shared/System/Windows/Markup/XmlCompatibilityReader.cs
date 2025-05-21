@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -37,9 +38,8 @@ namespace System.Windows.Markup
     // if the passed in namespace is subsumed, then newXmlNamespace returns the subsuming namespace.
     // </param>
     internal delegate bool IsXmlNamespaceSupportedCallback(string xmlNamespace, out string newXmlNamespace);
-
-    internal delegate void HandleElementCallback(int elementDepth, ref bool more);
-    internal delegate void HandleAttributeCallback(int elementDepth);
+    delegate void HandleElementCallback(int elementDepth, ref bool more);
+    delegate void HandleAttributeCallback(int elementDepth);
 
     internal sealed class XmlCompatibilityReader : XmlWrappingReader
     {
@@ -1623,7 +1623,7 @@ namespace System.Windows.Markup
         }
         #endregion Private Properties
         #region Nested Classes
-        private struct NamespaceElementPair
+        struct NamespaceElementPair
         {
             public string namespaceName;
             public string itemName;
@@ -1642,18 +1642,18 @@ namespace System.Windows.Markup
         /// </summary>
         private class CompatibilityScope
         {
-            private CompatibilityScope _previous;
-            private int _depth;
-            private bool _fallbackSeen;
-            private bool _inAlternateContent;
-            private bool _inProcessContent;
-            private bool _choiceTaken;
-            private bool _choiceSeen;
-            private XmlCompatibilityReader _reader;
-            private Dictionary<string, object> _ignorables;
-            private Dictionary<string, ProcessContentSet> _processContents;
-            private Dictionary<string, PreserveItemSet> _preserveElements;
-            private Dictionary<string, PreserveItemSet> _preserveAttributes;
+            CompatibilityScope _previous;
+            int _depth;
+            bool _fallbackSeen;
+            bool _inAlternateContent;
+            bool _inProcessContent;
+            bool _choiceTaken;
+            bool _choiceSeen;
+            XmlCompatibilityReader _reader;
+            Dictionary<string, object> _ignorables;
+            Dictionary<string, ProcessContentSet> _processContents;
+            Dictionary<string, PreserveItemSet> _preserveElements;
+            Dictionary<string, PreserveItemSet> _preserveAttributes;
 
             public CompatibilityScope(CompatibilityScope previous, int depth, XmlCompatibilityReader reader)
             {
@@ -1945,12 +1945,12 @@ namespace System.Windows.Markup
             }
         }
 
-        private class ProcessContentSet
+        class ProcessContentSet
         {
-            private bool _all;
-            private string _namespaceName;
-            private XmlCompatibilityReader _reader;
-            private HashSet<string> _names;
+            bool _all;
+            string _namespaceName;
+            XmlCompatibilityReader _reader;
+            HashSet<string> _names;
 
             public ProcessContentSet(string namespaceName, XmlCompatibilityReader reader)
             {
@@ -2000,12 +2000,12 @@ namespace System.Windows.Markup
             }
 }
 
-        private class PreserveItemSet
+        class PreserveItemSet
         {
-            private bool _all;
-            private string _namespaceName;
-            private XmlCompatibilityReader _reader;
-            private Dictionary<string, string> _names;
+            bool _all;
+            string _namespaceName;
+            XmlCompatibilityReader _reader;
+            Dictionary<string, string> _names;
 
             public PreserveItemSet(string namespaceName, XmlCompatibilityReader reader)
             {

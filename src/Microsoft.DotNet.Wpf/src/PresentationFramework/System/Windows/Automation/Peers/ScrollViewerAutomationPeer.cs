@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Globalization;
 using System.Windows.Automation.Provider;
@@ -17,19 +18,19 @@ namespace System.Windows.Automation.Peers
         {}
     
         ///
-        protected override string GetClassNameCore()
+        override protected string GetClassNameCore()
         {
             return "ScrollViewer";
         }
 
         ///
-        protected override AutomationControlType GetAutomationControlTypeCore()
+        override protected AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.Pane;
         }
 
         ///
-        protected override bool IsControlElementCore()
+        override protected bool IsControlElementCore()
         {
             // Return false if ScrollViewer is part of a ControlTemplate, otherwise return the base method
             ScrollViewer sv = (ScrollViewer)Owner;
@@ -45,7 +46,7 @@ namespace System.Windows.Automation.Peers
         }
 
         /// 
-        public override object GetPattern(PatternInterface patternInterface)
+        override public object GetPattern(PatternInterface patternInterface)
         {
             if (patternInterface == PatternInterface.Scroll)
             {
@@ -150,11 +151,11 @@ namespace System.Windows.Automation.Peers
 
             if (scrollHorizontally && (horizontalPercent < 0.0) || (horizontalPercent > 100.0))
             {
-                throw new ArgumentOutOfRangeException(nameof(horizontalPercent), SR.Format(SR.ScrollViewer_OutOfRange, "horizontalPercent", horizontalPercent.ToString(CultureInfo.InvariantCulture), "0", "100"));
+                throw new ArgumentOutOfRangeException("horizontalPercent", SR.Format(SR.ScrollViewer_OutOfRange, "horizontalPercent", horizontalPercent.ToString(CultureInfo.InvariantCulture), "0", "100"));
             }
             if (scrollVertically && (verticalPercent < 0.0) || (verticalPercent > 100.0))
             {
-                throw new ArgumentOutOfRangeException(nameof(verticalPercent), SR.Format(SR.ScrollViewer_OutOfRange, "verticalPercent", verticalPercent.ToString(CultureInfo.InvariantCulture), "0", "100"));
+                throw new ArgumentOutOfRangeException("verticalPercent", SR.Format(SR.ScrollViewer_OutOfRange, "verticalPercent", verticalPercent.ToString(CultureInfo.InvariantCulture), "0", "100"));
             }
 
             if (scrollHorizontally)

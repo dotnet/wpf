@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: 
 //      Proxy registration.
@@ -28,7 +29,7 @@ namespace UIAutomationClientsideProviders
         /// <summary>
         /// Table of client-side providers for various common Win32 controls
         /// </summary>
-        public static ClientSideProviderDescription[] ClientSideProviderDescriptionTable =
+        static public ClientSideProviderDescription[] ClientSideProviderDescriptionTable =
         {
             // Windows proxies
             new ClientSideProviderDescription(new ClientSideProviderFactoryCallback(MS.Internal.AutomationProxies.WindowsButton.Create), "Button"),

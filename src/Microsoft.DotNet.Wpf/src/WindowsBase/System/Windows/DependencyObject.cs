@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // #define NESTED_OPERATIONS_CHECK
 
@@ -134,7 +135,7 @@ namespace System.Windows
         ///     Since a DO can never be immutable (attached properties, etc.)
         ///     it makes sense to disallow overriding of Equals.
         /// </summary>
-        public sealed override bool Equals(Object obj)
+        public override sealed bool Equals(Object obj)
         {
             return base.Equals(obj);
         }
@@ -143,7 +144,7 @@ namespace System.Windows
         ///     CS0659: Required when overriding Equals().  Overriding
         ///     GetHashCode() is a bad idea for similar reasons.
         /// </summary>
-        public sealed override int GetHashCode()
+        public override sealed int GetHashCode()
         {
             return base.GetHashCode();
         }
@@ -2025,7 +2026,7 @@ namespace System.Windows
 
             if( e.Property == null )
             {
-                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "e.Property"), nameof(e));
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "e.Property"), "e");
             }
 
             if (e.IsAValueChange || e.IsASubPropertyChange || e.OperationType == OperationType.ChangeMutableDefaultValue)
@@ -2338,7 +2339,7 @@ namespace System.Windows
         // (using the following DP as the key).  The property engine will forward
         // notifications to direct dependents, the binding will hear about the change,
         // and will forward a sub-property change to the Border.
-        internal static readonly DependencyProperty DirectDependencyProperty =
+        static internal readonly DependencyProperty DirectDependencyProperty =
             DependencyProperty.Register("__Direct", typeof(object), typeof(DependencyProperty));
 
         internal static void UpdateSourceDependentLists(DependencyObject d, DependencyProperty dp, DependencySource[] sources, Expression expr, bool add)
@@ -2639,7 +2640,7 @@ namespace System.Windows
             }
             finally
             {
-                Debug.Assert(!CanModifyEffectiveValues, "We do not expect re-entrancy here.");
+                Debug.Assert(CanModifyEffectiveValues == false, "We do not expect re-entrancy here.");
                 CanModifyEffectiveValues = true;
             }
 
@@ -3109,7 +3110,7 @@ namespace System.Windows
             Debug.Assert(!debugIndex.Found && debugIndex.Index == entryIndex, "Inserting duplicate");
 #endif
 
-            if (!CanModifyEffectiveValues)
+            if (CanModifyEffectiveValues == false)
             {
                 throw new InvalidOperationException(SR.LocalValueEnumerationInvalidated);
             }
@@ -3154,7 +3155,7 @@ namespace System.Windows
             // For thread-safety, sealed DOs can't modify _effectiveValues.
             Debug.Assert(!DO_Sealed, "A Sealed DO cannot be modified");
 
-            if (!CanModifyEffectiveValues)
+            if (CanModifyEffectiveValues == false)
             {
                 throw new InvalidOperationException(SR.LocalValueEnumerationInvalidated);
             }
@@ -3356,7 +3357,7 @@ namespace System.Windows
         {
             Debug.Assert(value != DependencyProperty.UnsetValue, "Value to be set cannot be UnsetValue");
             Debug.Assert(baseValue != DependencyProperty.UnsetValue, "BaseValue to be set cannot be UnsetValue");
-            Debug.Assert(entryIndex.Found, "The baseValue for the expression should have been inserted prior to this and hence there should already been an entry for it.");
+            Debug.Assert(entryIndex.Found == true, "The baseValue for the expression should have been inserted prior to this and hence there should already been an entry for it.");
 
             // For thread-safety, sealed DOs can't modify _effectiveValues.
             Debug.Assert(!DO_Sealed, "A Sealed DO cannot be modified");

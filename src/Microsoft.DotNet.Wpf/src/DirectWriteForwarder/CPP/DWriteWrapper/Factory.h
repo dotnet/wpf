@@ -11,6 +11,8 @@
 #include "FontFace.h"
 #include "FontCollection.h"
 #include "DWriteTypeConverter.h"
+#include "IFontSourceCollection.h"
+#include "FontCollectionLoader.h"
 #include "FontFileLoader.h"
 #include "TextAnalyzer.h"
 #include "NativePointerWrapper.h"

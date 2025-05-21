@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //------------------------------------------------------------------------------
@@ -10,13 +11,15 @@
 //              a set of "C# prime" files, then executes the project.
 //
 
-using System.CodeDom.Compiler;
-using System.Collections;
-using System.Reflection;
-using System.Text;
-
 namespace MS.Internal.Csp
 {
+    using System;
+    using System.IO;
+    using System.Text;
+    using System.Collections;
+    using System.Reflection;
+    using System.CodeDom.Compiler;
+
     // This kind of exception is thrown when csp detects an
     // error in the project.
     public class CspProjectException : ApplicationException
@@ -93,7 +96,7 @@ namespace MS.Internal.Csp
 
             // Add some implicit referenced assemblies. 
 
-            referencedAssemblies.Add(string.IsNullOrEmpty(parameters.ClrDir) ? "System.dll" : Path.Combine(parameters.ClrDir, "System.dll"));
+            referencedAssemblies.Add(Path.Combine(parameters.ClrDir, "System.dll"));
             if (parameters.EnableCsPrime)
             {
                 // Needed so that the project can access MS.Internal.Csp.CsPrimeRuntime.
@@ -103,12 +106,10 @@ namespace MS.Internal.Csp
             referencedAssemblies.AddRange(parameters.ReferencedAssemblies);
 
             CompilerParameters cp = new CompilerParameters(
-                (string[])referencedAssemblies.ToArray(typeof(string))
-                )
-            {
-                GenerateExecutable = true,
-                IncludeDebugInformation = true
-            };
+                (string[]) referencedAssemblies.ToArray(typeof(string))
+                );
+            cp.GenerateExecutable = true;
+            cp.IncludeDebugInformation = true;
 
 
             // GenerateInMemory:
@@ -337,9 +338,9 @@ namespace MS.Internal.Csp
         //------------------------------------------------------
 
         #region Private Fields
-        private Assembly _assembly;
-        private TempDirectory _tempDirectory;
-        private bool _breakBeforeInvoke;
+        Assembly _assembly;
+        TempDirectory _tempDirectory;
+        bool _breakBeforeInvoke;
         #endregion Private Fields
     }
 }

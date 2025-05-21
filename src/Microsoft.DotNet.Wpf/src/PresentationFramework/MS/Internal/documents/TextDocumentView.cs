@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // 
 // Description: TextView implementation for FlowDocument pages. 
@@ -86,10 +87,10 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, nameof(position));
+            ValidationHelper.VerifyPosition(_textContainer, position, "position");
             if (!ContainsCore(position))
             {
-                throw new ArgumentOutOfRangeException(nameof(position));
+                throw new ArgumentOutOfRangeException("position");
             }
             _owner.EnsureValidVisuals();
 
@@ -114,8 +115,8 @@ namespace MS.Internal.Documents
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
 
-            ValidationHelper.VerifyPosition(_textContainer, startPosition, nameof(startPosition));
-            ValidationHelper.VerifyPosition(_textContainer, endPosition, nameof(endPosition));
+            ValidationHelper.VerifyPosition(_textContainer, startPosition, "startPosition");
+            ValidationHelper.VerifyPosition(_textContainer, endPosition, "endPosition");
 
             _owner.EnsureValidVisuals();
 
@@ -229,10 +230,10 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, nameof(position));
+            ValidationHelper.VerifyPosition(_textContainer, position, "position");
             if (!ContainsCore(position))
             {
-                throw new ArgumentOutOfRangeException(nameof(position));
+                throw new ArgumentOutOfRangeException("position");
             }
 
             _owner.EnsureValidVisuals();
@@ -280,10 +281,10 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, nameof(position));
+            ValidationHelper.VerifyPosition(_textContainer, position, "position");
             if (!ContainsCore(position))
             {
-                throw new ArgumentOutOfRangeException(nameof(position));
+                throw new ArgumentOutOfRangeException("position");
             }
 
             return IsAtCaretUnitBoundary(Columns, FloatingElements, position);
@@ -299,11 +300,11 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, nameof(position));
+            ValidationHelper.VerifyPosition(_textContainer, position, "position");
             ValidationHelper.VerifyDirection(direction, "direction");
             if (!ContainsCore(position))
             {
-                throw new ArgumentOutOfRangeException(nameof(position));
+                throw new ArgumentOutOfRangeException("position");
             }
 
             return GetNextCaretUnitPosition(Columns, FloatingElements, position, direction);
@@ -319,10 +320,10 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, nameof(position));
+            ValidationHelper.VerifyPosition(_textContainer, position, "position");
             if (!ContainsCore(position))
             {
-                throw new ArgumentOutOfRangeException(nameof(position));
+                throw new ArgumentOutOfRangeException("position");
             }
 
             return GetBackspaceCaretUnitPosition(Columns, FloatingElements, position);
@@ -338,10 +339,10 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, nameof(position));
+            ValidationHelper.VerifyPosition(_textContainer, position, "position");
             if (!ContainsCore(position))
             {
-                throw new ArgumentOutOfRangeException(nameof(position));
+                throw new ArgumentOutOfRangeException("position");
             }
 
             return GetLineRangeFromPosition(Columns, FloatingElements, position);
@@ -359,16 +360,16 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, start, nameof(start));
-            ValidationHelper.VerifyPosition(_textContainer, end, nameof(end));
+            ValidationHelper.VerifyPosition(_textContainer, start, "start");
+            ValidationHelper.VerifyPosition(_textContainer, end, "end");
             ValidationHelper.VerifyPositionPair(start, end);
             if (!ContainsCore(start))
             {
-                throw new ArgumentOutOfRangeException(nameof(start));
+                throw new ArgumentOutOfRangeException("start");
             }
             if (!ContainsCore(end))
             {
-                throw new ArgumentOutOfRangeException(nameof(end));
+                throw new ArgumentOutOfRangeException("end");
             }
 
             GetGlyphRuns(glyphRuns, start, end, Columns, FloatingElements);
@@ -386,7 +387,7 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, nameof(position));
+            ValidationHelper.VerifyPosition(_textContainer, position, "position");
             return ContainsCore(position);
         }
 
@@ -587,7 +588,7 @@ namespace MS.Internal.Documents
                 // Verify that layout information is valid. Cannot continue if not valid.
                 if (!IsValid)
                 {
-                    return ReadOnlyCollection<TextSegment>.Empty;
+                    return new ReadOnlyCollection<TextSegment>(new List<TextSegment>());
                 }
                 return this.TextSegmentsCore;
             }
@@ -1032,19 +1033,28 @@ namespace MS.Internal.Documents
 
                 // WOOT! COLUMNS!
                 cellInfo = GetCellInfoFromPoint(subpageParagraphResult.Columns, subpageParagraphResult.FloatingElements, point, tableFilter);
-                cellInfo?.Adjust(new Point(subpageParagraphResult.ContentOffset.X, subpageParagraphResult.ContentOffset.Y));
+                if (cellInfo != null)
+                {
+                    cellInfo.Adjust(new Point(subpageParagraphResult.ContentOffset.X, subpageParagraphResult.ContentOffset.Y));
+                }
             }
             else if (paragraph is FigureParagraphResult figureParagraphResult) // Subpage implies new coordinate system.
             {
                 TransformToSubpage(ref point, figureParagraphResult.ContentOffset);
                 cellInfo = GetCellInfoFromPoint(figureParagraphResult.Columns, figureParagraphResult.FloatingElements, point, tableFilter);
-                cellInfo?.Adjust(new Point(figureParagraphResult.ContentOffset.X, figureParagraphResult.ContentOffset.Y));
+                if (cellInfo != null)
+                {
+                    cellInfo.Adjust(new Point(figureParagraphResult.ContentOffset.X, figureParagraphResult.ContentOffset.Y));
+                }
             }
             else if (paragraph is FloaterParagraphResult floaterParagraphResult) // Subpage implies new coordinate system.
             {
                 TransformToSubpage(ref point, floaterParagraphResult.ContentOffset);
                 cellInfo = GetCellInfoFromPoint(floaterParagraphResult.Columns, floaterParagraphResult.FloatingElements, point, tableFilter);
-                cellInfo?.Adjust(new Point(floaterParagraphResult.ContentOffset.X, floaterParagraphResult.ContentOffset.Y));
+                if (cellInfo != null)
+                {
+                    cellInfo.Adjust(new Point(floaterParagraphResult.ContentOffset.X, floaterParagraphResult.ContentOffset.Y));
+                }
             }
 
             if (tableFilter != null && cellInfo != null && cellInfo.Cell.Table != tableFilter)
@@ -2471,7 +2481,7 @@ namespace MS.Internal.Documents
                         }
                         else
                         {
-                            lineIndex += count;
+                            lineIndex = lineIndex + count;
                             count = 0;
                         }
 
@@ -2950,7 +2960,7 @@ namespace MS.Internal.Documents
                 }
                 else
                 {
-                    lineIndex += count;
+                    lineIndex = lineIndex + count;
                     count = 0;
                 }
 
@@ -3514,7 +3524,7 @@ namespace MS.Internal.Documents
         /// <summary>
         /// Cached collection of ColumnResults.
         /// </summary>
-        private static ReadOnlyCollection<ParagraphResult> _emptyParagraphCollection = ReadOnlyCollection<ParagraphResult>.Empty;
+        private static ReadOnlyCollection<ParagraphResult> _emptyParagraphCollection = new ReadOnlyCollection<ParagraphResult>(new List<ParagraphResult>(0));
 
         /// <summary>
         /// Cached collection of TextSegments.

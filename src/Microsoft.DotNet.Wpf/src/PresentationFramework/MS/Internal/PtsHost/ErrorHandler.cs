@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Helpers to handle unexpected situations.
@@ -23,7 +24,7 @@ namespace MS.Internal.PtsHost
 #if DEBUG
             if (!condition)
             {
-                System.Diagnostics.Debug.Fail(message);
+                System.Diagnostics.Debug.Assert(false, message);
             }
 #endif
         }
@@ -37,7 +38,7 @@ namespace MS.Internal.PtsHost
             if (!condition)
             {
                 string message = String.Format(CultureInfo.InvariantCulture, format, args);
-                System.Diagnostics.Debug.Fail(message);
+                System.Diagnostics.Debug.Assert(false, message);
             }
 #endif
         }

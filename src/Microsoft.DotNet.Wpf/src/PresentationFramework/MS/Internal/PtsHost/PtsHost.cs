@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /* SSS_DROP_BEGIN */
 
@@ -566,7 +567,7 @@ namespace MS.Internal.PtsHost
             int* rgcColumns,                    // OUT: arrays of number of columns spanned
             out int cAreasActual)               // OUT: actual number of segment-defined areas
         {
-            Debug.Fail("PTS.GetSegmentDefinedColumnSpanAreaInfo is not implemented.");
+            Debug.Assert(false, "PTS.GetSegmentDefinedColumnSpanAreaInfo is not implemented.");
             cAreasActual = 0;
             return PTS.fserrNotImplemented;
         }
@@ -578,7 +579,7 @@ namespace MS.Internal.PtsHost
             int* rgcColumns,                    // OUT: arrays of number of columns spanned
             out int cAreasActual)               // OUT: actual number of height-defined areas
         {
-            Debug.Fail("PTS.GetHeightDefinedColumnSpanAreaInfo is not implemented.");
+            Debug.Assert(false, "PTS.GetHeightDefinedColumnSpanAreaInfo is not implemented.");
             cAreasActual = 0;
             return PTS.fserrNotImplemented;
         }
@@ -866,7 +867,7 @@ namespace MS.Internal.PtsHost
             IntPtr nms,                         // IN:  name of section
             out int ccolEndnote)                // OUT: number of columns in endnote area
         {
-            Debug.Fail("PTS.GetNumberEndnoteColumns is not implemented.");
+            Debug.Assert(false, "PTS.GetNumberEndnoteColumns is not implemented.");
             ccolEndnote = 0;
             return PTS.fserrNotImplemented;
         }
@@ -878,7 +879,7 @@ namespace MS.Internal.PtsHost
             PTS.FSCOLUMNINFO* fscolinfoEndnote, // OUT: array of the colinfo structures
             out int ccolEndnote)                // OUT: actual number of the columns in footnote area
         {
-            Debug.Fail("PTS.GetEndnoteColumnInfo is not implemented.");
+            Debug.Assert(false, "PTS.GetEndnoteColumnInfo is not implemented.");
             ccolEndnote = 0;
             return PTS.fserrNotImplemented;
         }
@@ -889,7 +890,7 @@ namespace MS.Internal.PtsHost
             out IntPtr nmsFtnContSeparator,     // OUT: name of the ftn cont separator segment
             out IntPtr nmsFtnContNotice)        // OUT: name of the footnote cont notice segment
         {
-            Debug.Fail("PTS.GetFootnoteSeparators is not implemented.");
+            Debug.Assert(false, "PTS.GetFootnoteSeparators is not implemented.");
             nmsFtnSeparator = nmsFtnContSeparator = nmsFtnContNotice = IntPtr.Zero;
             return PTS.fserrNotImplemented;
         }
@@ -898,7 +899,7 @@ namespace MS.Internal.PtsHost
             IntPtr nms,                         // IN:  name of section
             out int fFootnoteBeneathText)       // OUT: position footnote right after text?
         {
-            Debug.Fail("PTS.FFootnoteBeneathText is not implemented.");
+            Debug.Assert(false, "PTS.FFootnoteBeneathText is not implemented.");
             fFootnoteBeneathText = 0;
             return PTS.fserrNotImplemented;
         }
@@ -907,7 +908,7 @@ namespace MS.Internal.PtsHost
             IntPtr nms,                         // IN:  name of section
             out int ccolFootnote)               // OUT: number of columns in footnote area
         {
-            Debug.Fail("PTS.GetNumberFootnoteColumns is not implemented.");
+            Debug.Assert(false, "PTS.GetNumberFootnoteColumns is not implemented.");
             ccolFootnote = 0;
             return PTS.fserrNotImplemented;
         }
@@ -919,7 +920,7 @@ namespace MS.Internal.PtsHost
             PTS.FSCOLUMNINFO* fscolinfoFootnote,// OUT: array of the colinfo structures
             out int ccolFootnote)               // OUT: actual number of the columns in footnote area
         {
-            Debug.Fail("PTS.GetFootnoteColumnInfo is not implemented.");
+            Debug.Assert(false, "PTS.GetFootnoteColumnInfo is not implemented.");
             ccolFootnote = 0;
             return PTS.fserrNotImplemented;
         }
@@ -928,7 +929,7 @@ namespace MS.Internal.PtsHost
             IntPtr nmftn,                       // IN:  name of footnote
             out IntPtr nmsFootnote)             // OUT: name of footnote segment
         {
-            Debug.Fail("PTS.GetFootnoteSegment is not implemented.");
+            Debug.Assert(false, "PTS.GetFootnoteSegment is not implemented.");
             nmsFootnote = IntPtr.Zero;
             return PTS.fserrNotImplemented;
         }
@@ -942,7 +943,7 @@ namespace MS.Internal.PtsHost
             out int fProposedRejectionOrderAccepted,    // OUT: agree with proposed order?
             IntPtr* rgFinalRejectionOrder)              // OUT: footnotes in final reject order
         {
-            Debug.Fail("PTS.GetFootnotePresentationAndRejectionOrder is not implemented.");
+            Debug.Assert(false, "PTS.GetFootnotePresentationAndRejectionOrder is not implemented.");
             fProposedPresentationOrderAccepted = fProposedRejectionOrderAccepted = 0;
             return PTS.fserrNotImplemented;
         }
@@ -951,7 +952,7 @@ namespace MS.Internal.PtsHost
             IntPtr nmftn,                       // IN:  name of footnote
             out int fAllow)                     // OUT: allow separating footnote from its reference
         {
-            Debug.Fail("PTS.FAllowFootnoteSeparation is not implemented.");
+            Debug.Assert(false, "PTS.FAllowFootnoteSeparation is not implemented.");
             fAllow = 0;
             return PTS.fserrNotImplemented;
         }
@@ -1249,7 +1250,7 @@ namespace MS.Internal.PtsHost
             int* rgdcp,                         // OUT: array of footnote refs in the range
             out int cFootnotes)                 // OUT: actual number of footnotes
         {
-            Debug.Fail("PTS.GetFootnotes is not implemented.");
+            Debug.Assert(false, "PTS.GetFootnotes is not implemented.");
             cFootnotes = 0;
             return PTS.fserrNotImplemented;
         }
@@ -1268,7 +1269,7 @@ namespace MS.Internal.PtsHost
             out int cVertices,                  // OUT: number of vertices
             out int durText)                    // OUT: distance from text
         {
-            Debug.Fail("PTS.FormatDropCap is not implemented.");
+            Debug.Assert(false, "PTS.FormatDropCap is not implemented.");
             pfsdropc = IntPtr.Zero;
             fInMargin = dur = dvr = cPolygons = cVertices = durText = 0;
             return PTS.fserrNotImplemented;
@@ -1286,7 +1287,7 @@ namespace MS.Internal.PtsHost
             out int cfspt,                      // OUT: actual total number of vertices in all polygons
             out int fWrapThrough)               // OUT: fill text in empty areas within obstacles?
         {
-            Debug.Fail("PTS.GetDropCapPolygons is not implemented.");
+            Debug.Assert(false, "PTS.GetDropCapPolygons is not implemented.");
             ccVertices = cfspt = fWrapThrough = 0;
             return PTS.fserrNotImplemented;
         }
@@ -1294,7 +1295,7 @@ namespace MS.Internal.PtsHost
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsdropc)                    // IN:  pointer to drop cap created by client
         {
-            Debug.Fail("PTS.DestroyDropCap is not implemented.");
+            Debug.Assert(false, "PTS.DestroyDropCap is not implemented.");
             return PTS.fserrNotImplemented;
         }
         internal int FormatBottomText(IntPtr pfsclient,                   // IN:  client opaque data
@@ -1702,7 +1703,7 @@ namespace MS.Internal.PtsHost
             int vrCurrent,                      // IN:  current vertical position
             out int vrNew)                      // OUT: snapped vertical position
         {
-            Debug.Fail("PTS.SnapGridVertical is not implemented.");
+            Debug.Assert(false, "PTS.SnapGridVertical is not implemented.");
             vrNew = 0;
             return PTS.fserrNotImplemented;
         }
@@ -1803,7 +1804,7 @@ namespace MS.Internal.PtsHost
             IntPtr nmp,                         // IN:  name of paragraph
             out int fChanged)                   // OUT: dropcap changed?
         {
-            Debug.Fail("PTS.UpdGetDropCapChange is not implemented.");
+            Debug.Assert(false, "PTS.UpdGetDropCapChange is not implemented.");
             fChanged = 0;
             return PTS.fserrNotImplemented;
         }
@@ -1904,7 +1905,7 @@ namespace MS.Internal.PtsHost
             int cLines,                         // IN:  number of lines - size of pre-allocated array
             int* rgdcp)                         // OUT: array of dcp's to fill
         {
-            Debug.Fail("PTS.GetOptimalLineDcpCache is not implemented.");
+            Debug.Assert(false, "PTS.GetOptimalLineDcpCache is not implemented.");
             return PTS.fserrNotImplemented;
         }
 
@@ -2930,7 +2931,7 @@ namespace MS.Internal.PtsHost
             PTS.FSFTNINFO* pfsftninf,           // IN/OUT: array of footnote info
             out int iftnLim)                    // OUT: lim index used by this paragraph
         {
-            Debug.Fail("PTS.ObjGetFootnoteInfo is not implemented.");
+            Debug.Assert(false, "PTS.ObjGetFootnoteInfo is not implemented.");
             iftnLim = 0;
             return PTS.fserrNotImplemented;
         }
@@ -4075,7 +4076,10 @@ namespace MS.Internal.PtsHost
             try
             {
                 CellParaClient cellParaClient = PtsContext.HandleToObject(pfsCell) as CellParaClient;
-                cellParaClient?.Dispose();
+                if (cellParaClient != null)
+                {
+                    cellParaClient.Dispose();
+                }
             }
             catch (Exception e)
             {

@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using MS.Win32.PresentationCore;
@@ -121,7 +122,7 @@ namespace System.Windows.Media.Imaging
 
         internal void Init(Array array, Type type, VarEnum vt)
         {
-            varType = (ushort)vt;
+            varType = (ushort) vt;
             ca.cElems = 0;
             ca.pElems = IntPtr.Zero;
 
@@ -130,16 +131,17 @@ namespace System.Windows.Media.Imaging
             if (length > 0)
             {
                 long size = Marshal.SizeOf(type) * length;
-                IntPtr destPtr = IntPtr.Zero;
+
+                IntPtr destPtr =IntPtr.Zero;
+                GCHandle handle = new GCHandle();
 
                 try
                 {
-                    destPtr = Marshal.AllocCoTaskMem((int)size);
-
+                    destPtr = Marshal.AllocCoTaskMem((int) size);
+                    handle = GCHandle.Alloc(array, GCHandleType.Pinned);
                     unsafe
                     {
-                        fixed (byte* sourcePtr = &MemoryMarshal.GetArrayDataReference(array))
-                            CopyBytes((byte*)destPtr, (int)size, sourcePtr, (int)size);
+                        CopyBytes((byte *) destPtr, (int)size, (byte *)handle.AddrOfPinnedObject(), (int)size);
                     }
 
                     ca.cElems = (uint)length;
@@ -149,6 +151,11 @@ namespace System.Windows.Media.Imaging
                 }
                 finally
                 {
+                    if (handle.IsAllocated)
+                    {
+                        handle.Free();
+                    }
+
                     if (destPtr != IntPtr.Zero)
                     {
                         Marshal.FreeCoTaskMem(destPtr);
@@ -430,7 +437,7 @@ namespace System.Windows.Media.Imaging
             {
                 if (ca.pElems != IntPtr.Zero)
                 {
-                    vt &= ~VarEnum.VT_VECTOR;
+                    vt = vt & ~VarEnum.VT_VECTOR;
 
                     if (vt == VarEnum.VT_UNKNOWN)
                     {

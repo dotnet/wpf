@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 //---------------------------------------------------------------------------
@@ -67,15 +68,23 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 string fullPath = Path.Combine(resourceModel.OutputDirectory, path);
 
                 string moduleReference = "";
+                string sridReference = 
+                            [[inline]]
+                                using SR=System.Windows.SR;
+                            [[/inline]];
 
                 // Duplicate AnimatedTypeHelpers class across Core/Framework causes name conflicts,
                 // requiring that they be split across two namespaces.
                 switch (instance.ModuleName)
                 {
-                    case @"PresentationCore":
+                    case @"Core\CSharp":
                         moduleReference = "using MS.Internal.PresentationCore;";
+                        sridReference = 
+                            [[inline]]
+                                using SR=MS.Internal.PresentationCore.SR;
+                            [[/inline]];
                         break;
-                    case "PresentationFramework":
+                    case "Framework":
                         moduleReference = "using MS.Internal.PresentationFramework;";
                         break;
                 }
@@ -86,11 +95,21 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                         [[inline]]
                             [[Helpers.ManagedStyle.WriteFileHeader(fileName)]]
 
+                            using MS.Internal;
                             using MS.Internal.KnownBoxes;
+
+                            using System;
                             using System.Collections;
+                            using System.Collections.Generic;
                             using System.ComponentModel;
+                            using System.Diagnostics;
+                            using System.Windows;
                             using System.Windows.Markup;
-                            using System.Windows.Media.Media3D;
+                            using System.Windows.Media.Animation;
+                            using System.Windows.Media.Media3D;   
+
+                            [[sridReference]]
+
                             [[moduleReference]]
 
                             namespace System.Windows.Media.Animation
@@ -190,7 +209,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     protected override void CloneCore(Freezable sourceFreezable)
                                     {
-                                        [[instance.TypeName]]AnimationUsingKeyFrames sourceAnimation = ([[instance.TypeName]]AnimationUsingKeyFrames)sourceFreezable;
+                                        [[instance.TypeName]]AnimationUsingKeyFrames sourceAnimation = ([[instance.TypeName]]AnimationUsingKeyFrames) sourceFreezable;
                                         base.CloneCore(sourceFreezable);
 
                                         CopyCommon(sourceAnimation, /* isCurrentValueClone = */ false);
@@ -201,7 +220,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     protected override void CloneCurrentValueCore(Freezable sourceFreezable)
                                     {
-                                        [[instance.TypeName]]AnimationUsingKeyFrames sourceAnimation = ([[instance.TypeName]]AnimationUsingKeyFrames)sourceFreezable;
+                                        [[instance.TypeName]]AnimationUsingKeyFrames sourceAnimation = ([[instance.TypeName]]AnimationUsingKeyFrames) sourceFreezable;
                                         base.CloneCurrentValueCore(sourceFreezable);
 
                                         CopyCommon(sourceAnimation, /* isCurrentValueClone = */ true);
@@ -212,7 +231,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     protected override void GetAsFrozenCore(Freezable source)
                                     {
-                                        [[instance.TypeName]]AnimationUsingKeyFrames sourceAnimation = ([[instance.TypeName]]AnimationUsingKeyFrames)source;
+                                        [[instance.TypeName]]AnimationUsingKeyFrames sourceAnimation = ([[instance.TypeName]]AnimationUsingKeyFrames) source;
                                         base.GetAsFrozenCore(source);
 
                                         CopyCommon(sourceAnimation, /* isCurrentValueClone = */ false);
@@ -223,7 +242,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     protected override void GetCurrentValueAsFrozenCore(Freezable source)
                                     {
-                                        [[instance.TypeName]]AnimationUsingKeyFrames sourceAnimation = ([[instance.TypeName]]AnimationUsingKeyFrames)source;
+                                        [[instance.TypeName]]AnimationUsingKeyFrames sourceAnimation = ([[instance.TypeName]]AnimationUsingKeyFrames) source;
                                         base.GetCurrentValueAsFrozenCore(source);
 
                                         CopyCommon(sourceAnimation, /* isCurrentValueClone = */ true);
@@ -280,7 +299,10 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     {
                                         WritePreamble();
 
-                                        ArgumentNullException.ThrowIfNull(child);
+                                        if (child == null)
+                                        {
+                                            throw new ArgumentNullException("child");
+                                        }
 
                                         AddChild(child);
 
@@ -302,7 +324,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         }
                                         else
                                         {        
-                                            throw new ArgumentException(SR.Animation_ChildMustBeKeyFrame, nameof(child));
+                                            throw new ArgumentException(SR.Animation_ChildMustBeKeyFrame, "child");
                                         }
                                     }
 
@@ -321,7 +343,10 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// null.</exception>
                                     void IAddChild.AddText(string childText)
                                     {
-                                        ArgumentNullException.ThrowIfNull(childText);
+                                        if (childText == null)
+                                        {
+                                            throw new ArgumentNullException("childText");
+                                        }
 
                                         AddText(childText);
                                     }
@@ -587,7 +612,10 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         }
                                         set
                                         {
-                                            ArgumentNullException.ThrowIfNull(value);
+                                            if (value == null)
+                                            {
+                                                throw new ArgumentNullException("value");
+                                            }
                                             
                                             WritePreamble();
                                             
@@ -791,7 +819,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         }
                                         
                                         int maxKeyFrameIndex = keyFrameCount - 1;
-                                        List<KeyTimeBlock> unspecifiedBlocks = new List<KeyTimeBlock>();
+                                        ArrayList unspecifiedBlocks = new ArrayList();
                                         bool hasPacedKeyTimes = false;
                                         
                                         //
@@ -858,10 +886,8 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                                             hasPacedKeyTimes = true;
                                                         }
                                                         
-                                                        KeyTimeBlock block = new KeyTimeBlock
-                                                        {
-                                                            BeginIndex = index
-                                                        };
+                                                        KeyTimeBlock block = new KeyTimeBlock();
+                                                        block.BeginIndex = index;
                                                        
                                                         // NOTE: We don't want to go all the way up to the
                                                         // last frame because if it is Uniform or Paced its
@@ -881,11 +907,11 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                                                 || type == KeyTimeType.TimeSpan)
                                                             {
                                                                 break;
-                                                            }
+                                                            }   
                                                             else if (type == KeyTimeType.Paced)
                                                             {
                                                                 hasPacedKeyTimes = true;
-                                                            }
+                                                            }                                
                                                         }
 
                                                         Debug.Assert(index < keyFrameCount, 
@@ -905,7 +931,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         
                                         for (int j = 0; j < unspecifiedBlocks.Count; j++)
                                         {
-                                            KeyTimeBlock block = unspecifiedBlocks[j];
+                                            KeyTimeBlock block = (KeyTimeBlock)unspecifiedBlocks[j];
 
                                             TimeSpan blockBeginTime = TimeSpan.Zero;
                                             
@@ -1051,7 +1077,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                             {
                                                 index++;
                                             }
-                                        }
+                                        } 
                                         while (index < maxKeyFrameIndex);
                                     }
                                     
@@ -1087,7 +1113,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
             else
             {
                 return "fromValue = defaultOriginValue;";
-            }
+            }                 
         }
 
         private List<AnimationUsingKeyFramesTemplateInstance> Instances = new List<AnimationUsingKeyFramesTemplateInstance>();

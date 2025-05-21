@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Base class for content in text based FrameworkElement.
@@ -1093,7 +1094,10 @@ namespace System.Windows.Documents
                         // child.Current could be FrameworkElement, FrameworkContentElement,
                         //  or anything else.  Only recursively call self for FE & FCE.
                         TextElement child = children.Current as TextElement;
-                        child?.DeepEndInit();
+                        if (child != null)
+                        {
+                            child.DeepEndInit();
+                        }
                     }
                 }
 
@@ -1407,7 +1411,7 @@ namespace System.Windows.Documents
                 }
 
                 TextTreeTextElementNode node = _textElementNode.GetNextNode() as TextTreeTextElementNode;
-                return node?.TextElement;
+                return (node != null) ? node.TextElement : null;
             }
         }
 
@@ -1425,7 +1429,7 @@ namespace System.Windows.Documents
                 }
 
                 TextTreeTextElementNode node = _textElementNode.GetPreviousNode() as TextTreeTextElementNode;
-                return node?.TextElement;
+                return (node != null) ? node.TextElement : null;
             }
         }
 
@@ -1443,7 +1447,7 @@ namespace System.Windows.Documents
                 }
 
                 TextTreeTextElementNode node = _textElementNode.GetFirstContainedNode() as TextTreeTextElementNode;
-                return node?.TextElement;
+                return (node != null) ? node.TextElement : null;
             }
         }
 
@@ -1461,7 +1465,7 @@ namespace System.Windows.Documents
                 }
 
                 TextTreeTextElementNode node = _textElementNode.GetLastContainedNode() as TextTreeTextElementNode;
-                return node?.TextElement;
+                return (node != null) ? node.TextElement : null;
             }
         }
 

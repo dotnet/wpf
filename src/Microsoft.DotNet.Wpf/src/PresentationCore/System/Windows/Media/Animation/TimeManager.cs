@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 #if DEBUG
 #define TRACE
@@ -572,7 +573,7 @@ namespace System.Windows.Media.Animation
 
                 default:
 
-                    Debug.Fail("Unrecognized TimeState enumeration value");
+                    Debug.Assert(false, "Unrecognized TimeState enumeration value");
                     return TimeSpan.Zero;
             }
         }
@@ -615,7 +616,10 @@ namespace System.Windows.Media.Animation
                 WeakReference instance = _eventQueue.Dequeue();
                 Clock clock = (Clock)instance.Target;
 
-                clock?.RaiseAccumulatedEvents();
+                if (clock != null)
+                {
+                    clock.RaiseAccumulatedEvents();
+                }
             }
         }
 

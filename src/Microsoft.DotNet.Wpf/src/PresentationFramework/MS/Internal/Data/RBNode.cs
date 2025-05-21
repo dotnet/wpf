@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: Node in a red-black tree.
@@ -36,10 +37,10 @@ namespace MS.Internal.Data
         public bool IsRed { get; set; }
         public virtual bool HasData { get { return true; } }
 
-        private int _size;
+        int _size;
         public int Size { get { return _size; } set { _size = value; OnPropertyChanged("Size"); } }
 
-        private int _leftSize;
+        int _leftSize;
         public int LeftSize { get { return _leftSize; } set { _leftSize = value; OnPropertyChanged("LeftSize"); } }
 
         public T GetItemAt(int offset) { return _data[offset]; }
@@ -220,7 +221,7 @@ namespace MS.Internal.Data
             return result;
         }
 
-        private int BinarySearch(T x, int low, int high, Comparison<T> comparison, int compHigh, out bool found)
+        int BinarySearch(T x, int low, int high, Comparison<T> comparison, int compHigh, out bool found)
         {
             while (high - low > BinarySearchThreshold)
             {
@@ -540,7 +541,7 @@ namespace MS.Internal.Data
             }
         }
 
-        private RBNode<T> Substitute(RBNode<T> node, RBNode<T> sub, RBNode<T> parent)
+        RBNode<T> Substitute(RBNode<T> node, RBNode<T> sub, RBNode<T> parent)
         {
             sub.LeftChild = node.LeftChild;
             sub.RightChild = node.RightChild;
@@ -548,8 +549,8 @@ namespace MS.Internal.Data
             sub.Parent = node.Parent;
             sub.IsRed = node.IsRed;
 
-            sub.LeftChild?.Parent = sub;
-            sub.RightChild?.Parent = sub;
+            if (sub.LeftChild != null) sub.LeftChild.Parent = sub;
+            if (sub.RightChild != null) sub.RightChild.Parent = sub;
             return sub;
         }
 
@@ -596,7 +597,7 @@ namespace MS.Internal.Data
             return Fixup(node);
         }
 
-        private RBNode<T> DeleteLeftmost(RBNode<T> node, out RBNode<T> leftmost)
+        RBNode<T> DeleteLeftmost(RBNode<T> node, out RBNode<T> leftmost)
         {
             if (node.LeftChild == null)
             {
@@ -612,47 +613,47 @@ namespace MS.Internal.Data
             return Fixup(node);
         }
 
-        private bool IsNodeRed(RBNode<T> node)
+        bool IsNodeRed(RBNode<T> node)
         {
             return node != null && node.IsRed;
         }
 
-        private RBNode<T> RotateLeft()
+        RBNode<T> RotateLeft()
         {
             RBNode<T> node = this.RightChild;
             node.LeftSize += this.LeftSize + this.Size;
             node.IsRed = this.IsRed;
             node.Parent = this.Parent;
             this.RightChild = node.LeftChild;
-            this.RightChild?.Parent = this;
+            if (this.RightChild != null) this.RightChild.Parent = this;
             node.LeftChild = this;
             this.IsRed = true;
             this.Parent = node;
             return node;
         }
 
-        private RBNode<T> RotateRight()
+        RBNode<T> RotateRight()
         {
             RBNode<T> node = this.LeftChild;
             this.LeftSize -= node.LeftSize + node.Size;
             node.IsRed = this.IsRed;
             node.Parent = this.Parent;
             this.LeftChild = node.RightChild;
-            this.LeftChild?.Parent = this;
+            if (this.LeftChild != null) this.LeftChild.Parent = this;
             node.RightChild = this;
             this.IsRed = true;
             this.Parent = node;
             return node;
         }
 
-        private void ColorFlip()
+        void ColorFlip()
         {
             this.IsRed = !this.IsRed;
             LeftChild.IsRed = !LeftChild.IsRed;
             RightChild.IsRed = !RightChild.IsRed;
         }
 
-        private RBNode<T> Fixup(RBNode<T> node)
+        RBNode<T> Fixup(RBNode<T> node)
         {
             if (!IsNodeRed(node.LeftChild) && IsNodeRed(node.RightChild))
                 node = node.RotateLeft();
@@ -663,7 +664,7 @@ namespace MS.Internal.Data
             return node;
         }
 
-        private RBNode<T> MoveRedRight(RBNode<T> node)
+        RBNode<T> MoveRedRight(RBNode<T> node)
         {
             node.ColorFlip();
             if (IsNodeRed(node.LeftChild.LeftChild))
@@ -674,7 +675,7 @@ namespace MS.Internal.Data
             return node;
         }
 
-        private RBNode<T> MoveRedLeft(RBNode<T> node)
+        RBNode<T> MoveRedLeft(RBNode<T> node)
         {
             node.ColorFlip();
             if (IsNodeRed(node.RightChild.LeftChild))
@@ -693,7 +694,7 @@ namespace MS.Internal.Data
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
 
-        private T[] _data;
+        T[] _data;
 
         #region Debugging
 #if DEBUG
@@ -790,12 +791,12 @@ namespace MS.Internal.Data
             }
         }
 
-        private int AsInt(object x)
+        int AsInt(object x)
         {
             return (x is int) ? (int)x : 0;
         }
 
-        private T AsT(object x)
+        T AsT(object x)
         {
             return (x is T) ? (T)x : default(T);
         }
@@ -817,34 +818,34 @@ namespace MS.Internal.Data
             s = s.Substring(1);
 
             index = s.IndexOf(',');         // read LeftSize
-            node.LeftSize = Int32.Parse(s.AsSpan(0, index), TypeConverterHelper.InvariantEnglishUS);
+            node.LeftSize = Int32.Parse(s.Substring(0, index), TypeConverterHelper.InvariantEnglishUS);
             s = s.Substring(index + 1);
 
             index = s.IndexOf(',');         // read Size
-            node.Size = Int32.Parse(s.AsSpan(0, index), TypeConverterHelper.InvariantEnglishUS);
+            node.Size = Int32.Parse(s.Substring(0, index), TypeConverterHelper.InvariantEnglishUS);
             s = s.Substring(index+1);
 
             for (int k = 0; k < node.Size-1; ++k) // read data
             {
                 index = s.IndexOf(',');
-                node.SetItemAt(k, AsT(Int32.Parse(s.AsSpan(0, index), TypeConverterHelper.InvariantEnglishUS)));
+                node.SetItemAt(k, AsT(Int32.Parse(s.Substring(0, index), TypeConverterHelper.InvariantEnglishUS)));
                 s = s.Substring(index+1);
             }
             index = s.IndexOf('(');
-            node.SetItemAt(node.Size - 1, AsT(Int32.Parse(s.AsSpan(0, index), TypeConverterHelper.InvariantEnglishUS)));
+            node.SetItemAt(node.Size - 1, AsT(Int32.Parse(s.Substring(0, index), TypeConverterHelper.InvariantEnglishUS)));
             s = s.Substring(index);
 
             node.LeftChild = LoadTree(ref s);   // read subtrees
             node.RightChild = LoadTree(ref s);
-            node.LeftChild?.Parent = node;
-            node.RightChild?.Parent = node;
+            if (node.LeftChild != null) node.LeftChild.Parent = node;
+            if (node.RightChild != null) node.RightChild.Parent = node;
 
             s = s.Substring(1);             // skip ')'
 
             return node;
         }
 
-        protected static int BlackHeight { get; set; }
+        static protected int BlackHeight { get; set; }
 
 #endif // DEBUG
         #endregion Debugging

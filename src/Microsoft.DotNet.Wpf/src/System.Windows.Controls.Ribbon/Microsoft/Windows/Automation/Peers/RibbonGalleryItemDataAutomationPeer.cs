@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 
@@ -40,19 +41,19 @@ namespace Microsoft.Windows.Automation.Peers
         #region AutomationPeer override
 
         ///
-        protected override string GetClassNameCore()
+        override protected string GetClassNameCore()
         {
             return "RibbonGalleryItem";
         }
 
         ///
-        protected override AutomationControlType GetAutomationControlTypeCore()
+        override protected AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.ListItem;
         }
 
         ///
-        public override object GetPattern(PatternInterface patternInterface)
+        override public object GetPattern(PatternInterface patternInterface)
         {
             if (patternInterface == PatternInterface.ScrollItem || patternInterface == PatternInterface.SelectionItem)
             {
@@ -83,7 +84,10 @@ namespace Microsoft.Windows.Automation.Peers
         void IScrollItemProvider.ScrollIntoView()
         {
             RibbonGalleryItem ribbonGalleryItem = GetWrapper() as RibbonGalleryItem;
-            ribbonGalleryItem?.BringIntoView();
+            if (ribbonGalleryItem != null)
+            {
+                ribbonGalleryItem.BringIntoView();
+            }
         }
 
         #endregion
@@ -148,12 +152,12 @@ namespace Microsoft.Windows.Automation.Peers
                 return null;
             }
         }
-
+        
         #endregion
 
         #region data
 
-        private RibbonGalleryCategoryDataAutomationPeer _parentCategoryDataAutomationPeer;
+        RibbonGalleryCategoryDataAutomationPeer _parentCategoryDataAutomationPeer;
 
         #endregion
 

@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 
@@ -13,16 +14,16 @@ namespace MS.Internal.TextFormatting
     /// </Remark>
     internal static class Bidi
     {
-        private static readonly StateMachineAction [,]  Action;
-        private static readonly StateMachineState  [,]  NextState;
-        private static readonly byte               [,]  ImplictPush;
-        private static readonly byte               [,]  CharProperty;
-        private static readonly StateMachineState  []   ClassToState;
-        private static readonly byte               []   FastPathClass;
+        static private readonly StateMachineAction [,]  Action;
+        static private readonly StateMachineState  [,]  NextState;
+        static private readonly byte               [,]  ImplictPush;
+        static private readonly byte               [,]  CharProperty;
+        static private readonly StateMachineState  []   ClassToState;
+        static private readonly byte               []   FastPathClass;
 
         // Hidden char doesn't affect the relative ordering of surroudning characters. 
         // They are internally assigned to the class types of either the previous or following non-hidden text
-        private static char CharHidden = '\xFFFF';
+        static private char CharHidden = '\xFFFF';
 
         static Bidi()
         {
@@ -479,7 +480,7 @@ namespace MS.Internal.TextFormatting
         /// this method is useful while implementing the derived Bidi.State properties Bidi.LastNumberClass
         /// and Bidi.LastStrongClass.
         /// </summary>
-        internal static bool GetLastStongAndNumberClass(
+        static internal bool GetLastStongAndNumberClass(
             CharacterBufferRange charString,
             ref DirectionClass   strongClass,
             ref DirectionClass   numberClass)
@@ -592,8 +593,8 @@ namespace MS.Internal.TextFormatting
                 set { m_overflow = value; }
             }
 
-            private ulong                       m_levelStack;
-            private ulong                       m_overrideLevels;
+            ulong                       m_levelStack;
+            ulong                       m_overrideLevels;
 
             /// <Remark>
             /// holding the last number class from the analysis
@@ -604,7 +605,7 @@ namespace MS.Internal.TextFormatting
             /// </Remark>
             protected DirectionClass    StrongCharClass;
 
-            private ushort                      m_overflow;
+            ushort                      m_overflow;
         }
         #endregion
 
@@ -624,7 +625,7 @@ namespace MS.Internal.TextFormatting
         //
         //  Start BiDi class implementation
         //
-        private static bool GetFirstStrongCharacter(
+        static private bool GetFirstStrongCharacter(
             CharacterBuffer     charBuffer,
             int                 ichText,
             int                 cchText,
@@ -661,7 +662,7 @@ namespace MS.Internal.TextFormatting
             return false;
         }
 
-        private static void ResolveNeutrals(
+        static private void ResolveNeutrals(
             IList<DirectionClass>   characterClass,   // [IN / OUT]
             int                     classIndex,       // [IN]
             int                     count,            // [IN]
@@ -716,7 +717,7 @@ namespace MS.Internal.TextFormatting
         }
 
 
-        private static void ChangeType(
+        static private void ChangeType(
             IList<DirectionClass> characterClass,   // [IN / OUT]
             int                   classIndex,
             int                   count,            // [IN]
@@ -738,7 +739,7 @@ namespace MS.Internal.TextFormatting
         }
 
 
-        private static int ResolveNeutralAndWeak(
+        static private int ResolveNeutralAndWeak(
             IList<DirectionClass>   characterClass,        // [IN / OUT]
             int                     classIndex,            // [IN]
             int                     runLength,             // [IN]
@@ -1638,7 +1639,7 @@ namespace MS.Internal.TextFormatting
             }
         }
 
-        private static void ResolveImplictLevels(
+        static private void ResolveImplictLevels(
             IList<DirectionClass>   characterClass,     // [IN / OUT]
             CharacterBuffer         charBuffer,         // [IN]
             int                     ichText,            // [IN]
@@ -1701,7 +1702,7 @@ namespace MS.Internal.TextFormatting
         /// that BidiTest application only can call this method. the public key in the security attribute is
         /// generated from the BidiTest assembly by the command "sn -Tp biditest.exe"
         /// </Remark>
-        public static bool Analyze(
+        static public bool Analyze(
             char []         chars,              // input text to be analyzed
             int             cchText,            // number of input char
             int             cchTextMaxHint,     // hint maximum number of char processed
@@ -1728,7 +1729,7 @@ namespace MS.Internal.TextFormatting
                 );
         }
 
-        internal static bool BidiAnalyzeInternal(
+        static internal bool BidiAnalyzeInternal(
             CharacterBuffer         charBuffer,         // character buffer
             int                     ichText,            // offset to first char in the buffer
             int                     cchText,            // number of input char
@@ -2081,7 +2082,7 @@ namespace MS.Internal.TextFormatting
                     lastStrongClass = tempClass;
                 }
 
-                counter += wordCount;
+                counter = counter + wordCount;
             }
 
             if (counter < cchText)  // couldn't optimize.
@@ -2093,7 +2094,11 @@ namespace MS.Internal.TextFormatting
             else
             {
                 cchResolved = cchText;
-                state?.LastStrongClass = lastStrongClass;
+
+                if (state != null)
+                {
+                    state.LastStrongClass = lastStrongClass;
+                }
 
                 if (neutralIndex != -1) // resolve the neutral
                 {
@@ -2507,7 +2512,7 @@ namespace MS.Internal.TextFormatting
     /// </summary>
     internal static class DoubleWideChar
     {
-        internal static int GetChar(
+        static internal int GetChar(
             CharacterBuffer charBuffer,
             int             ichText,
             int             cchText,

@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.Windows.Media;
@@ -40,22 +41,22 @@ namespace System.Windows.Ink
         {
             if (Double.IsNaN(width) || Double.IsInfinity(width) || width < DrawingAttributes.MinWidth || width > DrawingAttributes.MaxWidth)
             {
-                throw new ArgumentOutOfRangeException(nameof(width));
+                throw new ArgumentOutOfRangeException("width");
             }
 
             if (Double.IsNaN(height) || Double.IsInfinity(height) || height < DrawingAttributes.MinHeight || height > DrawingAttributes.MaxHeight)
             {
-                throw new ArgumentOutOfRangeException(nameof(height));
+                throw new ArgumentOutOfRangeException("height");
             }
 
             if (Double.IsNaN(rotation) || Double.IsInfinity(rotation))
             {
-                throw new ArgumentOutOfRangeException(nameof(rotation));
+                throw new ArgumentOutOfRangeException("rotation");
             }
 
             if (!StylusTipHelper.IsDefined(tip))
             {
-                throw new ArgumentOutOfRangeException(nameof(tip));
+                throw new ArgumentOutOfRangeException("tip");
             }
 
 
@@ -210,7 +211,7 @@ namespace System.Windows.Ink
                                         topLeft + new Vector(m_width, 0),
                                         topLeft + new Vector(m_width, m_height),
                                         topLeft + new Vector(0, m_height)};
-            if (!DoubleUtil.IsZero(m_rotation))
+            if (false == DoubleUtil.IsZero(m_rotation))
             {
                 Matrix rotationTransform = Matrix.Identity;
                 rotationTransform.Rotate(m_rotation);
@@ -298,12 +299,12 @@ namespace System.Windows.Ink
                 transform.Rotate(m_rotation);
             }
 
-            if (!_transform.IsIdentity)
+            if (_transform.IsIdentity == false)
             {
                 transform *= _transform;
             }
 
-            if (!transform.IsIdentity)
+            if (transform.IsIdentity == false)
             {
                 for (int i = 0; i < controlPoints.Length; i++)
                 {

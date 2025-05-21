@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description: Converters for IList<double>, IList<ushort>, IList<Point>
 //              IList<bool> and IList<char>. 
@@ -52,7 +53,7 @@ namespace System.Windows.Media.Converters
 
             if (null == s)
             {
-                throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), nameof(value));
+                throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), "value");
             }
 
             return ConvertFromCore(td, ci, s);            
@@ -92,7 +93,7 @@ namespace System.Windows.Media.Converters
     {
         internal sealed override object ConvertFromCore(ITypeDescriptorContext td, CultureInfo ci, string value)
         {
-            _tokenizer = new TokenizerHelper(value, quoteChar: '\0', DelimiterChar);
+            _tokenizer = new TokenizerHelper(value, '\0' /* quote char */, DelimiterChar);
             
             // Estimate the output list's capacity from length of the input string. 
             List<double> list = new List<double>(Math.Min(256, value.Length / EstimatedCharCountPerItem + 1));
@@ -137,7 +138,7 @@ namespace System.Windows.Media.Converters
     {
         internal override object ConvertFromCore(ITypeDescriptorContext td, CultureInfo ci, string value)
         {
-            _tokenizer = new TokenizerHelper(value, quoteChar: '\0', DelimiterChar);
+            _tokenizer = new TokenizerHelper(value, '\0' /* quote char */, DelimiterChar);
             List<ushort> list = new List<ushort>(Math.Min(256, value.Length / EstimatedCharCountPerItem + 1));
             while (_tokenizer.NextToken())
             {
@@ -178,7 +179,7 @@ namespace System.Windows.Media.Converters
     {
         internal override object ConvertFromCore(ITypeDescriptorContext td, CultureInfo ci, string value)
         {
-             _tokenizer = new TokenizerHelper(value, quoteChar: '\0', DelimiterChar);            
+             _tokenizer = new TokenizerHelper(value, '\0' /* quote char */, DelimiterChar);            
             List<bool> list = new List<bool>(Math.Min(256, value.Length / EstimatedCharCountPerItem + 1));
             while (_tokenizer.NextToken())
             {
@@ -219,7 +220,7 @@ namespace System.Windows.Media.Converters
     {
         internal override object ConvertFromCore(ITypeDescriptorContext td, CultureInfo ci, string value)
         {
-            _tokenizer = new TokenizerHelper(value, quoteChar: '\0', DelimiterChar);
+            _tokenizer = new TokenizerHelper(value, '\0' /* quote char */, DelimiterChar);
             
             List<Point> list = new List<Point>(Math.Min(256, value.Length / EstimatedCharCountPerItem + 1));
             while (_tokenizer.NextToken())

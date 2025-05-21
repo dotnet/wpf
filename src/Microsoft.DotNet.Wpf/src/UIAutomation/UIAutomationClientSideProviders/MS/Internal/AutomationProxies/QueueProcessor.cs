@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 // Description:
 //      Class to create a queue on the client context.  
@@ -16,7 +17,7 @@ using Microsoft.Win32.SafeHandles;
 
 namespace MS.Internal.AutomationProxies
 {
-    internal class QueueProcessor
+    class QueueProcessor
     {
         // ------------------------------------------------------
         //
@@ -124,7 +125,7 @@ namespace MS.Internal.AutomationProxies
                     int result = Misc.MsgWaitForMultipleObjects(handle, false, NativeMethods.INFINITE, NativeMethods.QS_ALLINPUT);
                     if (result == NativeMethods.WAIT_FAILED || result == NativeMethods.WAIT_TIMEOUT)
                     {
-                        Debug.Fail("MsgWaitForMultipleObjects failed while WaitForWork");
+                        Debug.Assert(false, "MsgWaitForMultipleObjects failed while WaitForWork");
                         break;
                     }
                 }
@@ -166,7 +167,7 @@ namespace MS.Internal.AutomationProxies
     #region QueueItem Abstract Class
 
     // Abstract class for worker objects queued to the QueueProcessor class
-    internal abstract class QueueItem
+    abstract class QueueItem
     {
         // ------------------------------------------------------
         //

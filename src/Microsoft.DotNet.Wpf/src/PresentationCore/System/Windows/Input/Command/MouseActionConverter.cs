@@ -1,5 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Globalization;
@@ -86,8 +87,7 @@ namespace System.Windows.Input
             if (value is null || destinationType != typeof(string))
                 throw GetConvertToException(value, destinationType);
 
-            MouseAction mouseAction = (MouseAction)value;
-            return mouseAction switch
+            return (MouseAction)value switch
             {
                 MouseAction.None => string.Empty,
                 MouseAction.LeftClick => "LeftClick",
@@ -97,7 +97,7 @@ namespace System.Windows.Input
                 MouseAction.LeftDoubleClick => "LeftDoubleClick",
                 MouseAction.RightDoubleClick => "RightDoubleClick",
                 MouseAction.MiddleDoubleClick => "MiddleDoubleClick",
-                _ => throw new InvalidEnumArgumentException(nameof(value), (int)mouseAction, typeof(MouseAction))
+                _ => throw new InvalidEnumArgumentException(nameof(value), (int)value, typeof(MouseAction))
             };
         }
 

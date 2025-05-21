@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
 *
@@ -223,7 +224,7 @@ namespace System.Windows.Markup
 #if DEBUG
                         // this case can happen if doing BAML Async and entire record hasn't
                         // been downloaded.
-                        Debug.Assert(!XamlReaderStream.IsWriteComplete,
+                        Debug.Assert(false == XamlReaderStream.IsWriteComplete,
                                 "not enough bytes for RecordSize but write is complete");
 #endif
                         stream.Seek(currentPosition,SeekOrigin.Begin);
@@ -353,7 +354,10 @@ namespace System.Windows.Markup
         /// </summary>
         internal void Close()
         {
-            BamlStream?.Close();
+            if (BamlStream != null)
+            {
+                BamlStream.Close();
+            }
             EndOfDocument = true;
         }
 
@@ -366,7 +370,7 @@ namespace System.Windows.Markup
             bool moreData = true;
 
             // loop through the records until the end building the Tree.
-            while ( (moreData)
+            while ( (true == moreData)
                 && null != (bamlRecord = GetNextRecord()))
             {
                 moreData = ReadRecord(bamlRecord);
@@ -527,12 +531,12 @@ namespace System.Windows.Markup
             }
         }
 
-        private void ReadDocumentStartRecord(BamlDocumentStartRecord documentStartRecord)
+        void ReadDocumentStartRecord(BamlDocumentStartRecord documentStartRecord)
         {
             IsDebugBamlStream = documentStartRecord.DebugBaml;
         }
 
-        private void ReadDocumentEndRecord()
+        void ReadDocumentEndRecord()
         {
             Debug.Assert(0 == ReaderContextStack.Count); // if not zero we missed an EndElement
             SetPropertyValueToParent(false /*fromStartTag*/);
@@ -2920,7 +2924,10 @@ namespace System.Windows.Markup
         private void DoRegisterName( string name, object element )
         {
             // Store this name in the context (used by XamlParseException).
-            CurrentContext?.ElementNameOrPropertyName = name;
+            if( CurrentContext != null )
+            {
+                CurrentContext.ElementNameOrPropertyName = name;
+            }
 
 
             if (ParserContext != null && ParserContext.NameScopeStack != null)
@@ -2944,7 +2951,10 @@ namespace System.Windows.Markup
                         // "myStyle" also gets registered with the Window
                         // "myBrush" gets registered with the Style
                         INameScope nameScopePeek = ParserContext.NameScopeStack.Peek() as INameScope;
-                        nameScopePeek?.RegisterName(name, element);
+                        if (nameScopePeek != null)
+                        {
+                            nameScopePeek.RegisterName(name, element);
+                        }
                     }
                     else
                     {
@@ -3393,10 +3403,13 @@ namespace System.Windows.Markup
         protected virtual void ReadTextRecord(BamlTextRecord bamlTextRecord)
         {
             BamlTextWithIdRecord bamlTextWithId = bamlTextRecord as BamlTextWithIdRecord;
-            // Get the value string from the string table, and cache it in the
-            // record.
-            bamlTextWithId?.Value = MapTable.GetStringFromStringId(
-                                            bamlTextWithId.ValueId);
+            if (bamlTextWithId != null)
+            {
+                // Get the value string from the string table, and cache it in the
+                // record.
+                bamlTextWithId.Value = MapTable.GetStringFromStringId(
+                                                bamlTextWithId.ValueId);
+            }
 
             if (null == CurrentContext)
             {
@@ -3727,9 +3740,9 @@ namespace System.Windows.Markup
             CurrentContext.ExpectedType = null;
         }
 
-        private static Type NullableType = typeof(Nullable<>);
+        static private Type NullableType = typeof(Nullable<>);
 
-        internal static bool IsNullable(Type t)
+        static internal bool IsNullable(Type t)
         {
             return t.IsGenericType && t.GetGenericTypeDefinition() == NullableType;
         }
@@ -3754,7 +3767,7 @@ namespace System.Windows.Markup
         // This is a form of OptionallyMakeNullable that doesn't throw.  We split it out so that the different callers
         // can throw their own exception (StyleHelper uses this too).
 
-        internal static bool TryOptionallyMakeNullable( Type propertyType, string propName, ref object o  )
+        static internal bool TryOptionallyMakeNullable( Type propertyType, string propName, ref object o  )
         {
             // if o was nullable, it has been unwrapped and boxed when it was passed into this function
 
@@ -3867,7 +3880,7 @@ namespace System.Windows.Markup
 
         // Called when we are in the context of a constructor and an object end record is
         // encounted.  Add the newly created object to the parameter list.
-        private void SetConstructorParameter(object o)
+        void SetConstructorParameter(object o)
         {
             Debug.Assert(null != CurrentContext &&
                 ReaderFlags.ConstructorParams == CurrentContext.ContextType);
@@ -4009,7 +4022,7 @@ namespace System.Windows.Markup
 
         // Name is self-explanatory -- this is used to create CLR objects and such that aren't
         // underneath Elements (those are handled by ParseProperty above).
-        private object GetObjectFromString(Type type, string s, short converterTypeId)
+        object GetObjectFromString(Type type, string s, short converterTypeId)
         {
             object o = DependencyProperty.UnsetValue;
             o = ParserContext.XamlTypeMapper.ParseProperty(null, type,string.Empty, null,
@@ -4337,7 +4350,7 @@ namespace System.Windows.Markup
         }
 
         // Get BaseUri for the right elements.
-        private Uri GetBaseUri( )
+        Uri GetBaseUri( )
         {
             Uri baseuri = ParserContext.BaseUri;
 
@@ -4345,7 +4358,7 @@ namespace System.Windows.Markup
             {
                 baseuri = BindUriHelper.BaseUri;
             }
-            else if (!baseuri.IsAbsoluteUri)
+            else if (baseuri.IsAbsoluteUri == false)
             {
                 baseuri = new Uri(BindUriHelper.BaseUri, baseuri);
             }
@@ -4411,7 +4424,10 @@ namespace System.Windows.Markup
             }
 
             UIElement uiElement = element as UIElement;
-            uiElement?.SetPersistId(++_persistId);
+            if (uiElement != null)
+            {
+                uiElement.SetPersistId(++_persistId);
+            }
 
             // The second consition is to handle events within standalone dictionaries.
             // We need to setup the component connector correctly in this case. Note
@@ -4850,7 +4866,7 @@ namespace System.Windows.Markup
                         // represent the explicit collection and the grandparent is that property's target.
                         element = GetElementValue(element, GrandParentObjectData,
                                                   holder.PropertyDefinition.DependencyProperty, ref isMarkupExtension);
-                        elementType = element?.GetType();
+                        elementType = element == null ? null : element.GetType();
                     }
 
                     // the element is an explicit collection if it is assignable to the expected type of the parent or
@@ -4977,7 +4993,7 @@ namespace System.Windows.Markup
                         }
                         else
                         {
-                            Debug.Fail("The only remaining option is attached property, which is not allowed in xaml for content properties");
+                            Debug.Assert(false, "The only remaining option is attached property, which is not allowed in xaml for content properties");
                         }
                     }
                 }
@@ -5322,7 +5338,10 @@ namespace System.Windows.Markup
             if (_parserContext.FreezeFreezables)
             {
                 Freezable f = element as Freezable;
-                f?.Freeze();
+                if (f != null)
+                {
+                    f.Freeze();
+                }
             }
         }
         internal void PreParsedBamlReset()
@@ -5475,7 +5494,7 @@ namespace System.Windows.Markup
             get
             {
                 ReaderContextStackData contextData = ParentContext;
-                return contextData?.ObjectData;
+                return contextData == null ? null : contextData.ObjectData;
             }
         }
 
@@ -5489,7 +5508,7 @@ namespace System.Windows.Markup
             get
             {
                 ReaderContextStackData contextData = GrandParentContext;
-                return contextData?.ObjectData;
+                return contextData == null ? null : contextData.ObjectData;
             }
         }
 
@@ -5538,7 +5557,7 @@ namespace System.Windows.Markup
             set { _componentConnector = value; }
         }
 
-        private ReaderStream XamlReaderStream
+        ReaderStream XamlReaderStream
         {
             get { return _xamlReaderStream; }
         }
@@ -5573,7 +5592,7 @@ namespace System.Windows.Markup
             get { return _bamlStream.Position; }
         }
 
-        private Int64 StreamLength
+        Int64 StreamLength
         {
             get { return _bamlStream.Length; }
         }
@@ -5597,32 +5616,32 @@ namespace System.Windows.Markup
 #region Data
 
         // state vars
-        private IComponentConnector          _componentConnector;
-        private object                       _rootElement;
-        private bool                         _bamlAsForest;
-        private bool                         _isRootAlreadyLoaded;
-        private ArrayList                    _rootList;
-        private ParserContext                _parserContext;   // XamlTypeMapper, namespace state, lang/space values
-        private TypeConvertContext           _typeConvertContext;
-        private int                          _persistId;
-        private ParserStack                  _contextStack = new ParserStack();
-        private XamlParseMode                _parseMode = XamlParseMode.Synchronous;
-        private int                          _maxAsyncRecords;
+        IComponentConnector          _componentConnector;
+        object                       _rootElement;
+        bool                         _bamlAsForest;
+        bool                         _isRootAlreadyLoaded;
+        ArrayList                    _rootList;
+        ParserContext                _parserContext;   // XamlTypeMapper, namespace state, lang/space values
+        TypeConvertContext           _typeConvertContext;
+        int                          _persistId;
+        ParserStack                  _contextStack = new ParserStack();
+        XamlParseMode                _parseMode = XamlParseMode.Synchronous;
+        int                          _maxAsyncRecords;
         // end of state vars
 
-        private Stream                       _bamlStream;
-        private ReaderStream                 _xamlReaderStream;
-        private BamlBinaryReader             _binaryReader;
-        private BamlRecordManager            _bamlRecordManager;
-        private BamlRecord                   _preParsedBamlRecordsStart = null;
-        private BamlRecord                   _preParsedIndexRecord = null;
-        private bool                         _endOfDocument = false;
-        private bool                         _buildTopDown = true;
+        Stream                       _bamlStream;
+        ReaderStream                 _xamlReaderStream;
+        BamlBinaryReader             _binaryReader;
+        BamlRecordManager            _bamlRecordManager;
+        BamlRecord                   _preParsedBamlRecordsStart = null;
+        BamlRecord                   _preParsedIndexRecord = null;
+        bool                         _endOfDocument = false;
+        bool                         _buildTopDown = true;
 
         // The outer BRR, when this one is nested.
-        private BamlRecordReader             _previousBamlRecordReader;
+        BamlRecordReader             _previousBamlRecordReader;
 
-        private static List<ReaderContextStackData> _stackDataFactoryCache = new List<ReaderContextStackData>();
+        static List<ReaderContextStackData> _stackDataFactoryCache = new List<ReaderContextStackData>();
 
 #endregion Data
     }

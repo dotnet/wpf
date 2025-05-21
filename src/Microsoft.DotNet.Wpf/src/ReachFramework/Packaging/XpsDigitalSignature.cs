@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 /*++
                                                                                                                                            
@@ -304,7 +305,7 @@ namespace System.Windows.Xps.Packaging
         }
         #endregion Internal property
         #region Private methods
-        private bool CollectionContainsCollection(
+        bool CollectionContainsCollection(
             ICollection<Uri> containingCollection, 
             ICollection<Uri> containedCollection
             )
@@ -344,7 +345,7 @@ namespace System.Windows.Xps.Packaging
            string contentType =  _package.CurrentXpsManager.MetroPackage.GetPart(uri).ContentType;
            return( OptionalSignedParts.ContainsKey( contentType ) );
         }
-
+         
         /// <summary>
         /// This determines if the contained collection is a subset of the containting collection
         /// For each Source Uri in the Containging collection there must be the coorisponding
@@ -353,7 +354,7 @@ namespace System.Windows.Xps.Packaging
         /// <param name="containingCollection">The super set collection</param>
         /// <param name="containedCollection">The sub set collection</param>
         /// <returns>returns true if is the contained collection is a subset of the containing collection</returns>
-        private bool SelectorListContainsSelectorList(
+        bool SelectorListContainsSelectorList(
             ReadOnlyCollection<PackageRelationshipSelector> containingCollection,
             List<PackageRelationshipSelector> containedCollection
             )
@@ -412,8 +413,7 @@ namespace System.Windows.Xps.Packaging
             }
             return contained;
         }
-
-        private Dictionary<string, string> OptionalSignedParts
+        Dictionary<string, string> OptionalSignedParts
         {
             get
             {
@@ -441,7 +441,7 @@ namespace System.Windows.Xps.Packaging
         #region Private data
         private PackageDigitalSignature _packageSignature; 
         private XpsDocument _package;
-        private static Dictionary<string, string> _optionalSignedTypes;
+        static private Dictionary<string, string> _optionalSignedTypes;
         #endregion Private data       
     }
     

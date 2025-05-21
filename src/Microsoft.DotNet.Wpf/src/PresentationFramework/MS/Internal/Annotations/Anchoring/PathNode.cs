@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.Windows;
@@ -152,7 +153,8 @@ namespace MS.Internal.Annotations.Anchoring
 
             // make all the children readonly so we do not need to 
             // lock the PathNode when getting the children
-            firstPathNode?.FreezeChildren();
+            if (firstPathNode != null)
+                firstPathNode.FreezeChildren();
 
             return firstPathNode;
         }

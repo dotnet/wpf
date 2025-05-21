@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal.AppModel;
 using MS.Internal.Interop;
@@ -501,6 +502,14 @@ namespace Microsoft.Win32
 
         //---------------------------------------------------
         //
+        // Internal Events
+        //
+        //---------------------------------------------------
+        //#region Internal Events
+        //#endregion Internal Events
+
+        //---------------------------------------------------
+        //
         // Private Methods
         //
         //---------------------------------------------------
@@ -688,10 +697,10 @@ namespace Microsoft.Win32
         {
             public delegate bool OnOkCallback(IFileDialog dialog);
 
-            private readonly IFileDialog _dialog;
+            private IFileDialog _dialog;
 
-            private readonly OnOkCallback _okCallback;
-            private readonly uint _eventCookie;
+            private OnOkCallback _okCallback;
+            uint _eventCookie;
 
             public VistaDialogEvents(IFileDialog dialog, OnOkCallback okCallback)
             {

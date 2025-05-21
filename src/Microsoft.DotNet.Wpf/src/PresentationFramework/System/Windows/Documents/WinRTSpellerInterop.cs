@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using MS.Internal.WindowsRuntime.Windows.Data.Text;
 using System.Diagnostics.CodeAnalysis;
@@ -543,9 +544,6 @@ namespace System.Windows.Documents
             }
         }
 
-        [GeneratedRegex(@"\s*\#LID\s+(\d+)\s*", RegexOptions.Singleline | RegexOptions.CultureInvariant)]
-        private static partial Regex LexiconCultureRegex { get; }
-
         /// <summary>
         ///     Detect whether the <paramref name="line"/> is of the form #LID nnnn,
         ///     and if it is, try to instantiate a CultureInfo object with LCID nnnn.
@@ -556,6 +554,9 @@ namespace System.Windows.Documents
         /// </returns>
         private static CultureInfo TryParseLexiconCulture(string line)
         {
+            const string regexPattern = @"\s*\#LID\s+(\d+)\s*";
+            RegexOptions regexOptions = RegexOptions.Singleline | RegexOptions.CultureInvariant | RegexOptions.Compiled;
+
             CultureInfo result = CultureInfo.InvariantCulture;
 
             if (line == null)
@@ -563,7 +564,7 @@ namespace System.Windows.Documents
                 return result;
             }
 
-            string[] matches = LexiconCultureRegex.Split(line.Trim());
+            string[] matches = Regex.Split(line.Trim(), regexPattern, regexOptions);
 
             // We expect 1 exact match, which implies matches.Length == 3 (before, match, after)
             if (matches.Length != 3)
@@ -680,7 +681,10 @@ namespace System.Windows.Documents
                 foreach (Tuple<WordsSegmenter, SpellChecker> item in _spellCheckers.Values)
                 {
                     SpellChecker spellChecker = item?.Item2;
-                    spellChecker?.Dispose();
+                    if (spellChecker != null)
+                    {
+                        spellChecker.Dispose();
+                    }
                 }
 
                 _spellCheckers = null;
@@ -1021,7 +1025,7 @@ namespace System.Windows.Documents
             #region Private Fields
 
 
-            private SpellChecker _spellChecker;
+            SpellChecker _spellChecker;
             private IReadOnlyList<string> _suggestions;
             private bool? _isClean = null;
 

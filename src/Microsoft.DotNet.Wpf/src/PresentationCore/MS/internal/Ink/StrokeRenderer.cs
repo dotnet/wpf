@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //#define DEBUG_RENDERING_FEEDBACK
 
@@ -67,7 +68,7 @@ namespace MS.Internal.Ink
                 for (int index = 0; index < iterator.Count; index++)
                 {
                     StrokeNode strokeNode = iterator[index];
-                    System.Diagnostics.Debug.Assert(strokeNode.IsValid);
+                    System.Diagnostics.Debug.Assert(true == strokeNode.IsValid);
 
                     //the only code that calls this with !calculateBounds
                     //is dynamic rendering, which already draws enough strokeNodes
@@ -121,7 +122,7 @@ namespace MS.Internal.Ink
                             //insert a stroke node for the previous node
                             strokeNodePoints.Clear();
                             strokeNode.GetPreviousContourPoints(strokeNodePoints);
-                            AddFigureToStreamGeometryContext(context, strokeNodePoints, isBezierFigure: strokeNode.IsEllipse);
+                            AddFigureToStreamGeometryContext(context, strokeNodePoints, strokeNode.IsEllipse/*isBezierFigure*/);
 
                             previousPreviousNodeRendered = true;
                         }
@@ -129,7 +130,7 @@ namespace MS.Internal.Ink
                         //render the stroke node
                         strokeNodePoints.Clear();
                         strokeNode.GetContourPoints(strokeNodePoints);
-                        AddFigureToStreamGeometryContext(context, strokeNodePoints, isBezierFigure: strokeNode.IsEllipse);
+                        AddFigureToStreamGeometryContext(context, strokeNodePoints, strokeNode.IsEllipse/*isBezierFigure*/);
                     }
 
                     if (!directionChanged)
@@ -175,7 +176,7 @@ namespace MS.Internal.Ink
                             }
 
                             //now render away!
-                            AddFigureToStreamGeometryContext(context, connectingQuadPoints, isBezierFigure: false);
+                            AddFigureToStreamGeometryContext(context, connectingQuadPoints, false/*isBezierFigure*/);
                         }
                     }
                 }
@@ -489,7 +490,7 @@ namespace MS.Internal.Ink
                             {
                                 //render a complete first stroke node or we can get artifacts
                                 prevPrevStrokeNode.GetContourPoints(polyLinePoints);
-                                AddFigureToStreamGeometryContext(context, polyLinePoints, isBezierFigure: prevPrevStrokeNode.IsEllipse);
+                                AddFigureToStreamGeometryContext(context, polyLinePoints, prevPrevStrokeNode.IsEllipse/*isBezierFigure*/);
                                 polyLinePoints.Clear();
                             }
 
@@ -564,7 +565,7 @@ namespace MS.Internal.Ink
                                 {
                                     //render a complete stroke node or we can get artifacts
                                     prevStrokeNode.GetContourPoints(polyLinePoints);
-                                    AddFigureToStreamGeometryContext(context, polyLinePoints, isBezierFigure: prevStrokeNode.IsEllipse);
+                                    AddFigureToStreamGeometryContext(context, polyLinePoints, prevStrokeNode.IsEllipse/*isBezierFigure*/);
                                     polyLinePoints.Clear();
                                 }
                             }
@@ -671,7 +672,7 @@ namespace MS.Internal.Ink
                             // we only have a single point to render
                             Debug.Assert(pathFigureABSide.Count == 0);
                             prevPrevStrokeNode.GetContourPoints(pathFigureABSide);
-                            AddFigureToStreamGeometryContext(context, pathFigureABSide, isBezierFigure: prevPrevStrokeNode.IsEllipse);
+                            AddFigureToStreamGeometryContext(context, pathFigureABSide, prevPrevStrokeNode.IsEllipse/*isBezierFigure*/);
 }
                     }
                     else if (prevStrokeNode.IsValid && strokeNode.IsValid)
@@ -699,7 +700,7 @@ namespace MS.Internal.Ink
                             {
                                 //render a complete stroke node or we can get artifacts
                                 strokeNode.GetContourPoints(polyLinePoints);
-                                AddFigureToStreamGeometryContext(context, polyLinePoints, isBezierFigure: strokeNode.IsEllipse);
+                                AddFigureToStreamGeometryContext(context, polyLinePoints, strokeNode.IsEllipse/*isBezierFigure*/);
                             }
                         }
                         else
@@ -762,7 +763,7 @@ namespace MS.Internal.Ink
                 //we're between 100% and 70% overlapped
                 //just render two distinct figures with a connecting quad (if needed)
                 strokeNodePrevious.GetContourPoints(pointBuffer1);
-                AddFigureToStreamGeometryContext(context, pointBuffer1, isBezierFigure: strokeNodePrevious.IsEllipse);
+                AddFigureToStreamGeometryContext(context, pointBuffer1, strokeNodePrevious.IsEllipse/*isBezierFigure*/);
 
                 Quad quad = strokeNodeCurrent.GetConnectingQuad();
                 if (!quad.IsEmpty)
@@ -771,11 +772,11 @@ namespace MS.Internal.Ink
                     pointBuffer3.Add(quad.B);
                     pointBuffer3.Add(quad.C);
                     pointBuffer3.Add(quad.D);
-                    AddFigureToStreamGeometryContext(context, pointBuffer3, isBezierFigure: false);
+                    AddFigureToStreamGeometryContext(context, pointBuffer3, false/*isBezierFigure*/);
                 }
 
                 strokeNodeCurrent.GetContourPoints(pointBuffer2);
-                AddFigureToStreamGeometryContext(context, pointBuffer2, isBezierFigure: strokeNodeCurrent.IsEllipse);
+                AddFigureToStreamGeometryContext(context, pointBuffer2, strokeNodeCurrent.IsEllipse/*isBezierFigure*/);
             }
             else
             {
@@ -866,21 +867,21 @@ namespace MS.Internal.Ink
             Debug.Assert(points != null);
             Debug.Assert(points.Count > 0);
 
-            context.BeginFigure(startPoint: points[points.Count - 1],
-                                isFilled: true,
-                                isClosed: true);
+            context.BeginFigure(points[points.Count - 1], //start point
+                                        true,   //isFilled
+                                        true);  //IsClosed
 
             if (isBezierFigure)
             {
                 context.PolyBezierTo(points,
-                                     isStroked: true,
-                                     isSmoothJoin: true);
+                                     true,      //isStroked
+                                     true);     //isSmoothJoin
             }
             else
             {
                 context.PolyLineTo(points,
-                                   isStroked: true,
-                                   isSmoothJoin: true);
+                                     true,      //isStroked
+                                     true);     //isSmoothJoin
             }
         }
 
@@ -894,18 +895,18 @@ namespace MS.Internal.Ink
             Debug.Assert(abPoints != null && dcPoints != null);
             Debug.Assert(abPoints.Count > 0 && dcPoints.Count > 0);
 
-            context.BeginFigure(startPoint: abPoints[0],
-                                isFilled: true,
-                                isClosed: true);
+            context.BeginFigure(abPoints[0], //start point
+                                        true,   //isFilled
+                                        true);  //IsClosed
 
             context.PolyLineTo(abPoints,
-                               isStroked: true,
-                               isSmoothJoin: true);
+                                 true,      //isStroked
+                                 true);     //isSmoothJoin
 
             context.PolyLineTo(dcPoints,
-                               isStroked: true,
-                               isSmoothJoin: true);
-        }
+                                 true,      //isStroked
+                                 true);     //isSmoothJoin
+}
 
         /// <summary>
         /// Private helper to render a path figure to the SGC
@@ -921,9 +922,9 @@ namespace MS.Internal.Ink
                 return;
             }
 
-            context.BeginFigure(startPoint: abPoints[0],
-                                isFilled: true,
-                                isClosed: true);
+            context.BeginFigure(abPoints[0], //start point
+                                        true,   //isFilled
+                                        true);  //IsClosed
 
             for (int j = 0; j < 2; j++)
             {
@@ -937,9 +938,9 @@ namespace MS.Internal.Ink
                         if (polyLinePoints.Count > 0)
                         {
                             //polyline first
-                            context.PolyLineTo(polyLinePoints,
-                                               isStroked: true,
-                                               isSmoothJoin: true);
+                            context.PolyLineTo(  polyLinePoints,
+                                                 true,      //isStroked
+                                                 true);     //isSmoothJoin
                             polyLinePoints.Clear();
                         }
                         //we're arcing, pull out height, width and the arc to point
@@ -947,18 +948,18 @@ namespace MS.Internal.Ink
                         if (i + 2 < points.Count)
                         {
                             Point sizePoint = points[i + 1];
-                            Size ellipseSize = new Size(width: sizePoint.X / 2, height: sizePoint.Y / 2);
+                            Size ellipseSize = new Size(sizePoint.X / 2/*width*/, sizePoint.Y / 2/*height*/);
                             Point arcToPoint = points[i + 2];
 
                             bool isLargeArc = false; //>= 180
 
-                            context.ArcTo(arcToPoint,
-                                          ellipseSize,
-                                          rotationAngle: 0d,
-                                          isLargeArc: isLargeArc,
-                                          SweepDirection.Clockwise,
-                                          isStroked: true,
-                                          isSmoothJoin: true);
+                            context.ArcTo(  arcToPoint,
+                                            ellipseSize,
+                                            0d,             //rotation
+                                            isLargeArc,     //isLargeArc
+                                            SweepDirection.Clockwise,
+                                            true,           //isStroked
+                                            true);          //isSmoothJoin
                         }
                         i += 3; //advance past this arcTo block
                     }
@@ -973,8 +974,8 @@ namespace MS.Internal.Ink
                 {
                     //polyline
                     context.PolyLineTo(polyLinePoints,
-                                       isStroked: true,
-                                       isSmoothJoin: true);
+                                         true,      //isStroked
+                                         true);     //isSmoothJoin
                     polyLinePoints.Clear();
                 }
             }

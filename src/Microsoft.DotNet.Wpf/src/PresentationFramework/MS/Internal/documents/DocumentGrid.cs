@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 // Description: DocumentGrid displays DocumentPaginator content in a grid-like
@@ -424,7 +425,7 @@ namespace MS.Internal.Documents
 
                 if (!Helper.IsDoubleValid(scale))
                 {
-                    throw new ArgumentOutOfRangeException(nameof(scale));
+                    throw new ArgumentOutOfRangeException("scale");
                 }
 
                 QueueSetScale(scale);
@@ -591,7 +592,7 @@ namespace MS.Internal.Documents
             {
                 if (Double.IsNaN(offset))
                 {
-                    throw new ArgumentOutOfRangeException(nameof(offset));
+                    throw new ArgumentOutOfRangeException("offset");
                 }
 
                 // If there aren't any pending document layout delegates, then change
@@ -634,7 +635,7 @@ namespace MS.Internal.Documents
             {
                 if (Double.IsNaN(offset))
                 {
-                    throw new ArgumentOutOfRangeException(nameof(offset));
+                    throw new ArgumentOutOfRangeException("offset");
                 }
 
                 // If there aren't any pending document layout delegates, then change
@@ -800,7 +801,7 @@ namespace MS.Internal.Documents
             {
                 if (!Helper.IsDoubleValid(value))
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value));
+                    throw new ArgumentOutOfRangeException("value");
                 }
 
                 _rowCache.VerticalPageSpacing = value;
@@ -822,7 +823,7 @@ namespace MS.Internal.Documents
             {
                 if (!Helper.IsDoubleValid(value))
                 {
-                    throw new ArgumentOutOfRangeException(nameof(value));
+                    throw new ArgumentOutOfRangeException("value");
                 }
 
                 _rowCache.HorizontalPageSpacing = value;
@@ -853,7 +854,10 @@ namespace MS.Internal.Documents
                     {
                         DocumentGridPage dp = _childrenCollection[i] as DocumentGridPage;
 
-                        dp?.ShowPageBorders = _showPageBorders;
+                        if (dp != null)
+                        {
+                            dp.ShowPageBorders = _showPageBorders;
+                        }
                     }
                 }
             }
@@ -995,7 +999,7 @@ namespace MS.Internal.Documents
         {
             if (_childrenCollection == null || index < 0 || index >= _childrenCollection.Count)
             {
-                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
 
             return _childrenCollection[index];
@@ -2138,7 +2142,7 @@ namespace MS.Internal.Documents
             {
                 if (Double.IsNaN(offset))
                 {
-                    throw new ArgumentOutOfRangeException(nameof(offset));
+                    throw new ArgumentOutOfRangeException("offset");
                 }
 
                 _horizontalOffset = offset;
@@ -2158,7 +2162,7 @@ namespace MS.Internal.Documents
             {
                 if (Double.IsNaN(offset))
                 {
-                    throw new ArgumentOutOfRangeException(nameof(offset));
+                    throw new ArgumentOutOfRangeException("offset");
                 }
 
                 _verticalOffset = offset;
@@ -2174,7 +2178,10 @@ namespace MS.Internal.Documents
         private void UpdateTextView()
         {
             MultiPageTextView tv = TextView as MultiPageTextView;
-            tv?.OnPageLayoutChanged();
+            if (tv != null)
+            {
+                tv.OnPageLayoutChanged();
+            }
         }
 
         /// <summary>
@@ -2272,7 +2279,10 @@ namespace MS.Internal.Documents
             {
                 UIElement page = _childrenCollection[i] as UIElement;
 
-                page?.InvalidateMeasure();
+                if (page != null)
+                {
+                    page.InvalidateMeasure();
+                }
             }
         }
 
@@ -2492,9 +2502,15 @@ namespace MS.Internal.Documents
         /// </summary>
         private void InvalidateDocumentScrollInfo()
         {
-            ScrollOwner?.InvalidateScrollInfo();
+            if (ScrollOwner != null)
+            {
+                ScrollOwner.InvalidateScrollInfo();
+            }
 
-            DocumentViewerOwner?.InvalidateDocumentScrollInfo();
+            if (DocumentViewerOwner != null)
+            {
+                DocumentViewerOwner.InvalidateDocumentScrollInfo();
+            }
         }
 
         /// <summary>
@@ -2631,7 +2647,7 @@ namespace MS.Internal.Documents
         {
             //Hit test to find the DocumentPageView
             HitTestResult result = VisualTreeHelper.HitTest(this, point);
-            DependencyObject currentVisual = result?.VisualHit;
+            DependencyObject currentVisual = (result != null) ? result.VisualHit : null;
 
             DocumentPageView page = null;
 
@@ -2956,7 +2972,7 @@ namespace MS.Internal.Documents
             }
             if (args.PivotRowIndex >= _rowCache.RowCount)
             {
-                throw new ArgumentOutOfRangeException(nameof(args));
+                throw new ArgumentOutOfRangeException("args");
             }
 
             //Get the pivot row

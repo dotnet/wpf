@@ -1,5 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 
 using System.Collections;
@@ -68,7 +69,7 @@ namespace System.Windows.Documents.DocumentStructures
 
             throw new ArgumentException(SR.Format(SR.DocumentStructureUnexpectedParameterType4, value.GetType(),
                 typeof(ParagraphStructure), typeof(FigureStructure), typeof(ListStructure), typeof(TableStructure)), 
-                nameof(value));
+                "value");
         }
 
         void IAddChild.AddText(string text) { }
@@ -113,7 +114,7 @@ namespace System.Windows.Documents.DocumentStructures
 
             throw new ArgumentException(SR.Format(SR.DocumentStructureUnexpectedParameterType1, value.GetType(),
                 typeof(NamedElement)),
-                nameof(value));
+                "value");
         }
         
         void IAddChild.AddText(string text) { }
@@ -149,7 +150,7 @@ namespace System.Windows.Documents.DocumentStructures
                 _elementList.Add((BlockElement)value);
                 return;
             }
-            throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(NamedElement)), nameof(value));
+            throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(NamedElement)), "value");
         }
         
         void IAddChild.AddText(string text) { }
@@ -241,7 +242,7 @@ namespace System.Windows.Documents.DocumentStructures
             }
 
             throw new ArgumentException(SR.Format(SR.DocumentStructureUnexpectedParameterType4, value.GetType(),
-                typeof(ParagraphStructure), typeof(TableStructure), typeof(ListStructure), typeof(FigureStructure)), nameof(value));
+                typeof(ParagraphStructure), typeof(TableStructure), typeof(ListStructure), typeof(FigureStructure)), "value");
         }
         void IAddChild.AddText(string text) { }
 
@@ -293,7 +294,7 @@ namespace System.Windows.Documents.DocumentStructures
                 _elementList.Add((TableRowGroupStructure)value);
                 return;
             }
-            throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(TableRowGroupStructure)), nameof(value));
+            throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(TableRowGroupStructure)), "value");
         }
         
         void IAddChild.AddText(string text) { }

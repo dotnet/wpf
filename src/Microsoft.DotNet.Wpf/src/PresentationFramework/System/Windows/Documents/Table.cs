@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.ComponentModel;
@@ -64,7 +65,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            throw (new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(TableRowGroup)), nameof(value)));
+            throw (new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(TableRowGroup)), "value"));
         }
 
         /// <summary>
@@ -251,7 +252,10 @@ namespace System.Windows.Documents
 
                 // Table structure changes affect number of rows and colums. Need to notify peer about it.
                 TableAutomationPeer peer = ContentElementAutomationPeer.FromElement(this) as TableAutomationPeer;
-                peer?.OnStructureInvalidated();
+                if (peer != null)
+                {
+                    peer.OnStructureInvalidated();
+                }
             }
         }
 

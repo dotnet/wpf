@@ -1,5 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -344,7 +345,7 @@ namespace System.Windows
         //
         //------------------------------------------------------
 
-        private PropertyPathWorker SingleWorker
+        PropertyPathWorker SingleWorker
         {
             get
             {
@@ -499,7 +500,7 @@ namespace System.Windows
 
 
         // resolve the property names and path parameters early, if possible
-        private void ResolvePathParts(ITypeDescriptorContext typeDescriptorContext)
+        void ResolvePathParts(ITypeDescriptorContext typeDescriptorContext)
         {
             bool throwOnError = (typeDescriptorContext != null);
 
@@ -543,7 +544,7 @@ namespace System.Windows
         }
 
         // resolve a single DP name
-        private object ResolvePropertyName(string name, object item, Type ownerType, object context, bool throwOnError)
+        object ResolvePropertyName(string name, object item, Type ownerType, object context, bool throwOnError)
         {
             string propertyName = name;
             int index;
@@ -699,7 +700,7 @@ namespace System.Windows
         }
 
         // resolve indexer parameters
-        private IndexerParameterInfo[] ResolveIndexerParams(FrugalObjectList<IndexerParamInfo> paramList, object context, bool throwOnError)
+        IndexerParameterInfo[] ResolveIndexerParams(FrugalObjectList<IndexerParamInfo> paramList, object context, bool throwOnError)
         {
             IndexerParameterInfo[] args = new IndexerParameterInfo[paramList.Count];
             for (int i = 0; i < args.Length; ++i)
@@ -773,7 +774,7 @@ namespace System.Windows
             return args;
         }
 
-        private object GetTypedParamValue(string param, Type type, bool throwOnError)
+        object GetTypedParamValue(string param, Type type, bool throwOnError)
         {
             object value = null;
             if (type == typeof(string))
@@ -817,7 +818,7 @@ namespace System.Windows
 
 
         // Return the type named by the given name
-        private Type GetTypeFromName(string name, object context)
+        Type GetTypeFromName(string name, object context)
         {
             // use the parser context, if available.  This allows early resolution.
             // bchapman 5/8/2009 - I believe with System.Xaml there is never an old parserContext here.
@@ -847,7 +848,7 @@ namespace System.Windows
 
                 TypeAndSerializer typeAndSerializer = parserContext.XamlTypeMapper.GetTypeOnly(namespaceURI, name);
 
-                return typeAndSerializer?.ObjectType;
+                return (typeAndSerializer != null) ? typeAndSerializer.ObjectType : null;
             }
 
             else
@@ -921,7 +922,7 @@ namespace System.Windows
         }
 
         // determine if an object is one of the accessors we support
-        private static bool IsValidAccessor(object accessor)
+        static bool IsValidAccessor(object accessor)
         {
             return  accessor is DependencyProperty ||
                     accessor is PropertyInfo  ||
@@ -930,7 +931,7 @@ namespace System.Windows
         }
 
         // determine the name of an accessor
-        private static string GetPropertyName(object accessor)
+        static string GetPropertyName(object accessor)
         {
             DependencyProperty dp;
             PropertyInfo pi;
@@ -958,8 +959,8 @@ namespace System.Windows
         //
         //------------------------------------------------------
 
-        private const string SingleStepPath = "(0)";
-        private static readonly Char[] s_comma = new Char[]{','};
+        const string SingleStepPath = "(0)";
+        static readonly Char[] s_comma = new Char[]{','};
 
         //------------------------------------------------------
         //
@@ -967,13 +968,13 @@ namespace System.Windows
         //
         //------------------------------------------------------
 
-        private string _path = String.Empty;        // the path
-        private PathParameterCollection _parameters; // list of DPs to inject into the path
+        string _path = String.Empty;        // the path
+        PathParameterCollection _parameters; // list of DPs to inject into the path
 
-        private SourceValueInfo[] _arySVI;          // static description of each level in the path
-        private string _lastError = String.Empty;   // most recent error message
-        private object[] _earlyBoundPathParts;      // accessors and indexer parameters that got resolved early
-        private PropertyPathWorker _singleWorker;   // shared worker - used in "target" mode
+        SourceValueInfo[] _arySVI;          // static description of each level in the path
+        string _lastError = String.Empty;   // most recent error message
+        object[] _earlyBoundPathParts;      // accessors and indexer parameters that got resolved early
+        PropertyPathWorker _singleWorker;   // shared worker - used in "target" mode
 
         //------------------------------------------------------
         //

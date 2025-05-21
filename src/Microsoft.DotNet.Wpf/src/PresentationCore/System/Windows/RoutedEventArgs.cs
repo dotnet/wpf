@@ -1,8 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections.Specialized;
 using MS.Internal;
+using MS.Internal.KnownBoxes;
 
 namespace System.Windows
 {
@@ -135,7 +136,7 @@ namespace System.Windows
                 {
                     TraceRoutedEvent.TraceActivityItem(
                                             TraceRoutedEvent.HandleEvent,
-                                            value,
+                                            BooleanBoxes.Box(value),
                                             RoutedEvent.OwnerType.Name,
                                             RoutedEvent.Name,
                                             this );
@@ -289,7 +290,6 @@ namespace System.Windows
                 }
                 else
                 {
-                    // Restricted Action - reflection permission required
                     genericHandler.DynamicInvoke(new object[] {genericTarget, this});
                 }
             }

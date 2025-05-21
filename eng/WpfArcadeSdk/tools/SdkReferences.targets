@@ -125,7 +125,7 @@
                  And $([MSBuild]::VersionGreaterThanOrEquals('$(TargetFrameworkVersion)', '3.0')) ">
     <PropertyGroup>
       <!-- Use the current TargetFramework if not otherwise specified for WinForms private package -->
-      <_WinFormsTargetFrameworkVersion Condition="'$(_WinFormsTargetFrameworkVersion)' == '' and '$(DotNetBuildOrchestrator)' == 'true'">$(NetCurrent)</_WinFormsTargetFrameworkVersion>
+      <_WinFormsTargetFrameworkVersion Condition="'$(_WinFormsTargetFrameworkVersion)' == '' and '$(DotNetBuild)' == 'true'">$(NetCurrent)</_WinFormsTargetFrameworkVersion>
       <_WinFormsTargetFrameworkVersion Condition="'$(_WinFormsTargetFrameworkVersion)' == ''">$(_targetFrameworkRoot)</_WinFormsTargetFrameworkVersion>
     </PropertyGroup>
     <ItemGroup>

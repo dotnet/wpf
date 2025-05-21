@@ -13,11 +13,6 @@ foreach($themeColor in $themeColors)
     if($themeColor -eq "System") {
         $outFilePath = Join-Path $fluentThemeDir "Themes\Fluent.xaml"
     }
-    else
-    {
-        $outFilePath = Join-Path $fluentThemeDir "Themes\Fluent.$themeColor.xaml"
-        $themeColorFilePath = Join-Path $resouceFilesDir "Theme\$themeColor.xaml"
-    }
    
     [xml]$combinedXaml = '<ResourceDictionary 
                             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 

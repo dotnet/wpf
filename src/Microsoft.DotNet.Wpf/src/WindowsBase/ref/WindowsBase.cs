@@ -1823,7 +1823,6 @@ namespace System.Windows.Threading
         [System.ComponentModel.BrowsableAttribute(false)]
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.Runtime.CompilerServices.TaskAwaiter GetAwaiter() { throw null; }
-        protected virtual object InvokeDelegateCore() { throw null; }
         public System.Windows.Threading.DispatcherOperationStatus Wait() { throw null; }
         public System.Windows.Threading.DispatcherOperationStatus Wait(System.TimeSpan timeout) { throw null; }
     }
@@ -1843,7 +1842,6 @@ namespace System.Windows.Threading
         [System.ComponentModel.BrowsableAttribute(false)]
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public new System.Runtime.CompilerServices.TaskAwaiter<TResult> GetAwaiter() { throw null; }
-        protected override object InvokeDelegateCore() { throw null; }
     }
     public enum DispatcherPriority
     {

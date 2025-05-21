@@ -561,7 +561,7 @@ namespace System.Windows.Threading
         ///     Once the operation has started, it will complete before this method
         ///     returns.
         /// </param>
-        public void Invoke<TArg>(Action<TArg> callback, DispatcherPriority priority, CancellationToken cancellationToken, TimeSpan timeout, TArg arg)
+        internal void Invoke<TArg>(Action<TArg> callback, DispatcherPriority priority, CancellationToken cancellationToken, TimeSpan timeout, TArg arg)
         {
             ArgumentNullException.ThrowIfNull(callback);
             ValidatePriority(priority, "priority");
@@ -750,7 +750,7 @@ namespace System.Windows.Threading
         /// <returns>
         ///     The return value from the delegate being invoked.
         /// </returns>
-        public TResult Invoke<TArg1, TArg2, TResult>(Func<TArg1, TArg2, TResult> callback, DispatcherPriority priority, TimeSpan timeout, TArg1 arg1, TArg2 arg2)
+        internal TResult Invoke<TArg1, TArg2, TResult>(Func<TArg1, TArg2, TResult> callback, DispatcherPriority priority, TimeSpan timeout, TArg1 arg1, TArg2 arg2)
         {
             ArgumentNullException.ThrowIfNull(callback);
             ValidatePriority(priority, "priority");
@@ -813,7 +813,7 @@ namespace System.Windows.Threading
         /// <returns>
         ///     The return value from the delegate being invoked.
         /// </returns>
-        public TResult Invoke<TArg1, TArg2, TArg3, TResult>(Func<TArg1, TArg2, TArg3, TResult> callback, DispatcherPriority priority, TimeSpan timeout, TArg1 arg1, TArg2 arg2, TArg3 arg3)
+        internal TResult Invoke<TArg1, TArg2, TArg3, TResult>(Func<TArg1, TArg2, TArg3, TResult> callback, DispatcherPriority priority, TimeSpan timeout, TArg1 arg1, TArg2 arg2, TArg3 arg3)
         {
             ArgumentNullException.ThrowIfNull(callback);
             ValidatePriority(priority, "priority");
@@ -876,7 +876,7 @@ namespace System.Windows.Threading
         /// <returns>
         ///     The return value from the delegate being invoked.
         /// </returns>
-        public TResult Invoke<TArg, TResult>(Func<TArg, TResult> callback, DispatcherPriority priority, TimeSpan timeout, TArg arg)
+        internal TResult Invoke<TArg, TResult>(Func<TArg, TResult> callback, DispatcherPriority priority, TimeSpan timeout, TArg arg)
         {
             ArgumentNullException.ThrowIfNull(callback);
             ValidatePriority(priority, "priority");

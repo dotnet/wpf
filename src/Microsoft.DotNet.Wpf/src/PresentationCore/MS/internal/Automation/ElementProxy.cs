@@ -392,11 +392,11 @@ namespace MS.Internal.Automation
         }
 
         // Return value for specified property; or null if not supported
-        private int InContextGetPropertyValue(int property)
+        private object InContextGetPropertyValue(int property)
         {
             AutomationPeer peer = Peer ?? throw new ElementNotAvailableException();
 
-            return (int)peer.GetPropertyValue(property);
+            return peer.GetPropertyValue(property);
         }
 
         /// Returns whether this is the Root of the WCP tree or not

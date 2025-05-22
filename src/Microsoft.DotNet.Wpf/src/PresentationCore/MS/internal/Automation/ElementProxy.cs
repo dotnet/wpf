@@ -314,11 +314,11 @@ namespace MS.Internal.Automation
         }
 
         //  redirect to AutomationPeer
-        private int InContextGetPatternProvider(int arg)
+        private object InContextGetPatternProvider(int arg)
         {
             AutomationPeer peer = Peer ?? throw new ElementNotAvailableException();
 
-            return (int)peer.GetWrappedPattern(arg);
+            return peer.GetWrappedPattern(arg);
         }
 
         // Return proxy representing element in specified direction (parent/next/firstchild/etc.)

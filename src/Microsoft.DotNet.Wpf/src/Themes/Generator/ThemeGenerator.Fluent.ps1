@@ -1,4 +1,4 @@
-$themeColors=@("Light", "Dark", "HC");
+$themeColors=@("Light", "Dark", "HC", "System");
 
 $currentDir = Get-Location
 $fluentThemeDir = Join-Path $currentDir "..\PresentationFramework.Fluent\"
@@ -10,6 +10,9 @@ foreach($themeColor in $themeColors)
 {
     $outFilePath = Join-Path $fluentThemeDir "Themes\Fluent.$themeColor.xaml"
     $themeColorFilePath = Join-Path $resouceFilesDir "Theme\$themeColor.xaml"
+    if($themeColor -eq "System") {
+        $outFilePath = Join-Path $fluentThemeDir "Themes\Fluent.xaml"
+    }
    
     [xml]$combinedXaml = '<ResourceDictionary 
                             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
@@ -33,8 +36,10 @@ foreach($themeColor in $themeColors)
         $combinedXaml.ResourceDictionary.InnerXml += $currentXaml.ResourceDictionary.InnerXml
     }
     
-    [xml]$themeColorXaml = Get-Content $themeColorFilePath -Encoding UTF8
-    $combinedXaml.ResourceDictionary.InnerXml += $themeColorXaml.ResourceDictionary.InnerXml
+    if($themeColor -ne "System") {
+        [xml]$themeColorXaml = Get-Content $themeColorFilePath -Encoding UTF8
+        $combinedXaml.ResourceDictionary.InnerXml += $themeColorXaml.ResourceDictionary.InnerXml
+    }
     
     foreach ($file in Get-ChildItem $styleFilesDir -Filter "*.xaml") {
         [xml]$currentXaml = Get-Content $file.FullName -Encoding UTF8

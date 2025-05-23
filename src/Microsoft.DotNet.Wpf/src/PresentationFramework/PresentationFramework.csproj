@@ -547,6 +547,7 @@
     <Compile Include="System\Windows\Controls\CleanUpVirtualizedItemEventArgs.cs" />
     <Compile Include="System\Windows\Controls\ClickMode.cs" />
     <Compile Include="System\Windows\Controls\ColumnDefinition.cs" />
+    <Compile Include="System\Windows\Controls\ColumnDefinitionCollectionConverter.cs" />
     <Compile Include="System\Windows\Controls\ComboBox.cs" />
     <Compile Include="System\Windows\Controls\ComboBoxItem.cs" />
     <Compile Include="System\Windows\Controls\ContainerTracking.cs" />
@@ -739,6 +740,7 @@
     <Compile Include="System\Windows\Controls\RealizedColumnsBlock.cs" />
     <Compile Include="System\Windows\Controls\RichTextBox.cs" />
     <Compile Include="System\Windows\Controls\RowDefinition.cs" />
+    <Compile Include="System\Windows\Controls\RowDefinitionCollectionConverter.cs" />
     <Compile Include="System\Windows\Controls\ScrollChangedEventArgs.cs" />
     <Compile Include="System\Windows\Controls\ScrollUnit.cs" />
     <Compile Include="System\Windows\Controls\ScrollViewer.cs" />

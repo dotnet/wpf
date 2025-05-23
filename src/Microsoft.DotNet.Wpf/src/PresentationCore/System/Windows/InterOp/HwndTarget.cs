@@ -2631,10 +2631,7 @@ namespace System.Windows.Interop
                                             // Monitor is on
                                             _monitorOn = true;
                                         }
-                                        if (MonitorPowerEvent != null)
-                                        {
-                                            MonitorPowerEvent(null, new MonitorPowerEventArgs(_monitorOn));
-                                        }
+                                        MonitorPowerEvent?.Invoke(null, new MonitorPowerEventArgs(_monitorOn));
                                     }
                                 }
                                 break;

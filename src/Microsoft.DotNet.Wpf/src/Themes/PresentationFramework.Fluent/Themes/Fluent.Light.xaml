@@ -815,9 +815,12 @@
   <SolidColorBrush x:Key="ToggleSwitchKnobFillOnPressed" Color="{StaticResource TextOnAccentFillColorPrimary}" />
   <SolidColorBrush x:Key="ToggleSwitchKnobFillOnDisabled" Color="{StaticResource TextOnAccentFillColorDisabled}" />
   <!--  ToolTip  -->
-  <SolidColorBrush x:Key="ToolTipBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
+  <SolidColorBrush x:Key="ToolTipBackgroundBrush" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
   <SolidColorBrush x:Key="ToolTipBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
+  <SolidColorBrush x:Key="ToolTipForegroundBrush" Color="{StaticResource TextFillColorPrimary}" />
+  <!-- Deprecated TextControl Brushes -->
   <SolidColorBrush x:Key="ToolTipForeground" Color="{StaticResource TextFillColorPrimary}" />
+  <SolidColorBrush x:Key="ToolTipBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
   <!--  ToolBar  -->
   <!--  TODO  -->
   <!--  TreeGrid  -->
@@ -4721,7 +4724,7 @@
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type TabItem}">
           <Grid x:Name="Root">
-            <Border x:Name="Border" MinWidth="180" MinHeight="36" Margin="0" Padding="6" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,1,1,0" CornerRadius="8,8,0,0">
+            <Border x:Name="Border" MinHeight="32" Padding="6" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,1,1,0" CornerRadius="8,8,0,0">
               <ContentPresenter x:Name="ContentSite" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" ContentSource="Header" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" />
             </Border>
             <VisualStateManager.VisualStateGroups>
@@ -5266,28 +5269,25 @@
   <sys:Double x:Key="ToolTipMaxWidth">320</sys:Double>
   <Thickness x:Key="ToolTipBorderThemeThickness">1</Thickness>
   <Style x:Key="DefaultToolTipStyle" TargetType="{x:Type ToolTip}">
-    <Setter Property="MaxWidth" Value="{StaticResource ToolTipMaxWidth}" />
-    <Setter Property="Height" Value="Auto" />
-    <Setter Property="Width" Value="Auto" />
-    <Setter Property="TextElement.FontSize" Value="12" />
-    <Setter Property="TextBlock.TextAlignment" Value="Justify" />
-    <Setter Property="TextElement.Foreground" Value="{DynamicResource ToolTipForeground}" />
-    <Setter Property="Foreground" Value="{DynamicResource ToolTipForeground}" />
+    <Setter Property="Foreground" Value="{DynamicResource ToolTipForegroundBrush}" />
     <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.StatusFontFamilyKey}}" />
     <Setter Property="FontSize" Value="{DynamicResource {x:Static SystemFonts.StatusFontSizeKey}}" />
     <Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.StatusFontStyleKey}}" />
-    <Setter Property="Background" Value="{DynamicResource ToolTipBackground}" />
+    <Setter Property="FontWeight" Value="{DynamicResource {x:Static SystemFonts.StatusFontWeightKey}}" />
+    <Setter Property="Background" Value="{DynamicResource ToolTipBackgroundBrush}" />
     <Setter Property="BorderBrush" Value="{DynamicResource ToolTipBorderBrush}" />
     <Setter Property="BorderThickness" Value="{DynamicResource ToolTipBorderThemeThickness}" />
     <Setter Property="Padding" Value="{StaticResource ToolTipBorderPadding}" />
+    <Setter Property="MaxWidth" Value="{StaticResource ToolTipMaxWidth}" />
     <Setter Property="HorizontalContentAlignment" Value="Left" />
-    <Setter Property="VerticalContentAlignment" Value="Top" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="ToolTip">
-          <Border Name="Border" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" MaxWidth="{TemplateBinding MaxWidth}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4" SnapsToDevicePixels="True">
+          <Border Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4" SnapsToDevicePixels="True">
             <Border.Effect>
               <DropShadowEffect BlurRadius="30" Direction="0" Opacity="0.4" ShadowDepth="0" Color="#202020" />
             </Border.Effect>

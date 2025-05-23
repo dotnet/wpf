@@ -225,9 +225,7 @@
                     <Grid x:Name="Root">
                         <Border
                             x:Name="Border"
-                            MinWidth="180"
-                            MinHeight="36"
-                            Margin="0"
+                            MinHeight="32"
                             Padding="6"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"

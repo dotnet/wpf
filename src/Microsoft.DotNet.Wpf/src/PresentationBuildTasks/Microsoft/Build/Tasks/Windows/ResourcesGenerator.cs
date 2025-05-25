@@ -194,30 +194,17 @@ namespace Microsoft.Build.Tasks.Windows
 
                 Log.LogMessageFromResources(MessageImportance.Low, nameof(SR.ResourcesGenerated), resourcesFile);
             }
-            catch (Exception e)
+            catch (Exception e) when (e is not (NullReferenceException or SEHException))
             {
-                if (e is NullReferenceException || e is SEHException)
-                {
-                    throw;
-                }
-                else
-                {
-                    string message;
-                    string errorId = Log.ExtractMessageCode(e.Message, out message);
+                string errorId = Log.ExtractMessageCode(e.Message, out string message);
 
-                    if (string.IsNullOrEmpty(errorId))
-                    {
-                        errorId = UnknownErrorID;
-                        message = SR.Format(SR.UnknownBuildError, message);
-                    }
-
-                    Log.LogError(null, errorId, null, null, 0, 0, 0, 0, message, null);
-                    return false;
+                if (string.IsNullOrEmpty(errorId))
+                {
+                    errorId = UnknownErrorID;
+                    message = SR.Format(SR.UnknownBuildError, message);
                 }
-            }
-            catch   // Non-cls compliant errors
-            {
-                Log.LogErrorWithCodeFromResources(nameof(SR.NonClsError));
+
+                Log.LogError(null, errorId, null, null, 0, 0, 0, 0, message, null);
                 return false;
             }
 

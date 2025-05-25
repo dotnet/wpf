@@ -2198,9 +2198,6 @@ namespace System.Windows.Data
                     {
                         e = ex;
                     }
-                    catch // non CLS compliant exception
-                    {
-                    }
                 }
 
                 if (!success)

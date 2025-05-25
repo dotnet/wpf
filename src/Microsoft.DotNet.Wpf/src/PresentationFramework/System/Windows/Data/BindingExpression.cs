@@ -1657,19 +1657,6 @@ namespace System.Windows.Data
                 }
                 convertedValue = DependencyProperty.UnsetValue;
             }
-            catch // non CLS compliant exception
-            {
-                if (TraceData.IsEnabled)
-                {
-                    TraceData.TraceAndNotify(TraceLevel,
-                            TraceData.BadConverterForTransfer(
-                                converter.GetType().Name,
-                                AvTrace.ToStringHelper(value),
-                                AvTrace.TypeName(value)),
-                            this);
-                }
-                convertedValue = DependencyProperty.UnsetValue;
-            }
 
             return convertedValue;
         }
@@ -1709,18 +1696,6 @@ namespace System.Windows.Data
                 }
 
                 ProcessException(ex, ValidatesOnExceptions);
-                convertedValue = DependencyProperty.UnsetValue;
-            }
-            catch // non CLS compliant exception
-            {
-                if (TraceData.IsEnabled)
-                {
-                    TraceData.TraceAndNotify(TraceEventType.Error,
-                        TraceData.BadConverterForUpdate(
-                            AvTrace.ToStringHelper(Value),
-                            AvTrace.TypeName(value)),
-                        this);
-                }
                 convertedValue = DependencyProperty.UnsetValue;
             }
 
@@ -1985,14 +1960,6 @@ namespace System.Windows.Data
                     TraceData.TraceAndNotify(TraceEventType.Error, TraceData.WorkerUpdateFailed, this, ex);
 
                 ProcessException(ex, (ValidatesOnExceptions || BindingGroup != null));
-                SetStatus(BindingStatusInternal.UpdateSourceError);
-                value = DependencyProperty.UnsetValue;
-            }
-            catch // non CLS compliant exception
-            {
-                if (TraceData.IsEnabled)
-                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.WorkerUpdateFailed, this);
-
                 SetStatus(BindingStatusInternal.UpdateSourceError);
                 value = DependencyProperty.UnsetValue;
             }

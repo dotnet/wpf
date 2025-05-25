@@ -1747,9 +1747,6 @@
   <data name="NextPageText" xml:space="preserve">
     <value>Next Page</value>
   </data>
-  <data name="NonCLSException" xml:space="preserve">
-    <value>Text formatting engine encountered a non-CLS exception.</value>
-  </data>
   <data name="NonPackAppAbsoluteUriNotAllowed" xml:space="preserve">
     <value>Unsupported Uri syntax. Method expects a relative Uri or a pack://application:,,,/ form of absolute Uri.</value>
   </data>

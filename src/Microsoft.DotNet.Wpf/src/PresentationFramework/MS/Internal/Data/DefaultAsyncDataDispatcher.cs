@@ -77,10 +77,6 @@ namespace MS.Internal.Data
 
                 request.Fail(ex);
             }
-            catch // non CLS compliant exception
-            {
-                request.Fail(new InvalidOperationException(SR.Format(SR.NonCLSException, "processing an async data request")));
-            }
 
             // remove the request from the list
             lock (_list.SyncRoot)

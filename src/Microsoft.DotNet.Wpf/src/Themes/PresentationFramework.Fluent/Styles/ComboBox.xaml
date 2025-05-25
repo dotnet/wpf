@@ -282,8 +282,7 @@
                                                 TextElement.FontWeight="{TemplateBinding FontWeight}"
                                                 TextElement.Foreground="{TemplateBinding Foreground}"
                                                 VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
-                                                <StackPanel
-                                                    IsItemsHost="True"
+                                                <ItemsPresenter
                                                     KeyboardNavigation.DirectionalNavigation="Contained"
                                                     TextElement.FontSize="{TemplateBinding FontSize}" />
                                             </ScrollViewer>

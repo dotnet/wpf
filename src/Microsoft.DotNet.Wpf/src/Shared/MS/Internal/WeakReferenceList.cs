@@ -1,6 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+#nullable enable
+
 using System.Collections;
 
 namespace MS.Internal;
@@ -20,7 +22,7 @@ internal sealed class WeakReferenceList<T> : CopyOnWriteList<WeakReference<T>>, 
     {
     }
 
-    public WeakReferenceList(object syncRoot) : base(syncRoot)
+    public WeakReferenceList(object? syncRoot) : base(syncRoot)
     {
     }
 
@@ -177,7 +179,7 @@ internal sealed class WeakReferenceList<T> : CopyOnWriteList<WeakReference<T>>, 
             for (int i = 0; i < list.Count; i++)
             {
                 WeakReference<T> weakRef = list[i];
-                if (weakRef.TryGetTarget(out T target))
+                if (weakRef.TryGetTarget(out T? target))
                 {
                     if (obj == target)
                     {

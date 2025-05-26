@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections;
+using System.Collections.ObjectModel;
 
 namespace MS.Internal
 {
@@ -18,7 +19,7 @@ namespace MS.Internal
     /// </remarks>
     internal struct WeakReferenceListEnumerator : IEnumerator
     {
-        public WeakReferenceListEnumerator( ArrayList List)
+        public WeakReferenceListEnumerator( ReadOnlyCollection<object> List)
         {
             _i = 0;
             _List = List;
@@ -61,7 +62,7 @@ namespace MS.Internal
         }
 
         private int _i;
-        private ArrayList _List;
+        private ReadOnlyCollection<object> _List;
         private object _StrongReference;
     }
 }

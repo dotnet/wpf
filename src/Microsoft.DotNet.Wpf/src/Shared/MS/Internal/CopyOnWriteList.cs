@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections;
+using System.Collections.ObjectModel;
 
 namespace MS.Internal
 {
@@ -14,7 +15,7 @@ namespace MS.Internal
     ///   cache then the list is copied before it is modified and the readonly list is
     ///   released from the cache.
     /// </summary>
-    internal class CopyOnWriteList
+    internal class CopyOnWriteList<T>
     {
         public CopyOnWriteList() : this(null)
         {
@@ -35,16 +36,16 @@ namespace MS.Internal
         ///    1) Checking _readonlyWrapper and copying the list before modifying it.
         ///    2) Clearing _readonlyWrapper.
         /// </summary>
-        public ArrayList List
+        public ReadOnlyCollection<T> List
         {
             get
             {
-                ArrayList tempList;
+                ReadOnlyCollection<T> tempList;
 
                 lock (_syncRoot)
                 {
                     if (null == _readonlyWrapper)
-                        _readonlyWrapper = ArrayList.ReadOnly(_LiveList);
+                        _readonlyWrapper = _LiveList.AsReadOnly();
                     tempList = _readonlyWrapper;
                 }
                 return tempList;
@@ -56,7 +57,7 @@ namespace MS.Internal
         ///   Returns true if successfully added.
         ///   Returns false if object is already on the list.
         /// </summary>
-        public virtual bool Add(object obj)
+        public virtual bool Add(T obj)
         {
             Debug.Assert(null != obj, "CopyOnWriteList.Add() should not be passed null.");
             lock (_syncRoot)
@@ -75,7 +76,7 @@ namespace MS.Internal
         ///   Returns true if successfully removed.
         ///   Returns false if object was not on the list.
         /// </summary>
-        public virtual bool Remove(object obj)
+        public virtual bool Remove(T obj)
         {
             Debug.Assert(null != obj, "CopyOnWriteList.Remove() should not be passed null.");
             lock (_syncRoot)
@@ -106,7 +107,7 @@ namespace MS.Internal
         ///  any copy on write protection.  So the caller must really know what
         ///  they are doing.
         /// </summary>
-        protected ArrayList LiveList
+        protected List<T> LiveList
         {
             get { return _LiveList; }
         }
@@ -116,7 +117,7 @@ namespace MS.Internal
         ///   Without any error checks.
         ///   For use by derived classes that implement there own error checks.
         /// </summary>
-        protected bool Internal_Add(object obj)
+        protected bool Internal_Add(T obj)
         {
             DoCopyOnWriteCheck();
             _LiveList.Add(obj);
@@ -128,7 +129,7 @@ namespace MS.Internal
         ///   Without any error checks.
         ///   For use by derived classes that implement there own error checks.
         /// </summary>
-        protected bool Internal_Insert(int index, object obj)
+        protected bool Internal_Insert(int index, T obj)
         {
             DoCopyOnWriteCheck();
             _LiveList.Insert(index, obj);
@@ -138,12 +139,12 @@ namespace MS.Internal
         /// <summary>
         ///   Find an object on the List.
         /// </summary>
-        private int Find(object obj)
+        private int Find(T obj)
         {
             // syncRoot Lock MUST be held by the caller.
             for (int i = 0; i < _LiveList.Count; i++)
             {
-                if (obj == _LiveList[i])
+                if (obj.Equals(_LiveList[i]))
                 {
                     return i;
                 }
@@ -177,13 +178,13 @@ namespace MS.Internal
             // the old version free.
             if (null != _readonlyWrapper)
             {
-                _LiveList = (ArrayList)_LiveList.Clone();
+                _LiveList = new List<T>(_LiveList);
                 _readonlyWrapper = null;
             }
         }
 
         private readonly object _syncRoot;
-        private ArrayList _LiveList = new ArrayList();
-        private ArrayList _readonlyWrapper;
+        private List<T> _LiveList = new List<T>();
+        private ReadOnlyCollection<T> _readonlyWrapper;
     }
 }

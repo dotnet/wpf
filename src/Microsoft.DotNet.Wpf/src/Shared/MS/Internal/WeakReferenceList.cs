@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections;
@@ -14,7 +14,7 @@ namespace MS.Internal
     ///   cache then the list is copied before it is modified and the readonly list is
     ///   released from the cache.
     /// </summary>
-    internal class WeakReferenceList : CopyOnWriteList, IEnumerable
+    internal class WeakReferenceList : CopyOnWriteList<object>, IEnumerable
     {
         public WeakReferenceList():base(null)
         {
@@ -162,7 +162,7 @@ namespace MS.Internal
              while (foundDeadReferences)
              {
                  foundDeadReferences = false;
-                 ArrayList list = base.LiveList;
+                 List<object> list = base.LiveList;
 
                  for(int i = 0; i < list.Count; i++)
                  {
@@ -203,7 +203,7 @@ namespace MS.Internal
          // caller is expected to lock the SyncRoot
          private void Purge()
          {
-            ArrayList list = base.LiveList;
+            List<object> list = base.LiveList;
             int destIndex;
             int n = list.Count;
 

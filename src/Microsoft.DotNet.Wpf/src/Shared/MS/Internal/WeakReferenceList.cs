@@ -29,6 +29,10 @@ internal sealed class WeakReferenceList<T> : CopyOnWriteList<WeakReference<T>>, 
         }
     }
 
+    public WeakReferenceList(int capacity) : base(capacity)
+    {
+    }
+
     public WeakReferenceList(object? syncRoot) : base(syncRoot)
     {
     }

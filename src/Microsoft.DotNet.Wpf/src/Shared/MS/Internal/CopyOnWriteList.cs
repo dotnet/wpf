@@ -31,6 +31,12 @@ internal class CopyOnWriteList<T> where T : notnull
         _listList = new List<T>();
     }
 
+    public CopyOnWriteList(int capacity)
+    {
+        _syncRoot = new object();
+        _listList = new List<T>(capacity);
+    }
+
     /// <summary>
     ///   Return a readonly wrapper of the list.  Note: this is NOT a copy.
     ///   A non-null _readonlyWrapper  is a "Copy on Write" flag.

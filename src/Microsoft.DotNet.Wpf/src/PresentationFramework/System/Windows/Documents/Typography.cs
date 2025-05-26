@@ -11,14 +11,11 @@ using MS.Internal.Text;
 namespace System.Windows.Documents
 {
     /// <summary>
-    /// Provide access to typography porperties of element in syntax of Typography.xxx = yyy;
+    /// Provide access to typography properties of element in syntax of Typography.xxx = yyy;
     /// Actual data is stored in the owner.
     /// </summary>
     public sealed class Typography
     {
-        private static readonly Type _typeofThis = typeof(Typography);
-        private static readonly Type _typeofBool = typeof(bool);
-        
         #region Constructors
 
         /// <summary>
@@ -1478,9 +1475,9 @@ namespace System.Windows.Documents
         /// <summary> StandardLigatures Property </summary>
         public static readonly DependencyProperty StandardLigaturesProperty =
                 DependencyProperty.RegisterAttached(
-                        "StandardLigatures", 
-                        _typeofBool, 
-                        _typeofThis,
+                        "StandardLigatures",
+                        typeof(bool),
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 true,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1488,9 +1485,9 @@ namespace System.Windows.Documents
         /// <summary> ContextualLigatures Property </summary>
         public static readonly DependencyProperty ContextualLigaturesProperty =
                 DependencyProperty.RegisterAttached(
-                        "ContextualLigatures", 
-                        _typeofBool, 
-                        _typeofThis,
+                        "ContextualLigatures",
+                        typeof(bool),
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 true,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1499,8 +1496,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty DiscretionaryLigaturesProperty =
                 DependencyProperty.RegisterAttached(
                         "DiscretionaryLigatures", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool),
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1509,8 +1506,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty HistoricalLigaturesProperty =
                 DependencyProperty.RegisterAttached(
                         "HistoricalLigatures", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool),
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1519,8 +1516,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty AnnotationAlternatesProperty =
                 DependencyProperty.RegisterAttached(
                         "AnnotationAlternates", 
-                        typeof(int), 
-                        _typeofThis,
+                        typeof(int),
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 0,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1529,8 +1526,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty ContextualAlternatesProperty =
                 DependencyProperty.RegisterAttached(
                         "ContextualAlternates", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool),
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 true,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1539,8 +1536,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty HistoricalFormsProperty =
                 DependencyProperty.RegisterAttached(
                         "HistoricalForms", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1549,8 +1546,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty KerningProperty =
                 DependencyProperty.RegisterAttached(
                         "Kerning", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 true,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1559,8 +1556,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty CapitalSpacingProperty =
                 DependencyProperty.RegisterAttached(
                         "CapitalSpacing", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1569,8 +1566,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty CaseSensitiveFormsProperty =
                 DependencyProperty.RegisterAttached(
                         "CaseSensitiveForms", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1579,8 +1576,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty StylisticSet1Property =
                 DependencyProperty.RegisterAttached(
                         "StylisticSet1", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1589,8 +1586,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty StylisticSet2Property =
                 DependencyProperty.RegisterAttached(
                         "StylisticSet2", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1599,8 +1596,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty StylisticSet3Property =
                 DependencyProperty.RegisterAttached(
                         "StylisticSet3", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1609,8 +1606,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty StylisticSet4Property =
                 DependencyProperty.RegisterAttached(
                         "StylisticSet4", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1619,8 +1616,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty StylisticSet5Property =
                 DependencyProperty.RegisterAttached(
                         "StylisticSet5", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1629,8 +1626,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty StylisticSet6Property =
                 DependencyProperty.RegisterAttached(
                         "StylisticSet6", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1639,8 +1636,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty StylisticSet7Property =
                 DependencyProperty.RegisterAttached(
                         "StylisticSet7", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1649,8 +1646,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty StylisticSet8Property =
                 DependencyProperty.RegisterAttached(
                         "StylisticSet8", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1659,8 +1656,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty StylisticSet9Property =
                 DependencyProperty.RegisterAttached(
                         "StylisticSet9", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1669,8 +1666,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty StylisticSet10Property =
                 DependencyProperty.RegisterAttached(
                         "StylisticSet10", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1679,8 +1676,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty StylisticSet11Property =
                 DependencyProperty.RegisterAttached(
                         "StylisticSet11", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1689,8 +1686,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty StylisticSet12Property =
                 DependencyProperty.RegisterAttached(
                         "StylisticSet12", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1699,8 +1696,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty StylisticSet13Property =
                 DependencyProperty.RegisterAttached(
                         "StylisticSet13", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1709,8 +1706,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty StylisticSet14Property =
                 DependencyProperty.RegisterAttached(
                         "StylisticSet14", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1719,8 +1716,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty StylisticSet15Property =
                 DependencyProperty.RegisterAttached(
                         "StylisticSet15", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1729,8 +1726,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty StylisticSet16Property =
                 DependencyProperty.RegisterAttached(
                         "StylisticSet16", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1739,8 +1736,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty StylisticSet17Property =
                 DependencyProperty.RegisterAttached(
                         "StylisticSet17", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1749,8 +1746,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty StylisticSet18Property =
                 DependencyProperty.RegisterAttached(
                         "StylisticSet18", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1759,8 +1756,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty StylisticSet19Property =
                 DependencyProperty.RegisterAttached(
                         "StylisticSet19", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1769,8 +1766,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty StylisticSet20Property =
                 DependencyProperty.RegisterAttached(
                         "StylisticSet20", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1780,7 +1777,7 @@ namespace System.Windows.Documents
                 DependencyProperty.RegisterAttached(
                         "Fraction", 
                         typeof(FontFraction), 
-                        _typeofThis,
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 FontFraction.Normal,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1789,8 +1786,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty SlashedZeroProperty =
                 DependencyProperty.RegisterAttached(
                         "SlashedZero", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1799,8 +1796,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty MathematicalGreekProperty =
                 DependencyProperty.RegisterAttached(
                         "MathematicalGreek", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1809,8 +1806,8 @@ namespace System.Windows.Documents
         public static readonly DependencyProperty EastAsianExpertFormsProperty =
                 DependencyProperty.RegisterAttached(
                         "EastAsianExpertForms", 
-                        _typeofBool, 
-                        _typeofThis,
+                        typeof(bool), 
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1820,7 +1817,7 @@ namespace System.Windows.Documents
                 DependencyProperty.RegisterAttached(
                         "Variants", 
                         typeof(FontVariants), 
-                        _typeofThis,
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 FontVariants.Normal,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1830,7 +1827,7 @@ namespace System.Windows.Documents
                 DependencyProperty.RegisterAttached(
                         "Capitals", 
                         typeof(FontCapitals), 
-                        _typeofThis,
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 FontCapitals.Normal,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1840,7 +1837,7 @@ namespace System.Windows.Documents
                 DependencyProperty.RegisterAttached(
                         "NumeralStyle", 
                         typeof(FontNumeralStyle), 
-                        _typeofThis,
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 FontNumeralStyle.Normal,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1850,7 +1847,7 @@ namespace System.Windows.Documents
                 DependencyProperty.RegisterAttached(
                         "NumeralAlignment", 
                         typeof(FontNumeralAlignment), 
-                        _typeofThis,
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 FontNumeralAlignment.Normal,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1860,7 +1857,7 @@ namespace System.Windows.Documents
                 DependencyProperty.RegisterAttached(
                         "EastAsianWidths", 
                         typeof(FontEastAsianWidths), 
-                        _typeofThis,
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 FontEastAsianWidths.Normal,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1870,7 +1867,7 @@ namespace System.Windows.Documents
                 DependencyProperty.RegisterAttached(
                         "EastAsianLanguage", 
                         typeof(FontEastAsianLanguage), 
-                        _typeofThis,
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 FontEastAsianLanguage.Normal,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1880,7 +1877,7 @@ namespace System.Windows.Documents
                 DependencyProperty.RegisterAttached(
                         "StandardSwashes", 
                         typeof(int), 
-                        _typeofThis,
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 0,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1890,7 +1887,7 @@ namespace System.Windows.Documents
                 DependencyProperty.RegisterAttached(
                         "ContextualSwashes", 
                         typeof(int), 
-                        _typeofThis,
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 0,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
@@ -1900,7 +1897,7 @@ namespace System.Windows.Documents
                 DependencyProperty.RegisterAttached(
                         "StylisticAlternates", 
                         typeof(int), 
-                        _typeofThis,
+                        typeof(Typography),
                         new FrameworkPropertyMetadata(
                                 0,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));

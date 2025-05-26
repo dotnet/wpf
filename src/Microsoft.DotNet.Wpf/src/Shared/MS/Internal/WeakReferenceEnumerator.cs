@@ -71,9 +71,10 @@ internal struct WeakReferenceListEnumerator<T> : IEnumerator<T> where T : class
         _strongReference = null;
     }
 
-    public readonly void Dispose()
+    public void Dispose()
     {
-        // This method is here to satisfy the IEnumerator<T> interface.
+        // Clean up the instance to avoid holding strong references to elements
+        _strongReference = null;
     }
 }
 

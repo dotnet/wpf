@@ -18,6 +18,10 @@ namespace MS.Internal;
 /// </summary>
 internal sealed class WeakReferenceList<T> : CopyOnWriteList<WeakReference<T>>, IEnumerable<T> where T : class
 {
+    /// <summary>
+    /// Retrieves the count of weak references in the list.
+    /// </summary>
+    /// <remarks>This can include any dead references currently present in the list.</remarks>
     public int Count
     {
         get
@@ -29,14 +33,27 @@ internal sealed class WeakReferenceList<T> : CopyOnWriteList<WeakReference<T>>, 
         }
     }
 
+    /// <summary>
+    /// Creates a new WeakReferenceList with the default capacity.
+    /// </summary>
+    /// <param name="capacity">The initial capacity of the list.</param>
     public WeakReferenceList(int capacity) : base(capacity)
     {
     }
 
+    /// <summary>
+    /// Creates a new WeakReferenceList with the specified sync root.
+    /// </summary>
+    /// <param name="syncRoot">The synchronization object used to manage access to the list.</param>
+    /// <remarks>In case <paramref name="syncRoot"/> is <see langword="null"/>, a private instance will be created.</remarks>
     public WeakReferenceList(object? syncRoot) : base(syncRoot)
     {
     }
 
+    /// <summary>
+    /// Retrieves a struct-based enumerator for the list.
+    /// </summary>
+    /// <returns>A struct-based enumerator instance.</returns>
     public WeakReferenceListEnumerator<T> GetEnumerator()
     {
         return new WeakReferenceListEnumerator<T>(List);
@@ -58,14 +75,8 @@ internal sealed class WeakReferenceList<T> : CopyOnWriteList<WeakReference<T>>, 
 
         lock (SyncRoot)
         {
-            int index = FindWeakReference(item);
-
-            // If the object is already on the list then
-            // return true
-            if (index >= 0)
-                return true;
-
-            return false;
+            // If the object is already on the list then return true
+            return FindWeakReference(item) >= 0;
         }
     }
 
@@ -121,12 +132,8 @@ internal sealed class WeakReferenceList<T> : CopyOnWriteList<WeakReference<T>>, 
         {
             int index = FindWeakReference(obj);
 
-            // If the object is not on the list then
-            // we are done.  (return false)
-            if (index < 0)
-                return false;
-
-            return RemoveAt(index);
+            // If the object is not on the list then we are done.
+            return index >= 0 && RemoveAt(index);
         }
     }
 
@@ -143,12 +150,8 @@ internal sealed class WeakReferenceList<T> : CopyOnWriteList<WeakReference<T>>, 
         {
             int existingIndex = FindWeakReference(obj);
 
-            // If the object is already on the list then
-            // we are done.  (return false)
-            if (existingIndex >= 0)
-                return false;
-
-            return Internal_Insert(index, new WeakReference<T>(obj));
+            // If the object is already on the list then we are done.
+            return existingIndex < 0 && Internal_Insert(index, new WeakReference<T>(obj));
         }
     }
 
@@ -177,9 +180,10 @@ internal sealed class WeakReferenceList<T> : CopyOnWriteList<WeakReference<T>>, 
             for (int i = 0; i < list.Count; i++)
             {
                 WeakReference<T> weakRef = list[i];
+
                 if (weakRef.TryGetTarget(out T? target))
                 {
-                    if (obj == target)
+                    if (target == obj)
                     {
                         foundItem = i;
                         break;

@@ -16,7 +16,7 @@ namespace MS.Internal;
 ///   cache then the list is copied before it is modified and the readonly list is
 ///   released from the cache.
 /// </summary>
-internal class CopyOnWriteList<T> where T : notnull
+internal class CopyOnWriteList<T> where T : class
 {
     private ReadOnlyCollection<T>? _readonlyWrapper;
     private List<T> _listList;
@@ -159,7 +159,7 @@ internal class CopyOnWriteList<T> where T : notnull
         // syncRoot Lock MUST be held by the caller.
         for (int i = 0; i < _listList.Count; i++)
         {
-            if (obj.Equals(_listList[i]))
+            if (obj == _listList[i])
             {
                 return i;
             }

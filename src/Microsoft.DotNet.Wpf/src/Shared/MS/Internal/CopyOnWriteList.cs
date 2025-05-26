@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections;
@@ -22,10 +22,8 @@ namespace MS.Internal
 
         public CopyOnWriteList(object syncRoot)
         {
-            if(syncRoot == null)
-            {
-                syncRoot = new Object();
-            }
+            syncRoot ??= new object();
+
             _syncRoot = syncRoot;
         }
 
@@ -34,7 +32,7 @@ namespace MS.Internal
         ///   A non-null _readonlyWrapper  is a "Copy on Write" flag.
         ///   Methods that change the list (eg. Add() and Remove()) are
         ///   responsible for:
-        ///    1) Checking _readonlyWrapper and copying the list before modifing it.
+        ///    1) Checking _readonlyWrapper and copying the list before modifying it.
         ///    2) Clearing _readonlyWrapper.
         /// </summary>
         public ArrayList List
@@ -43,9 +41,9 @@ namespace MS.Internal
             {
                 ArrayList tempList;
 
-                lock(_syncRoot)
+                lock (_syncRoot)
                 {
-                    if(null == _readonlyWrapper)
+                    if (null == _readonlyWrapper)
                         _readonlyWrapper = ArrayList.ReadOnly(_LiveList);
                     tempList = _readonlyWrapper;
                 }
@@ -60,12 +58,12 @@ namespace MS.Internal
         /// </summary>
         public virtual bool Add(object obj)
         {
-            Debug.Assert(null!=obj, "CopyOnWriteList.Add() should not be passed null.");
-            lock(_syncRoot)
+            Debug.Assert(null != obj, "CopyOnWriteList.Add() should not be passed null.");
+            lock (_syncRoot)
             {
                 int index = Find(obj);
 
-                if(index >= 0)
+                if (index >= 0)
                     return false;
 
                 return Internal_Add(obj);
@@ -79,14 +77,14 @@ namespace MS.Internal
         /// </summary>
         public virtual bool Remove(object obj)
         {
-            Debug.Assert(null!=obj, "CopyOnWriteList.Remove() should not be passed null.");
-            lock(_syncRoot)
+            Debug.Assert(null != obj, "CopyOnWriteList.Remove() should not be passed null.");
+            lock (_syncRoot)
             {
                 int index = Find(obj);
 
                 // If the object is not on the list then
                 // we are done.  (return false)
-                if(index < 0)
+                if (index < 0)
                     return false;
 
                 return RemoveAt(index);
@@ -99,7 +97,7 @@ namespace MS.Internal
         /// </summary>
         protected object SyncRoot
         {
-            get{ return _syncRoot; }
+            get { return _syncRoot; }
         }
 
         /// <summary>
@@ -110,7 +108,7 @@ namespace MS.Internal
         /// </summary>
         protected ArrayList LiveList
         {
-            get{ return _LiveList; }
+            get { return _LiveList; }
         }
 
         /// <summary>
@@ -143,9 +141,9 @@ namespace MS.Internal
         private int Find(object obj)
         {
             // syncRoot Lock MUST be held by the caller.
-            for(int i = 0; i < _LiveList.Count; i++)
+            for (int i = 0; i < _LiveList.Count; i++)
             {
-                if(obj == _LiveList[i])
+                if (obj == _LiveList[i])
                 {
                     return i;
                 }
@@ -163,7 +161,7 @@ namespace MS.Internal
         protected bool RemoveAt(int index)
         {
             // syncRoot Lock MUST be held by the caller.
-            if(index <0 || index >= _LiveList.Count )
+            if (index < 0 || index >= _LiveList.Count)
                 return false;
 
             DoCopyOnWriteCheck();
@@ -177,14 +175,14 @@ namespace MS.Internal
             // If we have exposed (given out) a readonly reference to this
             // version of the list, then clone a new internal copy and cut
             // the old version free.
-            if(null != _readonlyWrapper)
+            if (null != _readonlyWrapper)
             {
                 _LiveList = (ArrayList)_LiveList.Clone();
                 _readonlyWrapper = null;
             }
         }
 
-        private object _syncRoot;
+        private readonly object _syncRoot;
         private ArrayList _LiveList = new ArrayList();
         private ArrayList _readonlyWrapper;
     }

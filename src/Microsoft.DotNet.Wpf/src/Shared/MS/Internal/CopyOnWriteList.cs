@@ -17,6 +17,11 @@ namespace MS.Internal
     /// </summary>
     internal class CopyOnWriteList<T>
     {
+        private ReadOnlyCollection<T> _readonlyWrapper;
+        private List<T> _listList;
+
+        private readonly object _syncRoot;
+
         public CopyOnWriteList() : this(null)
         {
         }
@@ -26,6 +31,7 @@ namespace MS.Internal
             syncRoot ??= new object();
 
             _syncRoot = syncRoot;
+            _listList = new List<T>();
         }
 
         /// <summary>
@@ -44,10 +50,11 @@ namespace MS.Internal
 
                 lock (_syncRoot)
                 {
-                    if (null == _readonlyWrapper)
-                        _readonlyWrapper = _LiveList.AsReadOnly();
+                    _readonlyWrapper ??= _listList.AsReadOnly();
+
                     tempList = _readonlyWrapper;
                 }
+
                 return tempList;
             }
         }
@@ -59,7 +66,8 @@ namespace MS.Internal
         /// </summary>
         public virtual bool Add(T obj)
         {
-            Debug.Assert(null != obj, "CopyOnWriteList.Add() should not be passed null.");
+            Debug.Assert(obj is not null, "CopyOnWriteList.Add() should not be passed null.");
+
             lock (_syncRoot)
             {
                 int index = Find(obj);
@@ -78,7 +86,7 @@ namespace MS.Internal
         /// </summary>
         public virtual bool Remove(T obj)
         {
-            Debug.Assert(null != obj, "CopyOnWriteList.Remove() should not be passed null.");
+            Debug.Assert(obj is not null, "CopyOnWriteList.Remove() should not be passed null.");
             lock (_syncRoot)
             {
                 int index = Find(obj);
@@ -109,7 +117,7 @@ namespace MS.Internal
         /// </summary>
         protected List<T> LiveList
         {
-            get { return _LiveList; }
+            get { return _listList; }
         }
 
         /// <summary>
@@ -120,7 +128,9 @@ namespace MS.Internal
         protected bool Internal_Add(T obj)
         {
             DoCopyOnWriteCheck();
-            _LiveList.Add(obj);
+
+            _listList.Add(obj);
+
             return true;
         }
 
@@ -132,7 +142,9 @@ namespace MS.Internal
         protected bool Internal_Insert(int index, T obj)
         {
             DoCopyOnWriteCheck();
-            _LiveList.Insert(index, obj);
+
+            _listList.Insert(index, obj);
+
             return true;
         }
 
@@ -142,9 +154,9 @@ namespace MS.Internal
         private int Find(T obj)
         {
             // syncRoot Lock MUST be held by the caller.
-            for (int i = 0; i < _LiveList.Count; i++)
+            for (int i = 0; i < _listList.Count; i++)
             {
-                if (obj.Equals(_LiveList[i]))
+                if (obj.Equals(_listList[i]))
                 {
                     return i;
                 }
@@ -162,11 +174,13 @@ namespace MS.Internal
         protected bool RemoveAt(int index)
         {
             // syncRoot Lock MUST be held by the caller.
-            if (index < 0 || index >= _LiveList.Count)
+            if (index < 0 || index >= _listList.Count)
                 return false;
 
             DoCopyOnWriteCheck();
-            _LiveList.RemoveAt(index);
+
+            _listList.RemoveAt(index);
+
             return true;
         }
 
@@ -176,15 +190,11 @@ namespace MS.Internal
             // If we have exposed (given out) a readonly reference to this
             // version of the list, then clone a new internal copy and cut
             // the old version free.
-            if (null != _readonlyWrapper)
+            if (_readonlyWrapper is not null)
             {
-                _LiveList = new List<T>(_LiveList);
+                _listList = new List<T>(_listList);
                 _readonlyWrapper = null;
             }
         }
-
-        private readonly object _syncRoot;
-        private List<T> _LiveList = new List<T>();
-        private ReadOnlyCollection<T> _readonlyWrapper;
     }
 }

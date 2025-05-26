@@ -2502,16 +2502,6 @@
         <target state="translated">呼叫執行緒無法存取此物件，因為此物件屬於另一個執行緒。</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_ApartmentState">
-        <source>This operation requires the thread's apartment state to be '{0}'.</source>
-        <target state="translated">此作業需要執行緒的 Apartment 狀態為 '{0}'。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Verify_FileExists">
-        <source>No file exists at '{0}'.</source>
-        <target state="translated">'{0}' 沒有任何檔案。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="VersionNumberComponentNegative">
         <source>Major and minor version number components cannot be negative.</source>
         <target state="translated">主要與次要版本號碼元件不可為負數。</target>

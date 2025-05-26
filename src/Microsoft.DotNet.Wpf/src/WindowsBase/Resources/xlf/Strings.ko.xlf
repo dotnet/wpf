@@ -2502,16 +2502,6 @@
         <target state="translated">다른 스레드가 이 개체를 소유하고 있어 호출 스레드가 해당 개체에 액세스할 수 없습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_ApartmentState">
-        <source>This operation requires the thread's apartment state to be '{0}'.</source>
-        <target state="translated">이 작업을 수행하려면 스레드의 아파트가 '{0}' 상태여야 합니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Verify_FileExists">
-        <source>No file exists at '{0}'.</source>
-        <target state="translated">'{0}'에 파일이 없습니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="VersionNumberComponentNegative">
         <source>Major and minor version number components cannot be negative.</source>
         <target state="translated">주 버전 및 부 버전 번호 구성 요소는 음수일 수 없습니다.</target>

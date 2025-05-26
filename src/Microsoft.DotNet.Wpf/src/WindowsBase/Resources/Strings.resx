@@ -1704,12 +1704,6 @@
   <data name="MustBeOfType" xml:space="preserve">
     <value>'{0}' must be of type '{1}'.</value>
   </data>
-  <data name="Verify_ApartmentState" xml:space="preserve">
-    <value>This operation requires the thread's apartment state to be '{0}'.</value>
-  </data>
-  <data name="Verify_FileExists" xml:space="preserve">
-    <value>No file exists at '{0}'.</value>
-  </data>
   <data name="InvalidEvent" xml:space="preserve">
     <value>Event argument is invalid.</value>
   </data>

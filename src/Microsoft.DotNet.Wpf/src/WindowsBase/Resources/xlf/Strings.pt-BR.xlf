@@ -2502,16 +2502,6 @@
         <target state="translated">O thread de chamada não pode acessar este objeto porque ele pertence a um thread diferente.</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_ApartmentState">
-        <source>This operation requires the thread's apartment state to be '{0}'.</source>
-        <target state="translated">Esta operação exige que o estado do apartment do thread seja '{0}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Verify_FileExists">
-        <source>No file exists at '{0}'.</source>
-        <target state="translated">Não existe arquivo em '{0}'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="VersionNumberComponentNegative">
         <source>Major and minor version number components cannot be negative.</source>
         <target state="translated">Os componentes de número de versão principal e secundária não podem ser negativos.</target>

@@ -2502,16 +2502,6 @@
         <target state="translated">Volající vlákno nemá přístup k tomuto objektu, protože jej vlastní jiné vlákno.</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_ApartmentState">
-        <source>This operation requires the thread's apartment state to be '{0}'.</source>
-        <target state="translated">Tato operace vyžaduje, aby stav vlákna modelu apartment byl {0}.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Verify_FileExists">
-        <source>No file exists at '{0}'.</source>
-        <target state="translated">V {0} neexistuje žádný soubor.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="VersionNumberComponentNegative">
         <source>Major and minor version number components cannot be negative.</source>
         <target state="translated">Součásti čísla hlavní verze a podverze nemůžou být záporné.</target>

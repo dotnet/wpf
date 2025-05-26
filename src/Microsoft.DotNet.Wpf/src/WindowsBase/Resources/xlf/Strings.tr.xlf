@@ -2502,16 +2502,6 @@
         <target state="translated">Başka bir iş parçacığına ait olduğundan çağıran iş parçacığı bu nesneye erişemiyor.</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_ApartmentState">
-        <source>This operation requires the thread's apartment state to be '{0}'.</source>
-        <target state="translated">Bu işlem iş parçacığı grup durumunun '{0}' olmasını gerektirir.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Verify_FileExists">
-        <source>No file exists at '{0}'.</source>
-        <target state="translated">'{0}' konumunda dosya yok.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="VersionNumberComponentNegative">
         <source>Major and minor version number components cannot be negative.</source>
         <target state="translated">Birincil ve ikincil sürüm numarası bileşenleri negatif olamaz.</target>

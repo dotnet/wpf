@@ -2502,16 +2502,6 @@
         <target state="translated">Вызывающий поток не может получить доступ к данному объекту, так как владельцем этого объекта является другой поток.</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_ApartmentState">
-        <source>This operation requires the thread's apartment state to be '{0}'.</source>
-        <target state="translated">Эта операция требует, чтобы подразделение потока находилось в состоянии "{0}".</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Verify_FileExists">
-        <source>No file exists at '{0}'.</source>
-        <target state="translated">Файл не существует в "{0}".</target>
-        <note />
-      </trans-unit>
       <trans-unit id="VersionNumberComponentNegative">
         <source>Major and minor version number components cannot be negative.</source>
         <target state="translated">Компоненты основного и дополнительного номера версии не могут быть отрицательными.</target>

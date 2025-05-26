@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -51,7 +51,7 @@ namespace System.Windows.Diagnostics
             {
                 if (!IsEnabled)
                 {
-                    return ResourceDictionaryDiagnostics.EmptyResourceDictionaryInfos;
+                    return ReadOnlyCollection<ResourceDictionaryInfo>.Empty;
                 }
 
                 return SystemResources.ThemedResourceDictionaries;
@@ -69,7 +69,7 @@ namespace System.Windows.Diagnostics
             {
                 if (!IsEnabled)
                 {
-                    return ResourceDictionaryDiagnostics.EmptyResourceDictionaryInfos;
+                    return ReadOnlyCollection<ResourceDictionaryInfo>.Empty;
                 }
 
                 return SystemResources.GenericResourceDictionaries;
@@ -276,46 +276,30 @@ namespace System.Windows.Diagnostics
 
         public static IEnumerable<FrameworkElement> GetFrameworkElementOwners(ResourceDictionary dictionary)
         {
-            return GetOwners<FrameworkElement>(dictionary.FrameworkElementOwners, EmptyFrameworkElementList);
+            return GetOwners(dictionary.FrameworkElementOwners);
         }
 
         public static IEnumerable<FrameworkContentElement> GetFrameworkContentElementOwners(ResourceDictionary dictionary)
         {
-            return GetOwners<FrameworkContentElement>(dictionary.FrameworkContentElementOwners, EmptyFrameworkContentElementList);
+            return GetOwners(dictionary.FrameworkContentElementOwners);
         }
 
         public static IEnumerable<Application> GetApplicationOwners(ResourceDictionary dictionary)
         {
-            return GetOwners<Application>(dictionary.ApplicationOwners, EmptyApplicationList);
+            return GetOwners(dictionary.ApplicationOwners);
         }
 
-        private static IEnumerable<T> GetOwners<T>(WeakReferenceList list, IEnumerable<T> emptyList)
+        private static IEnumerable<T> GetOwners<T>(WeakReferenceList<T> list)
             where T : DispatcherObject
         {
             if (!IsEnabled || list == null || list.Count == 0)
             {
-                return emptyList;
+                return Array.Empty<T>();
             }
 
-            List<T> result = new List<T>(list.Count);
-            foreach (Object o in list)
-            {
-                T owner = o as T;
-                if (owner != null)
-                {
-                    result.Add(owner);
-                }
-            }
-
-            return result.AsReadOnly();
+            // Create a read-only copy of the list
+            return new List<T>(list).AsReadOnly();
         }
-
-        private static IReadOnlyCollection<FrameworkElement> EmptyFrameworkElementList
-            => Array.Empty<FrameworkElement>();
-        private static IReadOnlyCollection<FrameworkContentElement> EmptyFrameworkContentElementList
-            => Array.Empty<FrameworkContentElement>();
-        private static IReadOnlyCollection<Application> EmptyApplicationList
-            => Array.Empty<Application>();
 
         #endregion
 
@@ -548,7 +532,5 @@ namespace System.Windows.Diagnostics
 
         internal static bool IsEnabled { get; private set; }
 
-        private static readonly ReadOnlyCollection<ResourceDictionaryInfo> EmptyResourceDictionaryInfos
-            = new List<ResourceDictionaryInfo>().AsReadOnly();
     }
 }

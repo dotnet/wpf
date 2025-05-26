@@ -357,7 +357,7 @@ namespace MS.Win32
 
         private IntPtr _handle;
         private UInt16 _classAtom;
-        private WeakReferenceList _hooks;
+        private WeakReferenceList<HwndWrapperHook> _hooks;
         private int _ownerThreadID;
         
         private HwndWrapperHook _wndProc;

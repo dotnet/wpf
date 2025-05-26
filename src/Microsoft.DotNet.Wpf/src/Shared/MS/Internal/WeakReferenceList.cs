@@ -18,8 +18,15 @@ namespace MS.Internal;
 /// </summary>
 internal sealed class WeakReferenceList<T> : CopyOnWriteList<WeakReference<T>>, IEnumerable<T> where T : class
 {
-    public WeakReferenceList() : base(null)
+    public int Count
     {
+        get
+        {
+            lock (SyncRoot)
+            {
+                return LiveList.Count;
+            }
+        }
     }
 
     public WeakReferenceList(object? syncRoot) : base(syncRoot)
@@ -55,19 +62,6 @@ internal sealed class WeakReferenceList<T> : CopyOnWriteList<WeakReference<T>>, 
                 return true;
 
             return false;
-        }
-    }
-
-    public int Count
-    {
-        get
-        {
-            int count = 0;
-            lock (SyncRoot)
-            {
-                count = LiveList.Count;
-            }
-            return count;
         }
     }
 

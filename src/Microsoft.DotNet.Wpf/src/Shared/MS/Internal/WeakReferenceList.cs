@@ -38,7 +38,7 @@ namespace MS.Internal
         {
             Debug.Assert(item is not null, "WeakReferenceList.Contains() should not be passed null.");
 
-            lock (base.SyncRoot)
+            lock (SyncRoot)
             {
                 int index = FindWeakReference(item);
 
@@ -56,9 +56,9 @@ namespace MS.Internal
             get
             {
                 int count = 0;
-                lock (base.SyncRoot)
+                lock (SyncRoot)
                 {
-                    count = base.LiveList.Count;
+                    count = LiveList.Count;
                 }
                 return count;
             }
@@ -82,7 +82,7 @@ namespace MS.Internal
         {
             Debug.Assert(obj is not null, "WeakReferenceList.Add() should not be passed null.");
 
-            lock (base.SyncRoot)
+            lock (SyncRoot)
             {
                 if (skipFind)
                 {
@@ -99,7 +99,7 @@ namespace MS.Internal
                     return false;
                 }
 
-                return base.Internal_Add(new WeakReference(obj));
+                return Internal_Add(new WeakReference(obj));
             }
         }
 
@@ -112,7 +112,7 @@ namespace MS.Internal
         {
             Debug.Assert(obj is not null, "WeakReferenceList.Remove() should not be passed null.");
 
-            lock (base.SyncRoot)
+            lock (SyncRoot)
             {
                 int index = FindWeakReference(obj);
 
@@ -121,7 +121,7 @@ namespace MS.Internal
                 if(index < 0)
                     return false;
 
-                return base.RemoveAt(index);
+                return RemoveAt(index);
             }
         }
 
@@ -134,7 +134,7 @@ namespace MS.Internal
         {
             Debug.Assert(obj is not null, "WeakReferenceList.Add() should not be passed null.");
 
-            lock (base.SyncRoot)
+            lock (SyncRoot)
             {
                 int existingIndex = FindWeakReference(obj);
 
@@ -143,7 +143,7 @@ namespace MS.Internal
                 if(existingIndex >=  0)
                     return false;
 
-                return base.Internal_Insert(index, new WeakReference(obj));
+                return Internal_Insert(index, new WeakReference(obj));
             }
         }
 
@@ -167,7 +167,7 @@ namespace MS.Internal
              while (foundDeadReferences)
              {
                  foundDeadReferences = false;
-                 List<object> list = base.LiveList;
+                 List<object> list = LiveList;
 
                  for(int i = 0; i < list.Count; i++)
                  {
@@ -208,7 +208,7 @@ namespace MS.Internal
          // caller is expected to lock the SyncRoot
          private void Purge()
          {
-            List<object> list = base.LiveList;
+            List<object> list = LiveList;
             int destIndex;
             int n = list.Count;
 
@@ -226,7 +226,7 @@ namespace MS.Internal
 
             // but if there is, check for copy-on-write
             DoCopyOnWriteCheck();
-            list = base.LiveList;
+            list = LiveList;
 
             // move remaining valid entries toward the beginning, into one
             // contiguous block

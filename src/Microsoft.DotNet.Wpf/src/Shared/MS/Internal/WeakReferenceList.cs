@@ -14,13 +14,13 @@ namespace MS.Internal
     ///   cache then the list is copied before it is modified and the readonly list is
     ///   released from the cache.
     /// </summary>
-    internal class WeakReferenceList : CopyOnWriteList<object>, IEnumerable
+    internal sealed class WeakReferenceList : CopyOnWriteList<object>, IEnumerable
     {
-        public WeakReferenceList():base(null)
+        public WeakReferenceList() : base(null)
         {
         }
 
-        public WeakReferenceList(object syncRoot):base(syncRoot)
+        public WeakReferenceList(object syncRoot) : base(syncRoot)
         {
         }
 
@@ -36,7 +36,8 @@ namespace MS.Internal
 
         public bool Contains(object item)
         {
-            Debug.Assert(null != item, "WeakReferenceList.Contains() should not be passed null.");
+            Debug.Assert(item is not null, "WeakReferenceList.Contains() should not be passed null.");
+
             lock (base.SyncRoot)
             {
                 int index = FindWeakReference(item);
@@ -70,22 +71,24 @@ namespace MS.Internal
         /// </summary>
         public override bool Add(object obj)
         {
-            Debug.Assert(null!=obj, "WeakReferenceList.Add() should not be passed null.");
+            Debug.Assert(obj is not null, "WeakReferenceList.Add() should not be passed null.");
+
             return Add(obj, false /*skipFind*/);
 }
 
-        //Will insert a new WeakREference into the list.
+        //Will insert a new WeakReference into the list.
         //The object bein inserted MUST be unique as there is no check for it.
         public bool Add(object obj, bool skipFind)
         {
-            Debug.Assert(null!=obj, "WeakReferenceList.Add() should not be passed null.");
-            lock(base.SyncRoot)
+            Debug.Assert(obj is not null, "WeakReferenceList.Add() should not be passed null.");
+
+            lock (base.SyncRoot)
             {
                 if (skipFind)
                 {
                     // before growing the list, purge it of dead entries.
                     // The expense of purging amortizes to O(1) per entry, because
-                    // the the list doubles its capacity when it grows.
+                    // the list doubles its capacity when it grows.
                     if (LiveList.Count == LiveList.Capacity)
                     {
                         Purge();
@@ -101,14 +104,15 @@ namespace MS.Internal
         }
 
         /// <summary>
-        ///   Remove a weak reference to the List.
-        ///   Returns true if successfully added.
-        ///   Returns false if object is already on the list.
+        /// Remove a weak reference to the List.
+        /// Returns true if successfully removed.
+        /// Returns false if object is not in the list.
         /// </summary>
         public override bool Remove(object obj)
         {
-            Debug.Assert(null!=obj, "WeakReferenceList.Remove() should not be passed null.");
-            lock(base.SyncRoot)
+            Debug.Assert(obj is not null, "WeakReferenceList.Remove() should not be passed null.");
+
+            lock (base.SyncRoot)
             {
                 int index = FindWeakReference(obj);
 
@@ -128,8 +132,9 @@ namespace MS.Internal
         /// </summary>
         public bool Insert(int index, object obj)
         {
-            Debug.Assert(null!=obj, "WeakReferenceList.Add() should not be passed null.");
-            lock(base.SyncRoot)
+            Debug.Assert(obj is not null, "WeakReferenceList.Add() should not be passed null.");
+
+            lock (base.SyncRoot)
             {
                 int existingIndex = FindWeakReference(obj);
 

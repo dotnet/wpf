@@ -19,18 +19,23 @@ namespace MS.Internal;
 ///    This should not be a problem unless the caller stops enumerating
 ///    before the end of the list AND holds the enumerator alive forever.
 /// </remarks>
-internal struct WeakReferenceListEnumerator : IEnumerator
+internal struct WeakReferenceListEnumerator<T> : IEnumerator<T> where T : class
 {
-    private readonly ReadOnlyCollection<object> _backingList;
+    private readonly ReadOnlyCollection<WeakReference<T>> _backingList;
 
-    private object? _strongReference;
+    private T? _strongReference;
     private int _index;
 
-    public WeakReferenceListEnumerator(ReadOnlyCollection<object> backingList)
+    internal WeakReferenceListEnumerator(ReadOnlyCollection<WeakReference<T>> backingList)
     {
         _index = 0;
         _backingList = backingList;
         _strongReference = null;
+    }
+
+    readonly T IEnumerator<T>.Current
+    {
+        get => Current;
     }
 
     readonly object IEnumerator.Current
@@ -38,20 +43,20 @@ internal struct WeakReferenceListEnumerator : IEnumerator
         get => Current;
     }
 
-    public readonly object Current
+    public readonly T Current
     {
         get => _strongReference ?? throw new InvalidOperationException(SR.Enumerator_VerifyContext);
     }
 
     public bool MoveNext()
     {
-        object? element = null;
+        T? element = null;
 
         while (_index < _backingList.Count)
         {
-            WeakReference weakRef = (WeakReference)_backingList[_index++];
-            element = weakRef.Target;
-            if (element is not null)
+            WeakReference<T> weakRef = _backingList[_index++];
+
+            if (weakRef.TryGetTarget(out element))
                 break;
         }
 
@@ -64,6 +69,11 @@ internal struct WeakReferenceListEnumerator : IEnumerator
     {
         _index = 0;
         _strongReference = null;
+    }
+
+    public readonly void Dispose()
+    {
+        // This method is here to satisfy the IEnumerator<T> interface.
     }
 }
 

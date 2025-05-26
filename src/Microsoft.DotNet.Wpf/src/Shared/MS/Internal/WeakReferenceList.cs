@@ -14,7 +14,7 @@ namespace MS.Internal;
 /// cache then the list is copied before it is modified and the readonly list is
 /// released from the cache.
 /// </summary>
-internal sealed class WeakReferenceList : CopyOnWriteList<object>, IEnumerable
+internal sealed class WeakReferenceList<T> : CopyOnWriteList<WeakReference<T>>, IEnumerable<T> where T : class
 {
     public WeakReferenceList() : base(null)
     {
@@ -24,9 +24,9 @@ internal sealed class WeakReferenceList : CopyOnWriteList<object>, IEnumerable
     {
     }
 
-    public WeakReferenceListEnumerator GetEnumerator()
+    public WeakReferenceListEnumerator<T> GetEnumerator()
     {
-        return new WeakReferenceListEnumerator(List);
+        return new WeakReferenceListEnumerator<T>(List);
     }
 
     IEnumerator IEnumerable.GetEnumerator()
@@ -34,7 +34,12 @@ internal sealed class WeakReferenceList : CopyOnWriteList<object>, IEnumerable
         return GetEnumerator();
     }
 
-    public bool Contains(object item)
+    IEnumerator<T> IEnumerable<T>.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
+
+    public bool Contains(T item)
     {
         Debug.Assert(item is not null, "WeakReferenceList.Contains() should not be passed null.");
 
@@ -69,16 +74,16 @@ internal sealed class WeakReferenceList : CopyOnWriteList<object>, IEnumerable
     /// Returns true if successfully added.
     /// Returns false if object is already on the list.
     /// </summary>
-    public override bool Add(object obj)
+    public bool Add(T obj)
     {
         Debug.Assert(obj is not null, "WeakReferenceList.Add() should not be passed null.");
 
-        return Add(obj, false /*skipFind*/);
+        return Add(obj, skipFind: false);
     }
 
     //Will insert a new WeakReference into the list.
     //The object bein inserted MUST be unique as there is no check for it.
-    public bool Add(object obj, bool skipFind)
+    public bool Add(T obj, bool skipFind)
     {
         Debug.Assert(obj is not null, "WeakReferenceList.Add() should not be passed null.");
 
@@ -99,7 +104,7 @@ internal sealed class WeakReferenceList : CopyOnWriteList<object>, IEnumerable
                 return false;
             }
 
-            return Internal_Add(new WeakReference(obj));
+            return Internal_Add(new WeakReference<T>(obj));
         }
     }
 
@@ -108,7 +113,7 @@ internal sealed class WeakReferenceList : CopyOnWriteList<object>, IEnumerable
     /// Returns true if successfully removed.
     /// Returns false if object is not in the list.
     /// </summary>
-    public override bool Remove(object obj)
+    public bool Remove(T obj)
     {
         Debug.Assert(obj is not null, "WeakReferenceList.Remove() should not be passed null.");
 
@@ -130,7 +135,7 @@ internal sealed class WeakReferenceList : CopyOnWriteList<object>, IEnumerable
     /// Returns true if successfully inserted.
     /// Returns false if object is already on the list.
     /// </summary>
-    public bool Insert(int index, object obj)
+    public bool Insert(int index, T obj)
     {
         Debug.Assert(obj is not null, "WeakReferenceList.Add() should not be passed null.");
 
@@ -143,7 +148,7 @@ internal sealed class WeakReferenceList : CopyOnWriteList<object>, IEnumerable
             if (existingIndex >= 0)
                 return false;
 
-            return Internal_Insert(index, new WeakReference(obj));
+            return Internal_Insert(index, new WeakReference<T>(obj));
         }
     }
 
@@ -151,7 +156,7 @@ internal sealed class WeakReferenceList : CopyOnWriteList<object>, IEnumerable
     /// Find an object on the List.
     /// Also cleans up dead weak references.
     /// </summary>
-    private int FindWeakReference(object obj)
+    private int FindWeakReference(T obj)
     {
         // syncRoot Lock MUST be held by the caller.
         // Search the LiveList looking for the object, also remove any
@@ -167,14 +172,14 @@ internal sealed class WeakReferenceList : CopyOnWriteList<object>, IEnumerable
         while (foundDeadReferences)
         {
             foundDeadReferences = false;
-            List<object> list = LiveList;
+            List<WeakReference<T>> list = LiveList;
 
             for (int i = 0; i < list.Count; i++)
             {
-                WeakReference weakRef = (WeakReference)list[i];
-                if (weakRef.IsAlive)
+                WeakReference<T> weakRef = list[i];
+                if (weakRef.TryGetTarget(out T target))
                 {
-                    if (obj == weakRef.Target)
+                    if (obj == target)
                     {
                         foundItem = i;
                         break;
@@ -208,15 +213,15 @@ internal sealed class WeakReferenceList : CopyOnWriteList<object>, IEnumerable
     // caller is expected to lock the SyncRoot
     private void Purge()
     {
-        List<object> list = LiveList;
+        List<WeakReference<T>> list = LiveList;
         int destIndex;
         int n = list.Count;
 
         // skip over valid entries at the beginning of the list
         for (destIndex = 0; destIndex < n; ++destIndex)
         {
-            WeakReference wr = (WeakReference)list[destIndex];
-            if (!wr.IsAlive)
+            WeakReference<T> wr = list[destIndex];
+            if (!wr.TryGetTarget(out _))
                 break;
         }
 
@@ -232,8 +237,8 @@ internal sealed class WeakReferenceList : CopyOnWriteList<object>, IEnumerable
         // contiguous block
         for (int i = destIndex + 1; i < n; ++i)
         {
-            WeakReference wr = (WeakReference)list[i];
-            if (wr.IsAlive)
+            WeakReference<T> wr = list[i];
+            if (wr.TryGetTarget(out _))
             {
                 list[destIndex++] = list[i];
             }

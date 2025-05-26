@@ -85,7 +85,6 @@ namespace Microsoft.Windows.Shell
             chromeWorker.SetWindowChrome(newChrome);
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static WindowChrome GetWindowChrome(Window window)
         {
@@ -94,7 +93,6 @@ namespace Microsoft.Windows.Shell
             return (WindowChrome)window.GetValue(WindowChromeProperty);
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static void SetWindowChrome(Window window, WindowChrome chrome)
         {
@@ -109,7 +107,6 @@ namespace Microsoft.Windows.Shell
             typeof(WindowChrome),
             new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits));
 
-        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static bool GetIsHitTestVisibleInChrome(IInputElement inputElement)
         {
@@ -123,7 +120,6 @@ namespace Microsoft.Windows.Shell
             return (bool)dependencyObject.GetValue(IsHitTestVisibleInChromeProperty);
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static void SetIsHitTestVisibleInChrome(IInputElement inputElement, bool hitTestVisible)
         {
@@ -143,7 +139,6 @@ namespace Microsoft.Windows.Shell
             typeof(WindowChrome),
             new FrameworkPropertyMetadata(ResizeGripDirection.None, FrameworkPropertyMetadataOptions.Inherits));
 
-        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static ResizeGripDirection GetResizeGripDirection(IInputElement inputElement)
         {
@@ -157,7 +152,6 @@ namespace Microsoft.Windows.Shell
             return (ResizeGripDirection)dependencyObject.GetValue(ResizeGripDirectionProperty);
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static void SetResizeGripDirection(IInputElement inputElement, ResizeGripDirection direction)
         {

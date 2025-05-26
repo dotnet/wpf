@@ -1,6 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+#nullable enable
+
 using System.Collections.ObjectModel;
 
 namespace MS.Internal;
@@ -14,18 +16,14 @@ namespace MS.Internal;
 ///   cache then the list is copied before it is modified and the readonly list is
 ///   released from the cache.
 /// </summary>
-internal class CopyOnWriteList<T>
+internal class CopyOnWriteList<T> where T : notnull
 {
-    private ReadOnlyCollection<T> _readonlyWrapper;
+    private ReadOnlyCollection<T>? _readonlyWrapper;
     private List<T> _listList;
 
     private readonly object _syncRoot;
 
-    public CopyOnWriteList() : this(null)
-    {
-    }
-
-    public CopyOnWriteList(object syncRoot)
+    public CopyOnWriteList(object? syncRoot)
     {
         syncRoot ??= new object();
 
@@ -160,6 +158,7 @@ internal class CopyOnWriteList<T>
                 return i;
             }
         }
+
         return -1;
     }
 

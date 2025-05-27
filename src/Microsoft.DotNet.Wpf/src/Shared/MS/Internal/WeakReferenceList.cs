@@ -8,7 +8,7 @@ using System.Collections;
 namespace MS.Internal;
 
 /// <summary>
-/// This is a Cached ThreadSafe ArrayList of WeakReferences.
+/// This is a Cached ThreadSafe <see cref="List{T}"/> of WeakReferences.
 /// - When the "List" property is requested a readonly reference to the
 /// list is returned and a reference to the readonly list is cached.
 /// - If the "List" is requested again, the same cached reference is returned.

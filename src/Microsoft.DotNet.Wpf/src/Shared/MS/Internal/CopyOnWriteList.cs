@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 namespace MS.Internal;
 
 /// <summary>
-/// This is a ThreadSafe List<T> that uses Copy On Write to support consistency.
+/// This is a ThreadSafe <see cref="List{T}"/> that uses Copy On Write to support consistency.
 /// - When the "List" property is requested a readonly reference to the
 /// list is returned and a reference to the readonly list is cached.
 /// - If the "List" is requested again, the same cached reference is returned.
@@ -20,7 +20,7 @@ namespace MS.Internal;
 internal abstract class CopyOnWriteList<T> where T : class
 {
     private ReadOnlyCollection<T>? _readonlyWrapper;
-    private List<T> _listList;
+    private List<T> _liveList;
 
     private readonly object _syncRoot;
 
@@ -31,7 +31,7 @@ internal abstract class CopyOnWriteList<T> where T : class
     public CopyOnWriteList(int capacity)
     {
         _syncRoot = new object();
-        _listList = new List<T>(capacity);
+        _liveList = new List<T>(capacity);
     }
 
     /// <summary>
@@ -44,7 +44,7 @@ internal abstract class CopyOnWriteList<T> where T : class
         syncRoot ??= new object();
 
         _syncRoot = syncRoot;
-        _listList = new List<T>();
+        _liveList = new List<T>();
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ internal abstract class CopyOnWriteList<T> where T : class
 
             lock (_syncRoot)
             {
-                _readonlyWrapper ??= _listList.AsReadOnly();
+                _readonlyWrapper ??= _liveList.AsReadOnly();
 
                 tempList = _readonlyWrapper;
             }
@@ -85,10 +85,7 @@ internal abstract class CopyOnWriteList<T> where T : class
         {
             int index = Find(obj);
 
-            if (index >= 0)
-                return false;
-
-            return Internal_Add(obj);
+            return index < 0 && Internal_Add(obj);
         }
     }
 
@@ -104,12 +101,8 @@ internal abstract class CopyOnWriteList<T> where T : class
         {
             int index = Find(obj);
 
-            // If the object is not on the list then
-            // we are done.  (return false)
-            if (index < 0)
-                return false;
-
-            return RemoveAt(index);
+            // If the object is not on the list then we are done.
+            return index >= 0 && RemoveAt(index);
         }
     }
 
@@ -119,7 +112,7 @@ internal abstract class CopyOnWriteList<T> where T : class
     /// </summary>
     protected object SyncRoot
     {
-        get { return _syncRoot; }
+        get => _syncRoot;
     }
 
     /// <summary>
@@ -130,7 +123,7 @@ internal abstract class CopyOnWriteList<T> where T : class
     /// </summary>
     protected List<T> LiveList
     {
-        get { return _listList; }
+        get => _liveList;
     }
 
     /// <summary>
@@ -142,7 +135,7 @@ internal abstract class CopyOnWriteList<T> where T : class
     {
         DoCopyOnWriteCheck();
 
-        _listList.Add(obj);
+        _liveList.Add(obj);
 
         return true;
     }
@@ -156,7 +149,7 @@ internal abstract class CopyOnWriteList<T> where T : class
     {
         DoCopyOnWriteCheck();
 
-        _listList.Insert(index, obj);
+        _liveList.Insert(index, obj);
 
         return true;
     }
@@ -167,9 +160,9 @@ internal abstract class CopyOnWriteList<T> where T : class
     private int Find(T obj)
     {
         // syncRoot Lock MUST be held by the caller.
-        for (int i = 0; i < _listList.Count; i++)
+        for (int i = 0; i < _liveList.Count; i++)
         {
-            if (obj == _listList[i])
+            if (obj == _liveList[i])
             {
                 return i;
             }
@@ -187,26 +180,27 @@ internal abstract class CopyOnWriteList<T> where T : class
     protected bool RemoveAt(int index)
     {
         // syncRoot Lock MUST be held by the caller.
-        if (index < 0 || index >= _listList.Count)
+        if ((uint)index >= (uint)_liveList.Count)
             return false;
 
         DoCopyOnWriteCheck();
 
-        _listList.RemoveAt(index);
+        _liveList.RemoveAt(index);
 
         return true;
     }
 
+    /// <remarks>
+    /// This must be called under <see cref="SyncRoot"/> lock held.
+    /// </remarks>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected void DoCopyOnWriteCheck()
     {
-        // syncRoot Lock MUST be held by the caller.
-        // If we have exposed (given out) a readonly reference to this
-        // version of the list, then clone a new internal copy and cut
-        // the old version free.
+        // If we have exposed (given out) a readonly reference to this version of the list,
+        // then clone a new internal copy and cut the old version free.
         if (_readonlyWrapper is not null)
         {
-            _listList = new List<T>(_listList);
+            _liveList = new List<T>(_liveList);
             _readonlyWrapper = null;
         }
     }

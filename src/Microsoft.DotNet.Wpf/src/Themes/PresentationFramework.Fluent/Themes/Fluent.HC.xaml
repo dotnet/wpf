@@ -4872,8 +4872,14 @@
       </Trigger>
     </ControlTemplate.Triggers>
   </ControlTemplate>
+  <ControlTemplate x:Key="DefaultTextBoxInvalidationStyle">
+    <Border BorderBrush="{DynamicResource SystemFillColorCriticalBrush}" BorderThickness="{DynamicResource TextControlBorderThemeThickness}" CornerRadius="{DynamicResource ControlCornerRadius}" Padding="1">
+      <AdornedElementPlaceholder />
+    </Border>
+  </ControlTemplate>
   <Style x:Key="DefaultTextBoxStyle" TargetType="{x:Type TextBox}">
     <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource DefaultTextBoxInvalidationStyle}" />
     <Setter Property="ContextMenu" Value="{DynamicResource DefaultControlContextMenu}" />
     <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
     <Setter Property="CaretBrush" Value="{DynamicResource TextControlForeground}" />

@@ -1628,32 +1628,28 @@ namespace System.Windows
             RemoveOwnerFromAllMergedDictionaries(owner);
         }
 
-        // Check if the given is an owner to this dictionary
-        internal bool ContainsOwner(DispatcherObject owner)
+        /// <summary>
+        /// Checks if the given <paramref name="owner"/> is owning this dictionary
+        /// </summary>
+        internal bool ContainsOwner(FrameworkElement owner)
         {
-            FrameworkElement fe = owner as FrameworkElement;
-            if (fe != null)
-            {
-                return (_ownerFEs != null && _ownerFEs.Contains(fe));
-            }
-            else
-            {
-                FrameworkContentElement fce = owner as FrameworkContentElement;
-                if (fce != null)
-                {
-                    return (_ownerFCEs != null && _ownerFCEs.Contains(fce));
-                }
-                else
-                {
-                    Application app = owner as Application;
-                    if (app != null)
-                    {
-                        return (_ownerApps != null && _ownerApps.Contains(app));
-                    }
-                }
-            }
+            return _ownerFEs?.Contains(owner) ?? false;
+        }
 
-            return false;
+        /// <summary>
+        /// Checks if the given <paramref name="owner"/> is owning this dictionary
+        /// </summary>
+        internal bool ContainsOwner(FrameworkContentElement owner)
+        {
+            return _ownerFCEs?.Contains(owner) ?? false;
+        }
+
+        /// <summary>
+        /// Checks if the given <paramref name="owner"/> is owning this dictionary
+        /// </summary>
+        internal bool ContainsOwner(Application owner)
+        {
+            return _ownerApps?.Contains(owner) ?? false;
         }
 
         // Helper method that tries to set IsInitialized to true if BeginInit hasn't been called before this.

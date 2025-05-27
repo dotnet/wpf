@@ -2048,37 +2048,31 @@ namespace System.Windows
         /// <param name="mergedDictionary"></param>
         internal void RemoveParentOwners(ResourceDictionary mergedDictionary)
         {
-            if (_ownerFEs != null)
+            if (_ownerFEs is not null)
             {
-                foreach (Object o in _ownerFEs)
+                foreach (FrameworkElement fe in _ownerFEs)
                 {
-                    FrameworkElement fe = o as FrameworkElement;
                     mergedDictionary.RemoveOwner(fe);
-
                 }
             }
 
-            if (_ownerFCEs != null)
+            if (_ownerFCEs is not null)
             {
                 Invariant.Assert(_ownerFCEs.Count > 0);
 
-                foreach (Object o in _ownerFCEs)
+                foreach (FrameworkContentElement fec in _ownerFCEs)
                 {
-                    FrameworkContentElement fec = o as FrameworkContentElement;
                     mergedDictionary.RemoveOwner(fec);
-
                 }
             }
 
-            if (_ownerApps != null)
+            if (_ownerApps is not null)
             {
                 Invariant.Assert(_ownerApps.Count > 0);
 
-                foreach (Object o in _ownerApps)
+                foreach (Application app in _ownerApps)
                 {
-                    Application app = o as Application;
                     mergedDictionary.RemoveOwner(app);
-
                 }
             }
         }

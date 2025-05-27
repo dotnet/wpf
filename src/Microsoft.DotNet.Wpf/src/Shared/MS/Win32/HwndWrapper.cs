@@ -220,13 +220,13 @@ namespace MS.Win32
 
         public void AddHook(HwndWrapperHook hook)
         {
-            _hooks ??= [];
+            _hooks ??= new WeakReferenceList<HwndWrapperHook>(syncRoot: null);
             _hooks.Insert(0, hook);
         }
 
         internal void AddHookLast(HwndWrapperHook hook)
         {
-            _hooks ??= [];
+            _hooks ??= new WeakReferenceList<HwndWrapperHook>(syncRoot: null);
             _hooks.Add(hook);
         }
 

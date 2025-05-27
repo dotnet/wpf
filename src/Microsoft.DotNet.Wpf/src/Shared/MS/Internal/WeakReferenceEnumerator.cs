@@ -9,15 +9,18 @@ using System.Collections.ObjectModel;
 namespace MS.Internal;
 
 /// <summary>
-///    This allows callers to "foreach" through a WeakReferenceList.
-///    Each weakreference is checked for liveness and "current"
-///    actually returns a strong reference to the current element.
+/// This allows callers to "foreach" through a WeakReferenceList.
+/// Each weak reference is checked for liveness and "current"
+/// actually returns a strong reference to the current element.
 /// </summary>
 /// <remarks>
-///    Due to the way enumerators function, this enumerator often
-///    holds a cached strong reference to the "Current" element.
-///    This should not be a problem unless the caller stops enumerating
-///    before the end of the list AND holds the enumerator alive forever.
+/// <para>
+/// Due to the way enumerators function, this enumerator often
+/// holds a cached strong reference to the "Current" element.
+/// This should not be a problem unless the caller stops enumerating
+/// before the end of the list AND holds the enumerator alive forever.
+/// </para>
+/// Explicitly calling Dispose, this removes the strong reference.
 /// </remarks>
 internal struct WeakReferenceListEnumerator<T> : IEnumerator<T> where T : class
 {

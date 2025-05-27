@@ -4,25 +4,41 @@
 #nullable enable
 
 using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
 
 namespace MS.Internal;
 
 /// <summary>
-///   This is a ThreadSafe ArrayList that uses Copy On Write to support consistency.
-///   - When the "List" property is requested a readonly reference to the
-///   list is returned and a reference to the readonly list is cached.
-///   - If the "List" is requested again, the same cached reference is returned.
-///   - When the list is modified, if a readonly reference is present in the
-///   cache then the list is copied before it is modified and the readonly list is
-///   released from the cache.
+/// This is a ThreadSafe List<T> that uses Copy On Write to support consistency.
+/// - When the "List" property is requested a readonly reference to the
+/// list is returned and a reference to the readonly list is cached.
+/// - If the "List" is requested again, the same cached reference is returned.
+/// - When the list is modified, if a readonly reference is present in the
+/// cache then the list is copied before it is modified and the readonly list is
+/// released from the cache.
 /// </summary>
-internal class CopyOnWriteList<T> where T : class
+internal abstract class CopyOnWriteList<T> where T : class
 {
     private ReadOnlyCollection<T>? _readonlyWrapper;
     private List<T> _listList;
 
     private readonly object _syncRoot;
 
+    /// <summary>
+    /// Creates a new WeakReferenceList with the default capacity.
+    /// </summary>
+    /// <param name="capacity">The initial capacity of the list.</param>
+    public CopyOnWriteList(int capacity)
+    {
+        _syncRoot = new object();
+        _listList = new List<T>(capacity);
+    }
+
+    /// <summary>
+    /// Creates a new CopyOnWriteList with the specified sync root.
+    /// </summary>
+    /// <param name="syncRoot">The synchronization object used to manage access to the list.</param>
+    /// <remarks>In case <paramref name="syncRoot"/> is <see langword="null"/>, a private instance will be created.</remarks>
     public CopyOnWriteList(object? syncRoot)
     {
         syncRoot ??= new object();
@@ -31,20 +47,14 @@ internal class CopyOnWriteList<T> where T : class
         _listList = new List<T>();
     }
 
-    public CopyOnWriteList(int capacity)
-    {
-        _syncRoot = new object();
-        _listList = new List<T>(capacity);
-    }
-
     /// <summary>
-    ///   Return a readonly wrapper of the list.  Note: this is NOT a copy.
-    ///   A non-null _readonlyWrapper  is a "Copy on Write" flag.
-    ///   Methods that change the list (eg. Add() and Remove()) are
-    ///   responsible for:
-    ///    1) Checking _readonlyWrapper and copying the list before modifying it.
-    ///    2) Clearing _readonlyWrapper.
+    /// Return a readonly wrapper of the list.
+    /// A non-null _readonlyWrapper is a "Copy on Write" flag.
+    /// Methods that change the list (eg. Add() and Remove()) are responsible for:
+    ///  1) Checking _readonlyWrapper and copying the list before modifying it.
+    ///  2) Clearing _readonlyWrapper.
     /// </summary>
+    /// <remarks>Note: This is NOT a copy.</remarks>
     public ReadOnlyCollection<T> List
     {
         get
@@ -63,11 +73,11 @@ internal class CopyOnWriteList<T> where T : class
     }
 
     /// <summary>
-    ///   Add an object to the List.
-    ///   Returns true if successfully added.
-    ///   Returns false if object is already on the list.
+    /// Add an object to the List.
+    /// Returns true if successfully added.
+    /// Returns false if object is already on the list.
     /// </summary>
-    public virtual bool Add(T obj)
+    protected bool Add(T obj)
     {
         Debug.Assert(obj is not null, "CopyOnWriteList.Add() should not be passed null.");
 
@@ -83,11 +93,11 @@ internal class CopyOnWriteList<T> where T : class
     }
 
     /// <summary>
-    ///   Remove an object from the List.
-    ///   Returns true if successfully removed.
-    ///   Returns false if object was not on the list.
+    /// Remove an object from the List.
+    /// Returns true if successfully removed.
+    /// Returns false if object was not on the list.
     /// </summary>
-    public virtual bool Remove(T obj)
+    protected bool Remove(T obj)
     {
         Debug.Assert(obj is not null, "CopyOnWriteList.Remove() should not be passed null.");
         lock (_syncRoot)
@@ -104,8 +114,8 @@ internal class CopyOnWriteList<T> where T : class
     }
 
     /// <summary>
-    ///   This allows derived classes to take the lock.  This is mostly used
-    ///   to extend Add() and Remove() etc.
+    /// This allows derived classes to take the lock.  This is mostly used
+    /// to extend Add() and Remove() etc.
     /// </summary>
     protected object SyncRoot
     {
@@ -113,10 +123,10 @@ internal class CopyOnWriteList<T> where T : class
     }
 
     /// <summary>
-    ///  This is protected and the caller can get into real serious trouble
-    ///  using this.  Because this points at the real current list without
-    ///  any copy on write protection.  So the caller must really know what
-    ///  they are doing.
+    /// This is protected and the caller can get into real serious trouble
+    /// using this.  Because this points at the real current list without
+    /// any copy on write protection.  So the caller must really know what
+    /// they are doing.
     /// </summary>
     protected List<T> LiveList
     {
@@ -124,9 +134,9 @@ internal class CopyOnWriteList<T> where T : class
     }
 
     /// <summary>
-    ///   Add an object to the List.
-    ///   Without any error checks.
-    ///   For use by derived classes that implement there own error checks.
+    /// Add an object to the List.
+    /// Without any error checks.
+    /// For use by derived classes that implement their own error checks.
     /// </summary>
     protected bool Internal_Add(T obj)
     {
@@ -138,9 +148,9 @@ internal class CopyOnWriteList<T> where T : class
     }
 
     /// <summary>
-    ///   Insert an object into the List at the given index.
-    ///   Without any error checks.
-    ///   For use by derived classes that implement there own error checks.
+    /// Insert an object into the List at the given index.
+    /// Without any error checks.
+    /// For use by derived classes that implement there own error checks.
     /// </summary>
     protected bool Internal_Insert(int index, T obj)
     {
@@ -152,7 +162,7 @@ internal class CopyOnWriteList<T> where T : class
     }
 
     /// <summary>
-    ///   Find an object on the List.
+    /// Find an object on the List.
     /// </summary>
     private int Find(T obj)
     {
@@ -169,12 +179,11 @@ internal class CopyOnWriteList<T> where T : class
     }
 
     /// <summary>
-    ///   Remove the object at a given index from the List.
-    ///   Returns true if successfully removed.
-    ///   Returns false if index is outside the range of the list.
-    ///
-    ///  This is protected because it operates on the LiveList
+    /// Remove the object at a given index from the List.
+    /// Returns true if successfully removed.
+    /// Returns false if index is outside the range of the list.
     /// </summary>
+    /// <remarks>This is protected because it operates on the <see cref="LiveList"/>.</remarks>
     protected bool RemoveAt(int index)
     {
         // syncRoot Lock MUST be held by the caller.
@@ -188,6 +197,7 @@ internal class CopyOnWriteList<T> where T : class
         return true;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     protected void DoCopyOnWriteCheck()
     {
         // syncRoot Lock MUST be held by the caller.

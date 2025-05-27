@@ -297,8 +297,15 @@ namespace System.Windows.Diagnostics
                 return Array.Empty<T>();
             }
 
+            // Copy list manually as it doesn't implement ICollection<T>
+            List<T> owners = new List<T>(list.Count);
+            foreach (T item in list)
+            {
+                owners.Add(item);
+            }
+
             // Create a read-only copy of the list
-            return new List<T>(list).AsReadOnly();
+            return owners.AsReadOnly();
         }
 
         #endregion

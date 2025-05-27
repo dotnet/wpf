@@ -1681,62 +1681,50 @@ namespace System.Windows
             if (shouldInvalidate || hasImplicitStyles)
             {
                 // Invalidate all FE owners
-                if (_ownerFEs != null)
+                if (_ownerFEs is not null)
                 {
-                    foreach (Object o in _ownerFEs)
+                    foreach (FrameworkElement fe in _ownerFEs)
                     {
-                        FrameworkElement fe = o as FrameworkElement;
-                        if (fe != null)
-                        {
-                            // Set the HasImplicitStyles flag on the owner
-                            if (hasImplicitStyles)
-                                fe.ShouldLookupImplicitStyles = true;
+                        // Set the HasImplicitStyles flag on the owner
+                        if (hasImplicitStyles)
+                            fe.ShouldLookupImplicitStyles = true;
 
-                            // If this dictionary has been initialized fire an invalidation
-                            // to let the tree know of this change.
-                            if (shouldInvalidate)
-                                TreeWalkHelper.InvalidateOnResourcesChange(fe, null, info);
-                        }
+                        // If this dictionary has been initialized fire an invalidation
+                        // to let the tree know of this change.
+                        if (shouldInvalidate)
+                            TreeWalkHelper.InvalidateOnResourcesChange(fe, null, info);
                     }
                 }
 
                 // Invalidate all FCE owners
-                if (_ownerFCEs != null)
+                if (_ownerFCEs is not null)
                 {
-                    foreach (Object o in _ownerFCEs)
+                    foreach (FrameworkContentElement fce in _ownerFCEs)
                     {
-                        FrameworkContentElement fce = o as FrameworkContentElement;
-                        if (fce != null)
-                        {
-                            // Set the HasImplicitStyles flag on the owner
-                            if (hasImplicitStyles)
-                                fce.ShouldLookupImplicitStyles = true;
+                        // Set the HasImplicitStyles flag on the owner
+                        if (hasImplicitStyles)
+                            fce.ShouldLookupImplicitStyles = true;
 
-                            // If this dictionary has been initialized fire an invalidation
-                            // to let the tree know of this change.
-                            if (shouldInvalidate)
-                                TreeWalkHelper.InvalidateOnResourcesChange(null, fce, info);
-                        }
+                        // If this dictionary has been initialized fire an invalidation
+                        // to let the tree know of this change.
+                        if (shouldInvalidate)
+                            TreeWalkHelper.InvalidateOnResourcesChange(null, fce, info);
                     }
                 }
 
                 // Invalidate all App owners
-                if (_ownerApps != null)
+                if (_ownerApps is not null)
                 {
-                    foreach (Object o in _ownerApps)
+                    foreach (Application app in _ownerApps)
                     {
-                        Application app = o as Application;
-                        if (app != null)
-                        {
-                            // Set the HasImplicitStyles flag on the owner
-                            if (hasImplicitStyles)
-                                app.HasImplicitStylesInResources = true;
+                        // Set the HasImplicitStyles flag on the owner
+                        if (hasImplicitStyles)
+                            app.HasImplicitStylesInResources = true;
 
-                            // If this dictionary has been initialized fire an invalidation
-                            // to let the tree know of this change.
-                            if (shouldInvalidate)
-                                app.InvalidateResourceReferences(info);
-                        }
+                        // If this dictionary has been initialized fire an invalidation
+                        // to let the tree know of this change.
+                        if (shouldInvalidate)
+                            app.InvalidateResourceReferences(info);
                     }
                 }
             }

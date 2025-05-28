@@ -12,6 +12,7 @@
     <TargetFramework Condition="!$(TargetFramework.Contains('windows'))">$(TargetFramework)-windows</TargetFramework>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <GenerateProgramFile>true</GenerateProgramFile>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <ItemGroup>

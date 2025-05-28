@@ -8,6 +8,7 @@
     <Platforms>x64;x86;arm64</Platforms>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>IDE0073, CS1591</NoWarn>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <ItemGroup>

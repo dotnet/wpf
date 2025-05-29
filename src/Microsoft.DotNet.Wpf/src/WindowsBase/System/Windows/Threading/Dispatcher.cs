@@ -2872,10 +2872,9 @@ namespace System.Windows.Threading
         }
 
         // Exception filter returns true if exception should be caught.
-        private static bool ExceptionFilterStatic(object source, Exception e)
+        private static bool ExceptionFilterStatic(Dispatcher dispatcher, Exception e)
         {
-            Dispatcher d = (Dispatcher)source;
-            return d.ExceptionFilter(e);
+            return dispatcher.ExceptionFilter(e);
         }
 
         private bool ExceptionFilter(Exception e)
@@ -2930,9 +2929,8 @@ namespace System.Windows.Threading
 
         // This returns false when caller should rethrow the exception.
         // true means Exception is "handled" and things just continue on.
-        private static bool CatchExceptionStatic(object source, Exception e)
+        private static bool CatchExceptionStatic(Dispatcher dispatcher, Exception e)
         {
-            Dispatcher dispatcher = (Dispatcher)source;
             return dispatcher.CatchException(e);
         }
 

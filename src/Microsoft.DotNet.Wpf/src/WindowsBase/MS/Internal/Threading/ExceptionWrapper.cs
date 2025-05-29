@@ -18,17 +18,17 @@ namespace System.Windows.Threading
         ///  Returns true if the exception is "handled"
         ///  Returns false if the caller should rethow the exception.
         /// </summary>
-        internal delegate bool CatchHandler(object source, Exception e);
+        internal delegate bool CatchHandler(Dispatcher dispatcher, Exception e);
 
         /// <summary>
         /// Exception Catch Handler
         ///  Returns true if the exception is "handled"
         ///  Returns false if the caller should rethow the exception.
         /// </summary>
-        internal delegate bool FilterHandler(object source, Exception e);
+        internal delegate bool FilterHandler(Dispatcher dispatcher, Exception e);
 
         // Helper for exception filtering:
-        internal static object TryCatchWhen(object source, Delegate callback, object args, int numArgs, Delegate catchHandler)
+        internal static object TryCatchWhen(Dispatcher dispatcher, Delegate callback, object args, int numArgs, Delegate catchHandler)
         {
             object result = null;
 
@@ -36,9 +36,9 @@ namespace System.Windows.Threading
             {
                 result = InternalRealCall(callback, args, numArgs);
             }
-            catch (Exception e) when (FilterException(source, e))
+            catch (Exception e) when (FilterException(dispatcher, e))
             {
-                if (!CatchException(source, e, catchHandler))
+                if (!CatchException(dispatcher, e, catchHandler))
                 {
                     throw;
                 }
@@ -134,16 +134,16 @@ namespace System.Windows.Threading
             return result;
         }
 
-        private static bool FilterException(object source, Exception e)
+        private static bool FilterException(Dispatcher dispatcher, Exception e)
         {
             // If we have a Catch handler we should catch the exception
             // unless the Filter handler says we shouldn't.
-            return Filter?.Invoke(source, e) ?? Catch is not null;
+            return Filter?.Invoke(dispatcher, e) ?? Catch is not null;
         }
 
         // This returns false when caller should rethrow the exception.
         // true means Exception is "handled" and things just continue on.
-        private static bool CatchException(object source, Exception e, Delegate catchHandler)
+        private static bool CatchException(Dispatcher dispatcher, Exception e, Delegate catchHandler)
         {
             if (catchHandler is not null)
             {
@@ -157,7 +157,7 @@ namespace System.Windows.Threading
                 }
             }
 
-            return Catch?.Invoke(source, e) ?? false;
+            return Catch?.Invoke(dispatcher, e) ?? false;
         }
     }
 }

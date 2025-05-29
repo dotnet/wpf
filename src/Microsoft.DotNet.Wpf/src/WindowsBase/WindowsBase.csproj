@@ -148,7 +148,6 @@
     <Compile Include="MS\Internal\SystemXmlExtensionMethods.cs" />
     <Compile Include="MS\Internal\SystemXmlLinqExtensionMethods.cs" />
     <Compile Include="MS\Internal\TraceLevelStore.cs" />
-    <Compile Include="MS\Internal\Threading\ExceptionFilterHelper.cs" />
     <Compile Include="MS\Internal\Utilities.cs" />
     <Compile Include="MS\Internal\Verify.cs" />
     <Compile Include="MS\Internal\WeakEventTable.cs" />

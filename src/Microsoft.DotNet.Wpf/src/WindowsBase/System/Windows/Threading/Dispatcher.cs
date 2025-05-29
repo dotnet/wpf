@@ -18,7 +18,7 @@ namespace System.Windows.Threading
     /// <summary>
     ///     Provides UI services for a thread.
     /// </summary>
-    public sealed class Dispatcher
+    public sealed partial class Dispatcher
     {
         static Dispatcher()
         {
@@ -26,8 +26,6 @@ namespace System.Windows.Threading
             _globalLock = new object();
             _dispatchers = new List<WeakReference>();
             _possibleDispatcher = new WeakReference(null);
-            ExceptionWrapper.Catch += CatchExceptionStatic;
-            ExceptionWrapper.Filter += ExceptionFilterStatic;
         }
 
         /// <summary>
@@ -2871,12 +2869,6 @@ namespace System.Windows.Threading
             }
         }
 
-        // Exception filter returns true if exception should be caught.
-        private static bool ExceptionFilterStatic(Dispatcher dispatcher, Exception e)
-        {
-            return dispatcher.ExceptionFilter(e);
-        }
-
         private bool ExceptionFilter(Exception e)
         {
             // see whether this dispatcher has already seen the exception.
@@ -2925,13 +2917,6 @@ namespace System.Windows.Threading
             }
 
             return requestCatch;
-        }
-
-        // This returns false when caller should rethrow the exception.
-        // true means Exception is "handled" and things just continue on.
-        private static bool CatchExceptionStatic(Dispatcher dispatcher, Exception e)
-        {
-            return dispatcher.CatchException(e);
         }
 
         // The exception filter called for catching an unhandled exception.

@@ -3,30 +3,15 @@
 
 using System.Threading;
 
-namespace System.Windows.Threading
+namespace System.Windows.Threading;
+
+public sealed partial class Dispatcher
 {
     /// <summary>
     /// Class for Filtering and Catching Exceptions
     /// </summary>
     internal static class ExceptionWrapper
     {
-        internal static event CatchHandler Catch;
-        internal static event FilterHandler Filter;
-
-        /// <summary>
-        /// Exception Catch Handler Delegate
-        ///  Returns true if the exception is "handled"
-        ///  Returns false if the caller should rethow the exception.
-        /// </summary>
-        internal delegate bool CatchHandler(Dispatcher dispatcher, Exception e);
-
-        /// <summary>
-        /// Exception Catch Handler
-        ///  Returns true if the exception is "handled"
-        ///  Returns false if the caller should rethow the exception.
-        /// </summary>
-        internal delegate bool FilterHandler(Dispatcher dispatcher, Exception e);
-
         // Helper for exception filtering:
         internal static object TryCatchWhen(Dispatcher dispatcher, Delegate callback, object args, int numArgs, Delegate catchHandler)
         {
@@ -59,14 +44,14 @@ namespace System.Windows.Threading
             // of an arbitrary "params object[]" is passed.
             int numArgsEx = numArgs;
             object singleArg = args;
-            if(numArgs == -1)
+            if (numArgs == -1)
             {
                 object[] argsArr = (object[])args;
                 if (argsArr == null || argsArr.Length == 0)
                 {
                     numArgsEx = 0;
                 }
-                else if(argsArr.Length == 1)
+                else if (argsArr.Length == 1)
                 {
                     numArgsEx = 1;
                     singleArg = argsArr[0];
@@ -75,7 +60,7 @@ namespace System.Windows.Threading
 
             // Special-case delegates that we know about to avoid the
             // expensive DynamicInvoke call.
-            if(numArgsEx == 0)
+            if (numArgsEx == 0)
             {
                 if (callback is Action action)
                 {
@@ -94,7 +79,7 @@ namespace System.Windows.Threading
                     }
                 }
             }
-            else if(numArgsEx == 1)
+            else if (numArgsEx == 1)
             {
                 if (callback is DispatcherOperationCallback dispatcherOperationCallback)
                 {
@@ -134,15 +119,15 @@ namespace System.Windows.Threading
             return result;
         }
 
+        /// <summary>
+        /// Exception filter returns <see langword="true"/> if exception should be caught.
+        /// </summary>
         private static bool FilterException(Dispatcher dispatcher, Exception e)
         {
-            // If we have a Catch handler we should catch the exception
-            // unless the Filter handler says we shouldn't.
-            return Filter?.Invoke(dispatcher, e) ?? Catch is not null;
+            // This will raise Dispatcher.UnhandledException event if registered.
+            return dispatcher.ExceptionFilter(e);
         }
 
-        // This returns false when caller should rethrow the exception.
-        // true means Exception is "handled" and things just continue on.
         private static bool CatchException(Dispatcher dispatcher, Exception e, Delegate catchHandler)
         {
             if (catchHandler is not null)
@@ -157,9 +142,9 @@ namespace System.Windows.Threading
                 }
             }
 
-            return Catch?.Invoke(dispatcher, e) ?? false;
+            // This returns false when caller should rethrow the exception.
+            // true means Exception is "handled" and things just continue on.
+            return dispatcher.CatchException(e);
         }
     }
 }
-
-

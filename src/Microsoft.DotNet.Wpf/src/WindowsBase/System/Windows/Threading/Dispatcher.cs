@@ -2951,12 +2951,20 @@ namespace System.Windows.Threading
             get { return (UnhandledException != null); }
         }
 
-        internal object WrappedInvoke(Delegate callback, object args, int numArgs, Delegate catchHandler)
+        /// <summary>
+        /// Calls the delegate and catches exceptions that are filtered by the dispatcher, raising the UnhandledException event if necessary.
+        /// </summary>
+        /// <returns>Result of the delegate method call in case it has succeeded.</returns>
+        internal object WrappedInvoke(Delegate callback, object args, int numArgs, Delegate catchCallback)
         {
-            return ExceptionWrapper.TryCatchWhen(this, callback, args, numArgs, catchHandler);
+            return ExceptionWrapper.TryCatchWhen(this, callback, args, numArgs, catchCallback);
         }
 
-        private object[] CombineParameters(object arg, object[] args)
+        /// <summary>
+        /// Combines the first argument with the rest of the arguments into an array.
+        /// </summary>
+        /// <remarks>NOTE: This is a legacy invoke arguments handling.</remarks>
+        private static object[] CombineParameters(object arg, object[] args)
         {
             object[] parameters = new object[1 + (args == null ? 1 : args.Length)];
             parameters[0] = arg;

@@ -8,12 +8,18 @@ namespace System.Windows.Threading;
 public sealed partial class Dispatcher
 {
     /// <summary>
-    /// Class for Filtering and Catching Exceptions
+    /// Helper class for Filtering and Catching Exceptions.
     /// </summary>
+    /// <remarks>
+    /// This is mostly legacy interface as newer (e.g. async) methods don't catch/filter the exceptions.
+    /// </remarks>
     internal static class ExceptionWrapper
     {
-        // Helper for exception filtering:
-        internal static object TryCatchWhen(Dispatcher dispatcher, Delegate callback, object args, int numArgs, Delegate catchHandler)
+        /// <summary>
+        /// Calls the delegate and catches exceptions that are filtered by the dispatcher, raising the UnhandledException event if necessary.
+        /// </summary>
+        /// <returns>Result of the delegate method call in case it has succeeded.</returns>
+        internal static object TryCatchWhen(Dispatcher dispatcher, Delegate callback, object args, int numArgs, Delegate catchCallback)
         {
             object result = null;
 
@@ -23,7 +29,8 @@ public sealed partial class Dispatcher
             }
             catch (Exception e) when (FilterException(dispatcher, e))
             {
-                if (!CatchException(dispatcher, e, catchHandler))
+                // Determine whether we should catch or throw the exception, executing the catchCallback beforehand
+                if (!CatchException(dispatcher, e, catchCallback))
                 {
                     throw;
                 }
@@ -68,7 +75,7 @@ public sealed partial class Dispatcher
                 }
                 else
                 {
-                    if (callback is Dispatcher.ShutdownCallback shutdownCallback)
+                    if (callback is ShutdownCallback shutdownCallback)
                     {
                         shutdownCallback();
                     }

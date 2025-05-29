@@ -10,10 +10,9 @@
 
 using System.Windows;
 using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace MS.Internal.Automation
 {
@@ -25,7 +24,7 @@ namespace MS.Internal.Automation
     //
     // Currently exposes just BoundingRectangle, ClassName, IsEnabled
     // and IsKeyboardFocused properties.
-    internal class ElementProxy: IRawElementProviderFragmentRoot, IRawElementProviderAdviseEvents
+    internal class ElementProxy : IRawElementProviderFragmentRoot, IRawElementProviderAdviseEvents
     {
         //------------------------------------------------------
         //
@@ -88,43 +87,30 @@ namespace MS.Internal.Automation
 
         public ProviderOptions ProviderOptions
         {
-            get 
+            get
             {
                 AutomationPeer peer = Peer;
-                if (peer == null)
-                {
-                    return ProviderOptions.ServerSideProvider;
-                }
-                return ElementUtil.Invoke(peer, static (state) => state.InContextGetProviderOptions(), this);
+
+                return peer is null ? ProviderOptions.ServerSideProvider : ElementUtil.Invoke(peer, static (state) => state.InContextGetProviderOptions(), this);
             }
-        }  
+        }
 
         public IRawElementProviderSimple HostRawElementProvider
         {
             get
             {
-                IRawElementProviderSimple host  = null;
-                HostedWindowWrapper hwndWrapper = null;
                 AutomationPeer peer = Peer;
-                if (peer == null)
+
+                if (peer is null)
                 {
                     return null;
                 }
-                hwndWrapper = ElementUtil.Invoke(peer, static (state) => state.InContextGetHostRawElementProvider(), this);
 
-                if (hwndWrapper != null)
-                    host = GetHostHelper(hwndWrapper);
-                
-                return host;
+                HostedWindowWrapper hwndWrapper = ElementUtil.Invoke(peer, static (state) => state.InContextGetHostRawElementProvider(), this);
+
+                return hwndWrapper is not null ? AutomationInteropProvider.HostProviderFromHandle(hwndWrapper.Handle) : null;
             }
         }
-
-        private static IRawElementProviderSimple GetHostHelper(HostedWindowWrapper hwndWrapper)
-        {
-            return AutomationInteropProvider.HostProviderFromHandle(hwndWrapper.Handle);
-        }
-
-        // IRawElementProviderFragment methods...
 
         public IRawElementProviderFragment Navigate(NavigateDirection direction)
         {
@@ -149,12 +135,12 @@ namespace MS.Internal.Automation
                 return ElementUtil.Invoke(peer, static (state) => state.InContextBoundingRectangle(), this);
             }
         }
-        
+
         public IRawElementProviderSimple[] GetEmbeddedFragmentRoots()
         {
             return null;
         }
-        
+
         public void SetFocus()
         {
             AutomationPeer peer = Peer ?? throw new ElementNotAvailableException();
@@ -172,7 +158,6 @@ namespace MS.Internal.Automation
             }
         }
 
-        // IRawElementProviderFragmentRoot methods..
         public IRawElementProviderFragment ElementProviderFromPoint(double x, double y)
         {
             AutomationPeer peer = Peer;
@@ -259,9 +244,9 @@ namespace MS.Internal.Automation
         {
             get
             {
-                if (_peer is WeakReference)
+                if (_peer is WeakReference weakRef)
                 {
-                    AutomationPeer peer = (AutomationPeer)((WeakReference)_peer).Target;
+                    AutomationPeer peer = (AutomationPeer)weakRef.Target;
                     return peer;
                 }
                 else

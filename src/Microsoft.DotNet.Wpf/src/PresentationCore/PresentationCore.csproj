@@ -137,6 +137,7 @@
     <Compile Include="MS\Internal\Automation\DockProviderWrapper.cs" />
     <Compile Include="MS\Internal\Automation\ElementProxy.cs" />
     <Compile Include="MS\Internal\Automation\ElementUtil.cs" />
+    <Compile Include="MS\Internal\Automation\ElementUtil.ReturnInfo.cs" />
     <Compile Include="MS\Internal\Automation\EventMap.cs" />
     <Compile Include="MS\Internal\Automation\ExpandCollapseProviderWrapper.cs" />
     <Compile Include="MS\Internal\Automation\GridItemProviderWrapper.cs" />

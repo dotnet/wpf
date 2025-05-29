@@ -14,16 +14,8 @@ namespace MS.Internal.Automation;
 /// <summary>
 /// Utility class for working with <see cref="AutomationPeer"/>.
 /// </summary>
-internal static class ElementUtil
+internal static partial class ElementUtil
 {
-    private readonly struct ReturnInfo<TReturn>
-    {
-        public Exception? StoredException { get; init; }
-        public bool Completed { get; init; }
-
-        public TReturn Value { get; init; }
-    }
-
     ///// <summary>
     ///// Provides a helper to invoke work on the UI thread, re-throwing all exceptions on the thread that invoked this execution.
     ///// </summary>
@@ -63,11 +55,11 @@ internal static class ElementUtil
         {
             try
             {
-                return new ReturnInfo<TReturn>() { Value = func(arg), Completed = true };
+                return ReturnInfo<TReturn>.FromResult(func(arg));
             }
             catch (Exception e)
             {
-                return new ReturnInfo<TReturn>() { StoredException = e, Completed = true };
+                return ReturnInfo<TReturn>.FromException(e);
             }
         }
 
@@ -88,11 +80,11 @@ internal static class ElementUtil
         {
             try
             {
-                return new ReturnInfo<TReturn>() { Value = func(arg1, arg2), Completed = true };
+                return ReturnInfo<TReturn>.FromResult(func(arg1, arg2));
             }
             catch (Exception e)
             {
-                return new ReturnInfo<TReturn>() { StoredException = e, Completed = true };
+                return ReturnInfo<TReturn>.FromException(e);
             }
         }
 
@@ -120,14 +112,23 @@ internal static class ElementUtil
         return retVal.Value;
     }
 
+    /// <summary>
+    /// Throws an <see cref="InvalidOperationException"/> indicating that the associated dispatcher has been shut down.
+    /// </summary>
     [DoesNotReturn]
     [MethodImpl(MethodImplOptions.NoInlining)]
     private static void ThrowInvalidOperationException() => throw new InvalidOperationException(SR.AutomationDispatcherShutdown);
 
+    /// <summary>
+    /// Throws a <see cref="TimeoutException"/> indicating that the automation operation has timed out.
+    /// </summary>
     [DoesNotReturn]
     [MethodImpl(MethodImplOptions.NoInlining)]
-    private static void ThrowTimeoutException() => throw new TimeoutException(SR.AutomationDispatcherShutdown);
+    private static void ThrowTimeoutException() => throw new TimeoutException(SR.AutomationTimeout);
 
+    /// <summary>
+    /// Unwraps the exception and throws it on the current thread.
+    /// </summary>
     [DoesNotReturn]
     [MethodImpl(MethodImplOptions.NoInlining)]
     private static void UnwrapException(Exception exception) => throw exception;
@@ -144,31 +145,23 @@ internal static class ElementUtil
         Exception? remoteException = null;
         bool completed = false;
 
-        object retVal = dispatcher.Invoke(
-            DispatcherPriority.Send,
-            TimeSpan.FromMinutes(3),
-            (DispatcherOperationCallback)delegate (object workArg)
+        object retVal = dispatcher.Invoke(DispatcherPriority.Send, TimeSpan.FromMinutes(3), (DispatcherOperationCallback)delegate (object workArg)
+        {
+            try
             {
-                try
-                {
-                    return work(workArg);
-                }
-                catch (Exception e)
-                {
-                    remoteException = e;
-                    return null;
-                }
-                catch        //for non-CLS Compliant exceptions
-                {
-                    remoteException = null;
-                    return null;
-                }
-                finally
-                {
-                    completed = true;
-                }
-            },
-            arg);
+                return work(workArg);
+            }
+            catch (Exception e)
+            {
+                remoteException = e;
+                return null;
+            }
+            finally
+            {
+                completed = true;
+            }
+        },
+        arg);
 
         if (completed)
         {

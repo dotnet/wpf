@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Threading;
@@ -8,14 +8,27 @@ namespace System.Windows.Threading
     /// <summary>
     /// Class for Filtering and Catching Exceptions
     /// </summary>
-    internal class ExceptionWrapper
+    internal static class ExceptionWrapper
     {
-        internal ExceptionWrapper()
-        {
-        }
+        internal static event CatchHandler Catch;
+        internal static event FilterHandler Filter;
+
+        /// <summary>
+        /// Exception Catch Handler Delegate
+        ///  Returns true if the exception is "handled"
+        ///  Returns false if the caller should rethow the exception.
+        /// </summary>
+        internal delegate bool CatchHandler(object source, Exception e);
+
+        /// <summary>
+        /// Exception Catch Handler
+        ///  Returns true if the exception is "handled"
+        ///  Returns false if the caller should rethow the exception.
+        /// </summary>
+        internal delegate bool FilterHandler(object source, Exception e);
 
         // Helper for exception filtering:
-        public object TryCatchWhen(object source, Delegate callback, object args, int numArgs, Delegate catchHandler)
+        internal static object TryCatchWhen(object source, Delegate callback, object args, int numArgs, Delegate catchHandler)
         {
             object result = null;
 
@@ -34,7 +47,7 @@ namespace System.Windows.Threading
             return result;
         }
 
-        private object InternalRealCall(Delegate callback, object args, int numArgs)
+        private static object InternalRealCall(Delegate callback, object args, int numArgs)
         {
             object result = null;
 
@@ -121,27 +134,22 @@ namespace System.Windows.Threading
             return result;
         }
 
-        private bool FilterException(object source, Exception e)
+        private static bool FilterException(object source, Exception e)
         {
             // If we have a Catch handler we should catch the exception
             // unless the Filter handler says we shouldn't.
-            bool shouldCatch = (null != Catch);
-            if(null != Filter)
-            {
-                shouldCatch = Filter(source, e);
-            }
-            return shouldCatch;
+            return Filter?.Invoke(source, e) ?? Catch is not null;
         }
 
         // This returns false when caller should rethrow the exception.
         // true means Exception is "handled" and things just continue on.
-        private bool CatchException(object source, Exception e, Delegate catchHandler)
+        private static bool CatchException(object source, Exception e, Delegate catchHandler)
         {
-            if (catchHandler != null)
+            if (catchHandler is not null)
             {
-                if(catchHandler is DispatcherOperationCallback)
+                if (catchHandler is DispatcherOperationCallback catchCallback)
                 {
-                    ((DispatcherOperationCallback)catchHandler)(null);
+                    catchCallback(null);
                 }
                 else
                 {
@@ -149,28 +157,8 @@ namespace System.Windows.Threading
                 }
             }
 
-            if(null != Catch)
-                return Catch(source, e);
-
-            return false;
+            return Catch?.Invoke(source, e) ?? false;
         }
-
-        /// <summary>
-        /// Exception Catch Handler Delegate
-        ///  Returns true if the exception is "handled"
-        ///  Returns false if the caller should rethow the exception.
-        /// </summary>
-        public delegate bool CatchHandler(object source, Exception e);
-
-        /// <summary>
-        /// Exception Catch Handler
-        ///  Returns true if the exception is "handled"
-        ///  Returns false if the caller should rethow the exception.
-        /// </summary>
-        public event CatchHandler Catch;
-
-        public delegate bool FilterHandler(object source, Exception e);
-        public event FilterHandler Filter;
     }
 }
 

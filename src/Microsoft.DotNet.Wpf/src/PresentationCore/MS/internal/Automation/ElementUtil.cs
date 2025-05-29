@@ -63,6 +63,7 @@ internal static partial class ElementUtil
             }
         }
 
+        // Either returns the result or throws an exception if the operation did not complete successfully
         return HandleReturnValue(dispatcher, in retVal);
     }
 
@@ -88,6 +89,7 @@ internal static partial class ElementUtil
             }
         }
 
+        // Either returns the result or throws an exception if the operation did not complete successfully
         return HandleReturnValue(dispatcher, in retVal);
     }
 

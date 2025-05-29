@@ -26,9 +26,8 @@ namespace System.Windows.Threading
             _globalLock = new object();
             _dispatchers = new List<WeakReference>();
             _possibleDispatcher = new WeakReference(null);
-            _exceptionWrapper = new ExceptionWrapper();
-            _exceptionWrapper.Catch += new ExceptionWrapper.CatchHandler(CatchExceptionStatic);
-            _exceptionWrapper.Filter += new ExceptionWrapper.FilterHandler(ExceptionFilterStatic);
+            ExceptionWrapper.Catch += CatchExceptionStatic;
+            ExceptionWrapper.Filter += ExceptionFilterStatic;
         }
 
         /// <summary>
@@ -2971,7 +2970,7 @@ namespace System.Windows.Threading
 
         internal object WrappedInvoke(Delegate callback, object args, int numArgs, Delegate catchHandler)
         {
-            return _exceptionWrapper.TryCatchWhen(this, callback, args, numArgs, catchHandler);
+            return ExceptionWrapper.TryCatchWhen(this, callback, args, numArgs, catchHandler);
         }
 
         private object[] CombineParameters(object arg, object[] args)
@@ -3026,7 +3025,6 @@ namespace System.Windows.Threading
         private int _postedProcessingType;
         private static WindowMessage _msgProcessQueue;
 
-        private static ExceptionWrapper _exceptionWrapper;
         private static readonly object ExceptionDataKey = new object();
 
         // Preallocated arguments for exception handling.

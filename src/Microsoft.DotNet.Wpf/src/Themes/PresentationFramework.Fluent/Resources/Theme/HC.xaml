@@ -230,7 +230,7 @@
     <SolidColorBrush x:Key="CalendarViewSelectedBorderBrush" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="CalendarViewTodayBackground" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="CalendarViewTodayForeground" Color="{StaticResource SystemColorHighlightTextColor}" />
-    <SolidColorBrush x:Key="CalendarViewButtonForeground" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="CalendarViewNavigationButtonForeground" Color="{StaticResource SystemColorButtonTextColor}" />
 
     <!--  Card / CardAction / CardColor / CardExpander  -->
     <SolidColorBrush x:Key="CardBackground" Color="{StaticResource SystemColorWindowColor}" />
@@ -338,7 +338,7 @@
     <SolidColorBrush x:Key="DatePickerBackground" Color="{StaticResource SystemColorWindowColor}" />
     <SolidColorBrush x:Key="DatePickerTextBoxForeground" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="DatePickerTextBoxCaretBrush" Color="{StaticResource SystemColorButtonTextColor}" />
-    <SolidColorBrush x:Key="DatePickerFocusedBorderBrush" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="DatePickerBorderBrushFocused" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="DatePickerBackgroundFocused" Color="{StaticResource SystemColorHighlightTextColor}" />
     <SolidColorBrush x:Key="DatePickerBackgroundPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
     <SolidColorBrush x:Key="DatePickerPopupBackground" Color="{StaticResource SystemColorWindowColor}"/>
@@ -426,7 +426,7 @@
     <SolidColorBrush x:Key="ListBoxItemForeground" Color="{StaticResource SystemColorWindowTextColor}" />
     <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundThemeBrush" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundPointerOverThemeBrush" Color="{StaticResource SystemColorButtonTextColor}" />
-    <SolidColorBrush x:Key="ListBoxItemBackgroundSelectedPressedThemeBrush" Color="{StaticResource SystemColorHighlightColor}"/>
+    <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundPressedThemeBrush" Color="{StaticResource SystemColorHighlightColor}"/>
     <SolidColorBrush x:Key="ListBoxItemSelectedForegroundThemeBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="ListBoxItemUnselectedBackgroundPointerOverThemeBrush" Color="{StaticResource SystemColorHighlightTextColor}" />
 
@@ -446,7 +446,7 @@
     <SolidColorBrush x:Key="MenuBarForeground" Color="{StaticResource SystemColorWindowTextColor}" />
     <SolidColorBrush x:Key="MenuBarItemBackgroundSelected" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="MenuBarItemBorderBrush" Color="{StaticResource SystemColorWindowColor}" />
-    <SolidColorBrush x:Key="MenuBarItemBackgroundMousePointer" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <SolidColorBrush x:Key="MenuBarItemBackgroundPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
 
     <!--  MessageDialog  -->
     <SolidColorBrush x:Key="MessageBoxBackground" Color="{StaticResource SystemColorWindowColor}" />
@@ -788,4 +788,11 @@
     <Color x:Key="SystemFillColorNeutralBackground">#2D3236</Color>
     <Color x:Key="SystemFillColorSolidAttentionBackground">#2D3236</Color>
     <Color x:Key="SystemFillColorSolidNeutralBackground">#FF0000</Color>
+
+    <!-- #region Brushes Deprecated in .NET 10 -->
+    <SolidColorBrush x:Key="CalendarViewButtonForeground" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="DatePickerFocusedBorderBrush" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="ListBoxItemBackgroundSelectedPressedThemeBrush" Color="{StaticResource SystemColorHighlightColor}"/>
+    <SolidColorBrush x:Key="MenuBarItemBackgroundMousePointer" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <!-- #endregion -->
 </ResourceDictionary>

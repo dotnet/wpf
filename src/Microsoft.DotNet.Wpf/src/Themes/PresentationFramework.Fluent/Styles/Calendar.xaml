@@ -353,7 +353,7 @@
                                     BorderBrush="Transparent"
                                     Focusable="True"
                                     AutomationProperties.Name="Previous"
-                                    Foreground="{DynamicResource CalendarViewButtonForeground}">
+                                    Foreground="{DynamicResource CalendarViewNavigationButtonForeground}">
                                     <Button.Content>
                                         <TextBlock
                                             FontSize="8"
@@ -374,7 +374,7 @@
                                     BorderBrush="Transparent"
                                     Focusable="True"
                                     AutomationProperties.Name="Next"
-                                    Foreground="{DynamicResource CalendarViewButtonForeground}">
+                                    Foreground="{DynamicResource CalendarViewNavigationButtonForeground}">
                                     <Button.Content>
                                         <TextBlock
                                             FontSize="8"

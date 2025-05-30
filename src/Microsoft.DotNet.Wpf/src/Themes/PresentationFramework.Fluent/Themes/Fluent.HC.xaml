@@ -263,7 +263,7 @@
   <SolidColorBrush x:Key="CalendarViewSelectedBorderBrush" Color="{StaticResource SystemColorHighlightColor}" />
   <SolidColorBrush x:Key="CalendarViewTodayBackground" Color="{StaticResource SystemColorHighlightColor}" />
   <SolidColorBrush x:Key="CalendarViewTodayForeground" Color="{StaticResource SystemColorHighlightTextColor}" />
-  <SolidColorBrush x:Key="CalendarViewButtonForeground" Color="{StaticResource SystemColorButtonTextColor}" />
+  <SolidColorBrush x:Key="CalendarViewNavigationButtonForeground" Color="{StaticResource SystemColorButtonTextColor}" />
   <!--  Card / CardAction / CardColor / CardExpander  -->
   <SolidColorBrush x:Key="CardBackground" Color="{StaticResource SystemColorWindowColor}" />
   <SolidColorBrush x:Key="CardBackgroundPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
@@ -360,7 +360,7 @@
   <SolidColorBrush x:Key="DatePickerBackground" Color="{StaticResource SystemColorWindowColor}" />
   <SolidColorBrush x:Key="DatePickerTextBoxForeground" Color="{StaticResource SystemColorButtonTextColor}" />
   <SolidColorBrush x:Key="DatePickerTextBoxCaretBrush" Color="{StaticResource SystemColorButtonTextColor}" />
-  <SolidColorBrush x:Key="DatePickerFocusedBorderBrush" Color="{StaticResource SystemColorHighlightColor}" />
+  <SolidColorBrush x:Key="DatePickerBorderBrushFocused" Color="{StaticResource SystemColorHighlightColor}" />
   <SolidColorBrush x:Key="DatePickerBackgroundFocused" Color="{StaticResource SystemColorHighlightTextColor}" />
   <SolidColorBrush x:Key="DatePickerBackgroundPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
   <SolidColorBrush x:Key="DatePickerPopupBackground" Color="{StaticResource SystemColorWindowColor}" />
@@ -433,7 +433,7 @@
   <SolidColorBrush x:Key="ListBoxItemForeground" Color="{StaticResource SystemColorWindowTextColor}" />
   <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundThemeBrush" Color="{StaticResource SystemColorHighlightColor}" />
   <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundPointerOverThemeBrush" Color="{StaticResource SystemColorButtonTextColor}" />
-  <SolidColorBrush x:Key="ListBoxItemBackgroundSelectedPressedThemeBrush" Color="{StaticResource SystemColorHighlightColor}" />
+  <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundPressedThemeBrush" Color="{StaticResource SystemColorHighlightColor}" />
   <SolidColorBrush x:Key="ListBoxItemSelectedForegroundThemeBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
   <SolidColorBrush x:Key="ListBoxItemUnselectedBackgroundPointerOverThemeBrush" Color="{StaticResource SystemColorHighlightTextColor}" />
   <!--  ListView  -->
@@ -450,7 +450,7 @@
   <SolidColorBrush x:Key="MenuBarForeground" Color="{StaticResource SystemColorWindowTextColor}" />
   <SolidColorBrush x:Key="MenuBarItemBackgroundSelected" Color="{StaticResource SystemColorButtonFaceColor}" />
   <SolidColorBrush x:Key="MenuBarItemBorderBrush" Color="{StaticResource SystemColorWindowColor}" />
-  <SolidColorBrush x:Key="MenuBarItemBackgroundMousePointer" Color="{StaticResource SystemColorHighlightTextColor}" />
+  <SolidColorBrush x:Key="MenuBarItemBackgroundPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
   <!--  MessageDialog  -->
   <SolidColorBrush x:Key="MessageBoxBackground" Color="{StaticResource SystemColorWindowColor}" />
   <SolidColorBrush x:Key="MessageBoxForeground" Color="{StaticResource SystemColorWindowTextColor}" />
@@ -736,6 +736,12 @@
   <Color x:Key="SystemFillColorNeutralBackground">#2D3236</Color>
   <Color x:Key="SystemFillColorSolidAttentionBackground">#2D3236</Color>
   <Color x:Key="SystemFillColorSolidNeutralBackground">#FF0000</Color>
+  <!-- #region Brushes Deprecated in .NET 10 -->
+  <SolidColorBrush x:Key="CalendarViewButtonForeground" Color="{StaticResource SystemColorButtonTextColor}" />
+  <SolidColorBrush x:Key="DatePickerFocusedBorderBrush" Color="{StaticResource SystemColorHighlightColor}" />
+  <SolidColorBrush x:Key="ListBoxItemBackgroundSelectedPressedThemeBrush" Color="{StaticResource SystemColorHighlightColor}" />
+  <SolidColorBrush x:Key="MenuBarItemBackgroundMousePointer" Color="{StaticResource SystemColorHighlightTextColor}" />
+  <!-- #endregion -->
   <Thickness x:Key="ButtonPadding">11,5,11,6</Thickness>
   <Thickness x:Key="ButtonBorderThemeThickness">1</Thickness>
   <Thickness x:Key="ButtonIconMargin">0,0,8,0</Thickness>
@@ -1044,12 +1050,12 @@
                   <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Button x:Name="PART_HeaderButton" Grid.Column="0" Margin="7,6,3,7" Padding="8,7,8,8" HorizontalAlignment="Left" VerticalAlignment="Stretch" Background="Transparent" BorderBrush="Transparent" Focusable="True" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource CalendarViewForeground}" />
-                <Button x:Name="PART_PreviousButton" Grid.Column="1" Width="26" Height="26" Margin="7,6,7,7" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" BorderBrush="Transparent" Focusable="True" AutomationProperties.Name="Previous" Foreground="{DynamicResource CalendarViewButtonForeground}">
+                <Button x:Name="PART_PreviousButton" Grid.Column="1" Width="26" Height="26" Margin="7,6,7,7" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" BorderBrush="Transparent" Focusable="True" AutomationProperties.Name="Previous" Foreground="{DynamicResource CalendarViewNavigationButtonForeground}">
                   <Button.Content>
                     <TextBlock FontSize="8" FontFamily="{DynamicResource SymbolThemeFontFamily}"></TextBlock>
                   </Button.Content>
                 </Button>
-                <Button x:Name="PART_NextButton" Grid.Column="2" Width="26" Height="26" Margin="7,6,7,7" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" BorderBrush="Transparent" Focusable="True" AutomationProperties.Name="Next" Foreground="{DynamicResource CalendarViewButtonForeground}">
+                <Button x:Name="PART_NextButton" Grid.Column="2" Width="26" Height="26" Margin="7,6,7,7" Padding="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" BorderBrush="Transparent" Focusable="True" AutomationProperties.Name="Next" Foreground="{DynamicResource CalendarViewNavigationButtonForeground}">
                   <Button.Content>
                     <TextBlock FontSize="8" FontFamily="{DynamicResource SymbolThemeFontFamily}"></TextBlock>
                   </Button.Content>

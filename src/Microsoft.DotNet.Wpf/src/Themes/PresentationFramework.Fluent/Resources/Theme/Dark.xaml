@@ -401,7 +401,7 @@
     <SolidColorBrush x:Key="CalendarViewSelectedBorderBrush" Color="{StaticResource SystemAccentColorLight2}" />
     <SolidColorBrush x:Key="CalendarViewTodayBackground" Color="{StaticResource SystemAccentColorLight2}" />
     <SolidColorBrush x:Key="CalendarViewTodayForeground" Color="{StaticResource TextOnAccentFillColorPrimary}" />
-    <SolidColorBrush x:Key="CalendarViewButtonForeground" Color="{StaticResource TextFillColorSecondary}" />
+    <SolidColorBrush x:Key="CalendarViewNavigationButtonForeground" Color="{StaticResource TextFillColorSecondary}" />
 
     <!--  Card / CardAction / CardColor / CardExpander  -->
     <SolidColorBrush x:Key="CardBackground" Color="{StaticResource CardBackgroundFillColorDefault}" />
@@ -506,7 +506,7 @@
     <SolidColorBrush x:Key="DatePickerBackground" Color="{StaticResource ControlFillColorDefault}" />
     <SolidColorBrush x:Key="DatePickerTextBoxForeground" Color="{StaticResource TextFillColorPrimary}" />
     <SolidColorBrush x:Key="DatePickerTextBoxCaretBrush" Color="{StaticResource TextFillColorPrimary}" />
-    <SolidColorBrush x:Key="DatePickerFocusedBorderBrush" Color="{StaticResource SystemAccentColorLight2}" />
+    <SolidColorBrush x:Key="DatePickerBorderBrushFocused" Color="{StaticResource SystemAccentColorLight2}" />
     <SolidColorBrush x:Key="DatePickerBackgroundFocused" Color="{StaticResource ControlFillColorInputActive}" />
     <SolidColorBrush x:Key="DatePickerBackgroundPointerOver" Color="{StaticResource ControlFillColorSecondary}" />
     <SolidColorBrush x:Key="DatePickerPopupBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}"/>
@@ -594,7 +594,7 @@
     <SolidColorBrush x:Key="ListBoxItemForeground" Color="{StaticResource TextFillColorPrimary}" />
     <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundThemeBrush" Color="{StaticResource SystemAccentColor}" Opacity="0.6" />
     <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundPointerOverThemeBrush" Color="{StaticResource SystemAccentColor}" Opacity="0.8" />
-    <SolidColorBrush x:Key="ListBoxItemBackgroundSelectedPressedThemeBrush" Color="{StaticResource SystemAccentColor}" Opacity="0.9" />
+    <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundPressedThemeBrush" Color="{StaticResource SystemAccentColor}" Opacity="0.9" />
     <SolidColorBrush x:Key="ListBoxItemSelectedForegroundThemeBrush" Color="{StaticResource TextFillColorPrimary}" />
     <SolidColorBrush x:Key="ListBoxItemUnselectedBackgroundPointerOverThemeBrush" Color="{StaticResource ControlAltFillColorTertiary}" />
 
@@ -614,7 +614,7 @@
     <SolidColorBrush x:Key="MenuBarForeground" Color="{StaticResource TextFillColorPrimary}" />
     <SolidColorBrush x:Key="MenuBarItemBackgroundSelected" Color="{StaticResource SubtleFillColorTertiary}" />
     <SolidColorBrush x:Key="MenuBarItemBorderBrush" Color="{StaticResource ControlAltFillColorTertiary}" />
-    <SolidColorBrush x:Key="MenuBarItemBackgroundMousePointer" Color="{StaticResource SubtleFillColorTertiary}" />
+    <SolidColorBrush x:Key="MenuBarItemBackgroundPointerOver" Color="{StaticResource SubtleFillColorTertiary}" />
 
     <!--  MessageDialog  -->
     <SolidColorBrush x:Key="MessageBoxBackground" Color="{StaticResource SolidBackgroundFillColorBase}" />
@@ -875,4 +875,11 @@
     <SolidColorBrush x:Key="TreeViewItemBackgroundSelected" Color="{StaticResource SubtleFillColorSecondary}" />
     <SolidColorBrush x:Key="TreeViewItemForeground" Color="{StaticResource TextFillColorPrimary}" />
     <SolidColorBrush x:Key="TreeViewItemSelectionIndicatorForeground" Color="{StaticResource SystemAccentColorLight2}" />
+
+    <!-- #region Brushes Deprecated in .NET10 -->
+    <SolidColorBrush x:Key="CalendarViewButtonForeground" Color="{StaticResource TextFillColorSecondary}" />
+    <SolidColorBrush x:Key="DatePickerFocusedBorderBrush" Color="{StaticResource SystemAccentColorLight2}" />
+    <SolidColorBrush x:Key="ListBoxItemBackgroundSelectedPressedThemeBrush" Color="{StaticResource SystemAccentColor}" Opacity="0.9" />
+    <SolidColorBrush x:Key="MenuBarItemBackgroundMousePointer" Color="{StaticResource SubtleFillColorTertiary}" />
+    <!-- #endregion -->
 </ResourceDictionary>

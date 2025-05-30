@@ -83,7 +83,7 @@ public class DispatcherOperation<TResult> : DispatcherOperation
                 _taskSource.SetCanceled();
                 break;
             case DispatcherOperationStatus.Completed:
-                if (_exception != null)
+                if (_exception is not null)
                 {
                     _taskSource.SetException(_exception);
                 }

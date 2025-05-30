@@ -10,11 +10,11 @@ namespace System.Windows.Threading;
 /// </summary>
 internal abstract class DispatcherOperationTaskSource
 {
-    public abstract void Initialize(DispatcherOperation operation);
-    public abstract Task GetTask();
-    public abstract void SetCanceled();
-    public abstract void SetResult(object result);
-    public abstract void SetException(Exception exception);
+    internal abstract void Initialize(DispatcherOperation operation);
+    internal abstract Task GetTask();
+    internal abstract void SetCanceled();
+    internal abstract void SetResult(object result);
+    internal abstract void SetException(Exception exception);
 }
 
 internal sealed class DispatcherOperationTaskSource<TResult> : DispatcherOperationTaskSource
@@ -25,44 +25,45 @@ internal sealed class DispatcherOperationTaskSource<TResult> : DispatcherOperati
     /// Create the underlying TaskCompletionSource and set the DispatcherOperation as the Task's AsyncState.
     /// </summary>
     /// <param name="operation"></param>
-    public override void Initialize(DispatcherOperation operation)
+    internal override void Initialize(DispatcherOperation operation)
     {
         Debug.Assert(_taskCompletionSource is null);
 
         _taskCompletionSource = new TaskCompletionSource<TResult>(new DispatcherOperationTaskMapping(operation));
     }
 
-    public override Task GetTask()
+    internal override Task GetTask()
     {
         Debug.Assert(_taskCompletionSource is not null);
 
         return _taskCompletionSource.Task;
     }
 
-    public override void SetCanceled()
+    internal override void SetCanceled()
     {
         Debug.Assert(_taskCompletionSource is not null);
 
         _taskCompletionSource.SetCanceled();
     }
 
-    public override void SetResult(object result)
+    internal override void SetResult(object result)
     {
         Debug.Assert(_taskCompletionSource is not null);
 
         _taskCompletionSource.SetResult((TResult)result);
     }
 
-    public void SetResult(TResult result)
+    internal void SetResult(TResult result)
     {
         Debug.Assert(_taskCompletionSource is not null);
 
         _taskCompletionSource.SetResult(result);
     }
 
-    public override void SetException(Exception exception)
+    internal override void SetException(Exception exception)
     {
         Debug.Assert(_taskCompletionSource is not null);
+        Debug.Assert(exception is not null);
 
         _taskCompletionSource.SetException(exception);
     }

@@ -211,7 +211,7 @@ public class DispatcherTests
     {
         Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
 
-        static double action(int parameter, double doubleParameter) => throw new InvalidOperationException("Exception for testing.");
+        static double action(int parameter, double doubleParameter) => throw new InvalidOperationException("Throw this");
         // Send + current thread forces direct callback invocation
         Assert.Throws<InvalidOperationException>(() => dispatcher.Invoke(action, DispatcherPriority.Send, TimeSpan.FromSeconds(3), 4, 14.5));
     }
@@ -221,9 +221,29 @@ public class DispatcherTests
     {
         Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
 
-        static double action(int parameter, double doubleParameter) => throw new InvalidOperationException("Exception for testing.");
+        static double action(int parameter, double doubleParameter) => throw new InvalidOperationException("Throw this");
         // Anything different than Send + current thread is DispatcherOperation allocation and queue pass
         Assert.Throws<InvalidOperationException>(() => dispatcher.Invoke(action, DispatcherPriority.Background, TimeSpan.FromSeconds(3), 4, 14.5));
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_Legacy_PropagatesException()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static object action(object exceptionText) => throw new InvalidOperationException((string)exceptionText);
+        // Send + current thread forces direct callback invocation
+        Assert.Throws<InvalidOperationException>(() => dispatcher.Invoke(DispatcherPriority.Send, TimeSpan.FromSeconds(3), (DispatcherOperationCallback)action, "Throw this"));
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_DispatcherOperation_Legacy_PropagatesException()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static object action(object exceptionText) => throw new InvalidOperationException((string)exceptionText);
+        // Anything different than Send + current thread is DispatcherOperation allocation and queue pass
+        Assert.Throws<InvalidOperationException>(() => dispatcher.Invoke(DispatcherPriority.Background, TimeSpan.FromSeconds(3), (DispatcherOperationCallback)action, "Throw this"));
     }
 
     [WpfTheory]

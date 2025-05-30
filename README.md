@@ -1,4 +1,4 @@
-# Windows Presentation Foundation (WPF)
+﻿# Windows Presentation Foundation (WPF)
 [![.NET Foundation](https://img.shields.io/badge/.NET%20Foundation-blueviolet.svg)](https://www.dotnetfoundation.org/)
 [![Build Status](https://dnceng.visualstudio.com/public/_apis/build/status/dotnet/wpf/dotnet-wpf%20CI)](https://dnceng.visualstudio.com/public/_build/latest?definitionId=270)
 [![codecov](https://codecov.io/gh/dotnet/wpf/branch/main/graph/badge.svg?flag=production)](https://codecov.io/gh/dotnet/wpf)
@@ -22,15 +22,15 @@ To build the WPF repo and contribute features and fixes for .NET 8.0, [Visual St
 
 ## Getting started
 
-* [.NET 6.0 SDK](https://dotnet.microsoft.com/download/dotnet/6.0), [.NET 7.0 SDK](https://dotnet.microsoft.com/download/dotnet/7.0)
-* [.NET Preview SDKs (8.0 daily, 7.0 servicing)](https://github.com/dotnet/installer)
+* [.NET 6.0 SDK](https://dotnet.microsoft.com/download/dotnet/6.0), [.NET 7.0 SDK](https://dotnet.microsoft.com/download/dotnet/7.0), [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0), [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
+* [.NET Preview SDKs](https://github.com/dotnet/dotnet/blob/main/docs/builds-table.md)
 * [Getting started instructions](Documentation/getting-started.md)
 * [Contributing guide](Documentation/contributing.md)
-* [Migrating .NET Framework WPF Apps to .NET Core](https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework)
+* [Migrating .NET Framework WPF Apps to .NET Core](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/migration/)
 
 ## Status
 
-- We are currently developing WPF for .NET 8. 
+- We are currently developing WPF for .NET 10. 
 
 See the [WPF roadmap](roadmap.md) to learn about the schedule for specific WPF components.
 
@@ -56,7 +56,7 @@ They should not be filed on this repo.
 
 This code base is a fork of the WPF code in the .NET Framework. .NET Core 3.0 was released with a goal of WPF having parity with the .NET Framework version. Over time, the two implementations may diverge.
 
-The [Update on .NET Core 3.0 and .NET Framework 4.8](https://blogs.msdn.microsoft.com/dotnet/2018/10/04/update-on-net-core-3-0-and-net-framework-4-8/) provides a good description of the forward-looking differences between .NET Core and .NET Framework.
+The [Update on .NET Core 3.0 and .NET Framework 4.8](https://devblogs.microsoft.com/dotnet/update-on-net-core-3-0-and-net-framework-4-8/) provides a good description of the forward-looking differences between .NET Core and .NET Framework.
 
 This [update](https://devblogs.microsoft.com/dotnet/net-core-is-the-future-of-net/) states how going forward .NET Core is the future of .NET. and .NET Framework 4.8 will be the last major version of .NET Framework.
 

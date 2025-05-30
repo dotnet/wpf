@@ -206,6 +206,26 @@ public class DispatcherTests
         Assert.Equal(24.0, result);
     }
 
+    [WpfFact]
+    public void Invoke_SameThread_TReturn_TArg1_TArg2_PropagatesException()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static double action(int parameter, double doubleParameter) => throw new InvalidOperationException("Exception for testing.");
+        // Send + current thread forces direct callback invocation
+        Assert.Throws<InvalidOperationException>(() => dispatcher.Invoke(action, DispatcherPriority.Send, TimeSpan.FromSeconds(3), 4, 14.5));
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_DispatcherOperation_TReturn_TArg1_TArg2_PropagatesException()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static double action(int parameter, double doubleParameter) => throw new InvalidOperationException("Exception for testing.");
+        // Anything different than Send + current thread is DispatcherOperation allocation and queue pass
+        Assert.Throws<InvalidOperationException>(() => dispatcher.Invoke(action, DispatcherPriority.Background, TimeSpan.FromSeconds(3), 4, 14.5));
+    }
+
     [WpfTheory]
     [InlineData(DispatcherPriority.Invalid)]
     [InlineData(DispatcherPriority.Invalid - 1)]

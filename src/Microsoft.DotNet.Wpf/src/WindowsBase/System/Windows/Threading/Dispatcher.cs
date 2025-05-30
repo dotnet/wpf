@@ -187,7 +187,7 @@ namespace System.Windows.Threading
         /// <returns>
         ///     True if the calling thread has access to this object.
         /// </returns>
-        [System.ComponentModel.EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool CheckAccess()
         {
             return Thread == Thread.CurrentThread;
@@ -202,7 +202,7 @@ namespace System.Windows.Threading
         ///     This method is public so that derived classes can probe to
         ///     see if the calling thread has access to itself.
         /// </remarks>
-        [System.ComponentModel.EditorBrowsable(EditorBrowsableState.Never)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public void VerifyAccess()
         {
             if(!CheckAccess())

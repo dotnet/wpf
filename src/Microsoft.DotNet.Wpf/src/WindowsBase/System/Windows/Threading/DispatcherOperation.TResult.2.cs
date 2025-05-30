@@ -1,6 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Runtime.CompilerServices;
+
 namespace System.Windows.Threading;
 
 /// <summary>
@@ -20,7 +22,7 @@ internal sealed class DispatcherOperation<TArg1, TArg2, TResult> : DispatcherOpe
 
     protected sealed override TResult InvokeDelegateCore()
     {
-        Func<TArg1, TArg2, TResult> func = (Func<TArg1, TArg2, TResult>)_method;
+        Func<TArg1, TArg2, TResult> func = Unsafe.As<Func<TArg1, TArg2, TResult>>(_method);
         return func(_arg1, _arg2);
     }
 }

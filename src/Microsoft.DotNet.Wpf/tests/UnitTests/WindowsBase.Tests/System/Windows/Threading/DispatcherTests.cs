@@ -147,6 +147,18 @@ public class DispatcherTests
     }
 
     [WpfFact]
+    public void Invoke_SameThread_TArg_Success()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        int result = 5;
+        // Send + current thread forces direct callback invocation
+        dispatcher.Invoke((param) => result += param, DispatcherPriority.Send, CancellationToken.None, TimeSpan.FromSeconds(3), 4);
+
+        Assert.Equal(9, result);
+    }
+
+    [WpfFact]
     public void Invoke_SameThread_TReturn_TArg_Success()
     {
         Dispatcher dispatcher = Dispatcher.CurrentDispatcher;

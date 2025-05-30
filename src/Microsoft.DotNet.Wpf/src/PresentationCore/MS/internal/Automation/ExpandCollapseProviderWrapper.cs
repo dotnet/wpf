@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -67,10 +67,7 @@ namespace MS.Internal.Automation
 
         public ExpandCollapseState ExpandCollapseState
         {
-            get
-            {
-                return (ExpandCollapseState) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetExpandCollapseState ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.ExpandCollapseState, _iface);
         }
 
         #endregion Interface IExpandCollapseProvider
@@ -109,11 +106,6 @@ namespace MS.Internal.Automation
         {
             _iface.Collapse();
             return null;
-        }
-
-        private object GetExpandCollapseState( object unused )
-        {
-            return _iface.ExpandCollapseState;
         }
 
         #endregion Private Methods

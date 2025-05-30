@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -68,50 +68,32 @@ namespace MS.Internal.Automation
         
         public double HorizontalScrollPercent
         {
-            get
-            {
-                return (double) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetHorizontalScrollPercent ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.HorizontalScrollPercent, _iface);
         }
 
         public double VerticalScrollPercent
         {
-            get
-            {
-                return (double) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetVerticalScrollPercent ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.VerticalScrollPercent, _iface);
         }
 
         public double HorizontalViewSize
         {
-            get
-            {
-                return (double) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetHorizontalViewSize ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.HorizontalViewSize, _iface);
         }
 
         public double VerticalViewSize
         {
-            get
-            {
-                return (double) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetVerticalViewSize ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.VerticalViewSize, _iface);
         }
-        
+
         public bool HorizontallyScrollable
         {
-            get
-            {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetHorizontallyScrollable ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.HorizontallyScrollable, _iface);
         }
-        
+
         public bool VerticallyScrollable
         {
-            get
-            {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetVerticallyScrollable ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.VerticallyScrollable, _iface);
         }
 
         #endregion Interface IScrollProvider
@@ -122,7 +104,7 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal static object Wrap( AutomationPeer peer, object iface )
@@ -152,36 +134,6 @@ namespace MS.Internal.Automation
             double [ ] args = (double [ ]) arg;
             _iface.SetScrollPercent( args[ 0 ], args[ 1 ] );
             return null;
-        }
-        
-        private object GetHorizontalScrollPercent( object unused )
-        {
-            return _iface.HorizontalScrollPercent;
-        }
-
-        private object GetVerticalScrollPercent( object unused )
-        {
-            return _iface.VerticalScrollPercent;
-        }
-
-        private object GetHorizontalViewSize( object unused )
-        {
-            return _iface.HorizontalViewSize;
-        }
-
-        private object GetVerticalViewSize( object unused )
-        {
-            return _iface.VerticalViewSize;
-        }
-        
-        private object GetHorizontallyScrollable( object unused )
-        {
-            return _iface.HorizontallyScrollable;
-        }
-        
-        private object GetVerticallyScrollable( object unused )
-        {
-            return _iface.VerticallyScrollable;
         }
 
         #endregion Private Methods

@@ -59,7 +59,7 @@ internal sealed class DispatcherOperationLegacy : DispatcherOperation
         }
     }
 
-    protected override void InvokeImpl()
+    private protected sealed override void InvokeImpl()
     {
         SynchronizationContext oldSynchronizationContext = SynchronizationContext.Current;
 

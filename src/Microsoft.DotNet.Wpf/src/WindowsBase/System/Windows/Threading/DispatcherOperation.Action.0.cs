@@ -69,7 +69,7 @@ internal class DispatcherOperationAction : DispatcherOperation
         }
     }
 
-    protected sealed override void InvokeImpl()
+    private protected sealed override void InvokeImpl()
     {
         SynchronizationContext oldSynchronizationContext = SynchronizationContext.Current;
 
@@ -101,7 +101,7 @@ internal class DispatcherOperationAction : DispatcherOperation
         }
     }
 
-    protected virtual void InvokeDelegateCore()
+    private protected virtual void InvokeDelegateCore()
     {
         Action action = (Action)_method;
         action();

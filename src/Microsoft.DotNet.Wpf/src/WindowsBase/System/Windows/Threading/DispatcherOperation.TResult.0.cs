@@ -100,7 +100,7 @@ public class DispatcherOperation<TResult> : DispatcherOperation
         }
     }
 
-    protected sealed override void InvokeImpl()
+    private protected sealed override void InvokeImpl()
     {
         SynchronizationContext oldSynchronizationContext = SynchronizationContext.Current;
 
@@ -132,7 +132,7 @@ public class DispatcherOperation<TResult> : DispatcherOperation
         }
     }
 
-    protected virtual TResult InvokeDelegateCore()
+    private protected virtual TResult InvokeDelegateCore()
     {
         Func<TResult> func = (Func<TResult>)_method;
         return func();

@@ -17,7 +17,7 @@ internal sealed class DispatcherOperationAction<TArg> : DispatcherOperationActio
         _arg = arg;
     }
 
-    protected sealed override void InvokeDelegateCore()
+    private protected sealed override void InvokeDelegateCore()
     {
         Action<TArg> action = Unsafe.As<Action<TArg>>(_method);
         action(_arg);

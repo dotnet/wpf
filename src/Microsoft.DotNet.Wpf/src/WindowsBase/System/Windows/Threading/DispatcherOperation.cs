@@ -6,7 +6,6 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using MS.Internal;
-using MS.Internal.Interop;
 
 namespace System.Windows.Threading
 {
@@ -294,7 +293,7 @@ namespace System.Windows.Threading
         internal abstract void InvokeCompletions();
 
         // Invoke --> InvokeImpl
-        protected abstract void InvokeImpl();
+        private protected abstract void InvokeImpl();
 
         // Note: this is called by the Dispatcher to actually invoke the operation.
         // Invoke --> InvokeImpl

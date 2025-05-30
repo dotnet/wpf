@@ -20,7 +20,7 @@ internal sealed class DispatcherOperation<TArg1, TArg2, TResult> : DispatcherOpe
         _arg2 = arg2;
     }
 
-    protected sealed override TResult InvokeDelegateCore()
+    private protected sealed override TResult InvokeDelegateCore()
     {
         Func<TArg1, TArg2, TResult> func = Unsafe.As<Func<TArg1, TArg2, TResult>>(_method);
         return func(_arg1, _arg2);

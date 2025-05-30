@@ -71,7 +71,7 @@ namespace System.Windows.Threading
         /// <returns>
         ///     Returns a string representation of the operation to be invoked.
         /// </returns>
-        internal string Name => _method.Method.DeclaringType + "." + _method.Method.Name;
+        internal string Name => $"{_method.Method.DeclaringType}.{_method.Method.Name}";
 
         /// <summary>
         ///     Gets or sets the priority of this operation within the

@@ -16,31 +16,6 @@ namespace MS.Internal.Automation;
 /// </summary>
 internal static partial class ElementUtil
 {
-    ///// <summary>
-    ///// Provides a helper to invoke work on the UI thread, re-throwing all exceptions on the thread that invoked this execution.
-    ///// </summary>
-    //internal static TReturn Invoke<TReturn>(AutomationPeer peer, Func<TReturn> work)
-    //{
-    //    // Null dispatcher likely means the visual is in bad shape
-    //    Dispatcher dispatcher = peer.Dispatcher ?? throw new ElementNotAvailableException();
-
-    //    static ReturnInfo<TReturn> ExceptionWrapper(Func<TReturn> func)
-    //    {
-    //        try
-    //        {
-    //            return new ReturnInfo<TReturn>() { Value = func(), Completed = true };
-    //        }
-    //        catch (Exception e)
-    //        {
-    //            return new ReturnInfo<TReturn>() { StoredException = e, Completed = true };
-    //        }
-    //    }
-
-    //    ReturnInfo<TReturn> retVal = dispatcher.Invoke(ExceptionWrapper, DispatcherPriority.Send, TimeSpan.FromMinutes(3), work);
-
-    //    return HandleReturnValue(dispatcher, in retVal);
-    //}
-
     /// <summary>
     /// Provides a helper to invoke work on the UI thread, re-throwing all exceptions on the thread that invoked this execution.
     /// </summary>

@@ -48,17 +48,17 @@ namespace MS.Internal.Automation
 
         public IRawElementProviderSimple GetItem(int row, int column)
         {
-            return ElementUtil.Invoke(_peer, static (state, rowColumn) => state.GetItem(rowColumn[0], rowColumn[1]), this, new int[] { row, column });
+            return ElementUtil.Invoke(_peer, static (state, rowColumn) => state.GetItem(rowColumn[0], rowColumn[1]), _iface, new int[] { row, column });
         }
 
         public int RowCount
         {
-            get => ElementUtil.Invoke(_peer, static (state) => state.RowCount, this);
+            get => ElementUtil.Invoke(_peer, static (state) => state.RowCount, _iface);
         }
 
         public int ColumnCount
         {
-            get => ElementUtil.Invoke(_peer, static (state) => state.ColumnCount, this);
+            get => ElementUtil.Invoke(_peer, static (state) => state.ColumnCount, _iface);
         }
 
         #endregion Interface IGridProvider

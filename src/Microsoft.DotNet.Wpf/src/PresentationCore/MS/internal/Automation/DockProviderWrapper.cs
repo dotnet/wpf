@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -62,10 +62,7 @@ namespace MS.Internal.Automation
 
         public DockPosition DockPosition
         {
-            get
-            {
-                return (DockPosition)ElementUtil.Invoke(_peer, new DispatcherOperationCallback( GetDockPosition ), null);              
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.DockPosition, _iface);
         }
 
         #endregion Interface IDockProvider
@@ -98,11 +95,6 @@ namespace MS.Internal.Automation
         {
             _iface.SetDockPosition( (DockPosition) arg );
             return null;
-        }
-
-        private object GetDockPosition( object unused )
-        {
-            return _iface.DockPosition;
         }
 
         #endregion Private Methods

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -8,7 +8,6 @@
 //
 //
 
-using System.Windows.Threading;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
 
@@ -56,42 +55,27 @@ namespace MS.Internal.Automation
 
         public int Row
         {
-            get
-            {
-                return (int) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetRow ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.Row, _iface);
         }
 
         public int Column
         {
-            get
-            {
-                return (int) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetColumn ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.Column, _iface);
         }
 
         public int RowSpan
         {
-            get
-            {
-                return (int) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetRowSpan ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.RowSpan, _iface);
         }
 
         public int ColumnSpan
         {
-            get
-            {
-                return (int) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetColumnSpan ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.ColumnSpan, _iface);
         }
 
         public IRawElementProviderSimple ContainingGrid
         {
-            get
-            {
-                return (IRawElementProviderSimple) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetContainingGrid ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.ContainingGrid, _iface);
         }
 
         #endregion Interface IGridItemProvider
@@ -102,7 +86,7 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal static object Wrap( AutomationPeer peer, object iface )
@@ -111,41 +95,6 @@ namespace MS.Internal.Automation
         }
 
         #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
- 
-        #region Private Methods
-
-        private object GetRow( object unused )
-        {
-            return _iface.Row;
-        }
-
-        private object GetColumn( object unused )
-        {
-            return _iface.Column;
-        }
-
-        private object GetRowSpan( object unused )
-        {
-            return _iface.RowSpan;
-        }
-
-        private object GetColumnSpan( object unused )
-        {
-            return _iface.ColumnSpan;
-        }
-
-        private object GetContainingGrid( object unused )
-        {
-            return _iface.ContainingGrid;
-        }
-
-        #endregion Private Methods
 
 
         //------------------------------------------------------

@@ -238,7 +238,7 @@
             BorderBrush="{DynamicResource SystemFillColorCriticalBrush}"
             BorderThickness="{DynamicResource TextControlBorderThemeThickness}"
             CornerRadius="{DynamicResource ControlCornerRadius}"
-            Padding="{StaticResource ErrorTemplateBorderPadding}">
+            Padding="{StaticResource TextControlErrorBorderPadding}">
             <AdornedElementPlaceholder />
         </Border>
     </ControlTemplate>

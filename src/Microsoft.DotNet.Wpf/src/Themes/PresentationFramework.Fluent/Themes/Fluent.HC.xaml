@@ -78,7 +78,7 @@
   <Thickness x:Key="DatePickerHostPadding">0,1,0,2</Thickness>
   <Thickness x:Key="DatePickerHostMonthPadding">9,0,0,1</Thickness>
   <Thickness x:Key="ComboBoxEditableTextPadding">10,0,30,0</Thickness>
-  <Thickness x:Key="ErrorTemplateBorderPadding">1</Thickness>
+  <Thickness x:Key="TextControlErrorBorderPadding">1</Thickness>
   <system:Double x:Key="ComboBoxMinHeight">24</system:Double>
   <!-- <Thickness x:Key="ComboBoxPadding">12,1,0,3</Thickness> -->
   <system:Double x:Key="NavigationViewItemOnLeftMinHeight">32</system:Double>
@@ -4874,7 +4874,7 @@
     </ControlTemplate.Triggers>
   </ControlTemplate>
   <ControlTemplate x:Key="DefaultTextBoxInvalidationStyle">
-    <Border BorderBrush="{DynamicResource SystemFillColorCriticalBrush}" BorderThickness="{DynamicResource TextControlBorderThemeThickness}" CornerRadius="{DynamicResource ControlCornerRadius}" Padding="{StaticResource ErrorTemplateBorderPadding}">
+    <Border BorderBrush="{DynamicResource SystemFillColorCriticalBrush}" BorderThickness="{DynamicResource TextControlBorderThemeThickness}" CornerRadius="{DynamicResource ControlCornerRadius}" Padding="{StaticResource TextControlErrorBorderPadding}">
       <AdornedElementPlaceholder />
     </Border>
   </ControlTemplate>

@@ -3,15 +3,16 @@
 
 // Description: TextRange provider wrapper for WCP
 
-using System.Windows.Threading;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Text;
 using System.Windows.Automation.Peers;
 
+#nullable enable
+
 namespace MS.Internal.Automation
 {
     // see comment on InvokeProviderWrapper class for explanation of purpose and organization of these wrapper classes.
-    internal class TextRangeProviderWrapper: MarshalByRefObject, ITextRangeProvider
+    internal sealed class TextRangeProviderWrapper : MarshalByRefObject, ITextRangeProvider
     {
         //------------------------------------------------------
         //
@@ -21,8 +22,11 @@ namespace MS.Internal.Automation
  
         #region Constructors
 
-        internal TextRangeProviderWrapper( AutomationPeer peer, ITextRangeProvider iface )
+        private TextRangeProviderWrapper(AutomationPeer peer, ITextRangeProvider iface)
         {
+            Debug.Assert(peer is not null);
+            Debug.Assert(iface is not null);
+
             _peer = peer;
             _iface = iface;
         }
@@ -271,8 +275,8 @@ namespace MS.Internal.Automation
  
         #region Private Fields
 
-        private AutomationPeer _peer;
-        private ITextRangeProvider _iface;
+        private readonly AutomationPeer _peer;
+        private readonly ITextRangeProvider _iface;
 
         #endregion Private Fields
     }

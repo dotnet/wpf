@@ -3,16 +3,17 @@
 
 // Description: Text pattern provider wrapper for WCP
 
-using System.Windows.Threading;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
 
+#nullable enable
+
 namespace MS.Internal.Automation
 {
     // see comment on InvokeProviderWrapper class for explanation of purpose and organization of these wrapper classes.
-    internal class TextProviderWrapper : MarshalByRefObject, ITextProvider
+    internal sealed class TextProviderWrapper : MarshalByRefObject, ITextProvider
     {
         //------------------------------------------------------
         //
@@ -22,8 +23,11 @@ namespace MS.Internal.Automation
  
         #region Constructors
 
-        private TextProviderWrapper( AutomationPeer peer, ITextProvider iface )
+        private TextProviderWrapper(AutomationPeer peer, ITextProvider iface)
         {
+            Debug.Assert(peer is not null);
+            Debug.Assert(iface is not null);
+
             _peer = peer;
             _iface = iface;
         }
@@ -110,8 +114,8 @@ namespace MS.Internal.Automation
  
         #region Private Fields
 
-        private AutomationPeer _peer;
-        private ITextProvider _iface;
+        private readonly AutomationPeer _peer;
+        private readonly ITextProvider _iface;
 
         #endregion Private Fields
     }

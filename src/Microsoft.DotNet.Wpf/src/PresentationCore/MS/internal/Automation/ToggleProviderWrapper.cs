@@ -8,7 +8,8 @@
 //
 //
 
-using System.Windows.Threading;
+#nullable enable
+
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
@@ -28,7 +29,7 @@ namespace MS.Internal.Automation
     // * private methods - one for each interface entry point - which get called back
     //   on the right context. These call through to the peer that's actually
     //   implenting the I...Provider version of the interface. 
-    internal class ToggleProviderWrapper: MarshalByRefObject, IToggleProvider
+    internal sealed class ToggleProviderWrapper : MarshalByRefObject, IToggleProvider
     {
         //------------------------------------------------------
         //
@@ -38,8 +39,11 @@ namespace MS.Internal.Automation
  
         #region Constructors
 
-        private ToggleProviderWrapper( AutomationPeer peer, IToggleProvider iface )
+        private ToggleProviderWrapper(AutomationPeer peer, IToggleProvider iface)
         {
+            Debug.Assert(peer is not null);
+            Debug.Assert(iface is not null);
+
             _peer = peer;
             _iface = iface;
         }
@@ -91,8 +95,8 @@ namespace MS.Internal.Automation
  
         #region Private Fields
 
-        private AutomationPeer _peer;
-        private IToggleProvider _iface;
+        private readonly AutomationPeer _peer;
+        private readonly IToggleProvider _iface;
 
         #endregion Private Fields
     }

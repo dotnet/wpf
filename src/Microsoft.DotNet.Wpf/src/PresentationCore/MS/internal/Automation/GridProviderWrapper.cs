@@ -1,6 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+#nullable enable
+
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
 
@@ -19,7 +21,7 @@ namespace MS.Internal.Automation
     // * private methods - one for each interface entry point - which get called back
     //   on the right context. These call through to the peer that's actually
     //   implenting the I...Provider version of the interface. 
-    internal class GridProviderWrapper: MarshalByRefObject, IGridProvider
+    internal sealed class GridProviderWrapper : MarshalByRefObject, IGridProvider
     {
         //------------------------------------------------------
         //
@@ -29,8 +31,11 @@ namespace MS.Internal.Automation
  
         #region Constructors
 
-        private GridProviderWrapper( AutomationPeer peer, IGridProvider iface )
+        private GridProviderWrapper(AutomationPeer peer, IGridProvider iface)
         {
+            Debug.Assert(peer is not null);
+            Debug.Assert(iface is not null);
+
             _peer = peer;
             _iface = iface;
         }
@@ -87,8 +92,8 @@ namespace MS.Internal.Automation
  
         #region Private Fields
 
-        private AutomationPeer _peer;
-        private IGridProvider _iface;
+        private readonly AutomationPeer _peer;
+        private readonly IGridProvider _iface;
 
         #endregion Private Fields
     }

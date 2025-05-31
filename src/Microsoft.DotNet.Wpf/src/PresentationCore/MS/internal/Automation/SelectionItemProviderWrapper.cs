@@ -8,7 +8,8 @@
 //
 //
 
-using System.Windows.Threading;
+#nullable enable
+
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
 
@@ -28,7 +29,7 @@ namespace MS.Internal.Automation
     //   on the right context. These call through to the peer that's actually
     //   implenting the I...Provider version of the interface. 
 
-    internal class SelectionItemProviderWrapper: MarshalByRefObject, ISelectionItemProvider
+    internal sealed class SelectionItemProviderWrapper : MarshalByRefObject, ISelectionItemProvider
     {
         //------------------------------------------------------
         //
@@ -38,8 +39,11 @@ namespace MS.Internal.Automation
  
         #region Constructors
 
-        private SelectionItemProviderWrapper( AutomationPeer peer, ISelectionItemProvider iface )
+        private SelectionItemProviderWrapper(AutomationPeer peer, ISelectionItemProvider iface)
         {
+            Debug.Assert(peer is not null);
+            Debug.Assert(iface is not null);
+
             _peer = peer;
             _iface = iface;
         }
@@ -106,8 +110,8 @@ namespace MS.Internal.Automation
  
         #region Private Fields
 
-        private AutomationPeer _peer;
-        private ISelectionItemProvider _iface;
+        private readonly AutomationPeer _peer;
+        private readonly ISelectionItemProvider _iface;
 
         #endregion Private Fields
     }

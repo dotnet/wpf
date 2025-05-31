@@ -8,7 +8,8 @@
 //
 //
 
-using System.Windows.Threading;
+#nullable enable
+
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
 
@@ -27,7 +28,7 @@ namespace MS.Internal.Automation
     // * private methods - one for each interface entry point - which get called back
     //   on the right context. These call through to the peer that's actually
     //   implenting the I...Provider version of the interface. 
-    internal class SelectionProviderWrapper: MarshalByRefObject, ISelectionProvider
+    internal sealed class SelectionProviderWrapper : MarshalByRefObject, ISelectionProvider
     {
         //------------------------------------------------------
         //
@@ -37,8 +38,11 @@ namespace MS.Internal.Automation
  
         #region Constructors
 
-        private SelectionProviderWrapper( AutomationPeer peer, ISelectionProvider iface )
+        private SelectionProviderWrapper(AutomationPeer peer, ISelectionProvider iface)
         {
+            Debug.Assert(peer is not null);
+            Debug.Assert(iface is not null);
+
             _peer = peer;
             _iface = iface;
         }
@@ -95,8 +99,8 @@ namespace MS.Internal.Automation
  
         #region Private Fields
 
-        private AutomationPeer _peer;
-        private ISelectionProvider _iface;
+        private readonly AutomationPeer _peer;
+        private readonly ISelectionProvider _iface;
 
         #endregion Private Fields
     }

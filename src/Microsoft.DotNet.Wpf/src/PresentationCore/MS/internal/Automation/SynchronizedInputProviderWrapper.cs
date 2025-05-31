@@ -8,7 +8,8 @@
 //
 //
 
-using System.Windows.Threading;
+#nullable enable
+
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
@@ -28,7 +29,7 @@ namespace MS.Internal.Automation
     // * private methods - one for each interface entry point - which get called back
     //   on the right context. These call through to the peer that's actually
     //   implenting the I...Provider version of the interface. 
-    internal class SynchronizedInputProviderWrapper: MarshalByRefObject, ISynchronizedInputProvider
+    internal sealed class SynchronizedInputProviderWrapper : MarshalByRefObject, ISynchronizedInputProvider
     {
         //------------------------------------------------------
         //
@@ -38,8 +39,11 @@ namespace MS.Internal.Automation
  
         #region Constructors
 
-        private SynchronizedInputProviderWrapper( AutomationPeer peer, ISynchronizedInputProvider iface )
+        private SynchronizedInputProviderWrapper(AutomationPeer peer, ISynchronizedInputProvider iface)
         {
+            Debug.Assert(peer is not null);
+            Debug.Assert(iface is not null);
+
             _peer = peer;
             _iface = iface;
         }
@@ -91,8 +95,8 @@ namespace MS.Internal.Automation
  
         #region Private Fields
 
-        private AutomationPeer _peer;
-        private ISynchronizedInputProvider _iface;
+        private readonly AutomationPeer _peer;
+        private readonly ISynchronizedInputProvider _iface;
 
         #endregion Private Fields
     }

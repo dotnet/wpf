@@ -8,7 +8,8 @@
 //
 //
 
-using System.Windows.Threading;
+#nullable enable
+
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
@@ -29,7 +30,7 @@ namespace MS.Internal.Automation
     //   on the right context. These call through to the peer that's actually
     //   implenting the I...Provider version of the interface. 
 
-    internal class ScrollProviderWrapper: MarshalByRefObject, IScrollProvider
+    internal sealed class ScrollProviderWrapper : MarshalByRefObject, IScrollProvider
     {
         //------------------------------------------------------
         //
@@ -39,8 +40,11 @@ namespace MS.Internal.Automation
  
         #region Constructors
 
-        private ScrollProviderWrapper( AutomationPeer peer, IScrollProvider iface )
+        private ScrollProviderWrapper(AutomationPeer peer, IScrollProvider iface)
         {
+            Debug.Assert(peer is not null);
+            Debug.Assert(iface is not null);
+
             _peer = peer;
             _iface = iface;
         }
@@ -122,8 +126,8 @@ namespace MS.Internal.Automation
  
         #region Private Fields
 
-        private AutomationPeer _peer;
-        private IScrollProvider _iface;
+        private readonly AutomationPeer _peer;
+        private readonly IScrollProvider _iface;
 
         #endregion Private Fields
     }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -65,57 +65,39 @@ namespace MS.Internal.Automation
             ElementUtil.Invoke( _peer, new DispatcherOperationCallback( Close ), null );
         }
 
-        public bool WaitForInputIdle( int milliseconds )
+        public bool WaitForInputIdle(int milliseconds)
         {
-            return (bool)ElementUtil.Invoke( _peer, new DispatcherOperationCallback( WaitForInputIdle ), milliseconds );
+            return ElementUtil.Invoke(_peer, static (state, milliseconds) => state.WaitForInputIdle(milliseconds), _iface, milliseconds);
         }
 
-        public bool Maximizable 
+        public bool Maximizable
         {
-            get
-            {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetMaximizable ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.Maximizable, _iface);
         }
-        
+
         public bool Minimizable
         {
-            get
-            {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetMinimizable ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.Minimizable, _iface);
         }
-        
+
         public bool IsModal
         {
-            get
-            {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetIsModal ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.IsModal, _iface);
         }
-        
+
         public WindowVisualState VisualState
         {
-            get
-            {
-                return (WindowVisualState) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetVisualState ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.VisualState, _iface);
         }
-        
+
         public WindowInteractionState InteractionState
         {
-            get
-            {
-                return (WindowInteractionState) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetInteractionState ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.InteractionState, _iface);
         }
-        
+
         public bool IsTopmost
         {
-            get
-            {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetIsTopmost ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.IsTopmost, _iface);
         }
 
         #endregion Interface IWindowProvider
@@ -126,7 +108,7 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal static object Wrap( AutomationPeer peer, object iface)
@@ -150,45 +132,10 @@ namespace MS.Internal.Automation
             return null;
         }
 
-        private object WaitForInputIdle( object arg )
-        {
-            return _iface.WaitForInputIdle( (int) arg );
-        }
-
         private object Close( object unused )
         {
             _iface.Close();
             return null;
-        }
-
-        private object GetMaximizable( object unused )
-        {
-            return _iface.Maximizable;
-        }
-        
-        private object GetMinimizable( object unused )
-        {
-            return _iface.Minimizable;
-        }
-        
-        private object GetIsModal( object unused )
-        {
-            return _iface.IsModal;
-        }
-        
-        private object GetVisualState( object unused )
-        {
-            return _iface.VisualState;
-        }
-        
-        private object GetInteractionState( object unused )
-        {
-            return _iface.InteractionState;
-        }
-        
-        private object GetIsTopmost( object unused )
-        {
-            return _iface.IsTopmost;
         }
 
         #endregion Private Methods

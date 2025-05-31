@@ -14,9 +14,8 @@ namespace MS.Internal.Automation;
 internal static partial class ElementUtil
 {
     /// <summary>
-    /// Wraps the return value and exception of an asynchronous operation.
+    /// Wraps the exception from an asynchronous operation, tracking whether the operation has completed or timed out.
     /// </summary>
-    /// <typeparam name="TReturn"></typeparam>
     [StructLayout(LayoutKind.Auto)]
     private readonly struct ActionInfo
     {
@@ -31,10 +30,10 @@ internal static partial class ElementUtil
         public bool HasCompleted { get; init; }
 
         /// <summary>
-        /// Creates a new instance of <see cref="ReturnInfo{TReturn}"/> with the specified exception.
+        /// Creates a new instance of <see cref="ActionInfo"/> with the specified exception.
         /// </summary>
         /// <param name="exception">The exception that was thrown during the operation.</param>
-        /// <returns>Returns a <see cref="ReturnInfo{TReturn}"/> object.</returns>
+        /// <returns>Returns a <see cref="ActionInfo"/> object.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ActionInfo FromException(Exception exception)
         {
@@ -46,10 +45,9 @@ internal static partial class ElementUtil
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="ReturnInfo{TReturn}"/> with the specified value.
+        /// Returns a singleton instance of <see cref="ActionInfo"/> signalizing successful completion of the operation.
         /// </summary>
-        /// <param name="value">The return value of the operation.</param>
-        /// <returns>Returns a <see cref="ReturnInfo{TReturn}"/> object.</returns>
+        /// <returns>Returns a <see cref="ActionInfo"/> object.</returns>
         public static ActionInfo Completed { get; } = new ActionInfo
         {
             StoredException = null,

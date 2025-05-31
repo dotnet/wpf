@@ -8,6 +8,10 @@ using System.Windows.Automation.Peers;
 
 namespace MS.Internal.Automation;
 
+/// <summary>
+/// Wrapper class for the <see cref="ITransformProvider"/> interface, calls through to the managed <see cref="AutomationPeer"/>
+/// that implements it. The calls are made on the peer's context to ensure that the correct synchronization context is used.
+/// </summary>
 internal sealed class TransformProviderWrapper : MarshalByRefObject, ITransformProvider
 {
     private readonly AutomationPeer _peer;

@@ -1,15 +1,19 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+#nullable enable
+
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
 
-#nullable enable
-
 namespace MS.Internal.Automation;
 
+/// <summary>
+/// Wrapper class for the <see cref="ITextProvider"/> interface, calls through to the managed <see cref="AutomationPeer"/>
+/// that implements it. The calls are made on the peer's context to ensure that the correct synchronization context is used.
+/// </summary>
 internal sealed class TextProviderWrapper : MarshalByRefObject, ITextProvider
 {
     private readonly AutomationPeer _peer;

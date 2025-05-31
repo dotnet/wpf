@@ -147,6 +147,16 @@ public class DispatcherTests
     }
 
     [WpfFact]
+    public void Invoke_SameThread_TReturn_PropagatesException()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static double action() => throw new InvalidOperationException("Throw this");
+        // Send + current thread forces direct callback invocation
+        Assert.Throws<InvalidOperationException>(() => dispatcher.Invoke(action, DispatcherPriority.Send, CancellationToken.None, TimeSpan.FromSeconds(3)));
+    }
+
+    [WpfFact]
     public void Invoke_SameThread_TArg_Success()
     {
         Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
@@ -156,6 +166,16 @@ public class DispatcherTests
         dispatcher.Invoke((param) => result += param, DispatcherPriority.Send, CancellationToken.None, TimeSpan.FromSeconds(3), 4);
 
         Assert.Equal(9, result);
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_TArg_PropagatesException()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static void action(double action) => throw new InvalidOperationException("Throw this");
+        // Send + current thread forces direct callback invocation
+        Assert.Throws<InvalidOperationException>(() => dispatcher.Invoke(action, DispatcherPriority.Send, CancellationToken.None, TimeSpan.FromSeconds(3), 7.0));
     }
 
     [WpfFact]
@@ -237,6 +257,41 @@ public class DispatcherTests
     }
 
     [WpfFact]
+    public void Invoke_SameThread_Legacy_UnhandledException_Handled_DoesNotThrow()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+        dispatcher.UnhandledException += unhandledException;
+
+        // Legacy Invoke with unhandled exception handler will not propagate the exception
+        static void unhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) => e.Handled = true;
+        static object action(object exceptionText) => throw new InvalidOperationException((string)exceptionText);
+
+        // Send + current thread forces direct callback invocation
+        dispatcher.Invoke(DispatcherPriority.Send, TimeSpan.FromSeconds(3), (DispatcherOperationCallback)action, "Throw this");
+
+        dispatcher.UnhandledException -= unhandledException;
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_Legacy_UnhandledExceptionFilter_RequestCatch_PropagatesException()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+        dispatcher.UnhandledException += unhandledException;
+        dispatcher.UnhandledExceptionFilter += unhandledExceptionFilter;
+
+        // Legacy Invoke with unhandled exception handler will not propagate the exception unless the filter requests it
+        static void unhandledExceptionFilter(object sender, DispatcherUnhandledExceptionFilterEventArgs e) => e.RequestCatch = false;
+        static void unhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) => e.Handled = true;
+        static object action(object exceptionText) => throw new InvalidOperationException((string)exceptionText);
+
+        // Send + current thread forces direct callback invocation
+        Assert.Throws<InvalidOperationException>(() => dispatcher.Invoke(DispatcherPriority.Send, TimeSpan.FromSeconds(3), (DispatcherOperationCallback)action, "Throw this"));
+
+        dispatcher.UnhandledException -= unhandledException;
+        dispatcher.UnhandledExceptionFilter -= unhandledExceptionFilter;
+    }
+
+    [WpfFact]
     public void Invoke_SameThread_DispatcherOperation_Legacy_PropagatesException()
     {
         Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
@@ -244,6 +299,41 @@ public class DispatcherTests
         static object action(object exceptionText) => throw new InvalidOperationException((string)exceptionText);
         // Anything different than Send + current thread is DispatcherOperation allocation and queue pass
         Assert.Throws<InvalidOperationException>(() => dispatcher.Invoke(DispatcherPriority.Background, TimeSpan.FromSeconds(3), (DispatcherOperationCallback)action, "Throw this"));
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_DispatcherOperation_Legacy_UnhandledException_Handled_DoesNotThrow()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+        dispatcher.UnhandledException += unhandledException;
+
+        // Legacy Invoke with unhandled exception handler will not propagate the exception
+        static void unhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) => e.Handled = true;
+        static object action(object exceptionText) => throw new InvalidOperationException((string)exceptionText);
+
+        // Anything different than Send + current thread is DispatcherOperation allocation and queue pass
+        dispatcher.Invoke(DispatcherPriority.Background, TimeSpan.FromSeconds(3), (DispatcherOperationCallback)action, "Throw this");
+
+        dispatcher.UnhandledException -= unhandledException;
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_DispatcherOperation_Legacy_UnhandledExceptionFilter_RequestCatch_PropagatesException()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+        dispatcher.UnhandledException += unhandledException;
+        dispatcher.UnhandledExceptionFilter += unhandledExceptionFilter;
+
+        // Legacy Invoke with unhandled exception handler will not propagate the exception unless the filter requests it
+        static void unhandledExceptionFilter(object sender, DispatcherUnhandledExceptionFilterEventArgs e) => e.RequestCatch = false;
+        static void unhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) => e.Handled = true;
+        static object action(object exceptionText) => throw new InvalidOperationException((string)exceptionText);
+
+        // Anything different than Send + current thread is DispatcherOperation allocation and queue pass
+        Assert.Throws<InvalidOperationException>(() => dispatcher.Invoke(DispatcherPriority.Background, TimeSpan.FromSeconds(3), (DispatcherOperationCallback)action, "Throw this"));
+
+        dispatcher.UnhandledException -= unhandledException;
+        dispatcher.UnhandledExceptionFilter -= unhandledExceptionFilter;
     }
 
     [WpfTheory]

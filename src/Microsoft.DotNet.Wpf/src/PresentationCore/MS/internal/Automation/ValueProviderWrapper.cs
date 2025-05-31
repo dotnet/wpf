@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -61,18 +61,12 @@ namespace MS.Internal.Automation
 
         public string Value
         {
-            get
-            {
-                return (string) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetValue ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.Value, _iface);
         }
 
         public bool IsReadOnly
         {
-            get
-            {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetIsReadOnly ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.IsReadOnly, _iface);
         }
 
         #endregion Interface IValueProvider
@@ -83,7 +77,7 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal static object Wrap( AutomationPeer peer, object iface )
@@ -105,16 +99,6 @@ namespace MS.Internal.Automation
         {
             _iface.SetValue( (string)arg );
             return null;
-        }
-
-        private object GetValue( object unused )
-        {
-            return _iface.Value;
-        }
-
-        private object GetIsReadOnly( object unused )
-        {
-            return _iface.IsReadOnly;
         }
 
         #endregion Private Methods

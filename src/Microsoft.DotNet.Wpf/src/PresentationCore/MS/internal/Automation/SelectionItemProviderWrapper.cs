@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -71,19 +71,13 @@ namespace MS.Internal.Automation
         }
 
         public bool IsSelected
-        { 
-            get
-            {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetIsSelected ), null );
-            }
+        {
+            get => ElementUtil.Invoke(_peer, static (state) => state.IsSelected, _iface);
         }
 
         public IRawElementProviderSimple SelectionContainer
         {
-            get
-            {
-                return (IRawElementProviderSimple) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetSelectionContainer ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.SelectionContainer, _iface);
         }
 
         #endregion Interface ISelectionItemProvider
@@ -94,7 +88,7 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal static object Wrap( AutomationPeer peer, object iface )
@@ -128,16 +122,6 @@ namespace MS.Internal.Automation
         {
             _iface.RemoveFromSelection();
             return null;
-        }
-
-        private object GetIsSelected( object unused )
-        { 
-            return _iface.IsSelected;
-        }
-
-        private object GetSelectionContainer( object unused )
-        {
-            return _iface.SelectionContainer;
         }
 
         #endregion Private Methods

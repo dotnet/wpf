@@ -1,7 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description: Interface exposes a control's ability to manipulate text ranges
+
+#nullable enable
 
 using System.Windows.Automation.Text;
 using System.Runtime.InteropServices;
@@ -71,7 +73,7 @@ namespace System.Windows.Automation.Provider
         /// <param name="value">The value of the specified attribute to search for.</param>
         /// <param name="backward">true if the last occurring range should be returned instead of the first.</param>
         /// <returns>A subrange with the specified attribute, or null if no such subrange exists.</returns>
-        ITextRangeProvider FindAttribute(int attribute, object value, [MarshalAs(UnmanagedType.Bool)] bool backward);
+        ITextRangeProvider? FindAttribute(int attribute, object value, [MarshalAs(UnmanagedType.Bool)] bool backward);
 
         /// <summary>
         /// Searches for an occurrence of text within the range.
@@ -80,7 +82,7 @@ namespace System.Windows.Automation.Provider
         /// <param name="backward">true if the last occurring range should be returned instead of the first.</param>
         /// <param name="ignoreCase">true if case should be ignored for the purposes of comparison.</param>
         /// <returns>A subrange with the specified text, or null if no such subrange exists.</returns>
-        ITextRangeProvider FindText(string text, [MarshalAs(UnmanagedType.Bool)] bool backward, [MarshalAs(UnmanagedType.Bool)] bool ignoreCase);
+        ITextRangeProvider? FindText(string text, [MarshalAs(UnmanagedType.Bool)] bool backward, [MarshalAs(UnmanagedType.Bool)] bool ignoreCase);
 
         /// <summary>
         /// Retrieves the value of a text attribute over the entire range.
@@ -100,7 +102,7 @@ namespace System.Windows.Automation.Provider
         /// 
         /// 
         /// </returns>
-        double [] GetBoundingRectangles();
+        double[] GetBoundingRectangles();
 
         /// <summary>
         /// Retrieves the innermost element that encloses this range.
@@ -204,7 +206,7 @@ namespace System.Windows.Automation.Provider
         /// that overlap with the range but are not entirely enclosed by it will
         /// also be included in the collection.  If there are no children then
         /// this can return either null or an empty enumeration.</returns>
-        IRawElementProviderSimple[] GetChildren();
+        IRawElementProviderSimple[]? GetChildren();
 
         #endregion Public Properties
     }

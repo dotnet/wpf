@@ -56,7 +56,7 @@ namespace MS.Internal.Automation
         public ITextRangeProvider RangeFromChild(IRawElementProviderSimple childElement)
         {
             if (childElement is not ElementProxy)
-                throw new ArgumentException(SR.Format(SR.TextProvider_InvalidChild, "childElement"));
+                throw new ArgumentException(SR.Format(SR.TextProvider_InvalidChild, nameof(childElement)));
 
             // The actual invocation method that gets called on the peer's context.
             static ITextRangeProvider RangeFromChild(TextProviderWrapper state, IRawElementProviderSimple childElement)

@@ -6,6 +6,7 @@
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Text;
 using System.Windows.Automation.Peers;
+using System.Diagnostics.CodeAnalysis;
 
 #nullable enable
 
@@ -81,12 +82,12 @@ namespace MS.Internal.Automation
             ElementUtil.Invoke(_peer, static (state, unit) => state.ExpandToEnclosingUnit(unit), _iface, unit);
         }
 
-        public ITextRangeProvider FindAttribute(int attribute, object val, bool backward)
+        public ITextRangeProvider? FindAttribute(int attribute, object val, bool backward)
         {
             object[] args = [attribute, val, backward];
 
             // The actual invocation method that gets called on the peer's context.
-            static ITextRangeProvider FindAttribute(TextRangeProviderWrapper state, object[] args)
+            static ITextRangeProvider? FindAttribute(TextRangeProviderWrapper state, object[] args)
             {
                 int attribute = (int)args[0];
                 object val = args[1];
@@ -98,12 +99,12 @@ namespace MS.Internal.Automation
             return ElementUtil.Invoke(_peer, FindAttribute, this, args);
         }
 
-        public ITextRangeProvider FindText(string text, bool backward, bool ignoreCase)
+        public ITextRangeProvider? FindText(string text, bool backward, bool ignoreCase)
         {
             object[] args = [text, backward, ignoreCase];
 
             // The actual invocation method that gets called on the peer's context.
-            static ITextRangeProvider FindText(TextRangeProviderWrapper state, object[] args)
+            static ITextRangeProvider? FindText(TextRangeProviderWrapper state, object[] args)
             {
                 string text = (string)args[0];
                 bool backward = (bool)args[1];
@@ -209,7 +210,7 @@ namespace MS.Internal.Automation
             ElementUtil.Invoke(_peer, static (state, alignToTop) => state.ScrollIntoView(alignToTop), _iface, alignToTop);
         }
 
-        public IRawElementProviderSimple[] GetChildren()
+        public IRawElementProviderSimple[]? GetChildren()
         {
             return ElementUtil.Invoke(_peer, static (state) => state.GetChildren(), _iface);
         }
@@ -227,7 +228,8 @@ namespace MS.Internal.Automation
         #region Internal Methods
 
         // Wrap arguments that are being returned, assuming they're not null or already wrapped.
-        internal static ITextRangeProvider WrapArgument(ITextRangeProvider argument, AutomationPeer peer)
+        [return: NotNullIfNotNull(nameof(argument))]
+        internal static ITextRangeProvider? WrapArgument(ITextRangeProvider? argument, AutomationPeer peer)
         {
             if (argument == null)
                 return null;
@@ -238,12 +240,13 @@ namespace MS.Internal.Automation
             return new TextRangeProviderWrapper(peer, argument);
         }
 
-        internal static ITextRangeProvider [] WrapArgument(ITextRangeProvider [] argument, AutomationPeer peer)
+        [return: NotNullIfNotNull(nameof(argument))]
+        internal static ITextRangeProvider[]? WrapArgument(ITextRangeProvider[]? argument, AutomationPeer peer)
         {
             if (argument == null)
                 return null;
 
-            if (argument is TextRangeProviderWrapper [])
+            if (argument is TextRangeProviderWrapper[])
                 return argument;
 
             ITextRangeProvider[] outArray = new ITextRangeProvider[argument.Length];
@@ -257,12 +260,7 @@ namespace MS.Internal.Automation
         // Remove the wrapper from the argument if a wrapper exists
         internal static ITextRangeProvider UnwrapArgument(ITextRangeProvider argument)
         {
-            if (argument is TextRangeProviderWrapper)
-            {
-                 return ((TextRangeProviderWrapper)argument)._iface;
-            }
-
-            return argument;
+            return argument is TextRangeProviderWrapper wrapper ? wrapper._iface : argument;
         }
 
         #endregion Internal Methods

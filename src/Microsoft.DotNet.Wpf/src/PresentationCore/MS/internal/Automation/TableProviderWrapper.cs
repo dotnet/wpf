@@ -31,13 +31,8 @@ namespace MS.Internal.Automation
     //   implenting the I...Provider version of the interface. 
     internal sealed class TableProviderWrapper : MarshalByRefObject, ITableProvider
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
- 
-        #region Constructors
+        private readonly AutomationPeer _peer;
+        private readonly ITableProvider _iface;
 
         private TableProviderWrapper(AutomationPeer peer, ITableProvider iface)
         {
@@ -47,17 +42,6 @@ namespace MS.Internal.Automation
             _peer = peer;
             _iface = iface;
         }
-
-        #endregion Constructors
-
-
-        //------------------------------------------------------
-        //
-        //  Interface ITableProvider
-        //
-        //------------------------------------------------------
- 
-        #region Interface ITableProvider
 
         public IRawElementProviderSimple GetItem(int row, int column)
         {
@@ -89,36 +73,9 @@ namespace MS.Internal.Automation
             get => ElementUtil.Invoke(_peer, static (state) => state.RowOrColumnMajor, _iface);
         }
 
-        #endregion Interface ITableProvider
-
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
-
-        #region Internal Methods
-
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new TableProviderWrapper( peer, (ITableProvider) iface );
+            return new TableProviderWrapper(peer, (ITableProvider)iface);
         }
-
-        #endregion Internal Methods
-
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
- 
-        #region Private Fields
-
-        private readonly AutomationPeer _peer;
-        private readonly ITableProvider _iface;
-
-        #endregion Private Fields
     }
 }

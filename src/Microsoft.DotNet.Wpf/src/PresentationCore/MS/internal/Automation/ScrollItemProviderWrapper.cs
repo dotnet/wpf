@@ -30,13 +30,8 @@ namespace MS.Internal.Automation
     //   implenting the I...Provider version of the interface. 
     internal sealed class ScrollItemProviderWrapper : MarshalByRefObject, IScrollItemProvider
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
- 
-        #region Constructors
+        private readonly AutomationPeer _peer;
+        private readonly IScrollItemProvider _iface;
 
         private ScrollItemProviderWrapper(AutomationPeer peer, IScrollItemProvider iface)
         {
@@ -47,51 +42,14 @@ namespace MS.Internal.Automation
             _iface = iface;
         }
 
-        #endregion Constructors
-
-
-        //------------------------------------------------------
-        //
-        //  Interface IInvokeProvider
-        //
-        //------------------------------------------------------
- 
-        #region Interface IScrollItemProvider
-
         public void ScrollIntoView()
         {
             ElementUtil.Invoke(_peer, static (state) => state.ScrollIntoView(), _iface);
         }
 
-        #endregion Interface IScrollItemProvider
-
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
- 
-        #region Internal Methods
-
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
             return new ScrollItemProviderWrapper(peer, (IScrollItemProvider)iface);
         }
-
-        #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
- 
-        #region Private Fields
-
-        private readonly AutomationPeer _peer;
-        private readonly IScrollItemProvider _iface;
-
-        #endregion Private Fields
     }
 }

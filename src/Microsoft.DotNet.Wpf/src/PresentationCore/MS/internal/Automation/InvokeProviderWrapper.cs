@@ -30,13 +30,8 @@ namespace MS.Internal.Automation
     //   implenting the I...Provider version of the interface. 
     internal sealed class InvokeProviderWrapper : MarshalByRefObject, IInvokeProvider
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
- 
-        #region Constructors
+        private readonly AutomationPeer _peer;
+        private readonly IInvokeProvider _iface;
 
         private InvokeProviderWrapper(AutomationPeer peer, IInvokeProvider iface)
         {
@@ -47,51 +42,14 @@ namespace MS.Internal.Automation
             _iface = iface;
         }
 
-        #endregion Constructors
-
-
-        //------------------------------------------------------
-        //
-        //  Interface IInvokeProvider
-        //
-        //------------------------------------------------------
- 
-        #region Interface IInvokeProvider
-
         public void Invoke()
         {
             ElementUtil.Invoke(_peer, static (state) => state.Invoke(), _iface);
         }
 
-        #endregion Interface IInvokeProvider
-
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
- 
-        #region Internal Methods
-
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new InvokeProviderWrapper( peer, (IInvokeProvider) iface );
+            return new InvokeProviderWrapper(peer, (IInvokeProvider)iface);
         }
-
-        #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
- 
-        #region Private Fields
-
-        private readonly AutomationPeer _peer;
-        private readonly IInvokeProvider _iface;
-
-        #endregion Private Fields
     }
 }

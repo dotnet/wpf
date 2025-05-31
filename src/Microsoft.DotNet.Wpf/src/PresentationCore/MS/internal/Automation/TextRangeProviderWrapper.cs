@@ -15,13 +15,8 @@ namespace MS.Internal.Automation
     // see comment on InvokeProviderWrapper class for explanation of purpose and organization of these wrapper classes.
     internal sealed class TextRangeProviderWrapper : MarshalByRefObject, ITextRangeProvider
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
- 
-        #region Constructors
+        private readonly AutomationPeer _peer;
+        private readonly ITextRangeProvider _iface;
 
         private TextRangeProviderWrapper(AutomationPeer peer, ITextRangeProvider iface)
         {
@@ -31,17 +26,6 @@ namespace MS.Internal.Automation
             _peer = peer;
             _iface = iface;
         }
-
-        #endregion Constructors
-
-
-        //------------------------------------------------------
-        //
-        //  Interface ITextRangeProvider
-        //
-        //------------------------------------------------------
- 
-        #region Interface ITextRangeProvider
 
         public ITextRangeProvider Clone()
         {
@@ -215,18 +199,6 @@ namespace MS.Internal.Automation
             return ElementUtil.Invoke(_peer, static (state) => state.GetChildren(), _iface);
         }
 
-
-        #endregion Interface ITextRangeProvider
-
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
- 
-        #region Internal Methods
-
         // Wrap arguments that are being returned, assuming they're not null or already wrapped.
         [return: NotNullIfNotNull(nameof(argument))]
         internal static ITextRangeProvider? WrapArgument(ITextRangeProvider? argument, AutomationPeer peer)
@@ -262,21 +234,6 @@ namespace MS.Internal.Automation
         {
             return argument is TextRangeProviderWrapper wrapper ? wrapper._iface : argument;
         }
-
-        #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
- 
-        #region Private Fields
-
-        private readonly AutomationPeer _peer;
-        private readonly ITextRangeProvider _iface;
-
-        #endregion Private Fields
     }
 }
 

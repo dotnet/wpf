@@ -30,13 +30,8 @@ namespace MS.Internal.Automation
     //   implenting the I...Provider version of the interface. 
     internal sealed class ItemContainerProviderWrapper : MarshalByRefObject, IItemContainerProvider
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
-
-        #region Constructors
+        private readonly AutomationPeer _peer;
+        private readonly IItemContainerProvider _iface;
 
         private ItemContainerProviderWrapper(AutomationPeer peer, IItemContainerProvider iface)
         {
@@ -46,17 +41,6 @@ namespace MS.Internal.Automation
             _peer = peer;
             _iface = iface;
         }
-
-        #endregion Constructors
-
-
-        //------------------------------------------------------
-        //
-        //  Interface IItemContainerProvider
-        //
-        //------------------------------------------------------
-
-        #region Interface IItemContainerProvider
 
         public IRawElementProviderSimple FindItemByProperty(IRawElementProviderSimple startAfter, int propertyId, object value)
         {
@@ -75,35 +59,9 @@ namespace MS.Internal.Automation
             return ElementUtil.Invoke(_peer, FindItemByProperty, _iface, args);
         }
 
-        #endregion Interface IItemContainerProvider
-
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
-
-        #region Internal Methods
-
         internal static object Wrap(AutomationPeer peer, object iface)
         {
             return new ItemContainerProviderWrapper(peer, (IItemContainerProvider)iface);
         }
-
-        #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
-
-        #region Private Fields
-
-        private readonly AutomationPeer _peer;
-        private readonly IItemContainerProvider _iface;
-
-        #endregion Private Fields
     }
 }

@@ -32,13 +32,8 @@ namespace MS.Internal.Automation
 
     internal sealed class ScrollProviderWrapper : MarshalByRefObject, IScrollProvider
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
- 
-        #region Constructors
+        private readonly AutomationPeer _peer;
+        private readonly IScrollProvider _iface;
 
         private ScrollProviderWrapper(AutomationPeer peer, IScrollProvider iface)
         {
@@ -48,17 +43,6 @@ namespace MS.Internal.Automation
             _peer = peer;
             _iface = iface;
         }
-
-        #endregion Constructors
-
-
-        //------------------------------------------------------
-        //
-        //  Interface IScrollProvider
-        //
-        //------------------------------------------------------
- 
-        #region Interface IScrollProvider
 
         public void Scroll(ScrollAmount horizontalAmount, ScrollAmount verticalAmount)
         {
@@ -100,35 +84,9 @@ namespace MS.Internal.Automation
             get => ElementUtil.Invoke(_peer, static (state) => state.VerticallyScrollable, _iface);
         }
 
-        #endregion Interface IScrollProvider
-
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
-
-        #region Internal Methods
-
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new ScrollProviderWrapper( peer, (IScrollProvider) iface );
+            return new ScrollProviderWrapper(peer, (IScrollProvider)iface);
         }
-
-        #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
- 
-        #region Private Fields
-
-        private readonly AutomationPeer _peer;
-        private readonly IScrollProvider _iface;
-
-        #endregion Private Fields
     }
 }

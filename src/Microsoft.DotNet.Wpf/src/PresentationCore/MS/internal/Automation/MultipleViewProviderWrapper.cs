@@ -30,13 +30,8 @@ namespace MS.Internal.Automation
     //   implenting the I...Provider version of the interface. 
     internal sealed class MultipleViewProviderWrapper : MarshalByRefObject, IMultipleViewProvider
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
- 
-        #region Constructors
+        private readonly AutomationPeer _peer;
+        private readonly IMultipleViewProvider _iface;
 
         private MultipleViewProviderWrapper(AutomationPeer peer, IMultipleViewProvider iface)
         {
@@ -46,17 +41,6 @@ namespace MS.Internal.Automation
             _peer = peer;
             _iface = iface;
         }
-
-        #endregion Constructors
-
-
-        //------------------------------------------------------
-        //
-        //  Interface IMultipleViewProvider
-        //
-        //------------------------------------------------------
- 
-        #region Interface IMultipleViewProvider
 
         public string GetViewName(int viewID)
         {
@@ -78,35 +62,9 @@ namespace MS.Internal.Automation
             return ElementUtil.Invoke(_peer, static (state) => state.GetSupportedViews(), _iface);
         }
 
-        #endregion Interface IMultipleViewProvider
-
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
- 
-        #region Internal Methods
-
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new MultipleViewProviderWrapper( peer, (IMultipleViewProvider) iface );
+            return new MultipleViewProviderWrapper(peer, (IMultipleViewProvider)iface);
         }
-
-        #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
- 
-        #region Private Fields
-
-        private readonly AutomationPeer _peer;
-        private readonly IMultipleViewProvider _iface;
-
-        #endregion Private Fields
     }
 }

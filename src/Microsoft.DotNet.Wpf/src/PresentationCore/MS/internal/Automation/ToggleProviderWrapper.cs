@@ -31,13 +31,8 @@ namespace MS.Internal.Automation
     //   implenting the I...Provider version of the interface. 
     internal sealed class ToggleProviderWrapper : MarshalByRefObject, IToggleProvider
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
- 
-        #region Constructors
+        private readonly AutomationPeer _peer;
+        private readonly IToggleProvider _iface;
 
         private ToggleProviderWrapper(AutomationPeer peer, IToggleProvider iface)
         {
@@ -47,17 +42,6 @@ namespace MS.Internal.Automation
             _peer = peer;
             _iface = iface;
         }
-
-        #endregion Constructors
-
-
-        //------------------------------------------------------
-        //
-        //  Interface IValueProvider
-        //
-        //------------------------------------------------------
- 
-        #region Interface IToggleProvider
 
         public void Toggle()
         {
@@ -69,35 +53,9 @@ namespace MS.Internal.Automation
             get => ElementUtil.Invoke(_peer, static (state) => state.ToggleState, _iface);
         }
 
-        #endregion Interface IToggleProvider
-
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
-
-        #region Internal Methods
-
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new ToggleProviderWrapper( peer, (IToggleProvider) iface );
+            return new ToggleProviderWrapper(peer, (IToggleProvider)iface);
         }
-
-        #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
- 
-        #region Private Fields
-
-        private readonly AutomationPeer _peer;
-        private readonly IToggleProvider _iface;
-
-        #endregion Private Fields
     }
 }

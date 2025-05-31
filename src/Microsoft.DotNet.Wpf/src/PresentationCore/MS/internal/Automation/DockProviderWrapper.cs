@@ -31,13 +31,8 @@ namespace MS.Internal.Automation
     //   implenting the I...Provider version of the interface. 
     internal sealed class DockProviderWrapper : MarshalByRefObject, IDockProvider
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
- 
-        #region Constructors
+        private readonly AutomationPeer _peer;
+        private readonly IDockProvider _iface;
 
         private DockProviderWrapper(AutomationPeer peer, IDockProvider iface)
         {
@@ -47,17 +42,6 @@ namespace MS.Internal.Automation
             _peer = peer;
             _iface = iface;
         }
-
-        #endregion Constructors
-
-
-        //------------------------------------------------------
-        //
-        //  Interface IDockProvider
-        //
-        //------------------------------------------------------
- 
-        #region Interface IDockProvider
 
         public void SetDockPosition(DockPosition dockPosition)
         {
@@ -69,35 +53,9 @@ namespace MS.Internal.Automation
             get => ElementUtil.Invoke(_peer, static (state) => state.DockPosition, _iface);
         }
 
-        #endregion Interface IDockProvider
-
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
- 
-        #region Internal Methods
-
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new DockProviderWrapper( peer, (IDockProvider) iface );
+            return new DockProviderWrapper(peer, (IDockProvider)iface);
         }
-
-        #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
- 
-        #region Private Fields
-
-        private readonly AutomationPeer _peer;
-        private readonly IDockProvider _iface;
-
-        #endregion Private Fields
     }
 }

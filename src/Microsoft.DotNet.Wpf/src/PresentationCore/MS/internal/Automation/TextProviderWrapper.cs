@@ -15,13 +15,8 @@ namespace MS.Internal.Automation
     // see comment on InvokeProviderWrapper class for explanation of purpose and organization of these wrapper classes.
     internal sealed class TextProviderWrapper : MarshalByRefObject, ITextProvider
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
- 
-        #region Constructors
+        private readonly AutomationPeer _peer;
+        private readonly ITextProvider _iface;
 
         private TextProviderWrapper(AutomationPeer peer, ITextProvider iface)
         {
@@ -31,17 +26,6 @@ namespace MS.Internal.Automation
             _peer = peer;
             _iface = iface;
         }
-
-        #endregion Constructors
-
-
-        //------------------------------------------------------
-        //
-        //  Interface ITextProvider
-        //
-        //------------------------------------------------------
- 
-        #region Interface ITextProvider
 
         public ITextRangeProvider[] GetSelection()
         {
@@ -88,36 +72,10 @@ namespace MS.Internal.Automation
             get => ElementUtil.Invoke(_peer, static (state) => state.SupportedTextSelection, _iface);
         }
 
-        #endregion Interface ITextProvider
-
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
- 
-        #region Internal Methods
-
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new TextProviderWrapper( peer, (ITextProvider) iface );
+            return new TextProviderWrapper(peer, (ITextProvider)iface);
         }
-
-        #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
- 
-        #region Private Fields
-
-        private readonly AutomationPeer _peer;
-        private readonly ITextProvider _iface;
-
-        #endregion Private Fields
     }
 }
 

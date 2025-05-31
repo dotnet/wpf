@@ -31,13 +31,8 @@ namespace MS.Internal.Automation
     //   implenting the I...Provider version of the interface. 
     internal sealed class WindowProviderWrapper : MarshalByRefObject, IWindowProvider
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
- 
-        #region Constructors
+        private readonly AutomationPeer _peer;
+        private readonly IWindowProvider _iface;
 
         private WindowProviderWrapper(AutomationPeer peer, IWindowProvider iface)
         {
@@ -47,17 +42,6 @@ namespace MS.Internal.Automation
             _peer = peer;
             _iface = iface;
         }
-
-        #endregion Constructors
-
-
-        //------------------------------------------------------
-        //
-        //  Interface IWindowProvider
-        //
-        //------------------------------------------------------
- 
-        #region Interface IWindowProvider
 
         public void SetVisualState(WindowVisualState state)
         {
@@ -104,35 +88,9 @@ namespace MS.Internal.Automation
             get => ElementUtil.Invoke(_peer, static (state) => state.IsTopmost, _iface);
         }
 
-        #endregion Interface IWindowProvider
-
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
-
-        #region Internal Methods
-
-        internal static object Wrap( AutomationPeer peer, object iface)
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new WindowProviderWrapper( peer, (IWindowProvider) iface );
+            return new WindowProviderWrapper(peer, (IWindowProvider)iface);
         }
-
-        #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
- 
-        #region Private Fields
-
-        private readonly AutomationPeer _peer;
-        private readonly IWindowProvider _iface;
-
-        #endregion Private Fields
     }
 }

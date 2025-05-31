@@ -31,13 +31,8 @@ namespace MS.Internal.Automation
     //   implenting the I...Provider version of the interface. 
     internal sealed class SynchronizedInputProviderWrapper : MarshalByRefObject, ISynchronizedInputProvider
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
- 
-        #region Constructors
+        private readonly AutomationPeer _peer;
+        private readonly ISynchronizedInputProvider _iface;
 
         private SynchronizedInputProviderWrapper(AutomationPeer peer, ISynchronizedInputProvider iface)
         {
@@ -47,17 +42,6 @@ namespace MS.Internal.Automation
             _peer = peer;
             _iface = iface;
         }
-
-        #endregion Constructors
-
-
-        //------------------------------------------------------
-        //
-        //  Interface ISynchronizedInputProvider
-        //
-        //------------------------------------------------------
- 
-        #region Interface ISynchronizedInputProvider
 
         public void StartListening(SynchronizedInputType inputType)
         {
@@ -69,35 +53,9 @@ namespace MS.Internal.Automation
             ElementUtil.Invoke(_peer, static (state) => state.Cancel(), _iface);
         }
 
-        #endregion Interface ISynchronizedInputProvider
-
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
- 
-        #region Internal Methods
-
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new SynchronizedInputProviderWrapper( peer, (ISynchronizedInputProvider) iface );
+            return new SynchronizedInputProviderWrapper(peer, (ISynchronizedInputProvider)iface);
         }
-
-        #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
- 
-        #region Private Fields
-
-        private readonly AutomationPeer _peer;
-        private readonly ISynchronizedInputProvider _iface;
-
-        #endregion Private Fields
     }
 }

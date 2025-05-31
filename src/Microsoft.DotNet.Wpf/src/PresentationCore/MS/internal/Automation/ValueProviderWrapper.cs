@@ -30,13 +30,8 @@ namespace MS.Internal.Automation
     //   implenting the I...Provider version of the interface. 
     internal sealed class ValueProviderWrapper : MarshalByRefObject, IValueProvider
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
- 
-        #region Constructors
+        private readonly AutomationPeer _peer;
+        private readonly IValueProvider _iface;
 
         private ValueProviderWrapper(AutomationPeer peer, IValueProvider iface)
         {
@@ -46,17 +41,6 @@ namespace MS.Internal.Automation
             _peer = peer;
             _iface = iface;
         }
-
-        #endregion Constructors
-
-
-        //------------------------------------------------------
-        //
-        //  Interface IValueProvider
-        //
-        //------------------------------------------------------
- 
-        #region Interface IValueProvider
 
         public void SetValue(string val)
         {
@@ -73,35 +57,9 @@ namespace MS.Internal.Automation
             get => ElementUtil.Invoke(_peer, static (state) => state.IsReadOnly, _iface);
         }
 
-        #endregion Interface IValueProvider
-
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
-
-        #region Internal Methods
-
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new ValueProviderWrapper( peer, (IValueProvider) iface );
+            return new ValueProviderWrapper(peer, (IValueProvider)iface);
         }
-
-        #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
- 
-        #region Private Fields
-
-        private readonly AutomationPeer _peer;
-        private readonly IValueProvider _iface;
-
-        #endregion Private Fields
     }
 }

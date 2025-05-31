@@ -30,13 +30,8 @@ namespace MS.Internal.Automation
     //   implenting the I...Provider version of the interface. 
     internal sealed class TransformProviderWrapper : MarshalByRefObject, ITransformProvider
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
- 
-        #region Constructors
+        private readonly AutomationPeer _peer;
+        private readonly ITransformProvider _iface;
 
         private TransformProviderWrapper(AutomationPeer peer, ITransformProvider iface)
         {
@@ -46,18 +41,6 @@ namespace MS.Internal.Automation
             _peer = peer;
             _iface = iface;
         }
-
-        #endregion Constructors
-
-
-        //------------------------------------------------------
-        //
-        //  Interface IWindowProvider
-        //
-        //------------------------------------------------------
- 
-        #region Interface ITransformProvider
-
 
         public void Move(double x, double y)
         {
@@ -89,35 +72,9 @@ namespace MS.Internal.Automation
             get => ElementUtil.Invoke(_peer, static (state) => state.CanRotate, _iface);
         }
 
-        #endregion Interface ITransformProvider
-
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
-
-        #region Internal Methods
-
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new TransformProviderWrapper( peer, (ITransformProvider) iface );
+            return new TransformProviderWrapper(peer, (ITransformProvider)iface);
         }
-
-        #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
- 
-        #region Private Fields
-
-        private readonly AutomationPeer _peer;
-        private readonly ITransformProvider _iface;
-
-        #endregion Private Fields
     }
 }

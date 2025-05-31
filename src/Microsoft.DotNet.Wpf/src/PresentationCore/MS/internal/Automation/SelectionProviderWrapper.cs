@@ -30,13 +30,8 @@ namespace MS.Internal.Automation
     //   implenting the I...Provider version of the interface. 
     internal sealed class SelectionProviderWrapper : MarshalByRefObject, ISelectionProvider
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
- 
-        #region Constructors
+        private readonly AutomationPeer _peer;
+        private readonly ISelectionProvider _iface;
 
         private SelectionProviderWrapper(AutomationPeer peer, ISelectionProvider iface)
         {
@@ -46,17 +41,6 @@ namespace MS.Internal.Automation
             _peer = peer;
             _iface = iface;
         }
-
-        #endregion Constructors
-
-
-        //------------------------------------------------------
-        //
-        //  Interface ISelectionProvider
-        //
-        //------------------------------------------------------
- 
-        #region Interface ISelectionProvider
 
         public IRawElementProviderSimple[] GetSelection()
         {
@@ -73,35 +57,9 @@ namespace MS.Internal.Automation
             get => ElementUtil.Invoke(_peer, static (state) => state.IsSelectionRequired, _iface);
         }
 
-        #endregion Interface ISelectionProvider
-
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
-
-        #region Internal Methods
-
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new SelectionProviderWrapper( peer, (ISelectionProvider) iface );
+            return new SelectionProviderWrapper(peer, (ISelectionProvider)iface);
         }
-
-        #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
- 
-        #region Private Fields
-
-        private readonly AutomationPeer _peer;
-        private readonly ISelectionProvider _iface;
-
-        #endregion Private Fields
     }
 }

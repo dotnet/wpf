@@ -30,13 +30,8 @@ namespace MS.Internal.Automation
     //   implenting the I...Provider version of the interface. 
     internal sealed class VirtualizedItemProviderWrapper : MarshalByRefObject, IVirtualizedItemProvider
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
-
-        #region Constructors
+        private readonly AutomationPeer _peer;
+        private readonly IVirtualizedItemProvider _iface;
 
         private VirtualizedItemProviderWrapper(AutomationPeer peer, IVirtualizedItemProvider iface)
         {
@@ -47,51 +42,14 @@ namespace MS.Internal.Automation
             _iface = iface;
         }
 
-        #endregion Constructors
-
-
-        //------------------------------------------------------
-        //
-        //  Interface IVirtualizedItemProvider
-        //
-        //------------------------------------------------------
-
-        #region Interface IVirtualizedItemProvider
-
         public void Realize()
         {
             ElementUtil.Invoke(_peer, static (state) => state.Realize(), _iface);
         }
 
-        #endregion Interface IVirtualizedItemProvider
-
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
-
-        #region Internal Methods
-
         internal static object Wrap(AutomationPeer peer, object iface)
         {
             return new VirtualizedItemProviderWrapper(peer, (IVirtualizedItemProvider)iface);
         }
-
-        #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
-
-        #region Private Fields
-
-        private readonly AutomationPeer _peer;
-        private readonly IVirtualizedItemProvider _iface;
-
-        #endregion Private Fields
     }
 }

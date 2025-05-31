@@ -31,13 +31,8 @@ namespace MS.Internal.Automation
     //   implenting the I...Provider version of the interface. 
     internal sealed class ExpandCollapseProviderWrapper : MarshalByRefObject, IExpandCollapseProvider
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
- 
-        #region Constructors
+        private readonly AutomationPeer _peer;
+        private readonly IExpandCollapseProvider _iface;
 
         private ExpandCollapseProviderWrapper(AutomationPeer peer, IExpandCollapseProvider iface)
         {
@@ -47,17 +42,6 @@ namespace MS.Internal.Automation
             _peer = peer;
             _iface = iface;
         }
-
-        #endregion Constructors
-
-
-        //------------------------------------------------------
-        //
-        //  Interface IExpandCollapseProvider
-        //
-        //------------------------------------------------------
- 
-        #region Interface IExpandCollapseProvider
 
         public void Expand()
         {
@@ -74,36 +58,9 @@ namespace MS.Internal.Automation
             get => ElementUtil.Invoke(_peer, static (state) => state.ExpandCollapseState, _iface);
         }
 
-        #endregion Interface IExpandCollapseProvider
-
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
- 
-        #region Internal Methods
-
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new ExpandCollapseProviderWrapper( peer, (IExpandCollapseProvider) iface );
+            return new ExpandCollapseProviderWrapper(peer, (IExpandCollapseProvider)iface);
         }
-
-        #endregion Internal Methods
-
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
- 
-        #region Private Fields
-
-        private readonly AutomationPeer _peer;
-        private readonly IExpandCollapseProvider _iface;
-
-        #endregion Private Fields
     }
 }

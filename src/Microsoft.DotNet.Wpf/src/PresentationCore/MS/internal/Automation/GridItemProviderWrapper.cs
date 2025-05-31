@@ -30,13 +30,8 @@ namespace MS.Internal.Automation
     //   implenting the I...Provider version of the interface. 
     internal sealed class GridItemProviderWrapper : MarshalByRefObject, IGridItemProvider
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
- 
-        #region Constructors
+        private readonly AutomationPeer _peer;
+        private readonly IGridItemProvider _iface;
 
         private GridItemProviderWrapper(AutomationPeer peer, IGridItemProvider iface)
         {
@@ -46,17 +41,6 @@ namespace MS.Internal.Automation
             _peer = peer;
             _iface = iface;
         }
-
-        #endregion Constructors
-
-
-        //------------------------------------------------------
-        //
-        //  Interface IGridItemProvider
-        //
-        //------------------------------------------------------
- 
-        #region Interface IGridItemProvider
 
         public int Row
         {
@@ -83,36 +67,9 @@ namespace MS.Internal.Automation
             get => ElementUtil.Invoke(_peer, static (state) => state.ContainingGrid, _iface);
         }
 
-        #endregion Interface IGridItemProvider
-
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
-
-        #region Internal Methods
-
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new GridItemProviderWrapper( peer, (IGridItemProvider) iface );
+            return new GridItemProviderWrapper(peer, (IGridItemProvider)iface);
         }
-
-        #endregion Internal Methods
-
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
- 
-        #region Private Fields
-
-        private readonly AutomationPeer _peer;
-        private readonly IGridItemProvider _iface;
-
-        #endregion Private Fields
     }
 }

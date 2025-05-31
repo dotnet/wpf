@@ -38,8 +38,11 @@ namespace MS.Internal.Automation
  
         #region Constructors
 
-        private GridItemProviderWrapper( AutomationPeer peer, IGridItemProvider iface )
+        private GridItemProviderWrapper(AutomationPeer peer, IGridItemProvider iface)
         {
+            Debug.Assert(peer is not null);
+            Debug.Assert(iface is not null);
+
             _peer = peer;
             _iface = iface;
         }
@@ -107,8 +110,8 @@ namespace MS.Internal.Automation
  
         #region Private Fields
 
-        private AutomationPeer _peer;
-        private IGridItemProvider _iface;
+        private readonly AutomationPeer _peer;
+        private readonly IGridItemProvider _iface;
 
         #endregion Private Fields
     }

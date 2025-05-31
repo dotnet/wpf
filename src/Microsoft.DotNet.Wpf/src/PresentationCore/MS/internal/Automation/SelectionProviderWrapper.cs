@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -54,25 +54,19 @@ namespace MS.Internal.Automation
  
         #region Interface ISelectionProvider
 
-        public IRawElementProviderSimple [] GetSelection()
+        public IRawElementProviderSimple[] GetSelection()
         {
-            return (IRawElementProviderSimple []) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetSelection ), null );
+            return ElementUtil.Invoke(_peer, static (state) => state.GetSelection(), _iface);
         }
 
         public bool CanSelectMultiple
         {
-            get
-            {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetCanSelectMultiple ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.CanSelectMultiple, _iface);
         }
 
-        public bool IsSelectionRequired 
+        public bool IsSelectionRequired
         {
-            get
-            {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetIsSelectionRequired ), null );
-            } 
+            get => ElementUtil.Invoke(_peer, static (state) => state.IsSelectionRequired, _iface);
         }
 
         #endregion Interface ISelectionProvider
@@ -83,7 +77,7 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal static object Wrap( AutomationPeer peer, object iface )
@@ -92,32 +86,6 @@ namespace MS.Internal.Automation
         }
 
         #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
- 
-        #region Private Methods
-
-        private object GetSelection( object unused )
-        {
-            return _iface.GetSelection();
-        }
-
-        private object GetCanSelectMultiple( object unused )
-        {
-            return _iface.CanSelectMultiple;
-        }
-
-        private object GetIsSelectionRequired( object unused )
-        {
-            return _iface.IsSelectionRequired;
-        }
-
-        #endregion Private Methods
-
 
         //------------------------------------------------------
         //

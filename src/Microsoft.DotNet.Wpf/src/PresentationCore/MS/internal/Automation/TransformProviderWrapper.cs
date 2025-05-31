@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -72,28 +72,19 @@ namespace MS.Internal.Automation
 
         public bool CanMove
         {
-            get
-            {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetCanMove ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.CanMove, _iface);
         }
-        
+
         public bool CanResize
         {
-            get
-            {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetCanResize ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.CanResize, _iface);
         }
-        
+
         public bool CanRotate
         {
-            get
-            {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetCanRotate ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.CanRotate, _iface);
         }
-        
+
         #endregion Interface ITransformProvider
 
 
@@ -102,7 +93,7 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal static object Wrap( AutomationPeer peer, object iface )
@@ -138,21 +129,6 @@ namespace MS.Internal.Automation
         {
             _iface.Rotate( (double)arg );
             return null;
-        }
-
-        private object GetCanMove( object unused )
-        {
-            return _iface.CanMove;
-        }
-        
-        private object GetCanResize( object unused )
-        {
-            return _iface.CanResize;
-        }
-        
-        private object GetCanRotate( object unused )
-        {
-            return _iface.CanRotate;
         }
         
         #endregion Private Methods

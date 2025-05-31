@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -57,41 +57,32 @@ namespace MS.Internal.Automation
 
         public IRawElementProviderSimple GetItem(int row, int column)
         {
-            return (IRawElementProviderSimple) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetItem ), new int [ ] { row, column } );
-        } 
+            return ElementUtil.Invoke(_peer, static (state, rowColumn) => state.GetItem(rowColumn[0], rowColumn[1]), _iface, new int[] { row, column });
+        }
 
         public int RowCount
         {
-            get
-            {
-                return (int) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetRowCount ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.RowCount, _iface);
         }
 
         public int ColumnCount
         {
-            get
-            {
-                return (int) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetColumnCount ), null );
-            }
-        }
-        
-        public IRawElementProviderSimple [] GetRowHeaders()
-        {
-            return (IRawElementProviderSimple []) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetRowHeaders ), null );
+            get => ElementUtil.Invoke(_peer, static (state) => state.ColumnCount, _iface);
         }
 
-        public IRawElementProviderSimple [] GetColumnHeaders()
+        public IRawElementProviderSimple[] GetRowHeaders()
         {
-            return (IRawElementProviderSimple []) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetColumnHeaders ), null );
+            return ElementUtil.Invoke(_peer, static (state) => state.GetRowHeaders(), _iface);
+        }
+
+        public IRawElementProviderSimple[] GetColumnHeaders()
+        {
+            return ElementUtil.Invoke(_peer, static (state) => state.GetColumnHeaders(), _iface);
         }
 
         public RowOrColumnMajor RowOrColumnMajor
         {
-            get
-            {
-                return (RowOrColumnMajor) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetRowOrColumnMajor ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.RowOrColumnMajor, _iface);
         }
 
         #endregion Interface ITableProvider
@@ -102,7 +93,7 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal static object Wrap( AutomationPeer peer, object iface )
@@ -111,47 +102,6 @@ namespace MS.Internal.Automation
         }
 
         #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
- 
-        #region Private Methods
-
-        private object GetItem( object arg )
-        {
-            int [ ] coords = (int [ ]) arg;
-            return _iface.GetItem( coords[ 0 ], coords[ 1 ] );
-        } 
-
-        private object GetRowCount( object unused )
-        {
-            return _iface.RowCount;
-        }
-
-        private object GetColumnCount( object unused )
-        {
-            return _iface.ColumnCount;
-        }
-
-        private object GetRowHeaders( object unused )
-        {
-            return _iface.GetRowHeaders();
-        }
-
-        private object GetColumnHeaders( object unused )
-        {
-            return _iface.GetColumnHeaders();
-        }
-
-        private object GetRowOrColumnMajor( object unused )
-        {
-            return _iface.RowOrColumnMajor;
-        }
-
-        #endregion Private Methods
 
 
         //------------------------------------------------------

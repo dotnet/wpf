@@ -45,12 +45,11 @@ namespace MS.Internal.Automation
 
         public bool Compare(ITextRangeProvider range)
         {
-            if (!(range is TextRangeProviderWrapper))
-            {
-                throw new ArgumentException(SR.Format(SR.TextRangeProvider_InvalidRangeProvider, "range"));
-            }
+            if (range is not TextRangeProviderWrapper)
+                throw new ArgumentException(SR.Format(SR.TextRangeProvider_InvalidRangeProvider, nameof(range)));
 
-            return (bool)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(Compare), range);
+            // Note: We always need to unwrap the range argument here.
+            return ElementUtil.Invoke(_peer, static (state, range) => state.Compare(UnwrapArgument(range)), _iface, range);
         }
 
         public int CompareEndpoints(TextPatternRangeEndpoint endpoint, ITextRangeProvider targetRange, TextPatternRangeEndpoint targetEndpoint)
@@ -84,24 +83,23 @@ namespace MS.Internal.Automation
 
         public object GetAttributeValue(int attribute)
         {
-            object[] args = new object[] { attribute };
-            return ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetAttributeValue), args);
+            // Note: If an attribute value is ever a range then we'll need to wrap/unwrap it appropriately here.
+            return ElementUtil.Invoke(_peer, static (state, attribute) => state.GetAttributeValue(attribute), _iface, attribute);
         }
 
-        public double [] GetBoundingRectangles()
+        public double[] GetBoundingRectangles()
         {
-            return (double [])ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetBoundingRectangles), null);
+            return ElementUtil.Invoke(_peer, static (state) => state.GetBoundingRectangles(), _iface);
         }
 
         public IRawElementProviderSimple GetEnclosingElement()
         {
-            return (IRawElementProviderSimple)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetEnclosingElement), null);
+            return ElementUtil.Invoke(_peer, static (state) => state.GetEnclosingElement(), _iface);
         }
 
         public string GetText(int maxLength)
         {
-            object[] args = new object[] {maxLength};
-            return (string)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetText), args);
+            return ElementUtil.Invoke(_peer, static (state, maxLength) => state.GetText(maxLength), _iface, maxLength);
         }
 
         public int Move(TextUnit unit, int count)
@@ -149,7 +147,7 @@ namespace MS.Internal.Automation
 
         public IRawElementProviderSimple[] GetChildren()
         {
-                return (IRawElementProviderSimple[])ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetChildren), null);
+            return ElementUtil.Invoke(_peer, static (state) => state.GetChildren(), _iface);
         }
 
 
@@ -218,12 +216,6 @@ namespace MS.Internal.Automation
             return TextRangeProviderWrapper.WrapArgument( _iface.Clone(), _peer );
         }
 
-        private object Compare(object arg)
-        {
-            ITextRangeProvider range = (ITextRangeProvider)arg;
-            return _iface.Compare( TextRangeProviderWrapper.UnwrapArgument( range ) );
-        }
-
         private object CompareEndpoints(object arg)
         {
             object[] args = (object[])arg;
@@ -257,31 +249,6 @@ namespace MS.Internal.Automation
             bool backward = (bool)args[1];
             bool ignoreCase = (bool)args[2];
             return TextRangeProviderWrapper.WrapArgument( _iface.FindText(text, backward, ignoreCase), _peer );
-        }
-
-        private object GetAttributeValue(object arg)
-        {
-            object[] args = (object[])arg;
-            int attribute = (int)args[0];
-            return _iface.GetAttributeValue(attribute);
-            // note: if an attribute value is ever a range then we'll need to wrap/unwrap it appropriately here.
-        }
-
-        private object GetBoundingRectangles(object unused)
-        {
-            return _iface.GetBoundingRectangles();
-        }
-
-        private object GetEnclosingElement(object unused)
-        {
-            return _iface.GetEnclosingElement();
-        }
-
-        private object GetText(object arg)
-        {
-            object[] args = (object[])arg;
-            int maxLength = (int)args[0];
-            return _iface.GetText(maxLength);
         }
 
         private object Move(object arg)
@@ -334,11 +301,6 @@ namespace MS.Internal.Automation
             bool alignTop = (bool)arg;
             _iface.ScrollIntoView(alignTop);
             return null;
-        }
-
-        private object GetChildren(object unused)
-        {
-            return _iface.GetChildren();
         }
 
         #endregion Private Methods

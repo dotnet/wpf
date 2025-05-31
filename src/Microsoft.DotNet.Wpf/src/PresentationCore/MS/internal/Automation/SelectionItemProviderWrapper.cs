@@ -1,76 +1,57 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-//
-// 
-//
-// Description: Selection Item pattern provider wrapper for WCP
-//
-//
-
 #nullable enable
 
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
 
-namespace MS.Internal.Automation
+namespace MS.Internal.Automation;
+
+internal sealed class SelectionItemProviderWrapper : MarshalByRefObject, ISelectionItemProvider
 {
-    // Automation/WCP Wrapper class: Implements that UIAutomation I...Provider
-    // interface, and calls through to a WCP AutomationPeer which implements the corresponding
-    // I...Provider inteface. Marshalls the call from the RPC thread onto the
-    // target AutomationPeer's context.
-    //
-    // Class has two major parts to it:
-    // * Implementation of the I...Provider, which uses Dispatcher.Invoke
-    //   to call a private method (lives in second half of the class) via a delegate,
-    //   if necessary, packages any params into an object param. Return type of Invoke
-    //   must be cast from object to appropriate type.
-    // * private methods - one for each interface entry point - which get called back
-    //   on the right context. These call through to the peer that's actually
-    //   implenting the I...Provider version of the interface. 
+    private readonly AutomationPeer _peer;
+    private readonly ISelectionItemProvider _iface;
 
-    internal sealed class SelectionItemProviderWrapper : MarshalByRefObject, ISelectionItemProvider
+    private SelectionItemProviderWrapper(AutomationPeer peer, ISelectionItemProvider iface)
     {
-        private readonly AutomationPeer _peer;
-        private readonly ISelectionItemProvider _iface;
+        Debug.Assert(peer is not null);
+        Debug.Assert(iface is not null);
 
-        private SelectionItemProviderWrapper(AutomationPeer peer, ISelectionItemProvider iface)
-        {
-            Debug.Assert(peer is not null);
-            Debug.Assert(iface is not null);
+        _peer = peer;
+        _iface = iface;
+    }
 
-            _peer = peer;
-            _iface = iface;
-        }
+    public void Select()
+    {
+        ElementUtil.Invoke(_peer, static (state) => state.Select(), _iface);
+    }
 
-        public void Select()
-        {
-            ElementUtil.Invoke(_peer, static (state) => state.Select(), _iface);
-        }
+    public void AddToSelection()
+    {
+        ElementUtil.Invoke(_peer, static (state) => state.AddToSelection(), _iface);
+    }
 
-        public void AddToSelection()
-        {
-            ElementUtil.Invoke(_peer, static (state) => state.AddToSelection(), _iface);
-        }
+    public void RemoveFromSelection()
+    {
+        ElementUtil.Invoke(_peer, static (state) => state.RemoveFromSelection(), _iface);
+    }
 
-        public void RemoveFromSelection()
-        {
-            ElementUtil.Invoke(_peer, static (state) => state.RemoveFromSelection(), _iface);
-        }
+    public bool IsSelected
+    {
+        get => ElementUtil.Invoke(_peer, static (state) => state.IsSelected, _iface);
+    }
 
-        public bool IsSelected
-        {
-            get => ElementUtil.Invoke(_peer, static (state) => state.IsSelected, _iface);
-        }
+    public IRawElementProviderSimple SelectionContainer
+    {
+        get => ElementUtil.Invoke(_peer, static (state) => state.SelectionContainer, _iface);
+    }
 
-        public IRawElementProviderSimple SelectionContainer
-        {
-            get => ElementUtil.Invoke(_peer, static (state) => state.SelectionContainer, _iface);
-        }
-
-        internal static object Wrap(AutomationPeer peer, object iface)
-        {
-            return new SelectionItemProviderWrapper(peer, (ISelectionItemProvider)iface);
-        }
+    /// <summary>
+    /// Creates a wrapper for the given <see cref="AutomationPeer"/> and <see cref="ISelectionItemProvider"/> interface.
+    /// </summary>
+    internal static object Wrap(AutomationPeer peer, object iface)
+    {
+        return new SelectionItemProviderWrapper(peer, (ISelectionItemProvider)iface);
     }
 }

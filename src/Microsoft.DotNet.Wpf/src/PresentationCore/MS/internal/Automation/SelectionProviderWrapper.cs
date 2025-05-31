@@ -1,65 +1,47 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-//
-// 
-//
-// Description: Selection pattern provider wrapper for WCP
-//
-//
-
 #nullable enable
 
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
 
-namespace MS.Internal.Automation
+namespace MS.Internal.Automation;
+
+internal sealed class SelectionProviderWrapper : MarshalByRefObject, ISelectionProvider
 {
-    // Automation/WCP Wrapper class: Implements that UIAutomation I...Provider
-    // interface, and calls through to a WCP AutomationPeer which implements the corresponding
-    // I...Provider inteface. Marshalls the call from the RPC thread onto the
-    // target AutomationPeer's context.
-    //
-    // Class has two major parts to it:
-    // * Implementation of the I...Provider, which uses Dispatcher.Invoke
-    //   to call a private method (lives in second half of the class) via a delegate,
-    //   if necessary, packages any params into an object param. Return type of Invoke
-    //   must be cast from object to appropriate type.
-    // * private methods - one for each interface entry point - which get called back
-    //   on the right context. These call through to the peer that's actually
-    //   implenting the I...Provider version of the interface. 
-    internal sealed class SelectionProviderWrapper : MarshalByRefObject, ISelectionProvider
+    private readonly AutomationPeer _peer;
+    private readonly ISelectionProvider _iface;
+
+    private SelectionProviderWrapper(AutomationPeer peer, ISelectionProvider iface)
     {
-        private readonly AutomationPeer _peer;
-        private readonly ISelectionProvider _iface;
+        Debug.Assert(peer is not null);
+        Debug.Assert(iface is not null);
 
-        private SelectionProviderWrapper(AutomationPeer peer, ISelectionProvider iface)
-        {
-            Debug.Assert(peer is not null);
-            Debug.Assert(iface is not null);
+        _peer = peer;
+        _iface = iface;
+    }
 
-            _peer = peer;
-            _iface = iface;
-        }
+    public IRawElementProviderSimple[] GetSelection()
+    {
+        return ElementUtil.Invoke(_peer, static (state) => state.GetSelection(), _iface);
+    }
 
-        public IRawElementProviderSimple[] GetSelection()
-        {
-            return ElementUtil.Invoke(_peer, static (state) => state.GetSelection(), _iface);
-        }
+    public bool CanSelectMultiple
+    {
+        get => ElementUtil.Invoke(_peer, static (state) => state.CanSelectMultiple, _iface);
+    }
 
-        public bool CanSelectMultiple
-        {
-            get => ElementUtil.Invoke(_peer, static (state) => state.CanSelectMultiple, _iface);
-        }
+    public bool IsSelectionRequired
+    {
+        get => ElementUtil.Invoke(_peer, static (state) => state.IsSelectionRequired, _iface);
+    }
 
-        public bool IsSelectionRequired
-        {
-            get => ElementUtil.Invoke(_peer, static (state) => state.IsSelectionRequired, _iface);
-        }
-
-        internal static object Wrap(AutomationPeer peer, object iface)
-        {
-            return new SelectionProviderWrapper(peer, (ISelectionProvider)iface);
-        }
+    /// <summary>
+    /// Creates a wrapper for the given <see cref="AutomationPeer"/> and <see cref="ISelectionProvider"/> interface.
+    /// </summary>
+    internal static object Wrap(AutomationPeer peer, object iface)
+    {
+        return new SelectionProviderWrapper(peer, (ISelectionProvider)iface);
     }
 }

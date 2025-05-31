@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description: Text pattern provider wrapper for WCP
@@ -39,14 +39,14 @@ namespace MS.Internal.Automation
  
         #region Interface ITextProvider
 
-        public ITextRangeProvider [] GetSelection()
+        public ITextRangeProvider[] GetSelection()
         {
-            return (ITextRangeProvider [])ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetSelection), null);
+            return ElementUtil.Invoke(_peer, static (state, peer) => TextRangeProviderWrapper.WrapArgument(state.GetSelection(), peer), _iface, _peer);
         }
 
-        public ITextRangeProvider [] GetVisibleRanges()
+        public ITextRangeProvider[] GetVisibleRanges()
         {
-            return (ITextRangeProvider[])ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetVisibleRanges), null);
+            return ElementUtil.Invoke(_peer, static (state, peer) => TextRangeProviderWrapper.WrapArgument(state.GetVisibleRanges(), peer), _iface, _peer);
         }
 
         public ITextRangeProvider RangeFromChild(IRawElementProviderSimple childElement)
@@ -64,20 +64,14 @@ namespace MS.Internal.Automation
             return (ITextRangeProvider)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(RangeFromPoint), screenLocation);
         }
 
-        public ITextRangeProvider DocumentRange 
+        public ITextRangeProvider DocumentRange
         {
-            get
-            {
-                return (ITextRangeProvider)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetDocumentRange), null);
-            }
+            get => ElementUtil.Invoke(_peer, static (state, peer) => TextRangeProviderWrapper.WrapArgument(state.DocumentRange, peer), _iface, _peer);
         }
 
         public SupportedTextSelection SupportedTextSelection
         {
-            get
-            {
-                return (SupportedTextSelection)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetSupportedTextSelection), null);
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.SupportedTextSelection, _iface);
         }
 
         #endregion Interface ITextProvider
@@ -106,16 +100,6 @@ namespace MS.Internal.Automation
  
         #region Private Methods
 
-        private object GetSelection(object unused)
-        {
-            return TextRangeProviderWrapper.WrapArgument( _iface.GetSelection(), _peer );
-        }
-
-        private object GetVisibleRanges(object unused)
-        {
-            return TextRangeProviderWrapper.WrapArgument( _iface.GetVisibleRanges(), _peer );
-        }
-
         private object RangeFromChild(object arg)
         {
             IRawElementProviderSimple childElement = (IRawElementProviderSimple)arg;
@@ -126,16 +110,6 @@ namespace MS.Internal.Automation
         {
             Point screenLocation = (Point)arg;
             return TextRangeProviderWrapper.WrapArgument( _iface.RangeFromPoint(screenLocation), _peer );
-        }
-
-        private object GetDocumentRange(object unused)
-        {
-            return TextRangeProviderWrapper.WrapArgument( _iface.DocumentRange, _peer );
-        }
-
-        private object GetSupportedTextSelection(object unused)
-        {
-            return _iface.SupportedTextSelection;
         }
 
         #endregion Private Methods

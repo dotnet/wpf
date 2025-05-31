@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -54,9 +54,9 @@ namespace MS.Internal.Automation
  
         #region Interface IMultipleViewProvider
 
-        public string GetViewName( int viewID )
+        public string GetViewName(int viewID)
         {
-            return (string) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetViewName ), viewID );
+            return ElementUtil.Invoke(_peer, static (state, viewID) => state.GetViewName(viewID), _iface, viewID);
         }
 
         public void SetCurrentView( int viewID )
@@ -66,15 +66,12 @@ namespace MS.Internal.Automation
 
         public int CurrentView
         {
-            get
-            {
-                return (int) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetCurrentView ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.CurrentView, _iface);
         }
 
-        public int [] GetSupportedViews()
+        public int[] GetSupportedViews()
         {
-            return (int []) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetSupportedViews ), null );
+            return ElementUtil.Invoke(_peer, static (state) => state.GetSupportedViews(), _iface);
         }
 
         #endregion Interface IMultipleViewProvider
@@ -103,25 +100,10 @@ namespace MS.Internal.Automation
  
         #region Private Methods
 
-        private object GetViewName( object arg )
-        {
-            return _iface.GetViewName( (int) arg );
-        }
-
         private object SetCurrentView( object arg )
         {
             _iface.SetCurrentView( (int) arg );
             return null;
-        }    
-
-        private object GetCurrentView( object unused )
-        {
-            return _iface.CurrentView;
-        }
-
-        private object GetSupportedViews( object unused )
-        {
-            return _iface.GetSupportedViews();
         }
 
         #endregion Private Methods

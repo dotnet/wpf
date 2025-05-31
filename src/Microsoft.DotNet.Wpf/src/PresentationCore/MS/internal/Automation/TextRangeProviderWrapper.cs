@@ -40,7 +40,7 @@ namespace MS.Internal.Automation
 
         public ITextRangeProvider Clone()
         {
-            return (ITextRangeProvider)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(Clone), null);
+            return ElementUtil.Invoke(_peer, static (state, peer) => WrapArgument(state.Clone(), peer), _iface, _peer);
         }
 
         public bool Compare(ITextRangeProvider range)
@@ -210,11 +210,6 @@ namespace MS.Internal.Automation
         //------------------------------------------------------
  
         #region Private Methods
-
-        private object Clone(object unused)
-        {
-            return TextRangeProviderWrapper.WrapArgument( _iface.Clone(), _peer );
-        }
 
         private object CompareEndpoints(object arg)
         {

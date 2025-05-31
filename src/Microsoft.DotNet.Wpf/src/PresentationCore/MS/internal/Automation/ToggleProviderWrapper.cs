@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -62,10 +62,7 @@ namespace MS.Internal.Automation
 
         public ToggleState ToggleState
         {
-            get
-            {
-                return (ToggleState) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetToggleState ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.ToggleState, _iface);
         }
 
         #endregion Interface IToggleProvider
@@ -76,7 +73,7 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal static object Wrap( AutomationPeer peer, object iface )
@@ -98,11 +95,6 @@ namespace MS.Internal.Automation
         {
             _iface.Toggle();
             return null;
-        }
-
-        private object GetToggleState( object unused )
-        {
-            return _iface.ToggleState;
         }
 
         #endregion Private Methods

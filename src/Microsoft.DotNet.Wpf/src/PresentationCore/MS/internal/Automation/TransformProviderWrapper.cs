@@ -55,19 +55,19 @@ namespace MS.Internal.Automation
         #region Interface ITransformProvider
 
 
-        public void Move( double x, double y )
+        public void Move(double x, double y)
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( Move ), new double [ ] { x, y } );
+            ElementUtil.Invoke(_peer, static (state, coordinates) => state.Move(coordinates[0], coordinates[1]), _iface, new double[] { x, y });
         }
 
-        public void Resize( double width, double height )
+        public void Resize(double width, double height)
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( Resize ), new double [ ] { width, height } );
+            ElementUtil.Invoke(_peer, static (state, dimensions) => state.Resize(dimensions[0], dimensions[1]), _iface, new double[] { width, height });
         }
 
-        public void Rotate( double degrees )
+        public void Rotate(double degrees)
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( Rotate ), degrees );
+            ElementUtil.Invoke(_peer, static (state, degrees) => state.Rotate(degrees), _iface, degrees);
         }
 
         public bool CanMove
@@ -102,37 +102,6 @@ namespace MS.Internal.Automation
         }
 
         #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
- 
-        #region Private Methods
-
-        private object Move( object arg )
-        {
-            double [ ] args = (double [ ]) arg;
-            _iface.Move( args[ 0 ], args[ 1 ] );
-            return null;
-        }
-
-        private object Resize( object arg )
-        {
-            double [ ] args = (double [ ]) arg;
-            _iface.Resize( args[ 0 ], args[ 1 ] );
-            return null;
-        }
-
-        private object Rotate( object arg )
-        {
-            _iface.Rotate( (double)arg );
-            return null;
-        }
-        
-        #endregion Private Methods
-
 
         //------------------------------------------------------
         //

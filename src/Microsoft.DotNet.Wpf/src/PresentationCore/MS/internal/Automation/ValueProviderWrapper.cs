@@ -54,9 +54,9 @@ namespace MS.Internal.Automation
  
         #region Interface IValueProvider
 
-        public void SetValue( string val )
+        public void SetValue(string val)
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( SetValueInternal ), val );
+            ElementUtil.Invoke(_peer, static (state, value) => state.SetValue(value), _iface, val);
         }
 
         public string Value
@@ -86,23 +86,6 @@ namespace MS.Internal.Automation
         }
 
         #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
- 
-        #region Private Methods
-
-        private object SetValueInternal( object arg )
-        {
-            _iface.SetValue( (string)arg );
-            return null;
-        }
-
-        #endregion Private Methods
-
 
         //------------------------------------------------------
         //

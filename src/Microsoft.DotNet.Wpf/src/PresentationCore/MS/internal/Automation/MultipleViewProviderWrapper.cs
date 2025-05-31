@@ -59,10 +59,10 @@ namespace MS.Internal.Automation
             return ElementUtil.Invoke(_peer, static (state, viewID) => state.GetViewName(viewID), _iface, viewID);
         }
 
-        public void SetCurrentView( int viewID )
+        public void SetCurrentView(int viewID)
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( SetCurrentView ), viewID );
-        }    
+            ElementUtil.Invoke(_peer, static (state, viewID) => state.SetCurrentView(viewID), _iface, viewID);
+        }
 
         public int CurrentView
         {

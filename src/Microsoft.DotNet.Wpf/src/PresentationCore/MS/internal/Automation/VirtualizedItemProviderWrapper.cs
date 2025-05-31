@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -56,7 +56,7 @@ namespace MS.Internal.Automation
 
         public void Realize()
         {
-            ElementUtil.Invoke(_peer, new DispatcherOperationCallback(Realize), null);
+            ElementUtil.Invoke(_peer, static (state) => state.Realize(), _iface);
         }
 
         #endregion Interface IVirtualizedItemProvider
@@ -76,24 +76,6 @@ namespace MS.Internal.Automation
         }
 
         #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
-
-        #region Private Methods
-
-        private object Realize(object unused)
-        {
-            _iface.Realize();
-            return null;
-        }
-
-        
-        #endregion Private Methods
-
 
         //------------------------------------------------------
         //

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -56,7 +56,7 @@ namespace MS.Internal.Automation
 
         public void Invoke()
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( Invoke ), null );
+            ElementUtil.Invoke(_peer, static (state) => state.Invoke(), _iface);
         }
 
         #endregion Interface IInvokeProvider
@@ -76,23 +76,6 @@ namespace MS.Internal.Automation
         }
 
         #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
- 
-        #region Private Methods
-
-        private object Invoke( object unused )
-        {
-            _iface.Invoke();
-            return null;
-        }
-
-        #endregion Private Methods
-
 
         //------------------------------------------------------
         //

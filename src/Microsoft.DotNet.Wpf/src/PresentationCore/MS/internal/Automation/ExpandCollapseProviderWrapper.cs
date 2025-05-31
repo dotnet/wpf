@@ -57,12 +57,12 @@ namespace MS.Internal.Automation
 
         public void Expand()
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( Expand ), null );
+            ElementUtil.Invoke(_peer, static (state) => state.Expand(), _iface);
         }
 
         public void Collapse()
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( Collapse ), null );
+            ElementUtil.Invoke(_peer, static (state) => state.Collapse(), _iface);
         }
 
         public ExpandCollapseState ExpandCollapseState
@@ -87,28 +87,6 @@ namespace MS.Internal.Automation
         }
 
         #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
- 
-        #region Private Methods
-
-        private object Expand( object unused )
-        {
-            _iface.Expand();
-            return null;
-        }
-
-        private object Collapse( object unused )
-        {
-            _iface.Collapse();
-            return null;
-        }
-
-        #endregion Private Methods
 
 
         //------------------------------------------------------

@@ -57,7 +57,7 @@ namespace MS.Internal.Automation
 
         public void SetDockPosition(DockPosition dockPosition)
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( SetDockPosition ), dockPosition );
+            ElementUtil.Invoke(_peer, static (state, dockPosition) => state.SetDockPosition(dockPosition), _iface, dockPosition);
         }
 
         public DockPosition DockPosition
@@ -82,23 +82,6 @@ namespace MS.Internal.Automation
         }
 
         #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
- 
-        #region Private Methods
-
-        private object SetDockPosition( object arg )
-        {
-            _iface.SetDockPosition( (DockPosition) arg );
-            return null;
-        }
-
-        #endregion Private Methods
-
 
         //------------------------------------------------------
         //

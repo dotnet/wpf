@@ -56,16 +56,16 @@ namespace MS.Internal.Automation
  
         #region Interface IScrollProvider
 
-        public void Scroll( ScrollAmount horizontalAmount, ScrollAmount verticalAmount )
+        public void Scroll(ScrollAmount horizontalAmount, ScrollAmount verticalAmount)
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( Scroll ), new ScrollAmount [ ] { horizontalAmount, verticalAmount } );
+            ElementUtil.Invoke(_peer, static (state, values) => state.Scroll(values[0], values[1]), _iface, new ScrollAmount[] { horizontalAmount, verticalAmount });
         }
 
-        public void SetScrollPercent( double horizontalPercent, double verticalPercent )
+        public void SetScrollPercent(double horizontalPercent, double verticalPercent)
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( SetScrollPercent ), new double [ ] { horizontalPercent, verticalPercent } );
+            ElementUtil.Invoke(_peer, static (state, values) => state.SetScrollPercent(values[0], values[1]), _iface, new double[] { horizontalPercent, verticalPercent });
         }
-        
+
         public double HorizontalScrollPercent
         {
             get => ElementUtil.Invoke(_peer, static (state) => state.HorizontalScrollPercent, _iface);
@@ -113,31 +113,6 @@ namespace MS.Internal.Automation
         }
 
         #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
- 
-        #region Private Methods
-
-        private object Scroll( object arg )
-        {
-            ScrollAmount [ ] args = (ScrollAmount [ ]) arg;
-            _iface.Scroll( args[ 0 ], args[ 1 ] );
-            return null;
-        }
-
-        private object SetScrollPercent( object arg )
-        {
-            double [ ] args = (double [ ]) arg;
-            _iface.SetScrollPercent( args[ 0 ], args[ 1 ] );
-            return null;
-        }
-
-        #endregion Private Methods
-
 
         //------------------------------------------------------
         //

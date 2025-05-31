@@ -57,17 +57,17 @@ namespace MS.Internal.Automation
 
         public void Select()
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( Select ), null );
+            ElementUtil.Invoke(_peer, static (state) => state.Select(), _iface);
         }
 
         public void AddToSelection()
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( AddToSelection ), null );
+            ElementUtil.Invoke(_peer, static (state) => state.AddToSelection(), _iface);
         }
-        
+
         public void RemoveFromSelection()
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( RemoveFromSelection ), null );
+            ElementUtil.Invoke(_peer, static (state) => state.RemoveFromSelection(), _iface);
         }
 
         public bool IsSelected
@@ -97,35 +97,6 @@ namespace MS.Internal.Automation
         }
 
         #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
- 
-        #region Private Methods
-
-        private object Select( object unused )
-        {
-            _iface.Select();
-            return null;
-        }
-
-        private object AddToSelection( object unused )
-        {
-            _iface.AddToSelection();
-            return null;
-        }
-        
-        private object RemoveFromSelection( object unused )
-        {
-            _iface.RemoveFromSelection();
-            return null;
-        }
-
-        #endregion Private Methods
-
 
         //------------------------------------------------------
         //

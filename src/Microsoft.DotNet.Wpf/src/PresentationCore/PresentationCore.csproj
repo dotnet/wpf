@@ -24,6 +24,7 @@
     <Compile Include="$(WpfCommonDir)\src\System\AppContextDefaultValues.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GlobalUsings.cs" />
+    <Compile Include="MS\Internal\Automation\ElementUtil.ActionInfo.cs" />
     <Compile Include="System\AppContextDefaultValues.cs" />
   </ItemGroup>
   <ItemGroup>

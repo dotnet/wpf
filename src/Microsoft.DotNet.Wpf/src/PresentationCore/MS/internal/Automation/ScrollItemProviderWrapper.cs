@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -56,7 +56,7 @@ namespace MS.Internal.Automation
 
         public void ScrollIntoView()
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( ScrollIntoView ), null );
+            ElementUtil.Invoke(_peer, static (state) => state.ScrollIntoView(), _iface);
         }
 
         #endregion Interface IScrollItemProvider
@@ -76,23 +76,6 @@ namespace MS.Internal.Automation
         }
 
         #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
- 
-        #region Private Methods
-
-        private object ScrollIntoView(object unused)
-        {
-            _iface.ScrollIntoView();
-            return null;
-        }
-
-        #endregion Private Methods
-
 
         //------------------------------------------------------
         //

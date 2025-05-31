@@ -18,7 +18,7 @@ internal static partial class ElementUtil
     /// </summary>
     /// <typeparam name="TReturn"></typeparam>
     [StructLayout(LayoutKind.Auto)]
-    private readonly struct ReturnInfo<TReturn>
+    private readonly struct ActionInfo
     {
         /// <summary>
         /// The exception that was thrown during the operation, if any.
@@ -31,23 +31,17 @@ internal static partial class ElementUtil
         public bool HasCompleted { get; init; }
 
         /// <summary>
-        /// The return value of the operation, if it completed successfully.
-        /// </summary>
-        public TReturn Value { get; init; }
-
-        /// <summary>
         /// Creates a new instance of <see cref="ReturnInfo{TReturn}"/> with the specified exception.
         /// </summary>
         /// <param name="exception">The exception that was thrown during the operation.</param>
         /// <returns>Returns a <see cref="ReturnInfo{TReturn}"/> object.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ReturnInfo<TReturn> FromException(Exception exception)
+        public static ActionInfo FromException(Exception exception)
         {
-            return new ReturnInfo<TReturn>
+            return new ActionInfo
             {
                 StoredException = exception,
-                HasCompleted = true,
-                Value = default!
+                HasCompleted = true
             };
         }
 
@@ -56,14 +50,10 @@ internal static partial class ElementUtil
         /// </summary>
         /// <param name="value">The return value of the operation.</param>
         /// <returns>Returns a <see cref="ReturnInfo{TReturn}"/> object.</returns>
-        public static ReturnInfo<TReturn> FromResult(TReturn value)
+        public static ActionInfo Completed { get; } = new ActionInfo
         {
-            return new ReturnInfo<TReturn>
-            {
-                StoredException = null,
-                HasCompleted = true,
-                Value = value
-            };
-        }
+            StoredException = null,
+            HasCompleted = true
+        };
     }
 }

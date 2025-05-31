@@ -51,17 +51,27 @@ namespace MS.Internal.Automation
 
         public ITextRangeProvider RangeFromChild(IRawElementProviderSimple childElement)
         {
-            if (!(childElement is ElementProxy))
-            {
+            if (childElement is not ElementProxy)
                 throw new ArgumentException(SR.Format(SR.TextProvider_InvalidChild, "childElement"));
+
+            // The actual invocation method that gets called on the peer's context.
+            static ITextRangeProvider RangeFromChild(TextProviderWrapper state, IRawElementProviderSimple childElement)
+            {
+                return TextRangeProviderWrapper.WrapArgument(state._iface.RangeFromChild(childElement), state._peer);
             }
 
-            return (ITextRangeProvider)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(RangeFromChild), childElement);
+            return ElementUtil.Invoke(_peer, RangeFromChild, this, childElement);
         }
 
         public ITextRangeProvider RangeFromPoint(Point screenLocation)
         {
-            return (ITextRangeProvider)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(RangeFromPoint), screenLocation);
+            // The actual invocation method that gets called on the peer's context.
+            static ITextRangeProvider RangeFromPoint(TextProviderWrapper state, Point screenLocation)
+            {
+                return TextRangeProviderWrapper.WrapArgument(state._iface.RangeFromPoint(screenLocation), state._peer);
+            }
+
+            return ElementUtil.Invoke(_peer, RangeFromPoint, this, screenLocation);
         }
 
         public ITextRangeProvider DocumentRange
@@ -91,28 +101,6 @@ namespace MS.Internal.Automation
         }
 
         #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
- 
-        #region Private Methods
-
-        private object RangeFromChild(object arg)
-        {
-            IRawElementProviderSimple childElement = (IRawElementProviderSimple)arg;
-            return TextRangeProviderWrapper.WrapArgument( _iface.RangeFromChild(childElement), _peer );
-        }
-
-        private object RangeFromPoint(object arg)
-        {
-            Point screenLocation = (Point)arg;
-            return TextRangeProviderWrapper.WrapArgument( _iface.RangeFromPoint(screenLocation), _peer );
-        }
-
-        #endregion Private Methods
 
         //------------------------------------------------------
         //

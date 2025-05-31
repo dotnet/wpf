@@ -55,9 +55,9 @@ namespace MS.Internal.Automation
  
         #region Interface IToggleProvider
 
-        public void Toggle( )
+        public void Toggle()
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( ToggleInternal ), null );
+            ElementUtil.Invoke(_peer, static (state) => state.Toggle(), _iface);
         }
 
         public ToggleState ToggleState
@@ -82,23 +82,6 @@ namespace MS.Internal.Automation
         }
 
         #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
- 
-        #region Private Methods
-
-        private object ToggleInternal( object unused )
-        {
-            _iface.Toggle();
-            return null;
-        }
-
-        #endregion Private Methods
-
 
         //------------------------------------------------------
         //

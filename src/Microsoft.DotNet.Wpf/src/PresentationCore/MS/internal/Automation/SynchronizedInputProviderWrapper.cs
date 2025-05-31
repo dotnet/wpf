@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -57,13 +57,14 @@ namespace MS.Internal.Automation
 
         public void StartListening(SynchronizedInputType inputType)
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( StartListening ), inputType );
-}
+            ElementUtil.Invoke(_peer, static (state, inputType) => state.StartListening(inputType), _iface, inputType);
+        }
 
         public void Cancel()
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( Cancel ), null );
-}
+            ElementUtil.Invoke(_peer, static (state) => state.Cancel(), _iface);
+        }
+
         #endregion Interface ISynchronizedInputProvider
 
 
@@ -81,27 +82,6 @@ namespace MS.Internal.Automation
         }
 
         #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
- 
-        #region Private Methods
-
-        private object StartListening( object arg )
-        {
-            _iface.StartListening((SynchronizedInputType)arg);
-            return null;
-}
-        private object Cancel( object unused )
-        {
-            _iface.Cancel();
-            return null;
-}
-        #endregion Private Methods
-
 
         //------------------------------------------------------
         //

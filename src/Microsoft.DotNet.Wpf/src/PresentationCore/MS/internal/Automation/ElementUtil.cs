@@ -19,6 +19,79 @@ internal static partial class ElementUtil
     /// <summary>
     /// Provides a helper to invoke work on the UI thread, re-throwing all exceptions on the thread that invoked this execution.
     /// </summary>
+    internal static void Invoke<TArg>(AutomationPeer peer, Action<TArg> work, TArg arg)
+    {
+        // Null dispatcher likely means the visual is in bad shape
+        Dispatcher dispatcher = peer.Dispatcher ?? throw new ElementNotAvailableException();
+
+        ActionInfo retVal = dispatcher.Invoke(ExceptionWrapper, DispatcherPriority.Send, TimeSpan.FromMinutes(3), work, arg);
+
+        static ActionInfo ExceptionWrapper(Action<TArg> func, TArg arg)
+        {
+            try
+            {
+                func(arg);
+                return ActionInfo.Completed;
+            }
+            catch (Exception e)
+            {
+                return ActionInfo.FromException(e);
+            }
+        }
+
+        // Either throws an exception if the operation did not complete successfully, or does nothing.
+        HandleActionInfo(dispatcher, retVal);
+    }
+
+    /// <summary>
+    /// Provides a helper to invoke work on the UI thread, re-throwing all exceptions on the thread that invoked this execution.
+    /// </summary>
+    internal static void Invoke<TArg1, TArg2>(AutomationPeer peer, Action<TArg1, TArg2> work, TArg1 arg1, TArg2 arg2)
+    {
+        // Null dispatcher likely means the visual is in bad shape
+        Dispatcher dispatcher = peer.Dispatcher ?? throw new ElementNotAvailableException();
+
+        ActionInfo retVal = dispatcher.Invoke(ExceptionWrapper, DispatcherPriority.Send, TimeSpan.FromMinutes(3), work, arg1, arg2);
+
+        static ActionInfo ExceptionWrapper(Action<TArg1, TArg2> func, TArg1 arg1, TArg2 arg2)
+        {
+            try
+            {
+                func(arg1, arg2);
+                return ActionInfo.Completed;
+            }
+            catch (Exception e)
+            {
+                return ActionInfo.FromException(e);
+            }
+        }
+
+        // Either throws an exception if the operation did not complete successfully, or does nothing.
+        HandleActionInfo(dispatcher, retVal);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static void HandleActionInfo(Dispatcher dispatcher, ActionInfo retVal)
+    {
+        if (!retVal.HasCompleted)
+        {
+            if (dispatcher.HasShutdownStarted)
+            {
+                ThrowInvalidOperationException();
+            }
+            else
+            {
+                ThrowTimeoutException();
+            }
+        }
+
+        if (retVal.StoredException is not null)
+            UnwrapException(retVal.StoredException);
+    }
+
+    /// <summary>
+    /// Provides a helper to invoke work on the UI thread, re-throwing all exceptions on the thread that invoked this execution.
+    /// </summary>
     internal static TReturn Invoke<TArg, TReturn>(AutomationPeer peer, Func<TArg, TReturn> work, TArg arg)
     {
         // Null dispatcher likely means the visual is in bad shape
@@ -71,7 +144,7 @@ internal static partial class ElementUtil
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static TReturn HandleReturnValue<TReturn>(Dispatcher dispatcher, ref readonly ReturnInfo<TReturn> retVal)
     {
-        if (!retVal.Completed)
+        if (!retVal.HasCompleted)
         {
             if (dispatcher.HasShutdownStarted)
             {
@@ -110,57 +183,4 @@ internal static partial class ElementUtil
     [MethodImpl(MethodImplOptions.NoInlining)]
     private static void UnwrapException(Exception exception) => throw exception;
 
-    /// <summary>
-    /// Provides a helper to invoke work on the UI thread, re-throwing all exceptions on the thread that invoked this execution.
-    /// </summary>
-    [OverloadResolutionPriority(1)] // We raise the priority here to avoid generic explosion when it's not needed
-    internal static object Invoke(AutomationPeer peer, DispatcherOperationCallback work, object arg)
-    {
-        // Null dispatcher likely means the visual is in bad shape
-        Dispatcher dispatcher = peer.Dispatcher ?? throw new ElementNotAvailableException();
-
-        Exception? remoteException = null;
-        bool completed = false;
-
-        object retVal = dispatcher.Invoke(DispatcherPriority.Send, TimeSpan.FromMinutes(3), (DispatcherOperationCallback)delegate (object workArg)
-        {
-            try
-            {
-                return work(workArg);
-            }
-            catch (Exception e)
-            {
-                remoteException = e;
-                return null;
-            }
-            finally
-            {
-                completed = true;
-            }
-        },
-        arg);
-
-        if (completed)
-        {
-            if (remoteException is not null)
-            {
-                throw remoteException;
-            }
-        }
-        else
-        {
-            bool dispatcherInShutdown = dispatcher.HasShutdownStarted;
-
-            if (dispatcherInShutdown)
-            {
-                throw new InvalidOperationException(SR.AutomationDispatcherShutdown);
-            }
-            else
-            {
-                throw new TimeoutException(SR.AutomationTimeout);
-            }
-        }
-
-        return retVal;
-    }
 }

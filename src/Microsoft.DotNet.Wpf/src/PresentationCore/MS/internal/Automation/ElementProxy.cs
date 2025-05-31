@@ -145,7 +145,7 @@ namespace MS.Internal.Automation
         {
             AutomationPeer peer = Peer ?? throw new ElementNotAvailableException();
 
-            ElementUtil.Invoke(peer, state => ((ElementProxy)state).InContextSetFocus(), this);
+            ElementUtil.Invoke(peer, state => state.InContextSetFocus(), this);
         }
 
         public IRawElementProviderFragmentRoot FragmentRoot
@@ -409,12 +409,11 @@ namespace MS.Internal.Automation
         }
 
         // Set focus to this element...
-        private object InContextSetFocus()
+        private void InContextSetFocus()
         {
             AutomationPeer peer = Peer ?? throw new ElementNotAvailableException();
 
             peer.SetFocus();
-            return null;
         }
 
         // Return proxy representing the root of this WCP tree...

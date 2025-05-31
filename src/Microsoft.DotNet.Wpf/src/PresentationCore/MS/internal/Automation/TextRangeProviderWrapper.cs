@@ -54,31 +54,61 @@ namespace MS.Internal.Automation
 
         public int CompareEndpoints(TextPatternRangeEndpoint endpoint, ITextRangeProvider targetRange, TextPatternRangeEndpoint targetEndpoint)
         {
-            if (!(targetRange is TextRangeProviderWrapper))
+            if (targetRange is not TextRangeProviderWrapper)
+                throw new ArgumentException(SR.Format(SR.TextRangeProvider_InvalidRangeProvider, nameof(targetRange)));
+
+            object[] args = [endpoint, targetRange, targetEndpoint];
+
+            // The actual invocation method that gets called on the peer's context.
+            static int CompareEndpoints(ITextRangeProvider state, object[] args)
             {
-                throw new ArgumentException(SR.Format(SR.TextRangeProvider_InvalidRangeProvider, "targetRange"));
+                TextPatternRangeEndpoint endpoint = (TextPatternRangeEndpoint)args[0];
+                ITextRangeProvider targetRange = (ITextRangeProvider)args[1];
+                TextPatternRangeEndpoint targetEndpoint = (TextPatternRangeEndpoint)args[2];
+
+                return state.CompareEndpoints(endpoint, UnwrapArgument(targetRange), targetEndpoint);
             }
 
-            object[] args = new object[] { endpoint, targetRange, targetEndpoint };
-            return (int)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(CompareEndpoints), args);
+            return ElementUtil.Invoke(_peer, CompareEndpoints, _iface, args);
         }
 
         public void ExpandToEnclosingUnit(TextUnit unit)
         {
-            object[] args = new object[] { unit };
-            ElementUtil.Invoke(_peer, new DispatcherOperationCallback(ExpandToEnclosingUnit), args);
+            ElementUtil.Invoke(_peer, static (state, unit) => state.ExpandToEnclosingUnit(unit), _iface, unit);
         }
 
         public ITextRangeProvider FindAttribute(int attribute, object val, bool backward)
         {
-            object[] args = new object[] { attribute, val, backward };
-            return (ITextRangeProvider)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(FindAttribute), args);
+            object[] args = [attribute, val, backward];
+
+            // The actual invocation method that gets called on the peer's context.
+            static ITextRangeProvider FindAttribute(TextRangeProviderWrapper state, object[] args)
+            {
+                int attribute = (int)args[0];
+                object val = args[1];
+                bool backward = (bool)args[2];
+
+                return WrapArgument(state._iface.FindAttribute(attribute, val, backward), state._peer);
+            }
+
+            return ElementUtil.Invoke(_peer, FindAttribute, this, args);
         }
 
         public ITextRangeProvider FindText(string text, bool backward, bool ignoreCase)
         {
-            object[] args = new object[] { text, backward, ignoreCase };
-            return (ITextRangeProvider)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(FindText), args);
+            object[] args = [text, backward, ignoreCase];
+
+            // The actual invocation method that gets called on the peer's context.
+            static ITextRangeProvider FindText(TextRangeProviderWrapper state, object[] args)
+            {
+                string text = (string)args[0];
+                bool backward = (bool)args[1];
+                bool ignoreCase = (bool)args[2];
+
+                return WrapArgument(state._iface.FindText(text, backward, ignoreCase), state._peer);
+            }
+
+            return ElementUtil.Invoke(_peer, FindText, this, args);
         }
 
         public object GetAttributeValue(int attribute)
@@ -104,45 +134,75 @@ namespace MS.Internal.Automation
 
         public int Move(TextUnit unit, int count)
         {
-            object[] args = new object[] { unit, count };
-            return (int)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(Move), args);
+            object[] args = [unit, count];
+
+            // The actual invocation method that gets called on the peer's context.
+            static int Move(ITextRangeProvider state, object[] args)
+            {
+                TextUnit unit = (TextUnit)args[0];
+                int count = (int)args[1];
+
+                return state.Move(unit, count);
+            }
+
+            return ElementUtil.Invoke(_peer, Move, _iface, args);
         }
 
         public int MoveEndpointByUnit(TextPatternRangeEndpoint endpoint, TextUnit unit, int count)
         {
-            object[] args = new object[] { endpoint, unit, count };
-            return (int)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(MoveEndpointByUnit), args);
+            object[] args = [endpoint, unit, count];
+
+            // The actual invocation method that gets called on the peer's context.
+            static int MoveEndpointByUnit(ITextRangeProvider state, object[] args)
+            {
+                TextPatternRangeEndpoint endpoint = (TextPatternRangeEndpoint)args[0];
+                TextUnit unit = (TextUnit)args[1];
+                int count = (int)args[2];
+
+                return state.MoveEndpointByUnit(endpoint, unit, count);
+            }
+
+            return ElementUtil.Invoke(_peer, MoveEndpointByUnit, _iface, args);
         }
 
         public void MoveEndpointByRange(TextPatternRangeEndpoint endpoint, ITextRangeProvider targetRange, TextPatternRangeEndpoint targetEndpoint)
         {
-            if (!(targetRange is TextRangeProviderWrapper))
+            if (targetRange is not TextRangeProviderWrapper)
+                throw new ArgumentException(SR.Format(SR.TextRangeProvider_InvalidRangeProvider, nameof(targetRange)));
+
+            object[] args = [endpoint, targetRange, targetEndpoint];
+
+            // The actual invocation method that gets called on the peer's context.
+            static void MoveEndpointByRange(ITextRangeProvider state, object[] args)
             {
-                throw new ArgumentException(SR.Format(SR.TextRangeProvider_InvalidRangeProvider, "targetRange"));
+                TextPatternRangeEndpoint endpoint = (TextPatternRangeEndpoint)args[0];
+                ITextRangeProvider targetRange = (ITextRangeProvider)args[1];
+                TextPatternRangeEndpoint targetEndpoint = (TextPatternRangeEndpoint)args[2];
+
+                state.MoveEndpointByRange(endpoint, UnwrapArgument(targetRange), targetEndpoint);
             }
 
-            object[] args = new object[] { endpoint, targetRange, targetEndpoint };
-            ElementUtil.Invoke(_peer, new DispatcherOperationCallback(MoveEndpointByRange), args);
+            ElementUtil.Invoke(_peer, MoveEndpointByRange, _iface, args);
         }
 
         public void Select()
         {
-            ElementUtil.Invoke(_peer, new DispatcherOperationCallback(Select), null);
+            ElementUtil.Invoke(_peer, static (state) => state.Select(), _iface);
         }
 
         public void AddToSelection()
         {
-            ElementUtil.Invoke(_peer, new DispatcherOperationCallback(AddToSelection), null);
+            ElementUtil.Invoke(_peer, static (state) => state.AddToSelection(), _iface);
         }
 
         public void RemoveFromSelection()
         {
-            ElementUtil.Invoke(_peer, new DispatcherOperationCallback(RemoveFromSelection), null);
+            ElementUtil.Invoke(_peer, static (state) => state.RemoveFromSelection(), _iface);
         }
 
         public void ScrollIntoView(bool alignToTop)
         {
-            ElementUtil.Invoke(_peer, new DispatcherOperationCallback(ScrollIntoView), alignToTop);
+            ElementUtil.Invoke(_peer, static (state, alignToTop) => state.ScrollIntoView(alignToTop), _iface, alignToTop);
         }
 
         public IRawElementProviderSimple[] GetChildren()
@@ -202,104 +262,6 @@ namespace MS.Internal.Automation
         }
 
         #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
- 
-        #region Private Methods
-
-        private object CompareEndpoints(object arg)
-        {
-            object[] args = (object[])arg;
-            TextPatternRangeEndpoint endpoint = (TextPatternRangeEndpoint)args[0];
-            ITextRangeProvider targetRange = (ITextRangeProvider)args[1];
-            TextPatternRangeEndpoint targetEndpoint = (TextPatternRangeEndpoint)args[2];
-            return _iface.CompareEndpoints(endpoint, TextRangeProviderWrapper.UnwrapArgument( targetRange ), targetEndpoint);
-        }
-
-        private object ExpandToEnclosingUnit(object arg)
-        {
-            object[] args = (object[])arg;
-            TextUnit unit = (TextUnit)args[0];
-            _iface.ExpandToEnclosingUnit(unit);
-            return null;
-        }
-
-        private object FindAttribute(object arg)
-        {
-            object[] args = (object[])arg;
-            int attribute = (int)args[0];
-            object val = args[1];
-            bool backward = (bool)args[2];
-            return TextRangeProviderWrapper.WrapArgument( _iface.FindAttribute(attribute, val, backward), _peer );
-        }
-
-        private object FindText(object arg)
-        {
-            object[] args = (object[])arg;
-            string text = (string)args[0];
-            bool backward = (bool)args[1];
-            bool ignoreCase = (bool)args[2];
-            return TextRangeProviderWrapper.WrapArgument( _iface.FindText(text, backward, ignoreCase), _peer );
-        }
-
-        private object Move(object arg)
-        {
-            object[] args = (object[])arg;
-            TextUnit unit = (TextUnit)args[0];
-            int count = (int)args[1];
-            return _iface.Move(unit, count);
-        }
-
-        private object MoveEndpointByUnit(object arg)
-        {
-            object[] args = (object[])arg;
-            TextPatternRangeEndpoint endpoint = (TextPatternRangeEndpoint)args[0];
-            TextUnit unit = (TextUnit)args[1];
-            int count = (int)args[2];
-            return _iface.MoveEndpointByUnit(endpoint, unit, count);
-        }
-
-        private object MoveEndpointByRange(object arg)
-        {
-            object[] args = (object[])arg;
-            TextPatternRangeEndpoint endpoint = (TextPatternRangeEndpoint)args[0];
-            ITextRangeProvider targetRange = (ITextRangeProvider)args[1];
-            TextPatternRangeEndpoint targetEndpoint = (TextPatternRangeEndpoint)args[2];
-            _iface.MoveEndpointByRange(endpoint, TextRangeProviderWrapper.UnwrapArgument( targetRange ), targetEndpoint);
-            return null;
-        }
-
-        private object Select(object unused)
-        {
-            _iface.Select();
-            return null;
-        }
-
-        private object AddToSelection(object unused)
-        {
-            _iface.AddToSelection();
-            return null;
-        }
-
-        private object RemoveFromSelection(object unused)
-        {
-            _iface.RemoveFromSelection();
-            return null;
-        }
-
-        private object ScrollIntoView(object arg)
-        {
-            bool alignTop = (bool)arg;
-            _iface.ScrollIntoView(alignTop);
-            return null;
-        }
-
-        #endregion Private Methods
-
 
         //------------------------------------------------------
         //

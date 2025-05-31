@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -56,8 +56,19 @@ namespace MS.Internal.Automation
 
         public IRawElementProviderSimple FindItemByProperty(IRawElementProviderSimple startAfter, int propertyId, object value)
         {
-            object [] args = new object[]{startAfter, propertyId, value};
-            return (IRawElementProviderSimple)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(FindItemByProperty), args);
+            object[] args = [startAfter, propertyId, value];
+
+            // The actual invocation method that gets called on the peer's context.
+            static IRawElementProviderSimple FindItemByProperty(IItemContainerProvider state, object[] args)
+            {
+                IRawElementProviderSimple startAfter = (IRawElementProviderSimple)args[0];
+                int propertyId = (int)args[1];
+                object value = args[2];
+
+                return state.FindItemByProperty(startAfter, propertyId, value);
+            }
+
+            return ElementUtil.Invoke(_peer, FindItemByProperty, _iface, args);
         }
 
         #endregion Interface IItemContainerProvider
@@ -77,27 +88,6 @@ namespace MS.Internal.Automation
         }
 
         #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
-
-        #region Private Methods
-
-        private object FindItemByProperty(object arg)
-        {
-            object[] args = (object[])arg;
-            IRawElementProviderSimple startAfter = (IRawElementProviderSimple)args[0];
-            int propertyId = (int)args[1];
-            object value = (object)args[2];
-            
-            return _iface.FindItemByProperty(startAfter, propertyId, value);            
-        }
-
-        #endregion Private Methods
-
 
         //------------------------------------------------------
         //

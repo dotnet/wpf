@@ -55,14 +55,14 @@ namespace MS.Internal.Automation
  
         #region Interface IWindowProvider
 
-        public void SetVisualState( WindowVisualState state )
+        public void SetVisualState(WindowVisualState state)
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( SetVisualState ), state );
+            ElementUtil.Invoke(_peer, static (state, visualState) => state.SetVisualState(visualState), _iface, state);
         }
 
         public void Close()
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( Close ), null );
+            ElementUtil.Invoke(_peer, static (state) => state.Close(), _iface);
         }
 
         public bool WaitForInputIdle(int milliseconds)
@@ -117,29 +117,6 @@ namespace MS.Internal.Automation
         }
 
         #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
- 
-        #region Private Methods
-
-        private object SetVisualState( object arg )
-        {
-            _iface.SetVisualState( (WindowVisualState) arg );
-            return null;
-        }
-
-        private object Close( object unused )
-        {
-            _iface.Close();
-            return null;
-        }
-
-        #endregion Private Methods
-
 
         //------------------------------------------------------
         //

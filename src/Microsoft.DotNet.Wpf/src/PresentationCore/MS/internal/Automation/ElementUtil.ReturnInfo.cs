@@ -16,32 +16,31 @@ internal static partial class ElementUtil
     /// <summary>
     /// Wraps the return value and exception of an asynchronous operation.
     /// </summary>
-    /// <typeparam name="TReturn"></typeparam>
+    /// <typeparam name="TReturn">The type of the return value.</typeparam>
     [StructLayout(LayoutKind.Auto)]
     private readonly struct ReturnInfo<TReturn>
     {
         /// <summary>
         /// The exception that was thrown during the operation, if any.
         /// </summary>
-        public Exception? StoredException { get; init; }
+        internal Exception? StoredException { get; init; }
 
         /// <summary>
         /// Gets a value indicating whether the operation has been completed or timed out.
         /// </summary>
-        public bool HasCompleted { get; init; }
+        internal bool HasCompleted { get; init; }
 
         /// <summary>
         /// The return value of the operation, if it completed successfully.
         /// </summary>
-        public TReturn Value { get; init; }
+        internal TReturn Value { get; init; }
 
         /// <summary>
         /// Creates a new instance of <see cref="ReturnInfo{TReturn}"/> with the specified exception.
         /// </summary>
         /// <param name="exception">The exception that was thrown during the operation.</param>
         /// <returns>Returns a <see cref="ReturnInfo{TReturn}"/> object.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ReturnInfo<TReturn> FromException(Exception exception)
+        internal static ReturnInfo<TReturn> FromException(Exception exception)
         {
             return new ReturnInfo<TReturn>
             {
@@ -56,7 +55,8 @@ internal static partial class ElementUtil
         /// </summary>
         /// <param name="value">The return value of the operation.</param>
         /// <returns>Returns a <see cref="ReturnInfo{TReturn}"/> object.</returns>
-        public static ReturnInfo<TReturn> FromResult(TReturn value)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static ReturnInfo<TReturn> FromResult(TReturn value)
         {
             return new ReturnInfo<TReturn>
             {

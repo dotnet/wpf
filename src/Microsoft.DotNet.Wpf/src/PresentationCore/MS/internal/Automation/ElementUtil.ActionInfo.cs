@@ -22,20 +22,19 @@ internal static partial class ElementUtil
         /// <summary>
         /// The exception that was thrown during the operation, if any.
         /// </summary>
-        public Exception? StoredException { get; init; }
+        internal Exception? StoredException { get; init; }
 
         /// <summary>
         /// Gets a value indicating whether the operation has been completed or timed out.
         /// </summary>
-        public bool HasCompleted { get; init; }
+        internal bool HasCompleted { get; init; }
 
         /// <summary>
         /// Creates a new instance of <see cref="ActionInfo"/> with the specified exception.
         /// </summary>
         /// <param name="exception">The exception that was thrown during the operation.</param>
         /// <returns>Returns a <see cref="ActionInfo"/> object.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ActionInfo FromException(Exception exception)
+        internal static ActionInfo FromException(Exception exception)
         {
             return new ActionInfo
             {
@@ -48,7 +47,7 @@ internal static partial class ElementUtil
         /// Returns a singleton instance of <see cref="ActionInfo"/> signalizing successful completion of the operation.
         /// </summary>
         /// <returns>Returns a <see cref="ActionInfo"/> object.</returns>
-        public static ActionInfo Completed { get; } = new ActionInfo
+        internal static ActionInfo Completed { get; } = new ActionInfo
         {
             StoredException = null,
             HasCompleted = true

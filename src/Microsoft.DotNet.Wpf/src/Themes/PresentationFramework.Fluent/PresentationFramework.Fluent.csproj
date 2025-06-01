@@ -27,6 +27,7 @@
   <ItemGroup>
     <Compile Include="Controls\AnimationFactorToValueConverter.cs" />
     <Compile Include="Controls\FallbackBrushConverter.cs" />
+    <Compile Include="Controls\ViewIsGridViewConverter.cs" />
   </ItemGroup>
 
   <!-- Project References -->

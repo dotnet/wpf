@@ -22,14 +22,6 @@ namespace System.Windows.Automation.Provider
     public interface ITextRangeProvider
 #endif
     {
-        //------------------------------------------------------
-        //
-        //  Public Methods
-        //
-        //------------------------------------------------------
- 
-        #region Public Methods
-
         /// <summary>
         /// Retrieves a new range covering an identical span of text.  The new range can be manipulated independently from the original.
         /// </summary>
@@ -187,17 +179,6 @@ namespace System.Windows.Automation.Provider
         /// <param name="alignToTop">true if the provider should be scrolled so the range is flush with the top of the viewport.
         /// false if the provider should be scrolled so the range is flush with the bottom.</param>
         void ScrollIntoView([MarshalAs(UnmanagedType.Bool)] bool alignToTop);
-     
-        #endregion Public Methods
-
-        
-        //------------------------------------------------------
-        //
-        //  Public Properties
-        //
-        //------------------------------------------------------
- 
-        #region Public Properties
 
         /// <summary>
         /// Retrieves a collection of all of the children that fall within the range.
@@ -208,6 +189,5 @@ namespace System.Windows.Automation.Provider
         /// this can return either null or an empty enumeration.</returns>
         IRawElementProviderSimple[]? GetChildren();
 
-        #endregion Public Properties
     }
 }

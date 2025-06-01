@@ -26,16 +26,16 @@ internal sealed class ItemContainerProviderWrapper : MarshalByRefObject, IItemCo
         _iface = iface;
     }
 
-    public IRawElementProviderSimple FindItemByProperty(IRawElementProviderSimple startAfter, int propertyId, object value)
+    public IRawElementProviderSimple? FindItemByProperty(IRawElementProviderSimple? startAfter, int propertyId, object? value)
     {
-        object[] args = [startAfter, propertyId, value];
+        object?[] args = [startAfter, propertyId, value];
 
         // The actual invocation method that gets called on the peer's context.
-        static IRawElementProviderSimple FindItemByProperty(IItemContainerProvider state, object[] args)
+        static IRawElementProviderSimple? FindItemByProperty(IItemContainerProvider state, object?[] args)
         {
-            IRawElementProviderSimple startAfter = (IRawElementProviderSimple)args[0];
-            int propertyId = (int)args[1];
-            object value = args[2];
+            IRawElementProviderSimple? startAfter = (IRawElementProviderSimple?)args[0];
+            int propertyId = (int)args[1]!;
+            object? value = args[2];
 
             return state.FindItemByProperty(startAfter, propertyId, value);
         }

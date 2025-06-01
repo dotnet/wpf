@@ -27,7 +27,7 @@ internal sealed class TableProviderWrapper : MarshalByRefObject, ITableProvider
         _iface = iface;
     }
 
-    public IRawElementProviderSimple GetItem(int row, int column)
+    public IRawElementProviderSimple? GetItem(int row, int column)
     {
         return ElementUtil.Invoke(_peer, static (state, rowColumn) => state.GetItem(rowColumn[0], rowColumn[1]), _iface, new int[] { row, column });
     }

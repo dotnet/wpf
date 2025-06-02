@@ -238,7 +238,17 @@ namespace System.Windows.Threading
         /// <summary>
         ///     Returns the result of the operation if it has completed.
         /// </summary>
-        public virtual object Result { get; }
+        public object Result
+        {
+            // As we cannot change the property to be abstract in the base class due to callvirt,
+            // we use a private protected property to allow derived classes to implement it.
+            get => OperationResult;
+        }
+
+        /// <summary>
+        /// Gets the underlying result of the operation as an object.
+        /// </summary>
+        private protected abstract object OperationResult { get; }
 
         /// <summary>
         ///     An event that is raised when the operation is aborted or canceled.

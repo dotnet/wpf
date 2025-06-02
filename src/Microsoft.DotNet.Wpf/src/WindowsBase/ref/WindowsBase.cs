@@ -1809,7 +1809,7 @@ namespace System.Windows.Threading
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void VerifyAccess() { }
     }
-    public partial class DispatcherOperation
+    public abstract partial class DispatcherOperation
     {
         internal DispatcherOperation() { }
         public System.Windows.Threading.Dispatcher Dispatcher { get { throw null; } }

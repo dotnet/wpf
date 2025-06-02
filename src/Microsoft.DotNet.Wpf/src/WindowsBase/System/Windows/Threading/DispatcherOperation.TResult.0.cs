@@ -75,6 +75,11 @@ public class DispatcherOperation<TResult> : DispatcherOperation
         }
     }
 
+    private protected sealed override object OperationResult
+    {
+        get => Result;
+    }
+
     internal sealed override void InvokeCompletions()
     {
         switch (_status)

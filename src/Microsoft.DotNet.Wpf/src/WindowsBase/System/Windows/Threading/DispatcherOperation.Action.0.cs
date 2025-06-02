@@ -20,7 +20,7 @@ internal class DispatcherOperationAction : DispatcherOperation
     {
     }
 
-    public sealed override object Result
+    private protected sealed override object OperationResult
     {
         get
         {

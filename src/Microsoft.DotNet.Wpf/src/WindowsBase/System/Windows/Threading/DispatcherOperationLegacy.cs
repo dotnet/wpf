@@ -27,12 +27,9 @@ internal sealed class DispatcherOperationLegacy : DispatcherOperation
     {
     }
 
-    public override object Result
+    private protected sealed override object OperationResult
     {
-        get
-        {
-            return _result;
-        }
+        get => _result;
     }
 
     internal override void InvokeCompletions()

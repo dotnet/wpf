@@ -3,6 +3,7 @@
 
 using System.ComponentModel;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace System.Windows.Threading.Tests;
 
@@ -132,6 +133,62 @@ public class DispatcherTests
         Assert.Equal(DispatcherPriority.Normal, operation.Priority);
         Assert.Equal(DispatcherOperationStatus.Pending, operation.Status);
         Assert.NotNull(operation.Task);
+    }
+
+    [WpfFact]
+    public void BeginInvoke_SameThread_DispatcherOperation_Return_Result_Block_Success()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static object action() => 5;
+        DispatcherOperation operation = dispatcher.BeginInvoke(DispatcherPriority.Send, action);
+
+        Assert.Equal(DispatcherOperationStatus.Completed, operation.Wait());
+        Assert.Equal(5, (int)operation.Result);
+    }
+
+    [WpfFact]
+    public async Task BeginInvoke_SameThread_DispatcherOperation_Result_Await_SuccessAsync()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static object action() => 5;
+        DispatcherOperation operation = dispatcher.BeginInvoke(DispatcherPriority.Send, action);
+        await operation;
+
+        Assert.Equal(DispatcherOperationStatus.Completed, operation.Status);
+        Assert.Equal(5, (int)operation.Result);
+    }
+
+    [WpfFact]
+    public void InvokeAsync_SameThread_DispatcherOperation_TReturn_Result_Block_Success()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static int action() => 5;
+        DispatcherOperation<int> operation = dispatcher.InvokeAsync(action, DispatcherPriority.Send, CancellationToken.None);
+        DispatcherOperation parentOperation = operation;
+
+        Assert.Equal(5, operation.Result);
+        Assert.Equal(5, (int)parentOperation.Result);
+        Assert.Equal(DispatcherOperationStatus.Completed, operation.Status);
+        Assert.Equal(DispatcherOperationStatus.Completed, parentOperation.Status);
+    }
+
+    [WpfFact]
+    public async Task InvokeAsync_SameThread_DispatcherOperation_TReturn_Await_SuccessAsync()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static int action() => 5;
+        DispatcherOperation<int> operation = dispatcher.InvokeAsync(action, DispatcherPriority.Send, CancellationToken.None);
+        DispatcherOperation parentOperation = operation;
+
+        Assert.Equal(5, await operation);
+        Assert.Equal(5, operation.Result);
+        Assert.Equal(5, (int)parentOperation.Result);
+        Assert.Equal(DispatcherOperationStatus.Completed, operation.Status);
+        Assert.Equal(DispatcherOperationStatus.Completed, parentOperation.Status);
     }
 
     [WpfFact]

@@ -5,6 +5,9 @@ using System.Runtime.CompilerServices;
 
 namespace System.Windows.Threading;
 
+/// <summary>
+/// DispatcherOperation represents a delegate that has been posted to the <see cref="Dispatcher"/> queue.
+/// </summary>
 internal sealed class DispatcherOperationAction<TArg> : DispatcherOperationAction
 {
     private readonly TArg _arg;

@@ -10,8 +10,7 @@ using MS.Internal;
 namespace System.Windows.Threading
 {
     /// <summary>
-    ///     DispatcherOperation represents a delegate that has been
-    ///     posted to the Dispatcher queue.
+    /// DispatcherOperation represents a delegate that has been posted to the <see cref="Dispatcher"/> queue.
     /// </summary>
     public abstract partial class DispatcherOperation
     {
@@ -127,8 +126,7 @@ namespace System.Windows.Threading
         /// </returns>
         public DispatcherOperationStatus Wait(TimeSpan timeout)
         {
-            if ((_status == DispatcherOperationStatus.Pending || _status == DispatcherOperationStatus.Executing) &&
-                timeout.TotalMilliseconds != 0)
+            if ((_status is DispatcherOperationStatus.Pending or DispatcherOperationStatus.Executing) && timeout.TotalMilliseconds != 0)
             {
                 if (_dispatcher.Thread == Thread.CurrentThread)
                 {

@@ -230,7 +230,7 @@
     <SolidColorBrush x:Key="CalendarViewSelectedBorderBrush" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="CalendarViewTodayBackground" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="CalendarViewTodayForeground" Color="{StaticResource SystemColorHighlightTextColor}" />
-    <SolidColorBrush x:Key="CalendarViewButtonForeground" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="CalendarViewNavigationButtonForeground" Color="{StaticResource SystemColorButtonTextColor}" />
 
     <!--  Card / CardAction / CardColor / CardExpander  -->
     <SolidColorBrush x:Key="CardBackground" Color="{StaticResource SystemColorWindowColor}" />
@@ -297,22 +297,40 @@
 
     <!--  ComboBox  -->
     <SolidColorBrush x:Key="ComboBoxBackground" Color="{StaticResource SystemColorButtonFaceColor}" />
-    <SolidColorBrush x:Key="ComboBoxBackgroundFocused" Color="{StaticResource SystemColorHighlightTextColor}" />
-    <SolidColorBrush x:Key="ComboBoxBackgroundPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
-    <SolidColorBrush x:Key="ComboBoxBackgroundDisabled" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="ComboBoxBackgroundPointerOver" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="ComboBoxBackgroundPressed" Color="{StaticResource SystemColorButtonFaceColor}" />
+    <SolidColorBrush x:Key="ComboBoxBackgroundDisabled" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="ComboBoxForeground" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="ComboBoxForegroundPointerOver" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="ComboBoxForegroundPressed" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="ComboBoxForegroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+    <SolidColorBrush x:Key="ComboBoxForegroundFocused" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="ComboBoxForegroundFocusedPressed" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="ComboBoxBorderBrush" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="ComboBoxBorderBrushPointerOver" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="ComboBoxBorderBrushPressed" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="ComboBoxBorderBrushDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+    <SolidColorBrush x:Key="ComboBoxDropDownGlyphForeground" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="ComboBoxDropDownGlyphForegroundFocused" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="ComboBoxDropDownGlyphForegroundFocusedPressed" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="ComboBoxDropDownGlyphForegroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+    <SolidColorBrush x:Key="ComboBoxDropDownForeground" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="ComboBoxDropDownBackground" Color="{StaticResource SystemColorButtonFaceColor}" />
+    <SolidColorBrush x:Key="ComboBoxDropDownBorderBrush" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="ComboBoxDropDownBackgroundPointerOver" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="ComboBoxDropDownBackgroundPointerPressed" Color="{StaticResource SystemColorButtonFaceColor}" />
+    <SolidColorBrush x:Key="ComboBoxFocusedDropDownBackgroundPointerPressed" Color="{StaticResource SystemColorButtonFaceColor}" />
+    <SolidColorBrush x:Key="ComboBoxEditableDropDownGlyphForeground" Color="{StaticResource SystemColorButtonTextColor}" />
+
+    <!-- Deprecated ComboBox brushes -->
+        <SolidColorBrush x:Key="ComboBoxBorderBrushFocused" Color="{StaticResource SystemColorHighlightTextColor}" />
+    
     <!--<SolidColorBrush x:Key="ComboBoxItemBorderBrush" Color="{StaticResource ControlElevationBorderBrush}" />-->
-    <SolidColorBrush x:Key="ComboBoxBorderBrushDisabled" Color="{StaticResource SystemColorWindowColor}" />
-    <SolidColorBrush x:Key="ComboBoxBorderBrushFocused" Color="{StaticResource SystemColorHighlightTextColor}" />
-    <SolidColorBrush x:Key="ComboBoxDropDownGlyphForeground" Color="{StaticResource SystemColorGrayTextColor}" />
-    <SolidColorBrush x:Key="ComboBoxDropDownBackground" Color="{StaticResource SystemColorWindowColor}" />
-    <SolidColorBrush x:Key="ComboBoxDropDownBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
     <SolidColorBrush x:Key="ComboBoxItemPillFillBrush" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="ComboBoxItemBackgroundSelected" Color="{StaticResource SystemColorWindowColor}" />
     <SolidColorBrush x:Key="ComboBoxItemForeground" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="ComboBoxItemForegroundSelected" Color="{StaticResource SystemColorHighlightColor}" />
-
+    
     <!--  ContentDialog  -->
     <SolidColorBrush
         x:Key="ContentDialogSmokeFill"
@@ -338,7 +356,7 @@
     <SolidColorBrush x:Key="DatePickerBackground" Color="{StaticResource SystemColorWindowColor}" />
     <SolidColorBrush x:Key="DatePickerTextBoxForeground" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="DatePickerTextBoxCaretBrush" Color="{StaticResource SystemColorButtonTextColor}" />
-    <SolidColorBrush x:Key="DatePickerFocusedBorderBrush" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="DatePickerBorderBrushFocused" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="DatePickerBackgroundFocused" Color="{StaticResource SystemColorHighlightTextColor}" />
     <SolidColorBrush x:Key="DatePickerBackgroundPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
     <SolidColorBrush x:Key="DatePickerPopupBackground" Color="{StaticResource SystemColorWindowColor}"/>
@@ -426,7 +444,7 @@
     <SolidColorBrush x:Key="ListBoxItemForeground" Color="{StaticResource SystemColorWindowTextColor}" />
     <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundThemeBrush" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundPointerOverThemeBrush" Color="{StaticResource SystemColorButtonTextColor}" />
-    <SolidColorBrush x:Key="ListBoxItemBackgroundSelectedPressedThemeBrush" Color="{StaticResource SystemColorHighlightColor}"/>
+    <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundPressedThemeBrush" Color="{StaticResource SystemColorHighlightColor}"/>
     <SolidColorBrush x:Key="ListBoxItemSelectedForegroundThemeBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="ListBoxItemUnselectedBackgroundPointerOverThemeBrush" Color="{StaticResource SystemColorHighlightTextColor}" />
 
@@ -446,7 +464,7 @@
     <SolidColorBrush x:Key="MenuBarForeground" Color="{StaticResource SystemColorWindowTextColor}" />
     <SolidColorBrush x:Key="MenuBarItemBackgroundSelected" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="MenuBarItemBorderBrush" Color="{StaticResource SystemColorWindowColor}" />
-    <SolidColorBrush x:Key="MenuBarItemBackgroundMousePointer" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <SolidColorBrush x:Key="MenuBarItemBackgroundPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
 
     <!--  MessageDialog  -->
     <SolidColorBrush x:Key="MessageBoxBackground" Color="{StaticResource SystemColorWindowColor}" />
@@ -788,4 +806,11 @@
     <Color x:Key="SystemFillColorNeutralBackground">#2D3236</Color>
     <Color x:Key="SystemFillColorSolidAttentionBackground">#2D3236</Color>
     <Color x:Key="SystemFillColorSolidNeutralBackground">#FF0000</Color>
+
+    <!-- #region Brushes Deprecated in .NET 10 -->
+    <SolidColorBrush x:Key="CalendarViewButtonForeground" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="DatePickerFocusedBorderBrush" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="ListBoxItemBackgroundSelectedPressedThemeBrush" Color="{StaticResource SystemColorHighlightColor}"/>
+    <SolidColorBrush x:Key="MenuBarItemBackgroundMousePointer" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <!-- #endregion -->
 </ResourceDictionary>

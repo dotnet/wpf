@@ -258,7 +258,7 @@
                                       TextElement.FontSize="{TemplateBinding FontSize}"
                                       TextElement.FontWeight="{TemplateBinding FontWeight}"
                                       TextElement.Foreground="{TemplateBinding Foreground}">
-                            <StackPanel IsItemsHost="True"
+                            <ItemsPresenter
                                         KeyboardNavigation.DirectionalNavigation="Contained" />
                         </ScrollViewer>
                     </Grid>
@@ -438,7 +438,7 @@
                                       TextElement.FontSize="{TemplateBinding FontSize}"
                                       TextElement.FontWeight="{TemplateBinding FontWeight}"
                                       TextElement.Foreground="{TemplateBinding Foreground}">
-                            <StackPanel IsItemsHost="True"
+                            <ItemsPresenter
                                         KeyboardNavigation.DirectionalNavigation="Contained" />
                         </ScrollViewer>
                     </Grid>

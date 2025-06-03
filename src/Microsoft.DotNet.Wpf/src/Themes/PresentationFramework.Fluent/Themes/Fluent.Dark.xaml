@@ -1565,7 +1565,7 @@
           </Border.RenderTransform>
           <Grid>
             <ScrollViewer MaxHeight="{TemplateBinding MaxDropDownHeight}" SnapsToDevicePixels="True" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" TextElement.FontSize="{TemplateBinding FontSize}" TextElement.FontWeight="{TemplateBinding FontWeight}" TextElement.Foreground="{TemplateBinding Foreground}">
-              <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+              <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained" />
             </ScrollViewer>
           </Grid>
           <Border.Effect>
@@ -1662,7 +1662,7 @@
           </Border.RenderTransform>
           <Grid>
             <ScrollViewer MaxHeight="{TemplateBinding MaxDropDownHeight}" SnapsToDevicePixels="True" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" TextElement.FontSize="{TemplateBinding FontSize}" TextElement.FontWeight="{TemplateBinding FontWeight}" TextElement.Foreground="{TemplateBinding Foreground}">
-              <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+              <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained" />
             </ScrollViewer>
           </Grid>
           <Border.Effect>

@@ -148,7 +148,7 @@ void CGDIBitmap::SetupPalette(interior_ptr<BITMAPINFO> bmi, int bitCount)
 
     if (colors != nullptr)
     {
-        count = colors->Count;
+        count = static_cast<IReadOnlyCollection<Color>^>(colors)->Count;
 
         if (count > (1 << bitCount))
         {

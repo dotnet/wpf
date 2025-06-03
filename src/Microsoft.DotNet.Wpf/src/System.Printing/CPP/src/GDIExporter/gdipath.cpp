@@ -574,9 +574,11 @@ public:
     
     virtual void PolyLineTo(System::Collections::Generic::IList<Point>^ points, bool isStroked, bool isSmoothJoin) override
     {
-        if (points->Count > 0 && BeginSegment(isStroked, isSmoothJoin, points[points->Count - 1]))
+        int pointCount = static_cast<IReadOnlyCollection<Point>^>(points)->Count;
+
+        if (pointCount > 0 && BeginSegment(isStroked, isSmoothJoin, points[pointCount - 1]))
         {
-            for (int index = 0; index < points->Count; index++)
+            for (int index = 0; index < pointCount; index++)
             {
                 AddPoint(points[index], PT_LINETO);
             }
@@ -585,9 +587,11 @@ public:
 
     virtual void PolyQuadraticBezierTo(System::Collections::Generic::IList<Point>^ points, bool isStroked, bool isSmoothJoin) override
     {
-        if (points->Count > 0 && BeginSegment(isStroked, isSmoothJoin, points[points->Count - 1]))
+        int pointCount = static_cast<IReadOnlyCollection<Point>^>(points)->Count;
+
+        if (pointCount > 0 && BeginSegment(isStroked, isSmoothJoin, points[pointCount - 1]))
         {
-            for (int index = 0; index < points->Count; index += 2)
+            for (int index = 0; index < pointCount; index += 2)
             {
                 AddQuadratic(points[index], points[index + 1]);
             }
@@ -596,9 +600,11 @@ public:
 
     virtual void PolyBezierTo(System::Collections::Generic::IList<Point>^ points, bool isStroked, bool isSmoothJoin) override
     {
-        if (points->Count > 0 && BeginSegment(isStroked, isSmoothJoin, points[points->Count - 1]))
+        int pointCount = static_cast<IReadOnlyCollection<Point>^>(points)->Count;
+
+        if (pointCount > 0 && BeginSegment(isStroked, isSmoothJoin, points[pointCount - 1]))
         {
-            for (int index = 0; index < points->Count; index++)
+            for (int index = 0; index < pointCount; index++)
             {
                 AddPoint(points[index], PT_BEZIERTO);
             }

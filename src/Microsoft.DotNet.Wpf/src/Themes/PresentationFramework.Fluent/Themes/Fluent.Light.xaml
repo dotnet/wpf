@@ -579,7 +579,7 @@
   <SolidColorBrush x:Key="GridsplitterForeground" Color="{StaticResource ControlStrongFillColorDefault}" />
   <!-- GridView -->
   <SolidColorBrush x:Key="GridViewColumnHeaderGripperThumbFill" Color="{StaticResource ControlStrokeColorSecondary}" />
-  <SolidColorBrush x:Key="GridViewColumnHeaderForeground" Color="{StaticResource TextFillColorSecondary}" />
+  <SolidColorBrush x:Key="GridViewColumnHeaderForeground" Color="{StaticResource TextFillColorPrimary}" />
   <SolidColorBrush x:Key="GridViewColumnHeaderBackground" Color="Transparent" />
   <SolidColorBrush x:Key="GridViewColumnHeaderBackgroundPointerOver" Color="{StaticResource SubtleFillColorSecondary}" />
   <SolidColorBrush x:Key="GridViewColumnHeaderBackgroundPressed" Color="{StaticResource SubtleFillColorTertiary}" />

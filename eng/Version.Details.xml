@@ -38,14 +38,6 @@
       <Uri>https://github.com/dotnet/dotnet</Uri>
       <Sha>d2434b1b5ed778f9869b1e51ba1df4bc3a64eda7</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.App.Runtime.win-x64" Version="10.0.0-preview.6.25302.103">
-      <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>d2434b1b5ed778f9869b1e51ba1df4bc3a64eda7</Sha>
-    </Dependency>
-    <Dependency Name="VS.Redist.Common.NetCore.SharedFramework.x64.10.0" Version="10.0.0-preview.6.25302.103">
-      <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>d2434b1b5ed778f9869b1e51ba1df4bc3a64eda7</Sha>
-    </Dependency>
     <Dependency Name="System.CodeDom" Version="10.0.0-preview.6.25302.103">
       <Uri>https://github.com/dotnet/dotnet</Uri>
       <Sha>d2434b1b5ed778f9869b1e51ba1df4bc3a64eda7</Sha>

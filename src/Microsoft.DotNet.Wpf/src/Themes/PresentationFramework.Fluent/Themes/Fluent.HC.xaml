@@ -3243,13 +3243,7 @@
         <Setter Property="Template">
           <Setter.Value>
             <ControlTemplate TargetType="GridViewColumnHeader">
-              <Canvas Name="PART_FloatingHeaderCanvas">
-                <!-- TODO : Verify / Check these values -->
-                <!--<Rectangle
-                                    Fill="{DynamicResource GridViewFloatingColumnHeaderBackground}"
-                                    Width="{TemplateBinding ActualWidth}"
-                                    Height="{TemplateBinding ActualHeight}" />-->
-              </Canvas>
+              <Canvas Name="PART_FloatingHeaderCanvas" />
             </ControlTemplate>
           </Setter.Value>
         </Setter>
@@ -3299,7 +3293,7 @@
         <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
       </ScrollViewer>
     </Border>
-    <!--Is enabled false trigger-->
+    <!-- TODO : Is enabled false trigger-->
   </ControlTemplate>
   <Thickness x:Key="GroupBoxPadding">0,0,0,16</Thickness>
   <system:Double x:Key="GroupBoxHeaderFontSize">20</system:Double>
@@ -3493,7 +3487,7 @@
       </Trigger>
     </ControlTemplate.Triggers>
   </ControlTemplate>
-  <Style x:Key="DefaultListViewStyle" TargetType="{x:Type ListView}">
+  <Style x:Key="BaseListViewStyle" TargetType="{x:Type ListView}">
     <Setter Property="Margin" Value="0" />
     <Setter Property="Padding" Value="0" />
     <Setter Property="Background" Value="{DynamicResource ListViewBackground}" />
@@ -3514,6 +3508,8 @@
         </ItemsPanelTemplate>
       </Setter.Value>
     </Setter>
+  </Style>
+  <Style x:Key="DefaultListViewStyle" TargetType="{x:Type ListView}" BasedOn="{StaticResource BaseListViewStyle}">
     <Setter Property="Template" Value="{StaticResource ListViewTemplate}" />
     <Style.Triggers>
       <DataTrigger Binding="{Binding View, RelativeSource={RelativeSource Self}, Converter={StaticResource ViewIsGridViewConverter}}" Value="True">
@@ -3527,6 +3523,7 @@
   <Style x:Key="{x:Static GridView.GridViewStyleKey}" TargetType="ListView" BasedOn="{StaticResource BaseListViewStyle}">
     <Setter Property="ItemContainerStyle" Value="{DynamicResource {x:Static GridView.GridViewItemContainerStyleKey}}" />
     <Setter Property="Template" Value="{StaticResource GridViewTemplate}" />
+    <Setter Property="GridView.ColumnHeaderContainerStyle" Value="{DynamicResource DefaultGridViewColumnHeaderStyle}" />
   </Style>
   <system:Double x:Key="ListViewItemMinHeight">40</system:Double>
   <system:Double x:Key="ListViewItemMinWidth">88</system:Double>

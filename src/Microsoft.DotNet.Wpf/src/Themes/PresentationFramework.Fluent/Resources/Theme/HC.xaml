@@ -398,6 +398,18 @@
     <SolidColorBrush x:Key="GridsplitterBackgroundDisabled" Color="{StaticResource SystemColorWindowColor}" />
     <SolidColorBrush x:Key="GridsplitterForeground" Color="{StaticResource SystemColorButtonTextColor}" />
 
+    <!-- GridView -->
+    <SolidColorBrush x:Key="GridViewColumnHeaderGripperThumbFill" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="GridViewColumnHeaderForeground" Color="{StaticResource SystemColorWindowTextColor}" />
+    <SolidColorBrush x:Key="GridViewColumnHeaderBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="GridViewColumnHeaderBackgroundPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <SolidColorBrush x:Key="GridViewColumnHeaderBackgroundPressed" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="GridViewColumnHeaderBackgroundDisabled" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="GridViewColumnHeaderBorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="GridViewColumnHeaderBorderBrushPointerOver" Color="Transparent" />
+    <SolidColorBrush x:Key="GridViewColumnHeaderBorderBrushPressed" Color="Transparent" />
+    <SolidColorBrush x:Key="GridViewColumnHeaderBorderBrushDisabled" Color="Transparent" />
+
     <!--  GroupBox  -->
     <SolidColorBrush x:Key="GroupBoxBackground" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="GroupBoxBorderBrush" Color="{StaticResource SystemColorButtonTextColor}" />

@@ -107,13 +107,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="GridViewColumnHeader">
-                            <Canvas Name="PART_FloatingHeaderCanvas">
-                                <!-- TODO : Verify / Check these values -->
-                                <!--<Rectangle
-                                    Fill="{DynamicResource GridViewFloatingColumnHeaderBackground}"
-                                    Width="{TemplateBinding ActualWidth}"
-                                    Height="{TemplateBinding ActualHeight}" />-->
-                            </Canvas>
+                            <Canvas Name="PART_FloatingHeaderCanvas" />
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -219,7 +213,7 @@
                 <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
             </ScrollViewer>
         </Border>
-        <!--Is enabled false trigger-->
+        <!-- TODO : Is enabled false trigger-->
     </ControlTemplate>
 
 </ResourceDictionary>

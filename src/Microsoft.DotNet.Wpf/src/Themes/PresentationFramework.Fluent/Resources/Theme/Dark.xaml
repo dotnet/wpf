@@ -526,6 +526,25 @@
     <SolidColorBrush x:Key="ContextMenuForeground" Color="{StaticResource TextFillColorPrimary}" />
 
     <!--  DataGrid  -->
+    <SolidColorBrush x:Key="DataGridColumnFloatingHeaderBorderBrush" Color="{StaticResource ControlStrongStrokeColorDefault}" />
+    <SolidColorBrush x:Key="DataGridHeaderDropSeparatorBackground" Color="{StaticResource ControlStrongStrokeColorDefault}" />
+    <SolidColorBrush x:Key="DataGridHeaderSeparatorBrush" Color="{StaticResource ControlStrokeColorSecondary}" />
+        <!-- DataGridHeaderBackground is used for PART_FillerColumnHeader and Row Headers
+             whereas DataGridColumnHeaderBackground is used for Column Headers. This is a bit confusing
+             but due to transparency in colors had to follow this.  -->
+    <SolidColorBrush x:Key="DataGridColumnHeaderBackground" Color="{StaticResource SubtleFillColorTransparent}" />
+    <SolidColorBrush x:Key="DataGridHeaderBackground" Color="{StaticResource SubtleFillColorTertiary}" />
+    <SolidColorBrush x:Key="DataGridHeaderBackgroundPointerOver" Color="{StaticResource SubtleFillColorSecondary}" />
+    <SolidColorBrush x:Key="DataGridHeaderBackgroundPressed" Color="{StaticResource SubtleFillColorTertiary}" />
+    <SolidColorBrush x:Key="DataGridHeaderBackgroundDisabled" Color="{StaticResource SubtleFillColorDisabled}" />
+    <SolidColorBrush x:Key="DataGridHeaderBackgroundSelected" Color="{StaticResource SubtleFillColorTertiary}" />
+    <SolidColorBrush x:Key="DataGridHeaderBorderBrush" Color="{StaticResource ControlStrokeColorSecondary}" />
+    <SolidColorBrush x:Key="DataGridHeaderBorderBrushPointerOver" Color="{StaticResource ControlStrokeColorSecondary}" />
+    <SolidColorBrush x:Key="DataGridHeaderBorderBrushPressed" Color="{StaticResource ControlStrokeColorSecondary}" />
+    <SolidColorBrush x:Key="DataGridHeaderBorderBrushDisabled" Color="{StaticResource ControlStrokeColorSecondary}" />
+    <SolidColorBrush x:Key="DataGridHeaderBorderBrushSelected" Color="{StaticResource ControlStrokeColorSecondary}" />
+    <SolidColorBrush x:Key="DataGridHeaderForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
+
     <SolidColorBrush x:Key="DataGridRowSelectedBackgroundThemeBrush" Color="{StaticResource SystemAccentColorLight3}" />
     <SolidColorBrush x:Key="DataGridRowSelectedForegroundThemeBrush" Color="{StaticResource TextOnAccentFillColorPrimary}" />
 

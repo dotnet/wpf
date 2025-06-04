@@ -350,49 +350,149 @@
         </Setter>
     </Style>
 
-    <!--  Style and template for the DataGridColumnHeader.  -->
-    <Style x:Key="DefaultDataGridColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
-        <Setter Property="Padding" Value="12,0,0,0" />
-        <Setter Property="MinHeight" Value="32" />
-        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="SeparatorBrush" Value="{DynamicResource ControlFillColorDefault}" />
-        <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="OverridesDefaultStyle" Value="True" />
+    <system:Double x:Key="DataGridColumnHeaderMinHeight">32</system:Double>
+    <CornerRadius x:Key="DataGridHeaderDropSeparatorCornerRadius">2</CornerRadius>
+    <Thickness x:Key="DataGridHeaderDropSeparatorPadding">0,4</Thickness>
+    <Thickness x:Key="DataGridColumnHeaderPadding">4,0</Thickness>
+    <system:Double x:Key="DataGridHeaderDropSeparatorWidth">4</system:Double>
+    <system:Double x:Key="DataGridColumnFloatingHeaderOpacity">0.8</system:Double>
+    <Thickness x:Key="DataGridColumnFloatingHeaderBorderThickness">1</Thickness>
+    <system:Double x:Key="DataGridSortIndicatorIconFontSize">8</system:Double>
+    <Thickness x:Key="DataGridSortIndicatorIconMargin">4,4,2,4</Thickness>
+
+    <!-- DataGrid Floating Column Header Style -->
+    <Style x:Key="DefaultDataGridColumnFloatingHeaderStyle" TargetType="{x:Type Control}">
+        <Setter Property="Opacity" Value="{DynamicResource DataGridColumnFloatingHeaderOpacity}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource DataGridColumnFloatingHeaderBorderBrush}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource DataGridColumnFloatingHeaderBorderThickness}" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
-                    <Grid>
-                        <Border
-                            x:Name="columnHeaderBorder"
-                            Padding="3,0,3,0"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="0,0,1,1">
-                            <ContentPresenter
-                                RecognizesAccessKey="True"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </Border>
-
-                        <Thumb
-                            x:Name="PART_LeftHeaderGripper"
-                            HorizontalAlignment="Left"
-                            Style="{StaticResource ColumnHeaderGripperStyle}" />
-                        <Thumb
-                            x:Name="PART_RightHeaderGripper"
-                            HorizontalAlignment="Right"
-                            Style="{StaticResource ColumnHeaderGripperStyle}" />
-                    </Grid>
+                <ControlTemplate TargetType="{x:Type Control}">
+                    <Border BorderThickness="{TemplateBinding BorderThickness}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}">
+                        <Grid>
+                            <Canvas Name="PART_VisualBrushCanvas" Margin="{TemplateBinding Margin}" />
+                        </Grid>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
+    <!-- DataGrid Column Header Drop Separator Style -->
+    <Style x:Key="DefaultDataGridHeaderDropSeparatorStyle" TargetType="{x:Type Separator}">
+        <Setter Property="Background"
+            Value="{DynamicResource DataGridHeaderDropSeparatorBackground}" />
+        <Setter Property="Width" Value="{DynamicResource DataGridHeaderDropSeparatorWidth}" />
+        <Setter Property="Padding" Value="{DynamicResource DataGridHeaderDropSeparatorPadding}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Separator}">
+                    <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        Margin="{TemplateBinding Padding}"
+                        Width="{TemplateBinding Width}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{DynamicResource DataGridHeaderDropSeparatorCornerRadius}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Style and template for the DataGridColumnHeader.  -->
+    <Style x:Key="DefaultDataGridColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+        <Setter Property="Background" Value="{DynamicResource DataGridColumnHeaderBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource DataGridHeaderBorderBrush}" />
+        <Setter Property="MinHeight" Value="{StaticResource DataGridColumnHeaderMinHeight}" />
+        <Setter Property="Padding" Value="{DynamicResource DataGridColumnHeaderPadding}" />
+        <Setter Property="SeparatorBrush" Value="{DynamicResource DataGridHeaderSeparatorBrush}" />
+        <Setter Property="SeparatorVisibility" Value="Visible" />
+        <Setter Property="BorderThickness" Value="0 0 0 1" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                    <Grid x:Name="RootGrid">
+                        <Border x:Name="SeparatorBorder"
+                            Grid.ColumnSpan="2"
+                            BorderBrush="{TemplateBinding SeparatorBrush}"
+                            Visibility="{TemplateBinding SeparatorVisibility}"
+                            BorderThickness="0 0 1 0" />
+
+                        <Border x:Name="HeaderBorder"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <ContentPresenter
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+
+                                <TextBlock x:Name="SortIndicator"
+                                    Grid.Column="1"
+                                    VerticalAlignment="Top"
+                                    Visibility="Hidden"
+                                    Margin="{DynamicResource DataGridSortIndicatorIconMargin}"
+                                    FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                    FontSize="{DynamicResource DataGridSortIndicatorIconFontSize}"
+                                    Text="&#xF090;" />
+
+                                <Thumb x:Name="PART_LeftHeaderGripper"
+                                    Grid.ColumnSpan="2"
+                                    HorizontalAlignment="Left"
+                                    Style="{StaticResource ColumnHeaderGripperStyle}" />
+                                <Thumb x:Name="PART_RightHeaderGripper"
+                                    Grid.ColumnSpan="2"
+                                    HorizontalAlignment="Right"
+                                    Style="{StaticResource ColumnHeaderGripperStyle}" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background"
+                                Value="{DynamicResource DataGridHeaderBackgroundPointerOver}" />
+                            <Setter Property="BorderBrush"
+                                Value="{DynamicResource DataGridHeaderBorderBrushPointerOver}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background"
+                                Value="{DynamicResource DataGridHeaderBackgroundPressed}" />
+                            <Setter Property="BorderBrush"
+                                Value="{DynamicResource DataGridHeaderBorderBrushPressed}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background"
+                                Value="{DynamicResource DataGridHeaderBackgroundDisabled}" />
+                            <Setter Property="BorderBrush"
+                                Value="{DynamicResource DataGridHeaderBorderBrushDisabled}" />
+                        </Trigger>
+                        <Trigger Property="SortDirection" Value="Ascending">
+                            <Setter TargetName="SortIndicator" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="SortIndicator" Property="Text" Value="&#xF090;" />
+                        </Trigger>
+                        <Trigger Property="SortDirection" Value="Descending">
+                            <Setter TargetName="SortIndicator" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="SortIndicator" Property="Text" Value="&#xF08E;" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <!--  Style and template for the DataGridColumnHeadersPresenter.  -->
     <Style x:Key="DefaultDataGridColumnHeadersPresenterStyle" TargetType="{x:Type DataGridColumnHeadersPresenter}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -403,6 +503,7 @@
                         <DataGridColumnHeader
                             x:Name="PART_FillerColumnHeader"
                             IsHitTestVisible="False"
+                            Background="{DynamicResource DataGridHeaderBackground}"
                             SeparatorVisibility="Collapsed" />
                         <ItemsPresenter />
                     </Grid>
@@ -428,65 +529,9 @@
         </Setter>
     </Style>
 
-    <Style x:Key="DefaultDragIndicatorStyleStyle" TargetType="{x:Type Control}">
-        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <!--  DataGridColumnFloatingHeader  is  internal  -->
-                <ControlTemplate TargetType="Control">
-                    <Grid Background="{TemplateBinding Background}">
-                        <Grid
-                            Margin="{TemplateBinding Padding}"
-                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" MinWidth="32" />
-                            </Grid.ColumnDefinitions>
+    <!-- Deprecated in .NET 10. Replaced with DefaultDataGridColumnFloatingHeaderStyle resource -->
+    <Style x:Key="DefaultDragIndicatorStyleStyle" BasedOn="{StaticResource DefaultDataGridColumnFloatingHeaderStyle}"  TargetType="{x:Type Control}" />
 
-                            <!-- <ContentPresenter Content="{TemplateBinding Content}" /> -->
-
-                        
-                            <TextBlock
-                                x:Name="SortIcon"
-                                Grid.Column="1"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontSize="12"
-                                Opacity="0"
-                                FontFamily="{DynamicResource SymbolThemeFontFamily}"
-                                Text="&#xE8CB;" />
-                        </Grid>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="SortStates">
-                                <VisualState x:Name="Unsorted" />
-                                <VisualState x:Name="SortAscending">
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="SortIcon"
-                                            Storyboard.TargetProperty="Opacity"
-                                            To="1"
-                                            Duration="0" />
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="SortDescending">
-                                    <Storyboard>
-                                        <DoubleAnimation
-                                            Storyboard.TargetName="SortIcon"
-                                            Storyboard.TargetProperty="Opacity"
-                                            To="1"
-                                            Duration="0" />
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
 
     <Style x:Key="TextBoxStyle" TargetType="TextBox">
         <Setter Property="Margin" Value="3" />
@@ -529,7 +574,8 @@
         <Setter Property="RowHeaderStyle" Value="{StaticResource DefaultDataGridRowHeaderStyle}" />
         <Setter Property="CellStyle" Value="{StaticResource DefaultDataGridCellStyle}" />
         <Setter Property="ColumnHeaderStyle" Value="{StaticResource DefaultDataGridColumnHeaderStyle}" />
-        <Setter Property="DragIndicatorStyle" Value="{StaticResource DefaultDragIndicatorStyleStyle}" />
+        <Setter Property="DropLocationIndicatorStyle" Value="{StaticResource DefaultDataGridHeaderDropSeparatorStyle}" />
+        <Setter Property="DragIndicatorStyle" Value="{StaticResource DefaultDataGridColumnFloatingHeaderStyle}" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -782,7 +828,21 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
 
-    <Style BasedOn="{StaticResource DefaultDataGridColumnHeadersPresenterStyle}" TargetType="{x:Type DataGridColumnHeadersPresenter}" />
+    <!-- DataGrid ColumnHeaders Presenter Style -->
+    <Style x:Key="{x:Type DataGridColumnHeadersPresenter}" TargetType="{x:Type DataGridColumnHeadersPresenter}"
+            BasedOn="{StaticResource DefaultDataGridColumnHeadersPresenterStyle}" />
+    
+    <!--DataGrid Column Header Style-->
+    <Style x:Key="{x:Type DataGridColumnHeader}" TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource DefaultDataGridColumnHeaderStyle}" />
+    
+    
+    <!--DataGridColumnHeader Other Styles-->
+    <Style x:Key="{x:Static DataGridColumnHeader.ColumnHeaderDropSeparatorStyleKey}" TargetType="{x:Type Separator}" 
+        BasedOn="{StaticResource DefaultDataGridHeaderDropSeparatorStyle}" />
+    <Style x:Key="{x:Static DataGridColumnHeader.ColumnFloatingHeaderStyleKey}" TargetType="{x:Type Control}"
+        BasedOn="{StaticResource DefaultDataGridColumnFloatingHeaderStyle}" />
+
+    <!-- DataGrid Style -->
     <Style BasedOn="{StaticResource DefaultDataGridStyle}" TargetType="{x:Type DataGrid}" />
 
 </ResourceDictionary>

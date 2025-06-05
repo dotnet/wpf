@@ -7,9 +7,48 @@
 
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" >
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:fluentcontrols="clr-namespace:Fluent.Controls" >
 
-    <Style x:Key="DefaultListViewStyle" TargetType="{x:Type ListView}">
+    <fluentcontrols:ViewIsGridViewConverter x:Key="ViewIsGridViewConverter" />
+
+    <ControlTemplate x:Key="ListViewTemplate" TargetType="{x:Type ListView}">
+        <Border BorderThickness="{TemplateBinding BorderThickness}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                Background="{TemplateBinding Background}">
+            <Grid>
+                <ScrollViewer x:Name="PART_ContentHost"
+                            Padding="{TemplateBinding Padding}"
+                            CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"
+                            HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                            VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                    <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                </ScrollViewer>
+                <Rectangle x:Name="PART_DisabledVisual"
+                    Opacity="0"
+                    RadiusX="2"
+                    RadiusY="2"
+                    Stretch="Fill"
+                    Stroke="Transparent"
+                    StrokeThickness="0"
+                    Visibility="Collapsed">
+                    <Rectangle.Fill>
+                        <SolidColorBrush Color="{DynamicResource ControlFillColorDefault}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsGrouping" Value="True">
+                <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="PART_DisabledVisual" Property="Visibility" Value="Visible" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="BaseListViewStyle" TargetType="{x:Type ListView}">
         <Setter Property="Margin" Value="0" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Background" Value="{DynamicResource ListViewBackground}"/>
@@ -30,50 +69,25 @@
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ListView}">
-                    <Border
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        Background="{TemplateBinding Background}">
-                        <Grid>
-                            <ScrollViewer
-                                x:Name="PART_ContentHost"
-                                Padding="{TemplateBinding Padding}"
-                                CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"
-                                HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-                                VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
-                                <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                            </ScrollViewer>
-                            <Rectangle
-                                x:Name="PART_DisabledVisual"
-                                Opacity="0"
-                                RadiusX="2"
-                                RadiusY="2"
-                                Stretch="Fill"
-                                Stroke="Transparent"
-                                StrokeThickness="0"
-                                Visibility="Collapsed">
-                                <Rectangle.Fill>
-                                    <SolidColorBrush Color="{DynamicResource ControlFillColorDefault}" />
-                                </Rectangle.Fill>
-                            </Rectangle>
-                        </Grid>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsGrouping" Value="True">
-                            <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="PART_DisabledVisual" Property="Visibility" Value="Visible" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+    </Style>
+
+    <Style x:Key="DefaultListViewStyle" TargetType="{x:Type ListView}" BasedOn="{StaticResource BaseListViewStyle}">
+        <Setter Property="Template" Value="{StaticResource ListViewTemplate}"/>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding View, RelativeSource={RelativeSource Self}, Converter={StaticResource ViewIsGridViewConverter}}" Value="True">
+                <Setter Property="Template" Value="{StaticResource GridViewTemplate}" />
+                <Setter Property="ItemContainerStyle" Value="{DynamicResource {x:Static GridView.GridViewItemContainerStyleKey}}" />
+                <Setter Property="GridView.ColumnHeaderContainerStyle" Value="{DynamicResource DefaultGridViewColumnHeaderStyle}" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
     <Style BasedOn="{StaticResource DefaultListViewStyle}" TargetType="{x:Type ListView}" />
+
+    <Style x:Key="{x:Static GridView.GridViewStyleKey}" TargetType="ListView" BasedOn="{StaticResource BaseListViewStyle}">
+        <Setter Property="ItemContainerStyle" Value="{DynamicResource {x:Static GridView.GridViewItemContainerStyleKey}}" />
+        <Setter Property="Template" Value="{StaticResource GridViewTemplate}" />
+        <Setter Property="GridView.ColumnHeaderContainerStyle" Value="{DynamicResource DefaultGridViewColumnHeaderStyle}" />
+    </Style>
 
 </ResourceDictionary>

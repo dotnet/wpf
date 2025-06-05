@@ -348,6 +348,22 @@
     <SolidColorBrush x:Key="ContextMenuForeground" Color="{StaticResource SystemColorWindowTextColor}" />
 
     <!--  DataGrid  -->
+    <SolidColorBrush x:Key="DataGridColumnFloatingHeaderBorderBrush" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="DataGridHeaderDropSeparatorBackground" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="DataGridHeaderSeparatorBrush" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="DataGridColumnHeaderBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="DataGridHeaderBackground" Color="{StaticResource SystemColorButtonFaceColor}" />
+    <SolidColorBrush x:Key="DataGridHeaderBackgroundPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <SolidColorBrush x:Key="DataGridHeaderBackgroundPressed" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <SolidColorBrush x:Key="DataGridHeaderBackgroundDisabled" Color="{StaticResource SystemColorButtonFaceColor}" />
+    <SolidColorBrush x:Key="DataGridHeaderBackgroundSelected" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <SolidColorBrush x:Key="DataGridHeaderBorderBrush" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="DataGridHeaderBorderBrushPointerOver" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="DataGridHeaderBorderBrushPressed" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <SolidColorBrush x:Key="DataGridHeaderBorderBrushDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+    <SolidColorBrush x:Key="DataGridHeaderBorderBrushSelected" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="DataGridHeaderForegroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+    
     <SolidColorBrush x:Key="DataGridRowSelectedBackgroundThemeBrush" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="DataGridRowSelectedForegroundThemeBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
 

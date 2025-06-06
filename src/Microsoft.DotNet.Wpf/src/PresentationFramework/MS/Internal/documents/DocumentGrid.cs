@@ -2319,7 +2319,7 @@ namespace MS.Internal.Documents
                 return;
             }
 
-            if (!DoubleUtil.AreClose(1.0, neededScaleFactor))
+            if (!DoubleUtil.IsOne(neededScaleFactor))
             {
                 //Rescale the row.
                 ApplyViewParameters(pivotRow);

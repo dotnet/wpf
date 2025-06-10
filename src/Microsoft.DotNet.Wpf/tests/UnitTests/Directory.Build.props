@@ -8,9 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Shared\ModuleInitializer.cs" />  
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="$(CoverletVersion)" GeneratePathProperty="true" PrivateAssets="all" />
   </ItemGroup>
+
 </Project>

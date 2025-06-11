@@ -474,11 +474,6 @@ namespace System.Windows.Data
                 error = null;   // indicate unknown error
                 e = ex;
             }
-            catch // non CLS compliant exception
-            {
-                error = null;   // indicate unknown error
-                e = new InvalidOperationException(SR.Format(SR.ObjectDataProviderNonCLSException, _objectType.Name));
-            }
 
             if (e != null || error != null)
             {
@@ -552,11 +547,6 @@ namespace System.Windows.Data
                 }
                 error = null;   // indicate unknown error
                 e = ex;
-            }
-            catch   //FXCop Fix: CatchNonClsCompliantExceptionsInGeneralHandlers
-            {
-                error = null;   // indicate unknown error
-                e = new InvalidOperationException(SR.Format(SR.ObjectDataProviderNonCLSExceptionInvoke, MethodName, _objectType.Name));
             }
 
             if (e != null || error != null)

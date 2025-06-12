@@ -1950,7 +1950,7 @@
         <ColumnDefinition Width="*" />
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
-      <ContentPresenter x:Name="ContentPresenter" Grid.Column="0" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" TextElement.FontSize="{TemplateBinding FontSize}" />
+      <ContentPresenter x:Name="ContentPresenter" Grid.Column="0" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" RecognizesAccessKey="True" TextElement.FontSize="{TemplateBinding FontSize}" />
       <Grid x:Name="ChevronGrid" Grid.Column="1" Margin="0" VerticalAlignment="Center" Background="Transparent" RenderTransformOrigin="0.5, 0.5">
         <Grid.RenderTransform>
           <RotateTransform Angle="0" />
@@ -1983,7 +1983,7 @@
         <ColumnDefinition Width="*" />
         <ColumnDefinition Width="Auto" />
       </Grid.ColumnDefinitions>
-      <ContentPresenter x:Name="ContentPresenter" Grid.Column="0" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" TextElement.FontSize="{TemplateBinding FontSize}" />
+      <ContentPresenter x:Name="ContentPresenter" Grid.Column="0" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" RecognizesAccessKey="True" TextElement.FontSize="{TemplateBinding FontSize}" />
       <Grid x:Name="ChevronGrid" Grid.Column="1" Margin="0" VerticalAlignment="Center" Background="Transparent" RenderTransformOrigin="0.5, 0.5">
         <Grid.RenderTransform>
           <RotateTransform Angle="0" />
@@ -2016,7 +2016,7 @@
         <RowDefinition Height="*" />
         <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
-      <ContentPresenter x:Name="ContentPresenter" Grid.Row="0" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" TextElement.FontSize="{TemplateBinding FontSize}" />
+      <ContentPresenter x:Name="ContentPresenter" Grid.Row="0" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" RecognizesAccessKey="True" TextElement.FontSize="{TemplateBinding FontSize}" />
       <Grid x:Name="ChevronGrid" Grid.Row="1" Margin="0" VerticalAlignment="Center" Background="Transparent" RenderTransformOrigin="0.5, 0.5">
         <Grid.RenderTransform>
           <RotateTransform Angle="0" />
@@ -2052,7 +2052,7 @@
         <RowDefinition Height="*" />
         <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
-      <ContentPresenter x:Name="ContentPresenter" Grid.Row="0" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" TextElement.FontSize="{TemplateBinding FontSize}" />
+      <ContentPresenter x:Name="ContentPresenter" Grid.Row="0" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" RecognizesAccessKey="True" TextElement.FontSize="{TemplateBinding FontSize}" />
       <Grid x:Name="ChevronGrid" Grid.Row="1" Margin="0" VerticalAlignment="Center" Background="Transparent" RenderTransformOrigin="0.5, 0.5">
         <Grid.RenderTransform>
           <RotateTransform Angle="0" />
@@ -2109,7 +2109,7 @@
               <!-- Dummy border to store Animation factor for expander -->
               <Border x:Name="AnimationFactorBorder" Width="0" Visibility="Collapsed" />
               <Border x:Name="ContentPresenterBorder" Background="{DynamicResource ExpanderContentBackground}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,0,1,1" CornerRadius="0,0,4,4" Visibility="Collapsed">
-                <ContentPresenter x:Name="ContentPresenter" RecognizesAccessKey="True" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" />
+                <ContentPresenter x:Name="ContentPresenter" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" />
                 <Border.Resources>
                   <TranslateTransform x:Key="HeightAnimationNegative">
                     <TranslateTransform.Y>
@@ -3640,7 +3640,7 @@
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type RepeatButton}">
           <Border x:Name="ContentBorder" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}" Padding="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
-            <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" TextElement.Foreground="{TemplateBinding Foreground}" TextElement.FontSize="{TemplateBinding FontSize}" />
+            <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True" Content="{TemplateBinding Content}" TextElement.Foreground="{TemplateBinding Foreground}" TextElement.FontSize="{TemplateBinding FontSize}" />
           </Border>
           <ControlTemplate.Triggers>
             <Trigger Property="IsEnabled" Value="False">
@@ -4639,7 +4639,7 @@
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ToggleButton}">
           <Border x:Name="ContentBorder" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}" Padding="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
-            <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" TextElement.Foreground="{TemplateBinding Foreground}" TextElement.FontSize="{TemplateBinding FontSize}" />
+            <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True" Content="{TemplateBinding Content}" TextElement.Foreground="{TemplateBinding Foreground}" TextElement.FontSize="{TemplateBinding FontSize}" />
           </Border>
           <ControlTemplate.Triggers>
             <MultiTrigger>

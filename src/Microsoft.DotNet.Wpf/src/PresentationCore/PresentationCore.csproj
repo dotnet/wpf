@@ -728,6 +728,7 @@
     <Compile Include="System\Windows\Media\DrawingVisual.cs" />
     <Compile Include="System\Windows\Media\DrawingVisualDrawingContext.cs" />
     <Compile Include="System\Windows\Media\EllipseGeometry.cs" />
+    <Compile Include="System\Windows\Media\EmGlyphMetrics.cs" />
     <Compile Include="System\Windows\Media\EventProxy.cs" />
     <Compile Include="System\Windows\Media\FactoryMaker.cs" />
     <Compile Include="System\Windows\Media\FamilyMap.cs" />

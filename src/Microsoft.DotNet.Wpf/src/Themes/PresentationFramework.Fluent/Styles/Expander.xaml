@@ -36,6 +36,7 @@
                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                 Content="{TemplateBinding Content}"
+                RecognizesAccessKey="True"
                 TextElement.FontSize="{TemplateBinding FontSize}" />
             <Grid
                 x:Name="ChevronGrid"
@@ -96,6 +97,7 @@
                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                 Content="{TemplateBinding Content}"
+                RecognizesAccessKey="True"
                 TextElement.FontSize="{TemplateBinding FontSize}" />
             <Grid
                 x:Name="ChevronGrid"
@@ -156,6 +158,7 @@
                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                 Content="{TemplateBinding Content}"
+                RecognizesAccessKey="True"
                 TextElement.FontSize="{TemplateBinding FontSize}" />
             <Grid
                 x:Name="ChevronGrid"
@@ -219,6 +222,7 @@
                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                 Content="{TemplateBinding Content}"
+                RecognizesAccessKey="True"
                 TextElement.FontSize="{TemplateBinding FontSize}" />
             <Grid
                 x:Name="ChevronGrid"
@@ -331,7 +335,6 @@
                                     CornerRadius="0,0,4,4"
                                     Visibility="Collapsed">
                                 <ContentPresenter x:Name="ContentPresenter"
-                                                  RecognizesAccessKey="True"
                                                   Margin="{TemplateBinding Padding}"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"

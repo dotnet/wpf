@@ -88,7 +88,8 @@
   </PropertyGroup>
   <!-- XUnit-related (not extensions) -->
   <PropertyGroup>
-    <XUnitV3Version>2.0.2</XUnitV3Version>
+    <!-- Temporary: Remove once https://github.com/dotnet/arcade/pull/15904 flows to the repo -->
+    <XUnitV3Version>2.0.3</XUnitV3Version>
     <XUnitStaFactPackageVersion>2.1.7</XUnitStaFactPackageVersion>
   </PropertyGroup>
   <!-- Test related -->
@@ -100,7 +101,7 @@
     <SystemWindowsExtensionsTestDataVersion>8.0.0-beta.23107.1</SystemWindowsExtensionsTestDataVersion>
     <VerifyXunitV3Version>30.1.0</VerifyXunitV3Version>
     <!-- Shared test utilities with WinForms -->
-    <SystemPrivateWindowsCoreTestUtilitiesVersion>10.0.0-alpha.1.24571.3</SystemPrivateWindowsCoreTestUtilitiesVersion>
+    <SystemPrivateWindowsCoreTestUtilitiesVersion>10.0.0-preview.6.25313.5</SystemPrivateWindowsCoreTestUtilitiesVersion>
   </PropertyGroup>
   <!-- Code Coverage -->
   <PropertyGroup>

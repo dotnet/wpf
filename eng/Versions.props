@@ -87,7 +87,7 @@
   <!-- XUnit-related (not extensions) -->
   <PropertyGroup>
     <!-- Temporary: Remove once https://github.com/dotnet/arcade/pull/15904 flows to the repo -->
-    <XUnitV3Version>2.0.3</XUnitV3Version>
+    <XUnitV3Version>3.0.0-pre.25</XUnitV3Version>
     <XUnitStaFactPackageVersion>2.1.7</XUnitStaFactPackageVersion>
     <MicrosoftTestingPlatformVersion>1.7.2</MicrosoftTestingPlatformVersion>
   </PropertyGroup>

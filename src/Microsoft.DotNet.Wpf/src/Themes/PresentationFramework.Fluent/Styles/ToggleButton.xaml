@@ -51,6 +51,7 @@
                             x:Name="ContentPresenter"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            RecognizesAccessKey="True"
                             Content="{TemplateBinding Content}"
                             TextElement.Foreground="{TemplateBinding Foreground}"
                             TextElement.FontSize="{TemplateBinding FontSize}"/>

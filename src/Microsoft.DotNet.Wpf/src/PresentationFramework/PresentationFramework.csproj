@@ -1344,6 +1344,7 @@
     <Compile Include="System\Windows\TemplateVisualStateAttribute.cs" />
     <Compile Include="System\Windows\TextPanelProperties.cs" />
     <Compile Include="System\Windows\ThemeManager.cs" />
+    <Compile Include="System\Windows\ThemeManager2.cs" />
     <Compile Include="System\Windows\FluentThemeState.cs" />
     <Compile Include="System\Windows\ThemeMode.cs" />
     <Compile Include="System\Windows\ThemeModeConverter.cs" />

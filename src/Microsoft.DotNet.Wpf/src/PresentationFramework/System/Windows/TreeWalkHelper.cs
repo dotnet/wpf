@@ -457,9 +457,9 @@ namespace System.Windows
             if(fe is Window currentWindow)
             {
                 currentWindow.AreResourcesInitialized = true;
-                if(!ThemeManager.IgnoreWindowResourcesChange)
+                if(!ThemeManager2.IgnoreWindowResourcesChange)
                 {
-                    ThemeManager.SyncWindowThemeMode(currentWindow);
+                    ThemeManager2.SyncWindowThemeMode(currentWindow);
                 }
             }
 

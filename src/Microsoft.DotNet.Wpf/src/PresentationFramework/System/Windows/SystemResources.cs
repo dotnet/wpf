@@ -1390,9 +1390,9 @@ namespace System.Windows
 
                     SystemParameters.InvalidateWindowFrameThicknessProperties();
 
-                    if(ThemeManager.IsFluentThemeEnabled || ThemeManager.FluentEnabledWindows.Count > 0)
+                    if(ThemeManager2.IsFluentThemeEnabled || ThemeManager2.FluentEnabledWindows.Count > 0)
                     {
-                        ThemeManager.OnSystemThemeChanged();
+                        ThemeManager2.OnSystemThemeChanged();
                     }
                     break;
 

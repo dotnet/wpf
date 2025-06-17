@@ -581,7 +581,7 @@ namespace System.Windows
             {
                 VerifyContextAndObjectState();
 
-                if(!ThemeManager.IsValidThemeMode(value))
+                if(!ThemeManager2.IsValidThemeMode(value))
                 {
                     throw new ArgumentException(string.Format("ThemeMode value {0} is invalid. Use None, System, Light or Dark", value));
                 }
@@ -591,7 +591,7 @@ namespace System.Windows
 
                 if(!AreResourcesInitialized)
                 {
-                    ThemeManager.OnWindowThemeChanged(this, oldTheme, value);
+                    ThemeManager2.OnWindowThemeChanged(this, oldTheme, value);
                     AreResourcesInitialized = false;
 
                     _reloadFluentDictionary = true;
@@ -603,7 +603,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    ThemeManager.OnWindowThemeChanged(this, oldTheme, value);
+                    ThemeManager2.OnWindowThemeChanged(this, oldTheme, value);
                 }
             }
         }
@@ -2137,7 +2137,7 @@ namespace System.Windows
             {
                 if(value != null && ThemeMode != ThemeMode.None)
                 {
-                    value.MergedDictionaries.Insert(0, ThemeManager.GetThemeDictionary(ThemeMode));
+                    value.MergedDictionaries.Insert(0, ThemeManager2.GetThemeDictionary(ThemeMode));
                     invalidateResources = true;
                 }
 
@@ -2379,7 +2379,7 @@ namespace System.Windows
 
                 if(ThemeMode != ThemeMode.None)
                 {
-                    ThemeManager.FluentEnabledWindows.Remove(this);
+                    ThemeManager2.FluentEnabledWindows.Remove(this);
                 }
             }
             finally
@@ -2580,15 +2580,15 @@ namespace System.Windows
 
             if (Standard.Utility.IsOSWindows10OrNewer)
             {
-                if (ThemeManager.IsFluentThemeEnabled)
+                if (ThemeManager2.IsFluentThemeEnabled)
                 {
-                    ThemeManager.ApplyStyleOnWindow(this);
+                    ThemeManager2.ApplyStyleOnWindow(this);
                 }
 
                 if (_deferThemeLoading)
                 {
                     _deferThemeLoading = false;
-                    ThemeManager.OnWindowThemeChanged(this, ThemeMode.None, ThemeMode);
+                    ThemeManager2.OnWindowThemeChanged(this, ThemeMode.None, ThemeMode);
                 }
             }
 

@@ -30,7 +30,7 @@ namespace System.Windows.Controls
                 if (_defaultElementStyle == null)
                 {
                     Style baseStyle = null;
-                    if (ThemeManager.IsFluentThemeEnabled)
+                    if (ThemeManager2.IsFluentThemeEnabled)
                     {
                         baseStyle = Application.Current.FindResource(typeof(CheckBox)) as Style;
                     }
@@ -62,7 +62,7 @@ namespace System.Windows.Controls
                 if (_defaultEditingElementStyle == null)
                 {
                     Style baseStyle = null;
-                    if (ThemeManager.IsFluentThemeEnabled)
+                    if (ThemeManager2.IsFluentThemeEnabled)
                     {
                         baseStyle = Application.Current.FindResource(typeof(CheckBox)) as Style;
                     }

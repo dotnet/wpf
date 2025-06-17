@@ -896,7 +896,7 @@ namespace System.Windows
                 {
                     if(value != null && ThemeMode != ThemeMode.None)
                     {
-                        value.MergedDictionaries.Insert(0, ThemeManager.GetThemeDictionary(ThemeMode));
+                        value.MergedDictionaries.Insert(0, ThemeManager2.GetThemeDictionary(ThemeMode));
                     }
                     _reloadFluentDictionary = false;
                     invalidateResources = true;
@@ -966,7 +966,7 @@ namespace System.Windows
             set
             {
                 VerifyAccess();
-                if (!ThemeManager.IsValidThemeMode(value))
+                if (!ThemeManager2.IsValidThemeMode(value))
                 {
                     throw new ArgumentException(string.Format("ThemeMode value {0} is invalid. Use None, System, Light or Dark", value));
                 }
@@ -977,7 +977,7 @@ namespace System.Windows
                 if(!_resourcesInitialized)
                 {
 
-                    ThemeManager.OnApplicationThemeChanged(oldValue, value);
+                    ThemeManager2.OnApplicationThemeChanged(oldValue, value);
 
                     // If the resources are not initializd, fluent dictionary
                     // included in this operation will be reset.
@@ -993,7 +993,7 @@ namespace System.Windows
                     return;
                 }
 
-                ThemeManager.OnApplicationThemeChanged(oldValue, value);
+                ThemeManager2.OnApplicationThemeChanged(oldValue, value);
             }
         }
 
@@ -1733,9 +1733,9 @@ namespace System.Windows
             //  - the event is not raised due to the change in Application.ThemeMode
             //      i.e. SkipAppThemeModeSyncing is set to true
             if (!info.IsIndividualResourceChange
-                    && !ThemeManager.SkipAppThemeModeSyncing)
+                    && !ThemeManager2.SkipAppThemeModeSyncing)
             {
-                ThemeManager.SyncApplicationThemeMode();
+                ThemeManager2.SyncApplicationThemeMode();
             }
             
             // Invalidate ResourceReference properties on all the windows.

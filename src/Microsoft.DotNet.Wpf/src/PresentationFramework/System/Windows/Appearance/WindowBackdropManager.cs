@@ -35,7 +35,7 @@ internal static class WindowBackdropManager
             return false;
         }
 
-        if(!ThemeManager.IsFluentThemeEnabled && window.ThemeMode == ThemeMode.None)
+        if(!ThemeManager2.IsFluentThemeEnabled && window.ThemeMode == ThemeMode.None)
         {
             return false;
         }

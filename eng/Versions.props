@@ -139,6 +139,6 @@
     <SystemReflectionMetadataLoadContextPackage>System.Reflection.MetadataLoadContext</SystemReflectionMetadataLoadContextPackage>
   </PropertyGroup>
   <PropertyGroup>
-    <MicrosoftDotNetWpfDncEngVersion>10.0.0-preview.6.25280.1</MicrosoftDotNetWpfDncEngVersion>
+    <MicrosoftDotNetWpfDncEngVersion>10.0.0-preview.7.25317.2</MicrosoftDotNetWpfDncEngVersion>
   </PropertyGroup>
 </Project>

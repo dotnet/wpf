@@ -19,33 +19,33 @@
             dotnet/winforms is handling versions for the analyzers.
       -->
     <AssemblyVersion>$(MajorVersion).$(MinorVersion).0.0</AssemblyVersion>
-    <MicrosoftDotNetCodeAnalysisVersion>10.0.0-beta.25320.106</MicrosoftDotNetCodeAnalysisVersion>
-    <MicrosoftSourceLinkAzureReposGitVersion>10.0.0-beta.25320.106</MicrosoftSourceLinkAzureReposGitVersion>
-    <MicrosoftSourceLinkGitHubVersion>10.0.0-beta.25320.106</MicrosoftSourceLinkGitHubVersion>
+    <MicrosoftDotNetCodeAnalysisVersion>10.0.0-beta.25320.118</MicrosoftDotNetCodeAnalysisVersion>
+    <MicrosoftSourceLinkAzureReposGitVersion>10.0.0-beta.25320.118</MicrosoftSourceLinkAzureReposGitVersion>
+    <MicrosoftSourceLinkGitHubVersion>10.0.0-beta.25320.118</MicrosoftSourceLinkGitHubVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/winforms -->
   <PropertyGroup>
-    <MicrosoftDotnetWinFormsProjectTemplatesVersion>10.0.0-preview.7.25320.106</MicrosoftDotnetWinFormsProjectTemplatesVersion>
-    <MicrosoftPrivateWinformsVersion>10.0.0-preview.7.25320.106</MicrosoftPrivateWinformsVersion>
-    <SystemDrawingCommonVersion>10.0.0-preview.7.25320.106</SystemDrawingCommonVersion>
+    <MicrosoftDotnetWinFormsProjectTemplatesVersion>10.0.0-preview.7.25320.118</MicrosoftDotnetWinFormsProjectTemplatesVersion>
+    <MicrosoftPrivateWinformsVersion>10.0.0-preview.7.25320.118</MicrosoftPrivateWinformsVersion>
+    <SystemDrawingCommonVersion>10.0.0-preview.7.25320.118</SystemDrawingCommonVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/runtime -->
   <PropertyGroup>
-    <MicrosoftNETCoreAppRefVersion>10.0.0-preview.7.25320.106</MicrosoftNETCoreAppRefVersion>
-    <MicrosoftNETCorePlatformsVersion>10.0.0-preview.7.25320.106</MicrosoftNETCorePlatformsVersion>
-    <SystemCodeDomPackageVersion>10.0.0-preview.7.25320.106</SystemCodeDomPackageVersion>
-    <SystemConfigurationConfigurationManagerPackageVersion>10.0.0-preview.7.25320.106</SystemConfigurationConfigurationManagerPackageVersion>
-    <SystemDiagnosticsEventLogPackageVersion>10.0.0-preview.7.25320.106</SystemDiagnosticsEventLogPackageVersion>
-    <SystemDirectoryServicesVersion>10.0.0-preview.7.25320.106</SystemDirectoryServicesVersion>
-    <SystemFormatsNrbfVersion>10.0.0-preview.7.25320.106</SystemFormatsNrbfVersion>
-    <SystemIOPackagingVersion>10.0.0-preview.7.25320.106</SystemIOPackagingVersion>
-    <SystemReflectionMetadataLoadContextVersion>10.0.0-preview.7.25320.106</SystemReflectionMetadataLoadContextVersion>
+    <MicrosoftNETCoreAppRefVersion>10.0.0-preview.7.25320.118</MicrosoftNETCoreAppRefVersion>
+    <MicrosoftNETCorePlatformsVersion>10.0.0-preview.7.25320.118</MicrosoftNETCorePlatformsVersion>
+    <SystemCodeDomPackageVersion>10.0.0-preview.7.25320.118</SystemCodeDomPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>10.0.0-preview.7.25320.118</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>10.0.0-preview.7.25320.118</SystemDiagnosticsEventLogPackageVersion>
+    <SystemDirectoryServicesVersion>10.0.0-preview.7.25320.118</SystemDirectoryServicesVersion>
+    <SystemFormatsNrbfVersion>10.0.0-preview.7.25320.118</SystemFormatsNrbfVersion>
+    <SystemIOPackagingVersion>10.0.0-preview.7.25320.118</SystemIOPackagingVersion>
+    <SystemReflectionMetadataLoadContextVersion>10.0.0-preview.7.25320.118</SystemReflectionMetadataLoadContextVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
-    <SystemResourcesExtensionsVersion>10.0.0-preview.7.25320.106</SystemResourcesExtensionsVersion>
-    <SystemRuntimeSerializationFormattersPackageVersion>10.0.0-preview.7.25320.106</SystemRuntimeSerializationFormattersPackageVersion>
-    <SystemSecurityCryptographyXmlPackageVersion>10.0.0-preview.7.25320.106</SystemSecurityCryptographyXmlPackageVersion>
-    <SystemSecurityPermissionsPackageVersion>10.0.0-preview.7.25320.106</SystemSecurityPermissionsPackageVersion>
-    <SystemWindowsExtensionsPackageVersion>10.0.0-preview.7.25320.106</SystemWindowsExtensionsPackageVersion>
+    <SystemResourcesExtensionsVersion>10.0.0-preview.7.25320.118</SystemResourcesExtensionsVersion>
+    <SystemRuntimeSerializationFormattersPackageVersion>10.0.0-preview.7.25320.118</SystemRuntimeSerializationFormattersPackageVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>10.0.0-preview.7.25320.118</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>10.0.0-preview.7.25320.118</SystemSecurityPermissionsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>10.0.0-preview.7.25320.118</SystemWindowsExtensionsPackageVersion>
   </PropertyGroup>
   <!-- These are minimum versions used for netfx-targeted components that run in Visual Studio because in those cases,
        Visual Studio is providing those assemblies, and we should work with whichever version it ships. -->
@@ -59,7 +59,7 @@
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>
     <MicrosoftDotNetApiCompatVersion>9.0.0-beta.24053.1</MicrosoftDotNetApiCompatVersion>
-    <MicrosoftDotNetGenAPIVersion>10.0.0-beta.25320.106</MicrosoftDotNetGenAPIVersion>
+    <MicrosoftDotNetGenAPIVersion>10.0.0-beta.25320.118</MicrosoftDotNetGenAPIVersion>
   </PropertyGroup>
   <!-- Sourcelink -->
   <PropertyGroup>

@@ -7,6 +7,7 @@
     <TargetFramework Condition="!$(TargetFramework.Contains('windows'))">$(TargetFramework)-windows</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <StrongNameKeyId>Open</StrongNameKeyId>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <ItemGroup>

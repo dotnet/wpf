@@ -196,6 +196,7 @@
                                 Grid.Column="1"
                                 VerticalAlignment="Stretch"
                                 Style="{StaticResource CalendarButtonStyle}"
+                                AutomationProperties.Name="Show Calendar"
                                 Focusable="False"
                                 MinWidth="30">
                                 <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}"

@@ -2605,7 +2605,7 @@
               <Border x:Name="BorderElement" Grid.ColumnSpan="2" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding Border.CornerRadius}" MinHeight="32">
               </Border>
               <DatePickerTextBox x:Name="PART_TextBox" Padding="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-              <Button x:Name="PART_Button" Grid.Column="1" VerticalAlignment="Stretch" Style="{StaticResource CalendarButtonStyle}" Focusable="False" MinWidth="30">
+              <Button x:Name="PART_Button" Grid.Column="1" VerticalAlignment="Stretch" Style="{StaticResource CalendarButtonStyle}" AutomationProperties.Name="Show Calendar" Focusable="False" MinWidth="30">
                 <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" FontSize="{DynamicResource DatePickerCalendarButtonIconSize}" Text="{StaticResource DatePickerCalendarGlyph}" HorizontalAlignment="Center" VerticalAlignment="Center" />
               </Button>
             </Grid>

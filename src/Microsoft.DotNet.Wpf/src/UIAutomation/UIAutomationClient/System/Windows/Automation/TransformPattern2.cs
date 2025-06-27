@@ -41,7 +41,7 @@ namespace System.Windows.Automation
         #region Public Constants and Readonly Fields
 
         /// <summary>Returns the Transform pattern identifier</summary>
-        public static readonly new AutomationPattern Pattern = TransformPattern2Identifiers.Pattern;
+        public static new readonly AutomationPattern Pattern = TransformPattern2Identifiers.Pattern;
 
         /// <summary>Property ID: CanZoom - Indicates whether the control supports zooming of its viewport</summary>
         public static readonly AutomationProperty CanZoomProperty = TransformPattern2Identifiers.CanZoomProperty;

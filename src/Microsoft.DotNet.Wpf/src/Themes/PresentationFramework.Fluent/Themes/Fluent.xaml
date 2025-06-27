@@ -1359,6 +1359,7 @@
   </Style>
   <!--  Style and template for the DataGridColumnHeader.  -->
   <Style x:Key="DefaultDataGridColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+    <Setter Property="Foreground" Value="{DynamicResource DataGridColumnHeaderForeground}" />
     <Setter Property="Background" Value="{DynamicResource DataGridColumnHeaderBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource DataGridHeaderBorderBrush}" />
     <Setter Property="MinHeight" Value="{StaticResource DataGridColumnHeaderMinHeight}" />

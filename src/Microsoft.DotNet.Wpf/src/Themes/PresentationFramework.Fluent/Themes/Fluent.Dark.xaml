@@ -526,6 +526,7 @@
   <!-- DataGridHeaderBackground is used for PART_FillerColumnHeader and Row Headers
              whereas DataGridColumnHeaderBackground is used for Column Headers. This is a bit confusing
              but due to transparency in colors had to follow this.  -->
+  <SolidColorBrush x:Key="DataGridColumnHeaderForeground" Color="{StaticResource TextFillColorPrimary}" />
   <SolidColorBrush x:Key="DataGridColumnHeaderBackground" Color="{StaticResource SubtleFillColorTransparent}" />
   <SolidColorBrush x:Key="DataGridHeaderBackground" Color="{StaticResource SubtleFillColorTertiary}" />
   <SolidColorBrush x:Key="DataGridHeaderBackgroundPointerOver" Color="{StaticResource SubtleFillColorSecondary}" />
@@ -2161,6 +2162,7 @@
   </Style>
   <!--  Style and template for the DataGridColumnHeader.  -->
   <Style x:Key="DefaultDataGridColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+    <Setter Property="Foreground" Value="{DynamicResource DataGridColumnHeaderForeground}" />
     <Setter Property="Background" Value="{DynamicResource DataGridColumnHeaderBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource DataGridHeaderBorderBrush}" />
     <Setter Property="MinHeight" Value="{StaticResource DataGridColumnHeaderMinHeight}" />

@@ -2476,7 +2476,7 @@
                   <Setter.Value>
                     <ControlTemplate TargetType="Button">
                       <Border x:Name="ButtonLayoutBorder" Margin="{DynamicResource DatePickerCalendarButtonMargin}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding Border.CornerRadius}">
-                        <ContentPresenter x:Name="GlyphElement" TextElement.Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <TextBlock x:Name="GlyphElement" TextElement.Foreground="{TemplateBinding Foreground}" FontFamily="{DynamicResource SymbolThemeFontFamily}" FontSize="{DynamicResource DatePickerCalendarButtonIconSize}" Text="{StaticResource DatePickerCalendarGlyph}" VerticalAlignment="Center" HorizontalAlignment="Center" />
                       </Border>
                       <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -2505,9 +2505,7 @@
               <Border x:Name="BorderElement" Grid.ColumnSpan="2" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding Border.CornerRadius}" MinHeight="32">
               </Border>
               <DatePickerTextBox x:Name="PART_TextBox" Padding="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-              <Button x:Name="PART_Button" Grid.Column="1" VerticalAlignment="Stretch" Style="{StaticResource CalendarButtonStyle}" AutomationProperties.Name="Show Calendar" Focusable="False" MinWidth="30">
-                <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" FontSize="{DynamicResource DatePickerCalendarButtonIconSize}" Text="{StaticResource DatePickerCalendarGlyph}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-              </Button>
+              <Button x:Name="PART_Button" Grid.Column="1" VerticalAlignment="Stretch" Style="{StaticResource CalendarButtonStyle}" Focusable="False" MinWidth="30" />
             </Grid>
             <Popup x:Name="PART_Popup" VerticalAlignment="Top" AllowsTransparency="True" Placement="Bottom" PlacementTarget="{Binding ElementName=PART_Root}" StaysOpen="False">
             </Popup>

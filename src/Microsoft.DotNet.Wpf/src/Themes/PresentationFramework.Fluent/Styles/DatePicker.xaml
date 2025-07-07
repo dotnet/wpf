@@ -148,8 +148,11 @@
                                                 BorderThickness="{TemplateBinding BorderThickness}"
                                                 Background="{TemplateBinding Background}"
                                                 CornerRadius="{TemplateBinding Border.CornerRadius}">
-                                                <ContentPresenter x:Name="GlyphElement"
+                                                <TextBlock x:Name="GlyphElement"
                                                               TextElement.Foreground="{TemplateBinding Foreground}"
+                                                              FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                              FontSize="{DynamicResource DatePickerCalendarButtonIconSize}"
+                                                              Text="{StaticResource DatePickerCalendarGlyph}"
                                                               VerticalAlignment="Center"
                                                               HorizontalAlignment="Center" />
                                             </Border>
@@ -196,15 +199,8 @@
                                 Grid.Column="1"
                                 VerticalAlignment="Stretch"
                                 Style="{StaticResource CalendarButtonStyle}"
-                                AutomationProperties.Name="Show Calendar"
                                 Focusable="False"
-                                MinWidth="30">
-                                <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}"
-                                        FontSize="{DynamicResource DatePickerCalendarButtonIconSize}"
-                                        Text="{StaticResource DatePickerCalendarGlyph}"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center" />
-                            </Button>
+                                MinWidth="30" />
                         </Grid>
                         
                         <Popup

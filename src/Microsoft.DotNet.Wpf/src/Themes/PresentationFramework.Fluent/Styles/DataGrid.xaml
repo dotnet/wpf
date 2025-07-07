@@ -689,9 +689,7 @@
     <system:Double x:Key="DataGridCheckBoxWidth">22</system:Double>
 
     <Style x:Key="DataGridCheckBoxElementDefaultStyle" TargetType="{x:Type CheckBox}">
-        <!--  Universal WPF UI focus  -->
         <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
-        <!--  Universal WPF UI focus  -->
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground">
             <Setter.Value>

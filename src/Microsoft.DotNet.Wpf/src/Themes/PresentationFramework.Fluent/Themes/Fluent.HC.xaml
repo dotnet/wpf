@@ -1436,9 +1436,7 @@
     </Setter>
   </Style>
   <Style x:Key="DefaultComboBoxItemStyle" TargetType="{x:Type ComboBoxItem}">
-    <!--  Universal WPF UI focus  -->
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
-    <!--  Universal WPF UI focus  -->
     <Setter Property="Foreground" Value="{DynamicResource ComboBoxForeground}" />
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="Margin" Value="{StaticResource ComboBoxItemMargin}" />
@@ -2252,9 +2250,7 @@
   <system:Double x:Key="DataGridCheckBoxHeight">22</system:Double>
   <system:Double x:Key="DataGridCheckBoxWidth">22</system:Double>
   <Style x:Key="DataGridCheckBoxElementDefaultStyle" TargetType="{x:Type CheckBox}">
-    <!--  Universal WPF UI focus  -->
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
-    <!--  Universal WPF UI focus  -->
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="Foreground">
       <Setter.Value>
@@ -4167,9 +4163,7 @@
   <system:Double x:Key="RadioButtonStrokeThickness">1</system:Double>
   <Thickness x:Key="RadioButtonPadding">8,6,0,0</Thickness>
   <Style x:Key="DefaultRadioButtonStyle" TargetType="{x:Type RadioButton}">
-    <!--  Universal WPF UI focus  -->
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
-    <!--  Universal WPF UI focus  -->
     <Setter Property="Background" Value="{DynamicResource RadioButtonBackground}" />
     <Setter Property="Foreground" Value="{DynamicResource RadioButtonForeground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource RadioButtonBorderBrush}" />
@@ -4322,9 +4316,7 @@
   <Thickness x:Key="RepeatButtonBorderThemeThickness">1</Thickness>
   <Thickness x:Key="RepeatButtonIconMargin">0,0,8,0</Thickness>
   <Style x:Key="DefaultRepeatButtonStyle" TargetType="{x:Type RepeatButton}">
-    <!--  Universal WPF UI focus  -->
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
-    <!--  Universal WPF UI focus  -->
     <Setter Property="Background" Value="{DynamicResource RepeatButtonBackground}" />
     <Setter Property="Foreground" Value="{DynamicResource RepeatButtonForeground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
@@ -5321,9 +5313,7 @@
   <Thickness x:Key="ToggleButtonBorderThemeThickness">1</Thickness>
   <Thickness x:Key="ToggleButtonIconMargin">0,0,8,0</Thickness>
   <Style x:Key="DefaultToggleButtonStyle" TargetType="{x:Type ToggleButton}">
-    <!--  Universal WPF UI focus  -->
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
-    <!--  Universal WPF UI focus  -->
     <Setter Property="Background" Value="{DynamicResource ToggleButtonBackground}" />
     <Setter Property="Foreground" Value="{DynamicResource ToggleButtonForeground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
@@ -5653,9 +5643,7 @@
   <system:String x:Key="TreeViewChevronRightGlyph"></system:String>
   <system:String x:Key="TreeViewChevronLeftGlyph"></system:String>
   <Style x:Key="ExpandCollapseToggleButtonStyle" TargetType="{x:Type ToggleButton}">
-    <!--  Universal WPF UI focus  -->
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
-    <!--  Universal WPF UI focus  -->
     <Setter Property="Focusable" Value="False" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -5694,9 +5682,7 @@
     </Setter>
   </Style>
   <Style x:Key="DefaultTreeViewItemStyle" TargetType="{x:Type TreeViewItem}">
-    <!--  Universal WPF UI focus  -->
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
-    <!--  Universal WPF UI focus  -->
     <Setter Property="Foreground" Value="{DynamicResource TreeViewItemForeground}" />
     <Setter Property="Background" Value="{DynamicResource TreeViewItemBackground}" />
     <Setter Property="Margin" Value="0,0,0,2" />

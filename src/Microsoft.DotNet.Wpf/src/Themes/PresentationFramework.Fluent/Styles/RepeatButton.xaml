@@ -11,9 +11,7 @@
     <Thickness x:Key="RepeatButtonIconMargin">0,0,8,0</Thickness>
 
     <Style x:Key="DefaultRepeatButtonStyle" TargetType="{x:Type RepeatButton}">
-        <!--  Universal WPF UI focus  -->
         <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
-        <!--  Universal WPF UI focus  -->
         <Setter Property="Background" Value="{DynamicResource RepeatButtonBackground}" />
         <Setter Property="Foreground" Value="{DynamicResource RepeatButtonForeground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />

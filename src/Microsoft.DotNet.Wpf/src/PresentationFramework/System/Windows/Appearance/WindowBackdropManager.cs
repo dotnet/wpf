@@ -123,6 +123,9 @@ internal static class WindowBackdropManager
 
     private static bool UpdateGlassFrame(IntPtr hwnd, WindowBackdropType backdropType)
     {
+        if (!NativeMethods.DwmIsCompositionEnabled())
+            return false;
+            
         MARGINS margins = new MARGINS();
         if (backdropType != WindowBackdropType.None)
         {

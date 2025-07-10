@@ -127,6 +127,7 @@
         <Setter Property="IsTodayHighlighted" Value="True" />
         <Setter Property="SelectedDateFormat" Value="Short" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="Local" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DatePicker}">
@@ -193,13 +194,14 @@
                             <DatePickerTextBox x:Name="PART_TextBox" 
                                             Padding="{TemplateBinding Padding}"
                                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                            KeyboardNavigation.TabIndex="0" />
 
                             <Button x:Name="PART_Button" 
                                 Grid.Column="1"
                                 VerticalAlignment="Stretch"
                                 Style="{StaticResource CalendarButtonStyle}"
-                                Focusable="False"
+                                KeyboardNavigation.TabIndex="1"
                                 MinWidth="30" />
                         </Grid>
                         

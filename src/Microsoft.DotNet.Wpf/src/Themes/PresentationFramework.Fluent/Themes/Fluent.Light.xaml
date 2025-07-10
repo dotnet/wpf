@@ -2575,6 +2575,7 @@
     <Setter Property="IsTodayHighlighted" Value="True" />
     <Setter Property="SelectedDateFormat" Value="Short" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
+    <Setter Property="KeyboardNavigation.TabNavigation" Value="Local" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type DatePicker}">
@@ -2619,8 +2620,8 @@
               </Grid.ColumnDefinitions>
               <Border x:Name="BorderElement" Grid.ColumnSpan="2" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding Border.CornerRadius}" MinHeight="32">
               </Border>
-              <DatePickerTextBox x:Name="PART_TextBox" Padding="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-              <Button x:Name="PART_Button" Grid.Column="1" VerticalAlignment="Stretch" Style="{StaticResource CalendarButtonStyle}" Focusable="False" MinWidth="30" />
+              <DatePickerTextBox x:Name="PART_TextBox" Padding="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" KeyboardNavigation.TabIndex="0" />
+              <Button x:Name="PART_Button" Grid.Column="1" VerticalAlignment="Stretch" Style="{StaticResource CalendarButtonStyle}" KeyboardNavigation.TabIndex="1" MinWidth="30" />
             </Grid>
             <Popup x:Name="PART_Popup" VerticalAlignment="Top" AllowsTransparency="True" Placement="Bottom" PlacementTarget="{Binding ElementName=PART_Root}" StaysOpen="False">
             </Popup>

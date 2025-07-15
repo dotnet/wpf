@@ -60,7 +60,7 @@
     <Compile Include="$(WpfCommonDir)src\System\LocalAppContext.cs" />
     <Compile Include="$(WpfCommonDir)src\System\AppContextDefaultValues.cs" />
     <Compile Include="System\AppContextDefaultValues.cs" />
-    <Compile Include="MS\internal\BuildTasksAppContextSwitches.cs" />
+    <Compile Include="MS\Internal\BuildTasksAppContextSwitches.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,26 +72,26 @@
     <Compile Include="$(WpfSharedDir)\RefAssemblyAttrs.cs">
       <Link>Shared\RefAssemblyAttrs.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSharedDir)\MS\internal\ResourceIDHelper.cs">
-      <Link>Shared\MS\internal\ResourceIDHelper.cs</Link>
+    <Compile Include="$(WpfSharedDir)\MS\Internal\ResourceIDHelper.cs">
+      <Link>Shared\MS\Internal\ResourceIDHelper.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSharedDir)\MS\internal\ReflectionUtils.cs">
-      <Link>Shared\MS\internal\ReflectionUtils.cs</Link>
+    <Compile Include="$(WpfSharedDir)\MS\Internal\ReflectionUtils.cs">
+      <Link>Shared\MS\Internal\ReflectionUtils.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSharedDir)\MS\internal\SecurityHelper.cs">
-      <Link>Shared\MS\internal\SecurityHelper.cs</Link>
+    <Compile Include="$(WpfSharedDir)\MS\Internal\SecurityHelper.cs">
+      <Link>Shared\MS\Internal\SecurityHelper.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSharedDir)\MS\internal\TokenizerHelper.cs">
-      <Link>Shared\MS\internal\TokenizerHelper.cs</Link>
+    <Compile Include="$(WpfSharedDir)\MS\Internal\TokenizerHelper.cs">
+      <Link>Shared\MS\Internal\TokenizerHelper.cs</Link>
     </Compile>
     <Compile Include="$(WpfSharedDir)\System\Windows\Markup\ReflectionHelper.cs">
       <Link>Shared\System\Windows\Markup\ReflectionHelper.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSharedDir)\MS\internal\Xaml\Parser\SpecialBracketCharacters.cs">
-      <Link>Shared\MS\internal\Xaml\Parser\SpecialBracketCharacters.cs</Link>
+    <Compile Include="$(WpfSharedDir)\MS\Internal\Xaml\Parser\SpecialBracketCharacters.cs">
+      <Link>Shared\MS\Internal\Xaml\Parser\SpecialBracketCharacters.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSharedDir)\MS\internal\CriticalExceptions.cs">
-      <Link>Shared\MS\internal\CriticalExceptions.cs</Link>
+    <Compile Include="$(WpfSharedDir)\MS\Internal\CriticalExceptions.cs">
+      <Link>Shared\MS\Internal\CriticalExceptions.cs</Link>
     </Compile>
 
     <Compile Include="$(WpfSourceDir)\WindowsBase\System\Windows\Markup\DateTimeConverter2.cs">
@@ -118,14 +118,14 @@
     <Compile Include="$(WpfSourceDir)\WindowsBase\System\IO\Packaging\CompoundFile\VersionPair.cs">
       <Link>WindowsBase\System\IO\Packaging\CompoundFile\VersionPair.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\WindowsBase\MS\internal\IO\Packaging\CompoundFile\ContainerUtilities.cs">
-      <Link>WindowsBase\MS\internal\IO\Packaging\CompoundFile\ContainerUtilities.cs</Link>
+    <Compile Include="$(WpfSourceDir)\WindowsBase\MS\Internal\IO\Packaging\CompoundFile\ContainerUtilities.cs">
+      <Link>WindowsBase\MS\Internal\IO\Packaging\CompoundFile\ContainerUtilities.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\PresentationCore\MS\internal\Media\XamlSerializationHelper.cs">
-      <Link>PresentationCore\MS\internal\Media\XamlSerializationHelper.cs</Link>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\MS\Internal\Media\XamlSerializationHelper.cs">
+      <Link>PresentationCore\MS\Internal\Media\XamlSerializationHelper.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\PresentationCore\MS\internal\Media\ParserStreamGeometryContext.cs">
-      <Link>PresentationCore\MS\internal\Media\ParserStreamGeometryContext.cs</Link>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\MS\Internal\Media\ParserStreamGeometryContext.cs">
+      <Link>PresentationCore\MS\Internal\Media\ParserStreamGeometryContext.cs</Link>
     </Compile>
     <Compile Include="$(WpfSourceDir)\PresentationCore\System\Windows\Media\StreamGeometryContext.cs">
       <Link>PresentationCore\System\Windows\Media\StreamGeometryContext.cs</Link>
@@ -257,29 +257,29 @@
     <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\SystemResourceKey.cs">
       <Link>PresentationFramework\System\Windows\SystemResourceKey.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\PresentationFramework\MS\internal\Globalization\LocalizationComments.cs">
-      <Link>PresentationFramework\MS\internal\Globalization\LocalizationComments.cs</Link>
+    <Compile Include="$(WpfSourceDir)\PresentationFramework\MS\Internal\Globalization\LocalizationComments.cs">
+      <Link>PresentationFramework\MS\Internal\Globalization\LocalizationComments.cs</Link>
     </Compile>
 
-    <Compile Include="MS\internal\Localization\LocalizationDirectivesToLocFile.cs" />
-    <Compile Include="MS\internal\Localization\LocalizationParserHooks.cs" />
-    <Compile Include="MS\internal\MarkupCompiler\AssemblyVersionParseException.cs" />
-    <Compile Include="MS\internal\MarkupCompiler\CompilationUnit.cs" />
-    <Compile Include="MS\internal\MarkupCompiler\FileUnit.cs" />
-    <Compile Include="MS\internal\MarkupCompiler\MarkupCompiler.cs" />
-    <Compile Include="MS\internal\MarkupCompiler\PathInternal.cs" />
-    <Compile Include="MS\internal\MarkupCompiler\ParserExtension.cs" />
-    <Compile Include="MS\internal\MarkupCompiler\VersionHelper.cs" />
-    <Compile Include="MS\internal\Shared\SourceFileInfo.cs" />
-    <Compile Include="MS\internal\Tasks\Shared.cs" />
-    <Compile Include="MS\internal\Tasks\TaskHelper.cs" />
-    <Compile Include="MS\internal\Tasks\CompilerWrapper.cs" />
-    <Compile Include="MS\internal\Tasks\CompilerState.cs" />
-    <Compile Include="MS\internal\Tasks\CompilerLocalReference.cs" />
-    <Compile Include="MS\internal\Tasks\IncrementalCompileAnalyzer.cs" />
-    <Compile Include="MS\internal\Tasks\IPersistFileCheckSum.cs" />
-    <Compile Include="MS\internal\Tasks\IVsMSBuildTaskFileManager.cs" />
-    <Compile Include="MS\internal\Tasks\TaskFileService.cs" />
+    <Compile Include="MS\Internal\Localization\LocalizationDirectivesToLocFile.cs" />
+    <Compile Include="MS\Internal\Localization\LocalizationParserHooks.cs" />
+    <Compile Include="MS\Internal\MarkupCompiler\AssemblyVersionParseException.cs" />
+    <Compile Include="MS\Internal\MarkupCompiler\CompilationUnit.cs" />
+    <Compile Include="MS\Internal\MarkupCompiler\FileUnit.cs" />
+    <Compile Include="MS\Internal\MarkupCompiler\MarkupCompiler.cs" />
+    <Compile Include="MS\Internal\MarkupCompiler\PathInternal.cs" />
+    <Compile Include="MS\Internal\MarkupCompiler\ParserExtension.cs" />
+    <Compile Include="MS\Internal\MarkupCompiler\VersionHelper.cs" />
+    <Compile Include="MS\Internal\Shared\SourceFileInfo.cs" />
+    <Compile Include="MS\Internal\Tasks\Shared.cs" />
+    <Compile Include="MS\Internal\Tasks\TaskHelper.cs" />
+    <Compile Include="MS\Internal\Tasks\CompilerWrapper.cs" />
+    <Compile Include="MS\Internal\Tasks\CompilerState.cs" />
+    <Compile Include="MS\Internal\Tasks\CompilerLocalReference.cs" />
+    <Compile Include="MS\Internal\Tasks\IncrementalCompileAnalyzer.cs" />
+    <Compile Include="MS\Internal\Tasks\IPersistFileCheckSum.cs" />
+    <Compile Include="MS\Internal\Tasks\IVsMSBuildTaskFileManager.cs" />
+    <Compile Include="MS\Internal\Tasks\TaskFileService.cs" />
     <Compile Include="Microsoft\Build\Tasks\Windows\MergeLocalizationDirectives.cs" />
     <Compile Include="Microsoft\Build\Tasks\Windows\MarkupCompilePass1.cs" />
     <Compile Include="Microsoft\Build\Tasks\Windows\MarkupCompilePass2.cs" />

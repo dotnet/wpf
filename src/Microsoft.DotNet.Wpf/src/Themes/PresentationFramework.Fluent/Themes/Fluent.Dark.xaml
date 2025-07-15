@@ -69,7 +69,7 @@
   <!-- Moved to Light, Dark and HC resource files -->
   <!-- <Thickness x:Key="TextControlBorderThemeThicknessFocused">2</Thickness> -->
   <system:Double x:Key="ContentControlFontSize">14</system:Double>
-  <system:Double x:Key="TextControlThemeMinHeight">24</system:Double>
+  <system:Double x:Key="TextControlThemeMinHeight">32</system:Double>
   <system:Double x:Key="TextControlThemeMinWidth">0</system:Double>
   <system:Double x:Key="TreeViewItemMultiSelectCheckBoxMinHeight">24</system:Double>
   <system:Double x:Key="TreeViewItemPresenterMargin">0</system:Double>
@@ -1480,7 +1480,7 @@
     <Setter Property="HorizontalContentAlignment" Value="Left" />
     <Setter Property="VerticalContentAlignment" Value="Top" />
     <Setter Property="Cursor" Value="IBeam" />
-    <Setter Property="MinHeight" Value="{DynamicResource TextBoxThemeMinHeight}" />
+    <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
     <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
     <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
@@ -1793,7 +1793,7 @@
     <Setter Property="HorizontalAlignment" Value="Stretch" />
     <Setter Property="VerticalAlignment" Value="Center" />
     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-    <Setter Property="VerticalContentAlignment" Value="Top" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
     <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
     <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
     <Setter Property="Padding" Value="{DynamicResource ComboBoxPadding}" />
@@ -2552,6 +2552,7 @@
     <Setter Property="Background" Value="{DynamicResource DatePickerBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource TextControlElevationBorderBrush}" />
     <Setter Property="BorderThickness" Value="{StaticResource DatePickerBorderThickness}" />
+    <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
     <Setter Property="HorizontalAlignment" Value="Stretch" />
     <Setter Property="VerticalAlignment" Value="Center" />
     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -2605,7 +2606,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
               </Grid.ColumnDefinitions>
-              <Border x:Name="BorderElement" Grid.ColumnSpan="2" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding Border.CornerRadius}" MinHeight="32">
+              <Border x:Name="BorderElement" Grid.ColumnSpan="2" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding Border.CornerRadius}" MinHeight="{TemplateBinding MinHeight}">
               </Border>
               <DatePickerTextBox x:Name="PART_TextBox" Padding="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" KeyboardNavigation.TabIndex="0" />
               <Button x:Name="PART_Button" Grid.Column="1" VerticalAlignment="Stretch" Style="{StaticResource CalendarButtonStyle}" KeyboardNavigation.TabIndex="1" MinWidth="30" />
@@ -4137,9 +4138,6 @@
   <!-- These rsources are redefined in .NET 10 -->
   <!-- <Thickness x:Key="PasswordBoxBorderThemeThickness">1,1,1,1</Thickness> -->
   <Thickness x:Key="PasswordBoxBorderThemeThickness">1</Thickness>
-  <!-- Instead of PasswordBoxThemeMinHeight, we need to use TextControlThemeMinHeight, but modifying that right now
-            will affect the other styles as well. Once the remaining styles using it are fixed, will remove this resource -->
-  <sys:Double x:Key="PasswordBoxThemeMinHeight">32</sys:Double>
   <ContextMenu x:Key="DefaultPasswordBoxContextMenu">
     <MenuItem Command="ApplicationCommands.Paste" />
   </ContextMenu>
@@ -4156,7 +4154,7 @@
     <Setter Property="HorizontalContentAlignment" Value="Left" />
     <Setter Property="VerticalContentAlignment" Value="Top" />
     <Setter Property="Cursor" Value="IBeam" />
-    <Setter Property="MinHeight" Value="{DynamicResource PasswordBoxThemeMinHeight}" />
+    <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
     <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
     <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
@@ -4487,9 +4485,6 @@
   <Style BasedOn="{StaticResource DefaultResizeGripStyle}" TargetType="{x:Type ResizeGrip}" />
   <!-- Deprecated RichTextBox Resources ( Used in .NET 9 ) -->
   <Thickness x:Key="RichTextBoxAccentBorderThemeThickness">0,0,0,1</Thickness>
-  <!-- Instead of RichTextBoxThemeMinHeight, we need to use TextControlThemeMinHeight, but modifying that right now
-            will affect the other styles as well. Once the remaining styles using it are fixed, will remove this resource -->
-  <system:Double x:Key="RichTextBoxThemeMinHeight">32</system:Double>
   <Style x:Key="DefaultRichTextBoxStyle" TargetType="{x:Type RichTextBox}">
     <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     <Setter Property="ContextMenu" Value="{DynamicResource DefaultControlContextMenu}" />
@@ -4503,7 +4498,7 @@
     <Setter Property="HorizontalContentAlignment" Value="Left" />
     <Setter Property="VerticalContentAlignment" Value="Top" />
     <Setter Property="Cursor" Value="IBeam" />
-    <Setter Property="MinHeight" Value="{DynamicResource RichTextBoxThemeMinHeight}" />
+    <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
     <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
     <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
@@ -5219,9 +5214,6 @@
   <!-- <Thickness x:Key="TextBoxClearButtonMargin">0,0,4,0</Thickness> -->
   <!-- <Thickness x:Key="TextBoxClearButtonPadding">0,0,0,0</Thickness> -->
   <system:Double x:Key="TextBoxIconFontSize">12</system:Double>
-  <!-- Instead of TextBoxThemeMinHeight, we need to use TextControlThemeMinHeight, but modifying that right now
-            will affect the other styles as well. Once the remaining styles using it are fixed, will remove this resource -->
-  <system:Double x:Key="TextBoxThemeMinHeight">32</system:Double>
   <Thickness x:Key="TextBoxClearButtonMargin">0,4,4,4</Thickness>
   <Thickness x:Key="TextBoxClearButtonPadding">0,0,-2,0</Thickness>
   <Style x:Key="DefaultTextBoxBaseStyle" TargetType="{x:Type TextBoxBase}">
@@ -5237,7 +5229,7 @@
     <Setter Property="HorizontalContentAlignment" Value="Left" />
     <Setter Property="VerticalContentAlignment" Value="Top" />
     <Setter Property="Cursor" Value="IBeam" />
-    <Setter Property="MinHeight" Value="{DynamicResource TextBoxThemeMinHeight}" />
+    <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
     <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
     <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
@@ -5383,7 +5375,7 @@
     <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
     <Setter Property="HorizontalContentAlignment" Value="Left" />
     <Setter Property="VerticalContentAlignment" Value="Top" />
-    <Setter Property="MinHeight" Value="{DynamicResource TextBoxThemeMinHeight}" />
+    <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
     <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
     <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
     <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />

@@ -12,10 +12,6 @@
     
     <!-- Deprecated RichTextBox Resources ( Used in .NET 9 ) -->
     <Thickness x:Key="RichTextBoxAccentBorderThemeThickness">0,0,0,1</Thickness>
-    
-    <!-- Instead of RichTextBoxThemeMinHeight, we need to use TextControlThemeMinHeight, but modifying that right now
-            will affect the other styles as well. Once the remaining styles using it are fixed, will remove this resource -->
-    <system:Double x:Key="RichTextBoxThemeMinHeight">32</system:Double>
 
     <Style x:Key="DefaultRichTextBoxStyle" TargetType="{x:Type RichTextBox}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -30,7 +26,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Top" />
         <Setter Property="Cursor" Value="IBeam" />
-        <Setter Property="MinHeight" Value="{DynamicResource RichTextBoxThemeMinHeight}" />
+        <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
         <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
         <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
         <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />

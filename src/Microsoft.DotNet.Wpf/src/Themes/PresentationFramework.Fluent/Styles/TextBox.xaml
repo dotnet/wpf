@@ -26,9 +26,6 @@
         <!-- <Thickness x:Key="TextBoxClearButtonPadding">0,0,0,0</Thickness> -->
 
     <system:Double x:Key="TextBoxIconFontSize">12</system:Double>
-    <!-- Instead of TextBoxThemeMinHeight, we need to use TextControlThemeMinHeight, but modifying that right now
-            will affect the other styles as well. Once the remaining styles using it are fixed, will remove this resource -->
-    <system:Double x:Key="TextBoxThemeMinHeight">32</system:Double>
     <Thickness x:Key="TextBoxClearButtonMargin">0,4,4,4</Thickness>
     <Thickness x:Key="TextBoxClearButtonPadding">0,0,-2,0</Thickness>
 
@@ -45,7 +42,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Top" />
         <Setter Property="Cursor" Value="IBeam" />
-        <Setter Property="MinHeight" Value="{DynamicResource TextBoxThemeMinHeight}" />
+        <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
         <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
         <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
         <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
@@ -256,7 +253,7 @@
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Top" />
-        <Setter Property="MinHeight" Value="{DynamicResource TextBoxThemeMinHeight}" />
+        <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
         <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
         <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
         <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />

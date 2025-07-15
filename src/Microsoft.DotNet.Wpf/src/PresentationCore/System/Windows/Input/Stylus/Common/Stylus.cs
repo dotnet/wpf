@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace System.Windows.Input
@@ -602,7 +602,7 @@ namespace System.Windows.Input
         /// <seealso cref="Stylus.GetIsPressAndHoldEnabled" />
         /// <seealso cref="Stylus.SetIsPressAndHoldEnabled" />
         public static readonly DependencyProperty IsPressAndHoldEnabledProperty
-            = DependencyProperty.RegisterAttached("IsPressAndHoldEnabled", typeof(bool), typeof(Stylus), new PropertyMetadata(true));  // note we can't specify inherits in frameworkcore.  new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.Inherits)
+            = DependencyProperty.RegisterAttached("IsPressAndHoldEnabled", typeof(bool), typeof(Stylus), new PropertyMetadata(BooleanBoxes.TrueBox));  // note we can't specify inherits in frameworkcore.  new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.Inherits)
 
 
         /// <summary>
@@ -642,7 +642,7 @@ namespace System.Windows.Input
         /// <seealso cref="Stylus.GetIsFlicksEnabled" />
         /// <seealso cref="Stylus.SetIsFlicksEnabled" />
         public static readonly DependencyProperty IsFlicksEnabledProperty
-            = DependencyProperty.RegisterAttached("IsFlicksEnabled", typeof(bool), typeof(Stylus), new PropertyMetadata(true));  // note we can't specify inherits in frameworkcore.  new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.Inherits)
+            = DependencyProperty.RegisterAttached("IsFlicksEnabled", typeof(bool), typeof(Stylus), new PropertyMetadata(BooleanBoxes.TrueBox));  // note we can't specify inherits in frameworkcore.  new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.Inherits)
 
 
         /// <summary>
@@ -682,7 +682,7 @@ namespace System.Windows.Input
         /// <seealso cref="Stylus.GetIsTapFeedbackEnabled" />
         /// <seealso cref="Stylus.SetIsTapFeedbackEnabled" />
         public static readonly DependencyProperty IsTapFeedbackEnabledProperty
-            = DependencyProperty.RegisterAttached("IsTapFeedbackEnabled", typeof(bool), typeof(Stylus), new PropertyMetadata(true));  // note we can't specify inherits in frameworkcore.  new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.Inherits)
+            = DependencyProperty.RegisterAttached("IsTapFeedbackEnabled", typeof(bool), typeof(Stylus), new PropertyMetadata(BooleanBoxes.TrueBox));  // note we can't specify inherits in frameworkcore.  new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.Inherits)
 
 
         /// <summary>
@@ -721,7 +721,7 @@ namespace System.Windows.Input
         /// <seealso cref="Stylus.GetIsTouchFeedbackEnabled" />
         /// <seealso cref="Stylus.SetIsTouchFeedbackEnabled" />
         public static readonly DependencyProperty IsTouchFeedbackEnabledProperty
-            = DependencyProperty.RegisterAttached("IsTouchFeedbackEnabled", typeof(bool), typeof(Stylus), new PropertyMetadata(true));  // note we can't specify inherits in frameworkcore.  new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.Inherits)
+            = DependencyProperty.RegisterAttached("IsTouchFeedbackEnabled", typeof(bool), typeof(Stylus), new PropertyMetadata(BooleanBoxes.TrueBox));  // note we can't specify inherits in frameworkcore.  new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.Inherits)
 
 
         /////////////////////////////////////////////////////////////////////

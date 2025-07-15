@@ -121,11 +121,11 @@
     <Compile Include="$(WpfSourceDir)\WindowsBase\MS\Internal\IO\Packaging\CompoundFile\ContainerUtilities.cs">
       <Link>WindowsBase\MS\Internal\IO\Packaging\CompoundFile\ContainerUtilities.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\PresentationCore\MS\Internal\Media\XamlSerializationHelper.cs">
-      <Link>PresentationCore\MS\Internal\Media\XamlSerializationHelper.cs</Link>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\MS\internal\Media\XamlSerializationHelper.cs">
+      <Link>PresentationCore\MS\internal\Media\XamlSerializationHelper.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSourceDir)\PresentationCore\MS\Internal\Media\ParserStreamGeometryContext.cs">
-      <Link>PresentationCore\MS\Internal\Media\ParserStreamGeometryContext.cs</Link>
+    <Compile Include="$(WpfSourceDir)\PresentationCore\MS\internal\Media\ParserStreamGeometryContext.cs">
+      <Link>PresentationCore\MS\internal\Media\ParserStreamGeometryContext.cs</Link>
     </Compile>
     <Compile Include="$(WpfSourceDir)\PresentationCore\System\Windows\Media\StreamGeometryContext.cs">
       <Link>PresentationCore\System\Windows\Media\StreamGeometryContext.cs</Link>

@@ -370,6 +370,7 @@
   <SolidColorBrush x:Key="DataGridColumnFloatingHeaderBorderBrush" Color="{StaticResource SystemColorHighlightColor}" />
   <SolidColorBrush x:Key="DataGridHeaderDropSeparatorBackground" Color="{StaticResource SystemColorHighlightColor}" />
   <SolidColorBrush x:Key="DataGridHeaderSeparatorBrush" Color="{StaticResource SystemColorButtonTextColor}" />
+  <SolidColorBrush x:Key="DataGridColumnHeaderForeground" Color="{StaticResource SystemColorButtonTextColor}" />
   <SolidColorBrush x:Key="DataGridColumnHeaderBackground" Color="Transparent" />
   <SolidColorBrush x:Key="DataGridHeaderBackground" Color="{StaticResource SystemColorButtonFaceColor}" />
   <SolidColorBrush x:Key="DataGridHeaderBackgroundPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
@@ -2061,6 +2062,7 @@
   </Style>
   <!--  Style and template for the DataGridColumnHeader.  -->
   <Style x:Key="DefaultDataGridColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+    <Setter Property="Foreground" Value="{DynamicResource DataGridColumnHeaderForeground}" />
     <Setter Property="Background" Value="{DynamicResource DataGridColumnHeaderBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource DataGridHeaderBorderBrush}" />
     <Setter Property="MinHeight" Value="{StaticResource DataGridColumnHeaderMinHeight}" />

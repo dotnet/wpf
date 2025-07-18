@@ -33,7 +33,7 @@
     <!-- <Thickness x:Key="TextControlBorderThemeThicknessFocused">2</Thickness> -->
 
     <system:Double x:Key="ContentControlFontSize">14</system:Double>
-    <system:Double x:Key="TextControlThemeMinHeight">24</system:Double>
+    <system:Double x:Key="TextControlThemeMinHeight">32</system:Double>
     <system:Double x:Key="TextControlThemeMinWidth">0</system:Double>
     <system:Double x:Key="TreeViewItemMultiSelectCheckBoxMinHeight">24</system:Double>
     <system:Double x:Key="TreeViewItemPresenterMargin">0</system:Double>

@@ -117,6 +117,7 @@
         <Setter Property="Background" Value="{DynamicResource DatePickerBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextControlElevationBorderBrush}" />
         <Setter Property="BorderThickness" Value="{StaticResource DatePickerBorderThickness}" />
+        <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -188,7 +189,7 @@
                                     BorderThickness="{TemplateBinding BorderThickness}"
                                     Background="{TemplateBinding Background}"
                                     CornerRadius="{TemplateBinding Border.CornerRadius}"
-                                    MinHeight="32">
+                                    MinHeight="{TemplateBinding MinHeight}">
                             </Border>
 
                             <DatePickerTextBox x:Name="PART_TextBox" 

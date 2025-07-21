@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description: Manager for the PropertyChanged event in the "weak event listener"
@@ -315,14 +315,13 @@ namespace System.ComponentModel
         {
             get
             {
-                Type managerType = typeof(PropertyChangedEventManager);
-                PropertyChangedEventManager manager = (PropertyChangedEventManager)GetCurrentManager(managerType);
+                PropertyChangedEventManager manager = (PropertyChangedEventManager)GetCurrentManager(typeof(PropertyChangedEventManager));
 
                 // at first use, create and register a new manager
                 if (manager == null)
                 {
                     manager = new PropertyChangedEventManager();
-                    SetCurrentManager(managerType, manager);
+                    SetCurrentManager(typeof(PropertyChangedEventManager), manager);
                 }
 
                 return manager;

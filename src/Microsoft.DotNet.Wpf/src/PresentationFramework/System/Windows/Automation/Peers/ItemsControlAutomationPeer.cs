@@ -22,23 +22,24 @@ namespace System.Windows.Automation.Peers
         ///
         public override object GetPattern(PatternInterface patternInterface)
         {
-            if(patternInterface == PatternInterface.Scroll)
+            if (patternInterface is PatternInterface.Scroll)
             {
                 ItemsControl owner = (ItemsControl)Owner;
-                if(owner.ScrollHost != null)
+                if (owner.ScrollHost is not null)
                 {
-                    AutomationPeer scrollPeer = UIElementAutomationPeer.CreatePeerForElement(owner.ScrollHost);
-                    if(scrollPeer != null && scrollPeer is IScrollProvider)
+                    AutomationPeer scrollPeer = CreatePeerForElement(owner.ScrollHost);
+                    if (scrollPeer is IScrollProvider scrollProvider)
                     {
                         scrollPeer.EventsSource = this;
-                        return (IScrollProvider)scrollPeer;
+                        return scrollProvider;
                     }
                 }
             }
-            else if (patternInterface == PatternInterface.ItemContainer)
+            else if (patternInterface is PatternInterface.ItemContainer)
             {
-                if(Owner as ItemsControl != null)
+                if (Owner is ItemsControl)
                     return this;
+
                 return null;
             }
 

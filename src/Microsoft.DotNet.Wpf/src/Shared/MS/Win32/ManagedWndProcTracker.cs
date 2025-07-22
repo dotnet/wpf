@@ -203,7 +203,7 @@ namespace MS.Win32
         {
             string msg = String.Format("BEGIN: {0:X} -- Setting DWP, process = {1} ({2}) {3}",
                    hwnd,
-                   System.Diagnostics.Process.GetCurrentProcess().ProcessName,
+                   Path.GetFileNameWithoutExtension(Environment.ProcessPath),
                    fromWhere,
                    System.Environment.NewLine);
 
@@ -214,7 +214,7 @@ namespace MS.Win32
         {
             string msg = String.Format("END:   {0:X} -- Setting DWP, process = {1} ({2}) {3}",
                    hwnd,
-                   System.Diagnostics.Process.GetCurrentProcess().ProcessName,
+                   Path.GetFileNameWithoutExtension(Environment.ProcessPath),
                    fromWhere,
                    System.Environment.NewLine);
 

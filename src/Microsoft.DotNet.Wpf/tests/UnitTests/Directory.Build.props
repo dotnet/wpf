@@ -8,7 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="coverlet.collector" Version="$(CoverletVersion)" GeneratePathProperty="true" PrivateAssets="all" />
+    <PackageReference Include="coverlet.msbuild" Version="$(CoverletMSBuildPackageVersion)" />
+    <PackageReference Include="Codecov" Version="$(CodecovVersion)" />
+    <PackageReference Include="ReportGenerator" Version="$(ReportGeneratorVersion)" />
   </ItemGroup>
 
 </Project>

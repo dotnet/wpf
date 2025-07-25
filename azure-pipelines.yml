@@ -46,6 +46,8 @@ extends:
         configFile: '$(Build.SourcesDirectory)/eng/tsaoptions.json'
     featureFlags:
       autoBaseline: true
+      # This prefast enablement causes compilation issues in STL.
+      autoEnablePREfastWithNewRuleset: false
     pool:
       name: NetCore1ESPool-Internal
       image: 1es-windows-2022

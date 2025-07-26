@@ -1,7 +1,7 @@
 <Project>
   <!-- Set code coverage properties that reference properties not available in Directory.Build.props -->
   <PropertyGroup Condition="'$(Coverage)' == 'true'">
-    <TestRunnerAdditionalArguments>$(TestRunnerAdditionalArguments) --coverage --coverage-output $(TargetDir)coverage\$(MSBuildProjectName).coverage --coverage-settings "$(RepoRoot)/eng/CodeCoverage.config"</TestRunnerAdditionalArguments>
+    <TestRunnerAdditionalArguments>$(TestRunnerAdditionalArguments) --coverage --coverage-output $(ArtifactsDir)TestResults\$(Configuration)\$(MSBuildProjectName).coverage --coverage-settings "$(RepoRoot)/eng/CodeCoverage.config"</TestRunnerAdditionalArguments>
     <!-- https://github.com/tonerdo/coverlet/issues/363 -->
     <DeterministicSourcePaths>false</DeterministicSourcePaths>
   </PropertyGroup>

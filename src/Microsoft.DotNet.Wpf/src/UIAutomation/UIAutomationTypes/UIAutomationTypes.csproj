@@ -68,6 +68,7 @@
     <Compile Include="System\Windows\Automation\TablePatternIdentifiers.cs" />
     <Compile Include="System\Windows\Automation\TextPatternIdentifiers.cs" />
     <Compile Include="System\Windows\Automation\TogglePatternIdentifiers.cs" />
+    <Compile Include="System\Windows\Automation\TransformPattern2Identifiers.cs" />
     <Compile Include="System\Windows\Automation\TransformPatternIdentifiers.cs" />
     <Compile Include="System\Windows\Automation\TreeScope.cs" />
     <Compile Include="System\Windows\Automation\ValuePatternIdentifiers.cs" />

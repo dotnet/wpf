@@ -101,10 +101,7 @@
   </PropertyGroup>
   <!-- Code Coverage -->
   <PropertyGroup>
-    <CoverletMSBuildPackageVersion>6.0.0</CoverletMSBuildPackageVersion>
-    <CodecovVersion>1.12.3</CodecovVersion>
-    <CoverletVersion>6.0.0</CoverletVersion>
-    <ReportGeneratorVersion>5.2.0</ReportGeneratorVersion>
+    <MicrosoftTestingExtensionsCodeCoverageVersion>17.14.2</MicrosoftTestingExtensionsCodeCoverageVersion>
   </PropertyGroup>
   <!-- External Analyzers -->
   <PropertyGroup>

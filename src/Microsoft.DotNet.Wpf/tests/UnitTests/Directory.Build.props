@@ -7,8 +7,4 @@
     <WpfTestsDir>$(MsBuildThisFileDirectory)</WpfTestsDir>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="coverlet.collector" Version="$(CoverletVersion)" GeneratePathProperty="true" PrivateAssets="all" />
-  </ItemGroup>
-
 </Project>

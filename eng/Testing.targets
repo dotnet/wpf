@@ -16,33 +16,5 @@
     <PackageReference Include="Microsoft.Testing.Extensions.HangDump" Version="$(MicrosoftTestingPlatformVersion)" />
     <PackageReference Include="Microsoft.Testing.Extensions.CrashDump" Version="$(MicrosoftTestingPlatformVersion)" />
   </ItemGroup>
-
-  <Target Name="InstrumentModulesNoBuild" BeforeTargets="RunTests" Condition="'$(IsTestProject)' == 'true'">
-    <Coverlet.MSbuild.Tasks.InstrumentationTask
-      Condition="'$(CollectCoverage)' == 'true'"
-      Path="$(TargetPath)"
-      Include="$(Include)"
-      IncludeDirectory="$(IncludeDirectory)"
-      Exclude="$(Exclude)"
-      ExcludeByFile="$(ExcludeByFile)"
-      ExcludeByAttribute="$(ExcludeByAttribute)"
-      IncludeTestAssembly="$(IncludeTestAssembly)"
-      SingleHit="$(SingleHit)"
-      MergeWith="$(MergeWith)"
-      UseSourceLink="$(UseSourceLink)" >
-      <Output TaskParameter="InstrumenterState" PropertyName="InstrumenterState"/>
-    </Coverlet.MSbuild.Tasks.InstrumentationTask>
-  </Target>
-
-  <Target Name="GenerateCoverageResult" AfterTargets="RunTests" Condition="'$(IsTestProject)' == 'true'">
-    <Coverlet.MSbuild.Tasks.CoverageResultTask
-      Condition="'$(CollectCoverage)' == 'true'"
-      Output="$(CoverletOutput)"
-      OutputFormat="$(CoverletOutputFormat)"
-      Threshold="$(Threshold)"
-      ThresholdType="$(ThresholdType)"
-      ThresholdStat="$(ThresholdStat)"
-      InstrumenterState="$(InstrumenterState)"/>
-  </Target>
-
+  <!-- TODO: Coverage -->
 </Project>

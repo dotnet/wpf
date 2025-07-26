@@ -32,20 +32,4 @@
   <Import Sdk="Microsoft.DotNet.Arcade.Wpf.Sdk"
           Project="Sdk.props"
           Condition="!Exists('$(WpfArcadeSdkProps)') Or !Exists('$(WpfArcadeSdkTargets)')"/>
-
-  <!-- For the purposes of generating code coverage as part of the build -->
-  <PropertyGroup Condition="'$(Coverage)' == 'true'">
-    <!-- https://github.com/tonerdo/coverlet/issues/618 -->
-    <IncludeTestAssembly>true</IncludeTestAssembly>
-    <CollectCoverage>true</CollectCoverage>
-    <SingleHit>true</SingleHit>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <CoverletOutputFormat>opencover</CoverletOutputFormat>
-    <Include></Include>
-    <Exclude></Exclude>
-    <!-- Exclude anything tagged with ExcludeFromCodeCoverage !!Avoid using this!! -->
-    <ExcludeByAttribute>ExcludeFromCodeCoverage</ExcludeByAttribute>
-    <ExcludeByFile />
-  </PropertyGroup>
-
 </Project>

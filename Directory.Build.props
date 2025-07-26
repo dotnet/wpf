@@ -7,6 +7,7 @@
     <TargetFrameworkVersion>10.0</TargetFrameworkVersion>
     <BuildWithNetFrameworkHostedCompiler>true</BuildWithNetFrameworkHostedCompiler>
     <PublishWindowsPdb>false</PublishWindowsPdb>
+    <TestRunnerName>XUnitV3</TestRunnerName>
   </PropertyGroup>
   <!-- Normalize $(TestWpfArcadeSdkPath) by appending a '\' to it if one is missing -->
   <PropertyGroup Condition="'$(TestWpfArcadeSdkPath)'!=''">

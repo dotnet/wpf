@@ -128,7 +128,14 @@ namespace MS.Internal.TextFormatting
                 }
                 else
                 {
-                    pwchText += lsrun.OffsetToFirstChar + lsrunOffset;
+                    int totalOffset = lsrun.OffsetToFirstChar + lsrunOffset;
+                    int bufferLength = lsrun.CharacterBuffer.Length;
+                    if (totalOffset < 0 || totalOffset >= bufferLength)
+                    {
+                        // Offset is out of bounds, return error as in the buffer copy branch
+                        return LsErr.None;
+                    }
+                    pwchText += totalOffset;
                 }
 
 

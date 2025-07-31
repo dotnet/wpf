@@ -51,8 +51,6 @@ namespace System.Windows.Media.Media3D
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -64,48 +62,31 @@ namespace System.Windows.Media.Media3D
         private static void PositionsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             MeshGeometry3D target = ((MeshGeometry3D) d);
-
 
             target.PropertyChanged(PositionsProperty);
         }
         private static void NormalsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             MeshGeometry3D target = ((MeshGeometry3D) d);
-
 
             target.PropertyChanged(NormalsProperty);
         }
         private static void TextureCoordinatesPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             MeshGeometry3D target = ((MeshGeometry3D) d);
-
 
             target.PropertyChanged(TextureCoordinatesProperty);
         }
         private static void TriangleIndicesPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             MeshGeometry3D target = ((MeshGeometry3D) d);
-
 
             target.PropertyChanged(TriangleIndicesProperty);
         }
-
 
         #region Public Properties
 
@@ -188,8 +169,6 @@ namespace System.Windows.Media.Media3D
             return new MeshGeometry3D();
         }
 
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -241,7 +220,6 @@ namespace System.Windows.Media.Media3D
                               data.TriangleIndicesSize)
                         );
 
-
                     // Copy this collection's elements (or their handles) to reserved data
                     for (int i = 0; i < PositionsCount; i++)
                     {
@@ -288,33 +266,25 @@ namespace System.Windows.Media.Media3D
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_MESHGEOMETRY3D))
                 {
 
-
                     AddRefOnChannelAnimations(channel);
-
 
                     UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
                 }
 
                 return _duceResource.GetHandle(channel);
-
         }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
 
-
                     ReleaseOnChannelAnimations(channel);
-
                 }
-
         }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
@@ -331,7 +301,6 @@ namespace System.Windows.Media.Media3D
             // Note that we are in a lock here already.
             return _duceResource.GetChannel(index);
         }
-
 
         #endregion Internal Methods
 
@@ -360,8 +329,6 @@ namespace System.Windows.Media.Media3D
                 return 4;
             }
         }
-
-
 
         #endregion Internal Properties
 
@@ -400,17 +367,13 @@ namespace System.Windows.Media.Media3D
 
         #region Internal Fields
 
-
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
-
         internal static Point3DCollection s_Positions = Point3DCollection.Empty;
         internal static Vector3DCollection s_Normals = Vector3DCollection.Empty;
         internal static PointCollection s_TextureCoordinates = PointCollection.Empty;
         internal static Int32Collection s_TriangleIndices = Int32Collection.Empty;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -482,7 +445,6 @@ namespace System.Windows.Media.Media3D
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

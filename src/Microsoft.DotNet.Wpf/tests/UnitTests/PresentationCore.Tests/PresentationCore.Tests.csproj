@@ -11,6 +11,7 @@
     <NoWarn>$(NoWarn);SYSLIB5005</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <TargetFramework Condition="!$(TargetFramework.Contains('windows'))">$(TargetFramework)-windows</TargetFramework>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <ItemGroup>

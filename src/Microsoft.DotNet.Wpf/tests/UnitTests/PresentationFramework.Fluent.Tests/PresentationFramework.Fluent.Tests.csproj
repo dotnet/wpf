@@ -7,6 +7,10 @@
     <TargetFramework Condition="!$(TargetFramework.Contains('windows'))">$(TargetFramework)-windows</TargetFramework>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <OutputType>Exe</OutputType>
+
+    <!-- Workaround for https://github.com/dotnet/wpf/issues/10940 -->
+    <_TestRunnerAdditionalArguments>--ignore-exit-code 8</_TestRunnerAdditionalArguments>
   </PropertyGroup>
 
   <ItemGroup>

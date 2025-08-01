@@ -142,11 +142,8 @@ namespace System.Windows.Documents.Internal
 
         internal void Uninitialize()
         {
-            if (_adornerLayer != null)
-            {
-                _adornerLayer.Remove(this);
-                _adornerLayer = null;
-            }
+            _adornerLayer?.Remove(this);
+            _adornerLayer = null;
         }
 
         #endregion Internal methods

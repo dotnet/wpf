@@ -533,11 +533,8 @@ namespace System.Windows.Automation.Peers
 
             void IDisposable.Dispose()
             {
-                if (_peer != null)
-                {
-                    _peer.ClearReusablePeers(_oldChildren);
-                    _peer = null;
-                }
+                _peer?.ClearReusablePeers(_oldChildren);
+                _peer = null;
             }
 
             private ItemsControlAutomationPeer _peer;

@@ -664,11 +664,8 @@ namespace MS.Internal.Data
 
             public void Dispose()
             {
-                if (_parent != null)
-                {
-                    _parent.EndIgnoreEvents();
-                    _parent = null;
-                }
+                _parent?.EndIgnoreEvents();
+                _parent = null;
 
                 GC.SuppressFinalize(this);
             }

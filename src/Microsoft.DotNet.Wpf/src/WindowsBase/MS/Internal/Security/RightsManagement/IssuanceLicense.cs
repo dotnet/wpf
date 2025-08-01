@@ -819,14 +819,11 @@ namespace MS.Internal.Security.RightsManagement
                                                                         out officialFlagTemp);
             Errors.ThrowOnErrorCode(hr);
 
-            if (ownerHandleTemp != null)
-            {
-                // As a result of calling DRMGetIssuanceLicenseInfo twice,
-                // we are getting 2 handles. We are going to dispose the first one 
-                // and preserve the second one.
-                ownerHandleTemp.Dispose();
-                ownerHandleTemp = null;
-            }
+            // As a result of calling DRMGetIssuanceLicenseInfo twice,
+            // we are getting 2 handles. We are going to dispose the first one 
+            // and preserve the second one.
+            ownerHandleTemp?.Dispose();
+            ownerHandleTemp = null;
 
             StringBuilder distributionPointNameTemp = null;
             // allocate memory as necessary, it seems that Unmanaged libraries really do not like

@@ -135,11 +135,8 @@ namespace MS.Internal.Documents.Application
             ThrowIfDisposed();
             _isDisposed = true;
 #endif
-            if (_dependency != null)
-            {
-                _dependency.Dispose();
-                _dependency = null;
-            }
+            _dependency?.Dispose();
+            _dependency = null;
         }
     }
     #endregion IDisposable Members

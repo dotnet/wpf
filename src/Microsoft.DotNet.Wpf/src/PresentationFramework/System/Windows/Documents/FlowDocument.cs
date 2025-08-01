@@ -1219,11 +1219,8 @@ namespace System.Windows.Documents
             _structuralCache = new StructuralCache(this, textContainer);
 
             // Get rid of the current formatter.
-            if (_formatter != null)
-            {
-                _formatter.Suspend();
-                _formatter = null;
-            }
+            _formatter?.Suspend();
+            _formatter = null;
         }
 
         /// <summary>

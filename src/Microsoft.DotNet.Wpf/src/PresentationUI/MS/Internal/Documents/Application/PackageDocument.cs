@@ -88,11 +88,8 @@ namespace MS.Internal.Documents.Application
         {
             if (disposing)
             {
-                if (Package != null)
-                {
-                    Package.Close();
-                    Package = null;
-                }
+                Package?.Close();
+                Package = null;
             }
         }
         finally

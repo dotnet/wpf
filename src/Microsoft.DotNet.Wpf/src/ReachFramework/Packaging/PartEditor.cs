@@ -299,17 +299,12 @@ namespace System.Windows.Xps.Packaging
         Close(
             )
         {
-            if (null != _xmlWriter)
-            {
-                _xmlWriter.Close();
-                _xmlWriter = null;
-            }
+            _xmlWriter?.Close();
+            _xmlWriter = null;
 
-            if (null != _xmlReader)
-            {
-                _xmlReader.Close();
-                _xmlReader = null;
-            }
+            _xmlReader?.Close();
+            _xmlReader = null;
+
             base.Close();
         }
 

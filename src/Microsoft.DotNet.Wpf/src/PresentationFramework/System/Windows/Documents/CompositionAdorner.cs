@@ -372,12 +372,9 @@ namespace System.Windows.Documents
         /// </summary>
         internal void Uninitialize()
         {
-            if (_adornerLayer != null)
-            {
-                // Remove CompositionAdorner form the socping of AdornerLayer
-                _adornerLayer.Remove(this);
-                _adornerLayer = null;
-            }
+            // Remove CompositionAdorner form the socping of AdornerLayer
+            _adornerLayer?.Remove(this);
+            _adornerLayer = null;
         }
 
         #endregion Internal methods

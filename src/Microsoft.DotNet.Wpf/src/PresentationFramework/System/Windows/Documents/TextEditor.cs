@@ -217,17 +217,11 @@ namespace System.Windows.Documents
             // We don't need this TextStore any more.
             // TextStore needs to be unregisted from Cicero so clean all reference
             // of the native resources.
-            if (_textstore != null)
-            {
-                _textstore.OnDetach(finalizer);
-                _textstore = null;
-            }
+            _textstore?.OnDetach(finalizer);
+            _textstore = null;
 
-            if (_weakThis != null)
-            {
-                _weakThis.StopListening();
-                _weakThis = null;
-            }
+            _weakThis?.StopListening();
+            _weakThis = null;
 
             if (!finalizer)
             {
@@ -1742,14 +1736,11 @@ namespace System.Windows.Documents
             // IMM32's OnLostFocus handler. Clean the composition string if it exists.
             if (_immEnabled)
             {
-                if (This._immComposition != null)
-                {
-                    // Call ImmComposition OnLostFocus to clean up the event handler(SelectionChanged).
-                    This._immComposition.OnLostFocus();
+                // Call ImmComposition OnLostFocus to clean up the event handler(SelectionChanged).
+                This._immComposition?.OnLostFocus();
 
-                    // Set _immComposition as null not to access it until get new from the getting focus.
-                    This._immComposition = null;
-                }
+                // Set _immComposition as null not to access it until get new from the getting focus.
+                This._immComposition = null;
             }
         }
 
@@ -1778,11 +1769,8 @@ namespace System.Windows.Documents
             TextEditorTyping._BreakTypingSequence(This);
 
             // Release column resizing adorner, and interrupt table resising process (if any)
-            if (This._tableColResizeInfo != null)
-            {
-                This._tableColResizeInfo.DisposeAdorner();
-                This._tableColResizeInfo = null;
-            }
+            This._tableColResizeInfo?.DisposeAdorner();
+            This._tableColResizeInfo = null;
 
             // Hide selection
             This._selection.UpdateCaretAndHighlight();

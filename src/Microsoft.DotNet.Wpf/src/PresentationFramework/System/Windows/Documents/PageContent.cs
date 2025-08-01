@@ -141,11 +141,8 @@ namespace System.Windows.Documents
 #endif
 //             VerifyAccess();
             // Important: do not throw if no outstanding GetPageRootAsyncCall
-            if (_asyncOp != null)
-            {
-                _asyncOp.Cancel();
-                _asyncOp = null;
-            }
+            _asyncOp?.Cancel();
+            _asyncOp = null;
         }
         #endregion Public Methods
 

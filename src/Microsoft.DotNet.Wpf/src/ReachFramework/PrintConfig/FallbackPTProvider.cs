@@ -656,11 +656,8 @@ namespace MS.Internal.Printing.Configuration
 
             if (disposing)
             {
-                if (_deviceHandle != null)
-                {
-                    _deviceHandle.Dispose();
-                    _deviceHandle = null;
-                }
+                _deviceHandle?.Dispose();
+                _deviceHandle = null;
 
                 _deviceName = null;
                 _driverName = null;

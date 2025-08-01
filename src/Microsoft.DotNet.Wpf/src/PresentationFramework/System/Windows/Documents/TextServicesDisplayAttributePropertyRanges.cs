@@ -101,11 +101,8 @@ namespace System.Windows.Documents
             // Remove any existing composition adorner for display attribute.
             //
 
-            if (_compositionAdorner != null)
-            {
-                _compositionAdorner.Uninitialize();
-                _compositionAdorner = null;
-            }
+            _compositionAdorner?.Uninitialize();
+            _compositionAdorner = null;
 
             //
             // Look for new ones.

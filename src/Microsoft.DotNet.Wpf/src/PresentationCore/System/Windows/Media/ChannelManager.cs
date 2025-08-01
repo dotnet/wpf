@@ -79,12 +79,9 @@ namespace System.Windows.Media
                     _freeSyncChannels = null;
                 }
 
-                if (_syncServiceChannel != null)
-                {
-                    _syncServiceChannel.Close();
+                _syncServiceChannel?.Close();
 
-                    _syncServiceChannel = null;
-                }
+                _syncServiceChannel = null;
             }
 
             /// <summary>
@@ -92,18 +89,11 @@ namespace System.Windows.Media
             /// </summary>
             internal void RemoveChannels()
             {
-                if (_asyncChannel != null)
-                {
-                    _asyncChannel.Close();
-                    _asyncChannel = null;
-                }
+                _asyncChannel?.Close();
+                _asyncChannel = null;
+                _asyncOutOfBandChannel?.Close();
+                _asyncOutOfBandChannel = null;
 
-                if (_asyncOutOfBandChannel != null)
-                {
-                    _asyncOutOfBandChannel.Close();
-                    _asyncOutOfBandChannel = null;
-                }
-               
                 RemoveSyncChannels();
 
                 if (_pSyncConnection != IntPtr.Zero)

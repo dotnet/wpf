@@ -534,11 +534,8 @@ namespace MS.Internal.Printing.Configuration
 
             if (disposing)
             {
-                if (_providerHandle != null)
-                {
-                    _providerHandle.Dispose();
-                    _providerHandle = null;
-                }
+                _providerHandle?.Dispose();
+                _providerHandle = null;
 
                 _deviceName = null;
                 _schemaVersion = 0;

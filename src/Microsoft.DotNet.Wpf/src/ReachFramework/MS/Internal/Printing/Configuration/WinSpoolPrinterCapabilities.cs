@@ -35,11 +35,8 @@ namespace MS.Internal.Printing.Configuration
 
         public void Release()
         {
-            if (this._devMode != null)
-            {
-                this._devMode.Dispose();
-                this._devMode = null;
-            }
+            this._devMode?.Dispose();
+            this._devMode = null;
         }
 
         /// <summary>

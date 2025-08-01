@@ -109,11 +109,8 @@ namespace System.Windows.Interop
             if (_hwndSource != null && _isProvidingPanningFeedback)
             {
                 _isProvidingPanningFeedback = false;
-                if (_updatePanningOperation != null)
-                {
-                    _updatePanningOperation.Abort();
-                    _updatePanningOperation = null;
-                }
+                _updatePanningOperation?.Abort();
+                _updatePanningOperation = null;
                 UnsafeNativeMethods.EndPanningFeedback(Handle, animateBack);
             }
         }

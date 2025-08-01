@@ -826,11 +826,8 @@ namespace System.Windows.Forms.Integration
             {
                 try
                 {
-                    if (_hostContainerInternal != null)
-                    {
-                        _hostContainerInternal.Dispose();
-                        _hostContainerInternal = null;
-                    }
+                    _hostContainerInternal?.Dispose();
+                    _hostContainerInternal = null;
                 }
                 finally
                 {

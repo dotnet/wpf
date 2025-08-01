@@ -1281,11 +1281,8 @@ namespace MS.Internal.Documents
             else if (!altKeyDown && _rubberBandSelector != null)
             {
                 //Detach the Rubberband Selector
-                if (_rubberBandSelector != null)
-                {
-                    _rubberBandSelector.DetachRubberbandSelector();
-                    _rubberBandSelector = null;
-                }
+                _rubberBandSelector?.DetachRubberbandSelector();
+                _rubberBandSelector = null;
 
                 DocumentViewerOwner.IsSelectionEnabled = true;
             }

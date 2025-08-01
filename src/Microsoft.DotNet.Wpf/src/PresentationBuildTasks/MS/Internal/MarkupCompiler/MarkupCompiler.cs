@@ -550,28 +550,18 @@ namespace MS.Internal
                     xamlParser.BamlRecordWriter == null &&
                     IsBamlNeeded)
                 {
-                    if (_pendingLocalFiles == null)
-                    {
-                        _pendingLocalFiles = new ArrayList(10);
-                    }
+                    _pendingLocalFiles ??= new ArrayList(10);
 
                     _pendingLocalFiles.Add(relativeSourceFile);
                 }
 
-                if (_codeContexts != null)
-                {
-                    _codeContexts.Clear();
-                    _codeContexts = null;
-                }
+                _codeContexts?.Clear();
+                _codeContexts = null;
 
 
                 SourceFileInfo?.CloseStream();
-
-                if (bamlStream != null)
-                {
-                    bamlStream.Close();
-                    bamlStream = null;
-                }
+                bamlStream?.Close();
+                bamlStream = null;
             }
         }
 
@@ -597,11 +587,8 @@ namespace MS.Internal
                 _ccRoot.CodeNS.Types.Add(_ccRoot.CodeClass);
             }
 
-            if (_usingNS != null)
-            {
-                _usingNS.Clear();
-                _usingNS = null;
-            }
+            _usingNS?.Clear();
+            _usingNS = null;
 
             if (IsCompilingEntryPointClass)
             {

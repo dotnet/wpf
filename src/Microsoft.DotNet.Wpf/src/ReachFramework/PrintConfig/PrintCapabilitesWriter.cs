@@ -51,13 +51,9 @@ namespace MS.Internal.Printing.Configuration
                 this._writer = null;
             }
 
-            if (this._strings != null)
-            {
-                // Security Critical call
-                this._strings.Release();
-
-                this._strings = null;
-            }
+            // Security Critical call
+            this._strings?.Release();
+            this._strings = null;
         }
 
         public void Flush()

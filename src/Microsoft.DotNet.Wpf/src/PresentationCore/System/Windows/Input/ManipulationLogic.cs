@@ -285,11 +285,8 @@ namespace System.Windows.Input
 
         private void ClearTimer()
         {
-            if (_inertiaTimer != null)
-            {
-                _inertiaTimer.Stop();
-                _inertiaTimer = null;
-            }
+            _inertiaTimer?.Stop();
+            _inertiaTimer = null;
         }
 
         /// <summary>

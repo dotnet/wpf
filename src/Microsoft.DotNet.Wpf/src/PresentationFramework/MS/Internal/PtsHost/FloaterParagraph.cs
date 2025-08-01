@@ -52,12 +52,8 @@ namespace MS.Internal.PtsHost
         public override void Dispose()
         {
             base.Dispose();
-
-            if (_mainTextSegment != null)
-            {
-                _mainTextSegment.Dispose();
-                _mainTextSegment = null;
-            }
+            _mainTextSegment?.Dispose();
+            _mainTextSegment = null;
         }
 
 

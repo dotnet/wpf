@@ -542,11 +542,8 @@ namespace System.Windows.Controls
 
         private void DismissPendingToolTip()
         {
-            if (PendingToolTipTimer != null)
-            {
-                PendingToolTipTimer.Stop();
-                PendingToolTipTimer = null;
-            }
+            PendingToolTipTimer?.Stop();
+            PendingToolTipTimer = null;
 
             if (PendingToolTip != null)
             {

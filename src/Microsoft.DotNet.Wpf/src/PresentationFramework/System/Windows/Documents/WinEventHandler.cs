@@ -99,11 +99,8 @@ namespace System.Windows.Documents
                 _hHook = IntPtr.Zero ;
             }
 
-            if (_shutdownListener != null)
-            {
-                _shutdownListener.StopListening();
-                _shutdownListener = null;
-            }
+            _shutdownListener?.StopListening();
+            _shutdownListener = null;
         }
 
         #endregion Internal Methods

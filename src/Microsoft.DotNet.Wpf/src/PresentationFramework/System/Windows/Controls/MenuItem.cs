@@ -2561,11 +2561,8 @@ namespace System.Windows.Controls
 
         private void StopTimer(ref DispatcherTimer timer)
         {
-            if (timer != null)
-            {
-                timer.Stop();
-                timer = null;
-            }
+            timer?.Stop();
+            timer = null;
         }
 
         private void StartTimer(DispatcherTimer timer)

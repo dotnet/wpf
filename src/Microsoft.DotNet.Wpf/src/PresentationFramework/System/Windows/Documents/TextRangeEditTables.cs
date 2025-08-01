@@ -1778,11 +1778,8 @@ namespace System.Windows.Documents
             // Must be called to remove table resizing adorned from a render scope
             internal void DisposeAdorner()
             {
-                if (_tableColResizeAdorner != null)
-                {
-                    _tableColResizeAdorner.Uninitialize();
-                    _tableColResizeAdorner = null;
-                }
+                _tableColResizeAdorner?.Uninitialize();
+                _tableColResizeAdorner = null;
             }
 
             internal double LeftDragMax { get { return (_dxl); } }

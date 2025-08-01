@@ -2499,11 +2499,8 @@ namespace System.Windows.Controls
 
             public void Dispose()
             {
-                if (_itemCollection != null)
-                {
-                    _itemCollection.EndDefer();
-                    _itemCollection = null;
-                }
+                _itemCollection?.EndDefer();
+                _itemCollection = null;
 
                 GC.SuppressFinalize(this);
             }

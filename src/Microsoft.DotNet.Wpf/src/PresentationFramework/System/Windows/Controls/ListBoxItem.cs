@@ -280,11 +280,8 @@ namespace System.Windows.Controls
         protected override void OnMouseEnter(MouseEventArgs e)
         {
             // abort any drag operation we have queued.
-            if (parentNotifyDraggedOperation != null)
-            {
-                parentNotifyDraggedOperation.Abort();
-                parentNotifyDraggedOperation = null;
-            }
+            parentNotifyDraggedOperation?.Abort();
+            parentNotifyDraggedOperation = null;
 
             if (IsMouseOver)
             {
@@ -305,11 +302,8 @@ namespace System.Windows.Controls
         protected override void OnMouseLeave(MouseEventArgs e)
         {
             // abort any drag operation we have queued.
-            if (parentNotifyDraggedOperation != null)
-            {
-                parentNotifyDraggedOperation.Abort();
-                parentNotifyDraggedOperation = null;
-            }
+            parentNotifyDraggedOperation?.Abort();
+            parentNotifyDraggedOperation = null;
 
             base.OnMouseLeave(e);
         }

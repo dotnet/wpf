@@ -625,12 +625,8 @@ namespace System.Windows.Input
                 _listeningElement = null;
                 _synchronizedInputEvents = null;
                 _pairedSynchronizedInputEvents = null;
-
-                if (_synchronizedInputAsyncClearOperation != null)
-                {
-                    _synchronizedInputAsyncClearOperation.Abort();
-                    _synchronizedInputAsyncClearOperation = null;
-                }
+                _synchronizedInputAsyncClearOperation?.Abort();
+                _synchronizedInputAsyncClearOperation = null;
             }
         }
 

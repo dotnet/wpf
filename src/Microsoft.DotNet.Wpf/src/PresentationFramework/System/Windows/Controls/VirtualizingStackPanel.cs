@@ -4630,11 +4630,8 @@ namespace System.Windows.Controls
                 }
             }
 
-            if (_cleanupDelay != null)
-            {
-                _cleanupDelay.Stop();
-                _cleanupDelay = null;
-            }
+            _cleanupDelay?.Stop();
+            _cleanupDelay = null;
         }
 
         private void ClearIsScrollActive()

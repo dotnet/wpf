@@ -446,11 +446,8 @@ namespace System.Printing
 
             if (disposing)
             {
-                if (_ptProvider != null)
-                {
-                    _ptProvider.Dispose();
-                    _ptProvider = null;
-                }
+                _ptProvider?.Dispose();
+                _ptProvider = null;
             }
 
             _disposed = true;

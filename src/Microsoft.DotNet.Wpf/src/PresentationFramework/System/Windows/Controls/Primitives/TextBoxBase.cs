@@ -1832,11 +1832,8 @@ namespace System.Windows.Controls.Primitives
             }
             else if ((fdv = _renderScope as FlowDocumentView) != null)
             {
-                if (fdv.Document != null)
-                {
-                    fdv.Document.Uninitialize();
-                    fdv.Document = null;
-                }
+                fdv.Document?.Uninitialize();
+                fdv.Document = null;
             }
             else
             {

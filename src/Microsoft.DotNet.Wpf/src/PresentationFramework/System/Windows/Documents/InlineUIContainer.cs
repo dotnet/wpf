@@ -156,11 +156,8 @@ namespace System.Windows.Documents
 
             if(_uiElementIsland == null || _uiElementIsland.Root != childElement)
             {
-                if(_uiElementIsland != null)
-                {
-                    _uiElementIsland.Dispose();
-                    _uiElementIsland = null;
-                }
+                _uiElementIsland?.Dispose();
+                _uiElementIsland = null;
 
                 if(childElement != null)
                 {

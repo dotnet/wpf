@@ -307,11 +307,8 @@ namespace System.Windows.Markup
         /// </summary>
         internal void Close()
         {
-            if (_xmlReader != null)
-            {
-                _xmlReader.Close();
-                _xmlReader = null;
-            }
+            _xmlReader?.Close();
+            _xmlReader = null;
         }
 
         /// <summary>

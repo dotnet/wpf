@@ -666,12 +666,9 @@ namespace Microsoft.Windows.Controls.Ribbon
                     if (IsTextSearchEnabled && _firstGallery != null)
                     {
 #if RIBBON_IN_FRAMEWORK
-                        if (_updateTextBoxOperation != null)
-                        {
-                            // cancel any pending async update of the textbox
-                            _updateTextBoxOperation.Abort();
-                            _updateTextBoxOperation = null;
-                        }
+                        // cancel any pending async update of the textbox
+                        _updateTextBoxOperation?.Abort();
+                        _updateTextBoxOperation = null;
 #endif
 
                         ItemsControl matchedGalleryCategory = null;

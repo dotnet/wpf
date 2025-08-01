@@ -1710,11 +1710,8 @@ namespace System.Windows.Markup
         internal void ClearConverterCache()
         {
             // clear the Type converterCache to reduce survived memory allocs
-            if (_converterCache != null)
-            {
-                _converterCache.Clear();
-                _converterCache = null;
-            }
+            _converterCache?.Clear();
+            _converterCache = null;
         }
 #endif
 

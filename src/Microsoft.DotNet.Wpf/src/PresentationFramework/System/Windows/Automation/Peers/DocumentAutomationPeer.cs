@@ -41,11 +41,8 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         internal void OnDisconnected()
         {
-            if (_textPattern != null)
-            {
-                _textPattern.Dispose();
-                _textPattern = null;
-            }
+            _textPattern?.Dispose();
+            _textPattern = null;
         }
 
         /// <summary>

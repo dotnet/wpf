@@ -194,11 +194,8 @@ namespace System.Windows.Documents
                 UnsafeNativeMethods.ImmReleaseContext(new HandleRef(this, hwnd), new HandleRef(this, himc));
             }
 
-            if (_compositionAdorner != null)
-            {
-                _compositionAdorner.Uninitialize();
-                _compositionAdorner = null;
-            }
+            _compositionAdorner?.Uninitialize();
+            _compositionAdorner = null;
 
             _startComposition = null;
             _endComposition = null;
@@ -820,11 +817,8 @@ namespace System.Windows.Documents
                 //
                 // Remove any existing composition adorner for display attribute.
                 //
-                if (_compositionAdorner != null)
-                {
-                    _compositionAdorner.Uninitialize();
-                    _compositionAdorner = null;
-                }
+                _compositionAdorner?.Uninitialize();
+                _compositionAdorner = null;
 
                 //
                 // Build up an array of resultChars + compositionChars -- the complete span of changing text.

@@ -50,11 +50,8 @@ namespace MS.Internal.Utility
 
             public void Dispose()
             {
-                if (_monitorWrapper != null)
-                {
-                    _monitorWrapper.Exit();
-                    _monitorWrapper = null;
-                }
+                _monitorWrapper?.Exit();
+                _monitorWrapper = null;
                 GC.SuppressFinalize(this);
             }
             private MonitorWrapper _monitorWrapper;

@@ -451,11 +451,8 @@ namespace MS.Internal.Controls
 
         internal void StopEvents()
         {
-            if (_connectionPoint != null)
-            {
-                _connectionPoint.Disconnect();
-                _connectionPoint = null;
-            }
+            _connectionPoint?.Disconnect();
+            _connectionPoint = null;
         }
 
         internal int OnActiveXRectChange(NativeMethods.COMRECT lprcPosRect)

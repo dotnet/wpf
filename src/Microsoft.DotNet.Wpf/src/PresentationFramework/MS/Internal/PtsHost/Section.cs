@@ -448,11 +448,8 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal void DestroyStructure()
         {
-            if (_mainTextSegment != null)
-            {
-                _mainTextSegment.Dispose();
-                _mainTextSegment = null;
-            }
+            _mainTextSegment?.Dispose();
+            _mainTextSegment = null;
         }
 
         /// <summary>

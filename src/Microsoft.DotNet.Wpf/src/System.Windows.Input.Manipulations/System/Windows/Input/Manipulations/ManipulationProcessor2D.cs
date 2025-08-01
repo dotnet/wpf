@@ -295,11 +295,8 @@ namespace System.Windows.Input.Manipulations
         /// previous timestamp for the current manipulation.</exception>
         public void CompleteManipulation(Int64 timestamp)
         {
-            if (this.currentManipulation != null)
-            {
-                this.currentManipulation.CompleteManipulation(timestamp);
-                this.currentManipulation = null;
-            }
+            this.currentManipulation?.CompleteManipulation(timestamp);
+            this.currentManipulation = null;
         }
 
         /// <summary>

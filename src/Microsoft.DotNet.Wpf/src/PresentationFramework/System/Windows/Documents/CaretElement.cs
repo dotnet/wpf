@@ -571,12 +571,8 @@ namespace System.Windows.Documents
         internal void DetachFromView()
         {
             SetBlinking(/*isBlinkEnabled:*/false);
-
-            if (_adornerLayer != null)
-            {
-                _adornerLayer.Remove(this);
-                _adornerLayer = null;
-            }
+            _adornerLayer?.Remove(this);
+            _adornerLayer = null;
         }
 
         internal void SetBlinking(bool isBlinkEnabled)

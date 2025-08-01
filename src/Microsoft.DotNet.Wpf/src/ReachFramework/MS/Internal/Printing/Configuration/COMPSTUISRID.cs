@@ -60,12 +60,9 @@ namespace MS.Internal.Printing.Configuration
 
         public void Release()
         {
-            SafeModuleHandle handle = this._compstuiHandle;            
-            if (this._compstuiHandle != null)
-            {
-                this._compstuiHandle.Dispose();
-                this._compstuiHandle = null;
-            }
+            SafeModuleHandle handle = this._compstuiHandle;
+            this._compstuiHandle?.Dispose();
+            this._compstuiHandle = null;
         }
 
         private SafeModuleHandle EnsureModuleHandle()

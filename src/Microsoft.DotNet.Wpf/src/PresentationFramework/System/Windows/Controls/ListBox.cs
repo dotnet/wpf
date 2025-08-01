@@ -625,11 +625,8 @@ namespace System.Windows.Controls
             }
             else
             {
-                if (_autoScrollTimer != null)
-                {
-                    _autoScrollTimer.Stop();
-                    _autoScrollTimer = null;
-                }
+                _autoScrollTimer?.Stop();
+                _autoScrollTimer = null;
             }
 
             base.OnIsMouseCapturedChanged(e);

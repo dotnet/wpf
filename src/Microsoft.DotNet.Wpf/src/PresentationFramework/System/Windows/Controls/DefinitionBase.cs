@@ -96,11 +96,8 @@ namespace System.Windows.Controls
         internal void OnExitParentTree()
         {
             _offset = 0;
-            if (_sharedState != null)
-            {
-                _sharedState.RemoveMember(this);
-                _sharedState = null;
-            }
+            _sharedState?.RemoveMember(this);
+            _sharedState = null;
         }
 
         /// <summary>
@@ -509,13 +506,10 @@ namespace System.Windows.Controls
             {
                 string sharedSizeGroupId = (string) e.NewValue;
 
-                if (definition._sharedState != null)
-                {
-                    //  if definition is already registered AND shared size group id is changing,
-                    //  then un-register the definition from the current shared size state object.
-                    definition._sharedState.RemoveMember(definition);
-                    definition._sharedState = null;
-                }
+                //  if definition is already registered AND shared size group id is changing,
+                //  then un-register the definition from the current shared size state object.
+                definition._sharedState?.RemoveMember(definition);
+                definition._sharedState = null;
 
                 if ((definition._sharedState == null) && (sharedSizeGroupId != null))
                 {
@@ -591,13 +585,10 @@ namespace System.Windows.Controls
             {
                 SharedSizeScope privateSharedSizeScope = (SharedSizeScope) e.NewValue;
 
-                if (definition._sharedState != null)
-                {
-                    //  if definition is already registered And shared size scope is changing,
-                    //  then un-register the definition from the current shared size state object.
-                    definition._sharedState.RemoveMember(definition);
-                    definition._sharedState = null;
-                }
+                //  if definition is already registered And shared size scope is changing,
+                //  then un-register the definition from the current shared size state object.
+                definition._sharedState?.RemoveMember(definition);
+                definition._sharedState = null;
 
                 if ((definition._sharedState == null) && (privateSharedSizeScope != null))
                 {

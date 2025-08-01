@@ -885,23 +885,15 @@ namespace System.Windows.Media
                 _nextLine = null;
                 _formatter = TextFormatter.FromCurrentDispatcher(text._textFormattingMode);
                 _that = text;
-                if (_that._textSourceImpl == null)
-                    _that._textSourceImpl = new TextSourceImplementation(_that);
+                _that._textSourceImpl ??= new TextSourceImplementation(_that);
             }
 
             public void Dispose()
             {
-                if (_currentLine != null)
-                {
-                    _currentLine.Dispose();
-                    _currentLine = null;
-                }
-
-                if (_nextLine != null)
-                {
-                    _nextLine.Dispose();
-                    _nextLine = null;
-                }
+                _currentLine?.Dispose();
+                _currentLine = null;
+                _nextLine?.Dispose();
+                _nextLine = null;
             }
 
             internal int Position
@@ -1035,11 +1027,8 @@ namespace System.Windows.Media
                     if (!nextLineFits)
                     {
                         // next line doesn't fit
-                        if (_nextLine != null)
-                        {
-                            _nextLine.Dispose();
-                            _nextLine = null;
-                        }
+                        _nextLine?.Dispose();
+                        _nextLine = null;
 
                         if (_that._trimming != TextTrimming.None && !_currentLine.HasCollapsed)
                         {

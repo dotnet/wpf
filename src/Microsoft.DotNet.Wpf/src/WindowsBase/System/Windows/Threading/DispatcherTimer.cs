@@ -186,12 +186,9 @@ namespace System.Windows.Threading
                     updateWin32Timer = true;
 
                     // If the operation is in the queue, abort it.
-                    if(_operation != null)
-                    {
-                        _operation.Abort();
-                        _operation = null;
-                    }
-}
+                    _operation?.Abort();
+                    _operation = null;
+                }
             }
 
             if(updateWin32Timer)

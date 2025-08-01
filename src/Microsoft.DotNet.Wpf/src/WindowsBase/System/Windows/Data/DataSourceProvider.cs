@@ -406,11 +406,8 @@ namespace System.Windows.Data
             public void Dispose()
             {
                 GC.SuppressFinalize(this);
-                if (_provider != null)
-                {
-                    _provider.EndDefer();
-                    _provider = null;
-                }
+                _provider?.EndDefer();
+                _provider = null;
             }
 
             private DataSourceProvider _provider;

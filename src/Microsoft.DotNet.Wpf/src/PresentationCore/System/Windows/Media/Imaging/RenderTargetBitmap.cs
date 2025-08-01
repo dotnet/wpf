@@ -213,12 +213,8 @@ namespace System.Windows.Media.Imaging
             // this happens by throwing away our reference to the previous DUCE bitmap source
             // and forcing the creation of a new one.
             _isSourceCached = false;
-
-            if (_convertedDUCEPtr != null)
-            {
-                _convertedDUCEPtr.Close();
-                _convertedDUCEPtr = null;
-            }
+            _convertedDUCEPtr?.Close();
+            _convertedDUCEPtr = null;
 
             // Register for update in the next render pass
             RegisterForAsyncUpdateResource();

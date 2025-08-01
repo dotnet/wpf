@@ -352,12 +352,9 @@ namespace MS.Internal.IO.Packaging
                     // filter, else to indicate filtering is completed.
                     //
 
-                    if (_currentStream != null)
-                    {
-                        // Close the stream for the previous PackagePart.
-                        _currentStream.Close();
-                        _currentStream = null;
-                    }
+                    // Close the stream for the previous PackagePart.
+                    _currentStream?.Close();
+                    _currentStream = null;
 
                     for (_currentFilter = null; _partIterator.MoveNext(); _currentFilter = null)
                     {
@@ -426,11 +423,8 @@ namespace MS.Internal.IO.Packaging
                             break;
                         }
 
-                        if (_currentStream != null)
-                        {
-                            _currentStream.Close();
-                            _currentStream = null;
-                        }
+                        _currentStream?.Close();
+                        _currentStream = null;
                     }
 
                     if (_currentFilter == null)

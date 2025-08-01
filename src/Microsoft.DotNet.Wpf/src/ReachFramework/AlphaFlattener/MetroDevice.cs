@@ -740,11 +740,8 @@ namespace Microsoft.Internal.AlphaFlattener
 
         private void DisposePrintTicketConverter()
         {
-            if (m_Converter != null)
-            {
-                m_Converter.Dispose();
-                m_Converter = null;
-            }
+            m_Converter?.Dispose();
+            m_Converter = null;
         }
 
         /// <summary>

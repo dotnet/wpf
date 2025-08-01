@@ -61,12 +61,8 @@ namespace System.Windows.Media
         protected override bool ReleaseHandle()
         {
             UnsafeNativeMethods.MILUnknown.ReleaseInterface(ref handle);
-
-            if (_gcPressure != null)
-            {
-                _gcPressure.Release();
-                _gcPressure = null;
-            }
+            _gcPressure?.Release();
+            _gcPressure = null;
 
             return true;
         }

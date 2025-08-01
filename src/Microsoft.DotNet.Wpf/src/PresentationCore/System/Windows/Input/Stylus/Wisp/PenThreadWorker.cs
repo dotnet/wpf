@@ -1246,8 +1246,7 @@ namespace System.Windows.Input
                             // we are doing this to compinsate for drivers that send a move after they send a outofrange
                             for (int i = 0; i < _penContexts.Length; i++)
                             {
-                                PenContext penContext = _penContexts[i].Target as PenContext;
-                                if (penContext != null)
+                                if (_penContexts[i].Target is PenContext penContext)
                                 {
                                     // we send 0 as the stulyspointerId to trigger code in PenContext::FirePenOutOfRange
                                     penContext.FirePenOutOfRange(0, Environment.TickCount);

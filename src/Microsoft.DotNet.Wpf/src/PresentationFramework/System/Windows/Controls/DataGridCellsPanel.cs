@@ -275,11 +275,8 @@ namespace System.Windows.Controls
                     if (columnIndex != childIndex || previousColumnIndex != (columnIndex - 1))
                     {
                         childIndex = columnIndex;
-                        if (generatorState != null)
-                        {
-                            generatorState.Dispose();
-                            generatorState = null;
-                        }
+                        generatorState?.Dispose();
+                        generatorState = null;
                     }
                     previousColumnIndex = columnIndex;
 
@@ -333,9 +330,9 @@ namespace System.Windows.Controls
                                             redeterminationNeeded = true;
                                         }
                                     }
-                                    else if (generatorState != null)
+                                    else
                                     {
-                                        generatorState.Dispose();
+                                        generatorState?.Dispose();
                                         generatorState = null;
                                     }
 
@@ -398,11 +395,8 @@ namespace System.Windows.Controls
             }
             finally
             {
-                if (generatorState != null)
-                {
-                    generatorState.Dispose();
-                    generatorState = null;
-                }
+                generatorState?.Dispose();
+                generatorState = null;
             }
 
             // If we are virtualizing and datagrid doesnt have any star columns

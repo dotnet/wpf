@@ -2585,11 +2585,8 @@ namespace System.Windows.Documents
         // Removes the caret from the visual tree.
         private void DetachCaretFromVisualTree()
         {
-            if (_caretElement != null)
-            {
-                _caretElement.DetachFromView();
-                _caretElement = null;
-            }
+            _caretElement?.DetachFromView();
+            _caretElement = null;
         }
 
         #endregion Private methods

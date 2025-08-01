@@ -533,11 +533,9 @@ namespace MS.Internal.PtsHost
             finally
             {
                 // Destroy top margin collapsing state (not needed anymore).
-                if (mcsContainer != null)
-                {
-                    mcsContainer.Dispose();
-                    mcsContainer = null;
-                }
+                mcsContainer?.Dispose();
+                mcsContainer = null;
+
                 // When possible in the future, remove this workaround for PTS uninitialized variable.
                 if (dvrSubTrackTopSpace > PTS.dvBottomUndefined / 2)
                 {
@@ -581,11 +579,8 @@ namespace MS.Internal.PtsHost
 
             // Since MCS returned by PTS is never passed back, destroy MCS provided by PTS.
             // If necessary, new MCS is created and passed back to PTS.
-            if (mcsContainer != null)
-            {
-                mcsContainer.Dispose();
-                mcsContainer = null;
-            }
+            mcsContainer?.Dispose();
+            mcsContainer = null;
 
             // Adjust fsbbox to account for margins
             fsbbox.fsrc.u -= mbp.MBPLeft;
@@ -675,11 +670,8 @@ namespace MS.Internal.PtsHost
             finally
             {
                 // Destroy top margin collapsing state (not needed anymore).
-                if (mcsContainer != null)
-                {
-                    mcsContainer.Dispose();
-                    mcsContainer = null;
-                }
+                mcsContainer?.Dispose();
+                mcsContainer = null;
             }
 
             if (fsfmtrbl != PTS.FSFMTRBL.fmtrblCollision)
@@ -700,11 +692,8 @@ namespace MS.Internal.PtsHost
 
                 // Since MCS returned by PTS is never passed back, destroy MCS provided by PTS.
                 // If necessary, new MCS is created and passed back to PTS.
-                if (mcsContainer != null)
-                {
-                    mcsContainer.Dispose();
-                    mcsContainer = null;
-                }
+                mcsContainer?.Dispose();
+                mcsContainer = null;
 
                 // Take into accound MBPs and modify subtrack metrics
                 dvrTopSpace = (mbp.BPTop != 0) ? marginTop : dvrSubTrackTopSpace;
@@ -805,11 +794,8 @@ namespace MS.Internal.PtsHost
             finally
             {
                 // Destroy top margin collapsing state (not needed anymore).
-                if (mcsContainer != null)
-                {
-                    mcsContainer.Dispose();
-                    mcsContainer = null;
-                }
+                mcsContainer?.Dispose();
+                mcsContainer = null;
             }
 
             if (fsfmtrbl != PTS.FSFMTRBL.fmtrblCollision)
@@ -830,11 +816,8 @@ namespace MS.Internal.PtsHost
 
                 // Since MCS returned by PTS is never passed back, destroy MCS provided by PTS.
                 // If necessary, new MCS is created and passed back to PTS.
-                if (mcsContainer != null)
-                {
-                    mcsContainer.Dispose();
-                    mcsContainer = null;
-                }
+                mcsContainer?.Dispose();
+                mcsContainer = null;
 
                 // Take into accound MBPs and modify subtrack metrics
                 dvrTopSpace = (mbp.BPTop != 0) ? marginTop : dvrSubTrackTopSpace;

@@ -498,11 +498,9 @@ namespace System.Windows.Interop
                 PresentationSource.RemoveSourceChangedHandler(this, new SourceChangedEventHandler(OnSourceChanged));
             }
 
-            if (_weakEventDispatcherShutdown != null) // Can be null if the static ctor failed ... see WebBrowser.
-            {
-                _weakEventDispatcherShutdown.Dispose();
-                _weakEventDispatcherShutdown = null;
-            }
+            // Can be null if the static ctor failed ... see WebBrowser.
+            _weakEventDispatcherShutdown?.Dispose();
+            _weakEventDispatcherShutdown = null;
 
             DestroyWindow();
 

@@ -356,12 +356,9 @@ namespace System.Windows.Input
             {
                  throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
             }
-         
-	    if (_innerGestureList != null)
-            {
-               _innerGestureList.Clear();
-               _innerGestureList = null;
-            }
+
+            _innerGestureList?.Clear();
+            _innerGestureList = null;
         }
 
         /// <summary>

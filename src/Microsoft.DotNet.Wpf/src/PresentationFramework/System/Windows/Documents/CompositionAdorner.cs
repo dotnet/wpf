@@ -36,7 +36,7 @@ namespace System.Windows.Documents
         /// <param name="textView">
         /// TextView to which this CompositionAdorner is attached as adorner.
         /// </param>
-        internal CompositionAdorner(ITextView textView) : this(textView, new ArrayList())
+        internal CompositionAdorner(ITextView textView) : this(textView, new List<AttributeRange>())
         {
         }
 
@@ -49,8 +49,7 @@ namespace System.Windows.Documents
         /// <param name="attributeRanges">
         /// Attribute ranges
         /// </param>
-        internal CompositionAdorner(ITextView textView, ArrayList attributeRanges)
-            : base(textView.RenderScope)
+        private CompositionAdorner(ITextView textView, List<AttributeRange> attributeRanges) : base(textView.RenderScope)
         {
             Debug.Assert(textView != null && textView.RenderScope != null);
 
@@ -82,23 +81,17 @@ namespace System.Windows.Documents
         /// Transform to apply to the adorner
         /// </returns>
         public override GeneralTransform GetDesiredTransform(GeneralTransform transform)
-        {            
-            TranslateTransform translation;
-            GeneralTransformGroup group = new GeneralTransformGroup();
-
+        {
             // Get the matrix transform out, skip all non affine transforms
-            Transform t = transform.AffineTransform;
-            if (t == null)
-            {                
-                t = Transform.Identity;                
-            }
+            Transform t = transform.AffineTransform ?? Transform.Identity;
 
             // Translate the adorner to (0, 0) point
-            translation = new TranslateTransform(-(t.Value.OffsetX), -(t.Value.OffsetY));
+            TranslateTransform translation = new(-t.Value.OffsetX, -t.Value.OffsetY);
 
+            GeneralTransformGroup group = new GeneralTransformGroup();
             group.Children.Add(translation);
 
-            if (transform != null)
+            if (transform is not null)
             {
                 group.Children.Add(transform);
             }
@@ -123,8 +116,7 @@ namespace System.Windows.Documents
         {
             // Get the matrix from AdornedElement to the visual parent to get the transformed
             // start/end point
-            Visual parent2d = VisualTreeHelper.GetParent(this.AdornedElement) as Visual;
-            if (parent2d == null)
+            if (VisualTreeHelper.GetParent(AdornedElement) is not Visual parent2d)
             {
                 return;
             }
@@ -148,7 +140,7 @@ namespace System.Windows.Documents
                 DoubleCollection dashArray;
 
                 // Get the composition attribute range from the attribute range lists
-                AttributeRange attributeRange = (AttributeRange)_attributeRanges[i];
+                AttributeRange attributeRange = _attributeRanges[i];
 
                 // Skip the rendering composition lines if the composition line doesn't exist.
                 if (attributeRange.CompositionLines.Count == 0)
@@ -157,7 +149,7 @@ namespace System.Windows.Documents
                 }
 
                 // Set the line bold and squiggle
-                bool lineBold = attributeRange.TextServicesDisplayAttribute.IsBoldLine ? true : false;
+                bool lineBold = attributeRange.TextServicesDisplayAttribute.IsBoldLine;
                 bool squiggle = false;
                 bool hasVirtualSelection = (attributeRange.TextServicesDisplayAttribute.AttrInfo & UnsafeNativeMethods.TF_DA_ATTR_INFO.TF_ATTR_TARGET_CONVERTED) != 0;
 
@@ -339,15 +331,14 @@ namespace System.Windows.Documents
             for (int i = 0; i < _attributeRanges.Count; i++)
             {
                 // Get the composition attribute range from the attribute range lists
-                AttributeRange attributeRange = (AttributeRange)_attributeRanges[i];
+                AttributeRange attributeRange = _attributeRanges[i];
 
                 // Add the composition lines for rendering the composition lines
                 attributeRange.AddCompositionLines();
             }
 
             // Invalidate the CompositionAdorner to update the rendering.
-            AdornerLayer adornerLayer = VisualTreeHelper.GetParent(this) as AdornerLayer;
-            if (adornerLayer != null)
+            if (VisualTreeHelper.GetParent(this) is AdornerLayer adornerLayer)
             {
                 adornerLayer.Update(AdornedElement);
                 adornerLayer.InvalidateArrange();
@@ -374,7 +365,7 @@ namespace System.Windows.Documents
         {
             if (_adornerLayer != null)
             {
-                // Remove CompositionAdorner form the socping of AdornerLayer
+                // Remove CompositionAdorner from the scoping of AdornerLayer
                 _adornerLayer.Remove(this);
                 _adornerLayer = null;
             }
@@ -397,7 +388,7 @@ namespace System.Windows.Documents
         private ITextView _textView;
 
         // ArrayList for the composition attribute ranges
-        private readonly ArrayList _attributeRanges;
+        private readonly List<AttributeRange> _attributeRanges;
 
         // Composition line's dot length
         private const double DotLength = 1.2;

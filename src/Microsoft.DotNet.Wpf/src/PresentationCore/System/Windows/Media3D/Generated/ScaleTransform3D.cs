@@ -450,11 +450,10 @@ namespace System.Windows.Media.Media3D
 
 
             // Initializations
-            Type typeofThis = typeof(ScaleTransform3D);
             ScaleXProperty =
                   RegisterProperty("ScaleX",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(ScaleTransform3D),
                                    1.0,
                                    new PropertyChangedCallback(ScaleXPropertyChanged),
                                    null,
@@ -463,7 +462,7 @@ namespace System.Windows.Media.Media3D
             ScaleYProperty =
                   RegisterProperty("ScaleY",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(ScaleTransform3D),
                                    1.0,
                                    new PropertyChangedCallback(ScaleYPropertyChanged),
                                    null,
@@ -472,7 +471,7 @@ namespace System.Windows.Media.Media3D
             ScaleZProperty =
                   RegisterProperty("ScaleZ",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(ScaleTransform3D),
                                    1.0,
                                    new PropertyChangedCallback(ScaleZPropertyChanged),
                                    null,
@@ -481,7 +480,7 @@ namespace System.Windows.Media.Media3D
             CenterXProperty =
                   RegisterProperty("CenterX",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(ScaleTransform3D),
                                    0.0,
                                    new PropertyChangedCallback(CenterXPropertyChanged),
                                    null,
@@ -490,7 +489,7 @@ namespace System.Windows.Media.Media3D
             CenterYProperty =
                   RegisterProperty("CenterY",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(ScaleTransform3D),
                                    0.0,
                                    new PropertyChangedCallback(CenterYPropertyChanged),
                                    null,
@@ -499,7 +498,7 @@ namespace System.Windows.Media.Media3D
             CenterZProperty =
                   RegisterProperty("CenterZ",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(ScaleTransform3D),
                                    0.0,
                                    new PropertyChangedCallback(CenterZPropertyChanged),
                                    null,

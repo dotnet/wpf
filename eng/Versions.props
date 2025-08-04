@@ -38,11 +38,6 @@
   <PropertyGroup>
     <MicrosoftDotNetApiCompatVersion>9.0.0-beta.24053.1</MicrosoftDotNetApiCompatVersion>
   </PropertyGroup>
-  <!-- Sourcelink -->
-  <PropertyGroup>
-    <MicrosoftSourceLinkGitHubVersion>8.0.0-beta.23409.2</MicrosoftSourceLinkGitHubVersion>
-    <MicrosoftSourceLinkAzureReposGitVersion>8.0.0-beta.23409.2</MicrosoftSourceLinkAzureReposGitVersion>
-  </PropertyGroup>
   <!-- Other Packages that require manual updating-->
   <PropertyGroup>
     <MicrosoftBuildFrameworkPackageVersion>15.9.20</MicrosoftBuildFrameworkPackageVersion>

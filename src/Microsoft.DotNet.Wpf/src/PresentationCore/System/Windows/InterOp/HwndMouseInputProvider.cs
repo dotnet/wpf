@@ -412,8 +412,8 @@ namespace System.Windows.Interop
                     _queryCursorOperation?.Abort();
                     _queryCursorOperation = null;
 
-                        // MITIGATION_SETCURSOR
-                        if (_haveCapture)
+                    // MITIGATION_SETCURSOR
+                    if (_haveCapture)
                     {
                         // When we have capture we don't receive WM_SETCURSOR
                         // prior to a mouse move.  So that we don't erroneously think

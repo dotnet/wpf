@@ -608,6 +608,7 @@ namespace MS.Internal.IO.Packaging
                 _package?.Close();
                 _package = null;
             }
+            
             _packageStream?.Close();
             _packageStream = null;
         }

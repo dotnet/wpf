@@ -92,11 +92,12 @@
       <Uri>https://github.com/dotnet/dotnet</Uri>
       <Sha>e9f665e52848a3615736c099e5631af531b66a5c</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.SourceLink.AzureRepos.Git" Version="10.0.0-beta.25409.103">
+    <!-- TODO: Unpin sourcelink dependencies: https://github.com/dotnet/wpf/issues/11042 -->
+    <Dependency Name="Microsoft.SourceLink.AzureRepos.Git" Version="8.0.0-beta.23409.2" Pinned="true">
       <Uri>https://github.com/dotnet/dotnet</Uri>
       <Sha>e9f665e52848a3615736c099e5631af531b66a5c</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.SourceLink.GitHub" Version="10.0.0-beta.25409.103">
+    <Dependency Name="Microsoft.SourceLink.GitHub" Version="8.0.0-beta.23409.2" Pinned="true">
       <Uri>https://github.com/dotnet/dotnet</Uri>
       <Sha>e9f665e52848a3615736c099e5631af531b66a5c</Sha>
     </Dependency>

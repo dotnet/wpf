@@ -15,7 +15,7 @@ This file should be imported by eng/Versions.props
     <MicrosoftNETCoreAppRefPackageVersion>10.0.0-rc.1.25409.103</MicrosoftNETCoreAppRefPackageVersion>
     <MicrosoftNETCorePlatformsPackageVersion>10.0.0-rc.1.25409.103</MicrosoftNETCorePlatformsPackageVersion>
     <MicrosoftPrivateWinformsPackageVersion>10.0.0-rc.1.25409.103</MicrosoftPrivateWinformsPackageVersion>
-    <MicrosoftSourceLinkAzureReposGitPackageVersion>10.0.0-beta.25409.103</MicrosoftSourceLinkAzureReposGitPackageVersion>
+    <MicrosoftSourceLinkAzureReposGitPackageVersion>8.0.0-beta.23409.2</MicrosoftSourceLinkAzureReposGitPackageVersion>
     <MicrosoftSourceLinkGitHubPackageVersion>8.0.0-beta.23409.2</MicrosoftSourceLinkGitHubPackageVersion>
     <SystemCodeDomPackageVersion>10.0.0-rc.1.25409.103</SystemCodeDomPackageVersion>
     <SystemConfigurationConfigurationManagerPackageVersion>10.0.0-rc.1.25409.103</SystemConfigurationConfigurationManagerPackageVersion>

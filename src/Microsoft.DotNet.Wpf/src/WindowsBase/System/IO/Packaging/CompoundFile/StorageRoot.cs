@@ -373,13 +373,10 @@ namespace System.IO.Packaging
     {
         if( null == rootIStorage )
             return; // Extraneous calls to Close() are ignored
-            
-        if( null != dataSpaceManager )
-        {
-            // Tell data space manager to flush all information as necessary
-            dataSpaceManager.Dispose();
-            dataSpaceManager = null;
-        }
+
+        // Tell data space manager to flush all information as necessary
+        dataSpaceManager?.Dispose();
+        dataSpaceManager = null;
 
         try
         {

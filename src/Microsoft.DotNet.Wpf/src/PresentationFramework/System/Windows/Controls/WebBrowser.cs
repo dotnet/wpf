@@ -584,11 +584,8 @@ namespace System.Windows.Controls
         internal override void DetachSink()
         {
             //If we have a cookie get rid of it
-            if ( _cookie != null)
-            {
-                _cookie.Disconnect();
-                _cookie = null;
-            }
+            _cookie?.Disconnect();
+            _cookie = null;
         }
         
         internal override ActiveXSite CreateActiveXSite()

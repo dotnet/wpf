@@ -2567,11 +2567,8 @@ namespace System.Windows.Interop
                 MonitorPowerEvent = null;
 
                 _hwndTargetCount = 0;
-                if (_notificationHwnd != null)
-                {
-                    _notificationHwnd.Dispose();
-                    _notificationHwnd = null;
-                }
+                _notificationHwnd?.Dispose();
+                _notificationHwnd = null;
             }
 
             public void AttachHwndTarget(HwndTarget hwndTarget)

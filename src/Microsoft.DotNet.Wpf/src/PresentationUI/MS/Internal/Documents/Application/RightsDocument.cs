@@ -141,19 +141,13 @@ namespace MS.Internal.Documents.Application
                 {
                     try
                     {
-                        if (WorkspacePackage != null)
-                        {
-                            WorkspacePackage.Close();
-                            WorkspacePackage = null;
-                        }
+                        WorkspacePackage?.Close();
+                        WorkspacePackage = null;
                     }
                     finally
                     {
-                        if (SourcePackage != null)
-                        {
-                            SourcePackage.Close();
-                            SourcePackage = null;
-                        }
+                        SourcePackage?.Close();
+                        SourcePackage = null;
                     }
                 }
             }

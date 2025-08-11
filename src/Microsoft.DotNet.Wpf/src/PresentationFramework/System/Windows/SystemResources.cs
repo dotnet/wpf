@@ -1782,11 +1782,8 @@ namespace System.Windows
         // remove this DeferredResourceReference from its ResourceDictionary
         internal virtual void RemoveFromDictionary()
         {
-            if (_dictionary != null)
-            {
-                _dictionary.RemoveDeferredResourceReference(this);
-                _dictionary = null;
-            }
+            _dictionary?.RemoveDeferredResourceReference(this);
+            _dictionary = null;
         }
 
         internal void AddInflatedListener(ResourceReferenceExpression listener)

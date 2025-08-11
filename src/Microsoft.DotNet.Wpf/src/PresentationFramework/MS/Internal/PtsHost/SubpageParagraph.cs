@@ -40,12 +40,8 @@ namespace MS.Internal.PtsHost
         public override void Dispose()
         {
             base.Dispose();
-
-            if(_mainTextSegment != null)
-            {
-                _mainTextSegment.Dispose();
-                _mainTextSegment = null;
-            }
+            _mainTextSegment?.Dispose();
+            _mainTextSegment = null;
             GC.SuppressFinalize(this);
         }
 
@@ -174,11 +170,8 @@ namespace MS.Internal.PtsHost
                 }
                 subpageHeight = Math.Max(1, subpageHeight - (marginTop + mbp.BPTop));
                 // Destroy top margin collapsing state (not needed anymore).
-                if (mcsSubpage != null)
-                {
-                    mcsSubpage.Dispose();
-                    mcsSubpage = null;
-                }
+                mcsSubpage?.Dispose();
+                mcsSubpage = null;
             }
             else
             {
@@ -283,12 +276,8 @@ namespace MS.Internal.PtsHost
 
             // Since MCS returned by PTS is never passed back, destroy MCS provided by PTS.
             // If necessary, new MCS is created and passed back to PTS (see above).
-            if (mcsSubpage != null)
-            {
-                mcsSubpage.Dispose();
-                mcsSubpage = null;
-            }
-
+            mcsSubpage?.Dispose();
+            mcsSubpage = null;
 
             // Update information about first/last chunk
             paraClient.SetChunkInfo(pbrkrecIn == IntPtr.Zero, pbrkrecOut == IntPtr.Zero);
@@ -352,12 +341,11 @@ namespace MS.Internal.PtsHost
 
             subpageWidth = Math.Max(1, subpageWidth - (mbp.MBPLeft + mbp.MBPRight));
             MarginCollapsingState.CollapseTopMargin(PtsContext, mbp, mcs, out mcsSubpage, out marginTop);
+
             // Destroy top margin collapsing state (not needed anymore).
-            if (mcsSubpage != null)
-            {
-                mcsSubpage.Dispose();
-                mcsSubpage = null;
-            }
+            mcsSubpage?.Dispose();
+            mcsSubpage = null;
+
             durSubpageMargin = subpageWidth;
 
             // Initialize column info
@@ -412,11 +400,8 @@ namespace MS.Internal.PtsHost
 
                 // Since MCS returned by PTS is never passed back, destroy MCS provided by PTS.
                 // If necessary, new MCS is created and passed back to PTS.
-                if (mcsSubpage != null)
-                {
-                    mcsSubpage.Dispose();
-                    mcsSubpage = null;
-                }
+                mcsSubpage?.Dispose();
+                mcsSubpage = null;
 
                 if (PTS.ToBoolean(fsbbox.fDefined))
                 {
@@ -512,12 +497,11 @@ namespace MS.Internal.PtsHost
 
             subpageWidth = Math.Max(1, subpageWidth - (mbp.MBPLeft + mbp.MBPRight));
             MarginCollapsingState.CollapseTopMargin(PtsContext, mbp, mcs, out mcsSubpage, out marginTop);
+
             // Destroy top margin collapsing state (not needed anymore).
-            if (mcsSubpage != null)
-            {
-                mcsSubpage.Dispose();
-                mcsSubpage = null;
-            }
+            mcsSubpage?.Dispose();
+            mcsSubpage = null;
+
             durSubpageMargin = subpageWidth;
 
             // Initialize column info
@@ -571,11 +555,8 @@ namespace MS.Internal.PtsHost
 
                 // Since MCS returned by PTS is never passed back, destroy MCS provided by PTS.
                 // If necessary, new MCS is created and passed back to PTS.
-                if (mcsSubpage != null)
-                {
-                    mcsSubpage.Dispose();
-                    mcsSubpage = null;
-                }
+                mcsSubpage?.Dispose();
+                mcsSubpage = null;
 
                 if (PTS.ToBoolean(fsbbox.fDefined))
                 {

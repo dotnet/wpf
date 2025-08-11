@@ -1721,20 +1721,14 @@ namespace System.Windows.Controls.Primitives
 
         private void CancelAsyncCreate()
         {
-            if (_asyncCreate != null)
-            {
-                _asyncCreate.Abort();
-                _asyncCreate = null;
-            }
+            _asyncCreate?.Abort();
+            _asyncCreate = null;
         }
 
         private void CancelAsyncDestroy()
         {
-            if (_asyncDestroy != null)
-            {
-                _asyncDestroy.Stop();
-                _asyncDestroy = null;
-            }
+            _asyncDestroy?.Stop();
+            _asyncDestroy = null;
         }
 
         internal void ForceClose()

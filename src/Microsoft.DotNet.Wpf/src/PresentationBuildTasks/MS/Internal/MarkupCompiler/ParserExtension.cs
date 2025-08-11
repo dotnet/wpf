@@ -676,12 +676,8 @@ namespace MS.Internal
                 _compiler.ConnectNameAndEvents(_name, _events, _connectionId);
 
                 _name = null;
-
-                if (_events != null)
-                {
-                    _events.Clear();
-                    _events = null;
-                }
+                _events?.Clear();
+                _events = null;
             }
             else
             {

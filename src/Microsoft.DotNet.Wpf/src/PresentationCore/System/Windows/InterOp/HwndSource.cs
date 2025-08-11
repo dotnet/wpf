@@ -2563,11 +2563,8 @@ namespace System.Windows.Interop
                     // (see comment above about disposing the HwndStylusInputProvider)
                     //
                     {
-                        if (_hwndTarget != null)
-                        {
-                            _hwndTarget.Dispose();
-                            _hwndTarget = null;
-                        }
+                        _hwndTarget?.Dispose();
+                        _hwndTarget = null;
 
                         if (_hwndWrapper != null)
                         {

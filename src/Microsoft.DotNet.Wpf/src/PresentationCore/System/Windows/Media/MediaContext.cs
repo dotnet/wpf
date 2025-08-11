@@ -1681,11 +1681,8 @@ namespace System.Windows.Media
             // Cancel pending render queue items so that we don't dispatch them later
             // causing a double render during Resize. (Note that RenderMessage will schedule a
             // new RenderQueueItem).
-            if (_currentRenderOp != null)
-            {
-                _currentRenderOp.Abort();
-                _currentRenderOp = null;
-            }
+            _currentRenderOp?.Abort();
+            _currentRenderOp = null;
 
             // We don't need to keep our promotion timers around.
             _promoteRenderOpToInput.Stop();
@@ -1859,11 +1856,8 @@ namespace System.Windows.Media
                 // We've processed the currentRenderOp so clear it
                 //
 
-                if (_currentRenderOp != null)
-                {
-                    _currentRenderOp.Abort();
-                    _currentRenderOp = null;
-                }
+                _currentRenderOp?.Abort();
+                _currentRenderOp = null;
 
                 if (!InterlockIsEnabled)
                 {

@@ -138,11 +138,8 @@ namespace MS.Internal
         //
         internal void CloseStream()
         {
-            if (_stream != null)
-            {
-                _stream.Close();
-                _stream = null;
-            }
+            _stream?.Close();
+            _stream = null;
         }
 
     #endregion

@@ -2690,11 +2690,8 @@ namespace System.Windows.Documents
                 }
                 Invariant.Assert(middleSubTree.Role == SplayTreeNodeRole.LocalRoot, "middleSubTree is not a local root!");
 
-                if (middleSubTree.ParentNode != null)
-                {
-                    middleSubTree.ParentNode.ContainedNode = null;
-                    middleSubTree.ParentNode = null;
-                }
+                middleSubTree.ParentNode?.ContainedNode = null;
+                middleSubTree.ParentNode = null;
 
                 // Calc the symbol count of the middle tree.
                 for (childNode = middleSubTree; childNode != null; childNode = childNode.RightChildNode)

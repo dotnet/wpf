@@ -259,17 +259,11 @@ namespace MS.Internal.AppModel
             }
             finally
             {
-                if (colorBitmap != null)
-                {
-                    colorBitmap.Dispose();
-                    colorBitmap = null;
-                }
+                colorBitmap?.Dispose();
+                colorBitmap = null;
 
-                if (maskBitmap != null)
-                {
-                    maskBitmap.Dispose();
-                    maskBitmap = null;
-                }
+                maskBitmap?.Dispose();
+                maskBitmap = null;
             }
         }
 

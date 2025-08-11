@@ -110,19 +110,13 @@ namespace MS.Internal.Documents.Application
         {
             try
             {
-                if (WorkspaceProxy != null)
-                {
-                    WorkspaceProxy.Close();
+                    WorkspaceProxy?.Close();
                     WorkspaceProxy = null;
-                }
             }
             finally
             {
-                if (SourceProxy != null)
-                {
-                    SourceProxy.Close();
+                    SourceProxy?.Close();
                     SourceProxy = null;
-                }
             }
         }
     }

@@ -1289,11 +1289,8 @@ namespace MS.Internal.Documents
     /// </summary>
     private void CleanUpSecureEnvironment()
     {
-        if (_secureEnvironment != null)
-        {
-             _secureEnvironment.Dispose();
-            _secureEnvironment = null;
-        }
+        _secureEnvironment?.Dispose();
+        _secureEnvironment = null;
     }
 
     /// <summary>

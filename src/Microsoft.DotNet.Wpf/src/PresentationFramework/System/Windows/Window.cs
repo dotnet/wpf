@@ -2360,11 +2360,8 @@ namespace System.Windows
             // a WM_DESTROY msg and it is a duplicate msg.
 
             // When the window is closing, stop any deferred operations.
-            if (_taskbarRetryTimer != null)
-            {
-                _taskbarRetryTimer.Stop();
-                _taskbarRetryTimer = null;
-            }
+            _taskbarRetryTimer?.Stop();
+            _taskbarRetryTimer = null;
 
             try
             {
@@ -4433,12 +4430,9 @@ namespace System.Windows
             //before _dispatcherFrame is instantiated. In the Activated handler, if user closes the
             //window (setting DialogResult fires the WM_CLOSE event), the _dispatcherFrame is still null.
             //Bug 874463 addressed this.
-            if (_dispatcherFrame != null)
-            {
-                // un block the push frame call
-                _dispatcherFrame.Continue = false;
-                _dispatcherFrame = null;
-            }
+            // un block the push frame call
+            _dispatcherFrame?.Continue = false;
+            _dispatcherFrame = null;
 
             // Fix for Close Dialog Window should not return null
             //
@@ -7642,9 +7636,9 @@ namespace System.Windows
                         _panningFeedback = new HwndPanningFeedback(_sourceWindow);
                     }
 
-                // Update the window position
-                _panningFeedback?.UpdatePanningFeedback(totalOverpanOffset, animate);
-            }
+                    // Update the window position
+                    _panningFeedback?.UpdatePanningFeedback(totalOverpanOffset, animate);
+                }
 
                 /// <summary>
                 ///     Return the window back to its original position.
@@ -7652,12 +7646,9 @@ namespace System.Windows
                 /// <param name="animateBack">Whether to animate to the original position.</param>
                 internal void EndPanningFeedback(bool animateBack)
                 {
-                    if (_panningFeedback != null)
-                    {
-                        // Restore the window to its original position
-                        _panningFeedback.EndPanningFeedback(animateBack);
-                        _panningFeedback = null;
-                    }
+                    // Restore the window to its original position
+                    _panningFeedback?.EndPanningFeedback(animateBack);
+                    _panningFeedback = null;
                 }
 
                 private HwndSource _sourceWindow;

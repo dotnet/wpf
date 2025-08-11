@@ -103,11 +103,8 @@ namespace Microsoft.Build.Tasks.Windows
             {
                 if (disposing)
                 {
-                    if (null != _sourceStream)
-                    {
-                        _sourceStream.Dispose();
-                        _sourceStream = null;
-                    }
+                    _sourceStream?.Dispose();
+                    _sourceStream = null;
                 }
             }
         }
@@ -153,7 +150,7 @@ namespace Microsoft.Build.Tasks.Windows
                return false;
             }
 
-            if (OutputResourcesFile != null && OutputResourcesFile.Length > 1)
+            if (OutputResourcesFile?.Length > 1)
             {
                 // Every task should generate only one .resources.
                 Log.LogErrorWithCodeFromResources(nameof(SR.MoreResourcesFiles));

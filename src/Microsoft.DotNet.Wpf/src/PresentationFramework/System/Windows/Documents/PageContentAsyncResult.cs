@@ -232,11 +232,8 @@ namespace System.Windows.Documents
         #region Private Methods
         private void _OnPaserFinished(object sender, EventArgs args)
         {
-            if (_pendingStream != null)
-            {
-                _pendingStream.Close();
-                _pendingStream = null;
-            }
+            _pendingStream?.Close();
+            _pendingStream = null;
         }
         #endregion Private Methods
 

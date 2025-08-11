@@ -409,11 +409,8 @@ namespace System.Windows.Interop
 
                     // Abort the pending operation waiting to update the cursor, because we
                     // are going to update it as part of this mouse move processing.
-                    if (_queryCursorOperation != null)
-                    {
-                        _queryCursorOperation.Abort();
-                        _queryCursorOperation = null;
-                    }
+                    _queryCursorOperation?.Abort();
+                    _queryCursorOperation = null;
 
                     // MITIGATION_SETCURSOR
                     if (_haveCapture)

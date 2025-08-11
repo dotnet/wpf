@@ -86,11 +86,8 @@ namespace System.Windows.Documents
             _statusTable = null;
 
             // Release our nl6 objects.
-            if (_spellerInterop != null)
-            {
-                _spellerInterop.Dispose();
-                _spellerInterop = null;
-            }
+            _spellerInterop?.Dispose();
+            _spellerInterop = null;
 
             // Clear the TextEditor.  (Used as a sentinel to track Detachedness
             // from pending idle callback.)

@@ -227,11 +227,8 @@ namespace System.Windows.Annotations
             // If it hasn't been run yet, abort the pending operation.  Still need to
             // unregister and unload annotations.  They may have been loaded due to a
             // store event.
-            if (_asyncLoadOperation != null)
-            {
-                _asyncLoadOperation.Abort();
-                _asyncLoadOperation = null;
-            }
+            _asyncLoadOperation?.Abort();
+            _asyncLoadOperation = null;
 
             // Unregister for changes to the store - add/deletes/anchor changes - before
             // unloading annotations.  We don't want any events between unloading and unregistering.
@@ -998,16 +995,13 @@ namespace System.Windows.Annotations
                 }
             }
 
-            if (_asyncLoadFromListOperation != null)
-            {
-                //stop this one - we  will set a new one in the queue
-                _asyncLoadFromListOperation.Abort();
-                _asyncLoadFromListOperation = null;
-            }
+            //stop this one - we  will set a new one in the queue
+            _asyncLoadFromListOperation?.Abort();
+            _asyncLoadFromListOperation = null;
 
-            if ((attachedAnnotations != null) && (attachedAnnotations.Count > 0))
+            if (attachedAnnotations?.Count > 0)
                 LoadAnnotationsFromListAsync(attachedAnnotations);
-		}
+        }
 
         /// <summary>
         /// Mark all AnnotationAdorners that Annotate this element as Dirty

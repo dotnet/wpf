@@ -2065,11 +2065,8 @@ namespace System.Windows.Data
 
             public void Dispose()
             {
-                if (_collectionView != null)
-                {
-                    _collectionView.EndDefer();
-                    _collectionView = null;
-                }
+                _collectionView?.EndDefer();
+                _collectionView = null;
 
                 GC.SuppressFinalize(this);
             }

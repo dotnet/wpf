@@ -402,16 +402,10 @@ namespace MS.Internal.IO.Packaging
                             FreeByteRangeDownloader();
 
                             // Free Event Handles - should not throw
-                            if (_readEventHandles[(int)ReadEvent.FullDownloadReadEvent] != null)
-                            {
-                                _readEventHandles[(int)ReadEvent.FullDownloadReadEvent].Close();
-                                _readEventHandles[(int)ReadEvent.FullDownloadReadEvent] = null;
-                            }
-                            if (_readEventHandles[(int)ReadEvent.ByteRangeReadEvent] != null)
-                            {
-                                _readEventHandles[(int)ReadEvent.ByteRangeReadEvent].Close();
-                                _readEventHandles[(int)ReadEvent.ByteRangeReadEvent] = null;
-                            }
+                            _readEventHandles[(int)ReadEvent.FullDownloadReadEvent]?.Close();
+                            _readEventHandles[(int)ReadEvent.FullDownloadReadEvent] = null;
+                            _readEventHandles[(int)ReadEvent.ByteRangeReadEvent]?.Close();
+                            _readEventHandles[(int)ReadEvent.ByteRangeReadEvent] = null;
 
                             // Free Full Download
                             _responseStream?.Close();
@@ -1167,11 +1161,8 @@ namespace MS.Internal.IO.Packaging
                         FreeByteRangeDownloader();
 
                         // release the full download read event as it is no longer needed
-                        if (_readEventHandles[(int)ReadEvent.FullDownloadReadEvent] != null)
-                        {
-                            _readEventHandles[(int)ReadEvent.FullDownloadReadEvent].Close();
-                            _readEventHandles[(int)ReadEvent.FullDownloadReadEvent] = null;
-                        }
+                        _readEventHandles[(int)ReadEvent.FullDownloadReadEvent]?.Close();
+                        _readEventHandles[(int)ReadEvent.FullDownloadReadEvent] = null;
                     }
                     finally
                     {
@@ -1196,12 +1187,8 @@ namespace MS.Internal.IO.Packaging
                 try
                 {
                     ((IDisposable)_byteRangeDownloader).Dispose();
-
-                    if (_readEventHandles[(int)ReadEvent.ByteRangeReadEvent] != null)
-                    {
-                        _readEventHandles[(int)ReadEvent.ByteRangeReadEvent].Close();
-                        _readEventHandles[(int)ReadEvent.ByteRangeReadEvent] = null;
-                    }
+                    _readEventHandles[(int)ReadEvent.ByteRangeReadEvent]?.Close();
+                    _readEventHandles[(int)ReadEvent.ByteRangeReadEvent] = null;
                 }
                 finally
                 {

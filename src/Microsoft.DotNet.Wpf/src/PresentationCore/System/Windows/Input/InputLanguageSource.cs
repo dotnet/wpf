@@ -82,11 +82,8 @@ namespace System.Windows.Input
         /// </summary>
         public void Uninitialize()
         {
-            if (_ipp != null)
-            {
-                _ipp.Uninitialize();
-                _ipp = null;
-            }
+            _ipp?.Uninitialize();
+            _ipp = null;
         }
 
         #endregion Public Methods

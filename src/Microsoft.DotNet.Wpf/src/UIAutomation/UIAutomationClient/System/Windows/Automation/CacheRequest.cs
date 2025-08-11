@@ -548,11 +548,8 @@ namespace System.Windows.Automation
         {
             Debug.Assert( _request != null );
 
-            if( _request != null )
-            {
-                _request.Pop();
-                _request = null;
-            }
+            _request?.Pop();
+            _request = null;
         }
 
         // No finalizer - usually Dispose is used with a finalizer,

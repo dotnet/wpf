@@ -2484,11 +2484,8 @@ namespace System.Windows.Navigation
             // some scenarios.
 
             // Do not close and null it before firing LoadCompleted because we pass webresponse out in Navigated and LoadCompleted event args.
-            if (_webResponse != null)
-            {
-                _webResponse.Close();
-                _webResponse = null;
-            }
+            _webResponse?.Close();
+            _webResponse = null;
 
             if (!isNavInitiator && ncParent != null)
             {
@@ -2935,11 +2932,8 @@ namespace System.Windows.Navigation
                 {
                     response.Close();
                     _webResponse = null;
-                    if (_asyncObjectConverter != null)
-                    {
-                        _asyncObjectConverter.CancelAsync();
-                        _asyncObjectConverter = null;
-                    }
+                    _asyncObjectConverter?.CancelAsync();
+                    _asyncObjectConverter = null;
                 }
             }
         }
@@ -4347,11 +4341,8 @@ namespace System.Windows.Navigation
             // and the ones in progress.
 
             // Abort dispatched navigation operations
-            if (_postedOp != null)
-            {
-                _postedOp.Abort();
-                _postedOp = null;
-            }
+            _postedOp?.Abort();
+            _postedOp = null;
         }
 
         internal Uri Source

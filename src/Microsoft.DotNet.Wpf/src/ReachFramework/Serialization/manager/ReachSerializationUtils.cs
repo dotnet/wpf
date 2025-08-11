@@ -621,11 +621,8 @@ namespace System.Windows.Xps.Serialization
 
             _serializationManager.PackagingPolicy.PreCommitCurrentPage();
 
-            if (_treeWalker != null)
-            {
-                _treeWalker.CommitHyperlinks();
-                _treeWalker = null;
-            }
+            _treeWalker?.CommitHyperlinks();
+            _treeWalker = null;
 
             xmlWriter.WriteEndElement();
 

@@ -603,16 +603,14 @@ namespace MS.Internal.IO.Packaging
                 _encryptedPackage.Close();
                 _encryptedPackage = null;
             }
-            else if (_package != null)
+            else
             {
-                _package.Close();
+                _package?.Close();
                 _package = null;
             }
-            if (_packageStream != null)
-            {
-                _packageStream.Close();
-                _packageStream = null;
-            }
+            
+            _packageStream?.Close();
+            _packageStream = null;
         }
 
         /// <summary>

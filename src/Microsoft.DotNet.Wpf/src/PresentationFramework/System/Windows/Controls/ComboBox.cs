@@ -679,12 +679,9 @@ namespace System.Windows.Controls
                     // Try searching for an item matching the new text
                     if (IsTextSearchEnabled)
                     {
-                        if (_updateTextBoxOperation != null)
-                        {
-                            // cancel any pending async update of the textbox
-                            _updateTextBoxOperation.Abort();
-                            _updateTextBoxOperation = null;
-                        }
+                        // cancel any pending async update of the textbox
+                        _updateTextBoxOperation?.Abort();
+                        _updateTextBoxOperation = null;
 
                         MatchedTextInfo matchedTextInfo = TextSearch.FindMatchingPrefix(this, newText);
                         int matchedIndex = matchedTextInfo.MatchedItemIndex;
@@ -1208,11 +1205,8 @@ namespace System.Windows.Controls
             }
             else
             {
-                if (_autoScrollTimer != null)
-                {
-                    _autoScrollTimer.Stop();
-                    _autoScrollTimer = null;
-                }
+                _autoScrollTimer?.Stop();
+                _autoScrollTimer = null;
             }
 
             base.OnIsMouseCapturedChanged(e);

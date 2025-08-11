@@ -116,11 +116,8 @@ namespace System.Windows.Input
 
         private void Dispose(bool disposing)
         {
-            if ( _cursorHandle != null )
-            {
-                _cursorHandle.Dispose();
-                _cursorHandle = null;
-            }
+            _cursorHandle?.Dispose();
+            _cursorHandle = null;
         }
 
         /// <summary>

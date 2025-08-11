@@ -54,11 +54,8 @@ namespace System.Windows.Controls
         public void Dispose()
         {
             // Dispose text line
-            if (_line != null)
-            {
-                _line.Dispose();
-                _line = null;
-            }
+            _line?.Dispose();
+            _line = null;
             GC.SuppressFinalize(this);
         }
 

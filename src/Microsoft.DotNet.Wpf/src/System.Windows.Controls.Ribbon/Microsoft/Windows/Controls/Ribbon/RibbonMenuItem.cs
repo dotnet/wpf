@@ -1152,11 +1152,8 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private static void StopTimer(ref DispatcherTimer timer)
         {
-            if (timer != null)
-            {
-                timer.Stop();
-                timer = null;
-            }
+            timer?.Stop();
+            timer = null;
         }
 
         private void StartTimer(DispatcherTimer timer)

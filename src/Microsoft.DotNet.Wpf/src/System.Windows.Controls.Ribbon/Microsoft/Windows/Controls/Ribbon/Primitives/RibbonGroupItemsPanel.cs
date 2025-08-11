@@ -116,11 +116,8 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         private void OnRibbonGroupItemsPanelUnloaded(object sender, RoutedEventArgs e)
         {
             IContainsStarLayoutManager iContainsStarLayoutManager = (IContainsStarLayoutManager)this;
-            if (iContainsStarLayoutManager.StarLayoutManager != null)
-            {
-                iContainsStarLayoutManager.StarLayoutManager.UnregisterStarLayoutProvider(this);
-                iContainsStarLayoutManager.StarLayoutManager = null;
-            }
+            iContainsStarLayoutManager.StarLayoutManager?.UnregisterStarLayoutProvider(this);
+            iContainsStarLayoutManager.StarLayoutManager = null;
         }
 
         private static double GetStarChildMinWidth(FrameworkElement child, ref double maxStarColumnWidth)

@@ -47,7 +47,7 @@
                             <Rectangle
                                 x:Name="ActiveRectangle"
                                 Width="3"
-                                Height="16"
+                                Height="18"
                                 Margin="0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
@@ -97,7 +97,7 @@
                             <Rectangle
                                 x:Name="ActiveRectangle"
                                 Width="3"
-                                Height="16"
+                                Height="18"
                                 Margin="0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"

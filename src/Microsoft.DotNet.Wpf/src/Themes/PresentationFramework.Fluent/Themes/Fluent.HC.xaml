@@ -3613,7 +3613,7 @@
           <Border x:Name="Border" Margin="0" Padding="0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
             <Grid>
               <ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-              <Rectangle x:Name="ActiveRectangle" Width="3" Height="16" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="{DynamicResource ListViewItemPillFillBrush}" RadiusX="2" RadiusY="2" Visibility="Collapsed" />
+              <Rectangle x:Name="ActiveRectangle" Width="3" Height="18" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="{DynamicResource ListViewItemPillFillBrush}" RadiusX="2" RadiusY="2" Visibility="Collapsed" />
             </Grid>
           </Border>
           <ControlTemplate.Triggers>
@@ -3643,7 +3643,7 @@
             <Grid x:Name="ContentGrid">
               <!-- remove the HorizontalAlignment due to HeaderRowPresenter does not have the ability to align to center or right -->
               <GridViewRowPresenter Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-              <Rectangle x:Name="ActiveRectangle" Width="3" Height="16" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="{DynamicResource ListViewItemPillFillBrush}" RadiusX="2" RadiusY="2" Visibility="Collapsed" />
+              <Rectangle x:Name="ActiveRectangle" Width="3" Height="18" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" Fill="{DynamicResource ListViewItemPillFillBrush}" RadiusX="2" RadiusY="2" Visibility="Collapsed" />
             </Grid>
           </Border>
           <ControlTemplate.Triggers>

@@ -24,6 +24,7 @@ This file should be imported by eng/Versions.props
     <SystemDrawingCommonPackageVersion>10.0.0-rc.1.25411.109</SystemDrawingCommonPackageVersion>
     <SystemFormatsNrbfPackageVersion>10.0.0-rc.1.25411.109</SystemFormatsNrbfPackageVersion>
     <SystemIOPackagingPackageVersion>10.0.0-rc.1.25411.109</SystemIOPackagingPackageVersion>
+    <SystemPrivateWindowsCoreTestUtilitiesPackageVersion>10.0.0-rc.1.25411.109</SystemPrivateWindowsCoreTestUtilitiesPackageVersion>
     <SystemReflectionMetadataLoadContextPackageVersion>10.0.0-rc.1.25411.109</SystemReflectionMetadataLoadContextPackageVersion>
     <SystemResourcesExtensionsPackageVersion>10.0.0-rc.1.25411.109</SystemResourcesExtensionsPackageVersion>
     <SystemRuntimeSerializationFormattersPackageVersion>10.0.0-rc.1.25411.109</SystemRuntimeSerializationFormattersPackageVersion>
@@ -53,6 +54,7 @@ This file should be imported by eng/Versions.props
     <SystemDrawingCommonVersion>$(SystemDrawingCommonPackageVersion)</SystemDrawingCommonVersion>
     <SystemFormatsNrbfVersion>$(SystemFormatsNrbfPackageVersion)</SystemFormatsNrbfVersion>
     <SystemIOPackagingVersion>$(SystemIOPackagingPackageVersion)</SystemIOPackagingVersion>
+    <SystemPrivateWindowsCoreTestUtilitiesVersion>$(SystemPrivateWindowsCoreTestUtilitiesPackageVersion)</SystemPrivateWindowsCoreTestUtilitiesVersion>
     <SystemReflectionMetadataLoadContextVersion>$(SystemReflectionMetadataLoadContextPackageVersion)</SystemReflectionMetadataLoadContextVersion>
     <SystemResourcesExtensionsVersion>$(SystemResourcesExtensionsPackageVersion)</SystemResourcesExtensionsVersion>
     <SystemRuntimeSerializationFormattersVersion>$(SystemRuntimeSerializationFormattersPackageVersion)</SystemRuntimeSerializationFormattersVersion>

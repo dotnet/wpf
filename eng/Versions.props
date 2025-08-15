@@ -68,8 +68,6 @@
     <SystemDrawingCommonTestDataVersion>8.0.0-beta.23107.1</SystemDrawingCommonTestDataVersion>
     <SystemWindowsExtensionsTestDataVersion>8.0.0-beta.23107.1</SystemWindowsExtensionsTestDataVersion>
     <VerifyXunitV3Version>30.1.0</VerifyXunitV3Version>
-    <!-- Shared test utilities with WinForms -->
-    <SystemPrivateWindowsCoreTestUtilitiesVersion>10.0.0-preview.6.25313.5</SystemPrivateWindowsCoreTestUtilitiesVersion>
   </PropertyGroup>
   <!-- Code Coverage -->
   <PropertyGroup>

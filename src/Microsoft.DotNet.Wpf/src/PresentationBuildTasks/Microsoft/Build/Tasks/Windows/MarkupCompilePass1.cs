@@ -1842,7 +1842,7 @@ namespace Microsoft.Build.Tasks.Windows
         private string[]                   _assembliesGeneratedDuringBuild;
         private string[]                   _knownReferencePaths;
 
-        private string                     _sourceDir;
+        private readonly string _sourceDir;
         private string                     _outputDir;
 
         private ITaskItem[]                _extraBuildControlFiles;

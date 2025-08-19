@@ -1,100 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
-  <Source Uri="https://github.com/dotnet/dotnet" Mapping="wpf" Sha="520c71b5277fc1f72dbec14da03ca55205d6c8e5" BarId="278961" />
+  <Source Uri="https://github.com/dotnet/dotnet" Mapping="wpf" Sha="5c3434d8b831745673c31e186906f463e1036301" BarId="279843" />
   <ProductDependencies>
-    <Dependency Name="Microsoft.Private.Winforms" Version="10.0.0-rc.1.25411.109">
+    <Dependency Name="Microsoft.Private.Winforms" Version="10.0.0-rc.1.25418.105">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>520c71b5277fc1f72dbec14da03ca55205d6c8e5</Sha>
+      <Sha>5c3434d8b831745673c31e186906f463e1036301</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="10.0.0-rc.1.25411.109">
+    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="10.0.0-rc.1.25418.105">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>520c71b5277fc1f72dbec14da03ca55205d6c8e5</Sha>
+      <Sha>5c3434d8b831745673c31e186906f463e1036301</Sha>
     </Dependency>
-    <Dependency Name="System.Reflection.MetadataLoadContext" Version="10.0.0-rc.1.25411.109">
+    <Dependency Name="System.Reflection.MetadataLoadContext" Version="10.0.0-rc.1.25418.105">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>520c71b5277fc1f72dbec14da03ca55205d6c8e5</Sha>
+      <Sha>5c3434d8b831745673c31e186906f463e1036301</Sha>
     </Dependency>
-    <Dependency Name="System.Windows.Extensions" Version="10.0.0-rc.1.25411.109">
+    <Dependency Name="System.Windows.Extensions" Version="10.0.0-rc.1.25418.105">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>520c71b5277fc1f72dbec14da03ca55205d6c8e5</Sha>
+      <Sha>5c3434d8b831745673c31e186906f463e1036301</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.Platforms" Version="10.0.0-rc.1.25411.109">
+    <Dependency Name="Microsoft.NETCore.Platforms" Version="10.0.0-rc.1.25418.105">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>520c71b5277fc1f72dbec14da03ca55205d6c8e5</Sha>
+      <Sha>5c3434d8b831745673c31e186906f463e1036301</Sha>
     </Dependency>
     <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="10.0.0-preview.7.25317.2">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int</Uri>
       <Sha>8a6c1d81657ef04c040f598cafacf8f5a33abda2</Sha>
     </Dependency>
-    <Dependency Name="System.Resources.Extensions" Version="10.0.0-rc.1.25411.109">
+    <Dependency Name="System.Resources.Extensions" Version="10.0.0-rc.1.25418.105">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>520c71b5277fc1f72dbec14da03ca55205d6c8e5</Sha>
+      <Sha>5c3434d8b831745673c31e186906f463e1036301</Sha>
     </Dependency>
-    <Dependency Name="System.Runtime.Serialization.Formatters" Version="10.0.0-rc.1.25411.109">
+    <Dependency Name="System.Runtime.Serialization.Formatters" Version="10.0.0-rc.1.25418.105">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>520c71b5277fc1f72dbec14da03ca55205d6c8e5</Sha>
+      <Sha>5c3434d8b831745673c31e186906f463e1036301</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.App.Ref" Version="10.0.0-rc.1.25411.109">
+    <Dependency Name="Microsoft.NETCore.App.Ref" Version="10.0.0-rc.1.25418.105">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>520c71b5277fc1f72dbec14da03ca55205d6c8e5</Sha>
+      <Sha>5c3434d8b831745673c31e186906f463e1036301</Sha>
     </Dependency>
-    <Dependency Name="System.CodeDom" Version="10.0.0-rc.1.25411.109">
+    <Dependency Name="System.CodeDom" Version="10.0.0-rc.1.25418.105">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>520c71b5277fc1f72dbec14da03ca55205d6c8e5</Sha>
+      <Sha>5c3434d8b831745673c31e186906f463e1036301</Sha>
     </Dependency>
-    <Dependency Name="System.Configuration.ConfigurationManager" Version="10.0.0-rc.1.25411.109">
+    <Dependency Name="System.Configuration.ConfigurationManager" Version="10.0.0-rc.1.25418.105">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>520c71b5277fc1f72dbec14da03ca55205d6c8e5</Sha>
+      <Sha>5c3434d8b831745673c31e186906f463e1036301</Sha>
     </Dependency>
-    <Dependency Name="System.Diagnostics.EventLog" Version="10.0.0-rc.1.25411.109">
+    <Dependency Name="System.Diagnostics.EventLog" Version="10.0.0-rc.1.25418.105">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>520c71b5277fc1f72dbec14da03ca55205d6c8e5</Sha>
+      <Sha>5c3434d8b831745673c31e186906f463e1036301</Sha>
     </Dependency>
-    <Dependency Name="System.DirectoryServices" Version="10.0.0-rc.1.25411.109">
+    <Dependency Name="System.DirectoryServices" Version="10.0.0-rc.1.25418.105">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>520c71b5277fc1f72dbec14da03ca55205d6c8e5</Sha>
+      <Sha>5c3434d8b831745673c31e186906f463e1036301</Sha>
     </Dependency>
-    <Dependency Name="System.Formats.Nrbf" Version="10.0.0-rc.1.25411.109">
+    <Dependency Name="System.Formats.Nrbf" Version="10.0.0-rc.1.25418.105">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>520c71b5277fc1f72dbec14da03ca55205d6c8e5</Sha>
+      <Sha>5c3434d8b831745673c31e186906f463e1036301</Sha>
     </Dependency>
-    <Dependency Name="System.IO.Packaging" Version="10.0.0-rc.1.25411.109">
+    <Dependency Name="System.IO.Packaging" Version="10.0.0-rc.1.25418.105">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>520c71b5277fc1f72dbec14da03ca55205d6c8e5</Sha>
+      <Sha>5c3434d8b831745673c31e186906f463e1036301</Sha>
     </Dependency>
-    <Dependency Name="System.Security.Cryptography.Xml" Version="10.0.0-rc.1.25411.109">
+    <Dependency Name="System.Security.Cryptography.Xml" Version="10.0.0-rc.1.25418.105">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>520c71b5277fc1f72dbec14da03ca55205d6c8e5</Sha>
+      <Sha>5c3434d8b831745673c31e186906f463e1036301</Sha>
     </Dependency>
-    <Dependency Name="System.Security.Permissions" Version="10.0.0-rc.1.25411.109">
+    <Dependency Name="System.Security.Permissions" Version="10.0.0-rc.1.25418.105">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>520c71b5277fc1f72dbec14da03ca55205d6c8e5</Sha>
+      <Sha>5c3434d8b831745673c31e186906f463e1036301</Sha>
     </Dependency>
-    <Dependency Name="System.Drawing.Common" Version="10.0.0-rc.1.25411.109">
+    <Dependency Name="System.Drawing.Common" Version="10.0.0-rc.1.25418.105">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>520c71b5277fc1f72dbec14da03ca55205d6c8e5</Sha>
+      <Sha>5c3434d8b831745673c31e186906f463e1036301</Sha>
     </Dependency>
   </ProductDependencies>
   <ToolsetDependencies>
-    <Dependency Name="System.Private.Windows.Core.TestUtilities" Version="10.0.0-rc.1.25411.109">
+    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="10.0.0-beta.25418.105">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>520c71b5277fc1f72dbec14da03ca55205d6c8e5</Sha>
+      <Sha>5c3434d8b831745673c31e186906f463e1036301</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="10.0.0-beta.25411.109">
+    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="10.0.0-beta.25418.105">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>520c71b5277fc1f72dbec14da03ca55205d6c8e5</Sha>
+      <Sha>5c3434d8b831745673c31e186906f463e1036301</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.CodeAnalysis" Version="10.0.0-beta.25411.109">
+    <Dependency Name="Microsoft.DotNet.Helix.Sdk" Version="10.0.0-beta.25418.105">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>520c71b5277fc1f72dbec14da03ca55205d6c8e5</Sha>
+      <Sha>5c3434d8b831745673c31e186906f463e1036301</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Helix.Sdk" Version="10.0.0-beta.25411.109">
+    <Dependency Name="Microsoft.DotNet.GenAPI" Version="10.0.0-beta.25418.105">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>520c71b5277fc1f72dbec14da03ca55205d6c8e5</Sha>
-    </Dependency>
-    <Dependency Name="Microsoft.DotNet.GenAPI" Version="10.0.0-beta.25411.109">
-      <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>520c71b5277fc1f72dbec14da03ca55205d6c8e5</Sha>
+      <Sha>5c3434d8b831745673c31e186906f463e1036301</Sha>
     </Dependency>
     <!-- TODO: Unpin sourcelink dependencies: https://github.com/dotnet/wpf/issues/11042 -->
     <Dependency Name="Microsoft.SourceLink.AzureRepos.Git" Version="8.0.0-beta.23409.2" Pinned="true">
@@ -104,6 +100,10 @@
     <Dependency Name="Microsoft.SourceLink.GitHub" Version="8.0.0-beta.23409.2" Pinned="true">
       <Uri>https://github.com/dotnet/dotnet</Uri>
       <Sha>e9f665e52848a3615736c099e5631af531b66a5c</Sha>
+    </Dependency>
+    <Dependency Name="System.Private.Windows.Core.TestUtilities" Version="10.0.0-rc.1.25418.105">
+      <Uri>https://github.com/dotnet/dotnet</Uri>
+      <Sha>5c3434d8b831745673c31e186906f463e1036301</Sha>
     </Dependency>
   </ToolsetDependencies>
 </Dependencies>

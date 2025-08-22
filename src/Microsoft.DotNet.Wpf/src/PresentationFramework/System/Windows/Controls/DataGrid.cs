@@ -400,10 +400,7 @@ namespace System.Windows.Controls
         /// </remarks>
         protected internal virtual void OnColumnDisplayIndexChanged(DataGridColumnEventArgs e)
         {
-            if (ColumnDisplayIndexChanged != null)
-            {
-                ColumnDisplayIndexChanged(this, e);
-            }
+            ColumnDisplayIndexChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1138,10 +1135,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnLoadingRow(DataGridRowEventArgs e)
         {
-            if (LoadingRow != null)
-            {
-                LoadingRow(this, e);
-            }
+            LoadingRow?.Invoke(this, e);
 
             var row = e.Row;
             if (row.DetailsVisibility == Visibility.Visible && row.DetailsPresenter != null)
@@ -1166,10 +1160,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnUnloadingRow(DataGridRowEventArgs e)
         {
-            if (UnloadingRow != null)
-            {
-                UnloadingRow(this, e);
-            }
+            UnloadingRow?.Invoke(this, e);
 
             var row = e.Row;
             OnUnloadingRowDetailsWrapper(row);
@@ -2426,10 +2417,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnRowEditEnding(DataGridRowEditEndingEventArgs e)
         {
-            if (RowEditEnding != null)
-            {
-                RowEditEnding(this, e);
-            }
+            RowEditEnding?.Invoke(this, e);
 
             if (AutomationPeer.ListenerExists(AutomationEvents.InvokePatternOnInvoked))
             {
@@ -2450,10 +2438,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnCellEditEnding(DataGridCellEditEndingEventArgs e)
         {
-            if (CellEditEnding != null)
-            {
-                CellEditEnding(this, e);
-            }
+            CellEditEnding?.Invoke(this, e);
 
             if (AutomationPeer.ListenerExists(AutomationEvents.InvokePatternOnInvoked))
             {
@@ -2949,10 +2934,7 @@ namespace System.Windows.Controls
         /// <param name="e">Empty event arguments.</param>
         protected virtual void OnCurrentCellChanged(EventArgs e)
         {
-            if (CurrentCellChanged != null)
-            {
-                CurrentCellChanged(this, e);
-            }
+            CurrentCellChanged?.Invoke(this, e);
         }
 
         private void UpdateCurrentCell(DataGridCell cell, bool isFocusWithinCell)
@@ -3086,10 +3068,7 @@ namespace System.Windows.Controls
         /// </remarks>
         protected virtual void OnBeginningEdit(DataGridBeginningEditEventArgs e)
         {
-            if (BeginningEdit != null)
-            {
-                BeginningEdit(this, e);
-            }
+            BeginningEdit?.Invoke(this, e);
 
             if (AutomationPeer.ListenerExists(AutomationEvents.InvokePatternOnInvoked))
             {
@@ -3114,10 +3093,7 @@ namespace System.Windows.Controls
         /// </remarks>
         protected internal virtual void OnPreparingCellForEdit(DataGridPreparingCellForEditEventArgs e)
         {
-            if (PreparingCellForEdit != null)
-            {
-                PreparingCellForEdit(this, e);
-            }
+            PreparingCellForEdit?.Invoke(this, e);
         }
 
         /// <summary>
@@ -3503,10 +3479,7 @@ namespace System.Windows.Controls
         /// <param name="e">Event arguments that provide access to the new item.</param>
         protected virtual void OnAddingNewItem(AddingNewItemEventArgs e)
         {
-            if (AddingNewItem != null)
-            {
-                AddingNewItem(this, e);
-            }
+            AddingNewItem?.Invoke(this, e);
         }
 
         /// <summary>
@@ -3525,10 +3498,7 @@ namespace System.Windows.Controls
         /// <param name="e">Event arguments that provide access to the new item.</param>
         protected virtual void OnInitializingNewItem(InitializingNewItemEventArgs e)
         {
-            if (InitializingNewItem != null)
-            {
-                InitializingNewItem(this, e);
-            }
+            InitializingNewItem?.Invoke(this, e);
         }
 
         private object AddNewItem()
@@ -3954,10 +3924,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnLoadingRowDetails(DataGridRowDetailsEventArgs e)
         {
-            if (LoadingRowDetails != null)
-            {
-                LoadingRowDetails(this, e);
-            }
+            LoadingRowDetails?.Invoke(this, e);
         }
 
         /// <summary>
@@ -3965,10 +3932,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnUnloadingRowDetails(DataGridRowDetailsEventArgs e)
         {
-            if (UnloadingRowDetails != null)
-            {
-                UnloadingRowDetails(this, e);
-            }
+            UnloadingRowDetails?.Invoke(this, e);
         }
 
         /// <summary>
@@ -3976,10 +3940,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected internal virtual void OnRowDetailsVisibilityChanged(DataGridRowDetailsEventArgs e)
         {
-            if (RowDetailsVisibilityChanged != null)
-            {
-                RowDetailsVisibilityChanged(this, e);
-            }
+            RowDetailsVisibilityChanged?.Invoke(this, e);
 
             var row = e.Row;
 
@@ -4264,10 +4225,7 @@ namespace System.Windows.Controls
         /// </remarks>
         protected virtual void OnSelectedCellsChanged(SelectedCellsChangedEventArgs e)
         {
-            if (SelectedCellsChanged != null)
-            {
-                SelectedCellsChanged(this, e);
-            }
+            SelectedCellsChanged?.Invoke(this, e);
 
             // Raise automation events
             if (AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementSelected) ||
@@ -7063,10 +7021,7 @@ namespace System.Windows.Controls
         protected virtual void OnSorting(DataGridSortingEventArgs eventArgs)
         {
             eventArgs.Handled = false;
-            if (Sorting != null)
-            {
-                Sorting(this, eventArgs);
-            }
+            Sorting?.Invoke(this, eventArgs);
 
             if (!eventArgs.Handled)
             {
@@ -7455,10 +7410,7 @@ namespace System.Windows.Controls
         /// <param name="e"></param>
         protected virtual void OnAutoGeneratedColumns(EventArgs e)
         {
-            if (AutoGeneratedColumns != null)
-            {
-                AutoGeneratedColumns(this, e);
-            }
+            AutoGeneratedColumns?.Invoke(this, e);
         }
 
         /// <summary>
@@ -7467,10 +7419,7 @@ namespace System.Windows.Controls
         /// <param name="e"></param>
         protected virtual void OnAutoGeneratingColumn(DataGridAutoGeneratingColumnEventArgs e)
         {
-            if (AutoGeneratingColumn != null)
-            {
-                AutoGeneratingColumn(this, e);
-            }
+            AutoGeneratingColumn?.Invoke(this, e);
         }
 
         /// <summary>
@@ -8128,42 +8077,27 @@ namespace System.Windows.Controls
 
         protected internal virtual void OnColumnHeaderDragStarted(DragStartedEventArgs e)
         {
-            if (ColumnHeaderDragStarted != null)
-            {
-                ColumnHeaderDragStarted(this, e);
-            }
+            ColumnHeaderDragStarted?.Invoke(this, e);
         }
 
         protected internal virtual void OnColumnReordering(DataGridColumnReorderingEventArgs e)
         {
-            if (ColumnReordering != null)
-            {
-                ColumnReordering(this, e);
-            }
+            ColumnReordering?.Invoke(this, e);
         }
 
         protected internal virtual void OnColumnHeaderDragDelta(DragDeltaEventArgs e)
         {
-            if (ColumnHeaderDragDelta != null)
-            {
-                ColumnHeaderDragDelta(this, e);
-            }
+            ColumnHeaderDragDelta?.Invoke(this, e);
         }
 
         protected internal virtual void OnColumnHeaderDragCompleted(DragCompletedEventArgs e)
         {
-            if (ColumnHeaderDragCompleted != null)
-            {
-                ColumnHeaderDragCompleted(this, e);
-            }
+            ColumnHeaderDragCompleted?.Invoke(this, e);
         }
 
         protected internal virtual void OnColumnReordered(DataGridColumnEventArgs e)
         {
-            if (ColumnReordered != null)
-            {
-                ColumnReordered(this, e);
-            }
+            ColumnReordered?.Invoke(this, e);
         }
 
         #endregion
@@ -8345,10 +8279,7 @@ namespace System.Windows.Controls
             }
 
             // Raise the event to give a chance to external listeners to modify row clipboard content (e.ClipboardRow)
-            if (CopyingRowClipboardContent != null)
-            {
-                CopyingRowClipboardContent(this, args);
-            }
+            CopyingRowClipboardContent?.Invoke(this, args);
         }
 
         /// <summary>

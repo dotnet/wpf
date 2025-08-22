@@ -429,10 +429,7 @@ namespace MS.Internal.Documents
             FirePageCacheChangedEvent(changes);
 
             //Fire the PaginationProgress event.
-            if (PaginationProgress != null)
-            {
-                PaginationProgress(this, args);
-            }
+            PaginationProgress?.Invoke(this, args);
 
             return null;
         }
@@ -468,10 +465,7 @@ namespace MS.Internal.Documents
             _isPaginationCompleted = true;
 
             //Fire the PaginationProgress event.
-            if (PaginationCompleted != null)
-            {
-                PaginationCompleted(this, args);
-            }
+            PaginationCompleted?.Invoke(this, args);
 
             return null;
         }
@@ -543,10 +537,7 @@ namespace MS.Internal.Documents
             }
 
             //Fire the PagesChanged event.
-            if (PagesChanged != null)
-            {
-                PagesChanged(this, args);
-            }
+            PagesChanged?.Invoke(this, args);
 
             return null;
         }
@@ -675,10 +666,7 @@ namespace MS.Internal.Documents
             }
 
             //Fire the GetPageCompleted event.
-            if (GetPageCompleted != null)
-            {
-                GetPageCompleted(this, args);
-            }
+            GetPageCompleted?.Invoke(this, args);
 
             return null;
         }

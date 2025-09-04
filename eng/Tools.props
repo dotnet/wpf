@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <!-- Pre-download vcxproj dependencies as vcxprojs in this repo don't support NuGet package download. -->
-  <ItemGroup>
+  <ItemGroup Condition="'$(OS)' == 'Windows_NT'">
     <PackageDownload Include="Microsoft.NETCore.App.Ref" Version="[$(MicrosoftNETCoreAppRefVersion)]" Condition="'$(MicrosoftNETCoreAppRefVersion)' != ''" />
     <PackageDownload Include="Microsoft.NETCore.App.Runtime.$(_RuntimeIdentifier)" Version="[$(MicrosoftNETCoreAppRefVersion)]" Condition="'$(MicrosoftNETCoreAppRefVersion)' != ''" />
     <PackageDownload Include="Microsoft.NETCore.App.Host.$(_RuntimeIdentifier)" Version="[$(MicrosoftNETCoreAppRefVersion)]" Condition="'$(MicrosoftNETCoreAppRefVersion)' != ''" />

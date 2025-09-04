@@ -95,7 +95,11 @@ namespace MS.Internal
         /// </summary>
         internal WeakEventManager this[Type managerType]
         {
-            get { return (WeakEventManager)_managerTable[managerType]; }
+            get
+            {
+                _managerTable.TryGetValue(managerType, out WeakEventManager result);
+                return result;
+            }
             set { _managerTable[managerType] = value; }
         }
 
@@ -107,7 +111,8 @@ namespace MS.Internal
             get
             {
                 EventNameKey key = new EventNameKey(eventSourceType, eventName);
-                return (WeakEventManager)_eventNameTable[key];
+                _eventNameTable.TryGetValue(key, out WeakEventManager result);
+                return result;
             }
 
             set
@@ -125,7 +130,7 @@ namespace MS.Internal
             get
             {
                 EventKey key = new EventKey(manager, source);
-                object result = _dataTable[key];
+                _dataTable.TryGetValue(key, out object result);
                 return result;
             }
 
@@ -284,7 +289,7 @@ namespace MS.Internal
                 {
                     // copy the keys into a separate array, so that later on
                     // we can change the table while iterating over the keys
-                    ICollection ic = _dataTable.Keys;
+                    ICollection<EventKey> ic = _dataTable.Keys;
                     EventKey[] keys = new EventKey[ic.Count];
                     ic.CopyTo(keys, 0);
 
@@ -318,14 +323,11 @@ namespace MS.Internal
                     Debug.Assert(_toRemove.Count == 0, "to-remove list should be empty");
                     _inPurge = true;
 
-                    // enumerate the dictionary using IDE explicitly rather than
-                    // foreach, to avoid allocating temporary DictionaryEntry objects
-                    IDictionaryEnumerator ide = _dataTable.GetEnumerator() as IDictionaryEnumerator;
-                    while (ide.MoveNext())
+                    foreach (KeyValuePair<EventKey, object> kvp in _dataTable)
                     {
-                        EventKey key = (EventKey)ide.Key;
+                        EventKey key = kvp.Key;
                         object source = key.Source;
-                        foundDirt |= key.Manager.PurgeInternal(source, ide.Value, purgeAll);
+                        foundDirt |= key.Manager.PurgeInternal(source, kvp.Value, purgeAll);
 
                         // if source has been GC'd, remove its data
                         if (!purgeAll && source == null)
@@ -334,9 +336,6 @@ namespace MS.Internal
                         }
                     }
 
-#if WeakEventTelemetry
-                    LogAllocation(ide.GetType(), 1, 36);                    // Hashtable+HashtableEnumerator
-#endif
                     _inPurge = false;
                 }
 
@@ -436,9 +435,9 @@ namespace MS.Internal
         //  Private Fields
         //
 
-        private Hashtable _managerTable = new Hashtable();  // maps manager type -> instance
-        private Hashtable _dataTable = new Hashtable();     // maps EventKey -> data
-        private Hashtable _eventNameTable = new Hashtable(); // maps <Type,name> -> manager
+        private Dictionary<Type, WeakEventManager> _managerTable = new Dictionary<Type, WeakEventManager>();                   // maps manager type -> instance
+        private Dictionary<EventKey, object> _dataTable = new Dictionary<EventKey, object>();                                  // maps EventKey -> data
+        private Dictionary<EventNameKey, WeakEventManager> _eventNameTable = new Dictionary<EventNameKey, WeakEventManager>(); // maps <Type,name> -> manager
 
         private ReaderWriterLockWrapper     _lock = new ReaderWriterLockWrapper();
         private int                 _cleanupRequests;

@@ -8,6 +8,7 @@
     <RunNetFrameworkApiCompat Condition="'$(Net48CompatNeededProjects)'!='' 
                                           and $(Net48CompatNeededProjects.Contains('$(MSBuildProjectName);'))
                                           and !($(MSBuildProjectName.Contains('_wpftmp')))">true</RunNetFrameworkApiCompat>
+    <RunNetFrameworkApiCompat Condition="'$(OS)' != 'Windows_NT'">false</RunNetFrameworkApiCompat>
   </PropertyGroup>
 
   <!-- Only enable Ref API Compat for the lib projects using hand-crafted reference assemblies,

@@ -1,0 +1,9 @@
+<Project>
+
+  <!-- Only build the Microsoft.NET.Sdk.WindowsDesktop package on non-Windows. -->
+  <ItemGroup Condition="'$(OS)' != 'Windows_NT'">
+    <ProjectToBuild Include="$(RepoRoot)packaging/Microsoft.NET.Sdk.WindowsDesktop/Microsoft.NET.Sdk.WindowsDesktop.ArchNeutral.csproj" />
+    <ProjectToBuild Include="$(RepoRoot)packaging/Microsoft.Dotnet.Wpf.ProjectTemplates/Microsoft.DotNet.Wpf.ProjectTemplates.ArchNeutral.csproj" />
+  </ItemGroup>
+
+</Project>

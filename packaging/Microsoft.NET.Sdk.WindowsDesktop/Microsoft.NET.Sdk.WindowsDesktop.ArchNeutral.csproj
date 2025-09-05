@@ -27,6 +27,10 @@
     <PackagingContent Include="useSharedDesignerContext.txt" SubFolder="root" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="$(RepoRoot)src/Microsoft.DotNet.Wpf/src/PresentationBuildTasks/PresentationBuildTasks.csproj" ReferenceOutputAssembly="false" SkipGetTargetFrameworkProperties="true" />
+  </ItemGroup>
+
   <!-- Windows Forms validation and packaging -->
   <Import Project="Microsoft.NET.Sdk.WindowsDesktop.WinForms.Packaging.targets" />
 

@@ -37,11 +37,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         static RibbonSplitButton()
         {
-            Type ownerType = typeof(RibbonSplitButton);
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            BorderThicknessProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new Thickness(), new PropertyChangedCallback(OnBorderThicknessChanged)));
-            ControlSizeDefinitionProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new PropertyChangedCallback(OnBorderThicknessChanged)));
-            IsInControlGroupProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnBorderThicknessChanged)), RibbonControlService.IsInControlGroupPropertyKey);
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonSplitButton), new FrameworkPropertyMetadata(typeof(RibbonSplitButton)));
+            BorderThicknessProperty.OverrideMetadata(typeof(RibbonSplitButton), new FrameworkPropertyMetadata(new Thickness(), new PropertyChangedCallback(OnBorderThicknessChanged)));
+            ControlSizeDefinitionProperty.OverrideMetadata(typeof(RibbonSplitButton), new FrameworkPropertyMetadata(null, new PropertyChangedCallback(OnBorderThicknessChanged)));
+            IsInControlGroupProperty.OverrideMetadata(typeof(RibbonSplitButton), new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnBorderThicknessChanged)), RibbonControlService.IsInControlGroupPropertyKey);
         }
 
         #endregion

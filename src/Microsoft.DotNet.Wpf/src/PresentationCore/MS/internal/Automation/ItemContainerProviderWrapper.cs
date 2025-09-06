@@ -1,115 +1,53 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-//
-//
-//
-// Description: Item Container pattern provider wrapper for WPF
-//
-//
+#nullable enable
 
-using System.Windows.Threading;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
 
-namespace MS.Internal.Automation
+namespace MS.Internal.Automation;
+
+/// <summary>
+/// Wrapper class for the <see cref="IItemContainerProvider"/> interface, calls through to the managed <see cref="AutomationPeer"/>
+/// that implements it. The calls are made on the peer's context to ensure that the correct synchronization context is used.
+/// </summary>
+internal sealed class ItemContainerProviderWrapper : MarshalByRefObject, IItemContainerProvider
 {
-    // Automation/WPF Wrapper class: Implements that UIAutomation I...Provider
-    // interface, and calls through to a WPF AutomationPeer which implements the corresponding
-    // I...Provider inteface. Marshalls the call from the RPC thread onto the
-    // target AutomationPeer's context.
-    //
-    // Class has two major parts to it:
-    // * Implementation of the I...Provider, which uses Dispatcher.Invoke
-    //   to call a private method (lives in second half of the class) via a delegate,
-    //   if necessary, packages any params into an object param. Return type of Invoke
-    //   must be cast from object to appropriate type.
-    // * private methods - one for each interface entry point - which get called back
-    //   on the right context. These call through to the peer that's actually
-    //   implenting the I...Provider version of the interface. 
-    internal class ItemContainerProviderWrapper : MarshalByRefObject, IItemContainerProvider
+    private readonly AutomationPeer _peer;
+    private readonly IItemContainerProvider _iface;
+
+    private ItemContainerProviderWrapper(AutomationPeer peer, IItemContainerProvider iface)
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
+        Debug.Assert(peer is not null);
+        Debug.Assert(iface is not null);
 
-        #region Constructors
+        _peer = peer;
+        _iface = iface;
+    }
 
-        private ItemContainerProviderWrapper(AutomationPeer peer, IItemContainerProvider iface)
+    public IRawElementProviderSimple? FindItemByProperty(IRawElementProviderSimple? startAfter, int propertyId, object? value)
+    {
+        object?[] args = [startAfter, propertyId, value];
+
+        // The actual invocation method that gets called on the peer's context.
+        static IRawElementProviderSimple? FindItemByProperty(IItemContainerProvider state, object?[] args)
         {
-            _peer = peer;
-            _iface = iface;
+            IRawElementProviderSimple? startAfter = (IRawElementProviderSimple?)args[0];
+            int propertyId = (int)args[1]!;
+            object? value = args[2];
+
+            return state.FindItemByProperty(startAfter, propertyId, value);
         }
 
-        #endregion Constructors
+        return ElementUtil.Invoke(_peer, FindItemByProperty, _iface, args);
+    }
 
-
-        //------------------------------------------------------
-        //
-        //  Interface IItemContainerProvider
-        //
-        //------------------------------------------------------
-
-        #region Interface IItemContainerProvider
-
-        public IRawElementProviderSimple FindItemByProperty(IRawElementProviderSimple startAfter, int propertyId, object value)
-        {
-            object [] args = new object[]{startAfter, propertyId, value};
-            return (IRawElementProviderSimple)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(FindItemByProperty), args);
-        }
-
-        #endregion Interface IItemContainerProvider
-
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
-
-        #region Internal Methods
-
-        internal static object Wrap(AutomationPeer peer, object iface)
-        {
-            return new ItemContainerProviderWrapper(peer, (IItemContainerProvider)iface);
-        }
-
-        #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
-
-        #region Private Methods
-
-        private object FindItemByProperty(object arg)
-        {
-            object[] args = (object[])arg;
-            IRawElementProviderSimple startAfter = (IRawElementProviderSimple)args[0];
-            int propertyId = (int)args[1];
-            object value = (object)args[2];
-            
-            return _iface.FindItemByProperty(startAfter, propertyId, value);            
-        }
-
-        #endregion Private Methods
-
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
-
-        #region Private Fields
-
-        private AutomationPeer _peer;
-        private IItemContainerProvider _iface;
-
-        #endregion Private Fields
+    /// <summary>
+    /// Creates a wrapper for the given <see cref="AutomationPeer"/> and <see cref="IItemContainerProvider"/> interface.
+    /// </summary>
+    internal static object Wrap(AutomationPeer peer, object iface)
+    {
+        return new ItemContainerProviderWrapper(peer, (IItemContainerProvider)iface);
     }
 }

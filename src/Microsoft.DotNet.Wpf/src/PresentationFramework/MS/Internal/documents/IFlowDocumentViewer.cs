@@ -1,12 +1,10 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-
 using System.Windows;               // Rect, Point
 using System.Windows.Documents;     // ITextSelection
 using System.Windows.Controls;      // FlowDocumentScrollViewer
 using System.Windows.Threading;     // Dispatcher
-using MS.Internal.KnownBoxes;       // BooleanBoxes
 
 namespace MS.Internal.Documents
 {

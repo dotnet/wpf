@@ -780,7 +780,7 @@ internal enum MILCMD
 #endif
 };
 
-    internal partial class DUCE
+    internal static partial class DUCE
     {
         //
         // The MILCE resource type enumeration.

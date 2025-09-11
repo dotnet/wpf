@@ -598,11 +598,6 @@ namespace System.Windows.Data
                         eventParameters: new object[] { ex });
                 }
             }
-            //FXCop Fix: CatchNonClsCompliantExceptionsInGeneralHandlers
-            catch
-            {
-                throw;
-            }
 
             if (ex != null)
             {

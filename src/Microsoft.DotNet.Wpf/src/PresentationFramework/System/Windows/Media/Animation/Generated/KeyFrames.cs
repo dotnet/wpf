@@ -13,7 +13,6 @@ using System.Windows.Media.Media3D;
 namespace System.Windows.Media.Animation
 {
 
-
     /// <summary>
     /// This class is used as part of a ThicknessKeyFrameCollection in
     /// conjunction with a KeyFrameThicknessAnimation to animate a

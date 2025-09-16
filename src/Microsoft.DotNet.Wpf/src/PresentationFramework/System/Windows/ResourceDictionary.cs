@@ -1495,7 +1495,7 @@ namespace System.Windows
             {
                 if (_ownerFEs == null)
                 {
-                    _ownerFEs = new WeakReferenceList(1);
+                    _ownerFEs = new WeakReferenceList<FrameworkElement>(1);
                 }
                 else if (_ownerFEs.Contains(fe) && ContainsCycle(this))
                 {
@@ -1517,7 +1517,7 @@ namespace System.Windows
                 {
                     if (_ownerFCEs == null)
                     {
-                        _ownerFCEs = new WeakReferenceList(1);
+                        _ownerFCEs = new WeakReferenceList<FrameworkContentElement>(1);
                     }
                     else if (_ownerFCEs.Contains(fce) && ContainsCycle(this))
                     {
@@ -1539,7 +1539,7 @@ namespace System.Windows
                     {
                         if (_ownerApps == null)
                         {
-                            _ownerApps = new WeakReferenceList(1);
+                            _ownerApps = new WeakReferenceList<Application>(1);
                         }
                         else if (_ownerApps.Contains(app) && ContainsCycle(this))
                         {
@@ -1628,32 +1628,28 @@ namespace System.Windows
             RemoveOwnerFromAllMergedDictionaries(owner);
         }
 
-        // Check if the given is an owner to this dictionary
-        internal bool ContainsOwner(DispatcherObject owner)
+        /// <summary>
+        /// Checks if the given <paramref name="owner"/> is owning this dictionary
+        /// </summary>
+        internal bool ContainsOwner(FrameworkElement owner)
         {
-            FrameworkElement fe = owner as FrameworkElement;
-            if (fe != null)
-            {
-                return (_ownerFEs != null && _ownerFEs.Contains(fe));
-            }
-            else
-            {
-                FrameworkContentElement fce = owner as FrameworkContentElement;
-                if (fce != null)
-                {
-                    return (_ownerFCEs != null && _ownerFCEs.Contains(fce));
-                }
-                else
-                {
-                    Application app = owner as Application;
-                    if (app != null)
-                    {
-                        return (_ownerApps != null && _ownerApps.Contains(app));
-                    }
-                }
-            }
+            return _ownerFEs?.Contains(owner) ?? false;
+        }
 
-            return false;
+        /// <summary>
+        /// Checks if the given <paramref name="owner"/> is owning this dictionary
+        /// </summary>
+        internal bool ContainsOwner(FrameworkContentElement owner)
+        {
+            return _ownerFCEs?.Contains(owner) ?? false;
+        }
+
+        /// <summary>
+        /// Checks if the given <paramref name="owner"/> is owning this dictionary
+        /// </summary>
+        internal bool ContainsOwner(Application owner)
+        {
+            return _ownerApps?.Contains(owner) ?? false;
         }
 
         // Helper method that tries to set IsInitialized to true if BeginInit hasn't been called before this.
@@ -1681,62 +1677,50 @@ namespace System.Windows
             if (shouldInvalidate || hasImplicitStyles)
             {
                 // Invalidate all FE owners
-                if (_ownerFEs != null)
+                if (_ownerFEs is not null)
                 {
-                    foreach (Object o in _ownerFEs)
+                    foreach (FrameworkElement fe in _ownerFEs)
                     {
-                        FrameworkElement fe = o as FrameworkElement;
-                        if (fe != null)
-                        {
-                            // Set the HasImplicitStyles flag on the owner
-                            if (hasImplicitStyles)
-                                fe.ShouldLookupImplicitStyles = true;
+                        // Set the HasImplicitStyles flag on the owner
+                        if (hasImplicitStyles)
+                            fe.ShouldLookupImplicitStyles = true;
 
-                            // If this dictionary has been initialized fire an invalidation
-                            // to let the tree know of this change.
-                            if (shouldInvalidate)
-                                TreeWalkHelper.InvalidateOnResourcesChange(fe, null, info);
-                        }
+                        // If this dictionary has been initialized fire an invalidation
+                        // to let the tree know of this change.
+                        if (shouldInvalidate)
+                            TreeWalkHelper.InvalidateOnResourcesChange(fe, null, info);
                     }
                 }
 
                 // Invalidate all FCE owners
-                if (_ownerFCEs != null)
+                if (_ownerFCEs is not null)
                 {
-                    foreach (Object o in _ownerFCEs)
+                    foreach (FrameworkContentElement fce in _ownerFCEs)
                     {
-                        FrameworkContentElement fce = o as FrameworkContentElement;
-                        if (fce != null)
-                        {
-                            // Set the HasImplicitStyles flag on the owner
-                            if (hasImplicitStyles)
-                                fce.ShouldLookupImplicitStyles = true;
+                        // Set the HasImplicitStyles flag on the owner
+                        if (hasImplicitStyles)
+                            fce.ShouldLookupImplicitStyles = true;
 
-                            // If this dictionary has been initialized fire an invalidation
-                            // to let the tree know of this change.
-                            if (shouldInvalidate)
-                                TreeWalkHelper.InvalidateOnResourcesChange(null, fce, info);
-                        }
+                        // If this dictionary has been initialized fire an invalidation
+                        // to let the tree know of this change.
+                        if (shouldInvalidate)
+                            TreeWalkHelper.InvalidateOnResourcesChange(null, fce, info);
                     }
                 }
 
                 // Invalidate all App owners
-                if (_ownerApps != null)
+                if (_ownerApps is not null)
                 {
-                    foreach (Object o in _ownerApps)
+                    foreach (Application app in _ownerApps)
                     {
-                        Application app = o as Application;
-                        if (app != null)
-                        {
-                            // Set the HasImplicitStyles flag on the owner
-                            if (hasImplicitStyles)
-                                app.HasImplicitStylesInResources = true;
+                        // Set the HasImplicitStyles flag on the owner
+                        if (hasImplicitStyles)
+                            app.HasImplicitStylesInResources = true;
 
-                            // If this dictionary has been initialized fire an invalidation
-                            // to let the tree know of this change.
-                            if (shouldInvalidate)
-                                app.InvalidateResourceReferences(info);
-                        }
+                        // If this dictionary has been initialized fire an invalidation
+                        // to let the tree know of this change.
+                        if (shouldInvalidate)
+                            app.InvalidateResourceReferences(info);
                     }
                 }
             }
@@ -1805,14 +1789,14 @@ namespace System.Windows
             return GetValue(resourceKey, out canCache);
         }
 
-        private WeakReferenceList GetOrCreateWeakReferenceList(object resourceKey)
+        private WeakReferenceList<DeferredResourceReference> GetOrCreateWeakReferenceList(object resourceKey)
         {
-            this._weakDeferredResourceReferencesMap ??= new();
+            _weakDeferredResourceReferencesMap ??= new Dictionary<object, WeakReferenceList<DeferredResourceReference>>();
 
-            if (!this._weakDeferredResourceReferencesMap.TryGetValue(resourceKey, out var weakDeferredResourceReferences))
+            if (!_weakDeferredResourceReferencesMap.TryGetValue(resourceKey, out var weakDeferredResourceReferences))
             {
-                weakDeferredResourceReferences = new WeakReferenceList();
-                this._weakDeferredResourceReferencesMap[resourceKey] = weakDeferredResourceReferences;
+                weakDeferredResourceReferences = new WeakReferenceList<DeferredResourceReference>(syncRoot: null);
+                _weakDeferredResourceReferencesMap[resourceKey] = weakDeferredResourceReferences;
             }
 
             return weakDeferredResourceReferences;
@@ -1820,8 +1804,7 @@ namespace System.Windows
 
         internal void RemoveDeferredResourceReference(DeferredResourceReference deferredResourceReference)
         {
-            
-            if (this._weakDeferredResourceReferencesMap?.TryGetValue(deferredResourceReference.Key, out var weakDeferredResourceReferences) is true)
+            if (_weakDeferredResourceReferencesMap?.TryGetValue(deferredResourceReference.Key, out var weakDeferredResourceReferences) is true)
             {
                 weakDeferredResourceReferences.Remove(deferredResourceReference);
             }
@@ -1833,7 +1816,6 @@ namespace System.Windows
         /// </summary>
         private void ValidateDeferredResourceReferences(object resourceKey)
         {
-            
             if (_weakDeferredResourceReferencesMap is null)
             {
                 return;
@@ -1841,36 +1823,29 @@ namespace System.Windows
 
             if (resourceKey is null)
             {
-                foreach (var weakDeferredResourceReferences in _weakDeferredResourceReferencesMap.Values)
+                foreach (WeakReferenceList<DeferredResourceReference> weakReferencesList in _weakDeferredResourceReferencesMap.Values)
                 {
-                    foreach (var weakResourceReference in weakDeferredResourceReferences)
+                    foreach (DeferredResourceReference weakReference in weakReferencesList)
                     {
-                        DeferredResourceReference deferredResourceReference = weakResourceReference as DeferredResourceReference;
-
-                        Inflate(deferredResourceReference);
+                        Inflate(weakReference);
                     }
                 }
             }
             else
             {
-                if (_weakDeferredResourceReferencesMap.TryGetValue(resourceKey, out var weakDeferredResourceReferences))
+                if (_weakDeferredResourceReferencesMap.TryGetValue(resourceKey, out WeakReferenceList<DeferredResourceReference> weakReferencesList))
                 {
-                    foreach (var weakResourceReference in weakDeferredResourceReferences)
+                    foreach (DeferredResourceReference weakReference in weakReferencesList)
                     {
-                        DeferredResourceReference deferredResourceReference = weakResourceReference as DeferredResourceReference;
-
-                        Inflate(deferredResourceReference);
+                        Inflate(weakReference);
                     }
                 }
             }
 
-            return;
-
-            void Inflate(DeferredResourceReference deferredResourceReference)
+            static void Inflate(DeferredResourceReference deferredResourceReference)
             {
-                // This will inflate the deferred reference, causing it
-                // to be removed from the list.  The list may also be
-                // purged of dead references.
+                // This will inflate the deferred reference, causing it to be removed from the list.
+                // The list may also be purged of dead references.
                 deferredResourceReference?.GetValue(BaseValueSourceInternal.Unknown);
             }
         }
@@ -2012,14 +1987,12 @@ namespace System.Windows
 
                 if (mergedDictionary._ownerFEs == null)
                 {
-                    mergedDictionary._ownerFEs = new WeakReferenceList(_ownerFEs.Count);
+                    mergedDictionary._ownerFEs = new WeakReferenceList<FrameworkElement>(_ownerFEs.Count);
                 }
 
-                foreach (object o in _ownerFEs)
+                foreach (FrameworkElement fe in _ownerFEs)
                 {
-                    FrameworkElement fe = o as FrameworkElement;
-                    if (fe != null)
-                        mergedDictionary.AddOwner(fe);
+                    mergedDictionary.AddOwner(fe);
                 }
             }
 
@@ -2029,14 +2002,12 @@ namespace System.Windows
 
                 if (mergedDictionary._ownerFCEs == null)
                 {
-                    mergedDictionary._ownerFCEs = new WeakReferenceList(_ownerFCEs.Count);
+                    mergedDictionary._ownerFCEs = new WeakReferenceList<FrameworkContentElement>(_ownerFCEs.Count);
                 }
 
-                foreach (object o in _ownerFCEs)
+                foreach (FrameworkContentElement fce in _ownerFCEs)
                 {
-                    FrameworkContentElement fce = o as FrameworkContentElement;
-                    if (fce != null)
-                        mergedDictionary.AddOwner(fce);
+                    mergedDictionary.AddOwner(fce);
                 }
             }
 
@@ -2046,14 +2017,12 @@ namespace System.Windows
 
                 if (mergedDictionary._ownerApps == null)
                 {
-                    mergedDictionary._ownerApps = new WeakReferenceList(_ownerApps.Count);
+                    mergedDictionary._ownerApps = new WeakReferenceList<Application>(_ownerApps.Count);
                 }
 
-                foreach (object o in _ownerApps)
+                foreach (Application app in _ownerApps)
                 {
-                    Application app = o as Application;
-                    if (app != null)
-                        mergedDictionary.AddOwner(app);
+                    mergedDictionary.AddOwner(app);
                 }
             }
         }
@@ -2067,37 +2036,31 @@ namespace System.Windows
         /// <param name="mergedDictionary"></param>
         internal void RemoveParentOwners(ResourceDictionary mergedDictionary)
         {
-            if (_ownerFEs != null)
+            if (_ownerFEs is not null)
             {
-                foreach (Object o in _ownerFEs)
+                foreach (FrameworkElement fe in _ownerFEs)
                 {
-                    FrameworkElement fe = o as FrameworkElement;
                     mergedDictionary.RemoveOwner(fe);
-
                 }
             }
 
-            if (_ownerFCEs != null)
+            if (_ownerFCEs is not null)
             {
                 Invariant.Assert(_ownerFCEs.Count > 0);
 
-                foreach (Object o in _ownerFCEs)
+                foreach (FrameworkContentElement fec in _ownerFCEs)
                 {
-                    FrameworkContentElement fec = o as FrameworkContentElement;
                     mergedDictionary.RemoveOwner(fec);
-
                 }
             }
 
-            if (_ownerApps != null)
+            if (_ownerApps is not null)
             {
                 Invariant.Assert(_ownerApps.Count > 0);
 
-                foreach (Object o in _ownerApps)
+                foreach (Application app in _ownerApps)
                 {
-                    Application app = o as Application;
                     mergedDictionary.RemoveOwner(app);
-
                 }
             }
         }
@@ -2118,19 +2081,19 @@ namespace System.Windows
 
         // three properties used by ResourceDictionaryDiagnostics
 
-        internal WeakReferenceList FrameworkElementOwners
+        internal WeakReferenceList<FrameworkElement> FrameworkElementOwners
         {
-            get { return _ownerFEs; }
+            get => _ownerFEs;
         }
 
-        internal WeakReferenceList FrameworkContentElementOwners
+        internal WeakReferenceList<FrameworkContentElement> FrameworkContentElementOwners
         {
-            get { return _ownerFCEs; }
+            get => _ownerFCEs;
         }
 
-        internal WeakReferenceList ApplicationOwners
+        internal WeakReferenceList<Application> ApplicationOwners
         {
-            get { return _ownerApps; }
+            get => _ownerApps;
         }
 
         #endregion HelperMethods
@@ -2619,11 +2582,12 @@ namespace System.Windows
 
         #region Data
 
+        private WeakReferenceList<FrameworkElement> _ownerFEs;
+        private WeakReferenceList<FrameworkContentElement> _ownerFCEs;
+        private WeakReferenceList<Application> _ownerApps;
+        private Dictionary<object, WeakReferenceList<DeferredResourceReference>> _weakDeferredResourceReferencesMap;
+
         private Hashtable                                 _baseDictionary = null;
-        private WeakReferenceList                         _ownerFEs = null;
-        private WeakReferenceList                         _ownerFCEs = null;
-        private WeakReferenceList                         _ownerApps = null;
-        private Dictionary<object, WeakReferenceList>     _weakDeferredResourceReferencesMap = null;
         private ObservableCollection<ResourceDictionary>  _mergedDictionaries = null;
         private Uri                                       _source = null;
         private Uri                                       _baseUri = null;

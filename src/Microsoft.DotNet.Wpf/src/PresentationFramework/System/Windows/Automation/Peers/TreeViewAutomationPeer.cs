@@ -28,24 +28,12 @@ namespace System.Windows.Automation.Peers
         ///
         public override object GetPattern(PatternInterface patternInterface)
         {
-            if (patternInterface == PatternInterface.Selection)
+            if (patternInterface is PatternInterface.Selection)
             {
                 return this;
             }
-            else if(patternInterface == PatternInterface.Scroll)
-            {
-                ItemsControl owner = (ItemsControl)Owner;
-                if(owner.ScrollHost != null)
-                {
-                    AutomationPeer scrollPeer = UIElementAutomationPeer.CreatePeerForElement(owner.ScrollHost);
-                    if(scrollPeer != null && scrollPeer is IScrollProvider)
-                    {
-                        scrollPeer.EventsSource = this;
-                        return (IScrollProvider)scrollPeer;
-                    }
-                }
-            }
 
+            // PatternInterface.Scroll is handled by ItemsControlAutomationPeer
             return base.GetPattern(patternInterface);
         }
 
@@ -164,12 +152,7 @@ namespace System.Windows.Automation.Peers
                 }
             }
 
-            if (selection == null)
-            {
-                selection = Array.Empty<IRawElementProviderSimple>();
-            }
-
-            return selection;
+            return selection ?? Array.Empty<IRawElementProviderSimple>();
         }
 
         bool ISelectionProvider.CanSelectMultiple

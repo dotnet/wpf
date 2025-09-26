@@ -26,24 +26,9 @@ namespace MS.Internal.Annotations.Anchoring
     ///     represent these TextAnchors and can generate TextAnchors from
     ///     the locator parts.
     /// </summary>  
-    internal class TextSelectionHelper
+    internal static class TextSelectionHelper
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
 
-        #region Constructors
-
-        /// <summary>
-        /// This ctor is added to prevent the compiler from
-        /// generating a public default ctor. This class
-        /// should not be instantiated
-        /// </summary>
-        private TextSelectionHelper() { }
-
-        #endregion Constructors
 
         //------------------------------------------------------
         //

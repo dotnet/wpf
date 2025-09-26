@@ -1296,10 +1296,10 @@ namespace System.Windows.Media
             set
             {
                 if (value <= 0)
-                    throw new ArgumentOutOfRangeException(nameof(value), SR.Format(SR.PropertyMustBeGreaterThanZero, "MaxTextHeight"));
+                    throw new ArgumentOutOfRangeException(nameof(value), SR.Format(SR.PropertyMustBeGreaterThanZero, nameof(MaxTextHeight)));
 
                 if (double.IsNaN(value))
-                    throw new ArgumentOutOfRangeException(nameof(value), SR.Format(SR.PropertyValueCannotBeNaN, "MaxTextHeight"));
+                    throw new ArgumentOutOfRangeException(nameof(value), SR.Format(SR.PropertyValueCannotBeNaN, nameof(MaxTextHeight)));
 
                 _maxTextHeight = value;
                 InvalidateMetrics();

@@ -11,7 +11,6 @@ using System.Windows.Navigation;
 using System.Windows.Media;
 using System.Windows.Markup;
 using System.Windows.Documents;
-using MS.Internal.KnownBoxes;
 using MS.Internal;
 
 namespace System.Windows.Controls

@@ -9,7 +9,6 @@ using System.Windows.Automation.Peers;
 using System.Windows.Input;
 using System.Windows.Navigation;
 using MS.Internal;
-using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
 using System.Windows.Controls.Primitives;
 

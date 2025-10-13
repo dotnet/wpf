@@ -105,8 +105,8 @@ namespace MS.Internal.MilCodeGen.Generators
 
         private void WriteEnums()
         {
-            ArrayList notInKernelEnums = new ArrayList();
-            ArrayList inKernelEnums = new ArrayList();
+            List<McgEnum> notInKernelEnums = new List<McgEnum>();
+            List<McgEnum> inKernelEnums = new List<McgEnum>();
 
             foreach (McgEnum e in _resourceModel.Enums)
             {
@@ -166,8 +166,8 @@ namespace MS.Internal.MilCodeGen.Generators
         {
             WriteMilMatrix3x2D();
 
-            ArrayList notInKernelStructs = new ArrayList();
-            ArrayList inKernelStructs = new ArrayList();
+            List<McgResource> notInKernelStructs = new List<McgResource>();
+            List<McgResource> inKernelStructs = new List<McgResource>();
 
             foreach (McgResource resource in _resourceModel.Resources)
             {

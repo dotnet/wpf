@@ -66,18 +66,18 @@ namespace System.Windows.Xps.Serialization
                     throw new XpsSerializationException(SR.ReachSerialization_NotSupported);
                 }
 
-                if (serializedObject is DocumentPaginator)
+                if (serializedObject is DocumentPaginator docuPag)
                 {
-                    if ((serializedObject as DocumentPaginator).Source is FixedDocument &&
+                    if (docuPag.Source is FixedDocument &&
                         serializedObject.GetType().ToString().Contains("FixedDocumentPaginator"))
                     {
-                        serializedObject = (serializedObject as DocumentPaginator).Source;
+                        serializedObject = docuPag.Source;
                     }
                     else
-                        if ((serializedObject as DocumentPaginator).Source is FixedDocumentSequence &&
+                        if (docuPag.Source is FixedDocumentSequence &&
                             serializedObject.GetType().ToString().Contains("FixedDocumentSequencePaginator"))
                         {
-                            serializedObject = (serializedObject as DocumentPaginator).Source;
+                            serializedObject = docuPag.Source;
                         }
                 }
 
@@ -293,8 +293,10 @@ namespace System.Windows.Xps.Serialization
         internal override Xml.XmlWriter AcquireXmlWriter(Type writerType)
         {
             XmlWriter xmlWriter = null;
-            if (_packagingPolicy != null)
-            {
+
+            if (_packagingPolicy == null)
+                return xmlWriter;
+                
                 if (writerType == typeof(FixedPage))
                 {
                     _currentFixedPageWriterRef++;
@@ -304,7 +306,6 @@ namespace System.Windows.Xps.Serialization
                 {
                     throw new XpsSerializationException(SR.ReachSerialization_NotSupported);
                 }
-            }
             return xmlWriter;
         }
 
@@ -404,8 +405,9 @@ namespace System.Windows.Xps.Serialization
         {
             XpsResourceStream resourceStream = null;
 
-            if (_packagingPolicy != null)
-            {
+            if (_packagingPolicy == null)
+               return resourceStream;
+            
                 if (resourceType == typeof(GlyphRun))
                 {
                     resourceStream = _packagingPolicy.AcquireResourceStreamForXpsFont(resourceID);
@@ -426,7 +428,6 @@ namespace System.Windows.Xps.Serialization
                 {
                     throw new XpsSerializationException(SR.ReachSerialization_NotSupported);
                 }
-            }
 
             return resourceStream;
         }
@@ -438,8 +439,9 @@ namespace System.Windows.Xps.Serialization
             Type resourceType
             )
         {
-            if (_packagingPolicy != null)
-            {
+            if (_packagingPolicy == null)
+                return;
+            
                 if (resourceType == typeof(GlyphRun))
                 {
                     _packagingPolicy.ReleaseResourceStreamForXpsFont();
@@ -460,7 +462,6 @@ namespace System.Windows.Xps.Serialization
                 {
                     throw new XpsSerializationException(SR.ReachSerialization_NotSupported);
                 }
-            }
         }
 
         /// <summary>

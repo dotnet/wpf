@@ -65,7 +65,7 @@ namespace MS.Internal.SchemaPP.Main
             StreamWriter output = File.CreateText(args[1]);
             string line;
 
-            ArrayList al = new ArrayList();
+            List<string> al = new List<string>();
 
             while ((line = input.ReadLine()) != null)
             {
@@ -90,7 +90,7 @@ namespace MS.Internal.SchemaPP.Main
                 string org = (string)line.Clone();
                 for (int i = 0; i < al.Count; i += 2)
                 {
-                    line = line.Replace((string)al[i], (string)al[i + 1]);
+                    line = line.Replace(al[i], al[i + 1]);
                 }
                 if (org.Length != line.Length || lineBreak)
                 {

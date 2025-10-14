@@ -733,38 +733,20 @@ namespace System.Windows.Xps.Serialization
             ReachSerializationServices  reachSerializationServices
             )
         {
-            bool canSerialize = false;
+            if (serializableObject == null || dependencyProperty == null)
+                return true;
+              var name = dependencyProperty.PropertyInfo?.Name ?? (dependencyProperty.DependencyProperty as DependencyProperty)?.Name;
+              
+            if (name == null)
+                return true;
 
-            if(serializableObject != null &&
-               dependencyProperty != null &&
-               ((dependencyProperty.PropertyInfo != null) ||
-                (((DependencyProperty)(dependencyProperty.DependencyProperty)).Name != null)))
-            {
-                String name = (dependencyProperty.PropertyInfo != null) ?
-                              dependencyProperty.PropertyInfo.Name :
-                              ((DependencyProperty)(dependencyProperty.DependencyProperty)).Name;
+            var type = serializableObject.GetType();
+            var dependencyPropertiesTable = (Hashtable)reachSerializationServices.TypeSerializableDependencyProperties[type];
 
-                Hashtable dependencyPropertiesTable = (Hashtable)reachSerializationServices.
-                                                      TypeSerializableDependencyProperties[serializableObject.GetType()];
+            if (dependencyPropertiesTable == null)
+                return true;
 
-                if(dependencyPropertiesTable != null)
-                {
-                    if(dependencyPropertiesTable.Contains(name))
-                    {
-                        canSerialize = true;
-                    }
-                }
-                else
-                {
-                    canSerialize = true;
-                }
-            }
-            else
-            {
-                canSerialize = true;
-            }
-
-            return canSerialize;
+            return dependencyPropertiesTable.Contains(name);
         }
 
         internal
@@ -790,10 +772,9 @@ namespace System.Windows.Xps.Serialization
             bool canSerialize = true;
 
             if (serializableObject != null &&
-               property != null &&
-               property.PropertyInfo != null)
+               property?.PropertyInfo != null)
             {
-                String name = property.PropertyInfo.Name;
+                string name = property.PropertyInfo.Name;
 
                 Hashtable clrPropertiesTable = (Hashtable)reachSerializationServices.
                                                TypeNoneSerializableClrProperties[serializableObject.GetType()];

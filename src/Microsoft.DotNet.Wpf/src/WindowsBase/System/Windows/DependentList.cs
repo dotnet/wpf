@@ -184,7 +184,7 @@ namespace System.Windows
             return o is Dependent d ? Equals(d) : false;
         }
         
-        public override bool Equals(Dependent d)
+        public bool Equals(Dependent d)
         {
             // Not equal to Dead values.
             // This is assuming that at least one of the compared items is live.

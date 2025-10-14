@@ -82,14 +82,13 @@ namespace System.Windows.Xps.Packaging
             ArgumentNullException.ThrowIfNull(serviceType);
             ArgumentNullException.ThrowIfNull(service);
 
-            if (!_objDict.ContainsKey(serviceType))
+            if (_objDict.TryGetValue(serviceType, out var existing))
             {
-                _objDict.Add(serviceType, service);
+                if (!ReferenceEquals(existing, service))
+                    throw new XpsPackagingException(SR.Format(SR.ReachPackaging_ServiceTypeAlreadyAdded, serviceType));
+                return;
             }
-            else if (_objDict[serviceType] != service)
-            {
-                throw new XpsPackagingException(SR.Format(SR.ReachPackaging_ServiceTypeAlreadyAdded, serviceType));
-            }
+            _objDict.Add(serviceType, service);
         }
         
         internal

@@ -505,10 +505,11 @@ namespace System.Windows.Xps.Packaging
                 metroPart.CreateRelationship(new Uri(relativePath, UriKind.Relative),
                                             TargetMode.Internal,
                                             XpsS0Markup.PrintTicketRelationshipName);
-                Stream stream = printTicketPart.GetStream(FileMode.Create);
-                PrintTicket printTicket = new PrintTicket();
-                printTicket.SaveTo(stream);
-                stream.Close();
+                using (Stream stream = printTicketPart.GetStream(FileMode.Create)) 
+                {
+                    PrintTicket printTicket = new PrintTicket();
+                    printTicket.SaveTo(stream);
+                }
             }
          }
 
@@ -530,17 +531,17 @@ namespace System.Windows.Xps.Packaging
         {
             ObjectDisposedException.ThrowIf(_metroPackage is null, typeof(XpsManager));
 
-            if (_cachedParts.ContainsKey(uri))
+            if (_cachedParts.TryGetValue(uri, out var part)) 
             {
-                return _cachedParts[uri];
+                return part;
             }
-
+            
             if (!_metroPackage.PartExists(uri))
             {
                 return null;
             }
 
-            PackagePart part = _metroPackage.GetPart(uri);
+            part = _metroPackage.GetPart(uri);
             _cachedParts[uri] = part;
 
             return part;
@@ -1009,15 +1010,13 @@ namespace System.Windows.Xps.Packaging
             {
                uniqueUri = "/MetaData/Job_PT.xml"; 
             }
-            else if( relatedPart is XpsFixedDocumentReaderWriter )
+            else if( relatedPart is XpsFixedDocumentReaderWriter doc)
             {
-                XpsFixedDocumentReaderWriter doc = relatedPart as XpsFixedDocumentReaderWriter;
                 uniqueUri = "/Documents/" + doc.DocumentNumber + "/Document_PT.xml"; 
             }
-            else if( relatedPart is XpsFixedPageReaderWriter )
+            else if( relatedPart is XpsFixedPageReaderWriter page)
             {
-                XpsFixedPageReaderWriter page = relatedPart as XpsFixedPageReaderWriter;
-                XpsFixedDocumentReaderWriter doc = (relatedPart as XpsFixedPageReaderWriter).Parent as XpsFixedDocumentReaderWriter;
+                XpsFixedDocumentReaderWriter doc = page.Parent as XpsFixedDocumentReaderWriter;
                 uniqueUri = "/Documents/" + doc.DocumentNumber + "/Page" + page.PageNumber+ "_PT.xml"; 
             }
                 
@@ -1085,9 +1084,9 @@ namespace System.Windows.Xps.Packaging
             Guid   uniqueName = Guid.NewGuid();
             string uniqueUri;
 
-            if (_contentTypes.ContainsKey(docContentKey))
+            if (_contentTypes.TryGetValue(docContentKey, out var contTypeVal)) 
             {
-                docCounter = _contentTypes[docContentKey]-1;
+                docCounter = contTypeVal - 1;
             }
 
             if (contentType.AreTypeAndSubTypeEqual(XpsS0Markup.DocumentSequenceContentType))
@@ -1230,10 +1229,7 @@ namespace System.Windows.Xps.Packaging
             // If the contentType counter has not been cached already then
             // cache a new counter and start it at 1.
             //
-            if (!_contentTypes.ContainsKey(key))
-            {
-                _contentTypes[key] = 1;
-            }
+            _contentTypes.TryAdd(key, 1);
 
             return key;
         }

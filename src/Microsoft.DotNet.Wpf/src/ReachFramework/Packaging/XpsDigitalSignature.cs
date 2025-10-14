@@ -99,10 +99,12 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {   bool restrictedFlag = false;
+                var signOrigin =  _package.CurrentXpsManager.GetSignatureOriginUri();
+                 var relType = XpsS0Markup.DitialSignatureRelationshipType;
                 foreach( PackageRelationshipSelector selector in _packageSignature.SignedRelationshipSelectors )
                 {
-                    if( selector.SourceUri == _package.CurrentXpsManager.GetSignatureOriginUri() &&
-                        selector.SelectionCriteria == XpsS0Markup.DitialSignatureRelationshipType )
+                    if( selector.SourceUri == signOrigin &&
+                        selector.SelectionCriteria == relType )
                     {
                         restrictedFlag = true;
                         break;
@@ -121,10 +123,12 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {   bool restrictedFlag = false;
+                 var rootUri = MS.Internal.IO.Packaging.PackUriHelper.PackageRootUri;
+                 var relType = XpsS0Markup.CorePropertiesRelationshipType;
                 foreach( PackageRelationshipSelector selector in _packageSignature.SignedRelationshipSelectors )
                 {
-                    if( selector.SourceUri == MS.Internal.IO.Packaging.PackUriHelper.PackageRootUri &&
-                        selector.SelectionCriteria == XpsS0Markup.CorePropertiesRelationshipType )
+                    if( selector.SourceUri == rootUri &&
+                        selector.SelectionCriteria == relType )
                     {
                         restrictedFlag = true;
                         break;
@@ -358,28 +362,19 @@ namespace System.Windows.Xps.Packaging
             List<PackageRelationshipSelector> containedCollection
             )
         {
-            bool contained = true;
             //
             // Convert the containing collection to a hash table
             Dictionary<Uri, Dictionary<string, int>> uriHashTable = new Dictionary<Uri, Dictionary<string, int>>();
             foreach (PackageRelationshipSelector selector in containingCollection)
             {
-                //
                 // If the Source Uri is already in the  hash table
                 // pull out the existing  relationship dictionary
-                Dictionary<string, int> relHash = null;
-                if( uriHashTable.ContainsKey( selector.SourceUri ) )
-                {
-                    relHash = uriHashTable[selector.SourceUri];
-                }
-                //
-                // Else create a new one and add it into Uri Hash
-                //
-                else
+                if (!uriHashTable.TryGetValue(selector.SourceUri, out var relHash))
                 {
                     relHash = new Dictionary<string, int>();
                     uriHashTable[selector.SourceUri] = relHash;
                 }
+
                 //
                 // The value is unused we are using this as a hash table
                 //
@@ -392,25 +387,15 @@ namespace System.Windows.Xps.Packaging
             //
             foreach (PackageRelationshipSelector selector in containedCollection)
             {
-                //
                 // If the source Uri is not in the hash this fails
-                if (!uriHashTable.ContainsKey(selector.SourceUri))
+                if (!uriHashTable.TryGetValue(selector.SourceUri, out var relHash) ||
+                    !relHash.ContainsKey(selector.SelectionCriteria))
                 {
-                    contained = false;
-                    break;
+                    return false; // early exit on first miss
                 }
-                else
-                {
-                    Dictionary<string, int> relHash = uriHashTable[selector.SourceUri];
-                    if (!relHash.ContainsKey(selector.SelectionCriteria))
-                    {
-                        contained = false;
-                        break;
-                    }
-                }
-
             }
-            return contained;
+
+            return true; // contained
         }
 
         private Dictionary<string, string> OptionalSignedParts

@@ -126,7 +126,7 @@ namespace System.Windows
         }
     }
 
-    internal struct Dependent
+    internal struct Dependent : IEquatable<Dependent>
     {
         private DependencyProperty _DP;
         private WeakReference _wrDO;
@@ -178,14 +178,14 @@ namespace System.Windows
                     return (Expression)_wrEX.Target;
             }
         }
-
+        
         public override bool Equals(object o)
         {
-            if(! (o is Dependent))
-                return false;
-
-            Dependent d = (Dependent)o;
-
+            return o is Dependent d ? Equals(d) : false;
+        }
+        
+        public override bool Equals(Dependent d)
+        {
             // Not equal to Dead values.
             // This is assuming that at least one of the compared items is live.
             // This assumtion comes from knowing that Equal is used by FrugalList.Remove()

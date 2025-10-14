@@ -53,8 +53,8 @@ namespace System.Windows.Xps.Serialization
         /// <param name="manager"></param>
         internal VisualSerializer(System.Xml.XmlWriter resWriter, System.Xml.XmlWriter bodyWriter, PackageSerializationManager manager)
         {
-            _objects = new ArrayList();
-            _objnams = new ArrayList();
+            _objects = new List<string>();
+            _objnams = new List<string>();
 
             _resWriter  = resWriter;
             _bodyWriter = bodyWriter;
@@ -178,9 +178,7 @@ namespace System.Windows.Xps.Serialization
 
             while (true)
             {
-                DoubleCollection dc = obj as DoubleCollection;
-
-                if (dc != null)
+                if (obj is DoubleCollection dc)
                 {
                     foreach (double d in dc)
                     {
@@ -195,9 +193,7 @@ namespace System.Windows.Xps.Serialization
                     break;
                 }
 
-                PointCollection pc = obj as PointCollection;
-
-                if (pc != null)
+                if (obj is PointCollection pc)
                 {
                     foreach (Point p in pc)
                     {
@@ -212,23 +208,23 @@ namespace System.Windows.Xps.Serialization
                     break;
                 }
 
-                if (obj is Matrix)
+                if (obj is Matrix mObj)
                 {
-                    AppendMatrix(rslt, (Matrix)obj);
+                    AppendMatrix(rslt, mObj);
                 }
-                else if (obj is Point)
+                else if (obj is Point pObj)
                 {
-                    AppendPoint(rslt, (Point)obj, Matrix.Identity);
+                    AppendPoint(rslt, (pObj, Matrix.Identity);
                 }
-                else if (obj is double)
+                else if (obj is double dObj)
                 {
-                    Double d = CheckFloat((double) obj);
+                    Double d = CheckFloat((dObj);
 
                     rslt.Append(d.ToString(CultureInfo.InvariantCulture));
                 }
-                else if (obj is Uri)
+                else if (obj is Uri uriObj)
                 {
-                    rslt.Append(GetUriAsString((Uri)obj));
+                    rslt.Append(GetUriAsString(uriObj));
                 }
                 else
                 {
@@ -272,9 +268,11 @@ namespace System.Windows.Xps.Serialization
 
             for (int i = 0; i < _objects.Count; i++)
             {
-                if ((string) _objects[i] == sBrush)
+                var iObj = _objects[i];
+                
+                if (iObj == sBrush)
                 {
-                    return _objnams[i] as string;
+                    return iObj;
                 }
             }
 
@@ -294,7 +292,7 @@ namespace System.Windows.Xps.Serialization
             _resWriter.WriteRaw(sbBrush.ToString());
             _resWriter.WriteWhitespace("\r\n");
 
-            return _objnams[_objects.Count - 1] as string;
+            return _objnams[_objects.Count - 1];
         }
 
 
@@ -332,9 +330,7 @@ namespace System.Windows.Xps.Serialization
         // Convert simple brush to inline string
         protected string SimpleBrushToString(Brush brush)
         {
-            SolidColorBrush solidBrush = brush as SolidColorBrush;
-
-            if (solidBrush != null) // SolidColorBrush
+            if (brush is SolidColorBrush solidBrush) // SolidColorBrush
             {
                 // Scale will normalize colors
                 Color color = Utility.Scale(solidBrush.Color, solidBrush.Opacity);
@@ -432,8 +428,9 @@ namespace System.Windows.Xps.Serialization
 
             // Remove AlignmentX/AlignmentY.
             // Or more precisely, change Viewbox/ViewPort so center alignment would replace current setting
-            double dstwidth  = brush.Viewport.Width  * bounds.Width;
-            double dstheight = brush.Viewport.Height * bounds.Height;
+            var brushViewport = brush.Viewport;
+            double dstwidth  = brushViewport.Width  * bounds.Width;
+            double dstheight = brushViewport.Height * bounds.Height;
 
             Rect vb = Utility.GetTileAbsoluteViewbox(brush);
 
@@ -528,11 +525,13 @@ namespace System.Windows.Xps.Serialization
             WriteAttr("ViewboxUnits", BrushMappingMode.Absolute);
 
             Rect vp = brush.Viewport;
-
-            vp = new Rect(bounds.X + vp.X * bounds.Width,
-                          bounds.Y + vp.Y * bounds.Height,
-                          vp.Width  * bounds.Width,
-                          vp.Height * bounds.Height);
+            var boundsWidth = bounds.Width;
+            var boundsHeight = bounds.Height
+            
+            vp = new Rect(bounds.X + vp.X * boundsWidth,
+                          bounds.Y + vp.Y * boundsHeight,
+                          vp.Width  * boundsWidth,
+                          vp.Height * boundsHeight);
 
             if (adjustViewport)
             {
@@ -611,11 +610,10 @@ namespace System.Windows.Xps.Serialization
                 {
                     ColorConvertedBitmap colorConvertedBitmap = imageSource as ColorConvertedBitmap;
 
-                    if ( colorConvertedBitmap!=null )
+                    if (colorConvertedBitmap!=null )
                     {
-                        if (colorConvertedBitmap.Source is FormatConvertedBitmap)
+                        if (colorConvertedBitmap.Source is FormatConvertedBitmap formatConvertedBitmap)
                         {
-                            FormatConvertedBitmap formatConvertedBitmap = colorConvertedBitmap.Source as FormatConvertedBitmap;
                             if (formatConvertedBitmap.Source is BitmapFrame)
                             {
                                 imageSource = formatConvertedBitmap.Source;
@@ -637,9 +635,7 @@ namespace System.Windows.Xps.Serialization
 
                     Object obj = converter.ConvertTo(_context, null, imageSource, typeof(Uri));
 
-                    Uri uri = obj as Uri;
-
-                    if (uri != null)
+                    if (obj is Uri uri)
                     {
                         bitmapUri = GetUriAsString(uri);
                     }
@@ -684,9 +680,7 @@ namespace System.Windows.Xps.Serialization
 
             while (true)
             {
-                SolidColorBrush sb = brush as SolidColorBrush;
-
-                if (sb != null) // SolidColorBrush
+                if (brush is SolidColorBrush sb) // SolidColorBrush
                 {
                     WriteBrushHeader("SolidColorBrush", sb);
                     WriteAttr("Color", sb.Color);
@@ -694,9 +688,7 @@ namespace System.Windows.Xps.Serialization
                     break;
                 }
 
-                LinearGradientBrush lb = brush as LinearGradientBrush;
-
-                if (lb != null)
+                if (brush is LinearGradientBrush lb)
                 {
                     WriteBrushHeader("LinearGradientBrush", lb);
 
@@ -723,9 +715,7 @@ namespace System.Windows.Xps.Serialization
                     break;
                 }
 
-                RadialGradientBrush rb = brush as RadialGradientBrush;
-
-                if (rb != null)
+                if (brush is RadialGradientBrush rb)
                 {
                     WriteBrushHeader("RadialGradientBrush", rb);
 
@@ -755,9 +745,7 @@ namespace System.Windows.Xps.Serialization
                     break;
                 }
 
-                ImageBrush ib = brush as ImageBrush;
-
-                if (ib != null)
+                if (brush is ImageBrush ib)
                 {
                     WriteTileBrush("ImageBrush", ib, bounds);
 
@@ -768,9 +756,7 @@ namespace System.Windows.Xps.Serialization
                     break;
                 }
 
-                DrawingBrush db = brush as DrawingBrush;
-
-                if (db != null)
+                if (brush is DrawingBrush db)
                 {
                     WriteTileBrush("VisualBrush", db, bounds);
 
@@ -789,9 +775,7 @@ namespace System.Windows.Xps.Serialization
                     break;
                 }
 
-                VisualBrush vb = brush as VisualBrush;
-
-                if (vb != null)
+                if (brush is VisualBrush vb)
                 {
                     SaveResetState();
 
@@ -850,8 +834,8 @@ namespace System.Windows.Xps.Serialization
         protected Stack     _tcoStack;     // Transform, Clip, Opacity stack
 
         // resource dictionary objects
-        protected ArrayList _objects;
-        protected ArrayList _objnams;
+        protected List<string> _objects;
+        protected List<string> _objnams;
 
         // common properties to apply to next element write
         protected double    _opacity         = 1.0;
@@ -931,11 +915,13 @@ namespace System.Windows.Xps.Serialization
                     }
                 }
 
-                if ((pen.DashStyle != null) && (pen.DashStyle.Dashes.Count != 0))
+                var penDashStyle = pen.DashStyle;
+                
+                if ((penDashStyle != null) && (penDashStyle.Dashes.Count != 0))
                 {
                     WriteAttr("StrokeDashCap", pen.DashCap);
 
-                    WriteAttr("StrokeDashOffset", pen.DashStyle.Offset);
+                    WriteAttr("StrokeDashOffset", penDashStyle.Offset);
 
                     //
                     // If there are an odd number of elements in StrokeDashArray
@@ -943,11 +929,11 @@ namespace System.Windows.Xps.Serialization
                     // demonstrated by odd elements in pen.
                     //
                     DoubleCollection dashes = new DoubleCollection();
-                    foreach( double d in pen.DashStyle.Dashes )
+                    foreach( double d in penDashStyle.Dashes )
                     {
                         dashes.Add(Math.Abs(d));
                     }
-                    if( pen.DashStyle.Dashes.Count%2 == 0 )
+                    if( penDashStyle.Dashes.Count%2 == 0 )
                     {
                         WriteAttr("StrokeDashArray", dashes);
                     }
@@ -1031,34 +1017,28 @@ namespace System.Windows.Xps.Serialization
                         }
                     }
 
-                    PolyLineSegment pl = ps as PolyLineSegment;
-
-                    if (pl != null)
+                    if (ps is PolyLineSegment pl)
                     {
                         _writer.WriteStartElement("PolyLineSegment");
-                        WriteAttr("Points", pl.Points);
-                        pc += pl.Points.Count;
+                        var plPoints = pl.Points;
+                        WriteAttr("Points", plPoints);
+                        pc += plPoints.Count;
                     }
-                    else if (ps is PolyBezierSegment)
+                    else if (ps is PolyBezierSegment pbs)
                     {
-                        PolyBezierSegment l = ps as PolyBezierSegment;
-
                         _writer.WriteStartElement("PolyBezierSegment");
-                        WriteAttr("Points", l.Points);
-                        pc += l.Points.Count;
+                        var pbsPoints = pbs.Points;
+                        WriteAttr("Points", pbs.Points);
+                        pc += pbsPoints.Count;
                     }
-                    else if (ps is LineSegment)
+                    else if (ps is LineSegment l)
                     {
-                        LineSegment l = ps as LineSegment;
-
                         _writer.WriteStartElement("PolyLineSegment");
                         WriteAttr("Points", l.Point);
                         pc ++;
                     }
-                    else if (ps is BezierSegment)
+                    else if (ps is BezierSegment b)
                     {
-                        BezierSegment b = ps as BezierSegment;
-
                         _writer.WriteStartElement("PolyBezierSegment");
 
                         StringBuilder rslt = new StringBuilder();
@@ -1072,11 +1052,10 @@ namespace System.Windows.Xps.Serialization
                         _writer.WriteAttributeString("Points", rslt.ToString());
                         pc += 3;
                     }
-                    else if (ps is ArcSegment)
+                    else if (ps is ArcSegment a)
                     {
-                        ArcSegment a = ps as ArcSegment;
-
-                        if (a.Size.IsEmpty || a.Size.Width == 0 || a.Size.Height == 0)
+                        var aSize = a.Size;
+                        if (aSize.IsEmpty || aSize.Width == 0 || aSize.Height == 0)
                         {
                             // empty size results in line segment
                             _writer.WriteStartElement("PolyLineSegment");
@@ -1088,36 +1067,32 @@ namespace System.Windows.Xps.Serialization
                             _writer.WriteStartElement("ArcSegment");
 
                             WriteAttr("Point", a.Point);
-                            WriteAttr("Size", a.Size);
+                            WriteAttr("Size", aSize);
                             WriteAttr("RotationAngle", a.RotationAngle);
                             WriteBool("IsLargeArc", a.IsLargeArc);
                             WriteAttr("SweepDirection", a.SweepDirection);
                             pc += 2;
                         }
                     }
-                    else if (ps is QuadraticBezierSegment)
+                    else if (ps is QuadraticBezierSegment qbs)
                     {
-                        QuadraticBezierSegment b = ps as QuadraticBezierSegment;
-
                         _writer.WriteStartElement("PolyQuadraticBezierSegment");
 
                         StringBuilder rslt = new StringBuilder();
 
-                        AppendPoint(rslt, b.Point1, Matrix.Identity);
+                        AppendPoint(rslt, qbs.Point1, Matrix.Identity);
                         rslt.Append(' ');
-                        AppendPoint(rslt, b.Point2, Matrix.Identity);
+                        AppendPoint(rslt, qbs.Point2, Matrix.Identity);
 
                         _writer.WriteAttributeString("Points", rslt.ToString());
                         pc += 2;
                     }
-                    else if (ps is PolyQuadraticBezierSegment)
+                    else if (ps is PolyQuadraticBezierSegment pqbs)
                     {
-                        PolyQuadraticBezierSegment b = ps as PolyQuadraticBezierSegment;
-
                         _writer.WriteStartElement("PolyQuadraticBezierSegment");
 
-                        WriteAttr("Points", b.Points);
-                        pc += b.Points.Count;
+                        WriteAttr("Points", pqbs.Points);
+                        pc += pqbs.Points.Count;
                     }
                     else
                     {
@@ -1191,9 +1166,11 @@ namespace System.Windows.Xps.Serialization
         // Return null if it does not fit short-hand syntax
         private string PathGeometryToString(PathGeometry path, Matrix map, bool forFill, bool forStroke)
         {
-            if ((path.Transform != null) && !Utility.IsIdentity(path.Transform))
+            var pathTransform = path.Transform;
+            
+            if ((pathTransform != null) && !Utility.IsIdentity(pathTransform))
             {
-                map = path.Transform.Value * map;
+                map = pathTransform.Value * map;
             }
 
             PathFigureCollection figures = path.Figures;
@@ -1253,46 +1230,36 @@ namespace System.Windows.Xps.Serialization
                         }
                     }
 
-                    if (ps is PolyLineSegment)
+                    if (ps is PolyLineSegment pl)
                     {
-                        PolyLineSegment l = ps as PolyLineSegment;
-
                         rslt.Append('L');
-                        pc += AppendPoints(rslt, l.Points, map);
+                        pc += AppendPoints(rslt, pl.Points, map);
                     }
-                    else if (ps is PolyBezierSegment)
+                    else if (ps is PolyBezierSegment pb)
                     {
-                        PolyBezierSegment l = ps as PolyBezierSegment;
-
                         rslt.Append('C');
-                        pc += AppendPoints(rslt, l.Points, map);
+                        pc += AppendPoints(rslt, pb.Points, map);
                     }
-                    else if (ps is LineSegment)
+                    else if (ps is LineSegment ls)
                     {
-                        LineSegment l = ps as LineSegment;
-
                         rslt.Append('L');
-                        AppendPoint(rslt, l.Point, map);
+                        AppendPoint(rslt, ls.Point, map);
                         pc ++;
                     }
-                    else if (ps is BezierSegment)
+                    else if (ps is BezierSegment bs)
                     {
-                        BezierSegment b = ps as BezierSegment;
-
                         rslt.Append('C');
-                        AppendPoint(rslt, b.Point1, map);
+                        AppendPoint(rslt, bs.Point1, map);
                         rslt.Append(' ');
-                        AppendPoint(rslt, b.Point2, map);
+                        AppendPoint(rslt, bs.Point2, map);
                         rslt.Append(' ');
-                        AppendPoint(rslt, b.Point3, map);
+                        AppendPoint(rslt, bs.Point3, map);
                         pc += 3;
                     }
-                    else if (ps is ArcSegment)
+                    else if (ps is ArcSegment a)
                     {
                         if (IsUniformScale(map))
                         {
-                            ArcSegment a = ps as ArcSegment;
-
                             Size s = a.Size;
 
                             if (s.IsEmpty || s.Width == 0 || s.Height == 0)
@@ -1323,22 +1290,18 @@ namespace System.Windows.Xps.Serialization
                             return null;
                         }
                     }
-                    else if (ps is QuadraticBezierSegment)
+                    else if (ps is QuadraticBezierSegment qbs)
                     {
-                        QuadraticBezierSegment b = ps as QuadraticBezierSegment;
-
                         rslt.Append('Q');
-                        AppendPoint(rslt, b.Point1, map);
+                        AppendPoint(rslt, qbs.Point1, map);
                         rslt.Append(' ');
-                        AppendPoint(rslt, b.Point2, map);
+                        AppendPoint(rslt, qbs.Point2, map);
                         pc += 2;
                     }
-                    else if (ps is PolyQuadraticBezierSegment)
+                    else if (ps is PolyQuadraticBezierSegment pqbs)
                     {
-                        PolyQuadraticBezierSegment l = ps as PolyQuadraticBezierSegment;
-
                         rslt.Append('Q');
-                        pc += AppendPoints(rslt, l.Points, map);
+                        pc += AppendPoints(rslt, pqbs.Points, map);
                     }
                     else
                     {
@@ -1721,16 +1684,12 @@ namespace System.Windows.Xps.Serialization
                 return false;
             }
 
-            TileBrush tb = b as TileBrush;
-
-            if (tb != null)
+            if (b is TileBrush tb)
             {
                 return (tb is VisualBrush) || (tb.ViewportUnits == BrushMappingMode.RelativeToBoundingBox);
             }
 
-            GradientBrush gb = b as GradientBrush;
-
-            if (gb != null)
+            if (b is GradientBrush gb)
             {
                 return gb.MappingMode == BrushMappingMode.RelativeToBoundingBox;
             }
@@ -1775,9 +1734,7 @@ namespace System.Windows.Xps.Serialization
         /// <returns></returns>
         internal static bool IsGeometryPolymophic(Geometry geo)
         {
-            PathGeometry pg = geo as PathGeometry;
-
-            if (pg != null)
+            if (geo is PathGeometry pg)
             {
                 PathFigureCollection figures = pg.Figures;
 
@@ -1808,17 +1765,13 @@ namespace System.Windows.Xps.Serialization
                 return false;
             }
 
-            CombinedGeometry cg = geo as CombinedGeometry;
-
-            if (cg != null)
+            if (geo is CombinedGeometry cg)
             {
                 return IsGeometryPolymophic(cg.Geometry1)  ||
                        IsGeometryPolymophic(cg.Geometry2);
             }
 
-            GeometryGroup gg = geo as GeometryGroup;
-
-            if (gg != null)
+            if (geo is GeometryGroup gg)
             {
                 if (gg.Children != null)
                 {
@@ -2070,8 +2023,9 @@ namespace System.Windows.Xps.Serialization
 
             WriteCommonAttrs(false);
 
-            WriteAttr("OriginX", glyphRun.BaselineOrigin.X + dx);
-            WriteAttr("OriginY", glyphRun.BaselineOrigin.Y + dy);
+            var grBaselineOrigin = glyphRun.BaselineOrigin;
+            WriteAttr("OriginX", grBaselineOrigin.X + dx);
+            WriteAttr("OriginY", grBaselineOrigin.Y + dy);
             WriteAttr("FontRenderingEmSize", glyphRun.FontRenderingEmSize);
 
             Uri uri = Utility.GetFontUri(glyphRun.GlyphTypeface);
@@ -2102,9 +2056,10 @@ namespace System.Windows.Xps.Serialization
 
             WriteAttr("BidiLevel", bidiLevel, 0);
 
-            if (glyphRun.IsSideways)
+            bool grIsSideways = glyphRun.IsSideways;
+            if (grIsSideways)
             {
-                WriteBool("IsSideways", glyphRun.IsSideways);
+                WriteBool("IsSideways", grIsSideways);
             }
 
             //
@@ -2161,14 +2116,16 @@ namespace System.Windows.Xps.Serialization
             {
                 bounds = glyphRun.ComputeInkBoundingBox();
 
-                bounds.X += glyphRun.BaselineOrigin.X + dx;
-                bounds.Y += glyphRun.BaselineOrigin.Y + dy;
+                var grBaselineOri = glyphRun.BaselineOrigin;
+                bounds.X += grBaselineOri.X + dx;
+                bounds.Y += grBaselineOri.Y + dy;
             }
 
             WriteBrush("Fill", foreground, bounds);
 
-            if (glyphRun.Language != null &&
-                glyphRun.Language != _manager.Language)
+            var grLang = glyphRun.Language;
+            if (grLang != null &&
+                grLang != _manager.Language)
             {
                 // Only write language attribute if it doesn't match the fixedpage language.
                 // WriteTCO might generate an element, so must write this attribute before.
@@ -2177,13 +2134,13 @@ namespace System.Windows.Xps.Serialization
                 // InvariantCulture is associated with english language but not with any country/region and comes with empty string as name
                 // Since language attribute with empty string is an invalid xml and InvariantCulture is associated with en-us
                 // add language attribute as en-us if it is an InvariantCulture
-                if (glyphRun.Language == XmlLanguage.Empty)
+                if (grLang == XmlLanguage.Empty)
                 {
                     WriteAttr(XpsS0Markup.XmlLang, XpsS0Markup.XmlEngLangValue);
                 }
                 else
                 {
-                    WriteAttr(XpsS0Markup.XmlLang, glyphRun.Language.ToString());
+                    WriteAttr(XpsS0Markup.XmlLang, grLang.ToString());
                 }
             }
 
@@ -2244,9 +2201,7 @@ namespace System.Windows.Xps.Serialization
             // Extract opacity from SolidColorBrush OpacityMask
             if (opacityMask != null)
             {
-                SolidColorBrush sb = opacityMask as SolidColorBrush;
-
-                if (sb != null)
+                if (opacityMask is SolidColorBrush sb)
                 {
                     opacity *= Utility.NormalizeOpacity(sb.Color.ScA) * Utility.NormalizeOpacity(opacityMask.Opacity);
                     opacityMask = null;

@@ -44,7 +44,7 @@ namespace System.Windows.Xps.Serialization
 
                 case SerializerAction.endSerializeDocumentPage:
                     {
-                        ReachFixedPageSerializerContext thisContext = context as ReachFixedPageSerializerContext;
+                        ReachFixedPageSerializerContext thisContext = (ReachFixedPageSerializerContext)context;
                         _syncSerializer.EndSerializeDocumentPage(thisContext.TreeWalker);
                         break;
                     }

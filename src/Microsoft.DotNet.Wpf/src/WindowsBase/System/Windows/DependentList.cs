@@ -181,7 +181,7 @@ namespace System.Windows
         
         public override bool Equals(object o)
         {
-            return o is Dependent d ? Equals(d) : false;
+            return o is Dependent d && Equals(d);
         }
         
         public bool Equals(Dependent d)

@@ -22,14 +22,14 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/winforms -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>9.0.11-servicing.25514.7</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>9.0.11-servicing.25519.1</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/runtime -->
   <PropertyGroup>
-    <VSRedistCommonNetCoreSharedFrameworkx6490PackageVersion>9.0.11-servicing.25514.14</VSRedistCommonNetCoreSharedFrameworkx6490PackageVersion>
+    <VSRedistCommonNetCoreSharedFrameworkx6490PackageVersion>9.0.11-servicing.25517.16</VSRedistCommonNetCoreSharedFrameworkx6490PackageVersion>
     <MicrosoftNETCoreAppRefVersion>9.0.11</MicrosoftNETCoreAppRefVersion>
     <MicrosoftNETCoreAppRuntimewinx64Version>9.0.11</MicrosoftNETCoreAppRuntimewinx64Version>
-    <MicrosoftNETCorePlatformsVersion>9.0.11-servicing.25514.14</MicrosoftNETCorePlatformsVersion>
+    <MicrosoftNETCorePlatformsVersion>9.0.11-servicing.25517.16</MicrosoftNETCorePlatformsVersion>
     <SystemCodeDomPackageVersion>9.0.11</SystemCodeDomPackageVersion>
     <SystemConfigurationConfigurationManagerPackageVersion>9.0.11</SystemConfigurationConfigurationManagerPackageVersion>
     <SystemDiagnosticsEventLogPackageVersion>9.0.11</SystemDiagnosticsEventLogPackageVersion>

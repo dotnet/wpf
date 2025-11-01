@@ -3137,10 +3137,8 @@ namespace System.Windows.Input.StylusWisp
         }
 
         /////////////////////////////////////////////////////////////////////
-        internal void RegisterHwndForInput(InputManager inputManager, PresentationSource inputSource)
+        internal void RegisterHwndForInput(InputManager inputManager, HwndSource hwndSource)
         {
-            HwndSource hwndSource = (HwndSource)inputSource;
-
             GetAndCacheTransformToDeviceMatrix(hwndSource);
 
             // Keep track so we don't bother looking for changes if someone happened to query this before
@@ -3152,14 +3150,14 @@ namespace System.Windows.Input.StylusWisp
 
             lock (__penContextsLock)
             {
-                if (__penContextsMap.ContainsKey(inputSource))
+                if (__penContextsMap.ContainsKey(hwndSource))
                 {
                     throw new InvalidOperationException(SR.PenService_WindowAlreadyRegistered);
                 }
 
-                PenContexts penContexts = new PenContexts(StylusLogic.GetCurrentStylusLogicAs<WispLogic>(), inputSource);
+                PenContexts penContexts = new PenContexts(StylusLogic.GetCurrentStylusLogicAs<WispLogic>(), hwndSource);
 
-                __penContextsMap[inputSource] = penContexts;
+                __penContextsMap[hwndSource] = penContexts;
 
                 // If FIRST one set this as the one to manage TabletAdded/Removed notifications.
                 if (__penContextsMap.Count == 1)

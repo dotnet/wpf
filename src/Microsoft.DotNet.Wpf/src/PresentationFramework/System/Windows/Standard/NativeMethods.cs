@@ -2532,6 +2532,9 @@ namespace Standard
             return false;
         }
 
+        // DWM error code for when desktop composition is disabled
+        private const int DWM_E_COMPOSITIONDISABLED = unchecked((int)0x80263001);
+
         public static bool DwmIsCompositionEnabled()
         {
             // Make this call safe to make on downlevel OSes...
@@ -2539,7 +2542,17 @@ namespace Standard
             {
                 return false;
             }
-            return _DwmIsCompositionEnabled();
+            
+            try
+            {
+                return _DwmIsCompositionEnabled();
+            }
+            catch (COMException ex) when (ex.HResult == DWM_E_COMPOSITIONDISABLED)
+            {
+                // Desktop composition is disabled - this is not an error condition,
+                // just return false to indicate composition is not available
+                return false;
+            }
         }
 
         [DllImport("dwmapi.dll")]

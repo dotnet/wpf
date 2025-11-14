@@ -1,6 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Windows.Win32;
 using Windows.Win32.Foundation;
@@ -13,6 +15,9 @@ namespace MS.Internal
     internal static class Utilities
     {
         private static readonly Version _osVersion = Environment.OSVersion.Version;
+
+        // DWM error code for when desktop composition is disabled
+        private const int DWM_E_COMPOSITIONDISABLED = unchecked((int)0x80263001);
 
         internal static bool IsOSVistaOrNewer
         {
@@ -38,8 +43,26 @@ namespace MS.Internal
                     return false;
                 }
 
-                PInvoke.DwmIsCompositionEnabled(out BOOL isDesktopCompositionEnabled).ThrowOnFailure();
-                return isDesktopCompositionEnabled;
+                try
+                {
+                    var result = PInvoke.DwmIsCompositionEnabled(out BOOL isDesktopCompositionEnabled);
+                    
+                    // Handle the specific case where desktop composition is disabled
+                    // Error code DWM_E_COMPOSITIONDISABLED should return false, not throw
+                    if (result.Failed && result.Value == DWM_E_COMPOSITIONDISABLED)
+                    {
+                        return false;
+                    }
+                    
+                    result.ThrowOnFailure();
+                    return isDesktopCompositionEnabled;
+                }
+                catch (COMException ex) when (ex.HResult == DWM_E_COMPOSITIONDISABLED)
+                {
+                    // Desktop composition is disabled - this is not an error condition,
+                    // just return false to indicate composition is not available
+                    return false;
+                }
             }
         }
 

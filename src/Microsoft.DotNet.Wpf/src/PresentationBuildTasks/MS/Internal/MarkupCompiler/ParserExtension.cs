@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //---------------------------------------------------------------------------
@@ -919,12 +919,13 @@ namespace MS.Internal
 
         #region Data
 
-        private MarkupCompiler      _compiler;
+        private readonly MarkupCompiler _compiler;
+        private readonly bool _pass2;
+
         private string              _name = null;
         private string              _class = string.Empty;
         private string              _subClass = string.Empty;
         private int                 _connectionId = 0;
-        private bool                _pass2 = false;
         private bool                _isRootTag = false;
         private bool                _processedRootElement = false;
         private bool                _isSameScope = false;

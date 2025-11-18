@@ -12,7 +12,7 @@ namespace System.Windows.Data;
 
 public sealed class ListCollectionViewTests
 {
-    public sealed class TestItem : INotifyPropertyChanged
+    private sealed class TestItem : INotifyPropertyChanged
     {
         public int Value
         {

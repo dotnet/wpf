@@ -9,6 +9,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
+using System.Threading;
 using Microsoft.Win32.SafeHandles;
 
 // Some COM interfaces and Win32 structures are already declared in the framework.
@@ -2501,8 +2502,8 @@ namespace Standard
         [DllImport("dwmapi.dll", PreserveSig = false)]
         public static extern int DwmGetWindowAttribute(IntPtr hWnd, DWMWA dwAttributeToGet, ref int pvAttributeValue, int cbAttribute);
 
-        [DllImport("dwmapi.dll", PreserveSig = false)]
-        public static extern int DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);
+        [DllImport("dwmapi.dll", EntryPoint = "DwmExtendFrameIntoClientArea", PreserveSig = false)]
+        private static extern int _DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);
 
         [DllImport("dwmapi.dll", EntryPoint = "DwmIsCompositionEnabled", PreserveSig = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -2510,6 +2511,31 @@ namespace Standard
 
         [DllImport("dwmapi.dll", EntryPoint = "DwmGetColorizationColor", PreserveSig = true)]
         private static extern HRESULT _DwmGetColorizationColor(out uint pcrColorization, [Out, MarshalAs(UnmanagedType.Bool)] out bool pfOpaqueBlend);
+
+        public static int DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset)
+        {
+            int retryCount = 2;
+            while(retryCount > 0)
+            {
+                try
+                {
+                    return _DwmExtendFrameIntoClientArea(hwnd, ref pMarInset);
+                }
+                catch (COMException ex)
+                {
+                    // DWM composition may not be available or the operation failed
+                    // Return the error code rather than crashing the application
+                    retryCount--;
+                    if(retryCount == 0)
+                    {
+                        return ex.HResult;
+                    }
+                    Thread.Sleep(100);
+                }
+            }
+            
+            return 0;
+        }
 
         public static bool DwmGetColorizationColor(out uint pcrColorization, out bool pfOpaqueBlend)
         {

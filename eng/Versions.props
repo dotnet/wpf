@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="Version.Details.props" Condition="Exists('Version.Details.props')" />
+<Project>
+
+  <Import Project="Version.Details.props" />
+
   <PropertyGroup>
     <MajorVersion>10</MajorVersion>
     <MinorVersion>0</MinorVersion>
@@ -8,6 +9,9 @@
     <PreReleaseVersionLabel>rc</PreReleaseVersionLabel>
     <PreReleaseVersionIteration>3</PreReleaseVersionIteration>
     <VersionPrefix>$(MajorVersion).$(MinorVersion).$(PatchVersion)</VersionPrefix>
+    <!-- Allowed values: '', 'prerelease', 'release'. Set to 'release' when stabilizing. -->
+    <DotNetFinalVersionKind></DotNetFinalVersionKind>
+
     <!--
       Set assembly version to align with major and minor version, as for the patches and revisions should be manually
       updated per assembly if it is serviced.
@@ -20,23 +24,28 @@
       -->
     <AssemblyVersion>$(MajorVersion).$(MinorVersion).0.0</AssemblyVersion>
   </PropertyGroup>
+
   <!-- Packages that come from https://github.com/dotnet/runtime -->
   <PropertyGroup>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
   </PropertyGroup>
+
   <!-- These are minimum versions used for netfx-targeted components that run in Visual Studio because in those cases,
        Visual Studio is providing those assemblies, and we should work with whichever version it ships. -->
   <PropertyGroup>
     <SystemReflectionMetadataLoadContextToolsetVersion>8.0.0</SystemReflectionMetadataLoadContextToolsetVersion>
   </PropertyGroup>
+
   <!-- Docs / Intellisense -->
   <PropertyGroup>
     <MicrosoftPrivateIntellisenseVersion>10.0.0-preview-20251006.1</MicrosoftPrivateIntellisenseVersion>
   </PropertyGroup>
+
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>
     <MicrosoftDotNetApiCompatVersion>9.0.0-beta.24053.1</MicrosoftDotNetApiCompatVersion>
   </PropertyGroup>
+
   <!-- Other Packages that require manual updating-->
   <PropertyGroup>
     <!--
@@ -54,10 +63,12 @@
     <NetFramework48RefAssembliesVersion>0.0.0.1</NetFramework48RefAssembliesVersion>
     <MicrosoftWindowsCsWin32PackageVersion>0.3.106</MicrosoftWindowsCsWin32PackageVersion>
   </PropertyGroup>
+
   <!-- XUnit-related (not extensions) -->
   <PropertyGroup>
     <XUnitStaFactPackageVersion>3.0.13</XUnitStaFactPackageVersion>
   </PropertyGroup>
+
   <!-- Test related -->
   <PropertyGroup>
     <AwesomeAssertionsVersion>8.0.2</AwesomeAssertionsVersion>
@@ -67,12 +78,14 @@
     <SystemWindowsExtensionsTestDataVersion>8.0.0-beta.23107.1</SystemWindowsExtensionsTestDataVersion>
     <VerifyXunitV3Version>30.1.0</VerifyXunitV3Version>
   </PropertyGroup>
+
   <!-- Code Coverage -->
   <PropertyGroup>
     <MicrosoftTestingExtensionsCodeCoverageVersion>17.14.2</MicrosoftTestingExtensionsCodeCoverageVersion>
     <CodecovVersion>1.12.3</CodecovVersion>
     <ReportGeneratorVersion>5.2.0</ReportGeneratorVersion>
   </PropertyGroup>
+
   <!-- External Analyzers -->
   <PropertyGroup>
     <CSharpIsNullAnalyzersVersion>0.1.495</CSharpIsNullAnalyzersVersion>
@@ -89,6 +102,7 @@
     <StyleCopAnalyzersVersion>1.2.0-beta.556</StyleCopAnalyzersVersion>
     <NugetPackagingVersion>6.11.0</NugetPackagingVersion>
   </PropertyGroup>
+
   <!--Package names-->
   <PropertyGroup>
     <SystemReflectionMetadataLoadContextPackage>System.Reflection.MetadataLoadContext</SystemReflectionMetadataLoadContextPackage>
@@ -99,4 +113,5 @@
     <SystemIOPackagingPackage>System.IO.Packaging</SystemIOPackagingPackage>
     <SystemReflectionMetadataLoadContextPackage>System.Reflection.MetadataLoadContext</SystemReflectionMetadataLoadContextPackage>
   </PropertyGroup>
+
 </Project>

@@ -2530,6 +2530,7 @@ namespace Standard
                     {
                         return ex.HResult;
                     }
+                    System.Diagnostics.Trace.WriteLine($"DwmExtendFrameIntoClientArea: retrying after COMException (HResult={ex.HResult})");
                     Thread.Sleep(100);
                 }
             }

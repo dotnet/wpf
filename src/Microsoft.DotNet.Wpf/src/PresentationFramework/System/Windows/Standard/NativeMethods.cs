@@ -11,6 +11,7 @@ using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading;
 using Microsoft.Win32.SafeHandles;
+using MS.Internal;
 
 // Some COM interfaces and Win32 structures are already declared in the framework.
 // Interesting ones to remember in System.Runtime.InteropServices.ComTypes are:
@@ -2514,26 +2515,36 @@ namespace Standard
 
         public static int DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset)
         {
-            int retryCount = 2;
-            while(retryCount > 0)
+            if(FrameworkAppContextSwitches.DisableDWMCrashContainment)
             {
-                try
+                // Original behavior: just call the native method and let any exceptions propagate.
+                return _DwmExtendFrameIntoClientArea(hwnd, ref pMarInset);
+            } 
+            else
+            {
+                // Crash containment behavior: retry a couple of times if a COMException is thrown.
+                int retryCount = 2;
+                while(retryCount > 0)
                 {
-                    return _DwmExtendFrameIntoClientArea(hwnd, ref pMarInset);
-                }
-                catch (COMException ex)
-                {
-                    // DWM composition may not be available or the operation failed
-                    // Return the error code rather than crashing the application
-                    retryCount--;
-                    if(retryCount == 0)
+                    try
                     {
-                        return ex.HResult;
+                        return _DwmExtendFrameIntoClientArea(hwnd, ref pMarInset);
                     }
-                    System.Diagnostics.Trace.WriteLine($"DwmExtendFrameIntoClientArea: retrying after COMException (HResult={ex.HResult})");
-                    Thread.Sleep(100);
+                    catch (COMException ex)
+                    {
+                        // DWM composition may not be available or the operation failed
+                        // Return the error code rather than crashing the application
+                        retryCount--;
+                        if(retryCount == 0)
+                        {
+                            return ex.HResult;
+                        }
+                        System.Diagnostics.Trace.WriteLine($"DwmExtendFrameIntoClientArea: retrying after COMException (HResult={ex.HResult})");
+                        Thread.Sleep(100);
+                    }
                 }
             }
+            
             
             return 0;
         }

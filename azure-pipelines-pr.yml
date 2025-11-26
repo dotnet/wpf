@@ -1,39 +1,3 @@
-# This is a simple wrapper for eng/pipeline.yml to get around the limitation of
-# user-defined variables not being available in yaml template expressions.
-
-# Parameters ARE available in template expressions, and parameters can have default values,
-# so they can be used to control yaml flow.
-#
-
-variables:
-    # clean the local repo on the build agents
-  - name: Build.Repository.Clean
-    value: true
-  - name: _DotNetArtifactsCategory
-    value: WINDOWSDESKTOP
-  - name: _DotNetValidationArtifactsCategory
-    value: WINDOWSDESKTOP
-  - ${{ if or(startswith(variables['Build.SourceBranch'], 'refs/heads/release/'), startswith(variables['Build.SourceBranch'], 'refs/heads/internal/release/'), eq(variables['Build.Reason'], 'Manual')) }}:
-    - name: PostBuildSign
-      value: false
-  - ${{ else }}:
-    - name: PostBuildSign
-      value: true
-  
-  - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
-    - group: DotNet-Wpf-SDLValidation-Params
-
-
-# This is set in the pipeline directly 
-# When set to false, CI tests will not be enabled in builds. 
-#
-# _ContinuousIntegrationTestsEnabled: false
-
-# Setting batch to true, triggers one build at a time.
-# if there is a push while a build in progress, it will wait,
-# until the running build finishes, and produce a build with all the changes
-#
-# only trigger ci builds for the master and release branches
 trigger:
   batch: true 
   branches:
@@ -59,34 +23,133 @@ pr:
     exclude:
     - Documentation/*
 
-# Call the pipeline-pr.yml template, which does the real work
+variables:
+- name: repoName
+  value: dotnet/wpf
+
 stages:
 - stage: build
   displayName: Build 
   jobs:
-  - template: /eng/pipeline-pr.yml
+  - template: /eng/common/templates/jobs/jobs.yml@self
     parameters:
-      ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
-        runAsPublic: false
+      enablePublishBuildArtifacts: true
+      enablePublishTestResults: false # tests run in helix
+      enablePublishBuildAssets: false
+      enablePublishUsingPipelines: false
+      enableTelemetry: true
+      helixRepo: $(repoName)
 
-- ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
-  - template: eng\common\templates\post-build\post-build.yml
-    parameters:
-      publishingInfraVersion: 3
-      enableSymbolValidation: false
-      enableSigningValidation: false
-      enableNugetValidation: false
-      enableSourceLinkValidation: false
-      # This is to enable SDL runs part of Post-Build Validation Stage
-      SDLValidationParameters:
-        enable: false
-        params: ' -SourceToolsList @("policheck","credscan")
-        -TsaInstanceURL $(_TsaInstanceURL)
-        -TsaProjectName $(_TsaProjectName)
-        -TsaNotificationEmail $(_TsaNotificationEmail)
-        -TsaCodebaseAdmin $(_TsaCodebaseAdmin)
-        -TsaBugAreaPath $(_TsaBugAreaPath)
-        -TsaIterationPath $(_TsaIterationPath)
-        -TsaRepositoryName "wpf"
-        -TsaCodebaseName "wpf"
-        -TsaPublish $True'
+      jobs:
+      - job: Windows_NT
+        timeoutInMinutes: 120  # how long to run the job before automatically cancelling; see https://github.com/dotnet/wpf/issues/952
+        pool:
+          # For public jobs, use the hosted pool.  For internal jobs use the internal pool.
+          # Will eventually change this to two BYOC pools.
+          # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
+          ${{ if eq(variables['System.TeamProject'], 'public') }}:
+            name: NetCore-Public
+            demands: ImageOverride -equals windows.vs2022.amd64.Open
+          ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+            name: NetCore1ESPool-Internal
+            demands: ImageOverride -equals windows.vs2022.amd64
+        variables:
+        - name: _Platform
+          value: x86
+        - name: _PlatformArgs
+          value: /p:Platform=$(_Platform)
+        - name: _TestHelixAgentPool
+          value: 'Windows.10.Amd64.ClientRS5.Open' # Preferred:'Windows.10.Amd64.Open%3bWindows.7.Amd64.Open%3bWindows.10.Amd64.ClientRS5.Open'; See https://github.com/dotnet/wpf/issues/952
+        - name: _HelixStagingDir
+          value: $(BUILD.STAGINGDIRECTORY)\helix\functests
+        - name: _HelixSource
+          value: $(repoName)/$(Build.SourceBranch)
+        - name: _HelixToken
+          value: ''
+        - name: _HelixCreator
+          value: $(repoName)
+        - name: _programfilesx86
+          value: ${Env:ProgramFiles(x86)}/dotnet
+        - name: _programfiles
+          value:  ${Env:ProgramFiles}/dotnet
+        - ${{ if ne(variables['System.TeamProject'], 'internal') }}:
+          - name: _InternalRuntimeDownloadArgs
+            value: ''
+        - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+          - group: AzureDevOps-Artifact-Feeds-Pats
+          - group: DotNet-HelixApi-Access
+          - name: _InternalRuntimeDownloadArgs
+            value: >-
+              /p:DotNetRuntimeSourceFeed=https://ci.dot.net/internal
+              /p:DotNetRuntimeSourceFeedKey=$(dotnetbuilds-internal-container-read-token-base64)
+          - name: _HelixSource
+            value: official/$(repoName)/$(Build.SourceBranch)
+          - name: _HelixToken
+            value: '$(HelixApiAccessToken)' # from DotNet-HelixApi-Access group
+          - name: _HelixCreator
+            value: '' #if _HelixToken is set, Creator must be empty
+          - name: _TestHelixAgentPool
+            value: 'Windows.10.Amd64.ClientRS5' # Preferred: 'Windows.10.Amd64%3bWindows.7.Amd64%3bWindows.10.Amd64.ClientRS5'
+
+        strategy:
+          matrix:
+            Build_Debug_x86:
+              _BuildConfig: Debug
+            Build_Release_x86:
+              _BuildConfig: Release
+            Build_Debug_x64:
+              _BuildConfig: Debug
+              _Coverage: true
+              # override some variables for debug
+              # _SignType has to be real for package publishing to succeed - do not override to test.
+              _Platform: x64
+            Build_Release_x64:
+              _BuildConfig: Release
+              _Platform: x64
+            Build_Debug_arm64:
+              _BuildConfig: Debug
+              # override some variables for debug
+              # _SignType has to be real for package publishing to succeed - do not override to test.
+              _Platform: arm64
+            Build_Release_arm64:
+              _BuildConfig: Release
+              _Platform: arm64
+        steps:
+        # Set VSO Variable(s)
+        - powershell: eng\pre-build.ps1
+          displayName: Pre-Build - Set VSO Variables
+
+        - template: /eng/common/templates/steps/enable-internal-sources.yml
+        - template: /eng/common/templates/steps/enable-internal-runtimes.yml
+
+        # Use utility script to run script command dependent on agent OS.
+        - script: eng\scripts\cibuild.cmd
+            -configuration $(_BuildConfig)
+            -prepareMachine
+            $(_PlatformArgs)
+            $(_InternalRuntimeDownloadArgs)
+            /p:Coverage=$(_Coverage)
+          displayName: Windows Build / Publish
+
+        - script: eng\scripts\ciunittest.cmd
+            -configuration $(_BuildConfig)
+            -prepareMachine
+            $(_PlatformArgs)
+            $(_InternalRuntimeDownloadArgs)
+            /bl:$(Build.SourcesDirectory)\artifacts\log\$(_BuildConfig)\Test.binlog
+            /p:Coverage=$(_Coverage)
+          displayName: Run xUnit Tests
+          condition: eq(variables['_Platform'], 'x64')
+
+        - task: PublishTestResults@2
+          displayName: Publish XUnit Test Results
+          inputs:
+            testRunner: VSTest
+            testResultsFiles: '$(Build.SourcesDirectory)/artifacts/TestResults/$(_BuildConfig)/*.trx'
+            mergeTestResults: true
+          condition: and(succeededOrFailed(), eq(variables['_BuildConfig'], 'Debug'), eq(variables['_Platform'], 'x64'))
+            
+        # Upload code coverage data
+        - script: dotnet msbuild -binaryLogger:artifacts\log\$(_configuration)\uploadCodeCov.binlog;ProjectImports=Embed -restore eng/CodeCoverage.proj
+          displayName: Upload coverage to codecov.io
+          condition: and(succeeded(), eq(variables['_Coverage'], True), eq(variables['_BuildConfig'], 'Debug'), eq(variables['_Platform'], 'x64'))

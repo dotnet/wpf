@@ -147,6 +147,18 @@ namespace MS.Internal
                 return LocalAppContext.GetCachedSwitchValue(DisableDynamicResourceOptimizationSwitchName, ref _DisableDynamicResourceOptimization);
             }
         }
+
+        // Swtich to disable DWM crash containment
+        internal const string DisableDWMCrashContainmentSwitchName = "Switch.System.Windows.Media.DisableDWMCrashContainment";
+        private static int _disableDWMCrashContainment;
+        public static bool DisableDWMCrashContainment
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(DisableDWMCrashContainmentSwitchName, ref _disableDWMCrashContainment);
+            }
+        }
     }
 }
 

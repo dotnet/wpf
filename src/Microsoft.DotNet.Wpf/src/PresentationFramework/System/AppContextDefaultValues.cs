@@ -32,7 +32,7 @@ namespace System
             LocalAppContext.DefineSwitchDefault(FrameworkAppContextSwitches.ItemAutomationPeerKeepsItsItemAliveSwitchName, false);
             LocalAppContext.DefineSwitchDefault(FrameworkAppContextSwitches.DisableFluentThemeWindowBackdropSwitchName, false);
             LocalAppContext.DefineSwitchDefault(FrameworkAppContextSwitches.DisableDynamicResourceOptimizationSwitchName, false);
-
+            LocalAppContext.DefineSwitchDefault(FrameworkAppContextSwitches.DisableDWMCrashContainmentSwitchName, false);
 #pragma warning restore CS0436 // Type conflicts with imported type
         }
     }

@@ -46,8 +46,6 @@ namespace System.Windows.Media.Effects
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -57,10 +55,7 @@ namespace System.Windows.Media.Effects
         //------------------------------------------------------
 
 
-
-
         #region Public Properties
-
 
 
         #endregion Public Properties
@@ -74,9 +69,6 @@ namespace System.Windows.Media.Effects
         #region Protected Methods
 
 
-
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -86,7 +78,6 @@ namespace System.Windows.Media.Effects
         //------------------------------------------------------
 
         #region Internal Methods
-
 
         internal abstract DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel);
 
@@ -151,7 +142,6 @@ namespace System.Windows.Media.Effects
             return GetChannelCore(index);
         }
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -161,9 +151,6 @@ namespace System.Windows.Media.Effects
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -177,7 +164,6 @@ namespace System.Windows.Media.Effects
         #region Dependency Properties
 
 
-
         #endregion Dependency Properties
 
         //------------------------------------------------------
@@ -189,13 +175,7 @@ namespace System.Windows.Media.Effects
         #region Internal Fields
 
 
-
-
-
-
-
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -205,8 +185,6 @@ namespace System.Windows.Media.Effects
         //  Constructors
         //
         //------------------------------------------------------
-
-
 
 
         #endregion Constructors

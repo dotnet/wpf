@@ -268,11 +268,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(ArcSegment);
             PointProperty =
                   RegisterProperty("Point",
                                    typeof(Point),
-                                   typeofThis,
+                                   typeof(ArcSegment),
                                    new Point(),
                                    null,
                                    null,
@@ -281,7 +280,7 @@ namespace System.Windows.Media
             SizeProperty =
                   RegisterProperty("Size",
                                    typeof(Size),
-                                   typeofThis,
+                                   typeof(ArcSegment),
                                    new Size(),
                                    null,
                                    null,
@@ -290,7 +289,7 @@ namespace System.Windows.Media
             RotationAngleProperty =
                   RegisterProperty("RotationAngle",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(ArcSegment),
                                    0.0,
                                    null,
                                    null,
@@ -299,7 +298,7 @@ namespace System.Windows.Media
             IsLargeArcProperty =
                   RegisterProperty("IsLargeArc",
                                    typeof(bool),
-                                   typeofThis,
+                                   typeof(ArcSegment),
                                    false,
                                    null,
                                    null,
@@ -308,7 +307,7 @@ namespace System.Windows.Media
             SweepDirectionProperty =
                   RegisterProperty("SweepDirection",
                                    typeof(SweepDirection),
-                                   typeofThis,
+                                   typeof(ArcSegment),
                                    SweepDirection.Counterclockwise,
                                    null,
                                    new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsSweepDirectionValid),

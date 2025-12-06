@@ -1961,7 +1961,7 @@ namespace System.Windows.Controls
             if (!InternalColumns.ColumnWidthsComputationPending)
             {
                 double widthChange = newSize.Width - oldSize.Width;
-                if (!DoubleUtil.AreClose(widthChange, 0.0))
+                if (!DoubleUtil.IsZero(widthChange))
                 {
                     _finalViewportWidth = newSize.Width;
                     if (!_viewportWidthChangeNotificationPending)
@@ -1986,7 +1986,7 @@ namespace System.Windows.Controls
             }
 
             double widthChange = _finalViewportWidth - _originalViewportWidth;
-            if (!DoubleUtil.AreClose(widthChange, 0.0))
+            if (!DoubleUtil.IsZero(widthChange))
             {
                 NotifyPropertyChanged(this,
                     "ViewportWidth",

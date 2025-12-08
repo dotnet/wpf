@@ -150,6 +150,6 @@ stages:
           condition: and(succeededOrFailed(), eq(variables['_BuildConfig'], 'Debug'), eq(variables['_Platform'], 'x64'))
             
         # Upload code coverage data
-        - script: dotnet msbuild -binaryLogger:artifacts\log\$(_configuration)\uploadCodeCov.binlog;ProjectImports=Embed -restore eng/CodeCoverage.proj
+        - script: dotnet msbuild -binaryLogger:artifacts\log\$(_BuildConfig)\uploadCodeCov.binlog;ProjectImports=Embed -restore eng/CodeCoverage.proj
           displayName: Upload coverage to codecov.io
           condition: and(succeeded(), eq(variables['_Coverage'], True), eq(variables['_BuildConfig'], 'Debug'), eq(variables['_Platform'], 'x64'))

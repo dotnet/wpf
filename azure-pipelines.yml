@@ -1,3 +1,5 @@
+# This pipeline does not do any real building of assets. It just publishing commit info to Maestro, which is used to trigger codeflow to the VMR.
+# All building of assets happens in the VMR.
 trigger:
   batch: true
   branches:
@@ -20,14 +22,6 @@ resources:
 extends:
   template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
   parameters:
-    sdl:
-      policheck:
-        enabled: true
-      tsa:
-        enabled: true
-        configFile: '$(Build.SourcesDirectory)/eng/tsaoptions.json'
-    featureFlags:
-      autoBaseline: true
     pool:
       name: NetCore1ESPool-Internal
       image: 1es-windows-2022
@@ -39,9 +33,9 @@ extends:
       - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
         - template: /eng/common/templates-official/job/onelocbuild.yml@self
           parameters:
-          MirrorRepo: wpf
-          LclSource: lclFilesfromPackage
-          LclPackageId: 'LCL-JUNO-PROD-WPF'
+            MirrorRepo: wpf
+            LclSource: lclFilesfromPackage
+            LclPackageId: 'LCL-JUNO-PROD-WPF'
       - template: /eng/common/templates-official/jobs/jobs.yml@self
         parameters:
           enablePublishBuildArtifacts: true

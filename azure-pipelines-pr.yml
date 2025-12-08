@@ -34,7 +34,7 @@ stages:
   - template: /eng/common/templates/jobs/jobs.yml@self
     parameters:
       enablePublishBuildArtifacts: true
-      enablePublishTestResults: false # tests run in helix
+      enablePublishTestResults: false
       enablePublishBuildAssets: false
       enablePublishUsingPipelines: false
       enableTelemetry: true

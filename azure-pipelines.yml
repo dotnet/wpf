@@ -44,6 +44,7 @@ extends:
           publishAssetsImmediately: true
           isAssetlessBuild: true
           enableTelemetry: true
+          enableSourceIndex: true
           sourceIndexParams:
             condition: eq(variables['Build.SourceBranch'], 'refs/heads/assetless-builds-and-cleanup')
             binlogPath: artifacts/log/Debug/x86/Build.binlog

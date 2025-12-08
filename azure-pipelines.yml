@@ -30,7 +30,7 @@ extends:
     - stage: build
       displayName: Build
       jobs:
-      - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/assetless-builds-and-cleanup') }}:
+      - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
         - template: /eng/common/templates-official/job/onelocbuild.yml@self
           parameters:
             MirrorRepo: wpf
@@ -46,7 +46,7 @@ extends:
           enableTelemetry: true
           enableSourceIndex: true
           sourceIndexParams:
-            condition: eq(variables['Build.SourceBranch'], 'refs/heads/assetless-builds-and-cleanup')
+            condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
             binlogPath: artifacts/log/Debug/x86/Build.binlog
             pool:
               name: NetCore1ESPool-Internal

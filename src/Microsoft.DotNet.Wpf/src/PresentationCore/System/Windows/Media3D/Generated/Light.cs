@@ -51,8 +51,6 @@ namespace System.Windows.Media.Media3D
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -65,10 +63,8 @@ namespace System.Windows.Media.Media3D
         {
             Light target = ((Light) d);
 
-
             target.PropertyChanged(ColorProperty);
         }
-
 
         #region Public Properties
 
@@ -98,9 +94,6 @@ namespace System.Windows.Media.Media3D
         #region Protected Methods
 
 
-
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -110,13 +103,6 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
         #region Internal Methods
-
-
-
-
-
-
-
 
 
         #endregion Internal Methods
@@ -144,8 +130,6 @@ namespace System.Windows.Media.Media3D
             }
         }
 
-
-
         #endregion Internal Properties
 
         //------------------------------------------------------
@@ -171,14 +155,9 @@ namespace System.Windows.Media.Media3D
 
         #region Internal Fields
 
-
-
-
-
         internal static Color s_Color = Colors.White;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -209,7 +188,6 @@ namespace System.Windows.Media.Media3D
                                    /* isIndependentlyAnimated  = */ true,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

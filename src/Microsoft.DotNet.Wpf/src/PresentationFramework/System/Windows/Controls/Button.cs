@@ -5,7 +5,6 @@ using System.Windows.Automation.Peers;
 using System.Windows.Controls.Primitives;
 
 using System.Windows.Input;
-using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
 
 namespace System.Windows.Controls

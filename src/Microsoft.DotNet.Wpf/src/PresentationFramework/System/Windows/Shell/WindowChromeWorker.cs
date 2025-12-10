@@ -1002,7 +1002,12 @@ namespace Microsoft.Windows.Shell
                     cyBottomHeight = (int)Math.Ceiling(deviceGlassThickness.Bottom),
                 };
 
-                NativeMethods.DwmExtendFrameIntoClientArea(_hwnd, ref dwmMargin);
+                var dwmApiResult = NativeMethods.DwmExtendFrameIntoClientArea(_hwnd, ref dwmMargin);
+                HRESULT hr = new HRESULT(unchecked((uint)dwmApiResult));
+                if(hr == HRESULT.DWM_E_COMPOSITIONDISABLED)
+                {
+                    _hwndSource.CompositionTarget.BackgroundColor = SystemColors.WindowColor;
+                }
             }
         }
 

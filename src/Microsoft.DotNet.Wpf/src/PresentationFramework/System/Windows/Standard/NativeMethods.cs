@@ -2503,7 +2503,7 @@ namespace Standard
         [DllImport("dwmapi.dll", PreserveSig = false)]
         public static extern int DwmGetWindowAttribute(IntPtr hWnd, DWMWA dwAttributeToGet, ref int pvAttributeValue, int cbAttribute);
 
-        [DllImport("dwmapi.dll", EntryPoint = "DwmExtendFrameIntoClientArea", PreserveSig = false)]
+        [DllImport("dwmapi.dll", EntryPoint = "DwmExtendFrameIntoClientArea", PreserveSig = true)]
         private static extern int _DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);
 
         [DllImport("dwmapi.dll", EntryPoint = "DwmIsCompositionEnabled", PreserveSig = false)]
@@ -2522,31 +2522,21 @@ namespace Standard
             } 
             else
             {
-                // Crash containment behavior: retry a couple of times if a COMException is thrown.
-                int retryCount = 2;
-                while(retryCount > 0)
+                // Crash containment behavior: catch and handle DWM errors gracefully.
+                int hresult = _DwmExtendFrameIntoClientArea(hwnd, ref pMarInset);
+                HRESULT hr = new HRESULT(unchecked((uint)hresult));
+
+                // Check if DWM composition is disabled and log it
+                if (hr == HRESULT.DWM_E_COMPOSITIONDISABLED)
                 {
-                    try
-                    {
-                        return _DwmExtendFrameIntoClientArea(hwnd, ref pMarInset);
-                    }
-                    catch (COMException ex)
-                    {
-                        // DWM composition may not be available or the operation failed
-                        // Return the error code rather than crashing the application
-                        retryCount--;
-                        if(retryCount == 0)
-                        {
-                            return ex.HResult;
-                        }
-                        System.Diagnostics.Trace.WriteLine($"DwmExtendFrameIntoClientArea: retrying after COMException (HResult={ex.HResult})");
-                        Thread.Sleep(100);
-                    }
+                    System.Diagnostics.Trace.WriteLine($"DwmExtendFrameIntoClientArea: DWM composition is disabled (HResult=0x{hresult:X8})");
                 }
+                else if (hr != HRESULT.S_OK)
+                {
+                    Marshal.ThrowExceptionForHR(hresult);
+                }
+                return hresult;
             }
-            
-            
-            return 0;
         }
 
         public static bool DwmGetColorizationColor(out uint pcrColorization, out bool pfOpaqueBlend)

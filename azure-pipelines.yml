@@ -21,8 +21,8 @@ variables:
     value: true
 - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
   - group: DotNet-Wpf-SDLValidation-Params
-# This is set in the pipeline directly 
-# When set to false, CI tests will not be enabled in builds. 
+# This is set in the pipeline directly
+# When set to false, CI tests will not be enabled in builds.
 #
 # _ContinuousIntegrationTestsEnabled: false
 
@@ -47,7 +47,7 @@ resources:
   - repository: 1ESPipelineTemplates
     type: git
     name: 1ESPipelineTemplates/1ESPipelineTemplates
-    ref: refs/tags/release-2025-07-08-1
+    ref: refs/tags/release
 extends:
   template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
   parameters:

@@ -144,11 +144,12 @@ stages:
 
         # Install ARM64 ATL components
         - powershell: |
+            $ErrorActionPreference = "Continue"
             $vsInstallerPath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vs_installer.exe"
             $vsInstallPath = "C:\Program Files\Microsoft Visual Studio\18\Insiders"
             
             if (Test-Path $vsInstallerPath) {
-              Write-Host "Installing ARM64 ATL components..."
+              Write-Host "##[section]Installing ARM64 ATL components..."
               Write-Host "VS Installer: $vsInstallerPath"
               Write-Host "VS Install Path: $vsInstallPath"
               
@@ -161,13 +162,16 @@ stages:
               $components | ForEach-Object { Write-Host "  - $_" }
               
               $addArgs = $components | ForEach-Object { "--add", $_ }
-              $allArgs = @("modify", "--installPath", $vsInstallPath) + $addArgs + @("--quiet", "--norestart", "--wait")
+              $allArgs = @("modify", "--installPath", $vsInstallPath) + $addArgs + @("--norestart", "--wait")
               
               Write-Host "`nExecuting: vs_installer.exe $($allArgs -join ' ')"
-              & "$vsInstallerPath" $allArgs
+              Write-Host "##[command]& `"$vsInstallerPath`" $($allArgs -join ' ')"
+              
+              $output = & "$vsInstallerPath" $allArgs 2>&1 | Tee-Object -Variable installerOutput
+              $output | ForEach-Object { Write-Host $_ }
               
               $exitCode = $LASTEXITCODE
-              Write-Host "`nInstallation completed with exit code: $exitCode"
+              Write-Host "`n##[section]Installation completed with exit code: $exitCode"
               
               if ($exitCode -eq 0) {
                 Write-Host "##[section]Installation succeeded"
@@ -175,6 +179,7 @@ stages:
                 Write-Host "##[warning]Installation succeeded but requires restart (exit code 3010)"
               } else {
                 Write-Host "##[error]Installation failed with exit code $exitCode"
+                Write-Host "##[error]Installer output: $installerOutput"
                 exit $exitCode
               }
             } else {

@@ -144,7 +144,6 @@ stages:
 
         # Install ARM64 ATL components
         - powershell: |
-            $ErrorActionPreference = "Continue"
             $vsInstallerPath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vs_installer.exe"
             $vsInstallPath = "C:\Program Files\Microsoft Visual Studio\18\Insiders"
             

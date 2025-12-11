@@ -153,7 +153,6 @@ stages:
               Write-Host "VS Install Path: $vsInstallPath"
               
               $components = @(
-                "Microsoft.VisualStudio.Component.VC.ATL.ARM64",
                 "Microsoft.VisualStudio.Component.VC.14.50.18.0.ATL.ARM64"
               )
               
@@ -164,10 +163,8 @@ stages:
               $allArgs = @("modify", "--installPath", $vsInstallPath) + $addArgs + @("--norestart", "--wait")
               
               Write-Host "`nExecuting: vs_installer.exe $($allArgs -join ' ')"
-              Write-Host "##[command]& `"$vsInstallerPath`" $($allArgs -join ' ')"
-              
-              $output = & "$vsInstallerPath" $allArgs 2>&1 | Tee-Object -Variable installerOutput
-              $output | ForEach-Object { Write-Host $_ }
+
+              & "$vsInstallerPath" $allArgs
               
               $exitCode = $LASTEXITCODE
               Write-Host "`n##[section]Installation completed with exit code: $exitCode"
@@ -178,7 +175,6 @@ stages:
                 Write-Host "##[warning]Installation succeeded but requires restart (exit code 3010)"
               } else {
                 Write-Host "##[error]Installation failed with exit code $exitCode"
-                Write-Host "##[error]Installer output: $installerOutput"
                 exit $exitCode
               }
             } else {

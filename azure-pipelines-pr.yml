@@ -119,6 +119,27 @@ stages:
         - powershell: eng\pre-build.ps1
           displayName: Pre-Build - Set VSO Variables
 
+        # Install required VS components from wpf.vsconfig
+        - powershell: |
+            $vsInstallerPath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vs_installer.exe"
+            $vsconfigPath = "$(Build.SourcesDirectory)\Documentation\wpf.vsconfig"
+            
+            if (Test-Path $vsInstallerPath) {
+              if (Test-Path $vsconfigPath) {
+                Write-Host "Installing VS components from wpf.vsconfig..."
+                & "$vsInstallerPath" modify --installPath "C:\Program Files\Microsoft Visual Studio\18\Insider" --config "$vsconfigPath" --quiet --norestart --wait
+                if ($LASTEXITCODE -ne 0) {
+                  Write-Warning "VS installer returned exit code $LASTEXITCODE"
+                }
+              } else {
+                Write-Warning "wpf.vsconfig not found at $vsconfigPath"
+              }
+            } else {
+              Write-Warning "VS Installer not found at $vsInstallerPath"
+            }
+          displayName: Install VS Components from wpf.vsconfig
+          condition: eq(variables['_Platform'], 'arm64')
+
         - template: /eng/common/templates/steps/enable-internal-sources.yml
         - template: /eng/common/templates/steps/enable-internal-runtimes.yml
 

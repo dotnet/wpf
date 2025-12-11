@@ -160,7 +160,7 @@ stages:
               $components | ForEach-Object { Write-Host "  - $_" }
               
               $addArgs = $components | ForEach-Object { "--add", $_ }
-              $allArgs = @("modify", "--installPath", $vsInstallPath) + $addArgs + @("--norestart", "--wait")
+              $allArgs = @("modify", "--installPath", $vsInstallPath) + $addArgs + @("--norestart", "--quiet")
               
               Write-Host "`nExecuting: vs_installer.exe $($allArgs -join ' ')"
 

@@ -142,25 +142,46 @@ stages:
           displayName: Check Installed VS Components
           condition: eq(variables['_Platform'], 'arm64')
 
-        # Install required VS components from wpf.vsconfig
+        # Install ARM64 ATL components
         - powershell: |
             $vsInstallerPath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vs_installer.exe"
-            $vsconfigPath = "$(Build.SourcesDirectory)\Documentation\wpf.vsconfig"
+            $vsInstallPath = "C:\Program Files\Microsoft Visual Studio\18\Insiders"
             
             if (Test-Path $vsInstallerPath) {
-              if (Test-Path $vsconfigPath) {
-                Write-Host "Installing VS components from wpf.vsconfig..."
-                & "$vsInstallerPath" modify --installPath "C:\Program Files\Microsoft Visual Studio\18\Insiders" --config "$vsconfigPath" --norestart --wait
-                if ($LASTEXITCODE -ne 0) {
-                  Write-Warning "VS installer returned exit code $LASTEXITCODE"
-                }
+              Write-Host "Installing ARM64 ATL components..."
+              Write-Host "VS Installer: $vsInstallerPath"
+              Write-Host "VS Install Path: $vsInstallPath"
+              
+              $components = @(
+                "Microsoft.VisualStudio.Component.VC.ATL.ARM64",
+                "Microsoft.VisualStudio.Component.VC.14.50.18.0.ATL.ARM64"
+              )
+              
+              Write-Host "`nComponents to install:"
+              $components | ForEach-Object { Write-Host "  - $_" }
+              
+              $addArgs = $components | ForEach-Object { "--add", $_ }
+              $allArgs = @("modify", "--installPath", $vsInstallPath) + $addArgs + @("--quiet", "--norestart", "--wait")
+              
+              Write-Host "`nExecuting: vs_installer.exe $($allArgs -join ' ')"
+              & "$vsInstallerPath" $allArgs
+              
+              $exitCode = $LASTEXITCODE
+              Write-Host "`nInstallation completed with exit code: $exitCode"
+              
+              if ($exitCode -eq 0) {
+                Write-Host "##[section]Installation succeeded"
+              } elseif ($exitCode -eq 3010) {
+                Write-Host "##[warning]Installation succeeded but requires restart (exit code 3010)"
               } else {
-                Write-Warning "wpf.vsconfig not found at $vsconfigPath"
+                Write-Host "##[error]Installation failed with exit code $exitCode"
+                exit $exitCode
               }
             } else {
-              Write-Warning "VS Installer not found at $vsInstallerPath"
+              Write-Host "##[error]VS Installer not found at $vsInstallerPath"
+              exit 1
             }
-          displayName: Install VS Components from wpf.vsconfig
+          displayName: Install ARM64 ATL Components
           condition: eq(variables['_Platform'], 'arm64')
 
         - template: /eng/common/templates/steps/enable-internal-sources.yml

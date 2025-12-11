@@ -119,6 +119,29 @@ stages:
         - powershell: eng\pre-build.ps1
           displayName: Pre-Build - Set VSO Variables
 
+        # Check installed VS components
+        - powershell: |
+            $vsWherePath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+            
+            if (Test-Path $vsWherePath) {
+              Write-Host "Checking installed Visual Studio components..."
+              $vsPath = & "$vsWherePath" -latest -prerelease -property installationPath
+              Write-Host "VS Installation Path: $vsPath"
+              
+              Write-Host "`nInstalled components:"
+              & "$vsWherePath" -latest -prerelease -format json | ConvertFrom-Json | ForEach-Object {
+                if ($_.packages) {
+                  $_.packages | Where-Object { $_.id -like "*ARM64*" -or $_.id -like "*ATL*" } | ForEach-Object {
+                    Write-Host "  - $($_.id) (Version: $($_.version))"
+                  }
+                }
+              }
+            } else {
+              Write-Warning "vswhere.exe not found at $vsWherePath"
+            }
+          displayName: Check Installed VS Components
+          condition: eq(variables['_Platform'], 'arm64')
+
         # Install required VS components from wpf.vsconfig
         - powershell: |
             $vsInstallerPath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vs_installer.exe"
@@ -127,7 +150,7 @@ stages:
             if (Test-Path $vsInstallerPath) {
               if (Test-Path $vsconfigPath) {
                 Write-Host "Installing VS components from wpf.vsconfig..."
-                & "$vsInstallerPath" modify --installPath "C:\Program Files\Microsoft Visual Studio\18\Insider" --config "$vsconfigPath" --quiet --norestart --wait
+                & "$vsInstallerPath" modify --installPath "C:\Program Files\Microsoft Visual Studio\18\Insider" --config "$vsconfigPath" --norestart --wait
                 if ($LASTEXITCODE -ne 0) {
                   Write-Warning "VS installer returned exit code $LASTEXITCODE"
                 }

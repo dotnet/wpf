@@ -2504,7 +2504,7 @@ namespace Standard
         public static extern int DwmGetWindowAttribute(IntPtr hWnd, DWMWA dwAttributeToGet, ref int pvAttributeValue, int cbAttribute);
 
         [DllImport("dwmapi.dll", EntryPoint = "DwmExtendFrameIntoClientArea", PreserveSig = true)]
-        private static extern int _DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);
+        private static extern HRESULT _DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);
 
         [DllImport("dwmapi.dll", EntryPoint = "DwmIsCompositionEnabled", PreserveSig = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -2513,30 +2513,17 @@ namespace Standard
         [DllImport("dwmapi.dll", EntryPoint = "DwmGetColorizationColor", PreserveSig = true)]
         private static extern HRESULT _DwmGetColorizationColor(out uint pcrColorization, [Out, MarshalAs(UnmanagedType.Bool)] out bool pfOpaqueBlend);
 
-        public static int DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset)
-        {
-            if(FrameworkAppContextSwitches.DisableDWMCrashContainment)
-            {
-                // Original behavior: just call the native method and let any exceptions propagate.
-                return _DwmExtendFrameIntoClientArea(hwnd, ref pMarInset);
-            } 
-            else
-            {
-                // Crash containment behavior: catch and handle DWM errors gracefully.
-                int hresult = _DwmExtendFrameIntoClientArea(hwnd, ref pMarInset);
-                HRESULT hr = new HRESULT(unchecked((uint)hresult));
+        public static bool DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset)
+        {           
+            // Crash containment behavior: catch and handle DWM errors gracefully.
+            HRESULT hr = _DwmExtendFrameIntoClientArea(hwnd, ref pMarInset);
 
-                // Check if DWM composition is disabled and log it
-                if (hr == HRESULT.DWM_E_COMPOSITIONDISABLED)
-                {
-                    System.Diagnostics.Trace.WriteLine($"DwmExtendFrameIntoClientArea: DWM composition is disabled (HResult=0x{hresult:X8})");
-                }
-                else if (hr != HRESULT.S_OK)
-                {
-                    Marshal.ThrowExceptionForHR(hresult);
-                }
-                return hresult;
+            // Check if DWM composition is disabled and log it
+            if (hr == HRESULT.S_OK)
+            {
+                return true;
             }
+            return false;
         }
 
         public static bool DwmGetColorizationColor(out uint pcrColorization, out bool pfOpaqueBlend)

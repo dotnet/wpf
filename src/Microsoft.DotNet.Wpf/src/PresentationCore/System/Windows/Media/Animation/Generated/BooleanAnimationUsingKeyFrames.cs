@@ -410,8 +410,6 @@ namespace System.Windows.Media.Animation
                 currentIterationValue = GetResolvedKeyFrame(currentResolvedKeyFrameIndex).InterpolateValue(fromValue, currentSegmentProgress);
             }
 
-
-
             return currentIterationValue;
         }
 
@@ -515,7 +513,6 @@ namespace System.Windows.Media.Animation
         }
 
         #endregion
-
 
 
         #region Private Methods

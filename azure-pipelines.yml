@@ -50,4 +50,4 @@ extends:
             binlogPath: artifacts/log/Debug/x86/Build.binlog
             pool:
               name: NetCore1ESPool-Internal
-              demands: ImageOverride -equals windows.vs2022.amd64
+              demands: ImageOverride -equals windows.vs2022.scout.amd64

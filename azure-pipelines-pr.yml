@@ -16,7 +16,6 @@ pr:
     include:
     - main
     - release/* 
-    - experimental/*
   paths:
     exclude:
     - Documentation/*

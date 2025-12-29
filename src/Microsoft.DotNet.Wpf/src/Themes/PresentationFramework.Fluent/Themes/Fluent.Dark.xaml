@@ -5902,6 +5902,15 @@
         </MultiTrigger.Conditions>
         <Setter TargetName="WindowResizeGrip" Property="Visibility" Value="Visible" />
       </MultiTrigger>
+      <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+        <Setter Property="Background" Value="{DynamicResource WindowBackground}" />
+      </DataTrigger>
+      <DataTrigger Binding="{Binding Path=(ms:FrameworkAppContextSwitches.DisableFluentThemeWindowBackdrop)}" Value="True">
+        <Setter Property="Background" Value="{DynamicResource WindowBackground}" />
+      </DataTrigger>
+      <DataTrigger Binding="{Binding Path=(standard:Utility.IsOSWindows11OrNewer)}" Value="False">
+        <Setter Property="Background" Value="{DynamicResource WindowBackground}" />
+      </DataTrigger>
     </ControlTemplate.Triggers>
   </ControlTemplate>
   <Style x:Key="DefaultWindowStyle" TargetType="{x:Type Window}">
@@ -5916,6 +5925,17 @@
               <ContentPresenter x:Name="ContentPresenter" />
             </AdornerDecorator>
           </Border>
+          <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+              <Setter Property="Background" Value="{DynamicResource WindowBackground}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=(ms:FrameworkAppContextSwitches.DisableFluentThemeWindowBackdrop)}" Value="True">
+              <Setter Property="Background" Value="{DynamicResource WindowBackground}" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=(standard:Utility.IsOSWindows11OrNewer)}" Value="False">
+              <Setter Property="Background" Value="{DynamicResource WindowBackground}" />
+            </DataTrigger>
+          </ControlTemplate.Triggers>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
@@ -5926,7 +5946,10 @@
       <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
         <Setter Property="Background" Value="{DynamicResource WindowBackground}" />
       </DataTrigger>
-      <DataTrigger Binding="{Binding Path=(framework:FrameworkAppContextSwitches.DisableFluentThemeWindowBackdrop)}" Value="True">
+      <DataTrigger Binding="{Binding Path=(ms:FrameworkAppContextSwitches.DisableFluentThemeWindowBackdrop)}" Value="True">
+        <Setter Property="Background" Value="{DynamicResource WindowBackground}" />
+      </DataTrigger>
+      <DataTrigger Binding="{Binding Path=(standard:Utility.IsOSWindows11OrNewer)}" Value="False">
         <Setter Property="Background" Value="{DynamicResource WindowBackground}" />
       </DataTrigger>
     </Style.Triggers>

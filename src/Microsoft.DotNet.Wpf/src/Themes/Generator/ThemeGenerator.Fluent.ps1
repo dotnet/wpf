@@ -34,7 +34,8 @@ foreach($themeColor in $themeColors)
             xmlns:system="clr-namespace:System;assembly=System.Runtime"
             xmlns:ui="clr-namespace:System.Windows.Documents;assembly=PresentationUI"
             xmlns:theme="clr-namespace:Microsoft.Windows.Themes"
-            xmlns:framework="clr-namespace:MS.Internal;assembly=PresentationFramework"
+            xmlns:ms="clr-namespace:MS.Internal;assembly=PresentationFramework"
+            xmlns:standard="clr-namespace:Standard;assembly=PresentationFramework"
             xmlns:base="clr-namespace:System.Windows;assembly=WindowsBase">
         </ResourceDictionary>'
                         

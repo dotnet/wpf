@@ -422,7 +422,6 @@ namespace System.Windows.Media.Animation
             }
 
 
-
             // If we're cumulative, we need to multiply the final key frame
             // value by the current repeat count and add this to the return
             // value.
@@ -443,7 +442,6 @@ namespace System.Windows.Media.Animation
             {                
                 return AnimatedTypeHelpers.AddInt32(defaultOriginValue, currentIterationValue);
             }
-
 
             return currentIterationValue;
         }

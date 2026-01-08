@@ -158,13 +158,6 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                dur = dvr = cPolygons = cVertices = 0; fsfigprops = new PTS.FSFIGUREPROPS();
-                durDistTextLeft = durDistTextRight = dvrDistTextTop = dvrDistTextBottom = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
 
             return fserr;
         }
@@ -195,12 +188,6 @@ namespace MS.Internal.PtsHost
             {
                 ccVertices = cfspt = fWrapThrough = 0; rgfspt = null;
                 PtsContext.CallbackException = e;
-                fserr = PTS.fserrCallbackException;
-            }
-            catch 
-            {
-                ccVertices = cfspt = fWrapThrough = 0; rgfspt = null;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
             }
 
@@ -240,12 +227,6 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fPushToNextTrack = 0; fsrcFlow = fsrcOverlap = fsrcSearch = new PTS.FSRECT(); fsbbox = new PTS.FSBBOX();
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
 
             return fserr;
         }
@@ -270,12 +251,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fSkip = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int GetPageDimensions(
@@ -301,12 +277,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fswdir = 0; fHeaderFooterAtTopBottom = durPage = dvrPage = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int GetNextSection(
@@ -328,12 +299,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fSuccess = 0; nmsNext = IntPtr.Zero;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int GetSectionProperties(
@@ -361,13 +327,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fNewPage = fApplyColumnBalancing = ccol = 0; fswdir = 0;
-                cSegmentDefinedColumnSpanAreas = cHeightDefinedColumnSpanAreas = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
 
@@ -396,13 +356,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fJustify = fCancelAtLastColumn = 0; 
-                fskal = default(PTS.FSKALIGNPAGE);
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int GetMainTextSegment(
@@ -423,12 +377,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                nmSegment = IntPtr.Zero;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
 
@@ -458,12 +407,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fHeaderPresent = fHardMargin = dvrMaxHeight = dvrFromEdge = 0; fswdirHeader = 0; nmsHeader = IntPtr.Zero;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
 
@@ -493,12 +437,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fFooterPresent = fHardMargin = dvrMaxHeight = dvrFromEdge = 0; fswdirFooter = 0; nmsFooter = IntPtr.Zero;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int UpdGetSegmentChange(
@@ -519,12 +458,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fskch = default(PTS.FSKCHANGE);
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
 
@@ -549,12 +483,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                ccol = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
 
@@ -602,12 +531,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fSuccessful = 0; nmp = IntPtr.Zero;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int GetNextPara(
@@ -632,12 +556,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fFound = 0; nmpNext = IntPtr.Zero;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int UpdGetFirstChangeInSegment(
@@ -660,12 +579,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fFound = fChangeFirst = 0; nmpBeforeChange = IntPtr.Zero;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int UpdGetParaChange(
@@ -688,13 +602,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fskch = default(PTS.FSKCHANGE);
-                fNoFurtherChanges = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int GetParaProperties(
@@ -712,11 +620,6 @@ namespace MS.Internal.PtsHost
             catch (Exception e)
             {
                 PtsContext.CallbackException = e;
-                fserr = PTS.fserrCallbackException;
-            }
-            catch
-            {
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
             }
             return fserr;
@@ -739,12 +642,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                pfsparaclient = IntPtr.Zero;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int TransferDisplayInfo(
@@ -766,11 +664,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int DestroyParaclient(
@@ -789,11 +683,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int FInterruptFormattingAfterPara(
@@ -826,12 +716,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                nmsEndnoteSeparator = nmsEndnoteContSeparator = nmsEndnoteContNotice = IntPtr.Zero;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int GetEndnoteSegment(
@@ -853,12 +738,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fEndnotesPresent = 0; nmsEndnotes = IntPtr.Zero;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int GetNumberEndnoteColumns(
@@ -976,12 +856,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                pmcsclientNew = IntPtr.Zero;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int DestroyMcsclient(
@@ -1000,11 +875,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int FEqualMcsclient(
@@ -1034,13 +905,8 @@ namespace MS.Internal.PtsHost
                     PtsContext.CallbackException = e;
                     fserr = PTS.fserrCallbackException;
                 }
-                catch
-                {
-                    fEqual = 0;
-                    PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                    fserr = PTS.fserrCallbackException;
-                }
             }
+
             return fserr;
         }
         internal int ConvertMcsclient(
@@ -1073,12 +939,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                dvr = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int GetObjectHandlerInfo(
@@ -1107,11 +968,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         // ------------------------------------------------------------------
@@ -1163,14 +1020,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                ppfsparabreakingsession = IntPtr.Zero;
-                fParagraphJustified = PTS.False;
 
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
             return fserr;
         }
         internal int DestroyParaBreakingSession(
@@ -1204,11 +1054,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int GetNumberFootnotes(
@@ -1231,12 +1077,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                nFootnote = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal unsafe int GetFootnotes(
@@ -1330,12 +1171,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                pmcsclientOut = IntPtr.Zero;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int FormatLine(
@@ -1389,13 +1225,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                pfsline = ppbrlineOut = IntPtr.Zero; dcpLine = fForcedBroken = dvrAscent = dvrDescent = urBBox = durBBox = dcpDepend = fReformatNeighborsAsLastLine = 0; 
-                fsflres = default(PTS.FSFLRES);
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int FormatLineForced(
@@ -1448,13 +1278,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                pfsline = ppbrlineOut = IntPtr.Zero; dcpLine = dvrAscent = dvrDescent = urBBox = durBBox = dcpDepend = 0; 
-                fsflres = default(PTS.FSFLRES);
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal unsafe int FormatLineVariants(
@@ -1568,13 +1392,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                nLineVariantsActual = 0;
-                iLineVariantBest = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int ReconstructLineVariant(
@@ -1628,13 +1446,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                pfsline = ppbrlineOut = IntPtr.Zero; dcpLine = fForcedBroken = dvrAscent = dvrDescent = urBBox = durBBox = dcpDepend = fReformatNeighborsAsLastLine = 0; 
-                fsflres = default(PTS.FSFLRES);
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int DestroyLine(
@@ -1664,12 +1476,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                pbrlineDup = IntPtr.Zero;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int DestroyLineBreakRecord(
@@ -1688,11 +1495,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int SnapGridVertical(
@@ -1733,12 +1536,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                dvrSuppressible = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int GetDvrAdvance(
@@ -1762,12 +1560,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                dvr = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int UpdGetChangeInText(
@@ -1790,12 +1583,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                dcpStart = ddcpOld = ddcpNew = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int UpdGetDropCapChange(
@@ -1828,12 +1616,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fInterruptFormatting = PTS.False;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int GetTextParaCache(
@@ -1932,12 +1715,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                cAttachedObjects = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
 
@@ -1989,13 +1767,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                cObjects = 0;
-                fEndOfParagraph = PTS.False;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
 
@@ -2044,12 +1816,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                cAttachedObjects = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
 
@@ -2102,12 +1869,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                cObjects = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int UpdGetAttachedObjectChange(
@@ -2130,12 +1892,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fskchObject = default(PTS.FSKCHANGE);
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int GetDurFigureAnchor(
@@ -2172,12 +1929,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                dur = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         // ------------------------------------------------------------------
@@ -2202,12 +1954,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fsfloaterprops = new PTS.FSFLOATERPROPS();
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
 
@@ -2253,12 +2000,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fsfmtr = new PTS.FSFMTR(); pfsFloatContent = pbrkrecpara = IntPtr.Zero; durFloaterWidth = dvrFloaterHeight = cPolygons = cVertices = 0; fsbbox = new PTS.FSBBOX();
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int FormatFloaterContentBottomless(
@@ -2296,13 +2038,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fsfmtrbl = default(PTS.FSFMTRBL); 
-                pfsFloatContent = IntPtr.Zero; durFloaterWidth = dvrFloaterHeight = cPolygons = cVertices = 0; fsbbox = new PTS.FSBBOX();
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int UpdateBottomlessFloaterContent(
@@ -2339,13 +2075,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fsfmtrbl = default(PTS.FSFMTRBL); 
-                durFloaterWidth = dvrFloaterHeight = cPolygons = cVertices = 0; fsbbox = new PTS.FSBBOX();
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
 
@@ -2378,12 +2108,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                ccVertices = cfspt = fWrapThrough = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
 }
 
@@ -2593,12 +2318,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                pmcsclientOut = IntPtr.Zero;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int GetDvrUsedForFloater(
@@ -2629,12 +2349,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                dvrUsed = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         // ------------------------------------------------------------------
@@ -2713,13 +2428,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fsfmtr = new PTS.FSFMTR(); pfspara = pbrkrecpara = pmcsclientOut = IntPtr.Zero; dvrUsed = dvrTopSpace = 0; fsbbox = new PTS.FSBBOX(); 
-                fskclearOut = default(PTS.FSKCLEAR);
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
 
@@ -2770,14 +2479,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fsfmtrbl = default(PTS.FSFMTRBL); 
-                pfspara = pmcsclientOut = IntPtr.Zero; dvrUsed = dvrTopSpace = fPageBecomesUninterruptable = 0; fsbbox = new PTS.FSBBOX(); 
-                fskclearOut = default(PTS.FSKCLEAR);
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
 
@@ -2828,14 +2530,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fsfmtrbl = default(PTS.FSFMTRBL); 
-                pfspara = pmcsclientOut = IntPtr.Zero; dvrUsed = dvrTopSpace = fPageBecomesUninterruptable = 0; fsbbox = new PTS.FSBBOX(); 
-                fskclearOut = default(PTS.FSKCLEAR);
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
 
@@ -2858,11 +2553,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
 
@@ -3028,13 +2719,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fsfmtr = new PTS.FSFMTR(); pfspara = pbrkrecpara = pmcsclientOut = IntPtr.Zero; dvrUsed = dvrTopSpace = 0; fsbbox = new PTS.FSBBOX(); 
-                fskclearOut = default(PTS.FSKCLEAR);
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int SubpageFormatParaBottomless(
@@ -3085,14 +2770,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fsfmtrbl = default(PTS.FSFMTRBL); 
-                pfspara = pmcsclientOut = IntPtr.Zero; dvrUsed = dvrTopSpace = fPageBecomesUninterruptable = 0; fsbbox = new PTS.FSBBOX(); 
-                fskclearOut = default(PTS.FSKCLEAR);
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
 
@@ -3143,14 +2821,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fsfmtrbl = default(PTS.FSFMTRBL); 
-                pfspara = pmcsclientOut = IntPtr.Zero; dvrUsed = dvrTopSpace = fPageBecomesUninterruptable = 0; fsbbox = new PTS.FSBBOX(); 
-                fskclearOut = default(PTS.FSKCLEAR);
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
         internal int SubpageSynchronizeBottomlessPara(
@@ -3274,12 +2945,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fstableobjprops = new PTS.FSTABLEOBJPROPS();
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
         internal int AutofitTable(       
@@ -3304,12 +2970,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                durTableWidth = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
         internal int UpdAutofitTable(        // calculate widths of table
@@ -3338,13 +2999,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                durTableWidth = 0;
-                fNoChangeInCellWidths = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
         internal int GetMCSClientAfterTable(
@@ -3369,12 +3024,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                ppmcsclientOut = IntPtr.Zero;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
         internal int GetFirstHeaderRow(
@@ -3399,13 +3049,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fFound = 0;
-                pnmFirstHeaderRow = IntPtr.Zero;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
         internal int GetNextHeaderRow(
@@ -3431,13 +3075,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fFound = 0;
-                pnmNextHeaderRow = IntPtr.Zero;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
         internal int GetFirstFooterRow(
@@ -3462,13 +3100,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fFound = 0;
-                pnmFirstFooterRow = IntPtr.Zero;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
         internal int GetNextFooterRow(
@@ -3494,13 +3126,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fFound = 0;
-                pnmNextFooterRow = IntPtr.Zero;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
         internal int GetFirstRow(
@@ -3524,13 +3150,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fFound = 0;
-                pnmFirstRow = IntPtr.Zero;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
         internal int GetNextRow(
@@ -3555,13 +3175,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fFound = 0;
-                pnmNextRow = IntPtr.Zero;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
         internal int UpdFChangeInHeaderFooter( // we don't do update in header/footer
@@ -3593,15 +3207,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fHeaderChanged = 0;
-                fFooterChanged = 0;
-                fRepeatedHeaderChanged = 0;
-                fRepeatedFooterChanged = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
         internal int UpdGetFirstChangeInTable(
@@ -3630,14 +3236,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fFound = 0;
-                fChangeFirst = 0;
-                pnmRowBeforeChange = IntPtr.Zero;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
         internal int UpdGetRowChange(
@@ -3665,13 +3264,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-               fskch = default(PTS.FSKCHANGE);
-                fNoFurtherChanges = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
         internal int UpdGetCellChange(
@@ -3696,13 +3289,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fWidthChanged = 0;
-                fskchCell = default(PTS.FSKCHANGE);
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
         internal int GetDistributionKind(
@@ -3725,12 +3312,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                tabledistr = PTS.FSKTABLEHEIGHTDISTRIBUTION.fskdistributeUnchanged;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
         internal int GetRowProperties(
@@ -3753,12 +3335,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                rowprops = new PTS.FSTABLEROWPROPS();
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
 
@@ -3782,11 +3359,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
         internal int FInterruptFormattingTable(
@@ -3810,12 +3383,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fInterrupt = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
 
@@ -3848,13 +3416,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                urBBox = 0;
-                durBBox = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
         // unless cell has vertical text or is special in some other ways,
@@ -3896,15 +3458,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                pfmtr = new PTS.FSFMTR();
-                ppfscell = IntPtr.Zero;
-                pfsbrkcellOut = IntPtr.Zero;
-                dvrUsed = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
         internal int FormatCellBottomless(   
@@ -3940,14 +3494,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fmtrbl = default(PTS.FSFMTRBL);
-                ppfscell = IntPtr.Zero;
-                dvrUsed = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
         // unless cell has vertical text or is special in some other ways,
@@ -3986,13 +3533,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                fmtrbl = default(PTS.FSFMTRBL);
-               dvrUsed = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
 
@@ -4046,11 +3587,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
 
@@ -4082,11 +3619,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
         internal int GetCellNumberFootnotes(
@@ -4108,12 +3641,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                cFtn = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
         internal int GetCellMinColumnBalancingStep(
@@ -4135,12 +3663,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                dvrMinStep = 0;
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return (fserr);
         }
 
@@ -4162,11 +3685,7 @@ namespace MS.Internal.PtsHost
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch
-            {
-                PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
-                fserr = PTS.fserrCallbackException;
-            }
+
             return fserr;
         }
 

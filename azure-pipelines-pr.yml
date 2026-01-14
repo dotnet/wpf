@@ -16,9 +16,6 @@ pr:
     include:
     - main
     - release/* 
-    - experimental/*
-    - feature/win11theming/staging
-    - feature/win11theming/release
   paths:
     exclude:
     - Documentation/*
@@ -49,10 +46,10 @@ stages:
           # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
           ${{ if eq(variables['System.TeamProject'], 'public') }}:
             name: NetCore-Public
-            demands: ImageOverride -equals windows.vs2022.amd64.Open
+            demands: ImageOverride -equals windows.vs2022preview.scout.amd64.Open
           ${{ if eq(variables['System.TeamProject'], 'internal') }}:
             name: NetCore1ESPool-Internal
-            demands: ImageOverride -equals windows.vs2022.amd64
+            demands: ImageOverride -equals windows.vs2022preview.scout.amd64
         variables:
         - name: _Platform
           value: x86

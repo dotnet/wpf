@@ -221,7 +221,10 @@ namespace Standard
         /// <remarks>Win32Error ERROR_INVALID_PARAMETER.</remarks>
         public static readonly HRESULT E_INVALIDARG = new HRESULT(0x80070057);
         /// <summary>INTSAFE_E_ARITHMETIC_OVERFLOW</summary>
-        public static readonly HRESULT INTSAFE_E_ARITHMETIC_OVERFLOW = new HRESULT(0x80070216);   
+        public static readonly HRESULT INTSAFE_E_ARITHMETIC_OVERFLOW = new HRESULT(0x80070216);
+        /// <summary>DWM_E_COMPOSITIONDISABLED</summary>
+        /// <remarks>DWM composition is disabled.</remarks>
+        public static readonly HRESULT DWM_E_COMPOSITIONDISABLED = new HRESULT(0x80263001);
         /// <summary>COR_E_OBJECTDISPOSED</summary>
         public static readonly HRESULT COR_E_OBJECTDISPOSED = new HRESULT(0x80131622);
         /// <summary>WC_E_GREATERTHAN</summary>

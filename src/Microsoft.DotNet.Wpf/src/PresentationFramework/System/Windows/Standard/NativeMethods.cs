@@ -2523,6 +2523,14 @@ namespace Standard
             {
                 return true;
             }
+            else if(hr == HRESULT.DWM_E_COMPOSITIONDISABLED)
+            {
+                return false;
+            }
+            else
+            {
+                HRESULT.ThrowLastError();
+            }
             return false;
         }
 

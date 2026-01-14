@@ -3,7 +3,7 @@
   <PropertyGroup>
     <MajorVersion>8</MajorVersion>
     <MinorVersion>0</MinorVersion>
-    <PatchVersion>23</PatchVersion>
+    <PatchVersion>24</PatchVersion>
     <PreReleaseVersionLabel>servicing</PreReleaseVersionLabel>
     <PreReleaseVersionIteration>
     </PreReleaseVersionIteration>
@@ -49,8 +49,8 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>
-    <MicrosoftDotNetApiCompatVersion>8.0.0-beta.25515.1</MicrosoftDotNetApiCompatVersion>
-    <MicrosoftDotNetCodeAnalysisPackageVersion>8.0.0-beta.25515.1</MicrosoftDotNetCodeAnalysisPackageVersion>
+    <MicrosoftDotNetApiCompatVersion>8.0.0-beta.25611.2</MicrosoftDotNetApiCompatVersion>
+    <MicrosoftDotNetCodeAnalysisPackageVersion>8.0.0-beta.25611.2</MicrosoftDotNetCodeAnalysisPackageVersion>
   </PropertyGroup>
   <!-- Sourcelink -->
   <PropertyGroup>
@@ -98,6 +98,6 @@
     <SystemReflectionMetadataLoadContextPackage>System.Reflection.MetadataLoadContext</SystemReflectionMetadataLoadContextPackage>
   </PropertyGroup>
   <PropertyGroup>
-    <MicrosoftDotNetWpfDncEngVersion>8.0.0-rtm.25515.4</MicrosoftDotNetWpfDncEngVersion>
+    <MicrosoftDotNetWpfDncEngVersion>8.0.0-rtm.25615.6</MicrosoftDotNetWpfDncEngVersion>
   </PropertyGroup>
 </Project>

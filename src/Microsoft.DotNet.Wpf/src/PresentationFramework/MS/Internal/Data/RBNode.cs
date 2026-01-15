@@ -290,6 +290,7 @@ namespace MS.Internal.Data
             if (startingNode.LeftChild != null)
             {
                 RBFinger<T> newFinger = startingNode.LeftChild.Find(x, comparison);
+                newFinger.Index += nodeIndex - startingNode.LeftSize; // Translate from subtree index to tree index
                 if (newFinger.Offset == newFinger.Node.Size)
                     newFinger = new RBFinger<T>() { Node = newFinger.Node.GetSuccessor(), Offset = 0, Index = newFinger.Index };
                 return newFinger;

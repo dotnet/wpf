@@ -33,8 +33,8 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(WpfCppProps)" />
   <PropertyGroup>
-    <VCRedistCrtFolderName Condition="'$(Configuration)'=='Release'">Microsoft.VC143.CRT</VCRedistCrtFolderName>
-    <VCRedistCrtFolderName Condition="'$(Configuration)'=='Debug'">Microsoft.VC143.DebugCRT</VCRedistCrtFolderName>
+    <VCRedistCrtFolderName Condition="'$(Configuration)'=='Release'">Microsoft.VC145.CRT</VCRedistCrtFolderName>
+    <VCRedistCrtFolderName Condition="'$(Configuration)'=='Debug'">Microsoft.VC145.DebugCRT</VCRedistCrtFolderName>
     <!-- 
       In Release builds,  the Target assembly will be a privatized copy of VC runtime with a name like vcruntime140_cor3.dll
       In Debug builds, the Target assembly will be a privatize copy of the VC runtime with no name changes - like vcruntime140d.dll

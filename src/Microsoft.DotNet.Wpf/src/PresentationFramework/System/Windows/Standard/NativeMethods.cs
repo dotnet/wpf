@@ -2528,11 +2528,7 @@ namespace Standard
 
             // Crash containment behavior: catch and handle DWM errors gracefully.
             // Check if DWM composition is disabled and log it
-            if(hr == HRESULT.DWM_E_COMPOSITIONDISABLED)
-            {
-                return false;
-            }
-            else
+            if(hr == HRESULT.E_INVALIDARG)
             {
                 HRESULT.ThrowLastError();
             }

@@ -13,9 +13,9 @@ public class PrintStringPropertyTests
         using PrintStringProperty property = new("TestProperty");
         property.Value.Should().BeNull();
         property.Name.Should().Be("TestProperty");
-        bool disposed = property.TestAccessor().Dynamic.IsDisposed;
+        bool disposed = property.TestAccessor.Dynamic.IsDisposed;
         disposed.Should().BeFalse();
-        bool initialized = property.TestAccessor().Dynamic.IsInitialized;
+        bool initialized = property.TestAccessor.Dynamic.IsInitialized;
         initialized.Should().BeFalse();
     }
 
@@ -25,9 +25,9 @@ public class PrintStringPropertyTests
         using PrintStringProperty property = new("TestProperty", "TestValue");
         property.Value.Should().Be("TestValue");
         property.Name.Should().Be("TestProperty");
-        bool disposed = property.TestAccessor().Dynamic.IsDisposed;
+        bool disposed = property.TestAccessor.Dynamic.IsDisposed;
         disposed.Should().BeFalse();
-        bool initialized = property.TestAccessor().Dynamic.IsInitialized;
+        bool initialized = property.TestAccessor.Dynamic.IsInitialized;
         initialized.Should().BeFalse();
     }
 
@@ -43,7 +43,7 @@ public class PrintStringPropertyTests
 
         property.Value.Should().Be("TestValue");
         property.Name.Should().Be("TestProperty");
-        bool initialized = property.TestAccessor().Dynamic.IsInitialized;
+        bool initialized = property.TestAccessor.Dynamic.IsInitialized;
         initialized.Should().BeFalse();
 
         changes.Should().BeEquivalentTo(["TestValue"]);
@@ -67,9 +67,9 @@ public class PrintStringPropertyTests
         // Name and Value are set to null
         property.Value.Should().BeNull();
         property.Name.Should().BeNull();
-        bool disposed = property.TestAccessor().Dynamic.IsDisposed;
+        bool disposed = property.TestAccessor.Dynamic.IsDisposed;
         disposed.Should().BeTrue();
-        bool initialized = property.TestAccessor().Dynamic.IsInitialized;
+        bool initialized = property.TestAccessor.Dynamic.IsInitialized;
         initialized.Should().BeFalse();
     }
 
@@ -82,19 +82,19 @@ public class PrintStringPropertyTests
         property.Value = "TestValue";
         property.Value.Should().Be("TestValue");
         property.Name.Should().Be("TestProperty");
-        bool initialized = property.TestAccessor().Dynamic.IsInitialized;
+        bool initialized = property.TestAccessor.Dynamic.IsInitialized;
         initialized.Should().BeFalse();
 
         // Set to non-string does nothing
         property.Value = new object();
         property.Value.Should().Be("TestValue");
-        initialized = property.TestAccessor().Dynamic.IsInitialized;
+        initialized = property.TestAccessor.Dynamic.IsInitialized;
         initialized.Should().BeFalse();
 
         // Set to null
         property.Value = null;
         property.Value.Should().BeNull();
-        initialized = property.TestAccessor().Dynamic.IsInitialized;
+        initialized = property.TestAccessor.Dynamic.IsInitialized;
         initialized.Should().BeFalse();
     }
 
@@ -105,9 +105,9 @@ public class PrintStringPropertyTests
 
         property.Value.Should().BeNull();
         property.Name.Should().Be("TestProperty");
-        bool disposed = property.TestAccessor().Dynamic.IsDisposed;
+        bool disposed = property.TestAccessor.Dynamic.IsDisposed;
         disposed.Should().BeFalse();
-        bool initialized = property.TestAccessor().Dynamic.IsInitialized;
+        bool initialized = property.TestAccessor.Dynamic.IsInitialized;
         initialized.Should().BeFalse();
     }
 }

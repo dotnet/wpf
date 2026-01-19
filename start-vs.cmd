@@ -7,9 +7,6 @@ setlocal enabledelayedexpansion
 set DOTNET_ROOT=%~dp0.dotnet
 set DOTNET_ROOT(x86)=%~dp0.dotnet\x86
 
-:: This tells .NET Core not to go looking for .NET Core in other places
-set DOTNET_MULTILEVEL_LOOKUP=0
-
 :: Put our local dotnet.exe on PATH first so Visual Studio knows which one to use
 set PATH=%DOTNET_ROOT%;%PATH%
 

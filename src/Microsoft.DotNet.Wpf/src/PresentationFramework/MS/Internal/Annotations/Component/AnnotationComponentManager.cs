@@ -32,10 +32,7 @@ namespace MS.Internal.Annotations.Component
         {
             // Only register if a service was passed in. If no service was passed in, we will not receive events.
             // This means a client will be calling us directly.
-            if (service != null)
-            {
-                service.AttachedAnnotationChanged += new AttachedAnnotationChangedEventHandler(AttachedAnnotationUpdateEventHandler);
-            }
+            service?.AttachedAnnotationChanged += new AttachedAnnotationChangedEventHandler(AttachedAnnotationUpdateEventHandler);
         }
 
         #endregion Constructors

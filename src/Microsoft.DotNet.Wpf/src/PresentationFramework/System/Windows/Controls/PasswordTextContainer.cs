@@ -761,11 +761,7 @@ namespace System.Windows.Controls
             for (; index < _positionList.Count; index++)
             {
                 position = GetPointerAtIndex(index);
-
-                if (position != null)
-                {
-                    position.Offset += delta;
-                }
+                position?.Offset += delta;
             }
 
             DebugAssertPositionList();

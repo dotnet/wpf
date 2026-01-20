@@ -2559,10 +2559,7 @@ namespace System.Windows.Data
                                                 : (IList)(new ArrayList(size));
                 lsList = localList as LiveShapingList;
 
-                if (lsList != null)
-                {
-                    lsList.LiveShapingDirty += new EventHandler(OnLiveShapingDirty);
-                }
+                lsList?.LiveShapingDirty += new EventHandler(OnLiveShapingDirty);
 
                 // filter the collection's array into the local array
                 for (int k = 0; k < size; ++k)

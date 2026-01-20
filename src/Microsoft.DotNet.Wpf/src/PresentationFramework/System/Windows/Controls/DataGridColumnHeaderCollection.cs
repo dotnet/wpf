@@ -18,10 +18,7 @@ namespace System.Windows.Controls
         {
             _columns = columns;
 
-            if (_columns != null)
-            {
-                _columns.CollectionChanged += OnColumnsChanged;
-            }
+            _columns?.CollectionChanged += OnColumnsChanged;
         }
 
         public DataGridColumn ColumnFromIndex(int index)
@@ -61,10 +58,7 @@ namespace System.Windows.Controls
         public void Dispose()
         {
             GC.SuppressFinalize(this);
-            if (_columns != null)
-            {
-                _columns.CollectionChanged -= OnColumnsChanged;
-            }
+            _columns?.CollectionChanged -= OnColumnsChanged;
         }
 
         #endregion 
@@ -144,10 +138,7 @@ namespace System.Windows.Controls
             public void Dispose()
             {
                 GC.SuppressFinalize(this);
-                if (_columns != null)
-                {
-                    _columns.CollectionChanged -= OnColumnsChanged;
-                }
+                _columns?.CollectionChanged -= OnColumnsChanged;
             }
 
             #endregion 

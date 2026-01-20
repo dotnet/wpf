@@ -89,11 +89,8 @@ namespace System.Windows.Controls
         {
             base.OnTemplateChangedInternal(oldTemplate, newTemplate);
 
-            if (_expander != null)
-            {
-                _expander.Expanded -= new RoutedEventHandler(OnExpanded);
-                _expander = null;
-            }
+            _expander?.Expanded -= new RoutedEventHandler(OnExpanded);
+            _expander = null;
 
             _itemsHost = null;
         }

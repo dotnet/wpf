@@ -1788,10 +1788,7 @@ namespace System.Windows.Controls.Primitives
 
             // Detach scroll handler from old scroll viewer.
             // Note that this.ScrollViewer will walk the tree from current TextEditor's render scope up to its ui scope.
-            if (this.ScrollViewer != null)
-            {
-                this.ScrollViewer.ScrollChanged -= new ScrollChangedEventHandler(OnScrollChanged);
-            }
+            this.ScrollViewer?.ScrollChanged -= new ScrollChangedEventHandler(OnScrollChanged);
 
             // Invalidate our cached copy of scroll viewer.
             _scrollViewer = null;

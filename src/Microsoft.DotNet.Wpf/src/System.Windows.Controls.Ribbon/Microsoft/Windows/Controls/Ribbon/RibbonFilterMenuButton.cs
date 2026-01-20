@@ -46,11 +46,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             base.OnApplyTemplate();
 
             RibbonToggleButton filterToggleButton = this.Template.FindName(RibbonMenuButton.ToggleButtonTemplatePartName, this) as RibbonToggleButton;
-
-            if (filterToggleButton != null)
-            {
-                filterToggleButton.Loaded += new RoutedEventHandler(OnFilterToggleButtonLoaded);
-            }
+            filterToggleButton?.Loaded += new RoutedEventHandler(OnFilterToggleButtonLoaded);
         }
         
         // We must set up bindings so that the current filter, a separate RibbonMenuItem hosted in

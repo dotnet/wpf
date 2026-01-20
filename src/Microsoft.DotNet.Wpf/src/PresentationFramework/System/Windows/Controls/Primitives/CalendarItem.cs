@@ -147,20 +147,9 @@ namespace System.Windows.Controls.Primitives
         {
             base.OnApplyTemplate();
 
-            if (this._previousButton != null)
-            {
-                this._previousButton.Click -= new RoutedEventHandler(PreviousButton_Click);
-            }
-
-            if (this._nextButton != null)
-            {
-                this._nextButton.Click -= new RoutedEventHandler(NextButton_Click);
-            }
-
-            if (this._headerButton != null)
-            {
-                this._headerButton.Click -= new RoutedEventHandler(HeaderButton_Click);
-            }
+            this._previousButton?.Click -= new RoutedEventHandler(PreviousButton_Click);
+            this._nextButton?.Click -= new RoutedEventHandler(NextButton_Click);
+            this._headerButton?.Click -= new RoutedEventHandler(HeaderButton_Click);
 
             _monthView = GetTemplateChild(ElementMonthView) as Grid;
             _yearView = GetTemplateChild(ElementYearView) as Grid;
@@ -200,10 +189,7 @@ namespace System.Windows.Controls.Primitives
                 this._nextButton.Click += new RoutedEventHandler(NextButton_Click);
             }
 
-            if (this._headerButton != null)
-            {
-                this._headerButton.Click += new RoutedEventHandler(HeaderButton_Click);
-            }
+            this._headerButton?.Click += new RoutedEventHandler(HeaderButton_Click);
 
             PopulateGrids();
 

@@ -291,10 +291,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             base.OnApplyTemplate();
 
             // Cleanup the previous template elements
-            if (_popup != null)
-            {
-                _popup.Opened -= new EventHandler(this.OnPopupOpened);
-            }
+            _popup?.Opened -= new EventHandler(this.OnPopupOpened);
 
             _popup = this.GetTemplateChild(PopupTemplateName) as Popup;
             SubmenuPlaceholder = this.GetTemplateChild(SubmenuTemplateName) as FrameworkElement;
@@ -302,10 +299,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             _footerPaneHost = this.GetTemplateChild(FooterPaneTemplateName) as ContentPresenter;
             _auxiliaryPaneHost = this.GetTemplateChild(AuxiliaryPaneTemplateName) as ContentPresenter;
 
-            if (_popup != null)
-            {
-                _popup.Opened += new EventHandler(this.OnPopupOpened);
-            }
+            _popup?.Opened += new EventHandler(this.OnPopupOpened);
         }
 
         /// <summary>

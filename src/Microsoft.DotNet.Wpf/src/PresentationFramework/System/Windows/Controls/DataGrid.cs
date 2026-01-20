@@ -1898,10 +1898,7 @@ namespace System.Windows.Controls
                     DataGridRow row = _rowTrackingRoot.Container;
                     _internalScrollContentPresenter = DataGridHelper.FindVisualParent<ScrollContentPresenter>(row);
                 }
-                if (_internalScrollContentPresenter != null)
-                {
-                    _internalScrollContentPresenter.SizeChanged += new SizeChangedEventHandler(OnInternalScrollContentPresenterSizeChanged);
-                }
+                _internalScrollContentPresenter?.SizeChanged += new SizeChangedEventHandler(OnInternalScrollContentPresenterSizeChanged);
             }
 
             if (_internalScrollHost == null)
@@ -1933,11 +1930,8 @@ namespace System.Windows.Controls
         {
             BindingOperations.ClearBinding(this, HorizontalScrollOffsetProperty);
             _internalScrollHost = null;
-            if (_internalScrollContentPresenter != null)
-            {
-                _internalScrollContentPresenter.SizeChanged -= new SizeChangedEventHandler(OnInternalScrollContentPresenterSizeChanged);
-                _internalScrollContentPresenter = null;
-            }
+            _internalScrollContentPresenter?.SizeChanged -= new SizeChangedEventHandler(OnInternalScrollContentPresenterSizeChanged);
+            _internalScrollContentPresenter = null;
         }
 
         /// <summary>

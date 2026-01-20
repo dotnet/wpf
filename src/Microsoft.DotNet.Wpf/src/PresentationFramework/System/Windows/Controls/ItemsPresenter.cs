@@ -258,13 +258,9 @@ namespace System.Windows.Controls
             if (generator == _generator)
                 return;
 
-            if (_generator != null)
-                _generator.PanelChanged -= new EventHandler(OnPanelChanged);
-
+            _generator?.PanelChanged -= new EventHandler(OnPanelChanged);
             _generator = generator;
-
-            if (_generator != null)
-                _generator.PanelChanged += new EventHandler(OnPanelChanged);
+            _generator?.PanelChanged += new EventHandler(OnPanelChanged);
         }
 
         private void OnPanelChanged(object sender, EventArgs e)

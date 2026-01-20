@@ -256,10 +256,7 @@ namespace System.Windows.Annotations
                     // in Scroll mode, we need to unregister for TextViewUpdated events
                     ITextView textView = GetTextView(document);
                     // ITextView may have gone away already
-                    if (textView != null)
-                    {
-                        textView.Updated -= OnContentChanged;
-                    }
+                    textView?.Updated -= OnContentChanged;
                 }
 
                 // Unload annotations
@@ -762,10 +759,7 @@ namespace System.Windows.Annotations
                 // happens synchronously which is not true for the FDPV - we register OnPageConnected
                 // for each page there.
                 ITextView textView = GetTextView(document);
-                if (textView != null)
-                {
-                    textView.Updated += OnContentChanged;
-                }
+                textView?.Updated += OnContentChanged;
             }
 
             //if there are too many visible annotations the application will freeze if we load them
@@ -933,8 +927,7 @@ namespace System.Windows.Annotations
         {
             // Unregister for the event
             UIElement root = _root as UIElement;
-            if (root != null)
-                root.LayoutUpdated -= OnLayoutUpdated;
+            root?.LayoutUpdated -= OnLayoutUpdated;
 
             UpdateAnnotations();
         }
@@ -1697,8 +1690,7 @@ namespace System.Windows.Annotations
         private void OnContentChanged(object sender, EventArgs e)
         {
             UIElement root = _root as UIElement;
-            if (root != null)
-                root.LayoutUpdated += OnLayoutUpdated;
+            root?.LayoutUpdated += OnLayoutUpdated;
         }
 
         #endregion DocumentViewerBase handling

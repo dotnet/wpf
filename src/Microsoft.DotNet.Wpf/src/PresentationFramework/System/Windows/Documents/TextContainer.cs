@@ -2915,10 +2915,7 @@ namespace System.Windows.Documents
             //
             // Remove char count for logical break, since the element is leaving the tree.
             //
-            if (null != element.TextElementNode)
-            {
-                element.TextElementNode.IMECharCount -= imeLeftEdgeCharCount;
-            }
+            element.TextElementNode?.IMECharCount -= imeLeftEdgeCharCount;
 
             return elementText;
         }

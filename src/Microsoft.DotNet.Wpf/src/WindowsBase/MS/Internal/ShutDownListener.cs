@@ -103,10 +103,7 @@ namespace MS.Internal
             if ((_flags & PrivateFlags.DispatcherShutdown) != 0)
             {
                 Dispatcher dispatcher = (Dispatcher)_dispatcherWR.Target;
-                if (dispatcher != null)
-                {
-                    dispatcher.ShutdownFinished -= new EventHandler(HandleShutDown);
-                }
+                dispatcher?.ShutdownFinished -= new EventHandler(HandleShutDown);
                 _dispatcherWR = null;
             }
         }

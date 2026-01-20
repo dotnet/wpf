@@ -332,11 +332,8 @@ namespace MS.Internal.Documents
                 _disposed = true;
 
                 //Detach the GetPageCompleted event from the content.
-                if (_paginator != null)
-                {
-                    _paginator.GetPageCompleted -= new GetPageCompletedEventHandler(OnGetPageCompleted);
-                    _paginator = null;
-                }
+                _paginator?.GetPageCompleted -= new GetPageCompletedEventHandler(OnGetPageCompleted);
+                _paginator = null;
 
                 //Dispose our DocumentPageView.
                 IDisposable dpv = _documentPageView as IDisposable;

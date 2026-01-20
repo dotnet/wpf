@@ -82,16 +82,9 @@ namespace Microsoft.Windows.Shell
                 return;
             }
 
-            if (_chromeInfo != null)
-            {
-                _chromeInfo.PropertyChangedThatRequiresRepaint -= _OnChromePropertyChangedThatRequiresRepaint;
-            }
-
+            _chromeInfo?.PropertyChangedThatRequiresRepaint -= _OnChromePropertyChangedThatRequiresRepaint;
             _chromeInfo = newChrome;
-            if (_chromeInfo != null)
-            {
-                _chromeInfo.PropertyChangedThatRequiresRepaint += _OnChromePropertyChangedThatRequiresRepaint;
-            }
+            _chromeInfo?.PropertyChangedThatRequiresRepaint += _OnChromePropertyChangedThatRequiresRepaint;
 
             _ApplyNewCustomChrome();
         }
@@ -189,10 +182,7 @@ namespace Microsoft.Windows.Shell
         {
             UnsubscribeWindowEvents();
 
-            if (_chromeInfo != null)
-            {
-                _chromeInfo.PropertyChangedThatRequiresRepaint -= _OnChromePropertyChangedThatRequiresRepaint;
-            }
+            _chromeInfo?.PropertyChangedThatRequiresRepaint -= _OnChromePropertyChangedThatRequiresRepaint;
 
             _RestoreStandardChromeState(true);
         }

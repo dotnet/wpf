@@ -41,8 +41,7 @@ namespace MS.Internal.Data
             view.CurrentChanged += new EventHandler(_OnCurrentChanged);
 
             INotifyPropertyChanged ipc = view as INotifyPropertyChanged;
-            if (ipc != null)
-                ipc.PropertyChanged += new PropertyChangedEventHandler(_OnPropertyChanged);
+            ipc?.PropertyChanged += new PropertyChangedEventHandler(_OnPropertyChanged);
         }
 
 
@@ -364,8 +363,7 @@ namespace MS.Internal.Data
                 _view.CurrentChanged -= new EventHandler(_OnCurrentChanged);
 
                 INotifyPropertyChanged ipc = _view as INotifyPropertyChanged;
-                if (ipc != null)
-                    ipc.PropertyChanged -= new PropertyChangedEventHandler(_OnPropertyChanged);
+                ipc?.PropertyChanged -= new PropertyChangedEventHandler(_OnPropertyChanged);
 
                 _view = null;
             }

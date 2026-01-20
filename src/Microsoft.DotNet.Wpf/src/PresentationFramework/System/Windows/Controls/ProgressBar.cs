@@ -335,19 +335,13 @@ namespace System.Windows.Controls
         {
             base.OnApplyTemplate();
 
-            if (_track != null)
-            {
-                _track.SizeChanged -= OnTrackSizeChanged;
-            }
+            _track?.SizeChanged -= OnTrackSizeChanged;
 
             _track = GetTemplateChild(TrackTemplateName) as FrameworkElement;
             _indicator = GetTemplateChild(IndicatorTemplateName) as FrameworkElement;
             _glow = GetTemplateChild(GlowingRectTemplateName) as FrameworkElement;
             
-            if (_track != null)
-            {
-                _track.SizeChanged += OnTrackSizeChanged;
-            }
+            _track?.SizeChanged += OnTrackSizeChanged;
 
             if (this.IsIndeterminate)
                 SetProgressBarGlowElementBrush();

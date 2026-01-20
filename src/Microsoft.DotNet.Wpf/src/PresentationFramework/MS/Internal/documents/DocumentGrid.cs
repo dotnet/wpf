@@ -676,10 +676,7 @@ namespace MS.Internal.Documents
                     _textContainer = null;
 
                     //Remove our old events from the content
-                    if (_pageCache.Content != null)
-                    {
-                        _pageCache.Content.GetPageNumberCompleted -= new GetPageNumberCompletedEventHandler(OnGetPageNumberCompleted);
-                    }
+                    _pageCache.Content?.GetPageNumberCompleted -= new GetPageNumberCompletedEventHandler(OnGetPageNumberCompleted);
 
                     //Remove our ScrollChanged events from our ScrollViewer
                     if (ScrollOwner != null)
@@ -691,11 +688,8 @@ namespace MS.Internal.Documents
                     //Assign the new content
                     _pageCache.Content = value;
 
-                    if (_pageCache.Content != null)
-                    {
-                        //Add our new events to the content
-                        _pageCache.Content.GetPageNumberCompleted += new GetPageNumberCompletedEventHandler(OnGetPageNumberCompleted);
-                    }
+                    //Add our new events to the content
+                    _pageCache.Content?.GetPageNumberCompleted += new GetPageNumberCompletedEventHandler(OnGetPageNumberCompleted);
 
                     //Clear out our visual collection so that the old pages (pointing to old content)
                     //will be replaced with new ones on the next Measure/Arrange pass.

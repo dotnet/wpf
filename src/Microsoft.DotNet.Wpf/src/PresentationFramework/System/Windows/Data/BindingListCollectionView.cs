@@ -1436,8 +1436,7 @@ namespace System.Windows.Data
             _cachedList = new ArrayList(InternalList);
             LiveShapingList lsList = _shadowList as LiveShapingList;
 
-            if (lsList != null)
-                lsList.LiveShapingDirty -= new EventHandler(OnLiveShapingDirty);
+            lsList?.LiveShapingDirty -= new EventHandler(OnLiveShapingDirty);
 
             if (_isGrouping && IsLiveGrouping == true)
             {

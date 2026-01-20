@@ -162,16 +162,10 @@ namespace System.Windows.Media.Effects
         private void PixelShaderPropertyChangedHook(DependencyPropertyChangedEventArgs e)
         {
             PixelShader oldShader = (PixelShader)e.OldValue;
-            if (oldShader != null)
-            {
-                oldShader._shaderBytecodeChanged -= OnPixelShaderBytecodeChanged;
-            }
+            oldShader?._shaderBytecodeChanged -= OnPixelShaderBytecodeChanged;
 
             PixelShader newShader = (PixelShader)e.NewValue;
-            if (newShader != null)
-            {
-                newShader._shaderBytecodeChanged += OnPixelShaderBytecodeChanged;
-            }
+            newShader?._shaderBytecodeChanged += OnPixelShaderBytecodeChanged;
 
             OnPixelShaderBytecodeChanged(PixelShader, null);
         }

@@ -2249,10 +2249,7 @@ namespace System.Windows.Navigation
                 else
                 {
                     FrameworkElement fe = _bp as FrameworkElement;
-                    if (fe != null)
-                    {
-                        fe.Loaded += OnContentLoaded;
-                    }
+                    fe?.Loaded += OnContentLoaded;
                 }
                 // ContentRendered handling will be canceled in the Loaded handler.
                 _cancelContentRenderedHandling = false;
@@ -3466,10 +3463,7 @@ namespace System.Windows.Navigation
                     iie?.RemoveHandler(Hyperlink.RequestNavigateEvent, navHandler);
 
                     IDownloader oldDownloader = _navigatorHost as IDownloader;
-                    if (oldDownloader != null)
-                    {
-                        oldDownloader.ContentRendered -= new EventHandler(ContentRenderedHandler);
-                    }
+                    oldDownloader?.ContentRendered -= new EventHandler(ContentRenderedHandler);
                 }
 
                 if (value != null)
@@ -3480,10 +3474,7 @@ namespace System.Windows.Navigation
                     // We want to listen to ContentRendered of the INavigatorHost so
                     // that we can scroll into view the correct element if needed
                     IDownloader newDownloader = value as IDownloader;
-                    if (newDownloader != null)
-                    {
-                        newDownloader.ContentRendered += new EventHandler(ContentRenderedHandler);
-                    }
+                    newDownloader?.ContentRendered += new EventHandler(ContentRenderedHandler);
                 }
 
                 _navigatorHost = value;

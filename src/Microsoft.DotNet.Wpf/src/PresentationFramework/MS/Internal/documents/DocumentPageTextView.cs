@@ -47,10 +47,7 @@ namespace MS.Internal.Documents
             {
                 _pageTextView = ((IServiceProvider)_page).GetService(typeof(ITextView)) as ITextView;
             }
-            if (_pageTextView != null)
-            {
-                _pageTextView.Updated += new EventHandler(HandlePageTextViewUpdated);
-            }
+            _pageTextView?.Updated += new EventHandler(HandlePageTextViewUpdated);
         }
 
         /// <summary>
@@ -73,10 +70,7 @@ namespace MS.Internal.Documents
             {
                 _pageTextView = ((IServiceProvider)_page).GetService(typeof(ITextView)) as ITextView;
             }
-            if (_pageTextView != null)
-            {
-                _pageTextView.Updated += new EventHandler(HandlePageTextViewUpdated);
-            }
+            _pageTextView?.Updated += new EventHandler(HandlePageTextViewUpdated);
         }
 
         #endregion Constructors
@@ -353,10 +347,9 @@ namespace MS.Internal.Documents
             {
                 _pageTextView = ((IServiceProvider)_page).GetService(typeof(ITextView)) as ITextView;
             }
-            if (_pageTextView != null)
-            {
-                _pageTextView.Updated += new EventHandler(HandlePageTextViewUpdated);
-            }
+
+            _pageTextView?.Updated += new EventHandler(HandlePageTextViewUpdated);
+
             if (IsValid)
             {
                 OnUpdated(EventArgs.Empty);
@@ -368,10 +361,7 @@ namespace MS.Internal.Documents
         /// </summary>
         internal void OnPageDisconnected()
         {
-            if (_pageTextView != null)
-            {
-                _pageTextView.Updated -= new EventHandler(HandlePageTextViewUpdated);
-            }
+            _pageTextView?.Updated -= new EventHandler(HandlePageTextViewUpdated);
             _pageTextView = null;
             _page = null;
         }

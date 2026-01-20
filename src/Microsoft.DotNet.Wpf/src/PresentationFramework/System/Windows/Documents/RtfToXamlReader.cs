@@ -7458,10 +7458,7 @@ namespace System.Windows.Documents
                         if (cf.IsVMerge)
                         {
                             DocumentNode dnSpanningCell = dnaSpanCells.EntryAt(kCSA);
-                            if (dnSpanningCell != null)
-                            {
-                                dnSpanningCell.RowSpan += 1;
-                            }
+                            dnSpanningCell?.RowSpan += 1;
                             kCSA += dnCell.ColSpan;
                             dnCell.ColSpan = 0;
                         }

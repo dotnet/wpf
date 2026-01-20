@@ -2705,10 +2705,7 @@ namespace System.Windows.Interop
 
             public void Dispose()
             {
-                if(null != _that)
-                {
-                    _that.ShutdownFinished-= new EventHandler(this.OnShutdownFinished);
-                }
+                _that?.ShutdownFinished-= new EventHandler(this.OnShutdownFinished);
             }
 
             private Dispatcher _that;

@@ -489,16 +489,10 @@ namespace System.Windows.Controls
             if (_oldDocument != null)
             {
                 DynamicDocumentPaginator dynamicDocumentPaginator = _oldDocument.DocumentPaginator as DynamicDocumentPaginator;
-                if (dynamicDocumentPaginator != null)
-                {
-                    dynamicDocumentPaginator.GetPageNumberCompleted -= new GetPageNumberCompletedEventHandler(HandleGetPageNumberCompleted);
-                }
+                dynamicDocumentPaginator?.GetPageNumberCompleted -= new GetPageNumberCompletedEventHandler(HandleGetPageNumberCompleted);
 
                 FlowDocumentPaginator flowDocumentPaginator = _oldDocument.DocumentPaginator as FlowDocumentPaginator;
-                if (flowDocumentPaginator != null)
-                {
-                    flowDocumentPaginator.BreakRecordTableInvalidated -= new BreakRecordTableInvalidatedEventHandler(HandleAllBreakRecordsInvalidated);
-                }
+                flowDocumentPaginator?.BreakRecordTableInvalidated -= new BreakRecordTableInvalidatedEventHandler(HandleAllBreakRecordsInvalidated);
             }
 
             base.OnDocumentChanged();
@@ -516,16 +510,10 @@ namespace System.Windows.Controls
             if(Document != null)
             {
                 DynamicDocumentPaginator dynamicDocumentPaginator = Document.DocumentPaginator as DynamicDocumentPaginator;
-                if (dynamicDocumentPaginator != null)
-                {
-                    dynamicDocumentPaginator.GetPageNumberCompleted += new GetPageNumberCompletedEventHandler(HandleGetPageNumberCompleted);
-                }
+                dynamicDocumentPaginator?.GetPageNumberCompleted += new GetPageNumberCompletedEventHandler(HandleGetPageNumberCompleted);
 
                 FlowDocumentPaginator flowDocumentPaginator = Document.DocumentPaginator as FlowDocumentPaginator;
-                if (flowDocumentPaginator != null)
-                {
-                    flowDocumentPaginator.BreakRecordTableInvalidated += new BreakRecordTableInvalidatedEventHandler(HandleAllBreakRecordsInvalidated);
-                }
+                flowDocumentPaginator?.BreakRecordTableInvalidated += new BreakRecordTableInvalidatedEventHandler(HandleAllBreakRecordsInvalidated);
             }
 
             // Update the toolbar with our current document state.

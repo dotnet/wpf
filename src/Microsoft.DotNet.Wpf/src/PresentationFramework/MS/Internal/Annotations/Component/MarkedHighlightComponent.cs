@@ -607,10 +607,7 @@ namespace MS.Internal.Annotations.Component
                 _selection.Changed += componentsRegister.SelectionHandler;
 
                 //register with the container's mousemove event
-                if (_uiParent != null)
-                {
-                    _uiParent.MouseMove += componentsRegister.MouseMoveHandler;
-                }
+                _uiParent?.MouseMove += componentsRegister.MouseMoveHandler;
             }
 
             componentsRegister.Add(this);
@@ -630,10 +627,7 @@ namespace MS.Internal.Annotations.Component
             {
                 _documentHandlers.Remove(_selection);
                 _selection.Changed -= componentsRegister.SelectionHandler;
-                if (_uiParent != null)
-                {
-                    _uiParent.MouseMove -= componentsRegister.MouseMoveHandler;
-                }
+                _uiParent?.MouseMove -= componentsRegister.MouseMoveHandler;
             }
         }
 

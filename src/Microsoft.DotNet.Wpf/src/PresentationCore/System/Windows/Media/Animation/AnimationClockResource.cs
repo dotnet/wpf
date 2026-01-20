@@ -34,11 +34,7 @@ namespace System.Windows.Media.Animation
         protected AnimationClockResource(AnimationClock animationClock)
         {
             _animationClock = animationClock;
-
-            if (_animationClock != null)
-            {
-                _animationClock.CurrentTimeInvalidated += new EventHandler(OnChanged);
-            }
+            _animationClock?.CurrentTimeInvalidated += new EventHandler(OnChanged);
         }
 
         #region Public Properties

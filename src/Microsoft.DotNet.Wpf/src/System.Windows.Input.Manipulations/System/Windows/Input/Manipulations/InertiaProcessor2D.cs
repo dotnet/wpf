@@ -414,11 +414,8 @@ namespace System.Windows.Input.Manipulations
 
             if (!object.ReferenceEquals(newBehavior, currentBehavior))
             {
-                if (currentBehavior != null)
-                {
-                    currentBehavior.Changed -= handler;
-                    currentBehavior = null;
-                }
+                currentBehavior?.Changed -= handler;
+                currentBehavior = null;
                 Reset();
                 if (newBehavior != null)
                 {

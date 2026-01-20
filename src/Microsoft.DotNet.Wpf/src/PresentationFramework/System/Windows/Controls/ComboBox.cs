@@ -863,11 +863,8 @@ namespace System.Windows.Controls
                 stringFormat = contentControl.ContentStringFormat;
             }
 
-            if (_clonedElement != null)
-            {
-                _clonedElement.LayoutUpdated -= CloneLayoutUpdated;
-                _clonedElement = null;
-            }
+            _clonedElement?.LayoutUpdated -= CloneLayoutUpdated;
+            _clonedElement = null;
 
             if (itemTemplate == null && ItemTemplateSelector == null && stringFormat == null)
             {
@@ -1616,10 +1613,7 @@ namespace System.Windows.Controls
         {
             base.OnApplyTemplate();
 
-            if (_dropDownPopup != null)
-            {
-                _dropDownPopup.Closed -= OnPopupClosed;
-            }
+            _dropDownPopup?.Closed -= OnPopupClosed;
 
             EditableTextBoxSite = GetTemplateChild(EditableTextBoxTemplateName) as TextBox;
             _dropDownPopup = GetTemplateChild(PopupTemplateName) as Popup;
@@ -1632,10 +1626,7 @@ namespace System.Windows.Controls
                 EditableTextBoxSite.PreviewTextInput += new TextCompositionEventHandler(OnEditableTextBoxPreviewTextInput);
             }
 
-            if (_dropDownPopup != null)
-            {
-                _dropDownPopup.Closed += OnPopupClosed;
-            }
+            _dropDownPopup?.Closed += OnPopupClosed;
 
             Update();
         }

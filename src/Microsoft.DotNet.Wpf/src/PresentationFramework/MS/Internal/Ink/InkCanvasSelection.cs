@@ -609,10 +609,7 @@ namespace MS.Internal.Ink
         /// </summary>
         private void QuitListeningToStrokeChanges()
         {
-            if ( _inkCanvas.Strokes != null )
-            {
-                _inkCanvas.Strokes.StrokesChanged -= new StrokeCollectionChangedEventHandler(this.OnStrokeCollectionChanged);
-            }
+            _inkCanvas.Strokes?.StrokesChanged -= new StrokeCollectionChangedEventHandler(this.OnStrokeCollectionChanged);
 
             foreach ( Stroke s in SelectedStrokes )
             {
@@ -625,10 +622,7 @@ namespace MS.Internal.Ink
         /// </summary>
         private void ListenToStrokeChanges()
         {
-            if ( _inkCanvas.Strokes != null )
-            {
-                _inkCanvas.Strokes.StrokesChanged += new StrokeCollectionChangedEventHandler(this.OnStrokeCollectionChanged);
-            }
+            _inkCanvas.Strokes?.StrokesChanged += new StrokeCollectionChangedEventHandler(this.OnStrokeCollectionChanged);
 
             foreach ( Stroke s in SelectedStrokes )
             {

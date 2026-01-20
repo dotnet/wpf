@@ -588,12 +588,9 @@ namespace System.Windows.Data
                 (ValidatesOnDataTransfer || ValidatesOnNotifyDataError))
             {
                 UIElement layoutElement = Helper.FindMentor(this) as UIElement;
-                if (layoutElement != null)
-                {
-                    // do the validation at the end of the current layout pass, to allow
-                    // bindings to join the group
-                    layoutElement.LayoutUpdated += new EventHandler(OnLayoutUpdated);
-                }
+                // do the validation at the end of the current layout pass, to allow
+                // bindings to join the group
+                layoutElement?.LayoutUpdated += new EventHandler(OnLayoutUpdated);
             }
 
             // sharing a BindingGroup among multiple hosts is bad - we wouldn't know which host
@@ -902,10 +899,7 @@ namespace System.Windows.Data
 
             // only do this once
             UIElement layoutElement = mentor as UIElement;
-            if (layoutElement != null)
-            {
-                layoutElement.LayoutUpdated -= new EventHandler(OnLayoutUpdated);
-            }
+            layoutElement?.LayoutUpdated -= new EventHandler(OnLayoutUpdated);
 
             // do the validation every time the DataContext changes
             FrameworkElement fe;
@@ -915,9 +909,9 @@ namespace System.Windows.Data
             {
                 fe.DataContextChanged += new DependencyPropertyChangedEventHandler(OnDataContextChanged);
             }
-            else if (fce != null)
+            else
             {
-                fce.DataContextChanged += new DependencyPropertyChangedEventHandler(OnDataContextChanged);
+                fce?.DataContextChanged += new DependencyPropertyChangedEventHandler(OnDataContextChanged);
             }
 
             // do the initial validation

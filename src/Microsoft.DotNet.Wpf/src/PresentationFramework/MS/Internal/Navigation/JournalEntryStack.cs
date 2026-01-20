@@ -154,10 +154,7 @@ namespace System.Windows.Navigation
         {
             _ieble = ieble;
             INotifyCollectionChanged ichildnotify = ieble as INotifyCollectionChanged;
-            if (ichildnotify != null)
-            {
-                ichildnotify.CollectionChanged += new NotifyCollectionChangedEventHandler(PropogateCollectionChanged);
-            }
+            ichildnotify?.CollectionChanged += new NotifyCollectionChangedEventHandler(PropogateCollectionChanged);
         }
 
         public IEnumerator GetEnumerator()

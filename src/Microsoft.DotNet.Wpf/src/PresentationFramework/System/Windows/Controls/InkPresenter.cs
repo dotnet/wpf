@@ -449,11 +449,9 @@ namespace System.Windows.Controls
             Debug.Assert(newStrokes != null, "Cannot set a null to InkPresenter");
 
             // Remove the event handlers from the old stroke collection
-            if ( null != oldStrokes )
-            {
-                // Stop listening on events from the stroke collection.
-                oldStrokes.StrokesChanged -= new StrokeCollectionChangedEventHandler(OnStrokesChanged);
-            }
+
+            // Stop listening on events from the stroke collection.
+            oldStrokes?.StrokesChanged -= new StrokeCollectionChangedEventHandler(OnStrokesChanged);
 
             // Start listening on events from the stroke collection.
             newStrokes.StrokesChanged += new StrokeCollectionChangedEventHandler(OnStrokesChanged);

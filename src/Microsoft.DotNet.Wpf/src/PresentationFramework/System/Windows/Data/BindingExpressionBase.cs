@@ -922,10 +922,7 @@ namespace System.Windows.Data
             if (dp == System.Windows.Controls.TextBox.TextProperty && IsReflective && !IsInBindingExpressionCollection)
             {
                 System.Windows.Controls.Primitives.TextBoxBase tbb = target as System.Windows.Controls.Primitives.TextBoxBase;
-                if (tbb != null)
-                {
-                    tbb.PreviewTextInput += OnPreviewTextInput;
-                }
+                tbb?.PreviewTextInput += OnPreviewTextInput;
             }
 
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Attach))
@@ -953,10 +950,7 @@ namespace System.Windows.Data
             if (TargetProperty == System.Windows.Controls.TextBox.TextProperty && IsReflective && !IsInBindingExpressionCollection)
             {
                 System.Windows.Controls.Primitives.TextBoxBase tbb = TargetElement as System.Windows.Controls.Primitives.TextBoxBase;
-                if (tbb != null)
-                {
-                    tbb.PreviewTextInput -= OnPreviewTextInput;
-                }
+                tbb?.PreviewTextInput -= OnPreviewTextInput;
             }
 
             _engine = null;

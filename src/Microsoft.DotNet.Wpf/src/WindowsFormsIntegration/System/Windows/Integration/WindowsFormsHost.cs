@@ -339,15 +339,8 @@ namespace System.Windows.Forms.Integration
 
         private void OnChildChanged(Control oldChild)
         {
-            if (oldChild != null)
-            {
-                oldChild.GotFocus -= new EventHandler(this.OnChildGotFocus);
-            }
-
-            if (this.Child != null)
-            {
-                this.Child.GotFocus += new EventHandler(this.OnChildGotFocus);
-            }
+            oldChild?.GotFocus -= new EventHandler(this.OnChildGotFocus);
+            this.Child?.GotFocus += new EventHandler(this.OnChildGotFocus);
 
             if (ChildChanged != null)
             {

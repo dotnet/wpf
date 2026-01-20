@@ -1099,10 +1099,8 @@ namespace System.Windows.Controls
         {
             PasswordBox passwordBox = (PasswordBox)o;
             NavigationService navService = NavigationService.GetNavigationService(o);
-            if (passwordBox._navigationService != null)
-            {
-                passwordBox._navigationService.Navigating -= new NavigatingCancelEventHandler(passwordBox.OnNavigating);
-            }
+            passwordBox._navigationService?.Navigating -= new NavigatingCancelEventHandler(passwordBox.OnNavigating);
+
             if (navService != null)
             {
                 navService.Navigating += new NavigatingCancelEventHandler(passwordBox.OnNavigating);

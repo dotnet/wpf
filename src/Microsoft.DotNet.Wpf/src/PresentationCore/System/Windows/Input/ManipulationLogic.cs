@@ -605,19 +605,13 @@ namespace System.Windows.Input
         private void SubscribeToLayoutUpdated()
         {
             UIElement container = _currentContainer as UIElement;
-            if (container != null)
-            {
-                container.LayoutUpdated += OnLayoutUpdated;
-            }
+            container?.LayoutUpdated += OnLayoutUpdated;
         }
 
         private void UnsubscribeFromLayoutUpdated()
         {
             UIElement container = _currentContainer as UIElement;
-            if (container != null)
-            {
-                container.LayoutUpdated -= OnLayoutUpdated;
-            }
+            container?.LayoutUpdated -= OnLayoutUpdated;
         }
 
         /// <summary>

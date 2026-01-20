@@ -655,14 +655,8 @@ namespace System.Windows
 
             if (!e.IsASubPropertyChange)
             {
-                if (oldBar != null)
-                {
-                    oldBar.PropertyChanged -= OnTaskbarItemInfoSubPropertyChanged;
-                }
-                if (newBar != null)
-                {
-                    newBar.PropertyChanged += OnTaskbarItemInfoSubPropertyChanged;
-                }
+                oldBar?.PropertyChanged -= OnTaskbarItemInfoSubPropertyChanged;
+                newBar?.PropertyChanged += OnTaskbarItemInfoSubPropertyChanged;
                 ApplyTaskbarItemInfo();
             }
         }
@@ -6903,10 +6897,7 @@ namespace System.Windows
                     HwndSource source = _swh.HwndSourceWindow;
                     _swh = null;
 
-                    if (source != null)
-                    {
-                        source.SizeToContentChanged -= new EventHandler(OnSourceSizeToContentChanged);
-                    }
+                    source?.SizeToContentChanged -= new EventHandler(OnSourceSizeToContentChanged);
                 }
             }
         }
@@ -7610,18 +7601,12 @@ namespace System.Windows
 
                 internal void AddDisposedHandler( EventHandler theHandler )
                 {
-                    if (_sourceWindow != null)
-                    {
-                        _sourceWindow.Disposed += theHandler;
-                    }
+                    _sourceWindow?.Disposed += theHandler;
                 }
 
                 internal void RemoveDisposedHandler( EventHandler theHandler )
                 {
-                    if (_sourceWindow != null)
-                    {
-                        _sourceWindow.Disposed -= theHandler;
-                    }
+                    _sourceWindow?.Disposed -= theHandler;
                 }
 
                 /// <summary>

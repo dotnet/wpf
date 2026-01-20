@@ -148,14 +148,11 @@ namespace System.Windows
                     {
                         Visual3D parentAsVisual3D = parent as Visual3D;
 
-                        if (parentAsVisual3D != null)
-                        {
-                            // We are being plugged into a non-UIElement visual. This
-                            // means that our parent doesn't play by the same rules we
-                            // do, so we need to track changes to our ancestors in
-                            // order to bridge the gap.
-                            parentAsVisual3D.VisualAncestorChanged += new Visual.AncestorChangedEventHandler(OnVisualAncestorChanged_ForceInherit);
-                        }
+                        // We are being plugged into a non-UIElement visual. This
+                        // means that our parent doesn't play by the same rules we
+                        // do, so we need to track changes to our ancestors in
+                        // order to bridge the gap.
+                        parentAsVisual3D?.VisualAncestorChanged += new Visual.AncestorChangedEventHandler(OnVisualAncestorChanged_ForceInherit);
                     }
 
                     // find a UIElement(3D) ancestor to use for coersion

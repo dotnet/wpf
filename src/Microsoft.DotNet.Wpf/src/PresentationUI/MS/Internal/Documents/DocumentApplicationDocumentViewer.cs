@@ -954,12 +954,8 @@ namespace MS.Internal.Documents
                 if (_infoBarCloseButton == null)
                 {
                     // Setup InfoBar Close Button
-                    _infoBarCloseButton = GetTemplateChild(_infoBarCloseButtonName)
-                            as Button;
-                    if (_infoBarCloseButton != null)
-                    {
-                        _infoBarCloseButton.Click += OnInfoBarCloseClicked;
-                    }
+                    _infoBarCloseButton = GetTemplateChild(_infoBarCloseButtonName) as Button;
+                    _infoBarCloseButton?.Click += OnInfoBarCloseClicked;
                 }
                 return _infoBarCloseButton;
             }

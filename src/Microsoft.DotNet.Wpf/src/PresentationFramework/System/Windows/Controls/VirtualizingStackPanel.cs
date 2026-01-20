@@ -12302,10 +12302,7 @@ namespace System.Windows.Controls
             private static void OnApplicationExit(object sender, ExitEventArgs e)
             {
                 Application app = sender as Application;
-                if (app != null)
-                {
-                    app.Exit -= OnApplicationExit;   // avoid re-entrancy
-                }
+                app?.Exit -= OnApplicationExit;   // avoid re-entrancy
 
                 CloseAllTraceLists();
             }
@@ -12314,10 +12311,7 @@ namespace System.Windows.Controls
             private static void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
             {
                 Application app = sender as Application;
-                if (app != null)
-                {
-                    app.DispatcherUnhandledException -= OnUnhandledException;   // avoid re-entrancy
-                }
+                app?.DispatcherUnhandledException -= OnUnhandledException;   // avoid re-entrancy
 
                 CloseAllTraceLists();
             }

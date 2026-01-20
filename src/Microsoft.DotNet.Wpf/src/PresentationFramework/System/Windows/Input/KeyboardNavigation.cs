@@ -2759,10 +2759,7 @@ namespace System.Windows.Input
         {
             UIElement uiElement = sender as UIElement;
             // Disconnect the layout listener.
-            if (uiElement != null)
-            {
-                uiElement.LayoutUpdated -= new EventHandler(OnLayoutUpdated);
-            }
+            uiElement?.LayoutUpdated -= new EventHandler(OnLayoutUpdated);
 
             _verticalBaseline = BASELINE_DEFAULT;
             _horizontalBaseline = BASELINE_DEFAULT;

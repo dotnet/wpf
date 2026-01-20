@@ -480,15 +480,9 @@ namespace System.Windows
         // set new parameter collection; update collection change notification handler
         private void SetPathParameterCollection(PathParameterCollection parameters)
         {
-            if (_parameters != null)
-            {
-                _parameters.CollectionChanged -= new NotifyCollectionChangedEventHandler(ParameterCollectionChanged);
-            }
+            _parameters?.CollectionChanged -= new NotifyCollectionChangedEventHandler(ParameterCollectionChanged);
             _parameters = parameters;
-            if (_parameters != null)
-            {
-                _parameters.CollectionChanged += new NotifyCollectionChangedEventHandler(ParameterCollectionChanged);
-            }
+            _parameters?.CollectionChanged += new NotifyCollectionChangedEventHandler(ParameterCollectionChanged);
         }
 
         // path parameters were added/removed, update SourceValueInfo

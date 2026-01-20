@@ -901,14 +901,8 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal void NotifyTabHeadersScrollOwnerChanged(ScrollViewer oldScrollViewer, ScrollViewer newScrollViewer)
         {
-            if (oldScrollViewer != null )
-            {
-                oldScrollViewer.ScrollChanged -= new ScrollChangedEventHandler(OnTabHeadersScrollChanged);
-            }
-            if (newScrollViewer != null)
-            {
-                newScrollViewer.ScrollChanged += new ScrollChangedEventHandler(OnTabHeadersScrollChanged);
-            }
+            oldScrollViewer?.ScrollChanged -= new ScrollChangedEventHandler(OnTabHeadersScrollChanged);
+            newScrollViewer?.ScrollChanged += new ScrollChangedEventHandler(OnTabHeadersScrollChanged);
         }
 
         private void OnTabHeadersScrollChanged(object d, ScrollChangedEventArgs e)

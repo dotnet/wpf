@@ -104,8 +104,8 @@ namespace System.Windows
 
             if (fe != null)
                 fe.LostFocus += new RoutedEventHandler(OnLostFocus);
-            else if (fce != null)
-                fce.LostFocus += new RoutedEventHandler(OnLostFocus);
+            else
+                fce?.LostFocus += new RoutedEventHandler(OnLostFocus);
         }
 
         /// <summary>
@@ -120,8 +120,8 @@ namespace System.Windows
 
             if (fe != null)
                 fe.LostFocus -= new RoutedEventHandler(OnLostFocus);
-            else if (fce != null)
-                fce.LostFocus -= new RoutedEventHandler(OnLostFocus);
+            else
+                fce?.LostFocus -= new RoutedEventHandler(OnLostFocus);
         }
 
         #endregion Protected Methods

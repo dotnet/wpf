@@ -45,15 +45,8 @@ namespace System.Windows.Documents
                 NavigationService oldService = (NavigationService) e.OldValue;
                 NavigationService newService = (NavigationService) e.NewValue;
 
-                if (oldService != null)
-                {
-                    oldService.FragmentNavigation -= new FragmentNavigationEventHandler(FragmentHandler);
-                }
-
-                if (newService != null)
-                {
-                    newService.FragmentNavigation += new FragmentNavigationEventHandler(FragmentHandler);
-                }
+                oldService?.FragmentNavigation -= new FragmentNavigationEventHandler(FragmentHandler);
+                newService?.FragmentNavigation += new FragmentNavigationEventHandler(FragmentHandler);
             }
         }
 

@@ -52,16 +52,9 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             base.OnApplyTemplate();
 
-            if (_headerButton != null)
-            {
-                _headerButton.Click -= new RoutedEventHandler(OnHeaderClicked);
-            }
+            _headerButton?.Click -= new RoutedEventHandler(OnHeaderClicked);
             _headerButton = GetTemplateChild(RibbonSplitButton.HeaderButtonTemplatePartName) as ButtonBase;
-
-            if (_headerButton != null)
-            {
-                _headerButton.Click += new RoutedEventHandler(OnHeaderClicked);
-            }
+            _headerButton?.Click += new RoutedEventHandler(OnHeaderClicked);
 
             // Set BorderThickess on TemplateParts
             SetBorderThickess();

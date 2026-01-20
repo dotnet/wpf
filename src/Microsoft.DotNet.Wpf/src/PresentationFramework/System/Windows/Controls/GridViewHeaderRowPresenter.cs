@@ -1004,14 +1004,8 @@ namespace System.Windows.Controls
             _headerSV = Parent as ScrollViewer;
             if (oldHeaderSV != _headerSV)
             {
-                if (oldHeaderSV != null)
-                {
-                    oldHeaderSV.ScrollChanged -= new ScrollChangedEventHandler(OnHeaderScrollChanged);
-                }
-                if (_headerSV != null)
-                {
-                    _headerSV.ScrollChanged += new ScrollChangedEventHandler(OnHeaderScrollChanged);
-                }
+                oldHeaderSV?.ScrollChanged -= new ScrollChangedEventHandler(OnHeaderScrollChanged);
+                _headerSV?.ScrollChanged += new ScrollChangedEventHandler(OnHeaderScrollChanged);
             }
 
             ScrollViewer oldSV = _mainSV; // backup the old value
@@ -1019,15 +1013,8 @@ namespace System.Windows.Controls
 
             if (oldSV != _mainSV)
             {
-                if (oldSV != null)
-                {
-                    oldSV.ScrollChanged -= new ScrollChangedEventHandler(OnMasterScrollChanged);
-                }
-
-                if (_mainSV != null)
-                {
-                    _mainSV.ScrollChanged += new ScrollChangedEventHandler(OnMasterScrollChanged);
-                }
+                oldSV?.ScrollChanged -= new ScrollChangedEventHandler(OnMasterScrollChanged);
+                _mainSV?.ScrollChanged += new ScrollChangedEventHandler(OnMasterScrollChanged);
             }
 
             // hook up key down event from ItemsControl,
@@ -1037,20 +1024,11 @@ namespace System.Windows.Controls
 
             if (oldIC != _itemsControl)
             {
-                if (oldIC != null)
-                {
-                    // NOTE: headers have unhooked the KeyDown event in RemoveHeader.
+                // NOTE: headers have unhooked the KeyDown event in RemoveHeader.
+                oldIC?.KeyDown -= new KeyEventHandler(OnColumnHeadersPresenterKeyDown);
 
-                    oldIC.KeyDown -= new KeyEventHandler(OnColumnHeadersPresenterKeyDown);
-                }
-
-                if (_itemsControl != null)
-                {
-                    // register to HeadersPresenter to cancel dragging
-                    _itemsControl.KeyDown += new KeyEventHandler(OnColumnHeadersPresenterKeyDown);
-
-                    // NOTE: headers will hookup the KeyDown event latter in CreateAndInsertHeader.
-                }
+                // register to HeadersPresenter to cancel dragging
+                _itemsControl?.KeyDown += new KeyEventHandler(OnColumnHeadersPresenterKeyDown);
             }
 
             //Set GridViewHeaderRowPresenter to ListView
@@ -1064,19 +1042,13 @@ namespace System.Windows.Controls
         private void UnhookItemsControlKeyboardEvent(GridViewColumnHeader header)
         {
             Debug.Assert(header != null);
-            if (_itemsControl != null)
-            {
-                _itemsControl.KeyDown -= new KeyEventHandler(header.OnColumnHeaderKeyDown);
-            }
+            _itemsControl?.KeyDown -= new KeyEventHandler(header.OnColumnHeaderKeyDown);
         }
 
         private void HookupItemsControlKeyboardEvent(GridViewColumnHeader header)
         {
             Debug.Assert(header != null);
-            if (_itemsControl != null)
-            {
-                _itemsControl.KeyDown += new KeyEventHandler(header.OnColumnHeaderKeyDown);
-            }
+            _itemsControl?.KeyDown += new KeyEventHandler(header.OnColumnHeaderKeyDown);
         }
 
         // The following two scroll changed methods will not be called recursively and lead to dead loop.

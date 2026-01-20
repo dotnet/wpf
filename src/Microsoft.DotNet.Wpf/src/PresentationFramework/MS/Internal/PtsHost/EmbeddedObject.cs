@@ -154,10 +154,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal override void Dispose()
         {
-            if (_uiElementIsland != null)
-            {
-                _uiElementIsland.DesiredSizeChanged -= new DesiredSizeChangedEventHandler(_para.OnUIElementDesiredSizeChanged);
-            }
+            _uiElementIsland?.DesiredSizeChanged -= new DesiredSizeChangedEventHandler(_para.OnUIElementDesiredSizeChanged);
             base.Dispose();
         }
 

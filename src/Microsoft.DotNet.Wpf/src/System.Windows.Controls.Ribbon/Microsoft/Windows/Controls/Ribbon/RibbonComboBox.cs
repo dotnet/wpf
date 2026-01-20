@@ -521,11 +521,8 @@ namespace Microsoft.Windows.Controls.Ribbon
                 stringFormat = contentControl.ContentStringFormat;
             }
 
-            if (_clonedElement != null)
-            {
-                _clonedElement.LayoutUpdated -= CloneLayoutUpdated;
-                _clonedElement = null;
-            }
+            _clonedElement?.LayoutUpdated -= CloneLayoutUpdated;
+            _clonedElement = null;
 
             if (itemTemplate == null && itemTemplateSelector == null && stringFormat == null)
             {

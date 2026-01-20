@@ -2156,17 +2156,9 @@ namespace System.Windows.Controls
         {
             base.OnApplyTemplate();
 
-            if (_submenuPopup != null)
-            {
-                _submenuPopup.Closed -= OnPopupClosed;
-            }
-
+            _submenuPopup?.Closed -= OnPopupClosed;
             _submenuPopup = GetTemplateChild(PopupTemplateName) as Popup;
-
-            if (_submenuPopup != null)
-            {
-                _submenuPopup.Closed += OnPopupClosed;
-            }
+            _submenuPopup?.Closed += OnPopupClosed;
         }
 
         #endregion

@@ -318,11 +318,8 @@ namespace System.Windows.Data
         // else just return the value.
         private object TryInstanceProvider(object value)
         {
-            if (_instanceProvider != null)  // was using provider for source
-            {
-                // stop listening to old provider
-                _instanceProvider.DataChanged -= _sourceDataChangedHandler;
-            }
+            // stop listening to old provider
+            _instanceProvider?.DataChanged -= _sourceDataChangedHandler;
 
             _instanceProvider = value as DataSourceProvider;
 

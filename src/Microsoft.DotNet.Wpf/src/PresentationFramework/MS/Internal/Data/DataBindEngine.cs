@@ -259,11 +259,8 @@ namespace MS.Internal.Data
             Task retryTail = retryHead;
 
             // unregister the LayoutUpdated event - we only need to be called once
-            if (_layoutElement != null)
-            {
-                _layoutElement.LayoutUpdated -= new EventHandler(OnLayoutUpdated);
-                _layoutElement = null;
-            }
+            _layoutElement?.LayoutUpdated -= new EventHandler(OnLayoutUpdated);
+            _layoutElement = null;
 
             if (IsShutDown)
                 return null;

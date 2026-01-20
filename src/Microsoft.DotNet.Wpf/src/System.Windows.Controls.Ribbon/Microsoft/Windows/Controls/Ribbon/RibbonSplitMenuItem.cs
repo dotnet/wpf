@@ -155,16 +155,9 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             base.OnApplyTemplate();
 
-            if (_headerButton != null)
-            {
-                _headerButton.Click -= new RoutedEventHandler(OnHeaderClicked);
-            }
+            _headerButton?.Click -= new RoutedEventHandler(OnHeaderClicked);
             _headerButton = GetTemplateChild(HeaderButtonTemplatePart) as ButtonBase;
-
-            if (_headerButton != null)
-            {
-                _headerButton.Click += new RoutedEventHandler(OnHeaderClicked);
-            }
+            _headerButton?.Click += new RoutedEventHandler(OnHeaderClicked);
 
             _partArrowButton = GetTemplateChild(ArrowButtonTemplatePart) as RibbonToggleButton;
             _highlightLeftBorder = GetTemplateChild("HighlightLeftBorder") as Border;

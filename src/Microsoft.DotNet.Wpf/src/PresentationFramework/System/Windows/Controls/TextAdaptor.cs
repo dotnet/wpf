@@ -45,7 +45,7 @@ namespace MS.Internal.Automation
             _textPeer = textPeer;
             _textContainer = textContainer;
             _textContainer.Changed += new TextContainerChangedEventHandler(OnTextContainerChanged);
-            _textContainer?.TextSelection.Changed += new EventHandler(OnTextSelectionChanged);
+            _textContainer.TextSelection?.Changed += new EventHandler(OnTextSelectionChanged);
         }
 
         /// <summary>

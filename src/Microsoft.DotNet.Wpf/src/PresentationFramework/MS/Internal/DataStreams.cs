@@ -265,7 +265,7 @@ namespace MS.Internal.AppModel
                         {
                             dataStream.Position = 0;
                             #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
-                            newValue = this.Formatter.Deserialize(dataStream);
+                            newValue = this.Formatter.Deserialize(dataStream); // CodeQL [SM04191] : This is a fallback deserialization to maintain backward compatibility for unsupported NRBF Data Types
                             #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
                         }
                         

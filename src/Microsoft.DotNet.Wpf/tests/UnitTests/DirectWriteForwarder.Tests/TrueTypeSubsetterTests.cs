@@ -8,20 +8,18 @@ namespace MS.Internal.Text.TextInterface.Tests;
 /// </summary>
 public class TrueTypeSubsetterTests
 {
-    private byte[]? LoadArialFontData()
+    private byte[] LoadArialFontData()
     {
-        var arialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
-        if (!File.Exists(arialPath)) return null;
-        return File.ReadAllBytes(arialPath);
+        Assert.SkipUnless(File.Exists(TestHelpers.ArialPath), "Arial font not found");
+        return File.ReadAllBytes(TestHelpers.ArialPath);
     }
 
     [Fact]
     public void ComputeSubset_WithValidFont_ShouldReturnData()
     {
         var fontData = LoadArialFontData();
-        if (fontData == null) return;
         
-        var arialUri = new Uri(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf"));
+        var arialUri = new Uri(TestHelpers.ArialPath);
         ushort[] glyphArray = [0, 1, 2, 3]; // Basic glyph indices
         
         unsafe
@@ -40,9 +38,8 @@ public class TrueTypeSubsetterTests
     public void ComputeSubset_WithNullGlyphArray_ShouldThrow()
     {
         var fontData = LoadArialFontData();
-        if (fontData == null) return;
         
-        var arialUri = new Uri(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf"));
+        var arialUri = new Uri(TestHelpers.ArialPath);
         
         unsafe
         {
@@ -65,9 +62,8 @@ public class TrueTypeSubsetterTests
     public void ComputeSubset_WithEmptyGlyphArray_ShouldThrow()
     {
         var fontData = LoadArialFontData();
-        if (fontData == null) return;
         
-        var arialUri = new Uri(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf"));
+        var arialUri = new Uri(TestHelpers.ArialPath);
         ushort[] glyphArray = [];
         
         unsafe
@@ -91,9 +87,8 @@ public class TrueTypeSubsetterTests
     public void ComputeSubset_SubsetShouldBeSmallerThanOriginal()
     {
         var fontData = LoadArialFontData();
-        if (fontData == null) return;
         
-        var arialUri = new Uri(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf"));
+        var arialUri = new Uri(TestHelpers.ArialPath);
         // Request only a few glyphs
         ushort[] glyphArray = [0, 65, 66, 67]; // .notdef, A, B, C
         
@@ -114,9 +109,8 @@ public class TrueTypeSubsetterTests
     public void ComputeSubset_OutputShouldBeValidTrueType()
     {
         var fontData = LoadArialFontData();
-        if (fontData == null) return;
         
-        var arialUri = new Uri(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf"));
+        var arialUri = new Uri(TestHelpers.ArialPath);
         ushort[] glyphArray = [0, 1, 2, 3];
         
         unsafe
@@ -145,9 +139,8 @@ public class TrueTypeSubsetterTests
     public void ComputeSubset_WithDifferentGlyphCounts_ShouldProduceDifferentSizes()
     {
         var fontData = LoadArialFontData();
-        if (fontData == null) return;
         
-        var arialUri = new Uri(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf"));
+        var arialUri = new Uri(TestHelpers.ArialPath);
         
         unsafe
         {

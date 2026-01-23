@@ -106,17 +106,10 @@ public class FontCollectionTests
 /// </summary>
 public class FontFamilyTests
 {
-    private FontFamily GetArialFamily()
-    {
-        var fontCollection = DWriteFactory.SystemFontCollection;
-        return fontCollection["Arial"];
-    }
-
     [Fact]
     public void FamilyNames_ShouldNotBeEmpty()
     {
-        var family = GetArialFamily();
-        if (family == null) return; // Skip if Arial not available
+        var family = TestHelpers.GetArialFamilyOrSkip();
         
         var familyNames = family.FamilyNames;
         
@@ -127,8 +120,7 @@ public class FontFamilyTests
     [Fact]
     public void IsPhysical_ShouldBeTrue()
     {
-        var family = GetArialFamily();
-        if (family == null) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
         
         family.IsPhysical.Should().BeTrue();
     }
@@ -136,8 +128,7 @@ public class FontFamilyTests
     [Fact]
     public void IsComposite_ShouldBeFalse()
     {
-        var family = GetArialFamily();
-        if (family == null) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
         
         family.IsComposite.Should().BeFalse();
     }
@@ -145,8 +136,7 @@ public class FontFamilyTests
     [Fact]
     public void Count_ShouldBeGreaterThanZero()
     {
-        var family = GetArialFamily();
-        if (family == null) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
         
         family.Count.Should().BeGreaterThan(0);
     }
@@ -154,8 +144,7 @@ public class FontFamilyTests
     [Fact]
     public void Indexer_ShouldReturnFont()
     {
-        var family = GetArialFamily();
-        if (family == null) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
         
         var firstFont = family[0u];
         
@@ -165,8 +154,7 @@ public class FontFamilyTests
     [Fact]
     public void GetEnumerator_ShouldEnumerateFonts()
     {
-        var family = GetArialFamily();
-        if (family == null) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
         
         var fonts = family.ToList();
         
@@ -177,8 +165,7 @@ public class FontFamilyTests
     [Fact]
     public void OrdinalName_ShouldNotBeEmpty()
     {
-        var family = GetArialFamily();
-        if (family == null) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
         
         family.OrdinalName.Should().NotBeNullOrEmpty();
     }
@@ -186,8 +173,7 @@ public class FontFamilyTests
     [Fact]
     public void Metrics_ShouldBeValid()
     {
-        var family = GetArialFamily();
-        if (family == null) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
         
         var metrics = family.Metrics;
         
@@ -198,8 +184,7 @@ public class FontFamilyTests
     [Fact]
     public void DisplayMetrics_ShouldReturnValidMetrics()
     {
-        var family = GetArialFamily();
-        if (family == null) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
         
         var displayMetrics = family.DisplayMetrics(emSize: 12.0f, pixelsPerDip: 1.0f);
         
@@ -210,8 +195,7 @@ public class FontFamilyTests
     [Fact]
     public void GetFirstMatchingFont_WithNormalProperties_ShouldReturnFont()
     {
-        var family = GetArialFamily();
-        if (family == null) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
         
         var font = family.GetFirstMatchingFont(FontWeight.Normal, FontStretch.Normal, FontStyle.Normal);
         
@@ -223,8 +207,7 @@ public class FontFamilyTests
     [Fact]
     public void GetFirstMatchingFont_WithBoldWeight_ShouldReturnBoldFont()
     {
-        var family = GetArialFamily();
-        if (family == null) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
         
         var font = family.GetFirstMatchingFont(FontWeight.Bold, FontStretch.Normal, FontStyle.Normal);
         
@@ -235,8 +218,7 @@ public class FontFamilyTests
     [Fact]
     public void GetFirstMatchingFont_WithItalicStyle_ShouldReturnItalicFont()
     {
-        var family = GetArialFamily();
-        if (family == null) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
         
         var font = family.GetFirstMatchingFont(FontWeight.Normal, FontStretch.Normal, FontStyle.Italic);
         
@@ -247,8 +229,7 @@ public class FontFamilyTests
     [Fact]
     public void GetMatchingFonts_WithNormalProperties_ShouldReturnFontList()
     {
-        var family = GetArialFamily();
-        if (family == null) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
         
         var matchingFonts = family.GetMatchingFonts(FontWeight.Normal, FontStretch.Normal, FontStyle.Normal);
         
@@ -259,8 +240,7 @@ public class FontFamilyTests
     [Fact]
     public void GetMatchingFonts_ShouldReturnFontsRankedByMatch()
     {
-        var family = GetArialFamily();
-        if (family == null) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
         
         var matchingFonts = family.GetMatchingFonts(FontWeight.Bold, FontStretch.Normal, FontStyle.Normal);
         
@@ -274,8 +254,7 @@ public class FontFamilyTests
     [Fact]
     public void GetMatchingFonts_ShouldBeEnumerable()
     {
-        var family = GetArialFamily();
-        if (family == null) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
         
         var matchingFonts = family.GetMatchingFonts(FontWeight.Normal, FontStretch.Normal, FontStyle.Normal);
         

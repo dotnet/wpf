@@ -8,19 +8,13 @@ namespace MS.Internal.Text.TextInterface.Tests;
 /// </summary>
 public class FontFileTests
 {
-    private string GetArialPath()
-    {
-        return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
-    }
-
     [Fact]
     public void CreateFontFile_WithValidPath_ShouldSucceed()
     {
-        var arialPath = GetArialPath();
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
         
         var factory = DWriteFactory.Instance;
-        var fontFile = factory.CreateFontFile(new Uri(arialPath));
+        var fontFile = factory.CreateFontFile(new Uri(TestHelpers.ArialPath));
         
         fontFile.Should().NotBeNull();
     }
@@ -28,11 +22,10 @@ public class FontFileTests
     [Fact]
     public void GetUriPath_ShouldReturnPath()
     {
-        var arialPath = GetArialPath();
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
         
         var factory = DWriteFactory.Instance;
-        var fontFile = factory.CreateFontFile(new Uri(arialPath));
+        var fontFile = factory.CreateFontFile(new Uri(TestHelpers.ArialPath));
         
         var uriPath = fontFile.GetUriPath();
         
@@ -43,11 +36,10 @@ public class FontFileTests
     [Fact]
     public void DWriteFontFileNoAddRef_ShouldReturnNonNullPointer()
     {
-        var arialPath = GetArialPath();
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
         
         var factory = DWriteFactory.Instance;
-        var fontFile = factory.CreateFontFile(new Uri(arialPath));
+        var fontFile = factory.CreateFontFile(new Uri(TestHelpers.ArialPath));
         
         // This returns the native pointer - just verify it doesn't throw
         // The actual pointer is internal to DirectWrite
@@ -60,19 +52,13 @@ public class FontFileTests
 /// </summary>
 public class FontSourceTests
 {
-    private string GetArialPath()
-    {
-        return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
-    }
-
     [Fact]
     public void FontSourceFactory_Create_ShouldReturnFontSource()
     {
-        var arialPath = GetArialPath();
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
         
         var factory = new FontSourceFactory();
-        var fontSource = factory.Create(arialPath);
+        var fontSource = factory.Create(TestHelpers.ArialPath);
         
         fontSource.Should().NotBeNull();
     }
@@ -80,10 +66,9 @@ public class FontSourceTests
     [Fact]
     public void FontSource_Uri_ShouldReturnUri()
     {
-        var arialPath = GetArialPath();
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
         
-        var fontSource = new FontSource(new Uri(arialPath));
+        var fontSource = new FontSource(new Uri(TestHelpers.ArialPath));
         
         fontSource.Uri.Should().NotBeNull();
         fontSource.Uri.LocalPath.ToLowerInvariant().Should().Contain("arial");
@@ -92,10 +77,9 @@ public class FontSourceTests
     [Fact]
     public void FontSource_IsComposite_ShouldBeFalseForTtf()
     {
-        var arialPath = GetArialPath();
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
         
-        var fontSource = new FontSource(new Uri(arialPath));
+        var fontSource = new FontSource(new Uri(TestHelpers.ArialPath));
         
         fontSource.IsComposite.Should().BeFalse();
     }
@@ -103,10 +87,9 @@ public class FontSourceTests
     [Fact]
     public void FontSource_GetLastWriteTimeUtc_ShouldReturnValidTime()
     {
-        var arialPath = GetArialPath();
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
         
-        var fontSource = new FontSource(new Uri(arialPath));
+        var fontSource = new FontSource(new Uri(TestHelpers.ArialPath));
         var lastWriteTime = fontSource.GetLastWriteTimeUtc();
         
         lastWriteTime.Should().BeBefore(DateTime.UtcNow);
@@ -116,10 +99,9 @@ public class FontSourceTests
     [Fact]
     public void FontSource_GetUnmanagedStream_ShouldReturnStream()
     {
-        var arialPath = GetArialPath();
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
         
-        var fontSource = new FontSource(new Uri(arialPath));
+        var fontSource = new FontSource(new Uri(TestHelpers.ArialPath));
         
         using var stream = fontSource.GetUnmanagedStream();
         
@@ -130,10 +112,9 @@ public class FontSourceTests
     [Fact]
     public void FontSource_TestFileOpenable_ShouldNotThrowForValidFile()
     {
-        var arialPath = GetArialPath();
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
         
-        var fontSource = new FontSource(new Uri(arialPath));
+        var fontSource = new FontSource(new Uri(TestHelpers.ArialPath));
         
         // Should not throw for valid file
         Action act = () => fontSource.TestFileOpenable();
@@ -161,18 +142,12 @@ public class FontFileLoaderTests
 /// </summary>
 public class FontFileStreamTests
 {
-    private string GetArialPath()
-    {
-        return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
-    }
-
     [Fact]
     public void FontFileStream_CanBeConstructedWithFontSource()
     {
-        var arialPath = GetArialPath();
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
         
-        var fontSource = new FontSource(new Uri(arialPath));
+        var fontSource = new FontSource(new Uri(TestHelpers.ArialPath));
         var stream = new FontFileStream(fontSource);
         
         stream.Should().NotBeNull();
@@ -186,25 +161,14 @@ public class FontFileStreamTests
 /// </summary>
 public class FontFileEnumeratorTests
 {
-    private string GetArialPath()
-    {
-        return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
-    }
-
-    private string GetFontsFolder()
-    {
-        return Environment.GetFolderPath(Environment.SpecialFolder.Fonts);
-    }
-
     [Fact]
     public unsafe void FontFileEnumerator_CanBeConstructed()
     {
-        var arialPath = GetArialPath();
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
 
         var fontSourceFactory = new FontSourceFactory();
         var fontFileLoader = new FontFileLoader(fontSourceFactory);
-        var fontSources = new IFontSource[] { new FontSource(new Uri(arialPath)) };
+        var fontSources = new IFontSource[] { new FontSource(new Uri(TestHelpers.ArialPath)) };
         
         var factory = DWriteFactory.Instance;
         var enumerator = new FontFileEnumerator(
@@ -219,12 +183,11 @@ public class FontFileEnumeratorTests
     [Fact]
     public unsafe void FontFileEnumerator_MoveNext_ReturnsTrueForFirstFile()
     {
-        var arialPath = GetArialPath();
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
 
         var fontSourceFactory = new FontSourceFactory();
         var fontFileLoader = new FontFileLoader(fontSourceFactory);
-        var fontSources = new IFontSource[] { new FontSource(new Uri(arialPath)) };
+        var fontSources = new IFontSource[] { new FontSource(new Uri(TestHelpers.ArialPath)) };
         
         var factory = DWriteFactory.Instance;
         var enumerator = new FontFileEnumerator(
@@ -243,12 +206,11 @@ public class FontFileEnumeratorTests
     [Fact]
     public unsafe void FontFileEnumerator_MoveNext_ReturnsFalseAfterLastFile()
     {
-        var arialPath = GetArialPath();
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
 
         var fontSourceFactory = new FontSourceFactory();
         var fontFileLoader = new FontFileLoader(fontSourceFactory);
-        var fontSources = new IFontSource[] { new FontSource(new Uri(arialPath)) };
+        var fontSources = new IFontSource[] { new FontSource(new Uri(TestHelpers.ArialPath)) };
         
         var factory = DWriteFactory.Instance;
         var enumerator = new FontFileEnumerator(
@@ -268,11 +230,9 @@ public class FontFileEnumeratorTests
     [Fact]
     public unsafe void FontFileEnumerator_MultipleFiles_EnumeratesAll()
     {
-        var fontsFolder = GetFontsFolder();
-        
         // Get a few font files
-        var fontFiles = Directory.GetFiles(fontsFolder, "*.ttf").Take(3).ToArray();
-        if (fontFiles.Length < 2) return; // Need at least 2 fonts for this test
+        var fontFiles = Directory.GetFiles(TestHelpers.FontsDirectory, "*.ttf").Take(3).ToArray();
+        Assert.SkipUnless(fontFiles.Length >= 2, "Need at least 2 fonts for this test");
 
         var fontSourceFactory = new FontSourceFactory();
         var fontFileLoader = new FontFileLoader(fontSourceFactory);
@@ -319,12 +279,11 @@ public class FontFileEnumeratorTests
     [Fact]
     public unsafe void FontFileEnumerator_GetCurrentFontFile_ReturnsValidPointer()
     {
-        var arialPath = GetArialPath();
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
 
         var fontSourceFactory = new FontSourceFactory();
         var fontFileLoader = new FontFileLoader(fontSourceFactory);
-        var fontSources = new IFontSource[] { new FontSource(new Uri(arialPath)) };
+        var fontSources = new IFontSource[] { new FontSource(new Uri(TestHelpers.ArialPath)) };
         
         var factory = DWriteFactory.Instance;
         var enumerator = new FontFileEnumerator(
@@ -353,12 +312,11 @@ public class FontFileEnumeratorTests
     [Fact]
     public unsafe void FontFileEnumerator_GetCurrentFontFile_WithNullPointer_ReturnsInvalidArg()
     {
-        var arialPath = GetArialPath();
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
 
         var fontSourceFactory = new FontSourceFactory();
         var fontFileLoader = new FontFileLoader(fontSourceFactory);
-        var fontSources = new IFontSource[] { new FontSource(new Uri(arialPath)) };
+        var fontSources = new IFontSource[] { new FontSource(new Uri(TestHelpers.ArialPath)) };
         
         var factory = DWriteFactory.Instance;
         var enumerator = new FontFileEnumerator(
@@ -379,14 +337,12 @@ public class FontFileEnumeratorTests
     [Fact]
     public unsafe void FontFileEnumerator_MultipleFontTypes_EnumeratesAll()
     {
-        var fontsFolder = GetFontsFolder();
-        
         // Get different font types
-        var ttfFiles = Directory.GetFiles(fontsFolder, "*.ttf").Take(2);
-        var ttcFiles = Directory.GetFiles(fontsFolder, "*.ttc").Take(1);
+        var ttfFiles = Directory.GetFiles(TestHelpers.FontsDirectory, "*.ttf").Take(2);
+        var ttcFiles = Directory.GetFiles(TestHelpers.FontsDirectory, "*.ttc").Take(1);
         var allFiles = ttfFiles.Concat(ttcFiles).ToArray();
         
-        if (allFiles.Length < 2) return;
+        Assert.SkipUnless(allFiles.Length >= 2, "Need at least 2 fonts for this test");
 
         var fontSourceFactory = new FontSourceFactory();
         var fontFileLoader = new FontFileLoader(fontSourceFactory);

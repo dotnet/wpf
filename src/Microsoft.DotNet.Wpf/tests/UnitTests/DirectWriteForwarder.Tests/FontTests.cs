@@ -8,19 +8,10 @@ namespace MS.Internal.Text.TextInterface.Tests;
 /// </summary>
 public class FontTests
 {
-    private Font? GetArialRegularFont()
-    {
-        var fontCollection = DWriteFactory.SystemFontCollection;
-        var arialFamily = fontCollection["Arial"];
-        if (arialFamily == null || arialFamily.Count == 0) return null;
-        return arialFamily[0u];
-    }
-
     [Fact]
     public void Weight_ShouldBeValid()
     {
-        var font = GetArialRegularFont();
-        if (font == null) return;
+        var font = TestHelpers.GetArialFontOrSkip();
         
         font.Weight.Should().BeDefined();
     }
@@ -28,8 +19,7 @@ public class FontTests
     [Fact]
     public void Stretch_ShouldBeValid()
     {
-        var font = GetArialRegularFont();
-        if (font == null) return;
+        var font = TestHelpers.GetArialFontOrSkip();
         
         font.Stretch.Should().BeDefined();
     }
@@ -37,8 +27,7 @@ public class FontTests
     [Fact]
     public void Style_ShouldBeValid()
     {
-        var font = GetArialRegularFont();
-        if (font == null) return;
+        var font = TestHelpers.GetArialFontOrSkip();
         
         font.Style.Should().BeDefined();
     }
@@ -46,8 +35,7 @@ public class FontTests
     [Fact]
     public void Family_ShouldNotBeNull()
     {
-        var font = GetArialRegularFont();
-        if (font == null) return;
+        var font = TestHelpers.GetArialFontOrSkip();
         
         font.Family.Should().NotBeNull();
     }
@@ -55,8 +43,7 @@ public class FontTests
     [Fact]
     public void FaceNames_ShouldNotBeEmpty()
     {
-        var font = GetArialRegularFont();
-        if (font == null) return;
+        var font = TestHelpers.GetArialFontOrSkip();
         
         var faceNames = font.FaceNames;
         
@@ -67,8 +54,7 @@ public class FontTests
     [Fact]
     public void Metrics_ShouldBeValid()
     {
-        var font = GetArialRegularFont();
-        if (font == null) return;
+        var font = TestHelpers.GetArialFontOrSkip();
         
         var metrics = font.Metrics;
         
@@ -80,8 +66,7 @@ public class FontTests
     [Fact]
     public void DisplayMetrics_ShouldBeValid()
     {
-        var font = GetArialRegularFont();
-        if (font == null) return;
+        var font = TestHelpers.GetArialFontOrSkip();
         
         var displayMetrics = font.DisplayMetrics(12.0f, 96.0f);
         
@@ -91,8 +76,7 @@ public class FontTests
     [Fact]
     public void GetFontFace_ShouldReturnValidFontFace()
     {
-        var font = GetArialRegularFont();
-        if (font == null) return;
+        var font = TestHelpers.GetArialFontOrSkip();
         
         var fontFace = font.GetFontFace();
         
@@ -103,8 +87,7 @@ public class FontTests
     [Fact]
     public void SimulationFlags_ShouldBeNoneForRegularFont()
     {
-        var font = GetArialRegularFont();
-        if (font == null) return;
+        var font = TestHelpers.GetArialFontOrSkip();
         
         // A regular font without simulations should have None
         font.SimulationFlags.Should().Be(FontSimulations.None);
@@ -113,8 +96,7 @@ public class FontTests
     [Fact]
     public void Version_ShouldBePositive()
     {
-        var font = GetArialRegularFont();
-        if (font == null) return;
+        var font = TestHelpers.GetArialFontOrSkip();
         
         font.Version.Should().BeGreaterThan(0);
     }
@@ -122,8 +104,7 @@ public class FontTests
     [Fact]
     public void IsSymbolFont_ForArial_ShouldBeFalse()
     {
-        var font = GetArialRegularFont();
-        if (font == null) return;
+        var font = TestHelpers.GetArialFontOrSkip();
         
         // Arial is not a symbol font
         font.IsSymbolFont.Should().BeFalse();
@@ -152,8 +133,7 @@ public class FontTests
     [Fact]
     public void HasCharacter_WithCommonCharacter_ShouldReturnTrue()
     {
-        var font = GetArialRegularFont();
-        if (font == null) return;
+        var font = TestHelpers.GetArialFontOrSkip();
         
         // 'A' (0x41) should be in Arial
         font.HasCharacter(0x41).Should().BeTrue();
@@ -162,8 +142,7 @@ public class FontTests
     [Fact]
     public void HasCharacter_WithRareCharacter_ShouldReturnFalse()
     {
-        var font = GetArialRegularFont();
-        if (font == null) return;
+        var font = TestHelpers.GetArialFontOrSkip();
         
         // Very high code point that's unlikely to be in Arial
         font.HasCharacter(0x1F999).Should().BeFalse(); // Emoji unicorn
@@ -172,8 +151,7 @@ public class FontTests
     [Fact]
     public void GetInformationalStrings_FamilyName_ShouldReturnArialFamily()
     {
-        var font = GetArialRegularFont();
-        if (font == null) return;
+        var font = TestHelpers.GetArialFontOrSkip();
         
         bool exists = font.GetInformationalStrings(InformationalStringID.WIN32FamilyNames, out var familyNames);
         
@@ -185,8 +163,7 @@ public class FontTests
     [Fact]
     public void GetInformationalStrings_DesignerName_ShouldNotThrow()
     {
-        var font = GetArialRegularFont();
-        if (font == null) return;
+        var font = TestHelpers.GetArialFontOrSkip();
         
         // May or may not have designer info, but shouldn't throw
         _ = font.GetInformationalStrings(InformationalStringID.Designer, out _);
@@ -196,8 +173,7 @@ public class FontTests
     [Fact]
     public void GetInformationalStrings_CopyrightNotice_ShouldExist()
     {
-        var font = GetArialRegularFont();
-        if (font == null) return;
+        var font = TestHelpers.GetArialFontOrSkip();
         
         bool exists = font.GetInformationalStrings(InformationalStringID.CopyrightNotice, out var copyright);
         
@@ -211,12 +187,11 @@ public class FontTests
 /// </summary>
 public class FontFaceTests
 {
-    private FontFace? GetArialFontFace()
+    private FontFace GetArialFontFace()
     {
         var factory = DWriteFactory.Instance;
-        var arialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
-        
-        if (!File.Exists(arialPath)) return null;
+        TestHelpers.SkipIfArialNotAvailable();
+        var arialPath = TestHelpers.ArialPath;
         
         return factory.CreateFontFace(new Uri(arialPath), 0);
     }
@@ -225,7 +200,6 @@ public class FontFaceTests
     public void Type_ShouldBeTrueType()
     {
         var fontFace = GetArialFontFace();
-        if (fontFace == null) return;
         
         try
         {
@@ -241,7 +215,6 @@ public class FontFaceTests
     public void Index_ShouldBeZero()
     {
         var fontFace = GetArialFontFace();
-        if (fontFace == null) return;
         
         try
         {
@@ -257,7 +230,6 @@ public class FontFaceTests
     public void SimulationFlags_ShouldBeNone()
     {
         var fontFace = GetArialFontFace();
-        if (fontFace == null) return;
         
         try
         {
@@ -273,7 +245,6 @@ public class FontFaceTests
     public void Metrics_ShouldBeValid()
     {
         var fontFace = GetArialFontFace();
-        if (fontFace == null) return;
         
         try
         {
@@ -294,7 +265,6 @@ public class FontFaceTests
     public void IsSymbolFont_ShouldBeFalse()
     {
         var fontFace = GetArialFontFace();
-        if (fontFace == null) return;
         
         try
         {
@@ -310,7 +280,6 @@ public class FontFaceTests
     public void GlyphCount_ShouldBeGreaterThanZero()
     {
         var fontFace = GetArialFontFace();
-        if (fontFace == null) return;
         
         try
         {
@@ -326,9 +295,8 @@ public class FontFaceTests
     public void FontFace_WithBoldSimulation_ShouldHaveBoldFlag()
     {
         var factory = DWriteFactory.Instance;
-        var arialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
-        
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
+        var arialPath = TestHelpers.ArialPath;
         
         var fontFace = factory.CreateFontFace(new Uri(arialPath), 0, FontSimulations.Bold);
         try
@@ -345,9 +313,8 @@ public class FontFaceTests
     public void FontFace_WithObliqueSimulation_ShouldHaveObliqueFlag()
     {
         var factory = DWriteFactory.Instance;
-        var arialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
-        
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
+        var arialPath = TestHelpers.ArialPath;
         
         var fontFace = factory.CreateFontFace(new Uri(arialPath), 0, FontSimulations.Oblique);
         try
@@ -364,9 +331,8 @@ public class FontFaceTests
     public void FontFace_WithCombinedSimulations_ShouldHaveBothFlags()
     {
         var factory = DWriteFactory.Instance;
-        var arialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
-        
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
+        var arialPath = TestHelpers.ArialPath;
         
         var fontFace = factory.CreateFontFace(new Uri(arialPath), 0, FontSimulations.Bold | FontSimulations.Oblique);
         try
@@ -384,7 +350,6 @@ public class FontFaceTests
     public void GetFileZero_ShouldReturnFontFile()
     {
         var fontFace = GetArialFontFace();
-        if (fontFace == null) return;
         
         try
         {
@@ -401,7 +366,6 @@ public class FontFaceTests
     public void TryGetFontTable_WithHeadTable_ShouldReturnData()
     {
         var fontFace = GetArialFontFace();
-        if (fontFace == null) return;
         
         try
         {
@@ -422,7 +386,6 @@ public class FontFaceTests
     public void TryGetFontTable_WithCmapTable_ShouldReturnData()
     {
         var fontFace = GetArialFontFace();
-        if (fontFace == null) return;
         
         try
         {
@@ -443,7 +406,6 @@ public class FontFaceTests
     public void TryGetFontTable_WithNonExistentTable_ShouldReturnFalse()
     {
         var fontFace = GetArialFontFace();
-        if (fontFace == null) return;
         
         try
         {
@@ -466,7 +428,6 @@ public class FontFaceTests
     public void ReadFontEmbeddingRights_ShouldReturnValue()
     {
         var fontFace = GetArialFontFace();
-        if (fontFace == null) return;
         
         try
         {
@@ -486,7 +447,6 @@ public class FontFaceTests
     public unsafe void GetArrayOfGlyphIndices_WithValidCodePoints_ShouldReturnGlyphIndices()
     {
         var fontFace = GetArialFontFace();
-        if (fontFace == null) return;
         
         try
         {
@@ -515,7 +475,6 @@ public class FontFaceTests
     public unsafe void GetArrayOfGlyphIndices_WithUnsupportedCodePoint_ShouldReturnZero()
     {
         var fontFace = GetArialFontFace();
-        if (fontFace == null) return;
         
         try
         {
@@ -542,7 +501,6 @@ public class FontFaceTests
     public unsafe void GetDesignGlyphMetrics_ShouldReturnMetrics()
     {
         var fontFace = GetArialFontFace();
-        if (fontFace == null) return;
         
         try
         {
@@ -578,7 +536,6 @@ public class FontFaceTests
     public unsafe void GetDisplayGlyphMetrics_ShouldReturnMetrics()
     {
         var fontFace = GetArialFontFace();
-        if (fontFace == null) return;
         
         try
         {
@@ -621,7 +578,6 @@ public class FontFaceTests
     public unsafe void GetDesignGlyphMetrics_MultipleGlyphs_ShouldReturnAllMetrics()
     {
         var fontFace = GetArialFontFace();
-        if (fontFace == null) return;
         
         try
         {

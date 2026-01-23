@@ -11,19 +11,10 @@ namespace MS.Internal.Text.TextInterface.Tests;
 /// </summary>
 public class LocalizedStringsTests
 {
-    private LocalizedStrings? GetArialFamilyNames()
-    {
-        var fontCollection = DWriteFactory.SystemFontCollection;
-        var arialFamily = fontCollection["Arial"];
-        if (arialFamily == null) return null;
-        return arialFamily.FamilyNames;
-    }
-
     [Fact]
     public void Count_ShouldBeGreaterThanZero()
     {
-        var localizedStrings = GetArialFamilyNames();
-        if (localizedStrings == null) return;
+        var localizedStrings = TestHelpers.GetArialLocalizedStringsOrSkip();
         
         localizedStrings.Count.Should().BeGreaterThan(0);
     }
@@ -31,8 +22,7 @@ public class LocalizedStringsTests
     [Fact]
     public void Keys_ShouldContainCultureInfo()
     {
-        var localizedStrings = GetArialFamilyNames();
-        if (localizedStrings == null) return;
+        var localizedStrings = TestHelpers.GetArialLocalizedStringsOrSkip();
         
         var keys = localizedStrings.Keys;
         
@@ -43,8 +33,7 @@ public class LocalizedStringsTests
     [Fact]
     public void Values_ShouldContainStrings()
     {
-        var localizedStrings = GetArialFamilyNames();
-        if (localizedStrings == null) return;
+        var localizedStrings = TestHelpers.GetArialLocalizedStringsOrSkip();
         
         var values = localizedStrings.Values;
         
@@ -55,12 +44,10 @@ public class LocalizedStringsTests
     [Fact]
     public void Indexer_WithValidCulture_ShouldReturnName()
     {
-        var localizedStrings = GetArialFamilyNames();
-        if (localizedStrings == null) return;
+        var localizedStrings = TestHelpers.GetArialLocalizedStringsOrSkip();
         
         // Get the first available culture
-        var firstCulture = localizedStrings.Keys.FirstOrDefault();
-        if (firstCulture == null) return;
+        var firstCulture = TestHelpers.GetFirstCultureOrSkip(localizedStrings);
         
         var name = localizedStrings[firstCulture];
         
@@ -70,11 +57,9 @@ public class LocalizedStringsTests
     [Fact]
     public void ContainsKey_WithExistingCulture_ShouldReturnTrue()
     {
-        var localizedStrings = GetArialFamilyNames();
-        if (localizedStrings == null) return;
+        var localizedStrings = TestHelpers.GetArialLocalizedStringsOrSkip();
         
-        var firstCulture = localizedStrings.Keys.FirstOrDefault();
-        if (firstCulture == null) return;
+        var firstCulture = TestHelpers.GetFirstCultureOrSkip(localizedStrings);
         
         localizedStrings.ContainsKey(firstCulture).Should().BeTrue();
     }
@@ -82,8 +67,7 @@ public class LocalizedStringsTests
     [Fact]
     public void ContainsKey_WithNonExistingCulture_ShouldReturnFalse()
     {
-        var localizedStrings = GetArialFamilyNames();
-        if (localizedStrings == null) return;
+        var localizedStrings = TestHelpers.GetArialLocalizedStringsOrSkip();
         
         // Use a culture that's unlikely to be in the font
         var rareCulture = new CultureInfo("zu-ZA"); // Zulu
@@ -97,11 +81,9 @@ public class LocalizedStringsTests
     [Fact]
     public void TryGetValue_WithExistingCulture_ShouldReturnTrueAndValue()
     {
-        var localizedStrings = GetArialFamilyNames();
-        if (localizedStrings == null) return;
+        var localizedStrings = TestHelpers.GetArialLocalizedStringsOrSkip();
         
-        var firstCulture = localizedStrings.Keys.FirstOrDefault();
-        if (firstCulture == null) return;
+        var firstCulture = TestHelpers.GetFirstCultureOrSkip(localizedStrings);
         
         bool result = localizedStrings.TryGetValue(firstCulture, out string value);
         
@@ -112,8 +94,7 @@ public class LocalizedStringsTests
     [Fact]
     public void GetEnumerator_ShouldEnumerateAllPairs()
     {
-        var localizedStrings = GetArialFamilyNames();
-        if (localizedStrings == null) return;
+        var localizedStrings = TestHelpers.GetArialLocalizedStringsOrSkip();
         
         var pairs = localizedStrings.ToList();
         
@@ -128,8 +109,7 @@ public class LocalizedStringsTests
     [Fact]
     public void EnglishName_ShouldExist()
     {
-        var localizedStrings = GetArialFamilyNames();
-        if (localizedStrings == null) return;
+        var localizedStrings = TestHelpers.GetArialLocalizedStringsOrSkip();
         
         // Most fonts should have an English (US) name
         var englishCulture = new CultureInfo("en-US");
@@ -144,8 +124,7 @@ public class LocalizedStringsTests
     [Fact]
     public void IsReadOnly_ShouldBeTrue()
     {
-        var localizedStrings = GetArialFamilyNames();
-        if (localizedStrings == null) return;
+        var localizedStrings = TestHelpers.GetArialLocalizedStringsOrSkip();
         
         localizedStrings.IsReadOnly.Should().BeTrue();
     }
@@ -153,8 +132,7 @@ public class LocalizedStringsTests
     [Fact]
     public void Add_ShouldThrowNotSupportedException()
     {
-        var localizedStrings = GetArialFamilyNames();
-        if (localizedStrings == null) return;
+        var localizedStrings = TestHelpers.GetArialLocalizedStringsOrSkip();
         
         Action act = () => localizedStrings.Add(CultureInfo.InvariantCulture, "Test");
         
@@ -164,11 +142,9 @@ public class LocalizedStringsTests
     [Fact]
     public void Remove_ShouldThrowNotSupportedException()
     {
-        var localizedStrings = GetArialFamilyNames();
-        if (localizedStrings == null) return;
+        var localizedStrings = TestHelpers.GetArialLocalizedStringsOrSkip();
         
-        var firstCulture = localizedStrings.Keys.FirstOrDefault();
-        if (firstCulture == null) return;
+        var firstCulture = TestHelpers.GetFirstCultureOrSkip(localizedStrings);
         
         Action act = () => localizedStrings.Remove(firstCulture);
         
@@ -178,8 +154,7 @@ public class LocalizedStringsTests
     [Fact]
     public void Clear_ShouldThrowNotSupportedException()
     {
-        var localizedStrings = GetArialFamilyNames();
-        if (localizedStrings == null) return;
+        var localizedStrings = TestHelpers.GetArialLocalizedStringsOrSkip();
         
         Action act = () => localizedStrings.Clear();
         
@@ -189,8 +164,7 @@ public class LocalizedStringsTests
     [Fact]
     public void StringsCount_ShouldMatchCount()
     {
-        var localizedStrings = GetArialFamilyNames();
-        if (localizedStrings == null) return;
+        var localizedStrings = TestHelpers.GetArialLocalizedStringsOrSkip();
         
         localizedStrings.StringsCount.Should().Be((uint)localizedStrings.Count);
     }
@@ -198,8 +172,7 @@ public class LocalizedStringsTests
     [Fact]
     public void FindLocaleName_WithEnUS_ShouldReturnTrueAndIndex()
     {
-        var localizedStrings = GetArialFamilyNames();
-        if (localizedStrings == null) return;
+        var localizedStrings = TestHelpers.GetArialLocalizedStringsOrSkip();
         
         bool found = localizedStrings.FindLocaleName("en-US", out uint index);
         
@@ -213,8 +186,7 @@ public class LocalizedStringsTests
     [Fact]
     public void GetLocaleName_WithValidIndex_ShouldReturnLocaleName()
     {
-        var localizedStrings = GetArialFamilyNames();
-        if (localizedStrings == null) return;
+        var localizedStrings = TestHelpers.GetArialLocalizedStringsOrSkip();
         
         var localeName = localizedStrings.GetLocaleName(0);
         
@@ -224,8 +196,7 @@ public class LocalizedStringsTests
     [Fact]
     public void GetString_WithValidIndex_ShouldReturnString()
     {
-        var localizedStrings = GetArialFamilyNames();
-        if (localizedStrings == null) return;
+        var localizedStrings = TestHelpers.GetArialLocalizedStringsOrSkip();
         
         var str = localizedStrings.GetString(0);
         
@@ -235,11 +206,9 @@ public class LocalizedStringsTests
     [Fact]
     public void Contains_ShouldThrowNotImplementedException()
     {
-        var localizedStrings = GetArialFamilyNames();
-        if (localizedStrings == null) return;
+        var localizedStrings = TestHelpers.GetArialLocalizedStringsOrSkip();
         
-        var firstCulture = localizedStrings.Keys.FirstOrDefault();
-        if (firstCulture == null) return;
+        var firstCulture = TestHelpers.GetFirstCultureOrSkip(localizedStrings);
         
         var pair = new KeyValuePair<CultureInfo, string>(firstCulture, localizedStrings[firstCulture]);
         
@@ -250,8 +219,7 @@ public class LocalizedStringsTests
     [Fact]
     public void CopyTo_ShouldCopyPairsToArray()
     {
-        var localizedStrings = GetArialFamilyNames();
-        if (localizedStrings == null) return;
+        var localizedStrings = TestHelpers.GetArialLocalizedStringsOrSkip();
         
         var array = new KeyValuePair<CultureInfo, string>[localizedStrings.Count];
         localizedStrings.CopyTo(array, 0);

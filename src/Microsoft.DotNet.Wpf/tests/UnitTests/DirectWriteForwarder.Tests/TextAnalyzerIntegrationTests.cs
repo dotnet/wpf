@@ -59,15 +59,9 @@ public class TextAnalyzerIntegrationTests
     /// <summary>
     /// Gets a Font instance for testing. Uses Arial which should be available on all Windows systems.
     /// </summary>
-    private static Font? GetTestFont()
+    private static Font GetTestFont()
     {
-        var fontCollection = DWriteFactory.SystemFontCollection;
-        if (fontCollection == null) return null;
-
-        var arialFamily = fontCollection["Arial"];
-        if (arialFamily == null) return null;
-
-        return arialFamily.GetFirstMatchingFont(FontWeight.Normal, FontStretch.Normal, FontStyle.Normal);
+        return TestHelpers.GetArialFontOrSkip();
     }
 
     /// <summary>
@@ -181,10 +175,6 @@ public class TextAnalyzerIntegrationTests
     {
         var font = GetTestFont();
         // Skip test if Arial is not available
-        if (font == null)
-        {
-            return;
-        }
         font.Weight.Should().Be(FontWeight.Normal);
     }
 
@@ -828,8 +818,6 @@ public class TextAnalyzerIntegrationTests
     public void GetGlyphsAndTheirPlacements_SimpleAscii_ReturnsGlyphData()
     {
         var font = GetTestFont();
-        if (font == null) return;
-
         var spans = ItemizeHelper.Itemize("Hello");
         spans.Should().NotBeNull();
         
@@ -861,8 +849,6 @@ public class TextAnalyzerIntegrationTests
     public void GetGlyphsAndTheirPlacements_SingleCharacter_ReturnsOneGlyph()
     {
         var font = GetTestFont();
-        if (font == null) return;
-
         var spans = ItemizeHelper.Itemize("A");
         var itemProps = (ItemProps)spans![0].element;
         var result = GetGlyphsAndPlacements("A", font, itemProps);
@@ -879,8 +865,6 @@ public class TextAnalyzerIntegrationTests
     public void GetGlyphsAndTheirPlacements_WithSpaces_HandlesSpacesCorrectly()
     {
         var font = GetTestFont();
-        if (font == null) return;
-
         var spans = ItemizeHelper.Itemize("A B");
         var itemProps = (ItemProps)spans![0].element;
         var result = GetGlyphsAndPlacements("A B", font, itemProps);
@@ -897,8 +881,6 @@ public class TextAnalyzerIntegrationTests
     public void GetGlyphsAndTheirPlacements_DifferentFontSizes_ScalesAdvances()
     {
         var font = GetTestFont();
-        if (font == null) return;
-
         var spans = ItemizeHelper.Itemize("A");
         var itemProps = (ItemProps)spans![0].element;
         
@@ -921,8 +903,6 @@ public class TextAnalyzerIntegrationTests
     public void GetGlyphsAndTheirPlacements_ClusterMap_MapsCharactersToGlyphs()
     {
         var font = GetTestFont();
-        if (font == null) return;
-
         var spans = ItemizeHelper.Itemize("ABC");
         var itemProps = (ItemProps)spans![0].element;
         var result = GetGlyphsAndPlacements("ABC", font, itemProps);
@@ -941,11 +921,9 @@ public class TextAnalyzerIntegrationTests
     public void GetGlyphsAndTheirPlacements_RightToLeft_Succeeds()
     {
         var font = GetTestFont();
-        if (font == null) return;
-
         // Use Arabic text for RTL
         var spans = ItemizeHelper.Itemize("مرحبا");
-        if (spans == null || spans.Count == 0) return;
+        Assert.SkipUnless(spans != null && spans.Count > 0, "Itemization failed");
         
         var itemProps = (ItemProps)spans[0].element;
         var result = GetGlyphsAndPlacements("مرحبا", font, itemProps, isRightToLeft: true);
@@ -958,8 +936,6 @@ public class TextAnalyzerIntegrationTests
     public void GetGlyphsAndTheirPlacements_LongText_Succeeds()
     {
         var font = GetTestFont();
-        if (font == null) return;
-
         var longText = new string('A', 1000);
         var spans = ItemizeHelper.Itemize(longText);
         var itemProps = (ItemProps)spans![0].element;
@@ -976,8 +952,6 @@ public class TextAnalyzerIntegrationTests
     public void GetGlyphsAndTheirPlacements_MixedCase_ReturnsDistinctGlyphs()
     {
         var font = GetTestFont();
-        if (font == null) return;
-
         var spans = ItemizeHelper.Itemize("Aa");
         var itemProps = (ItemProps)spans![0].element;
         var result = GetGlyphsAndPlacements("Aa", font, itemProps);
@@ -993,8 +967,6 @@ public class TextAnalyzerIntegrationTests
     public void GetGlyphsAndTheirPlacements_Numbers_ReturnsValidGlyphs()
     {
         var font = GetTestFont();
-        if (font == null) return;
-
         var spans = ItemizeHelper.Itemize("0123456789");
         var itemProps = (ItemProps)spans![0].element;
         var result = GetGlyphsAndPlacements("0123456789", font, itemProps);
@@ -1010,8 +982,6 @@ public class TextAnalyzerIntegrationTests
     public void GetGlyphsAndTheirPlacements_Punctuation_ReturnsValidGlyphs()
     {
         var font = GetTestFont();
-        if (font == null) return;
-
         var text = ".,!?;:";
         var spans = ItemizeHelper.Itemize(text);
         var itemProps = (ItemProps)spans![0].element;
@@ -1028,8 +998,6 @@ public class TextAnalyzerIntegrationTests
     public void GetGlyphsAndTheirPlacements_GlyphOffsets_AreReasonable()
     {
         var font = GetTestFont();
-        if (font == null) return;
-
         var spans = ItemizeHelper.Itemize("Hello");
         var itemProps = (ItemProps)spans![0].element;
         var result = GetGlyphsAndPlacements("Hello", font, itemProps);
@@ -1050,8 +1018,6 @@ public class TextAnalyzerIntegrationTests
     public void GetGlyphsAndTheirPlacements_ConsistentResults_ForSameInput()
     {
         var font = GetTestFont();
-        if (font == null) return;
-
         var spans = ItemizeHelper.Itemize("Test");
         var itemProps = (ItemProps)spans![0].element;
         
@@ -1070,8 +1036,6 @@ public class TextAnalyzerIntegrationTests
     public void GetGlyphsAndTheirPlacements_DisplayMode_DiffersFromIdeal()
     {
         var font = GetTestFont();
-        if (font == null) return;
-
         var spans = ItemizeHelper.Itemize("Hello");
         var itemProps = (ItemProps)spans![0].element;
         var analyzer = GetTextAnalyzer();
@@ -1117,8 +1081,6 @@ public class TextAnalyzerIntegrationTests
     public void GetBlankGlyphIndex_ReturnsValidIndex()
     {
         var font = GetTestFont();
-        if (font == null) return;
-
         var blankIndex = GetBlankGlyphIndex(font);
         
         // Blank glyph index should be valid (could be 0 for .notdef or space glyph index)
@@ -1130,8 +1092,6 @@ public class TextAnalyzerIntegrationTests
     public void TextAnalyzer_GetGlyphsAndTheirPlacements_WithFeatures_Succeeds()
     {
         var font = GetTestFont();
-        if (font == null) return;
-
         var spans = ItemizeHelper.Itemize("fi"); // potential ligature
         var itemProps = (ItemProps)spans![0].element;
         var analyzer = GetTextAnalyzer();
@@ -1268,8 +1228,6 @@ public class TextAnalyzerIntegrationTests
     public void GetGlyphPlacements_SimpleText_ReturnsAdvances()
     {
         var font = GetTestFont();
-        if (font == null) return;
-
         var spans = ItemizeHelper.Itemize("Hello");
         var itemProps = (ItemProps)spans![0].element;
         
@@ -1293,8 +1251,6 @@ public class TextAnalyzerIntegrationTests
     public void GetGlyphPlacements_DifferentFontSizes_ScalesAdvances()
     {
         var font = GetTestFont();
-        if (font == null) return;
-
         var spans = ItemizeHelper.Itemize("A");
         var itemProps = (ItemProps)spans![0].element;
         
@@ -1316,8 +1272,6 @@ public class TextAnalyzerIntegrationTests
     public void GetGlyphPlacements_MultipleCharacters_ReturnsCorrectCount()
     {
         var font = GetTestFont();
-        if (font == null) return;
-
         var spans = ItemizeHelper.Itemize("ABCDE");
         var itemProps = (ItemProps)spans![0].element;
         
@@ -1335,8 +1289,6 @@ public class TextAnalyzerIntegrationTests
     public void GetGlyphPlacements_Offsets_AreReasonable()
     {
         var font = GetTestFont();
-        if (font == null) return;
-
         var spans = ItemizeHelper.Itemize("Test");
         var itemProps = (ItemProps)spans![0].element;
         
@@ -1357,10 +1309,8 @@ public class TextAnalyzerIntegrationTests
     public void GetGlyphPlacements_RightToLeft_Succeeds()
     {
         var font = GetTestFont();
-        if (font == null) return;
-
         var spans = ItemizeHelper.Itemize("مرحبا");
-        if (spans == null || spans.Count == 0) return;
+        Assert.SkipUnless(spans != null && spans.Count > 0, "Itemization failed");
         
         var itemProps = (ItemProps)spans[0].element;
         
@@ -1374,8 +1324,6 @@ public class TextAnalyzerIntegrationTests
     public void GetGlyphPlacements_ConsistentWithGetGlyphsAndTheirPlacements()
     {
         var font = GetTestFont();
-        if (font == null) return;
-
         var spans = ItemizeHelper.Itemize("Hello");
         var itemProps = (ItemProps)spans![0].element;
         

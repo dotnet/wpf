@@ -109,9 +109,7 @@ public class EdgeCaseTests
     [Fact]
     public void FontFamily_Indexer_WithOutOfRangeIndex_ShouldThrow()
     {
-        var fontCollection = DWriteFactory.SystemFontCollection;
-        var family = fontCollection["Arial"];
-        if (family == null) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
 
         var invalidIndex = family.Count + 100;
 
@@ -124,9 +122,7 @@ public class EdgeCaseTests
     [Fact]
     public void FontFamily_GetFirstMatchingFont_WithExtremeWeight_ShouldReturnClosestMatch()
     {
-        var fontCollection = DWriteFactory.SystemFontCollection;
-        var family = fontCollection["Arial"];
-        if (family == null) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
 
         // Request a weight that likely doesn't exist (e.g., 950)
         var font = family.GetFirstMatchingFont((FontWeight)950, FontStretch.Normal, FontStyle.Normal);
@@ -137,9 +133,7 @@ public class EdgeCaseTests
     [Fact]
     public void FontFamily_GetFirstMatchingFont_WithMinWeight_ShouldReturnFont()
     {
-        var fontCollection = DWriteFactory.SystemFontCollection;
-        var family = fontCollection["Arial"];
-        if (family == null) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
 
         var font = family.GetFirstMatchingFont((FontWeight)1, FontStretch.Normal, FontStyle.Normal);
 
@@ -149,9 +143,7 @@ public class EdgeCaseTests
     [Fact]
     public void FontFamily_DisplayMetrics_WithZeroEmSize_ShouldThrowArgumentException()
     {
-        var fontCollection = DWriteFactory.SystemFontCollection;
-        var family = fontCollection["Arial"];
-        if (family == null) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
 
         // Zero emSize is rejected by DirectWrite
         Action act = () => family.DisplayMetrics(emSize: 0.0f, pixelsPerDip: 1.0f);
@@ -162,9 +154,7 @@ public class EdgeCaseTests
     [Fact]
     public void FontFamily_DisplayMetrics_WithNegativeEmSize_ShouldThrowArgumentException()
     {
-        var fontCollection = DWriteFactory.SystemFontCollection;
-        var family = fontCollection["Arial"];
-        if (family == null) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
 
         // Negative emSize is rejected by DirectWrite
         Action act = () => family.DisplayMetrics(emSize: -12.0f, pixelsPerDip: 1.0f);
@@ -175,9 +165,7 @@ public class EdgeCaseTests
     [Fact]
     public void FontFamily_DisplayMetrics_WithVeryLargeEmSize_ShouldReturnMetrics()
     {
-        var fontCollection = DWriteFactory.SystemFontCollection;
-        var family = fontCollection["Arial"];
-        if (family == null) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
 
         var metrics = family.DisplayMetrics(emSize: 10000.0f, pixelsPerDip: 1.0f);
 
@@ -187,9 +175,7 @@ public class EdgeCaseTests
     [Fact]
     public void FontFamily_DisplayMetrics_WithVerySmallPixelsPerDip_ShouldReturnMetrics()
     {
-        var fontCollection = DWriteFactory.SystemFontCollection;
-        var family = fontCollection["Arial"];
-        if (family == null) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
 
         var metrics = family.DisplayMetrics(emSize: 12.0f, pixelsPerDip: 0.001f);
 
@@ -215,9 +201,8 @@ public class EdgeCaseTests
     public void Factory_CreateFontFace_WithNegativeFaceIndex_ShouldThrow()
     {
         var factory = DWriteFactory.Instance;
-        var arialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
-
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
+        var arialPath = TestHelpers.ArialPath;
 
         // The API takes uint, so we can't pass negative directly, but we can test boundary
         Action act = () => factory.CreateFontFace(new Uri(arialPath), 999);
@@ -249,9 +234,8 @@ public class EdgeCaseTests
     public void FontFace_TryGetFontTable_WithInvalidTableTag_ShouldReturnFalse()
     {
         var factory = DWriteFactory.Instance;
-        var arialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
-
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
+        var arialPath = TestHelpers.ArialPath;
 
         var fontFace = factory.CreateFontFace(new Uri(arialPath), 0);
         try
@@ -272,9 +256,8 @@ public class EdgeCaseTests
     public unsafe void FontFace_GetArrayOfGlyphIndices_WithZeroCount_ShouldNotThrow()
     {
         var factory = DWriteFactory.Instance;
-        var arialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
-
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
+        var arialPath = TestHelpers.ArialPath;
 
         var fontFace = factory.CreateFontFace(new Uri(arialPath), 0);
         try
@@ -301,9 +284,8 @@ public class EdgeCaseTests
     public unsafe void FontFace_GetDesignGlyphMetrics_WithZeroGlyphIndex_ShouldReturnMetrics()
     {
         var factory = DWriteFactory.Instance;
-        var arialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
-
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
+        var arialPath = TestHelpers.ArialPath;
 
         var fontFace = factory.CreateFontFace(new Uri(arialPath), 0);
         try
@@ -331,9 +313,8 @@ public class EdgeCaseTests
     public unsafe void FontFace_GetDisplayGlyphMetrics_WithZeroEmSize_ShouldThrowArgumentException()
     {
         var factory = DWriteFactory.Instance;
-        var arialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
-
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
+        var arialPath = TestHelpers.ArialPath;
 
         var fontFace = factory.CreateFontFace(new Uri(arialPath), 0);
         try
@@ -378,9 +359,8 @@ public class EdgeCaseTests
     public unsafe void FontFace_GetDisplayGlyphMetrics_WithSideways_ShouldReturnMetrics()
     {
         var factory = DWriteFactory.Instance;
-        var arialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
-
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
+        var arialPath = TestHelpers.ArialPath;
 
         var fontFace = factory.CreateFontFace(new Uri(arialPath), 0);
         try
@@ -422,9 +402,8 @@ public class EdgeCaseTests
     public unsafe void FontFace_GetDisplayGlyphMetrics_WithUseDisplayNatural_ShouldReturnMetrics()
     {
         var factory = DWriteFactory.Instance;
-        var arialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
-
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
+        var arialPath = TestHelpers.ArialPath;
 
         var fontFace = factory.CreateFontFace(new Uri(arialPath), 0);
         try
@@ -469,9 +448,8 @@ public class EdgeCaseTests
     [Fact]
     public void Font_HasCharacter_WithZeroCodePoint_ShouldReturnFalse()
     {
-        var fontCollection = DWriteFactory.SystemFontCollection;
-        var family = fontCollection["Arial"];
-        if (family == null || family.Count == 0) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
+        Assert.SkipUnless(family.Count > 0, "Arial font family has no fonts");
 
         var font = family[0u];
 
@@ -482,9 +460,8 @@ public class EdgeCaseTests
     [Fact]
     public void Font_HasCharacter_WithMaxCodePoint_ShouldReturnFalse()
     {
-        var fontCollection = DWriteFactory.SystemFontCollection;
-        var family = fontCollection["Arial"];
-        if (family == null || family.Count == 0) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
+        Assert.SkipUnless(family.Count > 0, "Arial font family has no fonts");
 
         var font = family[0u];
 
@@ -495,9 +472,8 @@ public class EdgeCaseTests
     [Fact]
     public void Font_HasCharacter_WithSurrogateCodePoint_ShouldReturnFalse()
     {
-        var fontCollection = DWriteFactory.SystemFontCollection;
-        var family = fontCollection["Arial"];
-        if (family == null || family.Count == 0) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
+        Assert.SkipUnless(family.Count > 0, "Arial font family has no fonts");
 
         var font = family[0u];
 
@@ -509,9 +485,8 @@ public class EdgeCaseTests
     [Fact]
     public void Font_HasCharacter_WithPrivateUseArea_ShouldReturnResult()
     {
-        var fontCollection = DWriteFactory.SystemFontCollection;
-        var family = fontCollection["Arial"];
-        if (family == null || family.Count == 0) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
+        Assert.SkipUnless(family.Count > 0, "Arial font family has no fonts");
 
         var font = family[0u];
 
@@ -523,9 +498,8 @@ public class EdgeCaseTests
     [Fact]
     public void Font_GetInformationalStrings_AllStringTypes_ShouldNotThrow()
     {
-        var fontCollection = DWriteFactory.SystemFontCollection;
-        var family = fontCollection["Arial"];
-        if (family == null || family.Count == 0) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
+        Assert.SkipUnless(family.Count > 0, "Arial font family has no fonts");
 
         var font = family[0u];
 
@@ -540,9 +514,8 @@ public class EdgeCaseTests
     [Fact]
     public void Font_DisplayMetrics_WithExtremeValues_ShouldNotThrow()
     {
-        var fontCollection = DWriteFactory.SystemFontCollection;
-        var family = fontCollection["Arial"];
-        if (family == null || family.Count == 0) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
+        Assert.SkipUnless(family.Count > 0, "Arial font family has no fonts");
 
         var font = family[0u];
 
@@ -596,9 +569,7 @@ public class EdgeCaseTests
     [Fact]
     public void FontMetrics_Baseline_ShouldBeConsistentWithFormula()
     {
-        var fontCollection = DWriteFactory.SystemFontCollection;
-        var family = fontCollection["Arial"];
-        if (family == null) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
 
         var metrics = family.Metrics;
 
@@ -686,9 +657,8 @@ public class EdgeCaseTests
     [Fact]
     public void LocalizedStrings_NonExistentString_GetInformationalStrings_ReturnsFalse()
     {
-        var fontCollection = DWriteFactory.SystemFontCollection;
-        var family = fontCollection["Arial"];
-        if (family == null || family.Count == 0) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
+        Assert.SkipUnless(family.Count > 0, "Arial font family has no fonts");
 
         var font = family[0u];
 
@@ -706,9 +676,7 @@ public class EdgeCaseTests
     [Fact]
     public void LocalizedStrings_Enumeration_ShouldNotThrow()
     {
-        var fontCollection = DWriteFactory.SystemFontCollection;
-        var family = fontCollection["Arial"];
-        if (family == null) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
 
         var familyNames = family.FamilyNames;
 
@@ -727,9 +695,8 @@ public class EdgeCaseTests
     [Fact]
     public void Font_HasCharacter_WithBMPBoundary_ShouldWork()
     {
-        var fontCollection = DWriteFactory.SystemFontCollection;
-        var family = fontCollection["Arial"];
-        if (family == null || family.Count == 0) return;
+        var family = TestHelpers.GetArialFamilyOrSkip();
+        Assert.SkipUnless(family.Count > 0, "Arial font family has no fonts");
 
         var font = family[0u];
 
@@ -744,9 +711,8 @@ public class EdgeCaseTests
     public unsafe void FontFace_GetArrayOfGlyphIndices_WithSupplementaryPlaneCharacters_ShouldWork()
     {
         var factory = DWriteFactory.Instance;
-        var arialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
-
-        if (!File.Exists(arialPath)) return;
+        TestHelpers.SkipIfArialNotAvailable();
+        var arialPath = TestHelpers.ArialPath;
 
         var fontFace = factory.CreateFontFace(new Uri(arialPath), 0);
         try

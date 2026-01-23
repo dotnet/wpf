@@ -2503,7 +2503,7 @@ namespace Standard
         [DllImport("dwmapi.dll", PreserveSig = false)]
         public static extern int DwmGetWindowAttribute(IntPtr hWnd, DWMWA dwAttributeToGet, ref int pvAttributeValue, int cbAttribute);
 
-        [DllImport("dwmapi.dll", EntryPoint = "DwmExtendFrameIntoClientArea", PreserveSig = true)]
+        [DllImport("dwmapi.dll", EntryPoint = "DwmExtendFrameIntoClientArea", PreserveSig = true, SetLastError = true)]
         private static extern HRESULT _DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);
 
         [DllImport("dwmapi.dll", EntryPoint = "DwmIsCompositionEnabled", PreserveSig = false)]

@@ -47,42 +47,42 @@ bool WPFUtils::OSVersionHelper::IsWindowsVersionOrGreater(ULONG wMajorVersion, U
 
 bool WPFUtils::OSVersionHelper::IsWindowsXPOrGreater()
 {
-    return WPFUtils::OSVersionHelper::IsWindowsVersionOrGreater(HIBYTE(_WIN32_WINNT_WINXP), LOBYTE(_WIN32_WINNT_WINXP), 0);
+    return true;
 }
 
 bool WPFUtils::OSVersionHelper::IsWindowsXPSP1OrGreater()
 {
-    return WPFUtils::OSVersionHelper::IsWindowsVersionOrGreater(HIBYTE(_WIN32_WINNT_WINXP), LOBYTE(_WIN32_WINNT_WINXP), 1);
+    return true;
 }
 
 bool WPFUtils::OSVersionHelper::IsWindowsXPSP2OrGreater()
 {
-    return WPFUtils::OSVersionHelper::IsWindowsVersionOrGreater(HIBYTE(_WIN32_WINNT_WINXP), LOBYTE(_WIN32_WINNT_WINXP), 2);
+    return true;
 }
 
 bool WPFUtils::OSVersionHelper::IsWindowsXPSP3OrGreater()
 {
-    return IsWindowsVersionOrGreater(HIBYTE(_WIN32_WINNT_WINXP), LOBYTE(_WIN32_WINNT_WINXP), 3);
+    return true;
 }
 
 bool WPFUtils::OSVersionHelper::IsWindowsVistaOrGreater()
 {
-    return WPFUtils::OSVersionHelper::IsWindowsVersionOrGreater(HIBYTE(_WIN32_WINNT_VISTA), LOBYTE(_WIN32_WINNT_VISTA), 0);
+    return true;
 }
 
 bool WPFUtils::OSVersionHelper::IsWindowsVistaSP1OrGreater()
 {
-    return WPFUtils::OSVersionHelper::IsWindowsVersionOrGreater(HIBYTE(_WIN32_WINNT_VISTA), LOBYTE(_WIN32_WINNT_VISTA), 1);
+    return true;
 }
 
 bool WPFUtils::OSVersionHelper::IsWindowsVistaSP2OrGreater()
 {
-    return WPFUtils::OSVersionHelper::IsWindowsVersionOrGreater(HIBYTE(_WIN32_WINNT_VISTA), LOBYTE(_WIN32_WINNT_VISTA), 2);
+    return true;
 }
 
 bool WPFUtils::OSVersionHelper::IsWindows7OrGreater()
 {
-    return WPFUtils::OSVersionHelper::IsWindowsVersionOrGreater(HIBYTE(_WIN32_WINNT_WIN7), LOBYTE(_WIN32_WINNT_WIN7), 0);
+    return true;
 }
 
 bool WPFUtils::OSVersionHelper::IsWindows7SP1OrGreater()

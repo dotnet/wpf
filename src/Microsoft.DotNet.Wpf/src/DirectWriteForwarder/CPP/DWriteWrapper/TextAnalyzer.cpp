@@ -155,54 +155,78 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         bool isStrong;
         bool isExtended;
 
+        WCHAR ch = text[0];
         classificationUtility->GetCharAttribute(
-            text[0],
+            ch,
             isCombining,
             needsCaretInfo,
             isIndic,
             isDigit,
             isLatin,
-            isStrong
-            );
-
-        isExtended = ItemizerHelper::IsExtendedCharacter(text[0]);
+            isStrong,
+            isExtended
+        );
 
         UINT32 isDigitRangeStart = 0;
         UINT32 isDigitRangeEnd = 0;
         bool   previousIsDigitValue = (numberCulture == nullptr) ? false : isDigit;
         bool   currentIsDigitValue;
 
+        // Track base character for combining mark script comparison (PR #6857 / Issue #6801)
+        // A combining mark should only stay with its base character if they have the same script.
+        int baseChar = isCombining ? -1 : ch;
+
         // pCharAttribute is assumed to have the same length as text. This is enforced by Itemize().
         pCharAttribute[0] = (CharAttributeType)
-                            (((isCombining)    ? CharAttribute::IsCombining    : CharAttribute::None)
-                           | ((needsCaretInfo) ? CharAttribute::NeedsCaretInfo : CharAttribute::None)
-                           | ((isLatin)        ? CharAttribute::IsLatin        : CharAttribute::None)
-                           | ((isIndic)        ? CharAttribute::IsIndic        : CharAttribute::None)
-                           | ((isStrong)       ? CharAttribute::IsStrong       : CharAttribute::None)
-                           | ((isExtended)     ? CharAttribute::IsExtended     : CharAttribute::None));
+            (((isCombining) ? CharAttribute::IsCombining : CharAttribute::None)
+                | ((needsCaretInfo) ? CharAttribute::NeedsCaretInfo : CharAttribute::None)
+                | ((isLatin) ? CharAttribute::IsLatin : CharAttribute::None)
+                | ((isIndic) ? CharAttribute::IsIndic : CharAttribute::None)
+                | ((isStrong) ? CharAttribute::IsStrong : CharAttribute::None)
+                | ((isExtended) ? CharAttribute::IsExtended : CharAttribute::None));
 
         for (UINT32 i = 1; i < length; ++i)
         {
+            ch = text[i];
             classificationUtility->GetCharAttribute(
-            text[i],
-            isCombining,
-            needsCaretInfo,
-            isIndic,
-            isDigit,
-            isLatin,
-            isStrong
+                ch,
+                isCombining,
+                needsCaretInfo,
+                isIndic,
+                isDigit,
+                isLatin,
+                isStrong,
+                isExtended
             );
 
-            isExtended = ItemizerHelper::IsExtendedCharacter(text[i]);
-            
+            // For combining marks, check if they have the same script as the base character.
+            // If not, they should not be treated as combining with the base (PR #6857 / Issue #6801).
+            // However, script-agnostic combining marks (variation selectors, ZWJ, emoji modifiers, etc.)
+            // are designed to work with any base character regardless of script, so skip the check
+            // for them to allow emoji sequences to stay together.
+            bool isCombiningWithBase = isCombining;
+            if (isCombining && baseChar >= 0 && !isExtended)
+            {
+                if (!classificationUtility->IsSameScript(baseChar, ch))
+                {
+                    // Different script - this combining mark should not stay with the base character
+                    isCombiningWithBase = false;
+                }
+            }
+
+            // Update base character tracking
+            if (!isCombining)
+            {
+                baseChar = ch;
+            }
 
             pCharAttribute[i] = (CharAttributeType)
-                                (((isCombining)    ? CharAttribute::IsCombining    : CharAttribute::None)
-                               | ((needsCaretInfo) ? CharAttribute::NeedsCaretInfo : CharAttribute::None)
-                               | ((isLatin)        ? CharAttribute::IsLatin        : CharAttribute::None)
-                               | ((isIndic)        ? CharAttribute::IsIndic        : CharAttribute::None)
-                               | ((isStrong)       ? CharAttribute::IsStrong       : CharAttribute::None)
-                               | ((isExtended)     ? CharAttribute::IsExtended     : CharAttribute::None));
+                (((isCombiningWithBase) ? CharAttribute::IsCombining : CharAttribute::None)
+                    | ((needsCaretInfo) ? CharAttribute::NeedsCaretInfo : CharAttribute::None)
+                    | ((isLatin) ? CharAttribute::IsLatin : CharAttribute::None)
+                    | ((isIndic) ? CharAttribute::IsIndic : CharAttribute::None)
+                    | ((isStrong) ? CharAttribute::IsStrong : CharAttribute::None)
+                    | ((isExtended) ? CharAttribute::IsExtended : CharAttribute::None));
 
 
             currentIsDigitValue = (numberCulture == nullptr) ? false : isDigit;

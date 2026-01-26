@@ -21,8 +21,16 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             [System::Runtime::InteropServices::Out] bool% isIndic,
             [System::Runtime::InteropServices::Out] bool% isDigit,
             [System::Runtime::InteropServices::Out] bool% isLatin,
-            [System::Runtime::InteropServices::Out] bool% isStrong
+            [System::Runtime::InteropServices::Out] bool% isStrong,
+            [System::Runtime::InteropServices::Out] bool% isExtended
             );
+
+        /// <summary>
+        /// Check whether two Unicode scalar values belong to the same script.
+        /// This is used to determine if combining marks should stay with their base character
+        /// for font fallback purposes. (See PR #6857 / Issue #6801)
+        /// </summary>
+        bool IsSameScript(int unicodeScalar1, int unicodeScalar2);
     };
 
 }}}}//MS::Internal::Text::TextInterface

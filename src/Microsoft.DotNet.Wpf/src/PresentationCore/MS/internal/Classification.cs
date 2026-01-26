@@ -108,7 +108,8 @@ namespace MS.Internal
                                     out bool isIndic,
                                     out bool isDigit,
                                     out bool isLatin,
-                                    out bool isStrong
+                                    out bool isStrong,
+                                    out bool isExtended
                                     )
         {
             CharacterAttribute charAttribute = Classification.CharAttributeOf((int)Classification.GetUnicodeClass(unicodeScalar));
@@ -134,6 +135,16 @@ namespace MS.Internal
             {
                 isIndic = IsScriptIndic(scriptId);
             }
+
+            isExtended = Classification.IsScriptAgnosticCombining(unicodeScalar);
+        }
+
+        /// <summary>
+        /// Check whether two Unicode scalar values belong to the same script.
+        /// </summary>
+        public bool IsSameScript(int unicodeScalar1, int unicodeScalar2)
+        {
+            return Classification.IsSameScript(unicodeScalar1, unicodeScalar2);
         }
 
         /// <summary>
@@ -159,6 +170,7 @@ namespace MS.Internal
             }
         }
     }
+
     /// <summary>
     /// Hold the classification table pointers. 
     /// </summary>    
@@ -253,16 +265,73 @@ namespace MS.Internal
 
 
         /// <summary>
-        /// Lookup script ID for a Unicode scalar value
+        /// Check whether two Unicode scalar values belong to the same script
         /// </summary>
-        public static ScriptID GetScript(int unicodeScalar)
+        static public bool IsSameScript(int unicodeScalar1, int unicodeScalar2)
         {
             unsafe
             {
-                return (ScriptID)Classification.CharAttributeTable[GetUnicodeClass(unicodeScalar)].Script;
+                short unicodeClass1 = GetUnicodeClass(unicodeScalar1);
+                short unicodeClass2 = GetUnicodeClass(unicodeScalar2);
+                if (unicodeClass1 != unicodeClass2)
+                {
+                    CharacterAttribute a1 = Classification.CharAttributeTable[unicodeClass1];
+                    CharacterAttribute a2 = Classification.CharAttributeTable[unicodeClass2];
+                    if (a1.Script != a2.Script)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
             }
         }
 
+        /// <summary>
+        /// Check whether the character is a script-agnostic combining mark that should
+        /// stay with its base character regardless of script differences.
+        /// </summary>
+        /// <remarks>
+        /// This includes variation selectors and combining enclosing marks used in emoji
+        /// sequences like "1️⃣" (digit + VS16 + combining enclosing keycap).
+        /// These characters are designed to modify any base character regardless of script.
+        /// </remarks>
+        static public bool IsScriptAgnosticCombining(int unicodeScalar)
+        {
+            // ZWJ - used in many emoji/grapheme clusters
+            if (unicodeScalar == 0x200D)
+                return true;
+
+            // Variation Selectors VS1-VS16 (U+FE00-U+FE0F)
+            if (unicodeScalar >= 0xFE00 && unicodeScalar <= 0xFE0F)
+                return true;
+
+            // Ideographic Variation Selectors VS17-VS256 (U+E0100-U+E01EF)
+            if (IsIVS(unicodeScalar))
+                return true;
+
+            // Combining Diacritical Marks Extended (U+1AB0-U+1AFF)
+            if (unicodeScalar >= 0x1AB0 && unicodeScalar <= 0x1AFF)
+                return true;
+
+            // Combining Diacritical Marks Supplement (U+1DC0-U+1DFF)
+            if (unicodeScalar >= 0x1DC0 && unicodeScalar <= 0x1DFF)
+                return true;
+
+            // Combining Diacritical Marks for Symbols (U+20D0-U+20FF) - includes U+20E3 keycap
+            if (unicodeScalar >= 0x20D0 && unicodeScalar <= 0x20FF)
+                return true;
+
+            // Combining Half Marks (U+FE20-U+FE2F)
+            if (unicodeScalar >= 0xFE20 && unicodeScalar <= 0xFE2F)
+                return true;
+
+            // Emoji Modifiers / Skin tones (U+1F3FB-U+1F3FF)
+            if (unicodeScalar >= 0x1F3FB && unicodeScalar <= 0x1F3FF)
+                return true;
+
+            return false;
+        }
 
         /// <summary>
         /// Compute Unicode scalar value from unicode codepoint stream

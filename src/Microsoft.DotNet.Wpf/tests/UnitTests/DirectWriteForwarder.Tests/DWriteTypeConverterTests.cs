@@ -252,23 +252,23 @@ public class DWriteTypeConverterTests
     #region InformationalStringID conversion
 
     [Theory]
-    [InlineData(0)]   // None
-    [InlineData(1)]   // CopyrightNotice
-    [InlineData(2)]   // VersionStrings
-    [InlineData(3)]   // Trademark
-    [InlineData(4)]   // Manufacturer
-    [InlineData(5)]   // Designer
-    [InlineData(6)]   // DesignerURL
-    [InlineData(7)]   // Description
-    [InlineData(8)]   // FontVendorURL
-    [InlineData(9)]   // LicenseDescription
-    [InlineData(10)]  // LicenseInfoURL
-    [InlineData(11)]  // WIN32FamilyNames
-    [InlineData(12)]  // Win32SubFamilyNames
-    [InlineData(13)]  // PreferredFamilyNames
-    [InlineData(14)]  // PreferredSubFamilyNames
-    [InlineData(15)]  // SampleText
-    public void Convert_InformationalStringID_ToNative_ShouldSucceed(int stringIdValue)
+    [InlineData(0, null)]   // None - no string expected
+    [InlineData(1, "Monotype")]   // CopyrightNotice - contains "Monotype"
+    [InlineData(2, null)]   // VersionStrings - version varies
+    [InlineData(3, "Arial")]   // Trademark - contains "Arial"
+    [InlineData(4, "Monotype")]   // Manufacturer - "Monotype" or "The Monotype Corporation"
+    [InlineData(5, null)]   // Designer - may not exist
+    [InlineData(6, null)]   // DesignerURL - may not exist
+    [InlineData(7, null)]   // Description - may not exist
+    [InlineData(8, null)]   // FontVendorURL - may not exist
+    [InlineData(9, null)]   // LicenseDescription - may not exist
+    [InlineData(10, null)]  // LicenseInfoURL - may not exist
+    [InlineData(11, "Arial")]  // WIN32FamilyNames - "Arial"
+    [InlineData(12, "Normal")]  // Win32SubFamilyNames - "Normal" (localized style name)
+    [InlineData(13, null)]  // PreferredFamilyNames - may not exist
+    [InlineData(14, null)]  // PreferredSubFamilyNames - may not exist
+    [InlineData(15, null)]  // SampleText - may not exist
+    public void Convert_InformationalStringID_ToNative_ShouldSucceed(int stringIdValue, string? expectedSubstring)
     {
         var arialFamily = TestHelpers.GetArialFamilyOrSkip();
         Assert.SkipUnless(arialFamily.Count > 0, "Arial font family has no fonts");
@@ -277,7 +277,16 @@ public class DWriteTypeConverterTests
         var stringId = (InformationalStringID)stringIdValue;
 
         // GetInformationalStrings calls DWriteTypeConverter.Convert(InformationalStringID)
-        _ = font.GetInformationalStrings(stringId, out _);
+        var exists = font.GetInformationalStrings(stringId, out var localizedStrings);
+        
+        if (expectedSubstring != null && exists)
+        {
+            // Validate the English string contains expected content
+            localizedStrings.Should().NotBeNull();
+            var englishValue = localizedStrings!.Values.FirstOrDefault() ?? "";
+            englishValue.Should().Contain(expectedSubstring, 
+                $"InformationalStringID {stringId} should contain '{expectedSubstring}'");
+        }
     }
 
     #endregion

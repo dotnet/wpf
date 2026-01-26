@@ -211,22 +211,16 @@ public class TrueTypeSubsetterTests
 
         var arialUri = new Uri(TestHelpers.ArialPath);
 
-        unsafe
+        Assert.Throws<NullReferenceException>(() =>
         {
-            fixed (byte* pFontData = fontData)
+            unsafe
             {
-                NullReferenceException? caught = null;
-                try
+                fixed (byte* pFontData = fontData)
                 {
                     TrueTypeSubsetter.ComputeSubset(pFontData, fontData.Length, arialUri, 0, null!);
                 }
-                catch (NullReferenceException ex)
-                {
-                    caught = ex;
-                }
-                Assert.NotNull(caught);
             }
-        }
+        });
     }
 
     [Fact]
@@ -237,22 +231,16 @@ public class TrueTypeSubsetterTests
         var arialUri = new Uri(TestHelpers.ArialPath);
         ushort[] glyphArray = [];
 
-        unsafe
+        Assert.Throws<IndexOutOfRangeException>(() =>
         {
-            fixed (byte* pFontData = fontData)
+            unsafe
             {
-                IndexOutOfRangeException? caught = null;
-                try
+                fixed (byte* pFontData = fontData)
                 {
                     TrueTypeSubsetter.ComputeSubset(pFontData, fontData.Length, arialUri, 0, glyphArray);
                 }
-                catch (IndexOutOfRangeException ex)
-                {
-                    caught = ex;
-                }
-                Assert.NotNull(caught);
             }
-        }
+        });
     }
 
     [Fact]

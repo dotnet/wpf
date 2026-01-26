@@ -1,8 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Collections.Generic;
-
 namespace MS.Internal.Text.TextInterface.Tests;
 
 /// <summary>
@@ -431,16 +429,19 @@ public class DWriteTypeConverterTests
     // The following tests call DWriteTypeConverter methods directly
     // since it's a private ref class (internal in C#) with internal methods
     
+    // DWRITE_FACTORY_TYPE enum values (from dwrite.h)
+    private const int DWRITE_FACTORY_TYPE_SHARED = 0;
+    private const int DWRITE_FACTORY_TYPE_ISOLATED = 1;
+
     [Theory]
-    [InlineData(0)]  // Shared
-    [InlineData(1)]  // Isolated
-    public void DWriteTypeConverter_Convert_FactoryType_AllValues(int factoryTypeValue)
+    [InlineData(0, DWRITE_FACTORY_TYPE_SHARED)]   // Shared
+    [InlineData(1, DWRITE_FACTORY_TYPE_ISOLATED)] // Isolated
+    public void DWriteTypeConverter_Convert_FactoryType_ReturnsExpectedValue(int factoryTypeValue, int expectedNativeValue)
     {
         var factoryType = (FactoryType)factoryTypeValue;
-        // Convert FactoryType to native DWRITE_FACTORY_TYPE
-        // This is called internally when creating factories
-        _ = DWriteTypeConverter.Convert(factoryType);
-        // Result is a native enum, just verify no exception
+        int result = (int)DWriteTypeConverter.Convert(factoryType);
+        result.Should().Be(expectedNativeValue,
+            $"FactoryType.{factoryType} should convert to DWRITE_FACTORY_TYPE value {expectedNativeValue}");
     }
     
     [Fact]
@@ -451,25 +452,28 @@ public class DWriteTypeConverterTests
         act.Should().Throw<InvalidOperationException>();
     }
 
+    // DWRITE_FONT_WEIGHT enum values match the numeric weight values (100-950)
     [Theory]
-    [InlineData(100)]  // Thin
-    [InlineData(200)]  // ExtraLight
-    [InlineData(300)]  // Light
-    [InlineData(350)]  // SemiLight (falls through to default)
-    [InlineData(400)]  // Normal
-    [InlineData(500)]  // Medium
-    [InlineData(600)]  // SemiBold
-    [InlineData(700)]  // Bold
-    [InlineData(800)]  // ExtraBold
-    [InlineData(900)]  // Black
-    [InlineData(950)]  // ExtraBlack
-    [InlineData(1)]    // Min valid custom weight
-    [InlineData(999)]  // Max valid custom weight
-    [InlineData(550)]  // Custom weight in middle
-    public void DWriteTypeConverter_Convert_FontWeight_ToNative_AllValues(int weightValue)
+    [InlineData(100, 100)]   // Thin
+    [InlineData(200, 200)]   // ExtraLight
+    [InlineData(300, 300)]   // Light
+    [InlineData(350, 350)]   // SemiLight - passes through as-is
+    [InlineData(400, 400)]   // Normal
+    [InlineData(500, 500)]   // Medium
+    [InlineData(600, 600)]   // SemiBold
+    [InlineData(700, 700)]   // Bold
+    [InlineData(800, 800)]   // ExtraBold
+    [InlineData(900, 900)]   // Black
+    [InlineData(950, 950)]   // ExtraBlack
+    [InlineData(1, 1)]       // Min valid custom weight
+    [InlineData(999, 999)]   // Max valid custom weight
+    [InlineData(550, 550)]   // Custom weight in middle
+    public void DWriteTypeConverter_Convert_FontWeight_PreservesNumericValue(int weightValue, int expectedNativeValue)
     {
         var weight = (FontWeight)weightValue;
-        _ = DWriteTypeConverter.Convert(weight);
+        int result = (int)DWriteTypeConverter.Convert(weight);
+        result.Should().Be(expectedNativeValue,
+            $"FontWeight({weightValue}) should convert to DWRITE_FONT_WEIGHT value {expectedNativeValue}");
     }
     
     [Theory]
@@ -483,21 +487,24 @@ public class DWriteTypeConverterTests
         act.Should().Throw<InvalidOperationException>();
     }
 
+    // DWRITE_FONT_STRETCH enum values (0-9)
     [Theory]
-    [InlineData(0)]  // Undefined
-    [InlineData(1)]  // UltraCondensed
-    [InlineData(2)]  // ExtraCondensed
-    [InlineData(3)]  // Condensed
-    [InlineData(4)]  // SemiCondensed
-    [InlineData(5)]  // Normal
-    [InlineData(6)]  // SemiExpanded
-    [InlineData(7)]  // Expanded
-    [InlineData(8)]  // ExtraExpanded
-    [InlineData(9)]  // UltraExpanded
-    public void DWriteTypeConverter_Convert_FontStretch_ToNative_AllValues(int stretchValue)
+    [InlineData(0, 0)]  // Undefined
+    [InlineData(1, 1)]  // UltraCondensed
+    [InlineData(2, 2)]  // ExtraCondensed
+    [InlineData(3, 3)]  // Condensed
+    [InlineData(4, 4)]  // SemiCondensed
+    [InlineData(5, 5)]  // Normal
+    [InlineData(6, 6)]  // SemiExpanded
+    [InlineData(7, 7)]  // Expanded
+    [InlineData(8, 8)]  // ExtraExpanded
+    [InlineData(9, 9)]  // UltraExpanded
+    public void DWriteTypeConverter_Convert_FontStretch_PreservesNumericValue(int stretchValue, int expectedNativeValue)
     {
         var stretch = (FontStretch)stretchValue;
-        _ = DWriteTypeConverter.Convert(stretch);
+        int result = (int)DWriteTypeConverter.Convert(stretch);
+        result.Should().Be(expectedNativeValue,
+            $"FontStretch({stretchValue}) should convert to DWRITE_FONT_STRETCH value {expectedNativeValue}");
     }
     
     [Fact]
@@ -508,14 +515,17 @@ public class DWriteTypeConverterTests
         act.Should().Throw<InvalidOperationException>();
     }
 
+    // DWRITE_FONT_STYLE enum values (0-2)
     [Theory]
-    [InlineData(0)]  // Normal
-    [InlineData(1)]  // Oblique
-    [InlineData(2)]  // Italic
-    public void DWriteTypeConverter_Convert_FontStyle_ToNative_AllValues(int styleValue)
+    [InlineData(0, 0)]  // Normal
+    [InlineData(1, 1)]  // Oblique
+    [InlineData(2, 2)]  // Italic
+    public void DWriteTypeConverter_Convert_FontStyle_PreservesNumericValue(int styleValue, int expectedNativeValue)
     {
         var style = (FontStyle)styleValue;
-        _ = DWriteTypeConverter.Convert(style);
+        int result = (int)DWriteTypeConverter.Convert(style);
+        result.Should().Be(expectedNativeValue,
+            $"FontStyle({styleValue}) should convert to DWRITE_FONT_STYLE value {expectedNativeValue}");
     }
     
     [Fact]
@@ -526,15 +536,18 @@ public class DWriteTypeConverterTests
         act.Should().Throw<InvalidOperationException>();
     }
 
+    // DWRITE_FONT_SIMULATIONS enum values (0-3)
     [Theory]
-    [InlineData(0)]  // None
-    [InlineData(1)]  // Bold
-    [InlineData(2)]  // Oblique
-    [InlineData(3)]  // Bold | Oblique
-    public void DWriteTypeConverter_Convert_FontSimulations_ToNative_AllValues(int simValue)
+    [InlineData(0, 0)]  // None
+    [InlineData(1, 1)]  // Bold
+    [InlineData(2, 2)]  // Oblique
+    [InlineData(3, 3)]  // Bold | Oblique
+    public void DWriteTypeConverter_Convert_FontSimulations_PreservesNumericValue(int simValue, int expectedNativeValue)
     {
         var simulations = (FontSimulations)simValue;
-        _ = DWriteTypeConverter.Convert(simulations);
+        int result = (int)DWriteTypeConverter.Convert(simulations);
+        result.Should().Be(expectedNativeValue,
+            $"FontSimulations({simValue}) should convert to DWRITE_FONT_SIMULATIONS value {expectedNativeValue}");
     }
     
     [Fact]
@@ -545,18 +558,23 @@ public class DWriteTypeConverterTests
         act.Should().Throw<InvalidOperationException>();
     }
 
+    // DWRITE_FONT_FACE_TYPE enum values - mapping from WPF FontFaceType to native DWRITE values
+    // WPF: CFF=0, TrueType=1, TrueTypeCollection=2, Type1=3, Vector=4, Bitmap=5, Unknown=6
+    // Native: Same ordering as WPF (they match)
     [Theory]
-    [InlineData(0)]  // Unknown
-    [InlineData(1)]  // CFF
-    [InlineData(2)]  // TrueType
-    [InlineData(3)]  // TrueTypeCollection
-    [InlineData(4)]  // Type1
-    [InlineData(5)]  // Vector
-    [InlineData(6)]  // Bitmap
-    public void DWriteTypeConverter_Convert_FontFaceType_ToNative_AllValues(int faceTypeValue)
+    [InlineData(0, 0)]  // CFF -> DWRITE_FONT_FACE_TYPE_CFF
+    [InlineData(1, 1)]  // TrueType -> DWRITE_FONT_FACE_TYPE_TRUETYPE
+    [InlineData(2, 2)]  // TrueTypeCollection -> DWRITE_FONT_FACE_TYPE_TRUETYPE_COLLECTION
+    [InlineData(3, 3)]  // Type1 -> DWRITE_FONT_FACE_TYPE_TYPE1
+    [InlineData(4, 4)]  // Vector -> DWRITE_FONT_FACE_TYPE_VECTOR
+    [InlineData(5, 5)]  // Bitmap -> DWRITE_FONT_FACE_TYPE_BITMAP
+    [InlineData(6, 6)]  // Unknown -> DWRITE_FONT_FACE_TYPE_UNKNOWN
+    public void DWriteTypeConverter_Convert_FontFaceType_MapsToCorrectNativeValue(int faceTypeValue, int expectedNativeValue)
     {
         var faceType = (FontFaceType)faceTypeValue;
-        _ = DWriteTypeConverter.Convert(faceType);
+        int result = (int)DWriteTypeConverter.Convert(faceType);
+        result.Should().Be(expectedNativeValue,
+            $"FontFaceType({faceTypeValue}) should convert to DWRITE_FONT_FACE_TYPE value {expectedNativeValue}");
     }
     
     [Fact]
@@ -567,27 +585,30 @@ public class DWriteTypeConverterTests
         act.Should().Throw<InvalidOperationException>();
     }
 
+    // DWRITE_INFORMATIONAL_STRING_ID enum values (0-15)
     [Theory]
-    [InlineData(0)]   // None
-    [InlineData(1)]   // CopyrightNotice
-    [InlineData(2)]   // VersionStrings
-    [InlineData(3)]   // Trademark
-    [InlineData(4)]   // Manufacturer
-    [InlineData(5)]   // Designer
-    [InlineData(6)]   // DesignerURL
-    [InlineData(7)]   // Description
-    [InlineData(8)]   // FontVendorURL
-    [InlineData(9)]   // LicenseDescription
-    [InlineData(10)]  // LicenseInfoURL
-    [InlineData(11)]  // WIN32FamilyNames
-    [InlineData(12)]  // Win32SubFamilyNames
-    [InlineData(13)]  // PreferredFamilyNames
-    [InlineData(14)]  // PreferredSubFamilyNames
-    [InlineData(15)]  // SampleText
-    public void DWriteTypeConverter_Convert_InformationalStringID_ToNative_AllValues(int stringIdValue)
+    [InlineData(0, 0)]    // None
+    [InlineData(1, 1)]    // CopyrightNotice
+    [InlineData(2, 2)]    // VersionStrings
+    [InlineData(3, 3)]    // Trademark
+    [InlineData(4, 4)]    // Manufacturer
+    [InlineData(5, 5)]    // Designer
+    [InlineData(6, 6)]    // DesignerURL
+    [InlineData(7, 7)]    // Description
+    [InlineData(8, 8)]    // FontVendorURL
+    [InlineData(9, 9)]    // LicenseDescription
+    [InlineData(10, 10)]  // LicenseInfoURL
+    [InlineData(11, 11)]  // WIN32FamilyNames
+    [InlineData(12, 12)]  // Win32SubFamilyNames
+    [InlineData(13, 13)]  // PreferredFamilyNames
+    [InlineData(14, 14)]  // PreferredSubFamilyNames
+    [InlineData(15, 15)]  // SampleText
+    public void DWriteTypeConverter_Convert_InformationalStringID_PreservesNumericValue(int stringIdValue, int expectedNativeValue)
     {
         var stringId = (InformationalStringID)stringIdValue;
-        _ = DWriteTypeConverter.Convert(stringId);
+        int result = (int)DWriteTypeConverter.Convert(stringId);
+        result.Should().Be(expectedNativeValue,
+            $"InformationalStringID({stringIdValue}) should convert to DWRITE_INFORMATIONAL_STRING_ID value {expectedNativeValue}");
     }
     
     [Fact]
@@ -680,11 +701,12 @@ public class DWriteTypeConverterTests
     [Fact]
     public void Convert_FontWeight_FromNative_ViaAllSystemFonts()
     {
-        // Iterate all system fonts to maximize coverage of different DWRITE_FONT_WEIGHT values
+        // Iterate ALL system fonts to maximize coverage of different DWRITE_FONT_WEIGHT values
         var fontCollection = DWriteFactory.SystemFontCollection;
         var weightsFound = new HashSet<int>();
         
-        for (uint i = 0; i < fontCollection.FamilyCount && i < 50; i++)
+        // Iterate all families (not just first 50) to maximize coverage
+        for (uint i = 0; i < fontCollection.FamilyCount; i++)
         {
             var family = fontCollection[i];
             foreach (var font in family)
@@ -694,19 +716,23 @@ public class DWriteTypeConverterTests
             }
         }
         
-        // We should find at least Normal (400) and Bold (700) in system fonts
+        // We should find Normal (400) and Bold (700) in system fonts
         weightsFound.Should().Contain(400, "System should have Normal weight fonts");
         weightsFound.Should().Contain(700, "System should have Bold weight fonts");
+        
+        // Additional weights typically found on Windows: Light (300), Medium (500), SemiBold (600)
+        // We don't assert these as they depend on installed fonts, but we exercise all available values
     }
     
     [Fact]
     public void Convert_FontStretch_FromNative_ViaAllSystemFonts()
     {
-        // Iterate all system fonts to maximize coverage of different DWRITE_FONT_STRETCH values
+        // Iterate ALL system fonts to maximize coverage of different DWRITE_FONT_STRETCH values
         var fontCollection = DWriteFactory.SystemFontCollection;
         var stretchesFound = new HashSet<int>();
         
-        for (uint i = 0; i < fontCollection.FamilyCount && i < 50; i++)
+        // Iterate all families (not just first 50) to maximize coverage
+        for (uint i = 0; i < fontCollection.FamilyCount; i++)
         {
             var family = fontCollection[i];
             foreach (var font in family)
@@ -716,18 +742,21 @@ public class DWriteTypeConverterTests
             }
         }
         
-        // We should find at least Normal (5) in system fonts
+        // We should find Normal (5) in system fonts
         stretchesFound.Should().Contain(5, "System should have Normal stretch fonts");
+        
+        // Other stretches (Condensed=3, SemiCondensed=4, SemiExpanded=6, etc.) depend on installed fonts
     }
     
     [Fact]
     public void Convert_FontStyle_FromNative_ViaAllSystemFonts()
     {
-        // Iterate all system fonts to maximize coverage of different DWRITE_FONT_STYLE values
+        // Iterate ALL system fonts to maximize coverage of different DWRITE_FONT_STYLE values
         var fontCollection = DWriteFactory.SystemFontCollection;
         var stylesFound = new HashSet<int>();
         
-        for (uint i = 0; i < fontCollection.FamilyCount && i < 50; i++)
+        // Iterate all families (not just first 50) to maximize coverage
+        for (uint i = 0; i < fontCollection.FamilyCount; i++)
         {
             var family = fontCollection[i];
             foreach (var font in family)
@@ -737,8 +766,11 @@ public class DWriteTypeConverterTests
             }
         }
         
-        // We should find Normal (0) and likely Italic (2) in system fonts
+        // We should find Normal (0) and Italic (2) in system fonts
         stylesFound.Should().Contain(0, "System should have Normal style fonts");
+        stylesFound.Should().Contain(2, "System should have Italic style fonts");
+        
+        // Oblique (1) is rare in system fonts but may be found depending on installed fonts
     }
     
     [Fact]
@@ -773,8 +805,9 @@ public class DWriteTypeConverterTests
         // Test different font face types
         var factory = DWriteFactory.Instance;
         var fontsPath = Environment.GetFolderPath(Environment.SpecialFolder.Fonts);
+        var typesFound = new HashSet<FontFaceType>();
         
-        // TTF files
+        // TTF files (TrueType)
         string[] ttfFiles = ["arial.ttf", "times.ttf", "verdana.ttf", "cour.ttf"];
         foreach (var file in ttfFiles)
         {
@@ -787,6 +820,7 @@ public class DWriteTypeConverterTests
                 // This calls Convert(DWRITE_FONT_FACE_TYPE)
                 var faceType = fontFace.Type;
                 faceType.Should().Be(FontFaceType.TrueType);
+                typesFound.Add(faceType);
             }
             finally
             {
@@ -794,7 +828,7 @@ public class DWriteTypeConverterTests
             }
         }
         
-        // TTC file
+        // TTC file (TrueTypeCollection)
         var ttcPath = Path.Combine(fontsPath, "cambria.ttc");
         if (File.Exists(ttcPath))
         {
@@ -803,22 +837,46 @@ public class DWriteTypeConverterTests
             {
                 var faceType = fontFace.Type;
                 faceType.Should().Be(FontFaceType.TrueTypeCollection);
+                typesFound.Add(faceType);
             }
             finally
             {
                 fontFace.Release();
             }
         }
+        
+        // OTF files (CFF - OpenType with PostScript outlines)
+        string[] otfFiles = ["calibri.ttf", "consola.ttf", "segoeui.ttf"];
+        foreach (var file in otfFiles)
+        {
+            var path = Path.Combine(fontsPath, file);
+            if (!File.Exists(path)) continue;
+            
+            var fontFace = factory.CreateFontFace(new Uri(path), 0);
+            try
+            {
+                // Most Windows fonts are TrueType; CFF fonts are less common
+                var faceType = fontFace.Type;
+                typesFound.Add(faceType);
+            }
+            finally
+            {
+                fontFace.Release();
+            }
+        }
+        
+        // We should have found at least TrueType
+        typesFound.Should().Contain(FontFaceType.TrueType, "Should find at least TrueType fonts");
     }
     
     [Fact]
     public void Convert_FontMetrics_FromNative_ViaAllSystemFonts()
     {
-        // Access FontMetrics from various fonts to cover Convert(DWRITE_FONT_METRICS)
+        // Access FontMetrics from ALL system fonts to cover Convert(DWRITE_FONT_METRICS)
         var fontCollection = DWriteFactory.SystemFontCollection;
         int fontsChecked = 0;
         
-        for (uint i = 0; i < fontCollection.FamilyCount && fontsChecked < 20; i++)
+        for (uint i = 0; i < fontCollection.FamilyCount; i++)
         {
             var family = fontCollection[i];
             if (family.Count == 0) continue;

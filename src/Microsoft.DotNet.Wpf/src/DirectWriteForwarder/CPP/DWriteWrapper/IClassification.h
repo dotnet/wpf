@@ -22,7 +22,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             [System::Runtime::InteropServices::Out] bool% isDigit,
             [System::Runtime::InteropServices::Out] bool% isLatin,
             [System::Runtime::InteropServices::Out] bool% isStrong,
-            [System::Runtime::InteropServices::Out] bool% isExtended
+            [System::Runtime::InteropServices::Out] bool% isScriptAgnosticCombining
             );
 
         /// <summary>

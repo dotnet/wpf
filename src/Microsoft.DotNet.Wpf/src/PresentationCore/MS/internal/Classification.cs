@@ -109,7 +109,7 @@ namespace MS.Internal
                                     out bool isDigit,
                                     out bool isLatin,
                                     out bool isStrong,
-                                    out bool isExtended
+                                    out bool isScriptAgnosticCombining
                                     )
         {
             CharacterAttribute charAttribute = Classification.CharAttributeOf((int)Classification.GetUnicodeClass(unicodeScalar));
@@ -120,7 +120,7 @@ namespace MS.Internal
                         || Classification.IsIVS(unicodeScalar));
 
             isStrong = (itemClass == (byte)ItemClass.StrongClass);
-            
+
             int script = charAttribute.Script;
             needsCaretInfo = ScriptCaretInfo[script];
 
@@ -136,7 +136,7 @@ namespace MS.Internal
                 isIndic = IsScriptIndic(scriptId);
             }
 
-            isExtended = Classification.IsScriptAgnosticCombining(unicodeScalar);
+            isScriptAgnosticCombining = Classification.IsScriptAgnosticCombining(unicodeScalar);
         }
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace MS.Internal
         /// <summary>
         /// Check whether two Unicode scalar values belong to the same script
         /// </summary>
-        static public bool IsSameScript(int unicodeScalar1, int unicodeScalar2)
+        public static bool IsSameScript(int unicodeScalar1, int unicodeScalar2)
         {
             unsafe
             {
@@ -296,7 +296,7 @@ namespace MS.Internal
         /// sequences like "1️⃣" (digit + VS16 + combining enclosing keycap).
         /// These characters are designed to modify any base character regardless of script.
         /// </remarks>
-        static public bool IsScriptAgnosticCombining(int unicodeScalar)
+        public static bool IsScriptAgnosticCombining(int unicodeScalar)
         {
             // ZWJ - used in many emoji/grapheme clusters
             if (unicodeScalar == 0x200D)

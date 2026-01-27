@@ -154,6 +154,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         bool isLatin;
         bool isStrong;
         bool isExtended;
+        bool isScriptAgnosticCombining;
 
         WCHAR ch = text[0];
         classificationUtility->GetCharAttribute(
@@ -164,8 +165,10 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             isDigit,
             isLatin,
             isStrong,
-            isExtended
+            isScriptAgnosticCombining
         );
+
+        isExtended = ItemizerHelper::IsExtendedCharacter(ch);
 
         UINT32 isDigitRangeStart = 0;
         UINT32 isDigitRangeEnd = 0;
@@ -178,12 +181,12 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
 
         // pCharAttribute is assumed to have the same length as text. This is enforced by Itemize().
         pCharAttribute[0] = (CharAttributeType)
-            (((isCombining) ? CharAttribute::IsCombining : CharAttribute::None)
-                | ((needsCaretInfo) ? CharAttribute::NeedsCaretInfo : CharAttribute::None)
-                | ((isLatin) ? CharAttribute::IsLatin : CharAttribute::None)
-                | ((isIndic) ? CharAttribute::IsIndic : CharAttribute::None)
-                | ((isStrong) ? CharAttribute::IsStrong : CharAttribute::None)
-                | ((isExtended) ? CharAttribute::IsExtended : CharAttribute::None));
+                            (((isCombining)    ? CharAttribute::IsCombining    : CharAttribute::None)
+                           | ((needsCaretInfo) ? CharAttribute::NeedsCaretInfo : CharAttribute::None)
+                           | ((isLatin)        ? CharAttribute::IsLatin        : CharAttribute::None)
+                           | ((isIndic)        ? CharAttribute::IsIndic        : CharAttribute::None)
+                           | ((isStrong)       ? CharAttribute::IsStrong       : CharAttribute::None)
+                           | ((isExtended)     ? CharAttribute::IsExtended     : CharAttribute::None));
 
         for (UINT32 i = 1; i < length; ++i)
         {
@@ -196,8 +199,10 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
                 isDigit,
                 isLatin,
                 isStrong,
-                isExtended
+                isScriptAgnosticCombining
             );
+
+            isExtended = ItemizerHelper::IsExtendedCharacter(ch);
 
             // For combining marks, check if they have the same script as the base character.
             // If not, they should not be treated as combining with the base (PR #6857 / Issue #6801).
@@ -205,7 +210,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             // are designed to work with any base character regardless of script, so skip the check
             // for them to allow emoji sequences to stay together.
             bool isCombiningWithBase = isCombining;
-            if (isCombining && baseChar >= 0 && !isExtended)
+            if (isCombining && baseChar >= 0 && !isScriptAgnosticCombining)
             {
                 if (!classificationUtility->IsSameScript(baseChar, ch))
                 {
@@ -221,12 +226,12 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             }
 
             pCharAttribute[i] = (CharAttributeType)
-                (((isCombiningWithBase) ? CharAttribute::IsCombining : CharAttribute::None)
-                    | ((needsCaretInfo) ? CharAttribute::NeedsCaretInfo : CharAttribute::None)
-                    | ((isLatin) ? CharAttribute::IsLatin : CharAttribute::None)
-                    | ((isIndic) ? CharAttribute::IsIndic : CharAttribute::None)
-                    | ((isStrong) ? CharAttribute::IsStrong : CharAttribute::None)
-                    | ((isExtended) ? CharAttribute::IsExtended : CharAttribute::None));
+                                (((isCombining)    ? CharAttribute::IsCombining    : CharAttribute::None)
+                               | ((needsCaretInfo) ? CharAttribute::NeedsCaretInfo : CharAttribute::None)
+                               | ((isLatin)        ? CharAttribute::IsLatin        : CharAttribute::None)
+                               | ((isIndic)        ? CharAttribute::IsIndic        : CharAttribute::None)
+                               | ((isStrong)       ? CharAttribute::IsStrong       : CharAttribute::None)
+                               | ((isExtended)     ? CharAttribute::IsExtended     : CharAttribute::None));
 
 
             currentIsDigitValue = (numberCulture == nullptr) ? false : isDigit;

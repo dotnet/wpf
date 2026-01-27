@@ -33,7 +33,7 @@ This file should be imported by eng/Versions.props
     <SystemSecurityPermissionsPackageVersion>11.0.0-preview.1.26076.102</SystemSecurityPermissionsPackageVersion>
     <SystemWindowsExtensionsPackageVersion>11.0.0-preview.1.26076.102</SystemWindowsExtensionsPackageVersion>
     <!-- _git/dotnet-wpf-int dependencies -->
-    <MicrosoftDotNetWpfDncEngPackageVersion>10.0.0-rc.2.26076.2</MicrosoftDotNetWpfDncEngPackageVersion>
+    <MicrosoftDotNetWpfDncEngPackageVersion>10.0.0-rc.2.26076.3</MicrosoftDotNetWpfDncEngPackageVersion>
   </PropertyGroup>
   <!--Property group for alternate package version names-->
   <PropertyGroup>

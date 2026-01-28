@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Diagnostics.Tracing;
@@ -351,26 +351,21 @@ namespace MS.Internal.Telemetry
         }
 
         [EventData]
-        private class EmptyStruct
+        private sealed class EmptyStruct
         {
-            private EmptyStruct()
-            {
-
-            }
+            private EmptyStruct() { }
 
             internal static EmptyStruct Instance
             {
                 get
                 {
-                    if (_instance == null)
-                    {
-                        _instance = new EmptyStruct();
-                    }
-                    return _instance;
+                    s_instance ??= new EmptyStruct();
+
+                    return s_instance;
                 }
             }
 
-            private static EmptyStruct _instance;
+            private static EmptyStruct s_instance;
         }
     }
 }

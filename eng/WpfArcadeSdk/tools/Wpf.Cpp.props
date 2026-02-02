@@ -3,8 +3,8 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <CharacterSet>Unicode</CharacterSet>
 
-    <!-- v145 = Visual Studio 2026 -->
-    <PlatformToolset>v145</PlatformToolset>
+    <!-- v143 = Visual Studio 2022 -->
+    <PlatformToolset>v143</PlatformToolset>
 
     <!-- 26100 is Windows 11 SDK -->
     <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>

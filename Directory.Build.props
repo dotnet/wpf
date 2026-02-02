@@ -26,6 +26,10 @@
     <WpfArcadeSdkTargets>$(WpfArcadeSdkPath)Sdk\Sdk.targets</WpfArcadeSdkTargets>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <AfterMicrosoftNETSdkTargets>$(MSBuildThisFileDirectory)eng\vs-workaround.targets</AfterMicrosoftNETSdkTargets>
+  </PropertyGroup>
+
   <Import Project="$(WpfArcadeSdkProps)"
           Condition="Exists('$(WpfArcadeSdkProps)') And Exists('$(WpfArcadeSdkTargets)')"/>
 

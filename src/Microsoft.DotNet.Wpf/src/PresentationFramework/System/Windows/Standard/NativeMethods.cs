@@ -2520,18 +2520,19 @@ namespace Standard
             {
                 return true;
             }
+            
             if(FrameworkAppContextSwitches.DisableDWMCrashContainment)
             {
                 // Original behavior: just call the native method and let any exceptions propagate.
                 HRESULT.ThrowLastError();
             }
 
-            // Crash containment behavior: catch and handle DWM errors gracefully.
-            // Check if DWM composition is disabled and log it
+            // Crash only if the arguments are invalid.
             if(hr == HRESULT.E_INVALIDARG)
             {
                 HRESULT.ThrowLastError();
             }
+
             return false;
         }
 

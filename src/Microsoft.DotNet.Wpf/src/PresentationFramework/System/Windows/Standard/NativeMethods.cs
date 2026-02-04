@@ -2503,8 +2503,8 @@ namespace Standard
         [DllImport("dwmapi.dll", PreserveSig = false)]
         public static extern int DwmGetWindowAttribute(IntPtr hWnd, DWMWA dwAttributeToGet, ref int pvAttributeValue, int cbAttribute);
 
-        [DllImport("dwmapi.dll", EntryPoint = "DwmExtendFrameIntoClientArea", PreserveSig = false)]
-        private static extern int _DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);
+        [DllImport("dwmapi.dll", EntryPoint = "DwmExtendFrameIntoClientArea", PreserveSig = true, SetLastError = true)]
+        private static extern HRESULT _DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);
 
         [DllImport("dwmapi.dll", EntryPoint = "DwmIsCompositionEnabled", PreserveSig = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -2513,40 +2513,27 @@ namespace Standard
         [DllImport("dwmapi.dll", EntryPoint = "DwmGetColorizationColor", PreserveSig = true)]
         private static extern HRESULT _DwmGetColorizationColor(out uint pcrColorization, [Out, MarshalAs(UnmanagedType.Bool)] out bool pfOpaqueBlend);
 
-        public static int DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset)
+        public static bool DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset)
         {
+            HRESULT hr = _DwmExtendFrameIntoClientArea(hwnd, ref pMarInset);
+            if(hr == HRESULT.S_OK)
+            {
+                return true;
+            }
+            
             if(FrameworkAppContextSwitches.DisableDWMCrashContainment)
             {
                 // Original behavior: just call the native method and let any exceptions propagate.
-                return _DwmExtendFrameIntoClientArea(hwnd, ref pMarInset);
-            } 
-            else
-            {
-                // Crash containment behavior: retry a couple of times if a COMException is thrown.
-                int retryCount = 2;
-                while(retryCount > 0)
-                {
-                    try
-                    {
-                        return _DwmExtendFrameIntoClientArea(hwnd, ref pMarInset);
-                    }
-                    catch (COMException ex)
-                    {
-                        // DWM composition may not be available or the operation failed
-                        // Return the error code rather than crashing the application
-                        retryCount--;
-                        if(retryCount == 0)
-                        {
-                            return ex.HResult;
-                        }
-                        System.Diagnostics.Trace.WriteLine($"DwmExtendFrameIntoClientArea: retrying after COMException (HResult={ex.HResult})");
-                        Thread.Sleep(100);
-                    }
-                }
+                HRESULT.ThrowLastError();
             }
-            
-            
-            return 0;
+
+            // Crash only if the arguments are invalid.
+            if(hr == HRESULT.E_INVALIDARG)
+            {
+                HRESULT.ThrowLastError();
+            }
+
+            return false;
         }
 
         public static bool DwmGetColorizationColor(out uint pcrColorization, out bool pfOpaqueBlend)

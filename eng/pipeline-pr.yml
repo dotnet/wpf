@@ -193,7 +193,7 @@ jobs:
         inputs:
           targetPath: '$(Build.SourcesDirectory)\artifacts\packages\$(_BuildConfig)'
           artifactName: 'Packages'
-        condition: succeeded()
+        condition: and(eq(variables['_BuildConfig'], 'Release'), eq(variables['_Platform'], 'x64'))
 
       - task: PublishTestResults@2
         displayName: Publish XUnit Test Results

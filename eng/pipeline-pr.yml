@@ -192,8 +192,8 @@ jobs:
         displayName: Publish Artifact Packages
         inputs:
           targetPath: '$(Build.SourcesDirectory)\artifacts\packages\$(_BuildConfig)\NonShipping'
-          artifactName: 'Packages\$(_BuildConfig)'
-        condition: and(eq(variables['_BuildConfig'], 'Release'), ne(variables['_Platform'], 'arm64'))
+          artifactName: 'Packages'
+        condition: and(eq(variables['_BuildConfig'], 'Release'), eq(variables['_Platform'], 'x86'))
 
       - task: PublishTestResults@2
         displayName: Publish XUnit Test Results

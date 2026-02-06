@@ -196,13 +196,6 @@ jobs:
         displayName: Windows Build / Publish
         condition: and(or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))), ne(variables['_Platform'], 'arm64'))
 
-      - task: PublishPipelineArtifact@1
-        displayName: Publish Artifact Packages
-        inputs:
-          targetPath: '$(Build.SourcesDirectory)\artifacts\packages\$(_BuildConfig)\NonShipping'
-          artifactName: 'Packages'
-        condition: and(eq(variables['_BuildConfig'], 'Release'), eq(variables['_Platform'], 'x86'))
-
       - task: PublishTestResults@2
         displayName: Publish XUnit Test Results
         inputs:

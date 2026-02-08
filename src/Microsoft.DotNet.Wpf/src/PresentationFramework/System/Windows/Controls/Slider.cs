@@ -1189,6 +1189,11 @@ namespace System.Windows.Controls
                 value = DoubleUtil.GreaterThanOrClose(value, (previous + next) * 0.5) ? next : previous;
             }
 
+            // Normalize floating-point rounding errors introduced by
+            // repeated tick arithmetic (e.g. 0.1 + 0.2 ≠ 0.3 exactly in IEEE-754).
+            // This prevents visual artifacts like 1.1312000000000002.
+            value = Math.Round(value, 10);
+
             return value;
         }
 

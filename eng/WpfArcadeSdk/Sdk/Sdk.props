@@ -17,7 +17,7 @@
     <LangVersion Condition="'$(LangVersion)'=='' and ($(PreReleaseVersionLabel.Contains('rc')) or $(PreReleaseVersionLabel.Contains('preview')) or $(PreReleaseVersionLabel.Contains('alpha')))">preview</LangVersion>
     <LangVersion Condition="'$(LangVersion)'==''">10</LangVersion>
     <CLSCompliant Condition="'$(CLSCompliant)'==''">true</CLSCompliant>
-    <IncludeDllSafeSearchPathAttribute Condition="'$(IncludeDllSafeSearchPathAttribute )'==''">true</IncludeDllSafeSearchPathAttribute>
+    <IncludeDllSafeSearchPathAttribute Condition="'$(IncludeDllSafeSearchPathAttribute)'==''">true</IncludeDllSafeSearchPathAttribute>
 
     <!--
     Properly calculates the RuntimeIdentifier based on the Platform type. We don't want to affect the build by actually setting RuntimeIdentifier.

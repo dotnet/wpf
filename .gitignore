@@ -331,6 +331,7 @@ ASALocalRun/
 /.dotnet
 /.packages
 /.tools/vswhere/2.5.2
+/.tools/vswhere/3.1.7
 /.tools/native/iltools
 
 ### OSX ###

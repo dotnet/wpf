@@ -97,17 +97,17 @@ public class StorageInfo
     /// </summary>
     internal StorageInfoCore core;
 
-    // Instance name for the compression transform
-    private static readonly string sc_compressionTransformName = "CompressionTransform";
+        // Instance name for the compression transform
+        private const string sc_compressionTransformName = "CompressionTransform";
 
-    //Dataspace label definitions for compression and encryption combinations while creating a stream
-    private static readonly string sc_dataspaceLabelNoEncryptionNormalCompression = "NoEncryptionNormalCompression";
-    private static readonly string sc_dataspaceLabelRMEncryptionNormalCompression = "RMEncryptionNormalCompression";
+        //Dataspace label definitions for compression and encryption combinations while creating a stream
+        private const string sc_dataspaceLabelNoEncryptionNormalCompression = "NoEncryptionNormalCompression";
+        private const string sc_dataspaceLabelRMEncryptionNormalCompression = "RMEncryptionNormalCompression";
 
-    /// <summary>
-    /// We can have three valid enumerator types.
-    /// </summary>
-    private enum EnumeratorTypes
+        /// <summary>
+        /// We can have three valid enumerator types.
+        /// </summary>
+        private enum EnumeratorTypes
     {
         Everything,
         OnlyStorages,

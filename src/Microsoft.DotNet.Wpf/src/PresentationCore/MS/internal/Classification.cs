@@ -293,9 +293,10 @@ namespace MS.Internal
         /// </summary>
         /// <remarks>
         /// Corresponds to a subset of DWriteCore's is_font_extender predicate, covering characters
-        /// that are not already handled by IsCombining + IsSameScript.  These are combining marks
-        /// whose Unicode script is not the same as the base character's script, so that emoji
-        /// sequences like "1️⃣" (digit + VS16 + U+20E3 combining enclosing keycap) stay together.
+        /// that require special handling to prevent run-splitting when script comparisons would
+        /// otherwise split them. These are combining marks whose Unicode script is not the same
+        /// as the base character's script, so that emoji sequences like "1️⃣" (digit + VS16 +
+        /// U+20E3 combining enclosing keycap) stay together.
         /// <para>
         /// Note: ZWJ (U+200D) is NOT listed here because it is a JoinerClass character.
         /// IsCombining() returns false for it, so this function would never be reached for ZWJ.

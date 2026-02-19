@@ -358,7 +358,7 @@ namespace MS.Internal.FontFace
                     // Apply digit substitution, if any.
                     int ch = digitMap[originalChar];
 
-                    if (Classification.IsJoiner(ch))
+                    if (Classification.IsJoiner(originalChar))
                     {
                         prevWasJoiner = true;
                         continue;
@@ -387,7 +387,7 @@ namespace MS.Internal.FontFace
                         // Update baseChar for any strong char pulled into the unmapped run by a joiner so
                         // that combining marks that follow it are associated with the correct base.
                         if (prevWasJoiner && !Classification.IsCombining(ch))
-                            baseChar = originalChar;
+                            baseChar = ch;
                         prevWasJoiner = false;
                         continue;
                     }

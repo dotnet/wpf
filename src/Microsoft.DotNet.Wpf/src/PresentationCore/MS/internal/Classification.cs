@@ -288,20 +288,22 @@ namespace MS.Internal
         }
 
         /// <summary>
-        /// Check whether the character is a script-agnostic combining mark that should
+        /// Check whether the character is a script-agnostic combining mark (font extender) that should
         /// stay with its base character regardless of script differences.
         /// </summary>
         /// <remarks>
-        /// This includes variation selectors and combining enclosing marks used in emoji
-        /// sequences like "1️⃣" (digit + VS16 + combining enclosing keycap).
-        /// These characters are designed to modify any base character regardless of script.
+        /// Corresponds to a subset of DWriteCore's is_font_extender predicate, covering characters
+        /// that are not already handled by IsCombining + IsSameScript.  These are combining marks
+        /// whose Unicode script is not the same as the base character's script, so that emoji
+        /// sequences like "1️⃣" (digit + VS16 + U+20E3 combining enclosing keycap) stay together.
+        /// <para>
+        /// Note: ZWJ (U+200D) is NOT listed here because it is a JoinerClass character.
+        /// IsCombining() returns false for it, so this function would never be reached for ZWJ.
+        /// ZWJ is handled upstream by IsJoiner() and the prevWasJoiner logic in MapCharacters.
+        /// </para>
         /// </remarks>
         public static bool IsScriptAgnosticCombining(int unicodeScalar)
         {
-            // ZWJ - used in many emoji/grapheme clusters
-            if (unicodeScalar == 0x200D)
-                return true;
-
             // Variation Selectors VS1-VS16 (U+FE00-U+FE0F)
             if (unicodeScalar >= 0xFE00 && unicodeScalar <= 0xFE0F)
                 return true;

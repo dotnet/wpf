@@ -8,30 +8,30 @@ This file should be imported by eng/Versions.props
     <!-- dotnet/dotnet dependencies -->
     <MicrosoftBuildFrameworkPackageVersion>15.9.20</MicrosoftBuildFrameworkPackageVersion>
     <MicrosoftBuildUtilitiesCorePackageVersion>15.9.20</MicrosoftBuildUtilitiesCorePackageVersion>
-    <MicrosoftDotNetArcadeSdkPackageVersion>11.0.0-beta.26119.109</MicrosoftDotNetArcadeSdkPackageVersion>
-    <MicrosoftDotNetCodeAnalysisPackageVersion>11.0.0-beta.26119.109</MicrosoftDotNetCodeAnalysisPackageVersion>
-    <MicrosoftDotNetGenAPIPackageVersion>11.0.0-beta.26119.109</MicrosoftDotNetGenAPIPackageVersion>
-    <MicrosoftDotNetHelixSdkPackageVersion>11.0.0-beta.26119.109</MicrosoftDotNetHelixSdkPackageVersion>
-    <MicrosoftDotnetWinFormsProjectTemplatesPackageVersion>11.0.0-preview.3.26119.109</MicrosoftDotnetWinFormsProjectTemplatesPackageVersion>
-    <MicrosoftNETCoreAppRefPackageVersion>11.0.0-preview.3.26119.109</MicrosoftNETCoreAppRefPackageVersion>
-    <MicrosoftNETCorePlatformsPackageVersion>11.0.0-preview.3.26119.109</MicrosoftNETCorePlatformsPackageVersion>
-    <MicrosoftPrivateWinformsPackageVersion>11.0.0-preview.3.26119.109</MicrosoftPrivateWinformsPackageVersion>
+    <MicrosoftDotNetArcadeSdkPackageVersion>11.0.0-beta.26120.112</MicrosoftDotNetArcadeSdkPackageVersion>
+    <MicrosoftDotNetCodeAnalysisPackageVersion>11.0.0-beta.26120.112</MicrosoftDotNetCodeAnalysisPackageVersion>
+    <MicrosoftDotNetGenAPIPackageVersion>11.0.0-beta.26120.112</MicrosoftDotNetGenAPIPackageVersion>
+    <MicrosoftDotNetHelixSdkPackageVersion>11.0.0-beta.26120.112</MicrosoftDotNetHelixSdkPackageVersion>
+    <MicrosoftDotnetWinFormsProjectTemplatesPackageVersion>11.0.0-preview.3.26120.112</MicrosoftDotnetWinFormsProjectTemplatesPackageVersion>
+    <MicrosoftNETCoreAppRefPackageVersion>11.0.0-preview.3.26120.112</MicrosoftNETCoreAppRefPackageVersion>
+    <MicrosoftNETCorePlatformsPackageVersion>11.0.0-preview.3.26120.112</MicrosoftNETCorePlatformsPackageVersion>
+    <MicrosoftPrivateWinformsPackageVersion>11.0.0-preview.3.26120.112</MicrosoftPrivateWinformsPackageVersion>
     <MicrosoftSourceLinkAzureReposGitPackageVersion>8.0.0-beta.23409.2</MicrosoftSourceLinkAzureReposGitPackageVersion>
     <MicrosoftSourceLinkGitHubPackageVersion>8.0.0-beta.23409.2</MicrosoftSourceLinkGitHubPackageVersion>
-    <SystemCodeDomPackageVersion>11.0.0-preview.3.26119.109</SystemCodeDomPackageVersion>
-    <SystemConfigurationConfigurationManagerPackageVersion>11.0.0-preview.3.26119.109</SystemConfigurationConfigurationManagerPackageVersion>
-    <SystemDiagnosticsEventLogPackageVersion>11.0.0-preview.3.26119.109</SystemDiagnosticsEventLogPackageVersion>
-    <SystemDirectoryServicesPackageVersion>11.0.0-preview.3.26119.109</SystemDirectoryServicesPackageVersion>
-    <SystemDrawingCommonPackageVersion>11.0.0-preview.3.26119.109</SystemDrawingCommonPackageVersion>
-    <SystemFormatsNrbfPackageVersion>11.0.0-preview.3.26119.109</SystemFormatsNrbfPackageVersion>
-    <SystemIOPackagingPackageVersion>11.0.0-preview.3.26119.109</SystemIOPackagingPackageVersion>
-    <SystemPrivateWindowsCoreTestUtilitiesPackageVersion>11.0.0-preview.3.26119.109</SystemPrivateWindowsCoreTestUtilitiesPackageVersion>
-    <SystemReflectionMetadataLoadContextPackageVersion>11.0.0-preview.3.26119.109</SystemReflectionMetadataLoadContextPackageVersion>
-    <SystemResourcesExtensionsPackageVersion>11.0.0-preview.3.26119.109</SystemResourcesExtensionsPackageVersion>
-    <SystemRuntimeSerializationFormattersPackageVersion>11.0.0-preview.3.26119.109</SystemRuntimeSerializationFormattersPackageVersion>
-    <SystemSecurityCryptographyXmlPackageVersion>11.0.0-preview.3.26119.109</SystemSecurityCryptographyXmlPackageVersion>
-    <SystemSecurityPermissionsPackageVersion>11.0.0-preview.3.26119.109</SystemSecurityPermissionsPackageVersion>
-    <SystemWindowsExtensionsPackageVersion>11.0.0-preview.3.26119.109</SystemWindowsExtensionsPackageVersion>
+    <SystemCodeDomPackageVersion>11.0.0-preview.3.26120.112</SystemCodeDomPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>11.0.0-preview.3.26120.112</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>11.0.0-preview.3.26120.112</SystemDiagnosticsEventLogPackageVersion>
+    <SystemDirectoryServicesPackageVersion>11.0.0-preview.3.26120.112</SystemDirectoryServicesPackageVersion>
+    <SystemDrawingCommonPackageVersion>11.0.0-preview.3.26120.112</SystemDrawingCommonPackageVersion>
+    <SystemFormatsNrbfPackageVersion>11.0.0-preview.3.26120.112</SystemFormatsNrbfPackageVersion>
+    <SystemIOPackagingPackageVersion>11.0.0-preview.3.26120.112</SystemIOPackagingPackageVersion>
+    <SystemPrivateWindowsCoreTestUtilitiesPackageVersion>11.0.0-preview.3.26120.112</SystemPrivateWindowsCoreTestUtilitiesPackageVersion>
+    <SystemReflectionMetadataLoadContextPackageVersion>11.0.0-preview.3.26120.112</SystemReflectionMetadataLoadContextPackageVersion>
+    <SystemResourcesExtensionsPackageVersion>11.0.0-preview.3.26120.112</SystemResourcesExtensionsPackageVersion>
+    <SystemRuntimeSerializationFormattersPackageVersion>11.0.0-preview.3.26120.112</SystemRuntimeSerializationFormattersPackageVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>11.0.0-preview.3.26120.112</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>11.0.0-preview.3.26120.112</SystemSecurityPermissionsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>11.0.0-preview.3.26120.112</SystemWindowsExtensionsPackageVersion>
     <!-- _git/dotnet-wpf-int dependencies -->
     <MicrosoftDotNetWpfDncEngPackageVersion>10.0.0-rc.2.26118.3</MicrosoftDotNetWpfDncEngPackageVersion>
   </PropertyGroup>

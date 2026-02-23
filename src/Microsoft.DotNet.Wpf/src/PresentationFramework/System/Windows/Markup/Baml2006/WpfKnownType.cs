@@ -326,25 +326,20 @@ namespace System.Windows.Baml2006
 
         protected override IList<XamlType> LookupPositionalParameters(int paramCount)
         {
-            if (this.IsMarkupExtension)
+            if (IsMarkupExtension)
             {
-                List<XamlType> xTypes = null;
                 Baml6ConstructorInfo info = Constructors[paramCount];
-                if (Constructors.TryGetValue(paramCount, out info))
+                List<XamlType> xTypes = new(info.Types.Count);
+
+                foreach (Type type in info.Types)
                 {
-                    xTypes = new List<XamlType>();
-                    foreach (Type type in info.Types)
-                    {
-                        xTypes.Add(SchemaContext.GetXamlType(type));
-                    }
+                    xTypes.Add(SchemaContext.GetXamlType(type));
                 }
 
                 return xTypes;
             }
-            else
-            {
-                return base.LookupPositionalParameters(paramCount);
-            }
+
+            return base.LookupPositionalParameters(paramCount);
         }
 
         protected override ICustomAttributeProvider LookupCustomAttributeProvider()

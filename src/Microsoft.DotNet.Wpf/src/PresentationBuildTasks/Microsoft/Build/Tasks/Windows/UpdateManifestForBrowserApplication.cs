@@ -122,21 +122,9 @@ namespace Microsoft.Build.Tasks.Windows
                 }
 
             }
-            catch (Exception e)
+            catch (Exception e) when (e is not (NullReferenceException or SEHException))
             {
-                if (e is NullReferenceException || e is SEHException)
-                {
-                    throw;
-                }
-                else
-                {
-                    Log.LogErrorFromException(e);
-                    successful = false;
-                }
-            }
-            catch   // Non-cls compliant errors
-            {
-                Log.LogErrorWithCodeFromResources(nameof(SR.NonClsError));
+                Log.LogErrorFromException(e);
                 successful = false;
             }
 

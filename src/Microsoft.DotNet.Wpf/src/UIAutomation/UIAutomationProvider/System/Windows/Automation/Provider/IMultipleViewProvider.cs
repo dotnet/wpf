@@ -1,7 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description: Multiple View pattern provider interface
+
+#nullable enable
 
 using System.Runtime.InteropServices;
 
@@ -30,20 +32,17 @@ namespace System.Windows.Automation.Provider
         /// be the same across instances.
         /// </param>
         /// <returns>Return a localized, human readable string in the application's current UI language.</returns>
-        string GetViewName( int viewId );
+        string GetViewName(int viewId);
 
         /// <summary>
         /// Change the current view using an ID returned from SupportedViews property
         /// </summary>
-        void SetCurrentView( int viewId );    
+        void SetCurrentView(int viewId);
 
         /// <summary>The view ID corresponding to the control's current state. This ID is control-specific</summary>
-        int CurrentView
-        {
-            get;
-        }
+        int CurrentView { get; }
 
         /// <summary>Returns an array of ints representing the full set of views available in this control.</summary>
-        int [] GetSupportedViews();
+        int[] GetSupportedViews();
     }
 }

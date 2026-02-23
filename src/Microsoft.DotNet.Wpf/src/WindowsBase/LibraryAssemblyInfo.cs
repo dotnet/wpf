@@ -2,5 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Runtime.CompilerServices;
+using MS.Internal.WindowsBase;
 
-[assembly: InternalsVisibleTo("WindowsBase.Tests, PublicKey=00000000000000000400000000000000")]
+[assembly: InternalsVisibleTo(BuildInfo.WindowsBaseTests)]

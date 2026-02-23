@@ -449,7 +449,7 @@ namespace System.Windows
             // To fire PresentationSourceChanged when the RootVisual changes;
             // rather than simulate a "parent" pointer change, we just walk the
             // collection of all nodes that need the event.
-            foreach (DependencyObject element in _watchers)
+            foreach (DependencyObject element in s_watchers)
             {
                 // We only need to update those elements that are in the
                 // same context as this presentation source.
@@ -475,7 +475,7 @@ namespace System.Windows
         /// </summary>
         protected void AddSource()
         {
-            _sources.Add(this);
+            s_sources.Add(this);
         }
 
         /// <summary>
@@ -483,7 +483,7 @@ namespace System.Windows
         /// </summary>
         protected void RemoveSource()
         {
-            _sources.Remove(this);
+            s_sources.Remove(this);
         }
 
         /// <summary>
@@ -613,17 +613,14 @@ namespace System.Windows
         ///   over a ReadOnly SnapShot of the List of sources.  The Enumerator
         ///   skips over the any dead weak references in the list.
         /// </summary>
-        internal static WeakReferenceList CriticalCurrentSources
+        internal static WeakReferenceList<PresentationSource> CriticalCurrentSources
         {
-            get
-            {
-                return _sources;
-            }
+            get => s_sources;
         }
 
         private static void AddElementToWatchList(DependencyObject element)
         {
-            if(_watchers.Add(element))
+            if (s_watchers.Add(element))
             {
                 element.SetValue(CachedSourceProperty, PresentationSource.FindSource(element));
                 element.SetValue(GetsSourceChangedEventProperty, true);
@@ -633,7 +630,7 @@ namespace System.Windows
 
         private static void RemoveElementFromWatchList(DependencyObject element)
         {
-            if(_watchers.Remove(element))
+            if (s_watchers.Remove(element))
             {
                 element.ClearValue(CachedSourceProperty);
                 element.ClearValue(GetsSourceChangedEventProperty);
@@ -741,11 +738,11 @@ namespace System.Windows
         private static readonly object _globalLock = new object();
 
         // An array of weak-references to sources that we know about.
-        private static WeakReferenceList _sources = new WeakReferenceList(_globalLock);
+        private static readonly WeakReferenceList<PresentationSource> s_sources = new(_globalLock);
 
         // An array of weak-references to elements that need to know
         // about source changes.
-        private static WeakReferenceList _watchers = new WeakReferenceList(_globalLock);
+        private static readonly WeakReferenceList<DependencyObject> s_watchers = new(_globalLock);
 
         #endregion
     }

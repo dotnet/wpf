@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -105,8 +105,8 @@ namespace System.Windows.Input.Tracing
                 Name = name;
                 PlugAndPlayId = pnpId;
                 Capabilities = capabilities.ToString("F");
-                TabletSize = new StylusTraceLogger.StylusSize(tabletSize);
-                ScreenSize = new StylusTraceLogger.StylusSize(screenSize);
+                TabletSize = new StylusSize(tabletSize);
+                ScreenSize = new StylusSize(screenSize);
                 DeviceType = deviceType.ToString("F");
                 MaxContacts = maxContacts;
             }
@@ -202,7 +202,7 @@ namespace System.Windows.Input.Tracing
         /// <param name="stylusData">The statistics to log</param>
         internal static void LogStatistics(StylusStatistics stylusData)
         {
-            Requires<ArgumentNullException>(stylusData != null);
+            ArgumentNullException.ThrowIfNull(stylusData);
 
             Log(StatisticsTag, stylusData);
         }
@@ -221,7 +221,7 @@ namespace System.Windows.Input.Tracing
         /// <param name="error"></param>
         internal static void LogError(string error)
         {
-            Requires<ArgumentNullException>(error != null);
+            ArgumentNullException.ThrowIfNull(error);
 
             Log(ErrorTag, new StylusErrorEventData() { Error = error });
         }
@@ -232,7 +232,7 @@ namespace System.Windows.Input.Tracing
         /// <param name="deviceInfo"></param>
         internal static void LogDeviceConnect(StylusDeviceInfo deviceInfo)
         {
-            Requires<ArgumentNullException>(deviceInfo != null);
+            ArgumentNullException.ThrowIfNull(deviceInfo);
 
             Log(DeviceConnectTag, deviceInfo);
         }
@@ -267,19 +267,6 @@ namespace System.Windows.Input.Tracing
         #endregion
 
         #region Utility
-
-        /// <summary>
-        /// Throws exception when condition is not met.  We can't use the contracts version of this
-        /// since ccrewrite does not work on C++\CLI or netmodules and PresentationCore is a hybrid 
-        /// assembly.
-        /// </summary>
-        /// <typeparam name="T">The type of exception to throw</typeparam>
-        /// <param name="condition">The condition to check</param>
-        private static void Requires<T>(bool condition)
-            where T : Exception, new()
-        {
-            if (!condition) throw new T();
-        }
 
         /// <summary>
         /// Logs a tag with no associated data

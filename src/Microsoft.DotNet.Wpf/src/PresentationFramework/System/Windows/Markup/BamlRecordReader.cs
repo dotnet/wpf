@@ -142,7 +142,6 @@ namespace System.Windows.Markup
         /// </summary>
         internal void Initialize()
         {
-            MapTable.Initialize();
             XamlTypeMapper.Initialize();
             ParserContext.Initialize();
         }

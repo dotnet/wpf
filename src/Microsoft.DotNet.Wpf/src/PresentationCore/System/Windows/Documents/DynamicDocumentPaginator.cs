@@ -168,10 +168,7 @@ namespace System.Windows.Documents
         /// <param name="e">Event arguments for the GetPageNumberCompleted event.</param>
         protected virtual void OnGetPageNumberCompleted(GetPageNumberCompletedEventArgs e)
         {
-            if (this.GetPageNumberCompleted != null)
-            {
-                this.GetPageNumberCompleted(this, e);
-            }
+            this.GetPageNumberCompleted?.Invoke(this, e);
         }
 
         /// <summary>
@@ -180,10 +177,7 @@ namespace System.Windows.Documents
         /// <param name="e">Event arguments for the PaginationProgress event.</param>
         protected virtual void OnPaginationProgress(PaginationProgressEventArgs e)
         {
-            if (this.PaginationProgress != null)
-            {
-                this.PaginationProgress(this, e);
-            }
+            this.PaginationProgress?.Invoke(this, e);
         }
 
         /// <summary>
@@ -192,10 +186,7 @@ namespace System.Windows.Documents
         /// <param name="e">Event arguments for the PaginationCompleted event.</param>
         protected virtual void OnPaginationCompleted(EventArgs e)
         {
-            if (this.PaginationCompleted != null)
-            {
-                this.PaginationCompleted(this, e);
-            }
+            this.PaginationCompleted?.Invoke(this, e);
         }
 
         #endregion Protected Methods

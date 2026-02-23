@@ -572,10 +572,7 @@ namespace System.Windows.Xps.Serialization
         {
             XpsSerializationProgressChangedEventArgs e = operationState as XpsSerializationProgressChangedEventArgs;
 
-            if(XpsSerializationProgressChanged != null)
-            {
-                XpsSerializationProgressChanged(this,e);
-            }
+            XpsSerializationProgressChanged?.Invoke(this, e);
         }
 
         /// <summary>

@@ -131,20 +131,12 @@ namespace System.Windows.Controls
 
         private void OnChanging(CalendarDateRangeChangingEventArgs e)
         {
-            EventHandler<CalendarDateRangeChangingEventArgs> handler = this.Changing;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            this.Changing?.Invoke(this, e);
         }
 
         private void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            PropertyChangedEventHandler handler = this.PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            this.PropertyChanged?.Invoke(this, e);
         }
 
         /// <summary>

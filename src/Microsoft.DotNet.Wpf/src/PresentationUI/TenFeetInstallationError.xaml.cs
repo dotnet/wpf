@@ -204,10 +204,7 @@ namespace Microsoft.Internal.DeploymentUI
 
         internal void OnRetry(object sender, RoutedEventArgs e)
         {
-            if (RefreshCallback != null)
-            {
-                RefreshCallback(null);
-            }
+            RefreshCallback?.Invoke(null);
         }
 
         internal void OnShowLog(object sender, RoutedEventArgs e)
@@ -220,10 +217,7 @@ namespace Microsoft.Internal.DeploymentUI
 
         internal void OnGetWinFX(object sender, RoutedEventArgs e)
         {
-            if (GetWinFxCallback != null)
-            {
-                GetWinFxCallback(null);
-            }
+            GetWinFxCallback?.Invoke(null);
         }
 
         private string _logFilePath;

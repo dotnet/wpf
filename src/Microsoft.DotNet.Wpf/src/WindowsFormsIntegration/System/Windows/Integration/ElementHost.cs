@@ -268,10 +268,7 @@ namespace System.Windows.Forms.Integration
                 SyncHwndSrcImeStatus();
             }
 
-            if (ChildChanged != null)
-            {
-                ChildChanged(this, new ChildChangedEventArgs(oldChild));
-            }
+            ChildChanged?.Invoke(this, new ChildChangedEventArgs(oldChild));
         }
 
         /// <summary>

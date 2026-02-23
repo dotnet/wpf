@@ -12305,27 +12305,27 @@ namespace System.Windows.Media.Media3D
         public static System.Windows.Media.Media3D.Matrix3D Identity { get { throw null; } }
         public bool IsAffine { get { throw null; } }
         public bool IsIdentity { get { throw null; } }
-        public double M11 { get { throw null; } set { } }
-        public double M12 { get { throw null; } set { } }
-        public double M13 { get { throw null; } set { } }
-        public double M14 { get { throw null; } set { } }
-        public double M21 { get { throw null; } set { } }
-        public double M22 { get { throw null; } set { } }
-        public double M23 { get { throw null; } set { } }
-        public double M24 { get { throw null; } set { } }
-        public double M31 { get { throw null; } set { } }
-        public double M32 { get { throw null; } set { } }
-        public double M33 { get { throw null; } set { } }
-        public double M34 { get { throw null; } set { } }
-        public double M44 { get { throw null; } set { } }
-        public double OffsetX { get { throw null; } set { } }
-        public double OffsetY { get { throw null; } set { } }
-        public double OffsetZ { get { throw null; } set { } }
+        public double M11 { readonly get { throw null; } set { } }
+        public double M12 { readonly get { throw null; } set { } }
+        public double M13 { readonly get { throw null; } set { } }
+        public double M14 { readonly get { throw null; } set { } }
+        public double M21 { readonly get { throw null; } set { } }
+        public double M22 { readonly get { throw null; } set { } }
+        public double M23 { readonly get { throw null; } set { } }
+        public double M24 { readonly get { throw null; } set { } }
+        public double M31 { readonly get { throw null; } set { } }
+        public double M32 { readonly get { throw null; } set { } }
+        public double M33 { readonly get { throw null; } set { } }
+        public double M34 { readonly get { throw null; } set { } }
+        public double M44 { readonly get { throw null; } set { } }
+        public double OffsetX { readonly get { throw null; } set { } }
+        public double OffsetY { readonly get { throw null; } set { } }
+        public double OffsetZ { readonly get { throw null; } set { } }
         public void Append(System.Windows.Media.Media3D.Matrix3D matrix) { }
-        public override bool Equals(object o) { throw null; }
-        public bool Equals(System.Windows.Media.Media3D.Matrix3D value) { throw null; }
+        public override readonly bool Equals(object o) { throw null; }
+        public readonly bool Equals(System.Windows.Media.Media3D.Matrix3D value) { throw null; }
         public static bool Equals(System.Windows.Media.Media3D.Matrix3D matrix1, System.Windows.Media.Media3D.Matrix3D matrix2) { throw null; }
-        public override int GetHashCode() { throw null; }
+        public override readonly int GetHashCode() { throw null; }
         public void Invert() { }
         public static System.Windows.Media.Media3D.Matrix3D Multiply(System.Windows.Media.Media3D.Matrix3D matrix1, System.Windows.Media.Media3D.Matrix3D matrix2) { throw null; }
         public static bool operator ==(System.Windows.Media.Media3D.Matrix3D matrix1, System.Windows.Media.Media3D.Matrix3D matrix2) { throw null; }
@@ -12521,14 +12521,14 @@ namespace System.Windows.Media.Media3D
     public partial struct Point3D : System.IFormattable
     {
         public Point3D(double x, double y, double z) { throw null; }
-        public double X { get { throw null; } set { } }
-        public double Y { get { throw null; } set { } }
-        public double Z { get { throw null; } set { } }
+        public double X { readonly get { throw null; } set { } }
+        public double Y { readonly get { throw null; } set { } }
+        public double Z { readonly get { throw null; } set { } }
         public static System.Windows.Media.Media3D.Point3D Add(System.Windows.Media.Media3D.Point3D point, System.Windows.Media.Media3D.Vector3D vector) { throw null; }
-        public override bool Equals(object o) { throw null; }
-        public bool Equals(System.Windows.Media.Media3D.Point3D value) { throw null; }
+        public override readonly bool Equals(object o) { throw null; }
+        public readonly bool Equals(System.Windows.Media.Media3D.Point3D value) { throw null; }
         public static bool Equals(System.Windows.Media.Media3D.Point3D point1, System.Windows.Media.Media3D.Point3D point2) { throw null; }
-        public override int GetHashCode() { throw null; }
+        public override readonly int GetHashCode() { throw null; }
         public static System.Windows.Media.Media3D.Point3D Multiply(System.Windows.Media.Media3D.Point3D point, System.Windows.Media.Media3D.Matrix3D matrix) { throw null; }
         public void Offset(double offsetX, double offsetY, double offsetZ) { }
         public static System.Windows.Media.Media3D.Point3D operator +(System.Windows.Media.Media3D.Point3D point, System.Windows.Media.Media3D.Vector3D vector) { throw null; }
@@ -12619,15 +12619,15 @@ namespace System.Windows.Media.Media3D
     public partial struct Point4D : System.IFormattable
     {
         public Point4D(double x, double y, double z, double w) { throw null; }
-        public double W { get { throw null; } set { } }
-        public double X { get { throw null; } set { } }
-        public double Y { get { throw null; } set { } }
-        public double Z { get { throw null; } set { } }
+        public double W { readonly get { throw null; } set { } }
+        public double X { readonly get { throw null; } set { } }
+        public double Y { readonly get { throw null; } set { } }
+        public double Z { readonly get { throw null; } set { } }
         public static System.Windows.Media.Media3D.Point4D Add(System.Windows.Media.Media3D.Point4D point1, System.Windows.Media.Media3D.Point4D point2) { throw null; }
-        public override bool Equals(object o) { throw null; }
-        public bool Equals(System.Windows.Media.Media3D.Point4D value) { throw null; }
+        public override readonly bool Equals(object o) { throw null; }
+        public readonly bool Equals(System.Windows.Media.Media3D.Point4D value) { throw null; }
         public static bool Equals(System.Windows.Media.Media3D.Point4D point1, System.Windows.Media.Media3D.Point4D point2) { throw null; }
-        public override int GetHashCode() { throw null; }
+        public override readonly int GetHashCode() { throw null; }
         public static System.Windows.Media.Media3D.Point4D Multiply(System.Windows.Media.Media3D.Point4D point, System.Windows.Media.Media3D.Matrix3D matrix) { throw null; }
         public void Offset(double deltaX, double deltaY, double deltaZ, double deltaW) { }
         public static System.Windows.Media.Media3D.Point4D operator +(System.Windows.Media.Media3D.Point4D point1, System.Windows.Media.Media3D.Point4D point2) { throw null; }
@@ -12700,16 +12700,16 @@ namespace System.Windows.Media.Media3D
         public static System.Windows.Media.Media3D.Quaternion Identity { get { throw null; } }
         public bool IsIdentity { get { throw null; } }
         public bool IsNormalized { get { throw null; } }
-        public double W { get { throw null; } set { } }
-        public double X { get { throw null; } set { } }
-        public double Y { get { throw null; } set { } }
-        public double Z { get { throw null; } set { } }
+        public double W { readonly get { throw null; } set { } }
+        public double X { readonly get { throw null; } set { } }
+        public double Y { readonly get { throw null; } set { } }
+        public double Z { readonly get { throw null; } set { } }
         public static System.Windows.Media.Media3D.Quaternion Add(System.Windows.Media.Media3D.Quaternion left, System.Windows.Media.Media3D.Quaternion right) { throw null; }
         public void Conjugate() { }
-        public override bool Equals(object o) { throw null; }
-        public bool Equals(System.Windows.Media.Media3D.Quaternion value) { throw null; }
+        public override readonly bool Equals(object o) { throw null; }
+        public readonly bool Equals(System.Windows.Media.Media3D.Quaternion value) { throw null; }
         public static bool Equals(System.Windows.Media.Media3D.Quaternion quaternion1, System.Windows.Media.Media3D.Quaternion quaternion2) { throw null; }
-        public override int GetHashCode() { throw null; }
+        public override readonly int GetHashCode() { throw null; }
         public void Invert() { }
         public static System.Windows.Media.Media3D.Quaternion Multiply(System.Windows.Media.Media3D.Quaternion left, System.Windows.Media.Media3D.Quaternion right) { throw null; }
         public void Normalize() { }
@@ -12778,22 +12778,22 @@ namespace System.Windows.Media.Media3D
         public Rect3D(double x, double y, double z, double sizeX, double sizeY, double sizeZ) { throw null; }
         public Rect3D(System.Windows.Media.Media3D.Point3D location, System.Windows.Media.Media3D.Size3D size) { throw null; }
         public static System.Windows.Media.Media3D.Rect3D Empty { get { throw null; } }
-        public bool IsEmpty { get { throw null; } }
+        public readonly bool IsEmpty { get { throw null; } }
         public System.Windows.Media.Media3D.Point3D Location { get { throw null; } set { } }
         public System.Windows.Media.Media3D.Size3D Size { get { throw null; } set { } }
-        public double SizeX { get { throw null; } set { } }
-        public double SizeY { get { throw null; } set { } }
-        public double SizeZ { get { throw null; } set { } }
-        public double X { get { throw null; } set { } }
-        public double Y { get { throw null; } set { } }
-        public double Z { get { throw null; } set { } }
+        public double SizeX { readonly get { throw null; } set { } }
+        public double SizeY { readonly get { throw null; } set { } }
+        public double SizeZ { readonly get { throw null; } set { } }
+        public double X { readonly get { throw null; } set { } }
+        public double Y { readonly get { throw null; } set { } }
+        public double Z { readonly get { throw null; } set { } }
         public bool Contains(double x, double y, double z) { throw null; }
         public bool Contains(System.Windows.Media.Media3D.Point3D point) { throw null; }
         public bool Contains(System.Windows.Media.Media3D.Rect3D rect) { throw null; }
-        public override bool Equals(object o) { throw null; }
-        public bool Equals(System.Windows.Media.Media3D.Rect3D value) { throw null; }
+        public override readonly bool Equals(object o) { throw null; }
+        public readonly bool Equals(System.Windows.Media.Media3D.Rect3D value) { throw null; }
         public static bool Equals(System.Windows.Media.Media3D.Rect3D rect1, System.Windows.Media.Media3D.Rect3D rect2) { throw null; }
-        public override int GetHashCode() { throw null; }
+        public override readonly int GetHashCode() { throw null; }
         public void Intersect(System.Windows.Media.Media3D.Rect3D rect) { }
         public static System.Windows.Media.Media3D.Rect3D Intersect(System.Windows.Media.Media3D.Rect3D rect1, System.Windows.Media.Media3D.Rect3D rect2) { throw null; }
         public bool IntersectsWith(System.Windows.Media.Media3D.Rect3D rect) { throw null; }
@@ -12879,14 +12879,14 @@ namespace System.Windows.Media.Media3D
     {
         public Size3D(double x, double y, double z) { throw null; }
         public static System.Windows.Media.Media3D.Size3D Empty { get { throw null; } }
-        public bool IsEmpty { get { throw null; } }
-        public double X { get { throw null; } set { } }
-        public double Y { get { throw null; } set { } }
-        public double Z { get { throw null; } set { } }
-        public override bool Equals(object o) { throw null; }
-        public bool Equals(System.Windows.Media.Media3D.Size3D value) { throw null; }
+        public readonly bool IsEmpty { get { throw null; } }
+        public double X { readonly get { throw null; } set { } }
+        public double Y { readonly get { throw null; } set { } }
+        public double Z { readonly get { throw null; } set { } }
+        public override readonly bool Equals(object o) { throw null; }
+        public readonly bool Equals(System.Windows.Media.Media3D.Size3D value) { throw null; }
         public static bool Equals(System.Windows.Media.Media3D.Size3D size1, System.Windows.Media.Media3D.Size3D size2) { throw null; }
-        public override int GetHashCode() { throw null; }
+        public override readonly int GetHashCode() { throw null; }
         public static bool operator ==(System.Windows.Media.Media3D.Size3D size1, System.Windows.Media.Media3D.Size3D size2) { throw null; }
         public static explicit operator System.Windows.Media.Media3D.Point3D(System.Windows.Media.Media3D.Size3D size) { throw null; }
         public static explicit operator System.Windows.Media.Media3D.Vector3D(System.Windows.Media.Media3D.Size3D size) { throw null; }
@@ -13033,19 +13033,19 @@ namespace System.Windows.Media.Media3D
         public Vector3D(double x, double y, double z) { throw null; }
         public double Length { get { throw null; } }
         public double LengthSquared { get { throw null; } }
-        public double X { get { throw null; } set { } }
-        public double Y { get { throw null; } set { } }
-        public double Z { get { throw null; } set { } }
+        public double X { readonly get { throw null; } set { } }
+        public double Y { readonly get { throw null; } set { } }
+        public double Z { readonly get { throw null; } set { } }
         public static System.Windows.Media.Media3D.Point3D Add(System.Windows.Media.Media3D.Vector3D vector, System.Windows.Media.Media3D.Point3D point) { throw null; }
         public static System.Windows.Media.Media3D.Vector3D Add(System.Windows.Media.Media3D.Vector3D vector1, System.Windows.Media.Media3D.Vector3D vector2) { throw null; }
         public static double AngleBetween(System.Windows.Media.Media3D.Vector3D vector1, System.Windows.Media.Media3D.Vector3D vector2) { throw null; }
         public static System.Windows.Media.Media3D.Vector3D CrossProduct(System.Windows.Media.Media3D.Vector3D vector1, System.Windows.Media.Media3D.Vector3D vector2) { throw null; }
         public static System.Windows.Media.Media3D.Vector3D Divide(System.Windows.Media.Media3D.Vector3D vector, double scalar) { throw null; }
         public static double DotProduct(System.Windows.Media.Media3D.Vector3D vector1, System.Windows.Media.Media3D.Vector3D vector2) { throw null; }
-        public override bool Equals(object o) { throw null; }
-        public bool Equals(System.Windows.Media.Media3D.Vector3D value) { throw null; }
+        public override readonly bool Equals(object o) { throw null; }
+        public readonly bool Equals(System.Windows.Media.Media3D.Vector3D value) { throw null; }
         public static bool Equals(System.Windows.Media.Media3D.Vector3D vector1, System.Windows.Media.Media3D.Vector3D vector2) { throw null; }
-        public override int GetHashCode() { throw null; }
+        public override readonly int GetHashCode() { throw null; }
         public static System.Windows.Media.Media3D.Vector3D Multiply(double scalar, System.Windows.Media.Media3D.Vector3D vector) { throw null; }
         public static System.Windows.Media.Media3D.Vector3D Multiply(System.Windows.Media.Media3D.Vector3D vector, double scalar) { throw null; }
         public static System.Windows.Media.Media3D.Vector3D Multiply(System.Windows.Media.Media3D.Vector3D vector, System.Windows.Media.Media3D.Matrix3D matrix) { throw null; }

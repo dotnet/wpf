@@ -53,8 +53,6 @@ namespace System.Windows.Media
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -66,22 +64,14 @@ namespace System.Windows.Media
         private static void GuidelinesXPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             GuidelineSet target = ((GuidelineSet) d);
-
 
             target.PropertyChanged(GuidelinesXProperty);
         }
         private static void GuidelinesYPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             GuidelineSet target = ((GuidelineSet) d);
-
 
             target.PropertyChanged(GuidelinesYProperty);
         }
@@ -89,10 +79,8 @@ namespace System.Windows.Media
         {
             GuidelineSet target = ((GuidelineSet) d);
 
-
             target.PropertyChanged(IsDynamicProperty);
         }
-
 
         #region Public Properties
 
@@ -160,8 +148,6 @@ namespace System.Windows.Media
             return new GuidelineSet();
         }
 
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -206,7 +192,6 @@ namespace System.Windows.Media
                               data.GuidelinesYSize)
                         );
 
-
                     // Copy this collection's elements (or their handles) to reserved data
                     for (int i = 0; i < GuidelinesXCount; i++)
                     {
@@ -238,9 +223,7 @@ namespace System.Windows.Media
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_GUIDELINESET))
                 {
 
-
                     AddRefOnChannelAnimations(channel);
-
 
                     UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
                 }
@@ -257,9 +240,7 @@ namespace System.Windows.Media
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
 
-
                     ReleaseOnChannelAnimations(channel);
-
                 }
             }
         }
@@ -284,7 +265,6 @@ namespace System.Windows.Media
             return _duceResource.GetChannel(index);
         }
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -294,9 +274,6 @@ namespace System.Windows.Media
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -332,16 +309,12 @@ namespace System.Windows.Media
 
         #region Internal Fields
 
-
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
-
         internal static DoubleCollection s_GuidelinesX = DoubleCollection.Empty;
         internal static DoubleCollection s_GuidelinesY = DoubleCollection.Empty;
         internal const bool c_IsDynamic = false;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -396,7 +369,6 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

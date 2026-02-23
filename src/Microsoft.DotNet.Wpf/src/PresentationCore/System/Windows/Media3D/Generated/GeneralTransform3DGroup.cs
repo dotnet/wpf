@@ -51,8 +51,6 @@ namespace System.Windows.Media.Media3D
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -60,8 +58,6 @@ namespace System.Windows.Media.Media3D
         //  Public Properties
         //
         //------------------------------------------------------
-
-
 
 
         #region Public Properties
@@ -100,8 +96,6 @@ namespace System.Windows.Media.Media3D
             return new GeneralTransform3DGroup();
         }
 
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -113,13 +107,6 @@ namespace System.Windows.Media.Media3D
         #region Internal Methods
 
 
-
-
-
-
-
-
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -129,9 +116,6 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -159,14 +143,9 @@ namespace System.Windows.Media.Media3D
 
         #region Internal Fields
 
-
-
-
-
         internal static GeneralTransform3DCollection s_Children = GeneralTransform3DCollection.Empty;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -199,7 +178,6 @@ namespace System.Windows.Media.Media3D
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

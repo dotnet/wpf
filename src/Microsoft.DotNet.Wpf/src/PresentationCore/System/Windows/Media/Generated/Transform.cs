@@ -24,7 +24,6 @@ using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
-
     [TypeConverter(typeof(TransformConverter))]
     [ValueSerializer(typeof(TransformValueSerializer))] // Used by MarkupWriter
     public abstract partial class Transform : GeneralTransform, DUCE.IResource
@@ -56,8 +55,6 @@ namespace System.Windows.Media
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -67,10 +64,7 @@ namespace System.Windows.Media
         //------------------------------------------------------
 
 
-
-
         #region Public Properties
-
 
 
         #endregion Public Properties
@@ -84,9 +78,6 @@ namespace System.Windows.Media
         #region Protected Methods
 
 
-
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -96,7 +87,6 @@ namespace System.Windows.Media
         //------------------------------------------------------
 
         #region Internal Methods
-
 
         internal abstract DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel);
 
@@ -161,7 +151,6 @@ namespace System.Windows.Media
             return GetChannelCore(index);
         }
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -171,8 +160,6 @@ namespace System.Windows.Media
         //------------------------------------------------------
 
         #region Internal Properties
-
-
 
         /// <summary>
         /// Parse - returns an instance converted from the provided string
@@ -197,7 +184,6 @@ namespace System.Windows.Media
         #region Dependency Properties
 
 
-
         #endregion Dependency Properties
 
         //------------------------------------------------------
@@ -209,13 +195,7 @@ namespace System.Windows.Media
         #region Internal Fields
 
 
-
-
-
-
-
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -225,8 +205,6 @@ namespace System.Windows.Media
         //  Constructors
         //
         //------------------------------------------------------
-
-
 
 
         #endregion Constructors

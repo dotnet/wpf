@@ -53,8 +53,6 @@ namespace System.Windows.Media
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -67,13 +65,11 @@ namespace System.Windows.Media
         {
             ScaleTransform target = ((ScaleTransform) d);
 
-
             target.PropertyChanged(ScaleXProperty);
         }
         private static void ScaleYPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ScaleTransform target = ((ScaleTransform) d);
-
 
             target.PropertyChanged(ScaleYProperty);
         }
@@ -81,17 +77,14 @@ namespace System.Windows.Media
         {
             ScaleTransform target = ((ScaleTransform) d);
 
-
             target.PropertyChanged(CenterXProperty);
         }
         private static void CenterYPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ScaleTransform target = ((ScaleTransform) d);
 
-
             target.PropertyChanged(CenterYProperty);
         }
-
 
         #region Public Properties
 
@@ -174,8 +167,6 @@ namespace System.Windows.Media
             return new ScaleTransform();
         }
 
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -237,33 +228,25 @@ namespace System.Windows.Media
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_SCALETRANSFORM))
                 {
 
-
                     AddRefOnChannelAnimations(channel);
-
 
                     UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
                 }
 
                 return _duceResource.GetHandle(channel);
-
         }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
 
-
                     ReleaseOnChannelAnimations(channel);
-
                 }
-
         }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
@@ -281,7 +264,6 @@ namespace System.Windows.Media
             return _duceResource.GetChannel(index);
         }
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -291,9 +273,6 @@ namespace System.Windows.Media
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -333,17 +312,13 @@ namespace System.Windows.Media
 
         #region Internal Fields
 
-
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
-
         internal const double c_ScaleX = 1.0;
         internal const double c_ScaleY = 1.0;
         internal const double c_CenterX = 0.0;
         internal const double c_CenterY = 0.0;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -401,7 +376,6 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ true,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

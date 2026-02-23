@@ -1,8 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-
-
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -19,7 +17,6 @@ using System.Text;
 using Accessibility;
 using MS.Internal;
 using MS.Internal.Controls;
-using MS.Internal.KnownBoxes;
 using MS.Internal.Interop;
 using MS.Win32;
 
@@ -81,8 +78,7 @@ namespace System.Windows.Controls.Primitives
                                 "TreatMousePlacementAsBottom",
                                 typeof(bool),
                                 typeof(Popup),
-                                new FrameworkPropertyMetadata(
-                                            false));
+                                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         ///     Tooltips should show on Keyboard focus.

@@ -1,7 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-
 using MS.Internal;
 using System.Collections;
 using System.ComponentModel;
@@ -11,7 +10,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Automation.Peers;
 using MS.Internal.Commands; // CommandHelpers
-using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
 
 namespace System.Windows.Controls

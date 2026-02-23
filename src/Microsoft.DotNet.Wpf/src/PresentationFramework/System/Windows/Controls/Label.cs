@@ -47,8 +47,8 @@ namespace System.Windows.Controls
             _dType = DependencyObjectType.FromSystemTypeInternal(typeof(Label));
 
             // prevent label from being a tab stop and focusable
-            IsTabStopProperty.OverrideMetadata(typeof(Label), new FrameworkPropertyMetadata(MS.Internal.KnownBoxes.BooleanBoxes.FalseBox));
-            FocusableProperty.OverrideMetadata(typeof(Label), new FrameworkPropertyMetadata(MS.Internal.KnownBoxes.BooleanBoxes.FalseBox));
+            IsTabStopProperty.OverrideMetadata(typeof(Label), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
+            FocusableProperty.OverrideMetadata(typeof(Label), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
             ControlsTraceLogger.AddControl(TelemetryControls.Label);
         }

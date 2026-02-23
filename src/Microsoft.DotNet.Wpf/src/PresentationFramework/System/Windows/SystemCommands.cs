@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -38,25 +38,29 @@ namespace System.Windows
 
         public static void CloseWindow(Window window)
         {
-            Verify.IsNotNull(window, "window");
+            ArgumentNullException.ThrowIfNull(window, nameof(window));
+
             _PostSystemCommand(window, SC.CLOSE);
         }
 
         public static void MaximizeWindow(Window window)
         {
-            Verify.IsNotNull(window, "window");
+            ArgumentNullException.ThrowIfNull(window, nameof(window));
+
             _PostSystemCommand(window, SC.MAXIMIZE);
         }
 
         public static void MinimizeWindow(Window window)
         {
-            Verify.IsNotNull(window, "window");
+            ArgumentNullException.ThrowIfNull(window, nameof(window));
+
             _PostSystemCommand(window, SC.MINIMIZE);
         }
 
         public static void RestoreWindow(Window window)
         {
-            Verify.IsNotNull(window, "window");
+            ArgumentNullException.ThrowIfNull(window, nameof(window));
+
             _PostSystemCommand(window, SC.RESTORE);
         }
 
@@ -64,7 +68,8 @@ namespace System.Windows
         /// <param name="screenLocation">The location to display the system menu, in logical screen coordinates.</param>
         public static void ShowSystemMenu(Window window, Point screenLocation)
         {
-            Verify.IsNotNull(window, "window");
+            ArgumentNullException.ThrowIfNull(window, nameof(window));
+
             DpiScale dpi = window.GetDpi();
             ShowSystemMenuPhysicalCoordinates(window, DpiHelper.LogicalPixelsToDevice(screenLocation, dpi.DpiScaleX, dpi.DpiScaleY));
         }
@@ -75,7 +80,8 @@ namespace System.Windows
             const uint TPM_LEFTBUTTON = 0x0;
             const uint TPM_RIGHTBUTTON = 0x2;
 
-            Verify.IsNotNull(window, "window");
+            ArgumentNullException.ThrowIfNull(window, nameof(window));
+
             IntPtr hwnd = new WindowInteropHelper(window).Handle;
             if (hwnd == IntPtr.Zero || !NativeMethods.IsWindow(hwnd))
             {

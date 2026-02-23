@@ -280,11 +280,10 @@ namespace System.Windows.Media.Effects
 
 
             // Initializations
-            Type typeofThis = typeof(PixelShader);
             UriSourceProperty =
                   RegisterProperty("UriSource",
                                    typeof(Uri),
-                                   typeofThis,
+                                   typeof(PixelShader),
                                    null,
                                    new PropertyChangedCallback(UriSourcePropertyChanged),
                                    null,
@@ -293,7 +292,7 @@ namespace System.Windows.Media.Effects
             ShaderRenderModeProperty =
                   RegisterProperty("ShaderRenderMode",
                                    typeof(ShaderRenderMode),
-                                   typeofThis,
+                                   typeof(PixelShader),
                                    ShaderRenderMode.Auto,
                                    new PropertyChangedCallback(ShaderRenderModePropertyChanged),
                                    new ValidateValueCallback(System.Windows.Media.Effects.ValidateEnums.IsShaderRenderModeValid),

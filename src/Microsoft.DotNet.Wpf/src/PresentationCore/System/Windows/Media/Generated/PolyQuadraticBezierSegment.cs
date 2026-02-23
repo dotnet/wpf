@@ -203,11 +203,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(PolyQuadraticBezierSegment);
             PointsProperty =
                   RegisterProperty("Points",
                                    typeof(PointCollection),
-                                   typeofThis,
+                                   typeof(PolyQuadraticBezierSegment),
                                    new FreezableDefaultValueFactory(PointCollection.Empty),
                                    null,
                                    null,

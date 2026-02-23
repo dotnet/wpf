@@ -297,11 +297,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(TranslateTransform);
             XProperty =
                   RegisterProperty("X",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(TranslateTransform),
                                    0.0,
                                    new PropertyChangedCallback(XPropertyChanged),
                                    null,
@@ -310,7 +309,7 @@ namespace System.Windows.Media
             YProperty =
                   RegisterProperty("Y",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(TranslateTransform),
                                    0.0,
                                    new PropertyChangedCallback(YPropertyChanged),
                                    null,

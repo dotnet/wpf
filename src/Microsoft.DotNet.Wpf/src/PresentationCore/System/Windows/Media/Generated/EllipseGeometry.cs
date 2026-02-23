@@ -364,11 +364,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(EllipseGeometry);
             RadiusXProperty =
                   RegisterProperty("RadiusX",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(EllipseGeometry),
                                    0.0,
                                    new PropertyChangedCallback(RadiusXPropertyChanged),
                                    null,
@@ -377,7 +376,7 @@ namespace System.Windows.Media
             RadiusYProperty =
                   RegisterProperty("RadiusY",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(EllipseGeometry),
                                    0.0,
                                    new PropertyChangedCallback(RadiusYPropertyChanged),
                                    null,
@@ -386,7 +385,7 @@ namespace System.Windows.Media
             CenterProperty =
                   RegisterProperty("Center",
                                    typeof(Point),
-                                   typeofThis,
+                                   typeof(EllipseGeometry),
                                    new Point(),
                                    new PropertyChangedCallback(CenterPropertyChanged),
                                    null,

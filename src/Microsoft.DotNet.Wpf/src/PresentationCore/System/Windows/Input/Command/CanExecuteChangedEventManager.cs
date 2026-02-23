@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -160,14 +160,13 @@ namespace System.Windows.Input
         {
             get
             {
-                Type managerType = typeof(CanExecuteChangedEventManager);
-                CanExecuteChangedEventManager manager = (CanExecuteChangedEventManager)GetCurrentManager(managerType);
+                CanExecuteChangedEventManager manager = (CanExecuteChangedEventManager)GetCurrentManager(typeof(CanExecuteChangedEventManager));
 
                 // at first use, create and register a new manager
                 if (manager == null)
                 {
                     manager = new CanExecuteChangedEventManager();
-                    SetCurrentManager(managerType, manager);
+                    SetCurrentManager(typeof(CanExecuteChangedEventManager), manager);
                 }
 
                 return manager;

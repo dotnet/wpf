@@ -37,22 +37,20 @@ namespace Microsoft.Windows.Controls.Ribbon
         
         static RibbonTab()
         {
-            Type ownerType = typeof(RibbonTab);
-
-            IsEnabledProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsEnabledChanged)));
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            ItemsPanelProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new ItemsPanelTemplate(new FrameworkElementFactory(typeof(RibbonGroupsPanel)))));
-            HeaderProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnHeaderChanged)));
-            VisibilityProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(Visibility.Visible, new PropertyChangedCallback(OnVisibilityChanged), new CoerceValueCallback(CoerceVisibility)));
-            HeaderTemplateProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnNotifyHeaderPropertyChanged), new CoerceValueCallback(CoerceHeaderTemplate)));
-            HeaderTemplateSelectorProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnNotifyHeaderPropertyChanged)));
-            HeaderStringFormatProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnNotifyHeaderPropertyChanged)));
-            FocusableProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false));
-            EventManager.RegisterClassHandler(ownerType, KeyTipService.ActivatingKeyTipEvent, new ActivatingKeyTipEventHandler(OnActivatingKeyTipThunk));
-            EventManager.RegisterClassHandler(ownerType, KeyTipService.KeyTipAccessedEvent, new KeyTipAccessedEventHandler(OnKeyTipAccessedThunk));
-            KeyTipService.KeyTipProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnKeyTipChanged)));
+            IsEnabledProperty.OverrideMetadata(typeof(RibbonTab), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsEnabledChanged)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonTab), new FrameworkPropertyMetadata(typeof(RibbonTab)));
+            ItemsPanelProperty.OverrideMetadata(typeof(RibbonTab), new FrameworkPropertyMetadata(new ItemsPanelTemplate(new FrameworkElementFactory(typeof(RibbonGroupsPanel)))));
+            HeaderProperty.OverrideMetadata(typeof(RibbonTab), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnHeaderChanged)));
+            VisibilityProperty.OverrideMetadata(typeof(RibbonTab), new FrameworkPropertyMetadata(Visibility.Visible, new PropertyChangedCallback(OnVisibilityChanged), new CoerceValueCallback(CoerceVisibility)));
+            HeaderTemplateProperty.OverrideMetadata(typeof(RibbonTab), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnNotifyHeaderPropertyChanged), new CoerceValueCallback(CoerceHeaderTemplate)));
+            HeaderTemplateSelectorProperty.OverrideMetadata(typeof(RibbonTab), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnNotifyHeaderPropertyChanged)));
+            HeaderStringFormatProperty.OverrideMetadata(typeof(RibbonTab), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnNotifyHeaderPropertyChanged)));
+            FocusableProperty.OverrideMetadata(typeof(RibbonTab), new FrameworkPropertyMetadata(false));
+            EventManager.RegisterClassHandler(typeof(RibbonTab), KeyTipService.ActivatingKeyTipEvent, new ActivatingKeyTipEventHandler(OnActivatingKeyTipThunk));
+            EventManager.RegisterClassHandler(typeof(RibbonTab), KeyTipService.KeyTipAccessedEvent, new KeyTipAccessedEventHandler(OnKeyTipAccessedThunk));
+            KeyTipService.KeyTipProperty.OverrideMetadata(typeof(RibbonTab), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnKeyTipChanged)));
 #if RIBBON_IN_FRAMEWORK
-            AutomationProperties.IsOffscreenBehaviorProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(IsOffscreenBehavior.FromClip));
+            AutomationProperties.IsOffscreenBehaviorProperty.OverrideMetadata(typeof(RibbonTab), new FrameworkPropertyMetadata(IsOffscreenBehavior.FromClip));
 #endif
         }
 

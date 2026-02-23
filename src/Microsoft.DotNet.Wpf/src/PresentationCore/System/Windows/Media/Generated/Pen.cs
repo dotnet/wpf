@@ -564,11 +564,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(Pen);
             BrushProperty =
                   RegisterProperty("Brush",
                                    typeof(Brush),
-                                   typeofThis,
+                                   typeof(Pen),
                                    null,
                                    new PropertyChangedCallback(BrushPropertyChanged),
                                    null,
@@ -577,7 +576,7 @@ namespace System.Windows.Media
             ThicknessProperty =
                   RegisterProperty("Thickness",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(Pen),
                                    1.0,
                                    new PropertyChangedCallback(ThicknessPropertyChanged),
                                    null,
@@ -586,7 +585,7 @@ namespace System.Windows.Media
             StartLineCapProperty =
                   RegisterProperty("StartLineCap",
                                    typeof(PenLineCap),
-                                   typeofThis,
+                                   typeof(Pen),
                                    PenLineCap.Flat,
                                    new PropertyChangedCallback(StartLineCapPropertyChanged),
                                    new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsPenLineCapValid),
@@ -595,7 +594,7 @@ namespace System.Windows.Media
             EndLineCapProperty =
                   RegisterProperty("EndLineCap",
                                    typeof(PenLineCap),
-                                   typeofThis,
+                                   typeof(Pen),
                                    PenLineCap.Flat,
                                    new PropertyChangedCallback(EndLineCapPropertyChanged),
                                    new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsPenLineCapValid),
@@ -604,7 +603,7 @@ namespace System.Windows.Media
             DashCapProperty =
                   RegisterProperty("DashCap",
                                    typeof(PenLineCap),
-                                   typeofThis,
+                                   typeof(Pen),
                                    PenLineCap.Square,
                                    new PropertyChangedCallback(DashCapPropertyChanged),
                                    new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsPenLineCapValid),
@@ -613,7 +612,7 @@ namespace System.Windows.Media
             LineJoinProperty =
                   RegisterProperty("LineJoin",
                                    typeof(PenLineJoin),
-                                   typeofThis,
+                                   typeof(Pen),
                                    PenLineJoin.Miter,
                                    new PropertyChangedCallback(LineJoinPropertyChanged),
                                    new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsPenLineJoinValid),
@@ -622,7 +621,7 @@ namespace System.Windows.Media
             MiterLimitProperty =
                   RegisterProperty("MiterLimit",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(Pen),
                                    10.0,
                                    new PropertyChangedCallback(MiterLimitPropertyChanged),
                                    null,
@@ -631,7 +630,7 @@ namespace System.Windows.Media
             DashStyleProperty =
                   RegisterProperty("DashStyle",
                                    typeof(DashStyle),
-                                   typeofThis,
+                                   typeof(Pen),
                                    DashStyles.Solid,
                                    new PropertyChangedCallback(DashStylePropertyChanged),
                                    null,

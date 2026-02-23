@@ -875,11 +875,10 @@ namespace System.Windows.Media
                                        new PropertyChangedCallback(ClearTypeHintPropertyChanged)));
 
             // Initializations
-            Type typeofThis = typeof(DrawingGroup);
             ChildrenProperty =
                   RegisterProperty("Children",
                                    typeof(DrawingCollection),
-                                   typeofThis,
+                                   typeof(DrawingGroup),
                                    new FreezableDefaultValueFactory(DrawingCollection.Empty),
                                    new PropertyChangedCallback(ChildrenPropertyChanged),
                                    null,
@@ -888,7 +887,7 @@ namespace System.Windows.Media
             ClipGeometryProperty =
                   RegisterProperty("ClipGeometry",
                                    typeof(Geometry),
-                                   typeofThis,
+                                   typeof(DrawingGroup),
                                    null,
                                    new PropertyChangedCallback(ClipGeometryPropertyChanged),
                                    null,
@@ -897,7 +896,7 @@ namespace System.Windows.Media
             OpacityProperty =
                   RegisterProperty("Opacity",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(DrawingGroup),
                                    1.0,
                                    new PropertyChangedCallback(OpacityPropertyChanged),
                                    null,
@@ -906,7 +905,7 @@ namespace System.Windows.Media
             OpacityMaskProperty =
                   RegisterProperty("OpacityMask",
                                    typeof(Brush),
-                                   typeofThis,
+                                   typeof(DrawingGroup),
                                    null,
                                    new PropertyChangedCallback(OpacityMaskPropertyChanged),
                                    null,
@@ -915,7 +914,7 @@ namespace System.Windows.Media
             TransformProperty =
                   RegisterProperty("Transform",
                                    typeof(Transform),
-                                   typeofThis,
+                                   typeof(DrawingGroup),
                                    null,
                                    new PropertyChangedCallback(TransformPropertyChanged),
                                    null,
@@ -924,7 +923,7 @@ namespace System.Windows.Media
             GuidelineSetProperty =
                   RegisterProperty("GuidelineSet",
                                    typeof(GuidelineSet),
-                                   typeofThis,
+                                   typeof(DrawingGroup),
                                    null,
                                    new PropertyChangedCallback(GuidelineSetPropertyChanged),
                                    null,
@@ -933,7 +932,7 @@ namespace System.Windows.Media
             BitmapEffectProperty =
                   RegisterProperty("BitmapEffect",
                                    typeof(BitmapEffect),
-                                   typeofThis,
+                                   typeof(DrawingGroup),
                                    null,
                                    new PropertyChangedCallback(BitmapEffectPropertyChanged),
                                    null,
@@ -942,7 +941,7 @@ namespace System.Windows.Media
             BitmapEffectInputProperty =
                   RegisterProperty("BitmapEffectInput",
                                    typeof(BitmapEffectInput),
-                                   typeofThis,
+                                   typeof(DrawingGroup),
                                    null,
                                    new PropertyChangedCallback(BitmapEffectInputPropertyChanged),
                                    null,

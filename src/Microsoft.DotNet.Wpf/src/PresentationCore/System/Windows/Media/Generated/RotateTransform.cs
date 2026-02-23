@@ -330,11 +330,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(RotateTransform);
             AngleProperty =
                   RegisterProperty("Angle",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(RotateTransform),
                                    0.0,
                                    new PropertyChangedCallback(AnglePropertyChanged),
                                    null,
@@ -343,7 +342,7 @@ namespace System.Windows.Media
             CenterXProperty =
                   RegisterProperty("CenterX",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(RotateTransform),
                                    0.0,
                                    new PropertyChangedCallback(CenterXPropertyChanged),
                                    null,
@@ -352,7 +351,7 @@ namespace System.Windows.Media
             CenterYProperty =
                   RegisterProperty("CenterY",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(RotateTransform),
                                    0.0,
                                    new PropertyChangedCallback(CenterYPropertyChanged),
                                    null,

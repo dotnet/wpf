@@ -443,11 +443,10 @@ namespace System.Windows.Media.Media3D
 
 
             // Initializations
-            Type typeofThis = typeof(Transform3DGroup);
             ChildrenProperty =
                   RegisterProperty("Children",
                                    typeof(Transform3DCollection),
-                                   typeofThis,
+                                   typeof(Transform3DGroup),
                                    new FreezableDefaultValueFactory(Transform3DCollection.Empty),
                                    new PropertyChangedCallback(ChildrenPropertyChanged),
                                    null,

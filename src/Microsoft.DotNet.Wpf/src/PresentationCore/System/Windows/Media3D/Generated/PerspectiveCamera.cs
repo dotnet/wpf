@@ -311,11 +311,10 @@ namespace System.Windows.Media.Media3D
 
 
             // Initializations
-            Type typeofThis = typeof(PerspectiveCamera);
             FieldOfViewProperty =
                   RegisterProperty("FieldOfView",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(PerspectiveCamera),
                                    (double)45.0,
                                    new PropertyChangedCallback(FieldOfViewPropertyChanged),
                                    null,

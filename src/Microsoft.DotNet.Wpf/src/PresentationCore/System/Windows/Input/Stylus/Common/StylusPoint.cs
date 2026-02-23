@@ -77,9 +77,8 @@ namespace System.Windows.Input
             }
 
 
-            //we don't validate pressure when called by StylusPointDescription.Reformat
-            if (validatePressureFactor &&
-                (pressureFactor == Single.NaN || pressureFactor < 0.0f || pressureFactor > 1.0f))
+            // we don't validate pressure when called by StylusPointDescription.Reformat
+            if (validatePressureFactor && (float.IsNaN(pressureFactor) || pressureFactor < 0.0f || pressureFactor > 1.0f))
             {
                 throw new ArgumentOutOfRangeException(nameof(pressureFactor), SR.InvalidPressureValue);
             }

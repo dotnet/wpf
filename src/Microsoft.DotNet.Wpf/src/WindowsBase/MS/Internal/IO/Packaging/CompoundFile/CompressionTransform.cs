@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections;
@@ -113,7 +113,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         //------------------------------------------------------
         private TransformEnvironment _transformEnvironment;
         private VersionedStreamOwner _versionedStreamOwner;     // our instance data stream wrapped
-        private static readonly string _featureName = "Microsoft.Metadata.CompressionTransform";
+        private const string _featureName = "Microsoft.Metadata.CompressionTransform";
 
         private static readonly VersionPair _currentFeatureVersion = new VersionPair(1, 0);
         private static readonly VersionPair _minimumReaderVersion = new VersionPair(1, 0);

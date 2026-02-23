@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -16,22 +16,8 @@ namespace System.Windows.Documents
     //  TextTreeDumper.DumpTree(texttree);
     //  TextTreeDumper.DumpNode(someNode);
     //
-    internal class TextTreeDumper
+    internal static class TextTreeDumper
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
-
-    #region Constructors
- 
-        // Static class.
-        private TextTreeDumper()
-        {
-        }
-
-        #endregion Constructors
 
         //------------------------------------------------------
         //

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -9,7 +9,7 @@ namespace System.Windows.Input.StylusPointer
     /// <summary>
     /// Contains a WM_POINTER specific functions to parse out stylus property info
     /// </summary>
-    internal class PointerStylusPointPropertyInfoHelper
+    internal static class PointerStylusPointPropertyInfoHelper
     {
         #region Constants
 

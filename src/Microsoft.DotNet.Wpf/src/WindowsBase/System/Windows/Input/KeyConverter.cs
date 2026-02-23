@@ -36,10 +36,10 @@ namespace System.Windows.Input
                 return false;
 
             // When invoked by the serialization engine we can convert to string only for known type
-            if (context is null || context.Instance is null)
+            if (context?.Instance is not Key key)
                 return false;
 
-            return IsDefinedKey((Key)context.Instance);
+            return IsDefinedKey(key);
         }
 
         /// <summary>
@@ -70,10 +70,9 @@ namespace System.Windows.Input
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (value is null || destinationType != typeof(string))
+            if (value is not Key key || destinationType != typeof(string))
                 throw GetConvertToException(value, destinationType);
 
-            Key key = (Key)value;
             return key switch
             {
                 Key.None => string.Empty,

@@ -8,19 +8,10 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-using MS.Internal.KnownBoxes;
-using MS.Internal.Collections;
-using MS.Utility;
-using System.Collections;
-using System.ComponentModel;
-using System.Globalization;
-using System.Text;
-using System.Windows.Media.Effects;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
+using System.Windows.Media;
 using System.Windows.Markup;
-using System.Windows.Media.Converters;
+
+using ConverterHelper = System.Windows.Markup.TypeConverterHelper;
 
 namespace System.Windows.Media.Converters
 {
@@ -44,12 +35,7 @@ namespace System.Windows.Media.Converters
         public override bool CanConvertToString(object value, IValueSerializerContext context)
         {
             // Validate the input type
-            if (!(value is Int32Collection))
-            {
-                return false;
-            }
-
-            return true;
+            return value is Int32Collection;
         }
 
         /// <summary>
@@ -57,14 +43,7 @@ namespace System.Windows.Media.Converters
         /// </summary>
         public override object ConvertFromString(string value, IValueSerializerContext context)
         {
-            if (value != null)
-            {
-                return Int32Collection.Parse(value );
-            }
-            else
-            {
-                return base.ConvertFromString( value, context );
-            }
+            return value is not null ? Int32Collection.Parse(value) : base.ConvertFromString(value, context);
         }
 
         /// <summary>
@@ -72,13 +51,13 @@ namespace System.Windows.Media.Converters
         /// </summary>
         public override string ConvertToString(object value, IValueSerializerContext context)
         {
-            if (value is Int32Collection instance)
+            if (value is not Int32Collection int32Collection)
             {
-
-                return instance.ConvertToString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
+                // Let base throw an exception.
+                return base.ConvertToString(value, context);
             }
 
-            return base.ConvertToString(value, context);
+            return int32Collection.ConvertToString(null, ConverterHelper.InvariantEnglishUS);
         }
     }
 }

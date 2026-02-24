@@ -1181,7 +1181,25 @@ namespace System.Windows.Controls
                 }
                 else if (DoubleUtil.GreaterThanZero(TickFrequency))
                 {
-                    previous = Minimum + (Math.Round(((value - Minimum) / TickFrequency)) * TickFrequency);
+                    try
+                    {
+                        decimal dMin = (decimal)Minimum;
+                        decimal dFreq = (decimal)TickFrequency;
+                        decimal dValue = (decimal)value;
+
+                        // Round to nearest tick index, then reconstruct in decimal to avoid
+                        // the floating-point noise that occurs when multiplying back in double
+                        // (e.g. 19 * 0.1 = 1.9000000000000001). Decimal arithmetic is exact
+                        // for the base-10 fractions commonly used as TickFrequency values.
+                        decimal index = Math.Round((dValue - dMin) / dFreq);
+                        previous = (double)(dMin + index * dFreq);
+                    }
+                    catch (OverflowException)
+                    {
+                        // Fallback for values outside decimal's range (approx. ±7.9e28),
+                        // or for TickFrequency values not representable in decimal.
+                        previous = Minimum + (Math.Round(((value - Minimum) / TickFrequency)) * TickFrequency);
+                    }
                     next = Math.Min(Maximum, previous + TickFrequency);
                 }
 

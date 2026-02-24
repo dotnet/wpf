@@ -503,7 +503,14 @@ CConnectionContext::PresentAllPartitions()
             {
                 bool fPresentNeeded = false;
 
-                MIL_THR(pServerEntry->pCompDevice->Compose(&fPresentNeeded));
+                // So far this method is used only to synchronously present on managed UI
+                // thread when calling RenderTargetBitmap.Render or alike. This can happen
+                // when an app is running without any monitors, e.g. when Visual Studio
+                // restarts on a DevBox machine overnight after update. In this case we want
+                // to allow rendering without any displays. Otherwise RenderTargetBitmap images
+                // will appear blank when user reconnects to DevBox the next day.
+                MIL_THR(pServerEntry->pCompDevice->Compose(
+                    /*canRenderWithoutDisplayDevices*/true, &fPresentNeeded));
 
                 if (hr != WGXERR_DISPLAYSTATEINVALID) 
                 {

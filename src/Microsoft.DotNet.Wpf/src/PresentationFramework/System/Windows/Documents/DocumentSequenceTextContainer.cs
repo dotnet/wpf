@@ -343,13 +343,13 @@ namespace System.Windows.Documents
 
             if (position.TextContainer != this)
             {
-                throw new ArgumentException(SR.Format(SR.NotInAssociatedContainer, "position"));
+                throw new ArgumentException(SR.Format(SR.NotInAssociatedContainer, nameof(position)));
             }
 
             DocumentSequenceTextPointer tp = position as DocumentSequenceTextPointer;
             if (tp == null)
             {
-                throw new ArgumentException(SR.Format(SR.BadFixedTextPosition, "position"));
+                throw new ArgumentException(SR.Format(SR.BadFixedTextPosition, nameof(position)));
             }
 
             return tp;

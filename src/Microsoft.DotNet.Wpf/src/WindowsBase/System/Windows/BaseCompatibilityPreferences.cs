@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using Microsoft.Win32;
@@ -81,7 +81,7 @@ namespace System.Windows
                 {
                     if (_isSealed)
                     {
-                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, "ReuseDispatcherSynchronizationContextInstance", "BaseCompatibilityPreferences"));
+                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, nameof(ReuseDispatcherSynchronizationContextInstance), "BaseCompatibilityPreferences"));
                     }
 
                     _reuseDispatcherSynchronizationContextInstance = value;
@@ -132,7 +132,7 @@ namespace System.Windows
                 {
                     if (_isSealed)
                     {
-                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, "FlowDispatcherSynchronizationContextPriority", "BaseCompatibilityPreferences"));
+                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, nameof(FlowDispatcherSynchronizationContextPriority), "BaseCompatibilityPreferences"));
                     }
 
                     _flowDispatcherSynchronizationContextPriority = value;
@@ -182,7 +182,7 @@ namespace System.Windows
                 {
                     if (_isSealed)
                     {
-                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, "InlineDispatcherSynchronizationContextSend", "BaseCompatibilityPreferences"));
+                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, nameof(InlineDispatcherSynchronizationContextSend), "BaseCompatibilityPreferences"));
                     }
 
                     _inlineDispatcherSynchronizationContextSend = value;

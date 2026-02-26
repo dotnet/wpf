@@ -325,7 +325,11 @@ namespace MS.Internal.Text.TextInterface
         {
             IDWriteTextAnalyzer* textAnalyzer = null;
 
-            _factory.Value->CreateTextAnalyzer(&textAnalyzer);
+            int hr = _factory.Value->CreateTextAnalyzer(&textAnalyzer);
+
+            GC.KeepAlive(this);
+
+            DWriteUtil.ConvertHresultToException(hr);
 
             return new TextAnalyzer((Native.IDWriteTextAnalyzer*)textAnalyzer);
         }

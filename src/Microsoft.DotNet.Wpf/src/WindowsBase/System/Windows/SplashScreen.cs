@@ -173,7 +173,7 @@ namespace System.Windows
             using CreateDcScope memoryContext = new(screenContext);
             using SelectObjectScope selectObjectScope = new(memoryContext, hBitmap);
 
-            BLENDFUNCTION blendFunction = new()
+            _blendFunction = new()
             {
                 BlendOp = (byte)PInvoke.AC_SRC_OVER,
                 SourceConstantAlpha = 255,
@@ -188,7 +188,7 @@ namespace System.Windows
                 memoryContext,
                 new(0, 0),
                 default,
-                blendFunction,
+                _blendFunction,
                 UPDATE_LAYERED_WINDOW_FLAGS.ULW_ALPHA))
             {
                 ((HRESULT)Marshal.GetHRForLastWin32Error()).ThrowOnFailure();

@@ -822,11 +822,6 @@
         <target state="translated">Non è stato trovato alcun costruttore per '{0}' con gli argomenti '{1}'.</target>
         <note />
       </trans-unit>
-      <trans-unit id="NoDefaultConstructor">
-        <source>No default constructor found for type '{0}'. You can use the Arguments or FactoryMethod directives to construct this type.</source>
-        <target state="translated">Non è stato trovato alcun costruttore predefinito per il tipo '{0}'. È possibile usare le direttive Arguments o FactoryMethod per la costruzione del tipo.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NoElementUsage">
         <source>'{0}' is not allowed in element usage.</source>
         <target state="translated">'{0}' non consentito nella sintassi degli elementi.</target>

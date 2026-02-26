@@ -822,11 +822,6 @@
         <target state="translated">Un constructeur pour '{0}' avec '{1}' des arguments est introuvable.</target>
         <note />
       </trans-unit>
-      <trans-unit id="NoDefaultConstructor">
-        <source>No default constructor found for type '{0}'. You can use the Arguments or FactoryMethod directives to construct this type.</source>
-        <target state="translated">Aucun constructeur par défaut n'a été trouvé pour le type '{0}'. Vous pouvez utiliser les directives Arguments ou FactoryMethod pour construire ce type.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NoElementUsage">
         <source>'{0}' is not allowed in element usage.</source>
         <target state="translated">'{0}' n'est pas autorisé dans l'utilisation d'élément.</target>

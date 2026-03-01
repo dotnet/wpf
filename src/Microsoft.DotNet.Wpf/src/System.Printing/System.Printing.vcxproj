@@ -40,9 +40,10 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup>
     <Keyword>NetCoreCProj</Keyword>
-    <CLRSupport>pure</CLRSupport>
+    <CLRSupport>NetCore</CLRSupport>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ClAdditionalOptions>$(ClAdditionalOptions) /d1clrpure /d2clrpure /predefine"_M_CEE_PURE=1"</ClAdditionalOptions>
   </PropertyGroup>
   <Import Project="$(WpfCppProps)" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -57,7 +58,7 @@
     <ClCompile>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(WpfSharedDir)\inc;.\CPP;.\CPP\inc;.\CPP\inc\GDIExporter</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>$(CDefines);%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <CompileAsManaged>pure</CompileAsManaged>
+      <CompileAsManaged>NetCore</CompileAsManaged>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Win32Inc.hpp</PrecompiledHeaderFile>
       <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>

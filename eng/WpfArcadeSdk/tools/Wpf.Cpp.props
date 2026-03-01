@@ -50,7 +50,7 @@
   <PropertyGroup>
     <ManagedCxx Condition="'$(CLRSupport)'!='true'">false</ManagedCxx>
     <ManagedCxx Condition="'$(CLRSupport)'=='true'">true</ManagedCxx>
-    <ManagedCxx Condition="'$(CLRSupport)'=='pure'">true</ManagedCxx>
+    <ManagedCxx Condition="'$(CLRSupport)'=='NetCore'">true</ManagedCxx>
   </PropertyGroup>
   
   <!-- 

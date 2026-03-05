@@ -22,9 +22,9 @@
       <Uri>https://github.com/dotnet/dotnet</Uri>
       <Sha>15ac4103422d47f7c8f14fa98e813f315432d03b</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="11.0.0-preview.2.26152.7">
+    <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="11.0.0-preview.2.26154.8">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int</Uri>
-      <Sha>6fdd477b31eced552b7ece0d5b0a993e3ae082ea</Sha>
+      <Sha>18364ae37c405cbcab7d9c9566e1645e034dd0b1</Sha>
     </Dependency>
     <Dependency Name="System.Resources.Extensions" Version="11.0.0-preview.3.26153.117">
       <Uri>https://github.com/dotnet/dotnet</Uri>

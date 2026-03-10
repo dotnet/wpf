@@ -22,9 +22,9 @@
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
       <Sha>9ecbfd4f3f330dc9649bce49cb12570b19d48c87</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="9.0.0-rtm.26111.2">
+    <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="9.0.0-rtm.26160.7">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int</Uri>
-      <Sha>27196c7e9563dc9ec3894edc872ebf2550f22618</Sha>
+      <Sha>234061304ac6b73f9916946be52bc012069098bc</Sha>
     </Dependency>
     <Dependency Name="System.Resources.Extensions" Version="9.0.13" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>

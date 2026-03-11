@@ -404,6 +404,13 @@ namespace System.Windows
 
                 if (ListenerList.PrepareForWriting(ref list) && source != null)
                 {
+                    // WeakEventTable.Purge is iterating through Table, Table[this, source] = list will invalidate the enumerator.
+                    // Purge the list next time.
+                    if (BaseAppContextSwitches.EnableWeakEventMemoryImprovements)
+                    {
+                        return true;
+                    }
+
                     Table[this, source] = list;
                 }
 

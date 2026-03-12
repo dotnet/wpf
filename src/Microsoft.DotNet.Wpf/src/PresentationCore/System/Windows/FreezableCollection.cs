@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description: This file contains the implementation of FreezableCollection<T>.
@@ -598,10 +598,7 @@ namespace System.Windows
         /// </summary>
         private void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if (PrivatePropertyChanged != null)
-            {
-                PrivatePropertyChanged(this, e);
-            }
+            PrivatePropertyChanged?.Invoke(this, e);
         }
 
         #endregion INotifyPropertyChanged

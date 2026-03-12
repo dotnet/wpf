@@ -483,15 +483,9 @@ namespace System.Windows.Xps.Serialization
         {
             XpsSerializationCompletedEventArgs e = operationState as XpsSerializationCompletedEventArgs;
 
-            if (XpsSerializationCompleted != null)
-            {
-                XpsSerializationCompleted(this, e);
-            }
+            XpsSerializationCompleted?.Invoke(this, e);
 
-            if (XpsSerializationCompletedInternal != null)
-            {
-                XpsSerializationCompletedInternal(this, e);
-            }
+            XpsSerializationCompletedInternal?.Invoke(this, e);
             return null;
         }
 

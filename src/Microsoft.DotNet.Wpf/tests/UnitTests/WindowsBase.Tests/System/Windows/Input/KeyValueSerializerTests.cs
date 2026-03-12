@@ -58,25 +58,13 @@ public class KeyValueSerializerTests
 
     [Theory]
     [InlineData(null)]
-    // TODO: this should not throw InvalidCastException.
-    //[InlineData("", "")]
-    //[InlineData("value", "value")]
+    [InlineData("")]
+    [InlineData("value")]
     public void ConvertToString_InvokeNotKeyToStringNull_ThrowsNotSupportedException(object? value)
     {
         var serializer = new KeyValueSerializer();
         Assert.Throws<NotSupportedException>(() => serializer.ConvertToString(value, null));
         Assert.Throws<NotSupportedException>(() => serializer.ConvertToString(value, new CustomValueSerializerContext()));
-    }
-
-    [Theory]
-    [InlineData("")]
-    [InlineData("value")]
-    public void ConvertToString_InvokeNotKeyNotNull_ThrowsInvalidCastException(object value)
-    {
-        // TODO: this should not throw InvalidCastException.
-        var serializer = new KeyValueSerializer();
-        Assert.Throws<InvalidCastException>(() => serializer.ConvertToString(value, null));
-        Assert.Throws<InvalidCastException>(() => serializer.ConvertToString(value, new CustomValueSerializerContext()));
     }
 
     public static IEnumerable<object?[]> CanConvertFromString_TestData()

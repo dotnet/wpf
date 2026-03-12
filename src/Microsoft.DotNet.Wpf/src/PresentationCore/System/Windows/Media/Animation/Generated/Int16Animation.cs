@@ -44,36 +44,34 @@ namespace System.Windows.Media.Animation
         /// </summary>
         static Int16Animation()
         {
-            Type typeofProp = typeof(Int16?);
-            Type typeofThis = typeof(Int16Animation);
             PropertyChangedCallback propCallback = new PropertyChangedCallback(AnimationFunction_Changed);
             ValidateValueCallback validateCallback = new ValidateValueCallback(ValidateFromToOrByValue);
 
             FromProperty = DependencyProperty.Register(
                 "From",
-                typeofProp,
-                typeofThis,
+                typeof(Int16?),
+                typeof(Int16Animation),
                 new PropertyMetadata((Int16?)null, propCallback),
                 validateCallback);
 
             ToProperty = DependencyProperty.Register(
                 "To",
-                typeofProp,
-                typeofThis,
+                typeof(Int16?),
+                typeof(Int16Animation),
                 new PropertyMetadata((Int16?)null, propCallback),
                 validateCallback);
 
             ByProperty = DependencyProperty.Register(
                 "By",
-                typeofProp,
-                typeofThis,
+                typeof(Int16?),
+                typeof(Int16Animation),
                 new PropertyMetadata((Int16?)null, propCallback),
                 validateCallback);
 
             EasingFunctionProperty = DependencyProperty.Register(
                 "EasingFunction",
                 typeof(IEasingFunction),
-                typeofThis);
+                typeof(Int16Animation));
         }
 
 

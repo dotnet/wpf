@@ -475,22 +475,16 @@ namespace MS.Internal.Documents
                     {
                         if(rsa == null)
                         {
-                            using (DSA dsa = x509Certificate2.GetDSAPrivateKey())
+                            using (ECDsa ecdsa = x509Certificate2.GetECDsaPrivateKey())
                             {
-                                if(dsa == null)
+                                if(ecdsa == null)
                                 {
-                                    using (ECDsa ecdsa = x509Certificate2.GetECDsaPrivateKey())
-                                    {
-                                        if(ecdsa == null)
-                                        {
-                                            // Get[Algorithm]PrivateKey methods would always have returned the private key if the PrivateKey property would
-                                            // But Get[Algorithm]PrivateKey methods never throw but returns null in case of error during cryptographic operations
-                                            // But we want exception to be thrown when an error occurs during a cryptographic operation so that we can redisplay the certificate picker
-                                            #pragma warning disable SYSLIB0028
-                                            AsymmetricAlgorithm testKey = x509Certificate2.PrivateKey;
-                                            #pragma warning restore SYSLIB0028
-                                        }
-                                    }
+                                    // Get[Algorithm]PrivateKey methods would always have returned the private key if the PrivateKey property would
+                                    // But Get[Algorithm]PrivateKey methods never throw but returns null in case of error during cryptographic operations
+                                    // But we want exception to be thrown when an error occurs during a cryptographic operation so that we can redisplay the certificate picker
+                                    #pragma warning disable SYSLIB0028
+                                    AsymmetricAlgorithm testKey = x509Certificate2.PrivateKey;
+                                    #pragma warning restore SYSLIB0028
                                 }
                             }
                         }

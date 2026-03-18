@@ -1,0 +1,143 @@
+# Phase 2: Apply Issue Triage Labels
+#
+# Applies triage labels to GitHub issues based on triage data.
+# Triggered either:
+#   - By Power Automate (after team replies to the triage email)
+#   - Manually from the GitHub Actions UI (fallback)
+#
+# No additional secrets required beyond the default GITHUB_TOKEN.
+
+name: "Apply Issue Triage"
+
+on:
+  workflow_dispatch:
+    inputs:
+      triage_json:
+        description: "JSON array of triage decisions (from email reply or manual input)"
+        required: true
+        type: string
+      dry_run:
+        description: "Preview changes without applying (true/false)"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+
+permissions:
+  issues: write
+
+jobs:
+  apply:
+    name: Apply Triage Labels
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Parse triage data
+        id: parse
+        run: |
+          # Write the JSON input to a file
+          cat <<'TRIAGE_EOF' > triage-input.json
+          ${{ github.event.inputs.triage_json }}
+          TRIAGE_EOF
+
+          # Validate it's valid JSON
+          if ! python3 -c "import json; json.load(open('triage-input.json'))"; then
+            echo "::error::Invalid JSON input. Please check the triage data."
+            exit 1
+          fi
+
+          COUNT=$(python3 -c "import json; data=json.load(open('triage-input.json')); print(len(data))")
+          echo "issues_count=${COUNT}" >> "$GITHUB_OUTPUT"
+          echo "Found ${COUNT} issues to process"
+
+      - name: Apply labels to issues
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+        run: |
+          python3 << 'SCRIPT'
+          import json
+          import subprocess
+          import os
+          import sys
+
+          dry_run = os.environ.get("DRY_RUN", "false").lower() == "true"
+          repo = "${{ github.repository }}"
+
+          with open("triage-input.json") as f:
+              triage_data = json.load(f)
+
+          if dry_run:
+              print("🔍 DRY RUN MODE — no changes will be made\n")
+
+          results = {"success": 0, "skipped": 0, "failed": 0}
+
+          for item in triage_data:
+              number = item.get("number")
+              if not number:
+                  print(f"⚠️  Skipping entry with no issue number: {item}")
+                  results["skipped"] += 1
+                  continue
+
+              # Collect labels to apply
+              labels = []
+              proposed_type = item.get("proposed_type", "")
+              proposed_component = item.get("proposed_component", "")
+              proposed_priority = item.get("proposed_priority", "")
+
+              if proposed_type and proposed_type != "—":
+                  labels.append(proposed_type)
+              if proposed_component and proposed_component != "—":
+                  labels.append(proposed_component)
+              if proposed_priority and proposed_priority != "—":
+                  labels.append(proposed_priority)
+
+              if not labels:
+                  print(f"⏭️  #{number}: No labels to apply, skipping")
+                  results["skipped"] += 1
+                  continue
+
+              label_str = ",".join(labels)
+
+              if dry_run:
+                  print(f"🏷️  #{number}: Would apply [{label_str}]")
+                  results["success"] += 1
+              else:
+                  try:
+                      subprocess.run(
+                          ["gh", "issue", "edit", str(number),
+                           "--repo", repo,
+                           "--add-label", label_str],
+                          check=True,
+                          capture_output=True,
+                          text=True,
+                      )
+                      print(f"✅ #{number}: Applied [{label_str}]")
+                      results["success"] += 1
+                  except subprocess.CalledProcessError as e:
+                      print(f"❌ #{number}: Failed to apply labels — {e.stderr.strip()}")
+                      results["failed"] += 1
+
+          # Summary
+          mode = "DRY RUN" if dry_run else "APPLIED"
+          print(f"\n{'='*50}")
+          print(f"📊 Triage {mode} Summary")
+          print(f"   ✅ Success: {results['success']}")
+          print(f"   ⏭️  Skipped: {results['skipped']}")
+          print(f"   ❌ Failed:  {results['failed']}")
+          print(f"{'='*50}")
+
+          if results["failed"] > 0:
+              sys.exit(1)
+          SCRIPT
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## Triage Apply Results" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Mode**: ${{ github.event.inputs.dry_run == 'true' && 'Dry Run 🔍' || 'Applied ✅' }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Issues processed**: ${{ steps.parse.outputs.issues_count }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Triggered by**: ${{ github.actor }}" >> "$GITHUB_STEP_SUMMARY"

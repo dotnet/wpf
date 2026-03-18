@@ -1,0 +1,124 @@
+# Phase 1: Weekly Issue Triage Report
+#
+# Runs every Monday at 9:00 AM IST (3:30 AM UTC).
+# Fetches issues created in the past 7 days, generates a triage report,
+# and sends it to a Power Automate webhook which emails the team.
+#
+# Required secrets:
+#   TRIAGE_WEBHOOK_URL - Power Automate HTTP trigger URL (sends the email)
+
+name: "Weekly Issue Triage"
+
+on:
+  schedule:
+    # Every Monday at 3:30 AM UTC = 9:00 AM IST
+    - cron: "30 3 * * 1"
+  workflow_dispatch:
+    inputs:
+      days:
+        description: "Number of days to look back for issues"
+        required: false
+        default: "7"
+      email_override:
+        description: "Override email recipient (leave empty for default: waveteam@microsoft.com)"
+        required: false
+        default: ""
+
+permissions:
+  issues: read
+
+jobs:
+  triage:
+    name: Generate Triage Report
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch issues and generate report
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DAYS: ${{ github.event.inputs.days || '7' }}
+        run: |
+          mkdir -p output
+          python .github/scripts/generate-triage-report.py \
+            --days "$DAYS" \
+            --output-dir output
+
+      - name: Upload triage data artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: triage-data
+          path: |
+            output/triage-data.json
+            output/triage-report.md
+          retention-days: 30
+
+      - name: Prepare email content
+        id: email
+        run: |
+          # Read the email body
+          EMAIL_BODY=$(cat output/triage-email-body.md)
+
+          # Add workflow run info and apply link
+          RUN_ID=${{ github.run_id }}
+          REPO_URL="https://github.com/${{ github.repository }}"
+          APPLY_URL="${REPO_URL}/actions/workflows/apply-triage.yml"
+
+          # Build the full email
+          {
+            echo "$EMAIL_BODY"
+            echo ""
+            echo "---"
+            echo ""
+            echo "**Workflow Run ID**: \`${RUN_ID}\`"
+            echo ""
+            echo "**[Download triage-data.json](${REPO_URL}/actions/runs/${RUN_ID})**"
+            echo ""
+            echo "**[Trigger Apply Triage workflow](${APPLY_URL})** (fallback — use if email reply doesn't work)"
+          } > output/full-email-body.md
+
+          echo "Generated email body with run ID: ${RUN_ID}"
+
+      - name: Get report date
+        id: date
+        run: echo "date=$(date -u +'%Y-%m-%d')" >> "$GITHUB_OUTPUT"
+
+      - name: Send report via Power Automate webhook
+        env:
+          WEBHOOK_URL: ${{ secrets.TRIAGE_WEBHOOK_URL }}
+          EMAIL_TO: ${{ github.event.inputs.email_override || 'waveteam@microsoft.com' }}
+        run: |
+          # Read the email body and JSON data
+          EMAIL_BODY=$(cat output/full-email-body.md)
+          TRIAGE_JSON=$(cat output/triage-data.json)
+          REPORT_DATE="${{ steps.date.outputs.date }}"
+
+          # POST to Power Automate webhook
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            -X POST "$WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d @- <<EOF
+          {
+            "subject": "[WPF Triage] Weekly Issue Triage Report - ${REPORT_DATE}",
+            "body": $(echo "$EMAIL_BODY" | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))"),
+            "triageJson": $(echo "$TRIAGE_JSON" | python3 -c "import sys,json; print(json.dumps(sys.stdin.read()))"),
+            "runId": "${{ github.run_id }}",
+            "repoUrl": "https://github.com/${{ github.repository }}",
+            "emailTo": "${EMAIL_TO}"
+          }
+          EOF
+          )
+
+          if [ "$HTTP_STATUS" -eq 200 ] || [ "$HTTP_STATUS" -eq 202 ]; then
+            echo "✅ Webhook triggered successfully (HTTP $HTTP_STATUS)"
+          else
+            echo "❌ Webhook failed with HTTP $HTTP_STATUS"
+            exit 1
+          fi

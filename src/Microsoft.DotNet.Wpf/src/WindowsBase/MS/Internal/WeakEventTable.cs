@@ -348,6 +348,17 @@ namespace MS.Internal
                     _inPurge = false;
                 }
 
+                // Apply the updates before the removes, in case an entry appears in both lists.
+                if (_toUpdate.Count > 0)
+                {
+                    foreach (var (key, value) in _toUpdate)
+                    {
+                        _dataTable[key] = value;
+                    }
+                    _toUpdate.Clear();
+                    _toUpdate.TrimExcess();
+                }
+
                 if (purgeAll)
                 {
                     _managerTable.Clear();
@@ -361,16 +372,6 @@ namespace MS.Internal
                     }
                     _toRemove.Clear();
                     _toRemove.TrimExcess();
-                }
-
-                if (_toUpdate.Count > 0)
-                {
-                    foreach (var (key, value) in _toUpdate)
-                    {
-                        _dataTable[key] = value;
-                    }
-                    _toUpdate.Clear();
-                    _toUpdate.TrimExcess();
                 }
 
 #if WeakEventTelemetry

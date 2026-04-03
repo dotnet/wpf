@@ -1317,7 +1317,6 @@
     <Compile Include="System\Windows\Standard\NativeMethods.cs" />
     <Compile Include="System\Windows\Standard\ShellProvider.cs" />
     <Compile Include="System\Windows\Standard\Utilities.cs" />
-    <Compile Include="System\Windows\Standard\Verify.cs" />
     <Compile Include="System\Windows\StartupEventArgs.cs" />
     <Compile Include="System\Windows\StaticResourceExtension.cs" />
     <Compile Include="System\Windows\Style.cs" />

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -333,10 +333,7 @@ namespace System.Windows.Input.Manipulations
             this.currentManipulation.Completed += OnManipulationCompleted;
 
             // Fire the Started event on the manipulation processor.
-            if (Started != null)
-            {
-                Started(this, args);
-            }
+            Started?.Invoke(this, args);
         }
 
         /// <summary>
@@ -347,10 +344,7 @@ namespace System.Windows.Input.Manipulations
         private void OnManipulationDelta(object sender, Manipulation2DDeltaEventArgs args)
         {
             Debug.Assert(object.ReferenceEquals(sender, this.currentManipulation));
-            if (Delta != null)
-            {
-                Delta(this, args);
-            }
+            Delta?.Invoke(this, args);
         }
 
         /// <summary>
@@ -369,10 +363,7 @@ namespace System.Windows.Input.Manipulations
             this.currentManipulation = null;
 
             // Fire the Completed event on the manipulation processor.
-            if (Completed != null)
-            {
-                Completed(this, args);
-            }
+            Completed?.Invoke(this, args);
         }
         #endregion Private Methods
     }

@@ -463,14 +463,13 @@ namespace System.Windows.Controls.Primitives
         {
             get
             {
-                Type managerType = typeof(InternalCollectionChangedEventManager);
-                InternalCollectionChangedEventManager manager = (InternalCollectionChangedEventManager)GetCurrentManager(managerType);
+                InternalCollectionChangedEventManager manager = (InternalCollectionChangedEventManager)GetCurrentManager(typeof(InternalCollectionChangedEventManager));
 
                 // at first use, create and register a new manager
                 if (manager == null)
                 {
                     manager = new InternalCollectionChangedEventManager();
-                    SetCurrentManager(managerType, manager);
+                    SetCurrentManager(typeof(InternalCollectionChangedEventManager), manager);
                 }
 
                 return manager;

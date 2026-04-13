@@ -39,7 +39,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup>
     <Keyword>NetCoreCProj</Keyword>
-    <CLRSupport>pure</CLRSupport>
+    <CLRSupport>NetCore</CLRSupport>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
   </PropertyGroup>
@@ -57,7 +57,7 @@
     <ClCompile>
       <AdditionalOptions>%(AdditionalOptions) /clr:initLocals</AdditionalOptions>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(WpfSharedDir)\inc;.\;.\CPP</AdditionalIncludeDirectories>
-      <CompileAsManaged>pure</CompileAsManaged>
+      <CompileAsManaged>NetCore</CompileAsManaged>
       <PreprocessorDefinitions>$(CDefines);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>precomp.hxx</PrecompiledHeaderFile>
       <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
@@ -92,12 +92,7 @@
   <ItemGroup>
     <AdditionalPackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
   </ItemGroup>
-  <!--
-    Ignore ijwhost.dll during packaging
-  -->
-  <ItemGroup>
-    <FileNamesExcludedFromPackaging Include="ijwhost.dll" />
-  </ItemGroup>
+  <!-- ijwhost.dll is required for mixed-mode C++/CLI assemblies -->
   <Target Name="AddWindowsBaseDefine" AfterTargets="ResolveProjectReferences">
     <Error Text="Unexpected result from _WindowsBaseReference '@(_WindowsBaseReference->Count())'" Condition="'@(_WindowsBaseReference->Count())' != '1'" />
     <PropertyGroup>

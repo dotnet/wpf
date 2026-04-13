@@ -88,6 +88,9 @@ namespace MS.Win32.Penimc
         [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
         internal static extern IntPtr RegisterDllForSxSCOM();
 
+        [DllImport(ExternDll.Penimc, CharSet = CharSet.Auto)]
+        internal static extern void SetDisablePenImcBoundsCheckProtection([MarshalAs(UnmanagedType.Bool)] bool value);
+
         #endregion
 
         /// <summary>
@@ -114,6 +117,9 @@ namespace MS.Win32.Penimc
                 {
                     throw new InvalidOperationException(SR.Format(SR.PenImcSxSRegistrationFailed, ExternDll.Penimc));
                 }
+
+                // Pass security mitigation switch to native PenImc code.
+                SetDisablePenImcBoundsCheckProtection(CoreAppContextSwitches.DisablePenImcBoundsCheckProtection);
             }
         }
 

@@ -216,3 +216,15 @@ STDMETHODIMP CPimcManagerFactory::LockServer(BOOL fLock)
 }
 #endif // WANT_SINGLETON
 
+/////////////////////////////////////////////////////////////////////////////
+// Security mitigation switch - static storage and exported setter
+
+#include "PenImcSwitches.h"
+
+bool PenImcSwitches::s_boundsCheckDisabled = false;
+
+extern "C" void WINAPI SetDisablePenImcBoundsCheckProtection(BOOL fDisable)
+{
+    PenImcSwitches::SetPenImcBoundsCheckProtectionDisabled(!!fDisable);
+}
+

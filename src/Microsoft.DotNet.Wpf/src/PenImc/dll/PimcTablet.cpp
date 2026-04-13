@@ -10,6 +10,7 @@
 #include "PimcTablet.h"
 #include <strsafe.h>
 #include <intsafe.h>
+#include "PenImcSwitches.h"
 
 using namespace ComUtils;
 
@@ -45,6 +46,11 @@ static const WCHAR* MOUSEDEVICE_CURSOR_NAME         = L"Mouse";
 static const WCHAR* MOUSEDEVICE_BUTTON_ONE_NAME     = L"Tip Switch";
 static const WCHAR* MOUSEDEVICE_BUTTON_TWO_NAME    = L"Barrel Switch";
 static const WCHAR* MOUSEDEVICE_PLUGANDPLAYID    = L"SCREEN";
+
+// Reasonable upper bounds for COM-returned counts to guard against
+// integer overflow in allocation size calculations.
+static const DWORD MAX_TABLET_CURSORS = 128;
+static const DWORD MAX_CURSOR_BUTTONS = 64;
 
 static void EnsureNoDuplicateGUIDs(__in GUID *pGUID, __inout ULONG &cGUID)
 {
@@ -545,6 +551,10 @@ STDMETHODIMP CPimcTablet::RefreshCursorInfo()
     if (m_pTabS)
     {
         CHR(m_pTabS->GetCursorCount(&m_cCursors));
+        if (!PenImcSwitches::IsPenImcBoundsCheckProtectionDisabled())
+        {
+            CHR(m_cCursors <= MAX_TABLET_CURSORS ? S_OK : E_UNEXPECTED);
+        }
         m_apCursorInfo = new PCURSORINFO[m_cCursors]();
 
         CHR(m_apCursorInfo ? S_OK : E_OUTOFMEMORY);
@@ -566,6 +576,10 @@ STDMETHODIMP CPimcTablet::RefreshCursorInfo()
 
             DWORD cButtons;
             CHR(pCursorS->GetButtonCount(&cButtons));
+            if (!PenImcSwitches::IsPenImcBoundsCheckProtectionDisabled())
+            {
+                CHR(cButtons <= MAX_CURSOR_BUTTONS ? S_OK : E_UNEXPECTED);
+            }
             pCursorInfo->cButtons = cButtons;
             pCursorInfo->apButtonInfo = new PCURSORBUTTONINFO[cButtons]();
 
@@ -839,7 +853,14 @@ STDMETHODIMP CPimcTablet::IsPropertySupported(GUID guid, __out BOOL * pfSupporte
     DHR;
     CHR(pfSupported ? S_OK : E_INVALIDARG);
     PROPERTY_METRICS    metric;
-    *pfSupported = S_OK == m_pTabS->GetPropertyMetrics(guid, &metric);
+    if (!PenImcSwitches::IsPenImcBoundsCheckProtectionDisabled())
+    {
+        *pfSupported = m_pTabS ? (S_OK == m_pTabS->GetPropertyMetrics(guid, &metric)) : FALSE;
+    }
+    else
+    {
+        *pfSupported = S_OK == m_pTabS->GetPropertyMetrics(guid, &metric);
+    }
 CLEANUP:
     RHR;
 }

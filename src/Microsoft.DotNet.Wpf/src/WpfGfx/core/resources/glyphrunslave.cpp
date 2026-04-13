@@ -1700,7 +1700,22 @@ CGlyphRunRealization::EnsureValidAlphaMap(__in const EnhancedContrastTable *pECT
             CMilRectL CTBbox(clearTypeAlphaMapBoundingBox);
             CMilRectL UnionBBox(BLBbox);
             UnionBBox.Union(CTBbox);
-            UINT32 textureSize = UnionBBox.Width() * UnionBBox.Height();
+
+            UINT32 textureSize;
+            if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+            {
+                UINT64 textureSize64 = (UINT64)UnionBBox.Width() * UnionBBox.Height();
+                if (textureSize64 > UINT32_MAX)
+                {
+                    IFC(WGXERR_BADNUMBER);
+                }
+                textureSize = (UINT32)textureSize64;
+            }
+            else
+            {
+                textureSize = UnionBBox.Width() * UnionBBox.Height();
+            }
+
             BYTE *pCombinedAlphaMap = (BYTE*)WPFAlloc(ProcessHeap,
                                                        Mt(GlyphBitmapClearType),
                                                        textureSize
@@ -1866,14 +1881,25 @@ CGlyphRunRealization::RealizeAlphaBoundsAndTextures(
         //
         UINT32 width = boundingBox.right - boundingBox.left;
         UINT32 height = boundingBox.bottom - boundingBox.top;        
-        UINT32 textureStride = width;
+        UINT32 textureStrideU32 = width;
         if (textureType == DWRITE_TEXTURE_CLEARTYPE_3x1) 
         {
-            // ClearType bitmaps (DWRITE_TEXTURE_CLEARTYPE_3x1) contain 3 bytes per pixel, 
-            // Aliased bitmaps only contain 1.
-            textureStride *= 3;
+            textureStrideU32 *= 3;
         }
-        UINT32 textureSize = textureStride * height;
+        UINT32 textureSize = 0;
+        if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+        {
+            UINT64 textureSize64 = (UINT64)textureStrideU32 * height;
+            if (textureSize64 > UINT32_MAX)
+            {
+                IFC(WGXERR_BADNUMBER);
+            }
+            textureSize = (UINT32)textureSize64;
+        }
+        else
+        {
+            textureSize = textureStrideU32 * height;
+        }
         
         pAlphaValues = (BYTE *)WPFAlloc(ProcessHeap,
                                         (textureType == DWRITE_TEXTURE_CLEARTYPE_3x1 ? Mt(GlyphBitmapClearType) : Mt(GlyphBitmapBiLevel)),
@@ -1902,7 +1928,7 @@ CGlyphRunRealization::RealizeAlphaBoundsAndTextures(
             // pECT may be NULL if the contrast enhancement value is 0.
             if (pECT)
             {
-                pECT->RenormalizeAndApplyContrast(pAlphaValues, boundingBox.right - boundingBox.left, boundingBox.bottom - boundingBox.top, textureStride, textureSize);
+                pECT->RenormalizeAndApplyContrast(pAlphaValues, boundingBox.right - boundingBox.left, boundingBox.bottom - boundingBox.top, textureStrideU32, textureSize);
             }
         }
         else
@@ -1910,10 +1936,27 @@ CGlyphRunRealization::RealizeAlphaBoundsAndTextures(
             // Future Consideration: probably shouldn't do this texture expansion. Need to write a different
             // shader and shrink the texture to benefit perf. Aliased text is relatively rare however, so it's 
             // not worth the investment at this point.
-            BYTE *pNewAlphaValues = (BYTE *)WPFAlloc(ProcessHeap,
-                                                     Mt(GlyphBitmapBiLevel),
-                                                     textureSize * 3);
-            TraceTagText((tagError, "CGlyphRunRealization::RealizeAlphaBoundsAndTextures, allocated bytes: %d", textureSize * 3));
+            BYTE *pNewAlphaValues;
+            if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+            {
+                UINT64 expandedSize64 = (UINT64)textureSize * 3;
+                if (expandedSize64 > UINT32_MAX)
+                {
+                    IFC(WGXERR_BADNUMBER);
+                }
+                UINT32 expandedSize = (UINT32)expandedSize64;
+                pNewAlphaValues = (BYTE *)WPFAlloc(ProcessHeap,
+                                                         Mt(GlyphBitmapBiLevel),
+                                                         expandedSize);
+                TraceTagText((tagError, "CGlyphRunRealization::RealizeAlphaBoundsAndTextures, allocated bytes: %d", expandedSize));
+            }
+            else
+            {
+                pNewAlphaValues = (BYTE *)WPFAlloc(ProcessHeap,
+                                                         Mt(GlyphBitmapBiLevel),
+                                                         textureSize * 3);
+                TraceTagText((tagError, "CGlyphRunRealization::RealizeAlphaBoundsAndTextures, allocated bytes: %d", textureSize * 3));
+            }
             
             for (UINT i = 0; i < textureSize; i++)
             {

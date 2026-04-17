@@ -277,11 +277,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(MatrixTransform);
             MatrixProperty =
                   RegisterProperty("Matrix",
                                    typeof(Matrix),
-                                   typeofThis,
+                                   typeof(MatrixTransform),
                                    new Matrix(),
                                    new PropertyChangedCallback(MatrixPropertyChanged),
                                    null,

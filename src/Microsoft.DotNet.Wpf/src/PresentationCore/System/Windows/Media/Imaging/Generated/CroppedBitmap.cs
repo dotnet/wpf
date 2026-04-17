@@ -303,11 +303,10 @@ namespace System.Windows.Media.Imaging
 
 
             // Initializations
-            Type typeofThis = typeof(CroppedBitmap);
             SourceProperty =
                   RegisterProperty("Source",
                                    typeof(BitmapSource),
-                                   typeofThis,
+                                   typeof(CroppedBitmap),
                                    null,
                                    new PropertyChangedCallback(SourcePropertyChanged),
                                    null,
@@ -316,7 +315,7 @@ namespace System.Windows.Media.Imaging
             SourceRectProperty =
                   RegisterProperty("SourceRect",
                                    typeof(Int32Rect),
-                                   typeofThis,
+                                   typeof(CroppedBitmap),
                                    Int32Rect.Empty,
                                    new PropertyChangedCallback(SourceRectPropertyChanged),
                                    null,

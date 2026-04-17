@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -137,14 +137,13 @@ namespace System.Windows
         {
             get
             {
-                Type managerType = typeof(LostFocusEventManager);
-                LostFocusEventManager manager = (LostFocusEventManager)GetCurrentManager(managerType);
+                LostFocusEventManager manager = (LostFocusEventManager)GetCurrentManager(typeof(LostFocusEventManager));
 
                 // at first use, create and register a new manager
                 if (manager == null)
                 {
                     manager = new LostFocusEventManager();
-                    SetCurrentManager(managerType, manager);
+                    SetCurrentManager(typeof(LostFocusEventManager), manager);
                 }
 
                 return manager;

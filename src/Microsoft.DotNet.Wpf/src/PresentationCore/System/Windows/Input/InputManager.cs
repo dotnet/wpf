@@ -210,10 +210,7 @@ namespace System.Windows.Input
         /// </summary>
         internal void RaiseTranslateAccelerator(KeyEventArgs e)
         {
-            if (_translateAccelerator != null)
-            {
-                _translateAccelerator(this, e);
-            }
+            _translateAccelerator?.Invoke(this, e);
         }
 
         /// <summary>
@@ -332,11 +329,7 @@ namespace System.Windows.Input
 
             if (1 == _menuModeCount)
             {
-                EventHandler enterMenuMode = EnterMenuMode;
-                if (null != enterMenuMode)
-                {
-                    enterMenuMode(null, EventArgs.Empty);
-                }
+                EnterMenuMode?.Invoke(null, EventArgs.Empty);
             }
         }
 
@@ -358,11 +351,7 @@ namespace System.Windows.Input
 
             if (0 == _menuModeCount)
             {
-                EventHandler leaveMenuMode = LeaveMenuMode;
-                if (null != leaveMenuMode)
-                {
-                    leaveMenuMode(null, EventArgs.Empty);
-                }
+                LeaveMenuMode?.Invoke(null, EventArgs.Empty);
             }
         }
 
@@ -439,10 +428,7 @@ namespace System.Windows.Input
         private object HitTestInvalidatedAsyncCallback(object arg)
         {
             _hitTestInvalidatedAsyncOperation = null;
-            if (HitTestInvalidatedAsync != null)
-            {
-                HitTestInvalidatedAsync(this, EventArgs.Empty);
-            }
+            HitTestInvalidatedAsync?.Invoke(this, EventArgs.Empty);
 
             return null;
         }

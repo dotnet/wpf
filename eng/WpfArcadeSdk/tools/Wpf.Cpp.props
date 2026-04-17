@@ -48,16 +48,16 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <ManagedCxx Condition="'$(CLRSupport)'!='true'">false</ManagedCxx>
+    <ManagedCxx Condition="'$(CLRSupport)'!='true' and '$(CLRSupport)'!='NetCore'">false</ManagedCxx>
     <ManagedCxx Condition="'$(CLRSupport)'=='true'">true</ManagedCxx>
-    <ManagedCxx Condition="'$(CLRSupport)'=='pure'">true</ManagedCxx>
+    <ManagedCxx Condition="'$(CLRSupport)'=='NetCore'">true</ManagedCxx>
   </PropertyGroup>
   
   <!-- 
     Enable IDE support for C++/CLI .NET Core builds
     -->
   <PropertyGroup>
-    <CLRSupport Condition="'$(CLRSupport)' == 'pure'">NetCore</CLRSupport>
+  
   </PropertyGroup>
   
   <!-- 

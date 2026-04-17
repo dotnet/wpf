@@ -3418,16 +3418,6 @@ Do you want to replace it?</source>
         <target state="translated">无法在 MultiBinding 的内部 Binding 上设置 UpdateSourceTrigger。只有默认的 Immediate UpdateSourceTrigger 是有效的。</target>
         <note />
       </trans-unit>
-      <trans-unit id="NonCLSException">
-        <source>Unknown exception during '{0}'.</source>
-        <target state="translated">“{0}”期间发生未知异常。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="NonClsActivationException">
-        <source>Nonstandard exception occurred while activating the application.</source>
-        <target state="translated">激活应用程序时发生非标准异常。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NonPackAppAbsoluteUriNotAllowed">
         <source>Unsupported URI syntax. Method expects a relative URI or a pack://application:,,,/ form of absolute URI.</source>
         <target state="translated">不支持的 URI 语法。方法需要相对 URI 或“pack://application:,,,/”格式的绝对 URI。</target>
@@ -3506,16 +3496,6 @@ Do you want to replace it?</source>
       <trans-unit id="ObjectDataProviderHasNoSource">
         <source>ObjectDataProvider needs either an ObjectType or ObjectInstance.</source>
         <target state="translated">ObjectDataProvider 需要 ObjectType 或 ObjectInstance。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ObjectDataProviderNonCLSException">
-        <source>Unknown exception while creating type '{0}' for ObjectDataProvider.</source>
-        <target state="translated">创建 ObjectDataProvider 的类型“{0}”时，发生未知异常。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ObjectDataProviderNonCLSExceptionInvoke">
-        <source>Unknown exception while invoking method '{0}' on type '{1}' for ObjectDataProvider.</source>
-        <target state="translated">为 ObjectDataProvider 调用类型“{1}”上的方法“{0}”时，发生未知异常。</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectDataProviderParameterCollectionIsNotInUse">

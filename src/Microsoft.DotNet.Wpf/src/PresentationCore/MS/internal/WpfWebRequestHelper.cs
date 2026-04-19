@@ -62,7 +62,7 @@ namespace MS.Internal
         }
 
         #pragma warning disable SYSLIB0014 
-        WebRequest request = WebRequest.Create(uri);
+        WebRequest request = WebRequest.Create(uri); // CodeQL [SM03781] No practical exfiltration vector, response is unlikely to be relayed back
         #pragma warning restore SYSLIB0014 
 
         // It is not clear whether WebRequest.Create() can ever return null, but v1 code make this check in

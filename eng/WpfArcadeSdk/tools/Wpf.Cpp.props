@@ -54,13 +54,6 @@
   </PropertyGroup>
   
   <!-- 
-    Enable IDE support for C++/CLI .NET Core builds
-    -->
-  <PropertyGroup>
-  
-  </PropertyGroup>
-  
-  <!-- 
     When building C++/CLI..
       ... Disable C# CoreGenerateSatelliteAssemblies target
   -->

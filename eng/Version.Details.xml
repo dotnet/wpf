@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
   <ProductDependencies>
-    <Dependency Name="Microsoft.Private.Winforms" Version="9.0.16-servicing.26224.2">
+    <Dependency Name="Microsoft.Private.Winforms" Version="9.0.16-servicing.26229.1">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-winforms</Uri>
-      <Sha>e042c9e46d11010bbfb203eaca850e4bc996f9df</Sha>
+      <Sha>2390068c7e6b74a69f6ea8e8c1e7d05fb1fba689</Sha>
       <SourceBuildTarball RepoName="winforms" ManagedOnly="true" />
     </Dependency>
-    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="9.0.16-servicing.26224.2">
+    <Dependency Name="Microsoft.Dotnet.WinForms.ProjectTemplates" Version="9.0.16-servicing.26229.1">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-winforms</Uri>
-      <Sha>e042c9e46d11010bbfb203eaca850e4bc996f9df</Sha>
+      <Sha>2390068c7e6b74a69f6ea8e8c1e7d05fb1fba689</Sha>
     </Dependency>
     <Dependency Name="System.Reflection.MetadataLoadContext" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.Windows.Extensions" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NETCore.Platforms" Version="9.0.16-servicing.26218.6" CoherentParentDependency="Microsoft.Private.Winforms">
+    <Dependency Name="Microsoft.NETCore.Platforms" Version="9.0.16-servicing.26228.17" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="Microsoft.DotNet.Wpf.DncEng" Version="9.0.0-rtm.26202.1">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-wpf-int</Uri>
@@ -28,140 +28,140 @@
     </Dependency>
     <Dependency Name="System.Resources.Extensions" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.Runtime.Serialization.Formatters" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="Microsoft.NETCore.App.Ref" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="Microsoft.NETCore.App.Runtime.win-x64" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
-    <Dependency Name="VS.Redist.Common.NetCore.SharedFramework.x64.9.0" Version="9.0.16-servicing.26218.6" CoherentParentDependency="Microsoft.Private.Winforms">
+    <Dependency Name="VS.Redist.Common.NetCore.SharedFramework.x64.9.0" Version="9.0.16-servicing.26228.17" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <!-- These dependencies are required by windowsdesktop for coherency. -->
     <Dependency Name="Microsoft.Win32.Registry.AccessControl" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="Microsoft.Win32.SystemEvents" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.CodeDom" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.ComponentModel.Composition" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.Configuration.ConfigurationManager" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.Data.Odbc" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.Data.OleDb" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.Diagnostics.EventLog" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.Diagnostics.PerformanceCounter" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.DirectoryServices.AccountManagement" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.DirectoryServices.Protocols" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.DirectoryServices" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.Formats.Nrbf" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.IO.Packaging" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.IO.Ports" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.Management" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.Reflection.Context" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.Runtime.Caching" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.Security.Cryptography.Pkcs" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.Security.Cryptography.ProtectedData" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.Security.Cryptography.Xml" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.Security.Permissions" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.ServiceModel.Syndication" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.ServiceProcess.ServiceController" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.Speech" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.Text.Encoding.CodePages" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.Threading.AccessControl" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.ComponentModel.Composition.Registration" Version="9.0.16" CoherentParentDependency="Microsoft.Private.Winforms">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-runtime</Uri>
-      <Sha>c918bc31ab2b35053f098b190bb644bea211367b</Sha>
+      <Sha>2a90773a6f08116292accdc493b970ef3c7ed2c0</Sha>
     </Dependency>
     <Dependency Name="System.Drawing.Common" Version="9.0.16">
       <Uri>https://dev.azure.com/dnceng/internal/_git/dotnet-winforms</Uri>
-      <Sha>e042c9e46d11010bbfb203eaca850e4bc996f9df</Sha>
+      <Sha>2390068c7e6b74a69f6ea8e8c1e7d05fb1fba689</Sha>
     </Dependency>
   </ProductDependencies>
   <ToolsetDependencies>

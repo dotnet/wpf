@@ -9,7 +9,9 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
+using System.Threading;
 using Microsoft.Win32.SafeHandles;
+using MS.Internal;
 
 // Some COM interfaces and Win32 structures are already declared in the framework.
 // Interesting ones to remember in System.Runtime.InteropServices.ComTypes are:
@@ -2501,8 +2503,8 @@ namespace Standard
         [DllImport("dwmapi.dll", PreserveSig = false)]
         public static extern int DwmGetWindowAttribute(IntPtr hWnd, DWMWA dwAttributeToGet, ref int pvAttributeValue, int cbAttribute);
 
-        [DllImport("dwmapi.dll", PreserveSig = false)]
-        public static extern int DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);
+        [DllImport("dwmapi.dll", EntryPoint = "DwmExtendFrameIntoClientArea", PreserveSig = true, SetLastError = true)]
+        private static extern HRESULT _DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);
 
         [DllImport("dwmapi.dll", EntryPoint = "DwmIsCompositionEnabled", PreserveSig = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -2510,6 +2512,29 @@ namespace Standard
 
         [DllImport("dwmapi.dll", EntryPoint = "DwmGetColorizationColor", PreserveSig = true)]
         private static extern HRESULT _DwmGetColorizationColor(out uint pcrColorization, [Out, MarshalAs(UnmanagedType.Bool)] out bool pfOpaqueBlend);
+
+        public static bool DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset)
+        {
+            HRESULT hr = _DwmExtendFrameIntoClientArea(hwnd, ref pMarInset);
+            if(hr == HRESULT.S_OK)
+            {
+                return true;
+            }
+            
+            if(FrameworkAppContextSwitches.DisableDWMCrashContainment)
+            {
+                // Original behavior: just call the native method and let any exceptions propagate.
+                HRESULT.ThrowLastError();
+            }
+
+            // Crash only if the arguments are invalid.
+            if(hr == HRESULT.E_INVALIDARG)
+            {
+                HRESULT.ThrowLastError();
+            }
+
+            return false;
+        }
 
         public static bool DwmGetColorizationColor(out uint pcrColorization, out bool pfOpaqueBlend)
         {

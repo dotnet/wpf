@@ -131,8 +131,7 @@ internal static class WindowBackdropManager
             margins = new MARGINS { cxLeftWidth = -1, cxRightWidth = -1, cyTopHeight = -1, cyBottomHeight = -1 };
         }
 
-        var dwmApiResult = NativeMethods.DwmExtendFrameIntoClientArea(hwnd, ref margins);
-        return new HRESULT((uint)dwmApiResult) == HRESULT.S_OK;
+        return NativeMethods.DwmExtendFrameIntoClientArea(hwnd, ref margins);
     }
 
     #endregion

@@ -151,13 +151,13 @@
           - Supported only on Release builds 
           - WPF will carry a privatized copy of vcruntime with it - renamed with suffix _cor3
           - Debug builds normally link to Static VCRT by default, and linking to a privatized vcruntime is not required
-          - Managed C++ assemblies that utilize /clr:pure always link to vcruntime implicitly, and should employ this 
+          - Managed C++ assemblies that utilize /clr:netcore always link to vcruntime implicitly, and should employ this 
             DLL renaming at link time and reference the privatized copy of vcruntime.
           - It is in fact possible to create private builds of WPF that links to debug builds of redistributable vcruntime. We do not support
             linking to a privatized copy of vcruntime140d.dll here. Such build should simply copy over the debug version of vcruntime DLL's 
             to the appropriate location for testing purposes.
     -->
-    <DllRenameClause Condition="('$(UseStaticVCRT)'!='true' or '$(CLRSupport)'=='pure' or '$(CLRSupport)' == 'NetCore') And '$(Configuration)'=='Release'">/dllrename:$(VCRuntimeDllBaseName)$(VCRuntimeVersion)$(LibSuffix)=$(VCRuntimeDllBaseName)$(VCRuntimeVersion)$(LibSuffix)$(WpfVersionSuffix)</DllRenameClause>
+    <DllRenameClause Condition="('$(UseStaticVCRT)'!='true' or '$(CLRSupport)' == 'NetCore') And '$(Configuration)'=='Release'">/dllrename:$(VCRuntimeDllBaseName)$(VCRuntimeVersion)$(LibSuffix)=$(VCRuntimeDllBaseName)$(VCRuntimeVersion)$(LibSuffix)$(WpfVersionSuffix)</DllRenameClause>
 
 
     <StandardLibrariesForNativeCpp Condition="'$(ManagedCxx)'=='false'">$(StaticUCRTLibrary);$(StaticVCRTLibrary);$(StaticCRTStartupLibrary);$(StaticStandardCppLibrary);$(DynamicUCRTLibrary);$(DynamicVCRTLibrary);$(DynamicCRTStartupLibrary);$(DynamicStandardCppLibrary)</StandardLibrariesForNativeCpp>

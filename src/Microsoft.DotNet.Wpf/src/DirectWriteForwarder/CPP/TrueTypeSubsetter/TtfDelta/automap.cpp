@@ -22,6 +22,8 @@
 #include "ttferror.h" /* for error codes */
 #include "ttmem.h"
 #include "automap.h"
+#include "intsafe_private_copy.h"
+#include "ttf_safe_checks.h"
 
 
 int16 MortAutoMap(TTFACC_FILEBUFFERINFO * pInputBufferInfo,   /* ttfacc info */
@@ -41,6 +43,11 @@ int16 errCode = NO_ERROR;
     ulOffset = TTTableOffset( pInputBufferInfo, MORT_TAG );
      ulLength = TTTableLength( pInputBufferInfo, MORT_TAG );
     ulLastOffset = ulOffset+ulLength;
+    if (TTF_SAFE_CHECKS_ENABLED())
+    {
+        if (ulLastOffset < ulOffset) /* overflow check */
+            return ERR_GENERIC;
+    }
 
     if (ulOffset == DIRECTORY_ERROR || ulLength == 0)    /* nothing to map, we're done */
         return NO_ERROR;
@@ -68,7 +75,7 @@ int16 errCode = NO_ERROR;
 /* Static function to syncronize the Keep Glyph List with the Coverage list */
 /* (add in values if necessary) */ 
 /* ------------------------------------------------------------------- */
-static int16 UpdateKeepWithCoverage(TTFACC_FILEBUFFERINFO * pInputBufferInfo, uint8 * pabKeepGlyphs, uint16 usnGlyphs, uint16 fKeepFlag, uint32 ulBaseOffset, uint32 ulCoverageOffset, uint16 *pArray, uint16 usLookupType, uint16 usSubstFormat)
+static int16 UpdateKeepWithCoverage(TTFACC_FILEBUFFERINFO * pInputBufferInfo, uint8 * pabKeepGlyphs, uint16 usnGlyphs, uint16 fKeepFlag, uint32 ulBaseOffset, uint32 ulCoverageOffset, uint16 *pArray, uint16 usArrayCount, uint16 usLookupType, uint16 usSubstFormat)
 {
 uint32 ulOffset;
 uint16 usCoverageFormat;
@@ -82,6 +89,7 @@ GSUBRANGERECORD *pRangeRecordArray = NULL;
 uint16 i, j, k, l;
 uint16 usBytesRead;
 uint32 ulBytesRead;
+uint32 ulAllocSize;
 int16 errCode = NO_ERROR;
 
     if ((ulCoverageOffset == 0) || (pArray == NULL))
@@ -97,7 +105,16 @@ int16 errCode = NO_ERROR;
             return errCode;
         ulOffset += usBytesRead;
         usCount = Coverage1.GlyphCount;
-        pGlyphIDArray = (uint16 *)Mem_Alloc(usCount * sizeof(uint16));
+        if (TTF_SAFE_CHECKS_ENABLED())
+        {
+            if (ULongMult32((uint32)usCount, (uint32)sizeof(uint16), &ulAllocSize) != S_OK)
+                return ERR_MEM;
+            pGlyphIDArray = (uint16 *)Mem_Alloc(ulAllocSize);
+        }
+        else
+        {
+            pGlyphIDArray = (uint16 *)Mem_Alloc(usCount * sizeof(uint16));
+        }
         if (pGlyphIDArray == NULL)
             return ERR_MEM;
         if ((errCode = ReadGenericRepeat( pInputBufferInfo, (uint8 *)pGlyphIDArray, WORD_CONTROL, ulOffset, &ulBytesRead, usCount, sizeof(uint16)) )!= NO_ERROR)
@@ -111,7 +128,16 @@ int16 errCode = NO_ERROR;
             return errCode;
         ulOffset += usBytesRead;
         usCount = Coverage2.CoverageRangeCount;
-        pRangeRecordArray = (GSUBRANGERECORD *)Mem_Alloc(usCount * SIZEOF_GSUBRANGERECORD);
+        if (TTF_SAFE_CHECKS_ENABLED())
+        {
+            if (ULongMult32((uint32)usCount, (uint32)SIZEOF_GSUBRANGERECORD, &ulAllocSize) != S_OK)
+                return ERR_MEM;
+            pRangeRecordArray = (GSUBRANGERECORD *)Mem_Alloc(ulAllocSize);
+        }
+        else
+        {
+            pRangeRecordArray = (GSUBRANGERECORD *)Mem_Alloc(usCount * SIZEOF_GSUBRANGERECORD);
+        }
         if (pRangeRecordArray == NULL)
             return ERR_MEM;
         if ((errCode = ReadGenericRepeat( pInputBufferInfo, (uint8 *) pRangeRecordArray,  GSUBRANGERECORD_CONTROL, ulOffset, &ulBytesRead, usCount, SIZEOF_GSUBRANGERECORD) )!= NO_ERROR)
@@ -154,11 +180,28 @@ int16 errCode = NO_ERROR;
         case GSUBSingleLookupType: 
             if (usSubstFormat == 1)
             {
-                if ((usGlyphID + (int16) *pArray) < usnGlyphs && pabKeepGlyphs[usGlyphID + (int16) *pArray] == 0)
-                    pabKeepGlyphs[usGlyphID + (int16) *pArray] = (uint8)(fKeepFlag + 1);
+                if (TTF_SAFE_CHECKS_ENABLED())
+                {
+                    int32 sTargetGlyphID = (int32)usGlyphID + (int16) *pArray;
+                    if (sTargetGlyphID >= 0 && sTargetGlyphID < usnGlyphs && pabKeepGlyphs[sTargetGlyphID] == 0)
+                        pabKeepGlyphs[sTargetGlyphID] = (uint8)(fKeepFlag + 1);
+                }
+                else
+                {
+                    if ((usGlyphID + (int16) *pArray) < usnGlyphs && pabKeepGlyphs[usGlyphID + (int16) *pArray] == 0)
+                        pabKeepGlyphs[usGlyphID + (int16) *pArray] = (uint8)(fKeepFlag + 1);
+                }
             }
             else
             {
+                if (TTF_SAFE_CHECKS_ENABLED())
+                {
+                    if (usGlyphCount >= usArrayCount)
+                    {
+                        errCode = ERR_INVALID_GSUB;
+                        break;
+                    }
+                }
                 if (pArray[usGlyphCount] < usnGlyphs && pabKeepGlyphs[pArray[usGlyphCount]] == 0)
                     pabKeepGlyphs[pArray[usGlyphCount]] = (uint8)(fKeepFlag + 1);
             }
@@ -168,13 +211,33 @@ int16 errCode = NO_ERROR;
             uint16 usSequenceGlyphCount;
             uint16 *pausGlyphID = NULL;
 
+            if (TTF_SAFE_CHECKS_ENABLED())
+            {
+                if (usGlyphCount >= usArrayCount)
+                {
+                    errCode = ERR_INVALID_GSUB;
+                    break;
+                }
+            }
             if (pArray[usGlyphCount] == 0)
                 break;
             ulOffset = ulBaseOffset + pArray[usGlyphCount];
             if ((errCode = ReadWord( pInputBufferInfo, &usSequenceGlyphCount, ulOffset ) )!= NO_ERROR)
                 break;
             ulOffset += sizeof(uint16);
-            pausGlyphID = (uint16 *)Mem_Alloc(usSequenceGlyphCount * sizeof(uint16));
+            if (TTF_SAFE_CHECKS_ENABLED())
+            {
+                if (ULongMult32((uint32)usSequenceGlyphCount, (uint32)sizeof(uint16), &ulAllocSize) != S_OK)
+                {
+                    errCode = ERR_MEM;
+                    break;
+                }
+                pausGlyphID = (uint16 *)Mem_Alloc(ulAllocSize);
+            }
+            else
+            {
+                pausGlyphID = (uint16 *)Mem_Alloc(usSequenceGlyphCount * sizeof(uint16));
+            }
             if (pausGlyphID == NULL)
             {
                 errCode = ERR_MEM;
@@ -197,13 +260,33 @@ int16 errCode = NO_ERROR;
             uint16 usAlternateGlyphCount;
             uint16 *pausGlyphID = NULL;
 
+            if (TTF_SAFE_CHECKS_ENABLED())
+            {
+                if (usGlyphCount >= usArrayCount)
+                {
+                    errCode = ERR_INVALID_GSUB;
+                    break;
+                }
+            }
             if (pArray[usGlyphCount] == 0)
                 break;
             ulOffset = ulBaseOffset + pArray[usGlyphCount];
             if ((errCode = ReadWord( pInputBufferInfo, &usAlternateGlyphCount, ulOffset ) )!= NO_ERROR)
                 break;
             ulOffset += sizeof(uint16);
-            pausGlyphID = (uint16 *)Mem_Alloc(usAlternateGlyphCount * sizeof(uint16));
+            if (TTF_SAFE_CHECKS_ENABLED())
+            {
+                if (ULongMult32((uint32)usAlternateGlyphCount, (uint32)sizeof(uint16), &ulAllocSize) != S_OK)
+                {
+                    errCode = ERR_MEM;
+                    break;
+                }
+                pausGlyphID = (uint16 *)Mem_Alloc(ulAllocSize);
+            }
+            else
+            {
+                pausGlyphID = (uint16 *)Mem_Alloc(usAlternateGlyphCount * sizeof(uint16));
+            }
             if (pausGlyphID == NULL)
             {
                 errCode = ERR_MEM;
@@ -229,13 +312,33 @@ int16 errCode = NO_ERROR;
             uint16 *pausLigatureOffsetArray = NULL;
             GSUBLIGATURE GSUBLigature;
 
+            if (TTF_SAFE_CHECKS_ENABLED())
+            {
+                if (usGlyphCount >= usArrayCount)
+                {
+                    errCode = ERR_INVALID_GSUB;
+                    break;
+                }
+            }
             if (pArray[usGlyphCount] == 0)
                 break;
             ulOffset = ulBaseOffset + pArray[usGlyphCount];
             if ((errCode = ReadWord( pInputBufferInfo, &usLigatureCount, ulOffset ) )!= NO_ERROR)
                 break;
             ulOffset += sizeof(uint16);
-            pausLigatureOffsetArray = (uint16 *)Mem_Alloc(usLigatureCount * sizeof(uint16));
+             if (TTF_SAFE_CHECKS_ENABLED())
+            {
+                if (ULongMult32((uint32)usLigatureCount, (uint32)sizeof(uint16), &ulAllocSize) != S_OK)
+                {
+                    errCode = ERR_MEM;
+                    break;
+                }
+                pausLigatureOffsetArray = (uint16 *)Mem_Alloc(ulAllocSize);
+            }
+            else
+            {
+                pausLigatureOffsetArray = (uint16 *)Mem_Alloc(usLigatureCount * sizeof(uint16));
+            }
             if (pausLigatureOffsetArray == NULL)
             {
                 errCode = ERR_MEM;
@@ -247,7 +350,14 @@ int16 errCode = NO_ERROR;
                 {
                     if (pausLigatureOffsetArray[l] == 0)
                         continue;
-                    ulOffset = ulBaseOffset + (pArray)[usGlyphCount] + pausLigatureOffsetArray[l];
+                    if (TTF_SAFE_CHECKS_ENABLED())
+                    {
+                        ulOffset = ulBaseOffset + (uint32)(pArray)[usGlyphCount] + (uint32)pausLigatureOffsetArray[l];
+                    }
+                    else
+                    {
+                        ulOffset = ulBaseOffset + (pArray)[usGlyphCount] + pausLigatureOffsetArray[l];
+                    }
                     if ((errCode = ReadGeneric( pInputBufferInfo,  (uint8 *)&GSUBLigature, SIZEOF_GSUBLIGATURE, GSUBLIGATURE_CONTROL, ulOffset, &usBytesRead) )!= NO_ERROR)
                     {
                         Mem_Free (pausLigatureOffsetArray);
@@ -260,7 +370,30 @@ int16 errCode = NO_ERROR;
                     usLigatureGlyphID = GSUBLigature.GlyphID; 
                     if (usLigatureGlyphID >= usnGlyphs || pabKeepGlyphs[usLigatureGlyphID] != 0)
                         continue;  /* already in list, go to next ligature */
-                    pausCompGlyphID = (uint16 *)Mem_Alloc((usLigatureCompCount - 1) * sizeof(uint16));
+                    if (TTF_SAFE_CHECKS_ENABLED())
+                    {
+                        if (usLigatureCompCount < 2) /* need at least 2 components; 0 or 1 means no comp array */
+                        {
+                            if (usLigatureCompCount == 1 && pabKeepGlyphs[usLigatureGlyphID] == 0)
+                                pabKeepGlyphs[usLigatureGlyphID] = (uint8)(fKeepFlag+1);
+                            continue;
+                        }
+                    }
+                    if (TTF_SAFE_CHECKS_ENABLED())
+                    {
+                        if (ULongMult32((uint32)(usLigatureCompCount - 1), (uint32)sizeof(uint16), &ulAllocSize) != S_OK)
+                        {
+                            Mem_Free (pausLigatureOffsetArray);
+                            Mem_Free(pGlyphIDArray);
+                            Mem_Free(pRangeRecordArray);
+                            return ERR_MEM;
+                        }
+                        pausCompGlyphID = (uint16 *)Mem_Alloc(ulAllocSize);
+                    }
+                    else
+                    {
+                        pausCompGlyphID = (uint16 *)Mem_Alloc((usLigatureCompCount - 1) * sizeof(uint16));
+                    }
                     if (pausCompGlyphID == NULL)
                     {
                         Mem_Free (pausLigatureOffsetArray);
@@ -385,6 +518,7 @@ uint32 ulCurrentOffset;
 uint32 ulLangSysOffset;
 uint16 usMaxLookupCount;
 uint32 ulOffset;
+uint32 ulAllocSize;
 uint16 i, j, k;
 uint16 usBytesRead;
 uint32 ulBytesRead;
@@ -420,7 +554,20 @@ int16 errCode = NO_ERROR;
         uint16 *SubstTableOffsetArray = NULL;
 
             ulOffset = ulHeaderOffset + GSUBHeader.LookupListOffset;
-            pGSUBLookupList = (GSUBLOOKUPLIST *)Mem_Alloc(SIZEOF_GSUBLOOKUPLIST + usMaxLookupCount * sizeof(uint16));
+            if (TTF_SAFE_CHECKS_ENABLED())
+            {
+                if (ULongMult32((uint32)usMaxLookupCount, (uint32)sizeof(uint16), &ulAllocSize) != S_OK ||
+                    UIntAdd32(ulAllocSize, (uint32)SIZEOF_GSUBLOOKUPLIST, &ulAllocSize) != S_OK)
+                {
+                    errCode = ERR_MEM;
+                    break;
+                }
+                pGSUBLookupList = (GSUBLOOKUPLIST *)Mem_Alloc(ulAllocSize);
+            }
+            else
+            {
+                pGSUBLookupList = (GSUBLOOKUPLIST *)Mem_Alloc(SIZEOF_GSUBLOOKUPLIST + usMaxLookupCount * sizeof(uint16));
+            }
             if (pGSUBLookupList == NULL)
             {
                 errCode = ERR_MEM;
@@ -449,7 +596,19 @@ int16 errCode = NO_ERROR;
                 if (GSUBLookup.LookupType == GSUBContextLookupType)  /* not looking for context lookups */
                     continue;
                 usSubTableCount = GSUBLookup.SubTableCount;
-                SubstTableOffsetArray = (uint16 *)Mem_Alloc(sizeof(uint16) * usSubTableCount);
+                if (TTF_SAFE_CHECKS_ENABLED())
+                {
+                    if (ULongMult32((uint32)sizeof(uint16), (uint32)usSubTableCount, &ulAllocSize) != S_OK)
+                    {
+                        errCode = ERR_MEM;
+                        break;
+                    }
+                    SubstTableOffsetArray = (uint16 *)Mem_Alloc(ulAllocSize);
+                }
+                else
+                {
+                    SubstTableOffsetArray = (uint16 *)Mem_Alloc(sizeof(uint16) * usSubTableCount);
+                }
                 if (SubstTableOffsetArray == NULL)
                 {
                     errCode = ERR_MEM;
@@ -481,7 +640,7 @@ int16 errCode = NO_ERROR;
                         GSUBSINGLESUBSTFORMAT1 GSUBSubstTable;
 
                             if ((errCode = ReadGeneric( pInputBufferInfo,  (uint8 *)&GSUBSubstTable, SIZEOF_GSUBSINGLESUBSTFORMAT1, GSUBSINGLESUBSTFORMAT1_CONTROL, ulOffset, &usBytesRead) )== NO_ERROR)
-                                errCode = UpdateKeepWithCoverage( pInputBufferInfo, pabKeepGlyphs, usnGlyphs, fKeepFlag, ulOffset, GSUBSubstTable.CoverageOffset , (uint16 *) &(GSUBSubstTable.DeltaGlyphID), GSUBLookup.LookupType, Format);
+                                errCode = UpdateKeepWithCoverage( pInputBufferInfo, pabKeepGlyphs, usnGlyphs, fKeepFlag, ulOffset, GSUBSubstTable.CoverageOffset , (uint16 *) &(GSUBSubstTable.DeltaGlyphID), 1, GSUBLookup.LookupType, Format);
                             break;
                         }
                         case 2:
@@ -493,14 +652,26 @@ int16 errCode = NO_ERROR;
                             if ((errCode = ReadGeneric( pInputBufferInfo,  (uint8 *)&GSUBSubstTable, SIZEOF_GSUBSINGLESUBSTFORMAT2, GSUBSINGLESUBSTFORMAT2_CONTROL, ulOffset, &usBytesRead) )!= NO_ERROR)
                                 break;
                             usGlyphCount = GSUBSubstTable.GlyphCount;
-                            pGlyphIDArray = (uint16 *)Mem_Alloc(sizeof(uint16) * usGlyphCount);
+                            if (TTF_SAFE_CHECKS_ENABLED())
+                            {
+                                if (ULongMult32((uint32)sizeof(uint16), (uint32)usGlyphCount, &ulAllocSize) != S_OK)
+                                {
+                                    errCode = ERR_MEM;
+                                    break;
+                                }
+                                pGlyphIDArray = (uint16 *)Mem_Alloc(ulAllocSize);
+                            }
+                            else
+                            {
+                                pGlyphIDArray = (uint16 *)Mem_Alloc(sizeof(uint16) * usGlyphCount);
+                            }
                             if (pGlyphIDArray == NULL)
                             {
                                 errCode = ERR_MEM;
                                 break;
                             }
                             if ((errCode = ReadGenericRepeat( pInputBufferInfo,  (uint8 *)pGlyphIDArray, WORD_CONTROL, ulOffset + usBytesRead, &ulBytesRead, usGlyphCount, sizeof(uint16)) )== NO_ERROR)
-                                errCode = UpdateKeepWithCoverage( pInputBufferInfo, pabKeepGlyphs, usnGlyphs, fKeepFlag, ulOffset, GSUBSubstTable.CoverageOffset , pGlyphIDArray, GSUBLookup.LookupType, Format);
+                                errCode = UpdateKeepWithCoverage( pInputBufferInfo, pabKeepGlyphs, usnGlyphs, fKeepFlag, ulOffset, GSUBSubstTable.CoverageOffset , pGlyphIDArray, usGlyphCount, GSUBLookup.LookupType, Format);
                             Mem_Free(pGlyphIDArray);
                             break;
                         }
@@ -522,14 +693,26 @@ int16 errCode = NO_ERROR;
                         if ((errCode = ReadGeneric( pInputBufferInfo,  (uint8 *)&GSUBSubstTable, SIZEOF_GSUBMULTIPLESUBSTFORMAT1, GSUBMULTIPLESUBSTFORMAT1_CONTROL, ulOffset, &usBytesRead) )!= NO_ERROR)
                             break;
                         usCount = GSUBSubstTable.SequenceCount;
-                        pOffsetArray = (uint16 *)Mem_Alloc(sizeof(uint16) * usCount);
+                        if (TTF_SAFE_CHECKS_ENABLED())
+                        {
+                            if (ULongMult32((uint32)sizeof(uint16), (uint32)usCount, &ulAllocSize) != S_OK)
+                            {
+                                errCode = ERR_MEM;
+                                break;
+                            }
+                            pOffsetArray = (uint16 *)Mem_Alloc(ulAllocSize);
+                        }
+                        else
+                        {
+                            pOffsetArray = (uint16 *)Mem_Alloc(sizeof(uint16) * usCount);
+                        }
                         if (pOffsetArray == NULL)
                         {
                             errCode = ERR_MEM;
                             break;
                         }
                         if ((errCode = ReadGenericRepeat( pInputBufferInfo,  (uint8 *)pOffsetArray, WORD_CONTROL, ulOffset + usBytesRead, &ulBytesRead, usCount, sizeof(uint16)) )== NO_ERROR)
-                            errCode = UpdateKeepWithCoverage( pInputBufferInfo, pabKeepGlyphs, usnGlyphs, fKeepFlag, ulOffset, GSUBSubstTable.CoverageOffset , pOffsetArray, GSUBLookup.LookupType, Format);
+                            errCode = UpdateKeepWithCoverage( pInputBufferInfo, pabKeepGlyphs, usnGlyphs, fKeepFlag, ulOffset, GSUBSubstTable.CoverageOffset , pOffsetArray, usCount, GSUBLookup.LookupType, Format);
                         Mem_Free(pOffsetArray);
                         break;
                     }
@@ -544,14 +727,26 @@ int16 errCode = NO_ERROR;
                         if ((errCode = ReadGeneric( pInputBufferInfo,  (uint8 *)&GSUBSubstTable, SIZEOF_GSUBALTERNATESUBSTFORMAT1, GSUBALTERNATESUBSTFORMAT1_CONTROL, ulOffset, &usBytesRead) )!= NO_ERROR)
                             break;
                         usCount = GSUBSubstTable.AlternateSetCount;
-                        pOffsetArray = (uint16 *)Mem_Alloc(sizeof(uint16) * usCount);
+                        if (TTF_SAFE_CHECKS_ENABLED())
+                        {
+                            if (ULongMult32((uint32)sizeof(uint16), (uint32)usCount, &ulAllocSize) != S_OK)
+                            {
+                                errCode = ERR_MEM;
+                                break;
+                            }
+                            pOffsetArray = (uint16 *)Mem_Alloc(ulAllocSize);
+                        }
+                        else
+                        {
+                            pOffsetArray = (uint16 *)Mem_Alloc(sizeof(uint16) * usCount);
+                        }
                         if (pOffsetArray == NULL)
                         {
                             errCode = ERR_MEM;
                             break;
                         }
                         if ((errCode = ReadGenericRepeat( pInputBufferInfo,  (uint8 *)pOffsetArray, WORD_CONTROL, ulOffset + usBytesRead, &ulBytesRead, usCount, sizeof(uint16)) )== NO_ERROR)
-                            errCode = UpdateKeepWithCoverage( pInputBufferInfo, pabKeepGlyphs, usnGlyphs, fKeepFlag, ulOffset, GSUBSubstTable.CoverageOffset , pOffsetArray, GSUBLookup.LookupType, Format);
+                            errCode = UpdateKeepWithCoverage( pInputBufferInfo, pabKeepGlyphs, usnGlyphs, fKeepFlag, ulOffset, GSUBSubstTable.CoverageOffset , pOffsetArray, usCount, GSUBLookup.LookupType, Format);
                         Mem_Free(pOffsetArray);
                         break;
                     }
@@ -566,14 +761,26 @@ int16 errCode = NO_ERROR;
                         if ((errCode = ReadGeneric( pInputBufferInfo,  (uint8 *)&GSUBSubstTable, SIZEOF_GSUBLIGATURESUBSTFORMAT1, GSUBLIGATURESUBSTFORMAT1_CONTROL, ulOffset, &usBytesRead) )!= NO_ERROR)
                             break;
                         usCount = GSUBSubstTable.LigatureSetCount;
-                        pOffsetArray = (uint16 *)Mem_Alloc(sizeof(uint16) * usCount);
+                        if (TTF_SAFE_CHECKS_ENABLED())
+                        {
+                            if (ULongMult32((uint32)sizeof(uint16), (uint32)usCount, &ulAllocSize) != S_OK)
+                            {
+                                errCode = ERR_MEM;
+                                break;
+                            }
+                            pOffsetArray = (uint16 *)Mem_Alloc(ulAllocSize);
+                        }
+                        else
+                        {
+                            pOffsetArray = (uint16 *)Mem_Alloc(sizeof(uint16) * usCount);
+                        }
                         if (pOffsetArray == NULL)
                         {
                             errCode = ERR_MEM;
                             break;
                         }
                         if ((errCode = ReadGenericRepeat( pInputBufferInfo,  (uint8 *)pOffsetArray, WORD_CONTROL, ulOffset + usBytesRead, &ulBytesRead, usCount, sizeof(uint16)) )== NO_ERROR)
-                             errCode = UpdateKeepWithCoverage( pInputBufferInfo, pabKeepGlyphs, usnGlyphs, fKeepFlag, ulOffset, GSUBSubstTable.CoverageOffset , pOffsetArray, GSUBLookup.LookupType, Format);
+                             errCode = UpdateKeepWithCoverage( pInputBufferInfo, pabKeepGlyphs, usnGlyphs, fKeepFlag, ulOffset, GSUBSubstTable.CoverageOffset , pOffsetArray, usCount, GSUBLookup.LookupType, Format);
                         Mem_Free(pOffsetArray);
                         break;
                     }
@@ -606,7 +813,19 @@ int16 errCode = NO_ERROR;
 
         if ((errCode = ReadGeneric( pInputBufferInfo,   (uint8 *)&JSTFHeader, SIZEOF_JSTFHEADER, JSTFHEADER_CONTROL, ulHeaderOffset, &usBytesRead ) )!= NO_ERROR)
             break;
-        ScriptRecordArray = (JSTFSCRIPTRECORD *)Mem_Alloc(SIZEOF_JSTFSCRIPTRECORD * JSTFHeader.ScriptCount);
+        if (TTF_SAFE_CHECKS_ENABLED())
+        {
+            if (ULongMult32((uint32)SIZEOF_JSTFSCRIPTRECORD, (uint32)JSTFHeader.ScriptCount, &ulAllocSize) != S_OK)
+            {
+                errCode = ERR_MEM;
+                break;
+            }
+            ScriptRecordArray = (JSTFSCRIPTRECORD *)Mem_Alloc(ulAllocSize);
+        }
+        else
+        {
+            ScriptRecordArray = (JSTFSCRIPTRECORD *)Mem_Alloc(SIZEOF_JSTFSCRIPTRECORD * JSTFHeader.ScriptCount);
+        }
         if (ScriptRecordArray == NULL)
         {
             errCode = ERR_MEM;
@@ -631,7 +850,19 @@ int16 errCode = NO_ERROR;
             if ((errCode = ReadGeneric( pInputBufferInfo,  (uint8 *)&JSTFExtenderGlyph, SIZEOF_JSTFEXTENDERGLYPH, JSTFEXTENDERGLYPH_CONTROL, ulOffset, &usBytesRead) )!= NO_ERROR)
                 break;
 
-            GlyphIDArray = (uint16 *)Mem_Alloc((sizeof(uint16) * JSTFExtenderGlyph.ExtenderGlyphCount));
+            if (TTF_SAFE_CHECKS_ENABLED())
+            {
+                if (ULongMult32((uint32)sizeof(uint16), (uint32)JSTFExtenderGlyph.ExtenderGlyphCount, &ulAllocSize) != S_OK)
+                {
+                    errCode = ERR_MEM;
+                    break;
+                }
+                GlyphIDArray = (uint16 *)Mem_Alloc(ulAllocSize);
+            }
+            else
+            {
+                GlyphIDArray = (uint16 *)Mem_Alloc((sizeof(uint16) * JSTFExtenderGlyph.ExtenderGlyphCount));
+            }
             if (GlyphIDArray == NULL)
             {
                 errCode = ERR_MEM;

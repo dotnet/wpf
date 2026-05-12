@@ -71,6 +71,7 @@
     <ClCompile Include="utc.cpp" />
     <ClCompile Include="xmm.cpp" />
     <ClCompile Include="utils.cpp" />
+    <ClCompile Include="WpfGfxSwitches.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

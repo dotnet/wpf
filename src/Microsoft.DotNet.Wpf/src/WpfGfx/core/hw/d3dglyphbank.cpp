@@ -343,9 +343,21 @@ HRESULT CD3DGlyphBank::RectFillAlpha(
     // pDst00 points to the texel in destination that corresponds
     // to point (x,y) = (0,0) in source array
 
-    const BYTE *pSrc00 = pSrcData
-                        - srcPitch*fullDataRect.top
-                        - fullDataRect.left;
+    // Use 64-bit arithmetic to avoid integer overflow when srcPitch * fullDataRect.top
+    // exceeds INT32 range (possible with large ClearType glyphs where srcPitch = width*3).
+    const BYTE *pSrc00;
+    if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+    {
+        pSrc00 = pSrcData
+                 - (INT64)srcPitch*fullDataRect.top
+                 - fullDataRect.left;
+    }
+    else
+    {
+        pSrc00 = pSrcData
+                 - srcPitch*fullDataRect.top
+                 - fullDataRect.left;
+    }
     // pSrc00 points to (x,y) = (0,0) in given data array
 
     int y;
@@ -365,7 +377,15 @@ HRESULT CD3DGlyphBank::RectFillAlpha(
         for (; y < ymax; y++)
         {
                   BYTE* pDstRow = pDst00 + lockedRect.Pitch*y;
-            const BYTE* pSrcRow = pSrc00 +         srcPitch*y;
+            const BYTE* pSrcRow;
+            if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+            {
+                pSrcRow = pSrc00 + (INT64)srcPitch*y;
+            }
+            else
+            {
+                pSrcRow = pSrc00 + srcPitch*y;
+            }
 
             memset(pDstRow + srcRect.left, 0, xmin - srcRect.left);
             memcpy(pDstRow + xmin, pSrcRow + xmin, xmax - xmin);

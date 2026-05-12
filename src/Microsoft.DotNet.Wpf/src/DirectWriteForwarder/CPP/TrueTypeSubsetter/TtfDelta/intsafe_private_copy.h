@@ -138,4 +138,18 @@ ULongSub(
     
     return hr;
 }
+
+//
+// Convenience wrappers for the codebase's uint32 type (unsigned long).
+// These forward to the UINT/ULONG versions above, bridging the type mismatch.
+//
+static __inline HRESULT UIntAdd32(uint32 a, uint32 b, uint32 *pResult)
+{
+    return UIntAdd((UINT)a, (UINT)b, (UINT *)pResult);
+}
+static __inline HRESULT ULongMult32(uint32 a, uint32 b, uint32 *pResult)
+{
+    return ULongMult((ULONG)a, (ULONG)b, (ULONG *)pResult);
+}
+
 #endif //__INTSAFE_PRIVATE_COPY_H

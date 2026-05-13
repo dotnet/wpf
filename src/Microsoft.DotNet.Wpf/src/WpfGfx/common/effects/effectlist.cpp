@@ -21,6 +21,7 @@
 **************************************************************************/
 
 #include "precomp.hpp"
+#include "..\shared\WpfGfxSwitches.h"
 
 MtDefine(CEffectList, MILRender, "CEffectList");
 
@@ -320,16 +321,47 @@ CEffectList::GetParameters(
     API_ENTRY_NOFPU(IMILEffectList::GetParameters);
     HRESULT hr = S_OK;
     
-    UINT uiSize = m_rgParamBlock[idxEffect].cbParamSize;
-    if (idxEffect >= (UINT)m_rgParamBlock.GetCount() ||
-        size < uiSize ||
-        pData == NULL)
+    if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
     {
-        IFC(E_INVALIDARG);
-    }
+        if (idxEffect >= (UINT)m_rgParamBlock.GetCount() ||
+            pData == NULL)
+        {
+            IFC(E_INVALIDARG);
+        }
 
-    void* pParamData = m_rgDataBlock.GetDataBuffer() + m_rgParamBlock[idxEffect].cbParamOffset;
-    GpMemcpy(pData, pParamData, uiSize);
+        UINT uiSize = m_rgParamBlock[idxEffect].cbParamSize;
+        if (size < uiSize)
+        {
+            IFC(E_INVALIDARG);
+        }
+
+        UINT cbParamOffset = m_rgParamBlock[idxEffect].cbParamOffset;
+        UINT cbDataBlockSize = m_rgDataBlock.GetCount();
+        UINT cbEndOffset;
+
+        // Validate that offset + size does not exceed data block bounds
+        if (FAILED(UIntAdd(cbParamOffset, uiSize, &cbEndOffset)) ||
+            cbEndOffset > cbDataBlockSize)
+        {
+            IFC(E_INVALIDARG);
+        }
+
+        void* pParamData = m_rgDataBlock.GetDataBuffer() + cbParamOffset;
+        GpMemcpy(pData, pParamData, uiSize);
+    }
+    else
+    {
+        UINT uiSize = m_rgParamBlock[idxEffect].cbParamSize;
+        if (idxEffect >= (UINT)m_rgParamBlock.GetCount() ||
+            size < uiSize ||
+            pData == NULL)
+        {
+            IFC(E_INVALIDARG);
+        }
+
+        void* pParamData = m_rgDataBlock.GetDataBuffer() + m_rgParamBlock[idxEffect].cbParamOffset;
+        GpMemcpy(pData, pParamData, uiSize);
+    }
 
 Cleanup:
     API_CHECK(hr);

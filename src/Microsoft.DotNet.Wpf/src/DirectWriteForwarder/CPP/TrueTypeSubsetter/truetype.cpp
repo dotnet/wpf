@@ -57,15 +57,36 @@ using MS::Internal::TtfDelta::Mem_Free;
 using MS::Internal::TtfDelta::Mem_Alloc;
 using MS::Internal::TtfDelta::Mem_ReAlloc;
 using MS::Internal::TtfDelta::CreateDeltaTTF;
+using MS::Internal::TtfDelta::g_fDWFBoundsCheckEnabled;
 
 namespace MS { namespace Internal {
 
 array<System::Byte> ^ TrueTypeSubsetter::ComputeSubset(void * fontData, int fileSize, System::Uri ^ sourceUri, int directoryOffset, array<System::UInt16> ^ glyphArray)
 {
+    // Initialize the bounds check switch from AppContext (once).
+    static bool s_switchInitialized = false;
+    if (!s_switchInitialized)
+    {
+        s_switchInitialized = true;
+        bool switchValue = false;
+        System::AppContext::TryGetSwitch(
+            "Switch.MS.Internal.TtfDelta.DisableDirectWriteForwarderBoundsCheckProtection",
+            switchValue);
+        MS::Internal::TtfDelta::g_fDWFBoundsCheckEnabled = switchValue ? 0 : 1;
+    }
+
     uint8 * puchDestBuffer = NULL;
     unsigned long ulDestBufferSize = 0, ulBytesWritten = 0;
 
     assert(glyphArray != nullptr && glyphArray->Length > 0 && glyphArray->Length <= USHRT_MAX);
+
+    if ((g_fDWFBoundsCheckEnabled != 0))
+    {
+        if (fileSize <= 0)
+        {
+            throw gcnew FileFormatException(sourceUri);
+        }
+    }
 
     pin_ptr<const System::UInt16> pinnedGlyphArray = &glyphArray[0];
     int16 errCode = CreateDeltaTTF(
@@ -91,10 +112,25 @@ array<System::Byte> ^ TrueTypeSubsetter::ComputeSubset(void * fontData, int file
 
     try
     {
-        if (errCode == NO_ERROR)
+        if ((g_fDWFBoundsCheckEnabled != 0))
         {
-            retArray = gcnew array<System::Byte>(ulBytesWritten);
-            System::Runtime::InteropServices::Marshal::Copy((System::IntPtr)puchDestBuffer, retArray, 0, ulBytesWritten);
+            if (errCode == NO_ERROR && ulBytesWritten <= INT_MAX)
+            {
+                retArray = gcnew array<System::Byte>(ulBytesWritten);
+                System::Runtime::InteropServices::Marshal::Copy((System::IntPtr)puchDestBuffer, retArray, 0, ulBytesWritten);
+            }
+            else if (errCode == NO_ERROR)
+            {
+                errCode = static_cast<int16>(ERR_GENERIC);
+            }
+        }
+        else
+        {
+            if (errCode == NO_ERROR)
+            {
+                retArray = gcnew array<System::Byte>(ulBytesWritten);
+                System::Runtime::InteropServices::Marshal::Copy((System::IntPtr)puchDestBuffer, retArray, 0, ulBytesWritten);
+            }
         }
     }
     finally

@@ -29,6 +29,7 @@
 #include "refcountbase.h"
 #include "arithmetic.h"
 #include "dynarrayimpl.h"
+#include "WpfGfxSwitches.h"
 #include "dynarray.h"
 #include "heap.h"
 #include "resourcecache.h"

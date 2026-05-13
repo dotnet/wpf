@@ -155,6 +155,14 @@ namespace System.Windows.Automation.Peers
             return true;
         }
 
+        // Gated by FrameworkAppContextSwitches.UseWeakReferenceFromElementProxyToItemPeer. When on,
+        // a long-lived UIA ElementProxy no longer pins the data item, container, or parent
+        // ItemsControlAutomationPeer caches; re-discovery goes via WeakRefElementProxyStorage on the parent.
+        internal override bool ShouldUseWeakReferenceFromElementProxy
+        {
+            get { return FrameworkAppContextSwitches.UseWeakReferenceFromElementProxyToItemPeer; }
+        }
+
         internal override void AddToParentProxyWeakRefCache()
         {
             ItemsControlAutomationPeer itemsControlAutomationPeer = ItemsControlAutomationPeer;

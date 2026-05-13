@@ -39,7 +39,8 @@ namespace MS.Internal.Automation
         private ElementProxy(AutomationPeer peer)
         {
             if ((AutomationInteropReferenceType == ReferenceType.Weak) && 
-                (peer is UIElementAutomationPeer || peer is ContentElementAutomationPeer || peer is UIElement3DAutomationPeer))
+                (peer is UIElementAutomationPeer || peer is ContentElementAutomationPeer || peer is UIElement3DAutomationPeer 
+                    || peer.ShouldUseWeakReferenceFromElementProxy))
             {
                 _peer = new WeakReference(peer);
             }

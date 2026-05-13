@@ -523,6 +523,13 @@ namespace System.Windows.Automation.Peers
             return false;
         }
 
+        // When true, ElementProxy holds this peer via WeakReference. Opt-in fix for the
+        // UIA-retained-ElementProxy leak in virtualized ItemsControls (see ItemAutomationPeer).
+        internal virtual bool ShouldUseWeakReferenceFromElementProxy
+        {
+            get { return false; }
+        }
+
         // UpdatePeer is called asynchronously.  Between the time the call is
         // posted (InvalidatePeer) and the time the call is executed (UpdatePeer),
         // changes to the visual tree and/or automation tree may have eliminated

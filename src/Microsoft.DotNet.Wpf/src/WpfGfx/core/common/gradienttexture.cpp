@@ -1176,7 +1176,7 @@ CGradientTextureGenerator::SetFirstStop(
     Assert(uStopCount <= MAX_GRADIENTSTOP_COUNT);
 
     UINT uCurrentIndex;
-
+    
     //
     // This method handles all possible cominations to determine the gradient stop at 0.0
     //
@@ -1450,7 +1450,7 @@ CGradientTextureGenerator::SetLastStop(
     // This method requires that pStopBuffer contain at least two gradient stops
     Assert(uStopCount >= 2);
     Assert(uStopCount <= MAX_GRADIENTSTOP_COUNT);
-
+    
     //
     // See the comment in SetFirstStop for the URL containing the Spec Case #'s
     // This method handles the remaining cominations of stops to determine the 

@@ -23,6 +23,8 @@
 #ifdef _DEBUG
 #include <stdio.h>
 #endif
+#include "intsafe_private_copy.h"
+#include "ttf_safe_checks.h"
 
 #if 0
 /* turn back into a macro, because it gets called so much */
@@ -73,7 +75,7 @@ int16 CheckOutOffset(TTFACC_FILEBUFFERINFO *a, register uint32 b, register uint3
         {  
 #ifdef _DEBUG
 #if !defined(ARGITERATOR_SUPPORTED) || (defined(ARGITERATOR_SUPPORTED) && ARGITERATOR_SUPPORTED)
-			printf("we're reallocating 10 percent (%lu) more bytes\n", (uint32)(a->ulBufferSize * .1));
+        printf("we're reallocating 10 percent (%lu) more bytes\n", (uint32)(a->ulBufferSize * .1));
 #endif
 #endif
             a->ulBufferSize = (uint32) (a->ulBufferSize * 11/10);
@@ -86,14 +88,14 @@ int16 CheckOutOffset(TTFACC_FILEBUFFERINFO *a, register uint32 b, register uint3
 #endif
 #endif
             a->ulBufferSize = b + c; 
-        } 
-            
+        }
+        
         if ((a->puchBuffer = (uint8 *)a->lpfnReAllocate(a->puchBuffer, a->ulBufferSize)) == NULL) 
         {
             a->ulBufferSize = 0L;
             return ERR_MEM;
         }
-    } 
+    }
 
     return NO_ERROR;
 }
@@ -242,14 +244,30 @@ UNALIGNED uint32 *pulBuffer;
 uint16 i;
 int16 errCode;
 
-    usControlCount = puchControl[0]; 
+if (TTF_SAFE_CHECKS_ENABLED())
+{
+    if (pInputBufferInfo == NULL || puchControl == NULL || pusBytesRead == NULL)
+        return ERR_READCONTROL;
+    if (usBufferSize != 0 && puchBuffer == NULL)
+        return ERR_READCONTROL;
+}
+
+    usControlCount = puchControl[0];
     for (i = 1; i <= usControlCount; ++i)
     {
         switch (puchControl[i] & TTFACC_DATA)
         {
         case TTFACC_BYTE:
-            if (usBufferOffset + sizeof(uint8) > usBufferSize)
-                return ERR_READCONTROL;  /* trying to stuff too many bytes into target buffer */ 
+            if (TTF_SAFE_CHECKS_ENABLED())
+            {
+                if (static_cast<uint32>(usBufferOffset) + static_cast<uint32>(sizeof(uint8)) > static_cast<uint32>(usBufferSize))
+                    return ERR_READCONTROL;  /* trying to stuff too many bytes into target buffer */
+            }
+            else
+            {
+                if (usBufferOffset + sizeof(uint8) > usBufferSize)
+                    return ERR_READCONTROL;  /* trying to stuff too many bytes into target buffer */
+            }
             if (puchControl[i] & TTFACC_PAD) /* don't read, just pad */
                 *(puchBuffer + usBufferOffset) = 0;
             else
@@ -257,13 +275,30 @@ int16 errCode;
                 if ((errCode = ReadByte(pInputBufferInfo, puchBuffer + usBufferOffset, ulCurrOffset))!=NO_ERROR)
                     return errCode;
 
-                ulCurrOffset += sizeof(uint8);
+                if (TTF_SAFE_CHECKS_ENABLED())
+                {
+                    if (ulCurrOffset + static_cast<uint32>(sizeof(uint8)) < ulCurrOffset)
+                        return ERR_READOUTOFBOUNDS;
+                    ulCurrOffset += static_cast<uint32>(sizeof(uint8));
+                }
+                else
+                {
+                    ulCurrOffset += sizeof(uint8);
+                }
             }
             usBufferOffset += sizeof(uint8);
         break;
         case TTFACC_WORD:
-            if (usBufferOffset + sizeof(uint16) > usBufferSize)
-                return ERR_READCONTROL;  /* trying to stuff too many bytes into target buffer */ 
+            if (TTF_SAFE_CHECKS_ENABLED())
+            {
+                if (static_cast<uint32>(usBufferOffset) + static_cast<uint32>(sizeof(uint16)) > static_cast<uint32>(usBufferSize))
+                    return ERR_READCONTROL;  /* trying to stuff too many bytes into target buffer */
+            }
+            else
+            {
+                if (usBufferOffset + sizeof(uint16) > usBufferSize)
+                    return ERR_READCONTROL;  /* trying to stuff too many bytes into target buffer */
+            }
             pusBuffer = (uint16 *) (puchBuffer + usBufferOffset);
             if (puchControl[i] & TTFACC_PAD) /* don't read, just pad */
                 *pusBuffer = 0;
@@ -279,13 +314,30 @@ int16 errCode;
                     if ((errCode = ReadWord(pInputBufferInfo, pusBuffer, ulCurrOffset))!=NO_ERROR)
                         return errCode;
                 }
-                ulCurrOffset += sizeof(uint16);
+                if (TTF_SAFE_CHECKS_ENABLED())
+                {
+                    if (ulCurrOffset + static_cast<uint32>(sizeof(uint16)) < ulCurrOffset)
+                        return ERR_READOUTOFBOUNDS;
+                    ulCurrOffset += static_cast<uint32>(sizeof(uint16));
+                }
+                else
+                {
+                    ulCurrOffset += sizeof(uint16);
+                }
             }
             usBufferOffset += sizeof(uint16);
         break;
         case TTFACC_LONG:
-            if (usBufferOffset + sizeof(uint32) > usBufferSize)
-                return ERR_READCONTROL;  /* trying to stuff too many bytes into target buffer */ 
+            if (TTF_SAFE_CHECKS_ENABLED())
+            {
+                if (static_cast<uint32>(usBufferOffset) + static_cast<uint32>(sizeof(uint32)) > static_cast<uint32>(usBufferSize))
+                    return ERR_READCONTROL;  /* trying to stuff too many bytes into target buffer */
+            }
+            else
+            {
+                if (usBufferOffset + sizeof(uint32) > usBufferSize)
+                    return ERR_READCONTROL;  /* trying to stuff too many bytes into target buffer */
+            }
             pulBuffer = (uint32 *) (puchBuffer + usBufferOffset);
             if (puchControl[i] & TTFACC_PAD) /* don't read, just pad */
                 *pulBuffer = 0;
@@ -302,7 +354,16 @@ int16 errCode;
                     if ((errCode = ReadLong(pInputBufferInfo, pulBuffer, ulCurrOffset))!=NO_ERROR)
                         return errCode;
                 }
-                ulCurrOffset += sizeof(uint32);
+                if (TTF_SAFE_CHECKS_ENABLED())
+                {
+                    if (ulCurrOffset + static_cast<uint32>(sizeof(uint32)) < ulCurrOffset)
+                        return ERR_READOUTOFBOUNDS;
+                    ulCurrOffset += static_cast<uint32>(sizeof(uint32));
+                }
+                else
+                {
+                    ulCurrOffset += sizeof(uint32);
+                }
             }
             usBufferOffset += sizeof(uint32);
         break;
@@ -312,7 +373,17 @@ int16 errCode;
     } /* end for i */
     if (usBufferOffset < usBufferSize)  /* didn't fill up the buffer */
         return ERR_READCONTROL;  /* control thing doesn't fit the buffer */
-    * pusBytesRead = (uint16) (ulCurrOffset - ulOffset); 
+    if (TTF_SAFE_CHECKS_ENABLED())
+    {
+        uint32 ulBytesRead = ulCurrOffset - ulOffset;
+        *pusBytesRead = static_cast<uint16>(ulBytesRead);
+        if (static_cast<uint32>(*pusBytesRead) != ulBytesRead)
+            return ERR_READCONTROL;
+    }
+    else
+    {
+        * pusBytesRead = (uint16) (ulCurrOffset - ulOffset);
+    }
     return NO_ERROR;
 }
 /* ---------------------------------------------------------------------- */
@@ -348,7 +419,17 @@ uint16 usBytesRead;
         puchBuffer += usItemSize;
     }
 
-    *pulBytesRead = usItemSize * usItemCount;
+    if (TTF_SAFE_CHECKS_ENABLED())
+    {
+        uint32 ulTotalBytesRead;
+        if (ULongMult32((uint32)usItemSize, (uint32)usItemCount, &ulTotalBytesRead) != S_OK)
+            return ERR_READOUTOFBOUNDS;
+        *pulBytesRead = ulTotalBytesRead;
+    }
+    else
+    {
+        *pulBytesRead = usItemSize * usItemCount;
+    }
     return NO_ERROR;
 }    
 /* ---------------------------------------------------------------------- */
@@ -378,7 +459,15 @@ uint16 i;
 uint32 ulBytesWritten;
 int16 errCode;
  
-    usControlCount = puchControl[0]; 
+if (TTF_SAFE_CHECKS_ENABLED())
+{
+    if (pOutputBufferInfo == NULL || puchControl == NULL || pusBytesWritten == NULL)
+        return ERR_WRITECONTROL;
+    if (usBufferSize != 0 && puchBuffer == NULL)
+        return ERR_WRITECONTROL;
+}
+
+    usControlCount = puchControl[0];
     for (i = 1; i <= usControlCount; ++i)
     {
         switch (puchControl[i] & TTFACC_DATA)
@@ -386,20 +475,45 @@ int16 errCode;
         case TTFACC_BYTE:
             if (!(puchControl[i] & TTFACC_PAD))
             {
-                if (usBufferOffset + sizeof(uint8) > usBufferSize)
-                    return ERR_WRITECONTROL;  /* trying to read too many bytes from source buffer */ 
+                if (TTF_SAFE_CHECKS_ENABLED())
+                {
+                    if (static_cast<uint32>(usBufferOffset) + static_cast<uint32>(sizeof(uint8)) > static_cast<uint32>(usBufferSize))
+                        return ERR_WRITECONTROL;  /* trying to read too many bytes from source buffer */
+                }
+                else
+                {
+                    if (usBufferOffset + sizeof(uint8) > usBufferSize)
+                        return ERR_WRITECONTROL;  /* trying to read too many bytes from source buffer */
+                }
                 if ((errCode = WriteByte(pOutputBufferInfo, *(puchBuffer + usBufferOffset), ulCurrOffset))!=NO_ERROR)
                     return errCode;
 
-                ulCurrOffset += sizeof(uint8);
+                if (TTF_SAFE_CHECKS_ENABLED())
+                {
+                    if (ulCurrOffset + static_cast<uint32>(sizeof(uint8)) < ulCurrOffset)
+                        return ERR_WRITEOUTOFBOUNDS;
+                    ulCurrOffset += static_cast<uint32>(sizeof(uint8));
+                }
+                else
+                {
+                    ulCurrOffset += sizeof(uint8);
+                }
             }
             usBufferOffset += sizeof(uint8);
             break;
         case TTFACC_WORD:
             if (!(puchControl[i] & TTFACC_PAD))
             {
-                if (usBufferOffset + sizeof(uint16) > usBufferSize)
-                    return ERR_WRITECONTROL;  /* trying to read too many bytes from source buffer */ 
+                if (TTF_SAFE_CHECKS_ENABLED())
+                {
+                    if (static_cast<uint32>(usBufferOffset) + static_cast<uint32>(sizeof(uint16)) > static_cast<uint32>(usBufferSize))
+                        return ERR_WRITECONTROL;  /* trying to read too many bytes from source buffer */
+                }
+                else
+                {
+                    if (usBufferOffset + sizeof(uint16) > usBufferSize)
+                        return ERR_WRITECONTROL;  /* trying to read too many bytes from source buffer */
+                }
 
                  pusBuffer = (uint16 *) (puchBuffer + usBufferOffset);
                 if (puchControl[i] & TTFACC_NO_XLATE)
@@ -412,15 +526,32 @@ int16 errCode;
                     if ((errCode = WriteWord(pOutputBufferInfo, *pusBuffer, ulCurrOffset))!=NO_ERROR)
                         return errCode;
                 }
-                ulCurrOffset += sizeof(uint16);
+                if (TTF_SAFE_CHECKS_ENABLED())
+                {
+                    if (ulCurrOffset + static_cast<uint32>(sizeof(uint16)) < ulCurrOffset)
+                        return ERR_WRITEOUTOFBOUNDS;
+                    ulCurrOffset += static_cast<uint32>(sizeof(uint16));
+                }
+                else
+                {
+                    ulCurrOffset += sizeof(uint16);
+                }
             }
             usBufferOffset += sizeof(uint16);
             break;
         case TTFACC_LONG:
             if (!(puchControl[i] & TTFACC_PAD)) 
             {
-                if (usBufferOffset + sizeof(uint32) > usBufferSize)
-                    return ERR_WRITECONTROL;  /* trying to read too many bytes from source buffer */ 
+                if (TTF_SAFE_CHECKS_ENABLED())
+                {
+                    if (static_cast<uint32>(usBufferOffset) + static_cast<uint32>(sizeof(uint32)) > static_cast<uint32>(usBufferSize))
+                        return ERR_WRITECONTROL;  /* trying to read too many bytes from source buffer */
+                }
+                else
+                {
+                    if (usBufferOffset + sizeof(uint32) > usBufferSize)
+                        return ERR_WRITECONTROL;  /* trying to read too many bytes from source buffer */
+                }
 
                  pulBuffer = (uint32 *) (puchBuffer + usBufferOffset);
                 if (puchControl[i] & TTFACC_NO_XLATE)
@@ -433,7 +564,16 @@ int16 errCode;
                     if ((errCode = WriteLong(pOutputBufferInfo, *pulBuffer, ulCurrOffset))!=NO_ERROR)
                         return errCode;
                 }
-                ulCurrOffset += sizeof(uint32);
+                if (TTF_SAFE_CHECKS_ENABLED())
+                {
+                    if (ulCurrOffset + static_cast<uint32>(sizeof(uint32)) < ulCurrOffset)
+                        return ERR_WRITEOUTOFBOUNDS;
+                    ulCurrOffset += static_cast<uint32>(sizeof(uint32));
+                }
+                else
+                {
+                    ulCurrOffset += sizeof(uint32);
+                }
             }
             usBufferOffset += sizeof(uint32);
             break;
@@ -482,7 +622,17 @@ uint16 usBytesWritten;
         puchBuffer += usItemSize;
     }
 
-    *pulBytesWritten = usItemSize * usItemCount;
+    if (TTF_SAFE_CHECKS_ENABLED())
+    {
+        uint32 ulTotalBytesWritten;
+        if (ULongMult32((uint32)usItemSize, (uint32)usItemCount, &ulTotalBytesWritten) != S_OK)
+            return ERR_WRITEOUTOFBOUNDS;
+        *pulBytesWritten = ulTotalBytesWritten;
+    }
+    else
+    {
+        *pulBytesWritten = usItemSize * usItemCount;
+    }
     return NO_ERROR;
 }    
 

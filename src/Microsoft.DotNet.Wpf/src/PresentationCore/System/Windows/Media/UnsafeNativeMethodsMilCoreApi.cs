@@ -213,6 +213,9 @@ namespace MS.Win32.PresentationCore
             [DllImport(DllImport.MilCore, EntryPoint = "RenderOptions_EnableHardwareAccelerationInRdp")]
             internal unsafe static extern void RenderOptions_EnableHardwareAccelerationInRdp(bool value);                 
 
+            [DllImport(DllImport.MilCore, EntryPoint = "WpfGfx_SetDisableBoundsCheckProtection")]
+            internal static extern unsafe void WpfGfx_SetDisableBoundsCheckProtection(bool value);
+
             [DllImport(DllImport.MilCore, EntryPoint = "MilResource_CreateCWICWrapperBitmap")]
             internal unsafe static extern int /* HRESULT */ CreateCWICWrapperBitmap(
                 BitmapSourceSafeMILHandle /* IWICBitmapSource */ pIWICBitmapSource,

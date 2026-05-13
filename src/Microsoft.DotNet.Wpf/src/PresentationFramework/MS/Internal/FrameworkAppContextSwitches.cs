@@ -125,7 +125,9 @@ namespace MS.Internal
         // Opt-in: when true, ElementProxy holds ItemAutomationPeer (and subclasses) via WeakReference,
         // letting the GC reclaim peers and their data-item/container chain when UIA Core retains the
         // ElementProxy aggressively (heap growth in virtualized ItemsControls, e.g. DataGrid).
-        // Re-discovery: parent ItemsControlAutomationPeer's WeakRefElementProxyStorage.
+        // The parent ItemsControlAutomationPeer's WeakRefElementProxyStorage may reuse still-live
+        // ElementProxy/peer pairs, but it does not guarantee peer re-discovery after GC; callers may
+        // need to handle ElementNotAvailableException and re-walk when the peer has been collected.
         internal const string UseWeakReferenceFromElementProxyToItemPeerSwitchName = "Switch.System.Windows.Automation.Peers.UseWeakReferenceFromElementProxyToItemPeer";
         private static int _UseWeakReferenceFromElementProxyToItemPeer;
         public static bool UseWeakReferenceFromElementProxyToItemPeer

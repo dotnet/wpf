@@ -19,7 +19,7 @@ typedef unsigned __int64    ULONGLONG;
 //
 #if defined(MIDL_PASS) || defined(RC_INVOKED) || defined(_M_CEE_PURE) \
     || defined(_68K_) || defined(_MPPC_) \
-    || defined(_M_IA64) || defined(_M_AMD64)
+    || defined(_M_IA64) || defined(_M_AMD64) || defined(_M_ARM64)
 // DevDiv LKG RC Changes
 // Description: Define only if it is not already defined.
 // added conditional to note conflict with public\ddk\inc\ntdef.h

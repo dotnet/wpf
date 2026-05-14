@@ -2473,14 +2473,10 @@ namespace System.Windows.Controls
             desiredSize = BruteForceCalculateDesiredSize();
         }
 
-        // Helper for IncrementalMeasureLinesAfterInsert, IncrementalMeasureLinesAfterDelete.
-        // Re-formats the line at lineIndex starting at the given lineOffset, updates _lineMetrics,
-        // advances lineOffset past the formatted line, and clears the cached visual if the line changed.
+        // Formats the line at lineIndex, updates metrics, and clears the cached visual.
         private void FormatIncrementalLine(int lineIndex, double constraintWidth, LineProperties lineProperties, TextBoxLine line,
             ref int lineOffset, out bool endOfParagraph)
         {
-            LineRecord oldRecord = _lineMetrics[lineIndex];
-
             using (line)
             {
                 line.Format(lineOffset, constraintWidth, constraintWidth, lineProperties, _cache.TextRunCache, _cache.TextFormatter);
@@ -2491,11 +2487,7 @@ namespace System.Windows.Controls
                 endOfParagraph = line.EndOfParagraph;
             }
 
-            if (oldRecord.Offset != _lineMetrics[lineIndex].Offset ||
-                oldRecord.Length != _lineMetrics[lineIndex].Length)
-            {
-                ClearLineVisual(lineIndex);
-            }
+            ClearLineVisual(lineIndex);
         }
 
         // Helper for IncrementalMeasureLinesAfterInsert, IncrementalMeasureLinesAfterDelete.

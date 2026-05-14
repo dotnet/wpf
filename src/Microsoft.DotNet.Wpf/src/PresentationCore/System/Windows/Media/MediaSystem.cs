@@ -70,6 +70,9 @@ namespace System.Windows.Media
             // Setting renderOption for Hardware acceleration in RDP as per appcontext switch.
             UnsafeNativeMethods.RenderOptions_EnableHardwareAccelerationInRdp(CoreAppContextSwitches.EnableHardwareAccelerationInRdp);
 
+            // Pass security mitigation switch to native WpfGfx code.
+            UnsafeNativeMethods.WpfGfx_SetDisableBoundsCheckProtection(CoreAppContextSwitches.DisableWpfGfxBoundsCheckProtection);
+
             // Consider making MediaSystem.ConnectTransport return the state of transport connectedness so
             // that we can initialize the media system to a disconnected state.
 

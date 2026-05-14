@@ -19,6 +19,9 @@
 #include <string.h> /* for memcpy */
 
 #include "typedefs.h"
+#include "intsafe_private_copy.h"
+#include "ttf_safe_checks.h"
+
 #include "ttff.h"
 #include "ttfacc.h"
 #include "ttfcntrl.h"
@@ -111,7 +114,14 @@ int16 errCode;
     ulOffset += usBytesRead;
     /* Create a list of valid tables */
 
-    aDirectory = (DIRECTORY *) Mem_Alloc((usnTables + (ulDttfOffset == 0)) * sizeof(DIRECTORY));    /* one extra for possible private table */
+    if (TTF_SAFE_CHECKS_ENABLED()) {
+        uint32 ulAllocSize;
+        if (ULongMult32((uint32)(usnTables + (ulDttfOffset == 0)), (uint32)sizeof(DIRECTORY), &ulAllocSize) != S_OK)
+            return(ERR_MEM);
+        aDirectory = (DIRECTORY *) Mem_Alloc(ulAllocSize);    /* one extra for possible private table */
+    } else {
+        aDirectory = (DIRECTORY *) Mem_Alloc((usnTables + (ulDttfOffset == 0)) * sizeof(DIRECTORY));
+    }
     if (aDirectory == NULL)
         return(ERR_MEM);
     
@@ -213,7 +223,14 @@ char szTag[5];
     usnTables = OffsetTable.numTables;
     /* Create a list of valid tables */
 
-    aDirectory = (DIRECTORY *) Mem_Alloc((usnTables) * sizeof(DIRECTORY));
+    if (TTF_SAFE_CHECKS_ENABLED()) {
+        uint32 ulAllocSize;
+        if (ULongMult32((uint32)usnTables, (uint32)sizeof(DIRECTORY), &ulAllocSize) != S_OK)
+            return(ERR_MEM);
+        aDirectory = (DIRECTORY *) Mem_Alloc(ulAllocSize);
+    } else {
+        aDirectory = (DIRECTORY *) Mem_Alloc((usnTables) * sizeof(DIRECTORY));
+    }
     if (aDirectory == NULL)
         return(ERR_MEM);
 
@@ -297,7 +314,15 @@ HEAD Head;
 
     if ((ulHeadOffset = GetHead(pOutputBufferInfo, &Head)) == 0L)
         return ERR_MISSING_HEAD;
-    aulLoca = (uint32 *)Mem_Alloc( (usGlyphListCount + 1) * sizeof( uint32 ));
+    if (TTF_SAFE_CHECKS_ENABLED()) {
+        uint32 ulLocaCount = (uint32)usGlyphListCount + 1;
+        uint32 ulAllocSize;
+        if (ULongMult32(ulLocaCount, (uint32)sizeof( uint32 ), &ulAllocSize) != S_OK)
+            return ERR_MEM;
+        aulLoca = (uint32 *)Mem_Alloc( ulAllocSize );
+    } else {
+        aulLoca = (uint32 *)Mem_Alloc( (usGlyphListCount + 1) * sizeof( uint32 ) );
+    }
     if ( aulLoca == NULL )
         return ERR_MEM;
 
@@ -316,8 +341,16 @@ HEAD Head;
             if ((j == usDttfGlyphIndexCount) || (i < usGlyphListCount && puchKeepGlyphList[i]))
             {
                 usOffset = (uint16) (aulLoca[ i ] / 2L);
-                if ((errCode = WriteWord( pOutputBufferInfo,  usOffset, ulLocaOffset + j*sizeof(uint16) )) != NO_ERROR)
-                    break;
+                if (TTF_SAFE_CHECKS_ENABLED())
+                {
+                    if ((errCode = WriteWord( pOutputBufferInfo,  usOffset, ulLocaOffset + (uint32)j*sizeof(uint16) )) != NO_ERROR)
+                        break;
+                }
+                else
+                {
+                    if ((errCode = WriteWord( pOutputBufferInfo,  usOffset, ulLocaOffset + j*sizeof(uint16) )) != NO_ERROR)
+                        break;
+                }
                 ++j;
             }
         }
@@ -329,8 +362,16 @@ HEAD Head;
         {
             if ((j == usDttfGlyphIndexCount) || (i < usGlyphListCount && puchKeepGlyphList[i]))
             {
-                if ((errCode = WriteLong( pOutputBufferInfo,  aulLoca[ i ], ulLocaOffset + j*sizeof(uint32) )) != NO_ERROR)
-                    break;
+                if (TTF_SAFE_CHECKS_ENABLED())
+                {
+                    if ((errCode = WriteLong( pOutputBufferInfo,  aulLoca[ i ], ulLocaOffset + (uint32)j*sizeof(uint32) )) != NO_ERROR)
+                        break;
+                }
+                else
+                {
+                    if ((errCode = WriteLong( pOutputBufferInfo,  aulLoca[ i ], ulLocaOffset + j*sizeof(uint32) )) != NO_ERROR)
+                        break;
+                }
                 ++j;
             }
         }
@@ -385,11 +426,23 @@ uint16 usBytesWritten;
     if (usFormat != TTFDELTA_SUBSET1 && usFormat != TTFDELTA_DELTA) /* formats with dttf tables */
         return NO_ERROR;
 
+    if (TTF_SAFE_CHECKS_ENABLED()) {
+        if (usDttfGlyphIndexCount == 0)
+            return ERR_GENERIC;
+    }
+
     ulOffset = GetTTDirectory( pOutputBufferInfo, DTTF_TAG, &DttfDirectory); 
 
     if ((errCode = ZeroLongWordAlign(pOutputBufferInfo, *pulNewOutOffset, &(DttfDirectory.offset))) != NO_ERROR)
         return errCode;
-    DttfDirectory.length = GetGenericSize(DTTF_HEADER_CONTROL) + usDttfGlyphIndexCount * sizeof(uint16);
+    if (TTF_SAFE_CHECKS_ENABLED())
+    {
+        DttfDirectory.length = GetGenericSize(DTTF_HEADER_CONTROL) + (uint32)usDttfGlyphIndexCount * sizeof(uint16);
+    }
+    else
+    {
+        DttfDirectory.length = GetGenericSize(DTTF_HEADER_CONTROL) + usDttfGlyphIndexCount * sizeof(uint16);
+    }
 
     if (ulOffset == DIRECTORY_ERROR)  /* there wasn't one there - don't really need this code - its obsolete  */
         return ERR_GENERIC;
@@ -427,7 +480,7 @@ uint16 usBytesWritten;
 /*                in addition any array tables (LTSH, loca, hmtx, hdmx, vmtx) will have a percentage discarded */
 /* Format Delta will keep only a list of tables, and the Subset1 compacted and Glyf tables will keep only a portion */
 /* ---------------------------------------------------------------------- */
-PRIVATE void CalcOutputBufferSize(CONST_TTFACC_FILEBUFFERINFO *pInputBufferInfo,
+PRIVATE int16 CalcOutputBufferSize(CONST_TTFACC_FILEBUFFERINFO *pInputBufferInfo,
                                  uint16 usGlyphListCount,
                                  uint16 usGlyphKeepCount,
                                  uint16 usFormat,
@@ -458,37 +511,93 @@ uint32 ulKeepTablesLength = 0;
             if (ulEBDTTableOffset != TTTableOffset((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, BDAT_TAG))
                 ulBdatTableLength = 0;          
         }
-        ulAllGlyphsLength = ulEBDTTableLength + ulBdatTableLength;
-        ulAllGlyphsLength += TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, GLYF_TAG);
-
-        if (usFormat == TTFDELTA_DELTA || usFormat == TTFDELTA_SUBSET1)
-        {  /* these formats will compact some tables, discarding a percentage of these tables as well */
-                /* tables compacted */
-            ulGlyphDependentDataLength = TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, LTSH_TAG);
-            ulGlyphDependentDataLength += TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, HMTX_TAG);
-            ulGlyphDependentDataLength += TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, VMTX_TAG);
-            ulGlyphDependentDataLength += TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, HDMX_TAG);
-            ulGlyphDependentDataLength += TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, LOCA_TAG);
-        }
-        ulGlyphDependentDataLength += ulAllGlyphsLength; /* all formats will discard a percentage of the glyph data */
-
-        if (usFormat == TTFDELTA_DELTA) /* we're going to keep just a handfull of tables tables */
+        if (TTF_SAFE_CHECKS_ENABLED())
         {
-            ulKeepTablesLength = TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, HEAD_TAG);
-            ulKeepTablesLength += TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, MAXP_TAG);
-            ulKeepTablesLength += TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, HHEA_TAG);
-            ulKeepTablesLength += TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, VHEA_TAG);
-            ulKeepTablesLength += TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, CMAP_TAG);
-            if (ulEBDTTableLength > 0)
-                ulKeepTablesLength += TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, EBLC_TAG);
-            if (ulBdatTableLength > 0)
-                ulKeepTablesLength += TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, BLOC_TAG);
-            
-            *pulOutputBufferLength = ulKeepTablesLength + (uint32)(flKeepPercent * ulGlyphDependentDataLength/100);
+            if (UIntAdd32(ulEBDTTableLength, ulBdatTableLength, &ulAllGlyphsLength) != S_OK)
+                return ERR_GENERIC;
+            if (UIntAdd32(ulAllGlyphsLength, TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, GLYF_TAG), &ulAllGlyphsLength) != S_OK)
+                return ERR_GENERIC;
+
+            if (usFormat == TTFDELTA_DELTA || usFormat == TTFDELTA_SUBSET1)
+            {  /* these formats will compact some tables, discarding a percentage of these tables as well */
+                    /* tables compacted */
+                ulGlyphDependentDataLength = TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, LTSH_TAG);
+                if (UIntAdd32(ulGlyphDependentDataLength, TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, HMTX_TAG), &ulGlyphDependentDataLength) != S_OK)
+                    return ERR_GENERIC;
+                if (UIntAdd32(ulGlyphDependentDataLength, TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, VMTX_TAG), &ulGlyphDependentDataLength) != S_OK)
+                    return ERR_GENERIC;
+                if (UIntAdd32(ulGlyphDependentDataLength, TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, HDMX_TAG), &ulGlyphDependentDataLength) != S_OK)
+                    return ERR_GENERIC;
+                if (UIntAdd32(ulGlyphDependentDataLength, TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, LOCA_TAG), &ulGlyphDependentDataLength) != S_OK)
+                    return ERR_GENERIC;
+            }
+            if (UIntAdd32(ulGlyphDependentDataLength, ulAllGlyphsLength, &ulGlyphDependentDataLength) != S_OK) /* all formats will discard a percentage of the glyph data */
+                return ERR_GENERIC;
+
+            if (usFormat == TTFDELTA_DELTA) /* we're going to keep just a handfull of tables tables */
+            {
+                ulKeepTablesLength = TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, HEAD_TAG);
+                if (UIntAdd32(ulKeepTablesLength, TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, MAXP_TAG), &ulKeepTablesLength) != S_OK)
+                    return ERR_GENERIC;
+                if (UIntAdd32(ulKeepTablesLength, TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, HHEA_TAG), &ulKeepTablesLength) != S_OK)
+                    return ERR_GENERIC;
+                if (UIntAdd32(ulKeepTablesLength, TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, VHEA_TAG), &ulKeepTablesLength) != S_OK)
+                    return ERR_GENERIC;
+                if (UIntAdd32(ulKeepTablesLength, TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, CMAP_TAG), &ulKeepTablesLength) != S_OK)
+                    return ERR_GENERIC;
+                if (ulEBDTTableLength > 0)
+                {
+                    if (UIntAdd32(ulKeepTablesLength, TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, EBLC_TAG), &ulKeepTablesLength) != S_OK)
+                        return ERR_GENERIC;
+                }
+                if (ulBdatTableLength > 0)
+                {
+                    if (UIntAdd32(ulKeepTablesLength, TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, BLOC_TAG), &ulKeepTablesLength) != S_OK)
+                        return ERR_GENERIC;
+                }
+                
+                if (UIntAdd32(ulKeepTablesLength, (uint32)(flKeepPercent * ulGlyphDependentDataLength/100), pulOutputBufferLength) != S_OK)
+                    return ERR_GENERIC;
+            }
+            else
+            /* for straight subset, this will be: ulSrcBufferSize - (discard % * (Glyf table size + EBDT table size + bdat table size)) */
+                *pulOutputBufferLength = ulSrcBufferSize - (uint32)(flDiscardPercent * ulGlyphDependentDataLength/100);
         }
         else
-        /* for straight subset, this will be: ulSrcBufferSize - (discard % * (Glyf table size + EBDT table size + bdat table size)) */
-            *pulOutputBufferLength = ulSrcBufferSize - (uint32)(flDiscardPercent * ulGlyphDependentDataLength/100);
+        {
+            ulAllGlyphsLength = ulEBDTTableLength + ulBdatTableLength;
+            ulAllGlyphsLength += TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, GLYF_TAG);
+
+            if (usFormat == TTFDELTA_DELTA || usFormat == TTFDELTA_SUBSET1)
+            {  /* these formats will compact some tables, discarding a percentage of these tables as well */
+                    /* tables compacted */
+                ulGlyphDependentDataLength = TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, LTSH_TAG);
+                ulGlyphDependentDataLength += TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, HMTX_TAG);
+                ulGlyphDependentDataLength += TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, VMTX_TAG);
+                ulGlyphDependentDataLength += TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, HDMX_TAG);
+                ulGlyphDependentDataLength += TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, LOCA_TAG);
+            }
+            ulGlyphDependentDataLength += ulAllGlyphsLength; /* all formats will discard a percentage of the glyph data */
+
+            if (usFormat == TTFDELTA_DELTA) /* we're going to keep just a handfull of tables tables */
+            {
+                ulKeepTablesLength = TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, HEAD_TAG);
+                ulKeepTablesLength += TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, MAXP_TAG);
+                ulKeepTablesLength += TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, HHEA_TAG);
+                ulKeepTablesLength += TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, VHEA_TAG);
+                ulKeepTablesLength += TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, CMAP_TAG);
+                if (ulEBDTTableLength > 0)
+                    ulKeepTablesLength += TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, EBLC_TAG);
+                if (ulBdatTableLength > 0)
+                    ulKeepTablesLength += TTTableLength((TTFACC_FILEBUFFERINFO *)pInputBufferInfo, BLOC_TAG);
+                
+                *pulOutputBufferLength = ulKeepTablesLength + (uint32)(flKeepPercent * ulGlyphDependentDataLength/100);
+            }
+            else
+            /* for straight subset, this will be: ulSrcBufferSize - (discard % * (Glyf table size + EBDT table size + bdat table size)) */
+                *pulOutputBufferLength = ulSrcBufferSize - (uint32)(flDiscardPercent * ulGlyphDependentDataLength/100);
+        }
+        return NO_ERROR;
 }
 
 
@@ -613,8 +722,29 @@ int16 CreateDeltaTTF(CONST uint8 * puchSrcBuffer,
             }
 
             // make room for the extra glyph list
-            usCharCount = usListCount + usGlyphKeepCount;
-            pulKeepCharCodeList = (CHAR_ID *)Mem_Alloc(usCharCount * sizeof(CHAR_ID));
+            if (TTF_SAFE_CHECKS_ENABLED())
+            {
+                uint32 ulCharCount = (uint32)usListCount + (uint32)usGlyphKeepCount;
+                if (ulCharCount > (uint32)USHRT_MAX)
+                {
+                    Mem_Free(puchKeepGlyphList);
+                    return ExitCleanup(ERR_PARAMETER11);
+                }
+                usCharCount = (uint16)ulCharCount;
+
+                uint32 ulCharAllocSize;
+                if (ULongMult32((uint32)usCharCount, (uint32)sizeof(CHAR_ID), &ulCharAllocSize) != S_OK)
+                {
+                    Mem_Free(puchKeepGlyphList);
+                    return ExitCleanup(ERR_MEM);
+                }
+                pulKeepCharCodeList = (CHAR_ID *)Mem_Alloc(ulCharAllocSize);
+            }
+            else
+            {
+                usCharCount = usListCount + usGlyphKeepCount;
+                pulKeepCharCodeList = (CHAR_ID *)Mem_Alloc(usCharCount * sizeof(CHAR_ID));
+            }
             if (!pulKeepCharCodeList)
             {
                 Mem_Free(puchKeepGlyphList);
@@ -644,7 +774,15 @@ int16 CreateDeltaTTF(CONST uint8 * puchSrcBuffer,
         else
         {
             // allocate for extra 4 chars
-            pulKeepCharCodeList = (CHAR_ID *)Mem_Alloc((usListCount + 4) * sizeof(CHAR_ID));
+            if (TTF_SAFE_CHECKS_ENABLED()) {
+                if (usListCount > (uint16)(USHRT_MAX - 4))
+                {
+                    return ERR_PARAMETER11;
+                }
+                pulKeepCharCodeList = (CHAR_ID *)Mem_Alloc(((size_t)usListCount + 4u) * sizeof(CHAR_ID));
+            } else {
+                pulKeepCharCodeList = (CHAR_ID *)Mem_Alloc((usListCount + 4) * sizeof(CHAR_ID));
+            }
             if (!pulKeepCharCodeList)
             {
                 return ERR_MEM;
@@ -769,7 +907,15 @@ CONST_TTFACC_FILEBUFFERINFO InputBufferInfo;
 
     if (*ppuchDestBuffer == NULL || *pulDestBufferSize == 0) /* need to allocate some memory */
     {
-        CalcOutputBufferSize(&InputBufferInfo, usGlyphListCount, usGlyphKeepCount, usFormat, ulSrcBufferSize, pulDestBufferSize);
+        if (TTF_SAFE_CHECKS_ENABLED()) {
+            if ((errCode = CalcOutputBufferSize(&InputBufferInfo, usGlyphListCount, usGlyphKeepCount, usFormat, ulSrcBufferSize, pulDestBufferSize)) != NO_ERROR)
+            {
+                Mem_Free(puchKeepGlyphList);
+                return ExitCleanup(errCode);
+            }
+        } else {
+            CalcOutputBufferSize(&InputBufferInfo, usGlyphListCount, usGlyphKeepCount, usFormat, ulSrcBufferSize, pulDestBufferSize);
+        }
 #ifdef _DEBUG
 #if !defined(ARGITERATOR_SUPPORTED) || (defined(ARGITERATOR_SUPPORTED) && ARGITERATOR_SUPPORTED)
 		printf("Allocating %lu bytes for output buffer.\n", *pulDestBufferSize);
@@ -896,7 +1042,15 @@ CONST_TTFACC_FILEBUFFERINFO InputBufferInfo;
             if (errCode == NO_ERROR)
             {
                 /* now we need to allocate an array to keep a list of the actual glyphs we are keeping in the font */
-                pusGlyphIndexArray = (uint16 *)Mem_Alloc(usDttfGlyphIndexCount * sizeof(*pusGlyphIndexArray)); /* big as we would ever need */
+                if (TTF_SAFE_CHECKS_ENABLED()) {
+                    uint32 ulGlyphArrayAllocSize;
+                    if (ULongMult32((uint32)usDttfGlyphIndexCount, (uint32)sizeof(*pusGlyphIndexArray), &ulGlyphArrayAllocSize) != S_OK)
+                        errCode = ERR_MEM;
+                    else
+                        pusGlyphIndexArray = (uint16 *)Mem_Alloc(ulGlyphArrayAllocSize);
+                } else {
+                    pusGlyphIndexArray = (uint16 *)Mem_Alloc(usDttfGlyphIndexCount * sizeof(*pusGlyphIndexArray));
+                }
                 if (pusGlyphIndexArray == NULL)
                     errCode = ERR_MEM; 
                 else

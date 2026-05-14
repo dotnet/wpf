@@ -1,7 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description: Grid pattern provider interface
+
+#nullable enable
 
 using System.Runtime.InteropServices;
 
@@ -24,7 +26,7 @@ namespace System.Windows.Automation.Provider
         /// </summary>
         /// <param name="row">Row of cell to get</param>
         /// <param name="column">Column of cell to get</param>
-        IRawElementProviderSimple GetItem(int row, int column); 
+        IRawElementProviderSimple? GetItem(int row, int column);
 
         /// <summary>
         /// number of rows in the grid

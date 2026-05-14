@@ -121,7 +121,23 @@ namespace MS.Internal
                 return LocalAppContext.GetCachedSwitchValue(ItemAutomationPeerKeepsItsItemAliveSwitchName, ref _ItemAutomationPeerKeepsItsItemAlive);
             }
         }
-    
+
+        // Opt-in: when true, ElementProxy holds ItemAutomationPeer (and subclasses) via WeakReference,
+        // letting the GC reclaim peers and their data-item/container chain when UIA Core retains the
+        // ElementProxy aggressively (heap growth in virtualized ItemsControls, e.g. DataGrid).
+        // The parent ItemsControlAutomationPeer's WeakRefElementProxyStorage may reuse still-live
+        // ElementProxy/peer pairs, but it does not guarantee peer re-discovery after GC; callers may
+        // need to handle ElementNotAvailableException and re-walk when the peer has been collected.
+        internal const string UseWeakReferenceFromElementProxyToItemPeerSwitchName = "Switch.System.Windows.Automation.Peers.UseWeakReferenceFromElementProxyToItemPeer";
+        private static int _UseWeakReferenceFromElementProxyToItemPeer;
+        public static bool UseWeakReferenceFromElementProxyToItemPeer
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(UseWeakReferenceFromElementProxyToItemPeerSwitchName, ref _UseWeakReferenceFromElementProxyToItemPeer);
+            }
+        }    
     
         // Switch to opt-out Fluent theme Window Backdrop feature
         internal const string DisableFluentThemeWindowBackdropSwitchName = "Switch.System.Windows.Appearance.DisableFluentThemeWindowBackdrop";

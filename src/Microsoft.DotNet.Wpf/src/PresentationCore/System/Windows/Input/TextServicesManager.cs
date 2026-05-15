@@ -231,7 +231,7 @@ namespace System.Windows.Input
                     break;
                 default:
                     wParam = KeyInterop.VirtualKeyFromKey(keyArgs.RealKey);
-                    scancode = 0; 
+                    scancode = keyArgs.ScanCode;
                     break;
             }
 

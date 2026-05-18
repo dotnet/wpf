@@ -22,4 +22,5 @@ EXPORTS
     LockWispObjectFromGit     PRIVATE
     UnlockWispObjectFromGit   PRIVATE
     RegisterDllForSxSCOM      PRIVATE
+    SetDisablePenImcBoundsCheckProtection  PRIVATE
 

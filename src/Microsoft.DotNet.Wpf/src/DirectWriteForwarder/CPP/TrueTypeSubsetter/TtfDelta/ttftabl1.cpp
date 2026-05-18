@@ -28,6 +28,7 @@
 #include "ttftabl1.h"
 #include "ttfcntrl.h"
 #include "ControlTableInit.h"
+#include "ttf_safe_checks.h"
 
 /* if the _INDEX defines are changed, the Control_Table array below must be updated to match */
 
@@ -251,8 +252,19 @@ uint32 ulLength;
 
     for ( ul = 0; ul < (ulLength+3) / 4; ul++ )
     {
-        if ( ReadLong( pInputBufferInfo, &ulWord, ulOffset + ul * sizeof(uint32)) != 0 )
-            break;
+        if (TTF_SAFE_CHECKS_ENABLED())
+        {
+            uint32 ulReadOffset = ulOffset + ul * sizeof(uint32);
+            if (ulReadOffset < ulOffset) /* overflow check */
+                break;
+            if ( ReadLong( pInputBufferInfo, &ulWord, ulReadOffset) != 0 )
+                break;
+        }
+        else
+        {
+            if ( ReadLong( pInputBufferInfo, &ulWord, ulOffset + ul * sizeof(uint32)) != 0 )
+                break;
+        }
         *pulChecksum = *pulChecksum + ulWord;
     }
     return ulOffset; /* any non zero number will do */

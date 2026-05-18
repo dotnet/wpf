@@ -400,5 +400,50 @@ namespace MS.Internal
         }
 
         #endregion
+
+        #region DisableDirectWriteForwarderBoundsCheckProtection
+
+        internal const string DisableDirectWriteForwarderBoundsCheckProtectionSwitchName = "Switch.MS.Internal.TtfDelta.DisableDirectWriteForwarderBoundsCheckProtection";
+        private static int _disableDirectWriteForwarderBoundsCheckProtection;
+        public static bool DisableDirectWriteForwarderBoundsCheckProtection
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(DisableDirectWriteForwarderBoundsCheckProtectionSwitchName, ref _disableDirectWriteForwarderBoundsCheckProtection);
+            }
+        }
+
+        #endregion
+
+        #region DisablePenImcBoundsCheckProtection
+
+        internal const string DisablePenImcBoundsCheckProtectionSwitchName = "Switch.MS.Internal.PenImc.DisablePenImcBoundsCheckProtection";
+        private static int _disablePenImcBoundsCheckProtection;
+        public static bool DisablePenImcBoundsCheckProtection
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(DisablePenImcBoundsCheckProtectionSwitchName, ref _disablePenImcBoundsCheckProtection);
+            }
+        }
+
+        #endregion
+
+        #region DisableWpfGfxBoundsCheckProtection
+
+        internal const string DisableWpfGfxBoundsCheckProtectionSwitchName = "Switch.MS.Internal.WpfGfx.DisableWpfGfxBoundsCheckProtection";
+        private static int _disableWpfGfxBoundsCheckProtection;
+        public static bool DisableWpfGfxBoundsCheckProtection
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(DisableWpfGfxBoundsCheckProtectionSwitchName, ref _disableWpfGfxBoundsCheckProtection);
+            }
+        }
+
+        #endregion
     }
 }

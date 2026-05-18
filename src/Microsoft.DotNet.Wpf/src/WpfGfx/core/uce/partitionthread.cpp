@@ -134,7 +134,7 @@ CPartitionThread::RenderPartition(
 
     // This code path is for regular WPF rendering. By default we do not allow
     // rendering without display devices being present. App authors can still
-    // allow that with following switch in their app config file:
+    // allow that with the following switch in their app config file:
     //   <AppContextSwitchOverrides value="Switch.System.Windows.Media.ShouldRenderEvenWhenNoDisplayDevicesAreAvailable=true" />
     MIL_THR(pPartition->Compose(
         /*canRenderWithoutDisplayDevices*/false, &presentThisPartition));

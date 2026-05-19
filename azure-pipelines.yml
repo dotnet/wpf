@@ -44,10 +44,3 @@ extends:
           publishAssetsImmediately: true
           isAssetlessBuild: true
           enableTelemetry: true
-          enableSourceIndex: true
-          sourceIndexParams:
-            condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
-            binlogPath: artifacts/log/Debug/x86/Build.binlog
-            pool:
-              name: NetCore1ESPool-Internal
-              demands: ImageOverride -equals windows.vs2026preview.scout.amd64

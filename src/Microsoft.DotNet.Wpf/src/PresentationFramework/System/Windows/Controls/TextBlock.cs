@@ -324,7 +324,10 @@ namespace System.Windows.Controls
         /// <summary>
         /// Initializes a new instance of TextBlock class.
         /// </summary>
-        public TextBlock() : base() { }
+        public TextBlock() : base()
+        {
+
+        }
 
         /// <summary>
         /// Initializes a new inslace of TextBlock class and adds a first Inline to its Inline collection.
@@ -2747,11 +2750,7 @@ Debug.Assert(lineCount == LineCount);
         private List<InlineObject> InlineObjects
         {
             get => _complexContent?.InlineObjects;
-            set
-            {
-                if (_complexContent is not null)
-                    _complexContent.InlineObjects = value;
-            }
+            set => _complexContent?.InlineObjects = value;
         }
 
         //-------------------------------------------------------------------

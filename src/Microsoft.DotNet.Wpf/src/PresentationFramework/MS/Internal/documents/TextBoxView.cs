@@ -2348,15 +2348,19 @@ namespace System.Windows.Controls
 
             // Walk back through soft-wrap predecessors (lines without a hard break:
             // Length == ContentLength) so the whole wrapped paragraph is re-formatted.
+            // Find the first line of the paragraph containing lineIndex.
             int firstAffectedLineIndex = lineIndex;
-            if (firstAffectedLineIndex > 0)
+            while (firstAffectedLineIndex > 0 &&
+                   _lineMetrics[firstAffectedLineIndex - 1].Length == _lineMetrics[firstAffectedLineIndex - 1].ContentLength)
             {
                 firstAffectedLineIndex--;
-                while (firstAffectedLineIndex > 0 &&
-                       _lineMetrics[firstAffectedLineIndex - 1].Length == _lineMetrics[firstAffectedLineIndex - 1].ContentLength)
-                {
-                    firstAffectedLineIndex--;
-                }
+            }
+
+            // Always include the predecessor line for the merge check (it might
+            // absorb content from lineIndex if the new content is thinner).
+            if (lineIndex > 0 && firstAffectedLineIndex == lineIndex)
+            {
+                firstAffectedLineIndex--;
             }
 
             TextBoxLine line = new TextBoxLine(this);

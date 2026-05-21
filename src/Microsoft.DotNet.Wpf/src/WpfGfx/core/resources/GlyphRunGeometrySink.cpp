@@ -58,12 +58,12 @@ CGlyphRunGeometrySink::CGlyphRunGeometrySink()
     m_cFigures = -1;
     
     m_pCurrentFigure = NULL;
-    m_currentFigureOffset = -1;
-    m_offsetToLastSegment = -1;
+    m_currentFigureOffset = SIZE_MAX;
+    m_offsetToLastSegment = SIZE_MAX;
     m_lastFigureSize = 0;
 
     m_pCurrentSegment = NULL;
-    m_currentSegmentOffset = -1;
+    m_currentSegmentOffset = SIZE_MAX;
     m_lastSegmentSize = 0;
     m_isSegGap = false;
     m_isSegSmoothJoin = false;
@@ -92,7 +92,7 @@ CGlyphRunGeometrySink::Initialize()
     m_pGeometry->Flags = 0;
     m_pGeometry->FigureCount = 0;
     m_pGeometry->Bounds.top = m_pGeometry->Bounds.left = m_pGeometry->Bounds.bottom = m_pGeometry->Bounds.right = 0.0;
-    m_pGeometry->Size = m_currentOffset;
+    m_pGeometry->Size = static_cast<DWORD>(m_currentOffset);
 
     m_arrGeometryDataStructsCount = 1;
     IFC(m_arrGeometryDataStructs.Add(static_cast<void*>(m_pGeometry)));
@@ -432,7 +432,7 @@ CGlyphRunGeometrySink::SetSegmentFlags(
     }
     
     // Must have begun a segment.
-    if (m_pCurrentSegment == NULL || m_currentSegmentOffset == -1)
+    if (m_pCurrentSegment == NULL || m_currentSegmentOffset == SIZE_MAX)
     {
         MIL_THRX(m_hr, E_FAIL);
     }
@@ -476,7 +476,7 @@ CGlyphRunGeometrySink::BeginFigure(
     }
     
     // If we haven't EndFigure()ed we should fail.
-    if (m_pCurrentFigure != NULL || m_currentFigureOffset != -1)
+    if (m_pCurrentFigure != NULL || m_currentFigureOffset != SIZE_MAX)
     {
         MIL_THRX(m_hr, E_FAIL);
     }
@@ -488,7 +488,7 @@ CGlyphRunGeometrySink::BeginFigure(
 
         // Create a new figure and fill it in.
         m_pCurrentFigure = static_cast<MilPathFigure*>WPFAlloc(ProcessHeap, Mt(MilPathFigure), sizeof(MilPathFigure));
-        m_pCurrentFigure->BackSize = m_lastFigureSize;
+        m_pCurrentFigure->BackSize = static_cast<DWORD>(m_lastFigureSize);
         m_pCurrentFigure->Flags = (figureBegin == D2D1_FIGURE_BEGIN_FILLED) ? MilPathFigureFlags::IsFillable : 0;
         m_pCurrentFigure->StartPoint.X = startPoint.x;
         m_pCurrentFigure->StartPoint.Y = startPoint.y;
@@ -496,7 +496,7 @@ CGlyphRunGeometrySink::BeginFigure(
         m_currentOffset += sizeof(MilPathFigure);
         // Initializing these fields to be updating by subsequent Add__ and EndFigure() calls.
         m_pCurrentFigure->Count = 0;
-        m_pCurrentFigure->Size = m_currentOffset - m_currentFigureOffset;
+        m_pCurrentFigure->Size = static_cast<UINT>(m_currentOffset - m_currentFigureOffset);
         m_pCurrentFigure->OffsetToLastSegment = 0;
 
 
@@ -584,7 +584,7 @@ CGlyphRunGeometrySink::EndFigure(
     }
     
     // Must have begun a figure.
-    if (m_pCurrentFigure == NULL || m_currentFigureOffset == -1)
+    if (m_pCurrentFigure == NULL || m_currentFigureOffset == SIZE_MAX)
     {
         MIL_THRX(m_hr, E_FAIL);
     }
@@ -599,13 +599,13 @@ CGlyphRunGeometrySink::EndFigure(
         m_pGeometry->Flags |= ((m_pCurrentFigure->Flags & MilPathFigureFlags::HasGaps) != 0) ? MilPathGeometryFlags::HasGaps : 0;
         m_pGeometry->Flags |= ((m_pCurrentFigure->Flags & MilPathFigureFlags::IsFillable) == 0) ? MilPathGeometryFlags::HasHollows : 0;
         m_pGeometry->FigureCount += 1;
-        m_pGeometry->Size = m_currentOffset;
+        m_pGeometry->Size = static_cast<DWORD>(m_currentOffset);
 
         m_lastFigureSize = m_pCurrentFigure->Size;
 
         // Note, we've saved the pointer in our DynArray in BeginFigure.
         m_pCurrentFigure = NULL;
-        m_currentFigureOffset = -1;
+        m_currentFigureOffset = SIZE_MAX;
 
         m_lastSegmentSize = 0;
     }
@@ -629,7 +629,7 @@ CGlyphRunGeometrySink::AddGenericPoly(
     MilSegmentType::Enum segmentType)
 {
     // Must have begun a figure.
-    if (m_pCurrentFigure == NULL || m_currentFigureOffset == -1)
+    if (m_pCurrentFigure == NULL || m_currentFigureOffset == SIZE_MAX)
     {
         MIL_THRX(m_hr, E_FAIL);
     }
@@ -646,7 +646,7 @@ CGlyphRunGeometrySink::AddGenericPoly(
             EndSegment();
         }
 
-        Assert(m_pCurrentSegment == NULL && m_currentSegmentOffset == -1);
+        Assert(m_pCurrentSegment == NULL && m_currentSegmentOffset == SIZE_MAX);
 
         // Save the offset to this segment.
         m_currentSegmentOffset = m_currentOffset;
@@ -680,7 +680,7 @@ CGlyphRunGeometrySink::AddGenericPoly(
         m_pCurrentSegment->Type = segmentType;
         m_pCurrentSegment->Flags = 0;
         m_pCurrentSegment->Flags |= hasCurves ? MilCoreSeg::IsCurved : 0;
-        m_pCurrentSegment->BackSize = m_lastSegmentSize;
+        m_pCurrentSegment->BackSize = static_cast<DWORD>(m_lastSegmentSize);
 
         // Add the struct pointer to our list.
         MIL_THRX(m_hr, m_arrGeometryDataStructs.Add(static_cast<void*>(m_pCurrentSegment)));
@@ -701,7 +701,7 @@ void
 CGlyphRunGeometrySink::EndSegment()
 {
     // Must have begun a segment.
-    if (m_pCurrentSegment == NULL || m_currentSegmentOffset == -1)
+    if (m_pCurrentSegment == NULL || m_currentSegmentOffset == SIZE_MAX)
     {
         MIL_THRX(m_hr, E_FAIL);
     }
@@ -716,8 +716,8 @@ CGlyphRunGeometrySink::EndSegment()
         m_pCurrentFigure->Flags |= ((m_pCurrentSegment->Flags & MilCoreSeg::IsAGap) == 0) ? MilPathFigureFlags::HasGaps : 0;
         m_pCurrentFigure->Flags |= ((m_pCurrentSegment->Flags & MilCoreSeg::IsCurved) == 0) ? MilPathFigureFlags::HasCurves : 0;
         m_pCurrentFigure->Count += 1;
-        m_pCurrentFigure->Size = m_currentOffset - m_currentFigureOffset;
-        m_pCurrentFigure->OffsetToLastSegment = m_currentSegmentOffset - m_currentFigureOffset;
+        m_pCurrentFigure->Size = static_cast<UINT>(m_currentOffset - m_currentFigureOffset);
+        m_pCurrentFigure->OffsetToLastSegment = static_cast<UINT>(m_currentSegmentOffset - m_currentFigureOffset);
 
         // Reset segment information.
         switch (m_pCurrentSegment->Type)
@@ -735,7 +735,7 @@ CGlyphRunGeometrySink::EndSegment()
     
         // Note, we've saved the pointer in our DynArray in AddGenericPoly.
         m_pCurrentSegment = NULL;
-        m_currentSegmentOffset = -1;
+        m_currentSegmentOffset = SIZE_MAX;
     }
 }
 
@@ -758,6 +758,14 @@ CGlyphRunGeometrySink::Close()
     
     if (SUCCEEDED(m_hr))
     {
+        // Guard against excessively large geometry that could exhaust memory.
+        // A single glyph run geometry should never exceed 2GB.
+        if (m_currentOffset > INT_MAX)
+        {
+            MIL_THRX(m_hr, E_OUTOFMEMORY);
+            goto Cleanup;
+        }
+
         // Write our structs out into a contiguous block of memory.
         void *pGeometryStructMem = WPFAlloc(ProcessHeap, Mt(GlyphGeometryDataStructs), m_currentOffset);
         if (pGeometryStructMem == NULL)
@@ -823,7 +831,7 @@ CGlyphRunGeometrySink::Close()
         m_pGeometry = NULL;
 
         // Save our flattened structs to the path geometry resource.
-        m_pathGeometryData.m_cbFiguresSize = m_currentOffset;
+        m_pathGeometryData.m_cbFiguresSize = static_cast<UINT32>(m_currentOffset);
         m_pathGeometryData.m_pFiguresData = static_cast<MilPathGeometry*>(pGeometryStructMem);
 
         // Set the state of this geometry sink to closed.

@@ -4,6 +4,7 @@
 //#define ENABLE_AUTOMATIONPEER_LOGGING   // uncomment to include logging of various activities
 
 using System.Collections;
+using System.Runtime.InteropServices;
 using System.Windows.Threading;
 using System.Windows.Automation.Provider;
 using MS.Internal;
@@ -1812,6 +1813,39 @@ namespace System.Windows.Automation.Peers
             return ElementProxy.StaticWrap(peer, referencePeer);
         }
 
+        /// <summary>
+        /// Disconnects a peer from the UI Automation framework by calling
+        /// UiaDisconnectProvider on its ElementProxy CCW.
+        /// This causes the UIA client-side to release its COM references, allowing
+        /// the CCW ref count to drop to zero so the managed objects can be GC'd.
+        /// </summary>
+        /// <remarks>
+        /// This method intentionally does NOT recursively disconnect children.
+        /// In virtualized controls, a removed item peer's cached _children may
+        /// reference container peers (e.g. DataGridCellAutomationPeer) that have
+        /// been recycled and are now serving new items. Disconnecting those would
+        /// break accessibility on currently visible elements.
+        /// Children are disconnected naturally when their own parent's
+        /// UpdateChildrenInternal runs and detects them as removed.
+        /// </remarks>
+        private static void DisconnectPeerFromUia(AutomationPeer peer)
+        {
+            if (peer == null)
+                return;
+
+            // Disconnect the peer's own ElementProxy CCW from UIA.
+            WeakReference proxyWeakRef = peer._elementProxyWeakReference;
+            if (proxyWeakRef?.Target is ElementProxy proxy)
+            {
+                UiaDisconnectProvider(proxy);
+            }
+
+            peer._elementProxyWeakReference = null;
+        }
+
+        [DllImport("UIAutomationCore.dll", EntryPoint = "UiaDisconnectProvider", CharSet = CharSet.Unicode)]
+        private static extern int UiaDisconnectProvider(IRawElementProviderSimple provider);
+
         ///<Summary>
         /// When one AutomationPeer is using the pattern of another AutomationPeer instead of exposing
         /// it in the children collection (example - ListBox exposes IScrollProvider from internal ScrollViewer
@@ -1892,10 +1926,6 @@ namespace System.Windows.Automation.Peers
             _childrenValid = false;
             EnsureChildren();
 
-            // Callers have only checked if automation clients are present so filter for any interest in this particular event.
-            if (!EventMap.HasRegisteredEvent(AutomationEvents.StructureChanged))
-                return;
-
             //store old children in a hashset
             if(oldChildren != null)
             {
@@ -1936,6 +1966,23 @@ namespace System.Windows.Automation.Peers
             //now the hs only has "removed" children. If the count does not yet
             //calls for "bulk" notification, use per-child notification, otherwise use "bulk"
             int removedCount = (hs == null ? 0 : hs.Count);
+
+            // Disconnect removed children from UIA so the client-side releases its
+            // COM references to the ElementProxy CCWs.  Without this the CCW ref count
+            // never drops to zero, which prevents the managed peer (and its entire
+            // visual sub-tree) from being garbage collected.
+            // This must happen regardless of StructureChanged event registration.
+            if (removedCount > 0)
+            {
+                foreach (AutomationPeer removedChild in hs)
+                {
+                    DisconnectPeerFromUia(removedChild);
+                }
+            }
+
+            // Callers have only checked if automation clients are present so filter for any interest in this particular event.
+            if (!EventMap.HasRegisteredEvent(AutomationEvents.StructureChanged))
+                return;
 
             if(removedCount + addedCount > invalidateLimit) //bilk invalidation
             {

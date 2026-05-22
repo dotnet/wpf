@@ -2346,49 +2346,59 @@ namespace System.Windows.Controls
                 }
             }
 
-            // Walk back through soft-wrap predecessors (lines without a hard break:
-            // Length == ContentLength) so the whole wrapped paragraph is re-formatted.
-            // Find the first line of the paragraph containing lineIndex.
-            int firstAffectedLineIndex = lineIndex;
-            while (firstAffectedLineIndex > 0 &&
-                   _lineMetrics[firstAffectedLineIndex - 1].Length == _lineMetrics[firstAffectedLineIndex - 1].ContentLength)
-            {
-                firstAffectedLineIndex--;
-            }
-
-            // Always include the predecessor line for the merge check (it might
-            // absorb content from lineIndex if the new content is thinner).
-            if (lineIndex > 0 && firstAffectedLineIndex == lineIndex)
-            {
-                firstAffectedLineIndex--;
-            }
-
             TextBoxLine line = new TextBoxLine(this);
-            int lineOffset = _lineMetrics[firstAffectedLineIndex].Offset;
+            int lineOffset;
             bool endOfParagraph = false;
 
-            // Re-format each line from firstAffectedLineIndex through lineIndex,
-            // absorbing any successor lines fully covered by the new line.
-            int idx = firstAffectedLineIndex;
-            while (idx <= lineIndex && !endOfParagraph)
+            // We need to re-format the previous line, because if someone inserted
+            // a hard break, the first directly affected line might now be shorter
+            // and mergeable with its predecessor.
+            if (lineIndex > 0) // we can skip this if line wrap is disabled.
             {
-                FormatIncrementalLine(idx, constraintWidth, lineProperties, line, ref lineOffset, out endOfParagraph);
+                int origEndOffset = _lineMetrics[lineIndex - 1].EndOffset;
 
-                while (idx + 1 < _lineMetrics.Count && lineOffset >= _lineMetrics[idx + 1].EndOffset)
+                FormatFirstIncrementalLine(lineIndex - 1, constraintWidth, lineProperties, line, out lineOffset, out endOfParagraph);
+
+                // If the predecessor's metrics changed and it is part of a soft-wrapped
+                // paragraph (has soft-wrap predecessors), the entire paragraph's earlier
+                // lines may be stale.  Fall back to a full reformat to avoid leaving
+                // inconsistent metrics that crash on later hit-test/render (issue #11481).
+                if (!endOfParagraph && lineOffset != origEndOffset
+                    && lineIndex >= 2
+                    && _lineMetrics[lineIndex - 2].Length == _lineMetrics[lineIndex - 2].ContentLength)
                 {
-                    _lineMetrics.RemoveAt(idx + 1);
-                    RemoveLineVisualRange(idx + 1, 1);
-                    if (idx + 1 <= lineIndex)
-                    {
-                        lineIndex--;
-                    }
+                    _lineMetrics.Clear();
+                    _viewportLineVisuals = null;
+                    desiredSize = FullMeasureTick(constraintWidth, lineProperties);
+                    return;
                 }
+            }
+            else
+            {
+                lineOffset = _lineMetrics[lineIndex].Offset;
+            }
 
-                idx++;
+            // Format the line directly affected by the change.
+            // If endOfParagraph == true, then the line was absorbed into its
+            // predessor (because its new content is thinner, or because the
+            // TextWrapping property changed).
+            if (!endOfParagraph)
+            {
+                using (line)
+                {
+                    line.Format(lineOffset, constraintWidth, constraintWidth, lineProperties, _cache.TextRunCache, _cache.TextFormatter);
+
+                    _lineMetrics[lineIndex] = new LineRecord(lineOffset, line);
+
+                    lineOffset += line.Length;
+                    endOfParagraph = line.EndOfParagraph;
+                }
+                ClearLineVisual(lineIndex);
+                lineIndex++;
             }
 
             // Recalc the following lines not directly affected as needed.
-            SyncLineMetrics(range, constraintWidth, lineProperties, line, endOfParagraph, idx, lineOffset);
+            SyncLineMetrics(range, constraintWidth, lineProperties, line, endOfParagraph, lineIndex, lineOffset);
 
             desiredSize = BruteForceCalculateDesiredSize();
         }
@@ -2435,8 +2445,7 @@ namespace System.Windows.Controls
             // and mergeable with its predecessor.
             if (lineIndex > 0) // we can skip this if line wrap is disabled.
             {
-                lineOffset = _lineMetrics[lineIndex - 1].Offset;
-                FormatIncrementalLine(lineIndex - 1, constraintWidth, lineProperties, line, ref lineOffset, out endOfParagraph);
+                FormatFirstIncrementalLine(lineIndex - 1, constraintWidth, lineProperties, line, out lineOffset, out endOfParagraph);
             }
             else
             {
@@ -2477,10 +2486,15 @@ namespace System.Windows.Controls
             desiredSize = BruteForceCalculateDesiredSize();
         }
 
-        // Formats the line at lineIndex, updates metrics, and clears the cached visual.
-        private void FormatIncrementalLine(int lineIndex, double constraintWidth, LineProperties lineProperties, TextBoxLine line,
-            ref int lineOffset, out bool endOfParagraph)
+        // Helper for IncrementalMeasureLinesAfterInsert, IncrementalMeasureLinesAfterDelete.
+        // Formats the line preceding the first directly affected line after a TextContainer change.
+        // In general this line might grow as content in the following line is absorbed.
+        private void FormatFirstIncrementalLine(int lineIndex, double constraintWidth, LineProperties lineProperties, TextBoxLine line,
+            out int lineOffset, out bool endOfParagraph)
         {
+            int originalEndOffset = _lineMetrics[lineIndex].EndOffset;
+            lineOffset = _lineMetrics[lineIndex].Offset;
+
             using (line)
             {
                 line.Format(lineOffset, constraintWidth, constraintWidth, lineProperties, _cache.TextRunCache, _cache.TextFormatter);
@@ -2491,7 +2505,11 @@ namespace System.Windows.Controls
                 endOfParagraph = line.EndOfParagraph;
             }
 
-            ClearLineVisual(lineIndex);
+            // Don't clear the cached Visual unless something changed.
+            if (originalEndOffset != _lineMetrics[lineIndex].EndOffset)
+            {
+                ClearLineVisual(lineIndex);
+            }
         }
 
         // Helper for IncrementalMeasureLinesAfterInsert, IncrementalMeasureLinesAfterDelete.

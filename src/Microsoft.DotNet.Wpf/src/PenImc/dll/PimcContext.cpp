@@ -12,6 +12,9 @@
 #include "PimcContext.h"
 #include "..\tablib\sidutils.h"
 #include "..\tablib\scopes.h"
+#include <intsafe.h>
+
+#include "PenImcSwitches.h"
 
 using namespace ComUtils;
 
@@ -524,7 +527,16 @@ HRESULT CPimcContext::EnsurePackets(DWORD cb)
     {
         if (m_pbPackets)
             delete [] m_pbPackets;
-        m_cbPackets = max(256, cb * 2);
+        if (!PenImcSwitches::IsPenImcBoundsCheckProtectionDisabled())
+        {
+            UINT cbDoubled;
+            CHR(UIntMult(cb, 2, &cbDoubled));
+            m_cbPackets = max(256, (DWORD)cbDoubled);
+        }
+        else
+        {
+            m_cbPackets = max(256, cb * 2);
+        }
         CHR_MEMALLOC(m_pbPackets = new BYTE[m_cbPackets]);
     }
 CLEANUP:

@@ -14,6 +14,8 @@
 #include <stdlib.h> /* for qsort */
 
 #include "typedefs.h"
+#include "intsafe_private_copy.h"
+#include "ttf_safe_checks.h"
 #include "ttff.h"
 #include "ttfacc.h"
 #include "ttfcntrl.h"
@@ -46,7 +48,17 @@ struct cmapoffsetrecordkeeper      /* housekeeping structure */
 PRIVATE int16 InitCmapOffsetArray(PCMAPOFFSETRECORDKEEPER pKeeper, 
                                   uint16 usRecordCount)
 {
-    pKeeper->pCmapOffsetArray = (CmapOffsetRecord *) Mem_Alloc(usRecordCount * sizeof(*(pKeeper->pCmapOffsetArray)));
+    if (TTF_SAFE_CHECKS_ENABLED())
+    {
+        uint32 ulAllocSize;
+        if (ULongMult32((uint32)usRecordCount, (uint32)sizeof(*(pKeeper->pCmapOffsetArray)), &ulAllocSize) != S_OK)
+            return ERR_MEM;
+        pKeeper->pCmapOffsetArray = (CmapOffsetRecord *) Mem_Alloc(ulAllocSize);
+    }
+    else
+    {
+        pKeeper->pCmapOffsetArray = (CmapOffsetRecord *) Mem_Alloc(usRecordCount * sizeof(*(pKeeper->pCmapOffsetArray)));
+    }
     if (pKeeper->pCmapOffsetArray == NULL)
         return ERR_MEM;
     pKeeper->usCmapOffsetArrayLen = usRecordCount;
@@ -152,7 +164,17 @@ uint16 i,j;
 uint16 usBytesRead;
 uint16 usPadBytes;
 
-    pIndexArray = (IndexOffset *) Mem_Alloc(usSubTableCount * sizeof(*pIndexArray));
+    if (TTF_SAFE_CHECKS_ENABLED())
+    {
+        uint32 ulAllocSize;
+        if (ULongMult32((uint32)usSubTableCount, (uint32)sizeof(*pIndexArray), &ulAllocSize) != S_OK)
+            return ERR_MEM;
+        pIndexArray = (IndexOffset *) Mem_Alloc(ulAllocSize);
+    }
+    else
+    {
+        pIndexArray = (IndexOffset *) Mem_Alloc(usSubTableCount * sizeof(*pIndexArray));
+    }
     if (pIndexArray == NULL)
         return ERR_MEM;
     
@@ -384,7 +406,17 @@ uint16 usBytesRead;
         return ERR_INVALID_CMAP;  /* huh?*/
 
     usSubTableCount = GetCmapSubtableCount(pOutputBufferInfo, ulCmapOffset);
-    pCmapTableLoc = (CMAP_TABLELOC *)Mem_Alloc(SIZEOF_CMAP_TABLELOC * usSubTableCount);
+    if (TTF_SAFE_CHECKS_ENABLED())
+    {
+        uint32 ulAllocSize;
+        if (ULongMult32((uint32)SIZEOF_CMAP_TABLELOC, (uint32)usSubTableCount, &ulAllocSize) != S_OK)
+            return ERR_MEM;
+        pCmapTableLoc = (CMAP_TABLELOC *)Mem_Alloc(ulAllocSize);
+    }
+    else
+    {
+        pCmapTableLoc = (CMAP_TABLELOC *)Mem_Alloc(SIZEOF_CMAP_TABLELOC * usSubTableCount);
+    }
     if (pCmapTableLoc == NULL)
         return ERR_MEM;
     ulCmapSubTableDirOffset  = ulCmapOffset + GetGenericSize( CMAP_HEADER_CONTROL );
@@ -434,8 +466,24 @@ uint16 usBytesRead;
             if (errCode != NO_ERROR)
                 break;
 
-            NewFormat4Segments = (FORMAT4_SEGMENTS *) Mem_Alloc( (usnCharGlyphMapListCount+1) * SIZEOF_FORMAT4_SEGMENTS ); /* add one for the extra dummy segment */
-            NewFormat4GlyphIdArray = (GLYPH_ID *) Mem_Alloc( usnCharGlyphMapListCount * sizeof( *NewFormat4GlyphIdArray ) );
+            if (TTF_SAFE_CHECKS_ENABLED())
+            {
+                uint32 ulSegAllocSize, ulGlyphAllocSize;
+                uint32 ulSegCount32 = (uint32)usnCharGlyphMapListCount + 1; /* add one for extra dummy segment */
+                if (ULongMult32(ulSegCount32, (uint32)SIZEOF_FORMAT4_SEGMENTS, &ulSegAllocSize) != S_OK ||
+                    ULongMult32((uint32)usnCharGlyphMapListCount, (uint32)sizeof( *NewFormat4GlyphIdArray ), &ulGlyphAllocSize) != S_OK)
+                {
+                    errCode = ERR_MEM;
+                    break;
+                }
+                NewFormat4Segments = (FORMAT4_SEGMENTS *) Mem_Alloc( ulSegAllocSize );
+                NewFormat4GlyphIdArray = (GLYPH_ID *) Mem_Alloc( ulGlyphAllocSize );
+            }
+            else
+            {
+                NewFormat4Segments = (FORMAT4_SEGMENTS *) Mem_Alloc( (usnCharGlyphMapListCount + 1) * SIZEOF_FORMAT4_SEGMENTS ); /* add one for the extra dummy segment */
+                NewFormat4GlyphIdArray = (GLYPH_ID *) Mem_Alloc( usnCharGlyphMapListCount * sizeof( *NewFormat4GlyphIdArray ) );
+            }
 
             if ( NewFormat4Segments == NULL || NewFormat4GlyphIdArray == NULL )
             {
@@ -453,7 +501,7 @@ uint16 usBytesRead;
             
             if (CmapFormat4.length <= CmapSubHeader.length) /* if the new length is smaller than the old, we can write it in the old place */
             {
-                if (pCmapTableLoc[i].platformID == MS_PLATFORMID)  /* only applies to this platform */
+                if (pCmapTableLoc[i].platformID == MS_PLATFORMID && (!TTF_SAFE_CHECKS_ENABLED() || usnCharGlyphMapListCount > 0))  /* only applies to this platform */
                 {
                     *pOS2MinChr = pCharGlyphMapList[0].usCharCode;
                     *pOS2MaxChr = pCharGlyphMapList[usnCharGlyphMapListCount-1].usCharCode;
@@ -482,7 +530,20 @@ uint16 usBytesRead;
             if (errCode != NO_ERROR)
                 break;
 
-            NewFormat12Groups = (FORMAT12_GROUPS *) Mem_Alloc( (ulnCharGlyphMapListCount) * SIZEOF_FORMAT12_GROUPS );
+            if (TTF_SAFE_CHECKS_ENABLED())
+            {
+                uint32 ulAllocSize;
+                if (ULongMult32((uint32)ulnCharGlyphMapListCount, (uint32)SIZEOF_FORMAT12_GROUPS, &ulAllocSize) != S_OK)
+                {
+                    errCode = ERR_MEM;
+                    break;
+                }
+                NewFormat12Groups = (FORMAT12_GROUPS *) Mem_Alloc(ulAllocSize);
+            }
+            else
+            {
+                NewFormat12Groups = (FORMAT12_GROUPS *) Mem_Alloc(ulnCharGlyphMapListCount * SIZEOF_FORMAT12_GROUPS);
+            }
             if ( NewFormat12Groups == NULL)
             {
                 errCode = ERR_MEM;
@@ -495,7 +556,7 @@ uint16 usBytesRead;
             /* Donald, if you don't care if the Cmap subtable grows, you could comment out the next line */
             if (CmapFormat12.length <= CmapSubHeader.length) /* if the new length is smaller than the old, we can write it in the old place */
             {
-                if (pCmapTableLoc[i].platformID == MS_PLATFORMID)  /* only applies to this platform */
+                if (pCmapTableLoc[i].platformID == MS_PLATFORMID && (!TTF_SAFE_CHECKS_ENABLED() || ulnCharGlyphMapListCount > 0))  /* only applies to this platform */
                 {
                     *pOS2MinChr = (uint16)pCharGlyphMapListEx[0].ulCharCode;
                     *pOS2MaxChr = (uint16)pCharGlyphMapListEx[ulnCharGlyphMapListCount-1].ulCharCode;

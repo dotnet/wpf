@@ -40,6 +40,7 @@
 //
 
 #include "precomp.hpp"
+#include "..\shared\WpfGfxSwitches.h"
 
 //+-----------------------------------------------------------------------------
 //
@@ -84,8 +85,17 @@ Convert_1_32bppARGB(
 
     UINT n, bits;
 
-    ARGB c0 = ppal->Entries[0];
-    ARGB c1 = ppal->Entries[1];
+    ARGB c0 = 0, c1 = 0;
+    if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+    {
+        c0 = ppal->Count > 0 ? ppal->Entries[0] : 0;
+        c1 = ppal->Count > 1 ? ppal->Entries[1] : 0;
+    }
+    else
+    {
+        c0 = ppal->Entries[0];
+        c1 = ppal->Entries[1];
+    }
 
     // NOTE: We choose code size over speed here
 
@@ -149,6 +159,7 @@ Convert_4_32bppARGB(
     Assert(ppal);
 
     const ARGB* colors = ppal->Entries;
+    UINT paletteCount = ppal->Count;
     UINT n = uiCount >> 1;
 
     // Handle whole bytes
@@ -160,8 +171,20 @@ Convert_4_32bppARGB(
         Assert((bits >> 4)  < ppal->Count);
         Assert((bits & 0xf) < ppal->Count);
 
-        pDest[0] = colors[bits >> 4];
-        pDest[1] = colors[bits & 0xf];
+        UINT hiNibble = bits >> 4;
+        UINT loNibble = bits & 0xf;
+
+        if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+        {
+            // Clamp indices to valid palette range to prevent OOB read
+            pDest[0] = hiNibble < paletteCount ? colors[hiNibble] : 0;
+            pDest[1] = loNibble < paletteCount ? colors[loNibble] : 0;
+        }
+        else
+        {
+            pDest[0] = colors[hiNibble];
+            pDest[1] = colors[loNibble];
+        }
 
         pDest += 2;
     }
@@ -169,7 +192,17 @@ Convert_4_32bppARGB(
     // Handle the last odd nibble, if any
 
     if (uiCount & 1)
-        *pDest = colors[*pSrc >> 4];
+    {
+        UINT lastNibble = *pSrc >> 4;
+        if(!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+        {
+            *pDest = lastNibble < paletteCount ? colors[lastNibble] : 0;
+        }
+        else
+        {
+            *pDest = colors[lastNibble];
+        }
+    }
 }
 
 
@@ -186,6 +219,7 @@ Convert_2_32bppARGB(
 
     const ColorPalette *ppal = DYNCAST(OSDPalette, pSOP->m_posd)->m_pPalette;
     Assert(ppal);
+    UINT paletteCount = ppal->Count;
 
     const ARGB* colors = ppal->Entries;
 
@@ -205,7 +239,14 @@ Convert_2_32bppARGB(
 
             Assert(i  < ppal->Count);
 
-            * pDest++ = colors[i];
+            if(!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+            {
+                *pDest++ = i < paletteCount ? colors[i] : 0;
+            }
+            else
+            {
+                *pDest++ = colors[i];
+            }
 
             c --;
         }
@@ -226,19 +267,29 @@ Convert_8_32bppARGB(
 
     const ColorPalette *ppal = DYNCAST(OSDPalette, pSOP->m_posd)->m_pPalette;
     Assert(ppal);
+    UINT paletteCount = ppal->Count;
 
     const ARGB* colors = ppal->Entries;
 
     while (uiCount--)
     {
+        BYTE index = *pSrc++;
 #if DBG
-        if (*pSrc >= ppal->Count)
+        if (index >= paletteCount)
         {
             TraceTag((tagMILWarning,
                 "Palette missing entries on conversion from 8bpp to 32bppARGB"));
         }
 #endif
-        *pDest++ = colors[*pSrc++];
+
+        if(!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+        {
+             *pDest++ = index < paletteCount ? colors[index] : 0;
+        }
+        else
+        {
+             *pDest++ = colors[index];
+        }
     }
 }
 

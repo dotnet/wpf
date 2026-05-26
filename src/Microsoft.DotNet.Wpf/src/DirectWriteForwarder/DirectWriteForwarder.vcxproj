@@ -92,7 +92,25 @@
   <ItemGroup>
     <AdditionalPackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
   </ItemGroup>
-  <!-- ijwhost.dll is required for mixed-mode C++/CLI assemblies -->
+  <!--
+    Exclude ijwhost.dll from the managed (lib/) folder packaging.
+    It must be placed in runtimes/win-{arch}/native/ instead so that it is
+    recognized as a native asset and included in RuntimeList.xml for
+    self-contained publish scenarios.
+  -->
+  <ItemGroup>
+    <FileNamesExcludedFromPackaging Include="ijwhost.dll" />
+  </ItemGroup>
+  <Target Name="_PackageIjwHostAsNativeAsset" BeforeTargets="CopyPackageAssets" AfterTargets="IdentifyPackageAssets" Condition="'$(PackageName)'!='' and Exists('$(OutDir)ijwhost.dll')">
+    <PropertyGroup>
+      <_IjwHostNativeDestFolder Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='x86' or '$(Platform)'=='Win32'">runtimes\win-x86\native\</_IjwHostNativeDestFolder>
+      <_IjwHostNativeDestFolder Condition="'$(Platform)'=='x64'">runtimes\win-x64\native\</_IjwHostNativeDestFolder>
+      <_IjwHostNativeDestFolder Condition="'$(Platform)'=='arm64'">runtimes\win-arm64\native\</_IjwHostNativeDestFolder>
+    </PropertyGroup>
+    <ItemGroup>
+      <PackageAsset Include="$(OutDir)ijwhost.dll" RelativePath="$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(_IjwHostNativeDestFolder)" />
+    </ItemGroup>
+  </Target>
   <Target Name="AddWindowsBaseDefine" AfterTargets="ResolveProjectReferences">
     <Error Text="Unexpected result from _WindowsBaseReference '@(_WindowsBaseReference->Count())'" Condition="'@(_WindowsBaseReference->Count())' != '1'" />
     <PropertyGroup>

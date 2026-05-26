@@ -108,7 +108,8 @@ namespace MS.Internal
                                     out bool isIndic,
                                     out bool isDigit,
                                     out bool isLatin,
-                                    out bool isStrong
+                                    out bool isStrong,
+                                    out bool isScriptAgnosticCombining
                                     )
         {
             CharacterAttribute charAttribute = Classification.CharAttributeOf((int)Classification.GetUnicodeClass(unicodeScalar));
@@ -119,7 +120,7 @@ namespace MS.Internal
                         || Classification.IsIVS(unicodeScalar));
 
             isStrong = (itemClass == (byte)ItemClass.StrongClass);
-            
+
             int script = charAttribute.Script;
             needsCaretInfo = ScriptCaretInfo[script];
 
@@ -134,6 +135,16 @@ namespace MS.Internal
             {
                 isIndic = IsScriptIndic(scriptId);
             }
+
+            isScriptAgnosticCombining = Classification.IsScriptAgnosticCombining(unicodeScalar);
+        }
+
+        /// <summary>
+        /// Check whether two Unicode scalar values belong to the same script.
+        /// </summary>
+        public bool IsSameScript(int unicodeScalar1, int unicodeScalar2)
+        {
+            return Classification.IsSameScript(unicodeScalar1, unicodeScalar2);
         }
 
         /// <summary>
@@ -159,6 +170,7 @@ namespace MS.Internal
             }
         }
     }
+
     /// <summary>
     /// Hold the classification table pointers. 
     /// </summary>    
@@ -253,16 +265,76 @@ namespace MS.Internal
 
 
         /// <summary>
-        /// Lookup script ID for a Unicode scalar value
+        /// Check whether two Unicode scalar values belong to the same script
         /// </summary>
-        public static ScriptID GetScript(int unicodeScalar)
+        public static bool IsSameScript(int unicodeScalar1, int unicodeScalar2)
         {
             unsafe
             {
-                return (ScriptID)Classification.CharAttributeTable[GetUnicodeClass(unicodeScalar)].Script;
+                short unicodeClass1 = GetUnicodeClass(unicodeScalar1);
+                short unicodeClass2 = GetUnicodeClass(unicodeScalar2);
+                if (unicodeClass1 != unicodeClass2)
+                {
+                    CharacterAttribute a1 = Classification.CharAttributeTable[unicodeClass1];
+                    CharacterAttribute a2 = Classification.CharAttributeTable[unicodeClass2];
+                    if (a1.Script != a2.Script)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
             }
         }
 
+        /// <summary>
+        /// Check whether the character is a script-agnostic combining mark (font extender) that should
+        /// stay with its base character regardless of script differences.
+        /// </summary>
+        /// <remarks>
+        /// Corresponds to a subset of DWriteCore's is_font_extender predicate, covering characters
+        /// that require special handling to prevent run-splitting when script comparisons would
+        /// otherwise split them. These are combining marks whose Unicode script is not the same
+        /// as the base character's script, so that emoji sequences like "1️⃣" (digit + VS16 +
+        /// U+20E3 combining enclosing keycap) stay together.
+        /// <para>
+        /// Note: ZWJ (U+200D) is NOT listed here because it is a JoinerClass character.
+        /// IsCombining() returns false for it, so this function would never be reached for ZWJ.
+        /// ZWJ is handled upstream by IsJoiner() and the prevWasJoiner logic in MapCharacters.
+        /// </para>
+        /// </remarks>
+        public static bool IsScriptAgnosticCombining(int unicodeScalar)
+        {
+            // Variation Selectors VS1-VS16 (U+FE00-U+FE0F)
+            if (unicodeScalar >= 0xFE00 && unicodeScalar <= 0xFE0F)
+                return true;
+
+            // Ideographic Variation Selectors VS17-VS256 (U+E0100-U+E01EF)
+            if (IsIVS(unicodeScalar))
+                return true;
+
+            // Combining Diacritical Marks Extended (U+1AB0-U+1AFF)
+            if (unicodeScalar >= 0x1AB0 && unicodeScalar <= 0x1AFF)
+                return true;
+
+            // Combining Diacritical Marks Supplement (U+1DC0-U+1DFF)
+            if (unicodeScalar >= 0x1DC0 && unicodeScalar <= 0x1DFF)
+                return true;
+
+            // Combining Diacritical Marks for Symbols (U+20D0-U+20FF) - includes U+20E3 keycap
+            if (unicodeScalar >= 0x20D0 && unicodeScalar <= 0x20FF)
+                return true;
+
+            // Combining Half Marks (U+FE20-U+FE2F)
+            if (unicodeScalar >= 0xFE20 && unicodeScalar <= 0xFE2F)
+                return true;
+
+            // Emoji Modifiers / Skin tones (U+1F3FB-U+1F3FF)
+            if (unicodeScalar >= 0x1F3FB && unicodeScalar <= 0x1F3FF)
+                return true;
+
+            return false;
+        }
 
         /// <summary>
         /// Compute Unicode scalar value from unicode codepoint stream

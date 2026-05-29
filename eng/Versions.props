@@ -66,7 +66,7 @@
 
   <!-- XUnit-related (not extensions) -->
   <PropertyGroup>
-    <XUnitStaFactPackageVersion>3.0.13</XUnitStaFactPackageVersion>
+    <XUnitStaFactPackageVersion>4.0.5-beta</XUnitStaFactPackageVersion>
   </PropertyGroup>
 
   <!-- Test related -->
@@ -81,7 +81,7 @@
 
   <!-- Code Coverage -->
   <PropertyGroup>
-    <MicrosoftTestingExtensionsCodeCoverageVersion>17.14.2</MicrosoftTestingExtensionsCodeCoverageVersion>
+    <MicrosoftTestingExtensionsCodeCoverageVersion>18.7.0</MicrosoftTestingExtensionsCodeCoverageVersion>
     <CodecovVersion>1.12.3</CodecovVersion>
     <ReportGeneratorVersion>5.2.0</ReportGeneratorVersion>
   </PropertyGroup>

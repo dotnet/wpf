@@ -269,6 +269,10 @@ HRESULT CResourceFactory::Create(
         pResource = new CMilRadialGradientBrushDuce(pComposition);
         break;
 
+    case TYPE_SWEEPGRADIENTBRUSH:
+        pResource = new CMilSweepGradientBrushDuce(pComposition);
+        break;
+
     case TYPE_IMAGEBRUSH:
         pResource = new CMilImageBrushDuce(pComposition);
         break;

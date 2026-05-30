@@ -985,6 +985,26 @@ typedef struct
     MILCMD Type;
     HMIL_RESOURCE Handle;
     DOUBLE Opacity;
+    MilPoint2D Center;
+    DOUBLE StartAngle;
+    DOUBLE EndAngle;
+    HMIL_RESOURCE hOpacityAnimations;
+    HMIL_RESOURCE hTransform;
+    HMIL_RESOURCE hRelativeTransform;
+    MilColorInterpolationMode::Enum ColorInterpolationMode;
+    MilBrushMappingMode::Enum MappingMode;
+    MilGradientSpreadMethod::Enum SpreadMethod;
+    UINT32 GradientStopsSize;
+    HMIL_RESOURCE hCenterAnimations;
+    HMIL_RESOURCE hStartAngleAnimations;
+    HMIL_RESOURCE hEndAngleAnimations;
+} MILCMD_SWEEPGRADIENTBRUSH;
+
+typedef struct
+{
+    MILCMD Type;
+    HMIL_RESOURCE Handle;
+    DOUBLE Opacity;
     MilPointAndSizeD Viewport;
     MilPointAndSizeD Viewbox;
     DOUBLE CacheInvalidationThresholdMinimum;

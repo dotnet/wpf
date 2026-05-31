@@ -121,13 +121,13 @@ typedef enum
 //      MilRectU
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilRectU
 {
     UINT left;
     UINT top;
     UINT right;
     UINT bottom;
-} MilRectU;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -135,7 +135,7 @@ typedef struct
 //      MilPointAndSize3F
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilPointAndSize3F
 {
     FLOAT X;
     FLOAT Y;
@@ -143,7 +143,7 @@ typedef struct
     FLOAT LengthX;
     FLOAT LengthY;
     FLOAT LengthZ;
-} MilPointAndSize3F;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -151,7 +151,7 @@ typedef struct
 //      MilIccProfile
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilIccProfile
 {
     //
     // profile type
@@ -167,7 +167,7 @@ typedef struct
     // size of profile data
     //
     DWORD cbDataSize;
-} MilIccProfile;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -175,7 +175,7 @@ typedef struct
 //      MilIccProfileHeader
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilIccProfileHeader
 {
     //
     // profile size in bytes
@@ -261,7 +261,7 @@ typedef struct
     // reserved for future use
     //
     BYTE phReserved[44];
-} MilIccProfileHeader;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -269,13 +269,13 @@ typedef struct
 //      MilVertexXYD
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilVertexXYD
 {
     MilPoint2F Pos;
     MilColorF Diffuse;
 
     enum {Format = MILVFAttrXY | MILVFAttrDiffuse};
-} MilVertexXYD;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -283,13 +283,13 @@ typedef struct
 //      MilVertexXYUV
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilVertexXYUV
 {
     MilPoint2F Pos;
     MilPoint2F Tex;
 
     enum {Format = MILVFAttrXY | MILVFAttrUV1};
-} MilVertexXYUV;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -297,14 +297,14 @@ typedef struct
 //      MilVertexXYDUV
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilVertexXYDUV
 {
     MilPoint2F Pos;
     MilColorF Diffuse;
     MilPoint2F Tex;
 
     enum {Format = MILVFAttrXY | MILVFAttrDiffuse | MILVFAttrUV1};
-} MilVertexXYDUV;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -312,7 +312,7 @@ typedef struct
 //      MilVertexXYZDUV2
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilVertexXYZDUV2
 {
     MilPoint3F Pos;
     DWORD dwDiffuse;
@@ -320,7 +320,7 @@ typedef struct
     MilPoint2F Tex2;
 
     enum {Format = MILVFAttrXYZ | MILVFAttrDiffuse | MILVFAttrUV2};
-} MilVertexXYZDUV2;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -328,7 +328,7 @@ typedef struct
 //      MilVertexXYZNDSUV4
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilVertexXYZNDSUV4
 {
     FLOAT X;
     FLOAT Y;
@@ -344,7 +344,7 @@ typedef struct
     MilPoint2F Tex4;
 
     enum {Format = MILVFAttrXYZ | MILVFAttrNormal | MILVFAttrDiffuse | MILVFAttrSpecular | MILVFAttrUV4};
-} MilVertexXYZNDSUV4;
+};
 
 #ifdef COMPOUND_PEN_IMPLEMENTED
 BEGIN_MILENUM( MilCompoundStyle )

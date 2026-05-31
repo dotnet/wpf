@@ -1497,6 +1497,23 @@ CHwFFPipelineBuilder::Set_RadialGradient(
 //+-----------------------------------------------------------------------------
 //
 //  Member:
+//      CHwFFPipelineBuilder::Set_SweepGradient
+//
+//  Synopsis:
+//      Not implemented in the fixed function pipeline
+//
+//------------------------------------------------------------------------------
+HRESULT
+CHwFFPipelineBuilder::Set_SweepGradient(
+    __in_ecount(1) CHwSweepGradientColorSource *pSweepGradient
+    )
+{
+    RRETURN(E_NOTIMPL);
+}
+
+//+-----------------------------------------------------------------------------
+//
+//  Member:
 //      CHwPipeline::FFBuilder::Mul_ConstAlpha
 //
 //  Synopsis:

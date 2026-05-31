@@ -220,6 +220,19 @@ public:
         OUT CColorSource **ppColorSource
         ) = 0;
 
+    virtual HRESULT GetCS_SweepGradient(
+        __in_ecount(3) const MilPoint2F *pGradientPoints,
+        FLOAT startAngleDegrees,
+        FLOAT endAngleDegrees,
+        UINT nColorCount,
+        const MilColorF *pColors,
+        const FLOAT *pPositions,
+        MilGradientWrapMode::Enum wrapMode,
+        MilColorInterpolationMode::Enum colorInterpolationMode,
+        const CMatrix<CoordinateSpace::BaseSamplingHPC,CoordinateSpace::DeviceHPC> *pmatWorldHPCToDeviceHPC,
+        OUT CColorSource **ppColorSource
+        ) = 0;
+
 
     HRESULT GetCS_PrefilterAndResample(
         __in_ecount(1) IWGXBitmapSource *pIBitmapSource,
@@ -256,6 +269,7 @@ class CConstantColorBrushSpan;
 class CLinearGradientBrushSpan;
 class CRadialGradientBrushSpan;
 class CFocalGradientBrushSpan;
+class CSweepGradientBrushSpan;
 class CShaderEffectBrushSpan;
 
 class CIdentitySpan;
@@ -371,6 +385,19 @@ public:
         OUT CColorSource **ppColorSource
         ) override;
 
+    HRESULT GetCS_SweepGradient(
+        __in_ecount(3) const MilPoint2F *pGradientPoints,
+        FLOAT startAngleDegrees,
+        FLOAT endAngleDegrees,
+        UINT nColorCount,
+        const MilColorF *pColors,
+        const FLOAT *pPositions,
+        MilGradientWrapMode::Enum wrapMode,
+        MilColorInterpolationMode::Enum colorInterpolationMode,
+        const CMatrix<CoordinateSpace::BaseSamplingHPC,CoordinateSpace::DeviceHPC> *pmatWorldHPCToDeviceHPC,
+        OUT CColorSource **ppColorSource
+        ) override;
+
     HRESULT GetCS_Resample(
         __in_ecount(1) IWGXBitmapSource *pIBitmapSource,
         MilBitmapWrapMode::Enum wrapMode,
@@ -385,6 +412,7 @@ private:
     CLinearGradientBrushSpan *m_pLinearGradientSpan;
     CRadialGradientBrushSpan *m_pRadialGradientSpan;
     CFocalGradientBrushSpan *m_pFocalGradientSpan;
+    CSweepGradientBrushSpan *m_pSweepGradientSpan;
     CShaderEffectBrushSpan *m_pShaderEffectSpan;
     CResampleSpanCreator_sRGB m_ResampleSpans;
 };
@@ -463,6 +491,19 @@ public:
         MilGradientWrapMode::Enum wrapMode,
         MilColorInterpolationMode::Enum colorInterpolationMode,
         const MilPoint2F *pptOrigin,
+        const CMatrix<CoordinateSpace::BaseSamplingHPC,CoordinateSpace::DeviceHPC> *pmatWorldHPCToDeviceHPC,
+        OUT CColorSource **ppColorSource
+        ) override;
+
+    HRESULT GetCS_SweepGradient(
+        __in_ecount(3) const MilPoint2F *pGradientPoints,
+        FLOAT startAngleDegrees,
+        FLOAT endAngleDegrees,
+        UINT nColorCount,
+        const MilColorF *pColors,
+        const FLOAT *pPositions,
+        MilGradientWrapMode::Enum wrapMode,
+        MilColorInterpolationMode::Enum colorInterpolationMode,
         const CMatrix<CoordinateSpace::BaseSamplingHPC,CoordinateSpace::DeviceHPC> *pmatWorldHPCToDeviceHPC,
         OUT CColorSource **ppColorSource
         ) override;

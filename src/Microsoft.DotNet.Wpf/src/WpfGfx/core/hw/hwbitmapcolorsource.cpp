@@ -3716,7 +3716,14 @@ CHwBitmapColorSource::PushTheSourceBitsToVideoMemory(
         rcMilTextureLock.Y = 0;
         rcMilTextureLock.Width = static_cast<INT>(m_d3dsdRequired.Width);
         rcMilTextureLock.Height = static_cast<INT>(m_d3dsdRequired.Height);
-        cbLockedBufferSize = GetRequiredBufferSize(m_fmtTexture, d3dlrBitmapCopyDestination.Pitch, &rcMilTextureLock);
+        if(!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+        {
+            IFC(HrGetRequiredBufferSize(m_fmtTexture, d3dlrBitmapCopyDestination.Pitch, &rcMilTextureLock, &cbLockedBufferSize));
+        }
+        else
+        {
+            cbLockedBufferSize = GetRequiredBufferSize(m_fmtTexture, d3dlrBitmapCopyDestination.Pitch, &rcMilTextureLock);
+        }
         fLockedSurface = true;
     }
 
@@ -3774,16 +3781,49 @@ CHwBitmapColorSource::PushTheSourceBitsToVideoMemory(
                 rcDirty.left, rcDirty.top, rcDirty.right - rcDirty.left, rcDirty.bottom - rcDirty.top
             };
 
-            BYTE *pvDestPixels = reinterpret_cast<BYTE*>(d3dlrBitmapCopyDestination.pBits)
-                                 + uPixelSize * static_cast<UINT>(ptDest.x)
-                                 + d3dlrBitmapCopyDestination.Pitch * ptDest.y +
-                                 // Offset according to border.
-                                 uBorderSize * (uPixelSize + d3dlrBitmapCopyDestination.Pitch);
+            BYTE *pvDestPixels;
+            UINT cbRemainingBufferSize;
+
+            if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+            {
+                // Compute destination offset with overflow-safe arithmetic.
+                UINT uDestOffsetX;
+                UINT uDestOffsetY;
+                UINT uDestOffset;
+                UINT uBorderOffset;
+
+                IFC(UIntMult(uPixelSize, static_cast<UINT>(ptDest.x), &uDestOffsetX));
+                IFC(UIntMult(static_cast<UINT>(d3dlrBitmapCopyDestination.Pitch), static_cast<UINT>(ptDest.y), &uDestOffsetY));
+                IFC(UIntAdd(uDestOffsetX, uDestOffsetY, &uDestOffset));
+
+                // Border offset: uBorderSize * (uPixelSize + Pitch)
+                IFC(UIntAdd(uPixelSize, static_cast<UINT>(d3dlrBitmapCopyDestination.Pitch), &uBorderOffset));
+                IFC(UIntMult(uBorderSize, uBorderOffset, &uBorderOffset));
+                IFC(UIntAdd(uDestOffset, uBorderOffset, &uDestOffset));
+
+                // Verify the offset doesn't exceed the locked buffer
+                if (uDestOffset >= cbLockedBufferSize)
+                {
+                    IFC(WGXERR_INTERNALERROR);
+                }
+
+                pvDestPixels = reinterpret_cast<BYTE*>(d3dlrBitmapCopyDestination.pBits)
+                                     + uDestOffset;
+                cbRemainingBufferSize = cbLockedBufferSize - uDestOffset;
+            }
+            else
+            {
+                pvDestPixels = reinterpret_cast<BYTE*>(d3dlrBitmapCopyDestination.pBits)
+                                     + uPixelSize * static_cast<UINT>(ptDest.x)
+                                     + d3dlrBitmapCopyDestination.Pitch * ptDest.y +
+                                     uBorderSize * (uPixelSize + d3dlrBitmapCopyDestination.Pitch);
+                cbRemainingBufferSize = cbLockedBufferSize;
+            }
 
             IFC(pIBitmapSource->CopyPixels(
                 &rcCopy,
                 d3dlrBitmapCopyDestination.Pitch,
-                cbLockedBufferSize,
+                cbRemainingBufferSize,
                 pvDestPixels
                 ));
         }
@@ -4451,7 +4491,8 @@ Cleanup:
 //  Function:  SelfCopyPixels
 //
 //  Synopsis:  Copy source rectangle to new location (non-overlapping)
-//             in image.  Does not check memory!
+//             in image.  Validates all offsets against buffer size using
+//             overflow-safe arithmetic before copying.
 //
 //-----------------------------------------------------------------------------
 void
@@ -4468,20 +4509,52 @@ SelfCopyPixels(
     __inout_bcount(cbBufferSize) BYTE *pvPixels  // Pointer to start of output
     )
 {
-    #pragma prefast(suppress: 22013, "Offset calculations may not overflow")
-    UINT offReadEnd = cbStep * rc.right + cbStride * (rc.bottom-1);
-    UINT offWriteEnd = cbStep * (x+rc.Width()) + cbStride * (y+rc.Height()-1);
+    if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+    {
+        // Compute the end offsets for both source and destination using
+        // overflow-safe arithmetic.  If any multiplication or addition
+        // overflows, the bounds check will correctly reject the operation.
+        UINT offReadEnd = 0;
+        UINT offWriteEnd = 0;
+        UINT temp1, temp2;
 
-    if (cbBufferSize < offReadEnd)
-    {
-        RIP("Buffer size too small for source rectangle");
-    }
-    else if (cbBufferSize < offWriteEnd)
-    {
-        RIP("Buffer size too small for destination rectangle");
-    }
-    else
-    {
+        bool fOverflow = false;
+
+        // offReadEnd = cbStep * rc.right + cbStride * (rc.bottom - 1)
+        if (rc.bottom == 0 ||
+            FAILED(UIntMult(cbStep, rc.right, &temp1)) ||
+            FAILED(UIntMult(cbStride, rc.bottom - 1, &temp2)) ||
+            FAILED(UIntAdd(temp1, temp2, &offReadEnd)))
+        {
+            fOverflow = true;
+        }
+
+        // offWriteEnd = cbStep * (x + rc.Width()) + cbStride * (y + rc.Height() - 1)
+        if (!fOverflow)
+        {
+            UINT destRight, destBottom;
+            if (FAILED(UIntAdd(x, rc.Width(), &destRight)) ||
+                FAILED(UIntMult(cbStep, destRight, &temp1)) ||
+                FAILED(UIntAdd(y, rc.Height(), &destBottom)) ||
+                destBottom == 0 ||
+                FAILED(UIntMult(cbStride, destBottom - 1, &temp2)) ||
+                FAILED(UIntAdd(temp1, temp2, &offWriteEnd)))
+            {
+                fOverflow = true;
+            }
+        }
+
+        if (fOverflow || cbBufferSize < offReadEnd)
+        {
+            RIP("Buffer size too small for source rectangle");
+            return;
+        }
+        else if (cbBufferSize < offWriteEnd)
+        {
+            RIP("Buffer size too small for destination rectangle");
+            return;
+        }
+
         for (UINT i = rc.left; i < rc.right; ++i)
         {
             for (UINT j = rc.top; j < rc.bottom; ++j)
@@ -4492,6 +4565,36 @@ SelfCopyPixels(
                 Assert(pvSrc + cbStep <= pvPixels + cbBufferSize);
 
                 RtlCopyMemory(pvDst, pvSrc, cbStep);
+            }
+        }
+    }
+    else
+    {
+        #pragma prefast(suppress: 22013, "Offset calculations may not overflow")
+        UINT offReadEnd = cbStep * rc.right + cbStride * (rc.bottom-1);
+        UINT offWriteEnd = cbStep * (x+rc.Width()) + cbStride * (y+rc.Height()-1);
+
+        if (cbBufferSize < offReadEnd)
+        {
+            RIP("Buffer size too small for source rectangle");
+        }
+        else if (cbBufferSize < offWriteEnd)
+        {
+            RIP("Buffer size too small for destination rectangle");
+        }
+        else
+        {
+            for (UINT i = rc.left; i < rc.right; ++i)
+            {
+                for (UINT j = rc.top; j < rc.bottom; ++j)
+                {
+                    BYTE *pvSrc = pvPixels + j * cbStride + i * cbStep;
+                    BYTE *pvDst = pvPixels + ((j-rc.top)+y) * cbStride + ((i-rc.left)+x) * cbStep;
+                    Assert(pvDst + cbStep <= pvPixels + cbBufferSize);
+                    Assert(pvSrc + cbStep <= pvPixels + cbBufferSize);
+
+                    RtlCopyMemory(pvDst, pvSrc, cbStep);
+                }
             }
         }
     }

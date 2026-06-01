@@ -89,16 +89,30 @@ public:
     __ecount(this->Count) T &First() const
     {
         __pfx_assert(Count > 0, "Buffer overflow accessing empty DynArray");
-        Assert(Count > 0);
+        if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+        {
+            FreAssert(Count > 0);
+        }
+        else
+        {
+            Assert(Count > 0);
+        }
         return GetDataBuffer()[0];
     }
 
     __ecount(1) T &Last() const
     {
         __pfx_assert(Count > 0, "Buffer overflow accessing empty DynArray");
-        Assert(Count > 0);
+        if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+        {
+            FreAssert(Count > 0);
+        }
+        else
+        {
+            Assert(Count > 0);
+        }
 #pragma prefast (push)
-#pragma prefast (disable: 37001 37002 37003, "This operation will not overflow becasuse of the Assert above.")
+#pragma prefast (disable: 37001 37002 37003, "This operation will not overflow because of the Assert/FreAssert above.")
         return GetDataBuffer()[Count-1];
 #pragma prefast (pop)
     }

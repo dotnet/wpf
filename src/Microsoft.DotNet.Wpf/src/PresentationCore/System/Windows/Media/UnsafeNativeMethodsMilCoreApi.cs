@@ -195,6 +195,9 @@ namespace MS.Win32.PresentationCore
             [DllImport(DllImport.MilCore, EntryPoint = "RenderOptions_IsSoftwareRenderingForcedForProcess")]
             internal static extern unsafe bool RenderOptions_IsSoftwareRenderingForcedForProcess();
 
+            [DllImport(DllImport.MilCore, EntryPoint = "WpfGfx_SetDisableBoundsCheckProtection")]
+            internal static extern unsafe void WpfGfx_SetDisableBoundsCheckProtection(bool value);
+
             [DllImport(DllImport.MilCore, EntryPoint = "RenderOptions_EnableHardwareAccelerationInRdp")]
             internal static extern unsafe void RenderOptions_EnableHardwareAccelerationInRdp(bool value);                 
 

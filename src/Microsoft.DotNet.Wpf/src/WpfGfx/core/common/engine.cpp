@@ -230,7 +230,7 @@ CCommonRegistryData::InitializeFromRegistry()
         }
     }
 
-    // NOTICE-2006/07/19-milesc  Given that most of the registry keys previously 
+    // NOTICE-2006/07/19-milesc Given that most of the registry keys previously 
     // in the class were not registry keys we wanted to ship, this class no longer
     // accesses the registry for all keys. Instead default values are returned 
     // from the public functions for those keys we didn't want to ship with.

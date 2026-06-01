@@ -67,6 +67,9 @@ namespace System.Windows.Media
                 s_refCount++;
             }
 
+            // Pass security mitigation switch to native WpfGfx code.
+            UnsafeNativeMethods.WpfGfx_SetDisableBoundsCheckProtection(CoreAppContextSwitches.DisableWpfGfxBoundsCheckProtection);
+
             // Setting renderOption for Hardware acceleration in RDP as per appcontext switch.
             UnsafeNativeMethods.RenderOptions_EnableHardwareAccelerationInRdp(CoreAppContextSwitches.EnableHardwareAccelerationInRdp);
 

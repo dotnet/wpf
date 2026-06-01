@@ -28,6 +28,8 @@
 #include "ttfdelta.h" /* for Dont care info */
 #include "ttferror.h"
 #include "ttfdcnfg.h"
+#include "intsafe_private_copy.h"
+#include "ttf_safe_checks.h"
 
 /* ---------------------------------------------------------------------- */
 PRIVATE int CRTCB AscendingTagCompare( CONST void *arg1, CONST void *arg2 )
@@ -269,6 +271,11 @@ uint32 ulBytesRead;
     }
     else
     {
+        if (TTF_SAFE_CHECKS_ENABLED())
+        {
+            if (ulGlyphCount + 1 > 0xFFFF)
+                return 0L;
+        }
         if (ReadGenericRepeat(pInputBufferInfo, (uint8 *)pulLoca, LONG_CONTROL, ulOffset, &ulBytesRead, (uint16) (ulGlyphCount + 1), sizeof(uint32)) != NO_ERROR) 
             return 0L;
     }
@@ -315,9 +322,17 @@ FORMAT4_SEGMENTS KeySegment;
         sIDIdx = (int32)(pFormat4Segment - (Format4Segments + usnSegments));
         /* sIDIdx = (uint16) i - (uint16) usnSegments; */
         sIDIdx += (int32) (pFormat4Segment->idRangeOffset / 2) + usCharCode - pFormat4Segment->startCount;
-        /* check against bounds */
-        if (sIDIdx >= usnGlyphs)
-            return INVALID_GLYPH_INDEX;
+        /* check against bounds (both negative and too large) */
+        if (TTF_SAFE_CHECKS_ENABLED())
+        {
+            if (sIDIdx < 0 || sIDIdx >= usnGlyphs)
+                return INVALID_GLYPH_INDEX;
+        }
+        else
+        {
+            if (sIDIdx >= usnGlyphs)
+                return INVALID_GLYPH_INDEX;
+        }
         usGlyphIdx = GlyphId[ sIDIdx ];
         if (usGlyphIdx)
             /* Only add in idDelta if we've really got a glyph! */
@@ -401,7 +416,17 @@ int16 errCode;
     if ( *pusnIds == 0 )
         return(NO_ERROR);
 
-    *ppGlyphId = (GLYPH_ID *)Mem_Alloc(*pusnIds * sizeof( (*ppGlyphId)[0] ));
+    if (TTF_SAFE_CHECKS_ENABLED())
+    {
+        uint32 ulAllocSize;
+        if (ULongMult32((uint32)*pusnIds, (uint32)sizeof( (*ppGlyphId)[0] ), &ulAllocSize) != S_OK)
+            return ERR_MEM;
+        *ppGlyphId = (GLYPH_ID *)Mem_Alloc(ulAllocSize);
+    }
+    else
+    {
+        *ppGlyphId = (GLYPH_ID *)Mem_Alloc(*pusnIds * sizeof( (*ppGlyphId)[0] ));
+    }
     if ( *ppGlyphId == NULL )
         return(ERR_MEM);
 
@@ -431,7 +456,17 @@ uint32 ulBytesRead;
 
 /* allocate memory for variable length part of table */
 
-    *Format4Segments = (FORMAT4_SEGMENTS *)Mem_Alloc( usSegCount * SIZEOF_FORMAT4_SEGMENTS);
+    if (TTF_SAFE_CHECKS_ENABLED())
+    {
+        uint32 ulAllocSize;
+        if (ULongMult32((uint32)usSegCount, (uint32)SIZEOF_FORMAT4_SEGMENTS, &ulAllocSize) != S_OK)
+            return ERR_MEM;
+        *Format4Segments = (FORMAT4_SEGMENTS *)Mem_Alloc( ulAllocSize );
+    }
+    else
+    {
+        *Format4Segments = (FORMAT4_SEGMENTS *)Mem_Alloc( usSegCount * SIZEOF_FORMAT4_SEGMENTS);
+    }
     if ( *Format4Segments == NULL )
         return( ERR_MEM );
 
@@ -661,7 +696,17 @@ int16 errCode;
     if (pCmap->format != FORMAT6_CMAP_FORMAT)
         return( ERR_FORMAT );
 
-    *glyphIndexArray = (uint16 *)Mem_Alloc( pCmap->entryCount * sizeof( uint16 ));
+    if (TTF_SAFE_CHECKS_ENABLED())
+    {
+        uint32 ulAllocSize;
+        if (ULongMult32((uint32)pCmap->entryCount, (uint32)sizeof( uint16 ), &ulAllocSize) != S_OK)
+            return ERR_MEM;
+        *glyphIndexArray = (uint16 *)Mem_Alloc( ulAllocSize );
+    }
+    else
+    {
+        *glyphIndexArray = (uint16 *)Mem_Alloc( pCmap->entryCount * sizeof( uint16 ));
+    }
     if ( *glyphIndexArray == NULL )
         return( ERR_MEM );
 
@@ -1030,7 +1075,20 @@ int16 errCode = NO_ERROR;
         usCharCodeCount += (pFormat4Segments[ i ].endCount - pFormat4Segments[ i ].startCount + 1);
     }
 
-    *ppCharGlyphMapList = (PCHAR_GLYPH_MAP_LIST)Mem_Alloc(usCharCodeCount * sizeof(**ppCharGlyphMapList));
+    if (TTF_SAFE_CHECKS_ENABLED())
+    {
+        uint32 ulAllocSize;
+        if (ULongMult32((uint32)usCharCodeCount, (uint32)sizeof(**ppCharGlyphMapList), &ulAllocSize) != S_OK)
+        {
+            FreeCmapFormat4(pFormat4Segments, pFormat4GlyphIdArray);
+            return ERR_MEM;
+        }
+        *ppCharGlyphMapList = (PCHAR_GLYPH_MAP_LIST)Mem_Alloc(ulAllocSize);
+    }
+    else
+    {
+        *ppCharGlyphMapList = (PCHAR_GLYPH_MAP_LIST)Mem_Alloc(usCharCodeCount * sizeof(**ppCharGlyphMapList));
+    }
     if (*ppCharGlyphMapList == NULL)
     {
         FreeCmapFormat4(pFormat4Segments, pFormat4GlyphIdArray);
@@ -1134,7 +1192,20 @@ int16 errCode = NO_ERROR;
         ulCharCodeCount += (pFormat12Groups[ i ].endCharCode - pFormat12Groups[ i ].startCharCode + 1);
     }
 
-    *ppCharGlyphMapList = (PCHAR_GLYPH_MAP_LIST_EX)Mem_Alloc(ulCharCodeCount * sizeof(**ppCharGlyphMapList));
+    if (TTF_SAFE_CHECKS_ENABLED())
+    {
+        uint32 ulAllocSize;
+        if (ULongMult32(ulCharCodeCount, (uint32)sizeof(**ppCharGlyphMapList), &ulAllocSize) != S_OK)
+        {
+            FreeCmapFormat12Groups( pFormat12Groups );
+            return ERR_MEM;
+        }
+        *ppCharGlyphMapList = (PCHAR_GLYPH_MAP_LIST_EX)Mem_Alloc(ulAllocSize);
+    }
+    else
+    {
+        *ppCharGlyphMapList = (PCHAR_GLYPH_MAP_LIST_EX)Mem_Alloc(ulCharCodeCount * sizeof(**ppCharGlyphMapList));
+    }
     if (*ppCharGlyphMapList == NULL)
     {
         FreeCmapFormat12Groups( pFormat12Groups );
@@ -1658,7 +1729,17 @@ char *pStr1, *pStr2; /* temps to point to either new or old string from PNAMEREC
     ulOffset = ulNameOffset + GetGenericSize(NAME_HEADER_CONTROL);
 
     /* first create the NameRecordStrings array to sort */
-    pNameRecordStrings = (NAMERECORDSTRINGS *)Mem_Alloc(NameRecordCount * sizeof(*pNameRecordStrings));
+    if (TTF_SAFE_CHECKS_ENABLED())
+    {
+        uint32 ulAllocSize;
+        if (ULongMult32((uint32)NameRecordCount, (uint32)sizeof(*pNameRecordStrings), &ulAllocSize) != S_OK)
+            return ERR_GENERIC;
+        pNameRecordStrings = (NAMERECORDSTRINGS *)Mem_Alloc(ulAllocSize);
+    }
+    else
+    {
+        pNameRecordStrings = (NAMERECORDSTRINGS *)Mem_Alloc(NameRecordCount * sizeof(*pNameRecordStrings));
+    }
     if (pNameRecordStrings == NULL)
         return ERR_MEM;
 
@@ -1845,7 +1926,17 @@ int32 lCopySize;
 
         ulOffset += usBytesRead;
         
-        aDirectory = (DIRECTORY *) Mem_Alloc(((int32)usnNewTables) * sizeof(DIRECTORY));    /* one extra for new table */
+        if (TTF_SAFE_CHECKS_ENABLED())
+        {
+            uint32 ulAllocSize;
+            if (ULongMult32((uint32)usnNewTables, (uint32)sizeof(DIRECTORY), &ulAllocSize) != S_OK)
+                return ERR_MEM;
+            aDirectory = (DIRECTORY *) Mem_Alloc(ulAllocSize);
+        }
+        else
+        {
+            aDirectory = (DIRECTORY *) Mem_Alloc(((int32)usnNewTables) * sizeof(DIRECTORY));    /* one extra for new table */
+        }
         if (aDirectory == NULL)
             return(ERR_MEM);
 
@@ -2150,7 +2241,17 @@ int16 errCode;
     ulOffset += usBytesRead;
     /* Create a list of valid tables */
 
-    aDirectory = (DIRECTORY *) Mem_Alloc((usnTables) * sizeof(DIRECTORY));
+    if (TTF_SAFE_CHECKS_ENABLED())
+    {
+        uint32 ulAllocSize;
+        if (ULongMult32((uint32)usnTables, (uint32)sizeof(DIRECTORY), &ulAllocSize) != S_OK)
+            return ERR_MEM;
+        aDirectory = (DIRECTORY *) Mem_Alloc(ulAllocSize);
+    }
+    else
+    {
+        aDirectory = (DIRECTORY *) Mem_Alloc((usnTables) * sizeof(DIRECTORY));
+    }
     if (aDirectory == NULL)
         return(ERR_MEM);
 

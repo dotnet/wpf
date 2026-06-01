@@ -217,23 +217,6 @@ configuration:
       description: In-PR label
     - if:
       - payloadType: Pull_Request
-      - targetsBranch:
-          branch: main
-      - and:
-        - isAction:
-            action: Closed
-        - isMerged
-        - not:
-            titleContains:
-              pattern: '[main] Update dependencies'
-              isRegex: False
-      then:
-      - addMilestone:
-          milestone: 7.0 Preview4
-      description: Apply milestone '7.0' to PRs on the main branch
-      triggerOnOwnActions: true
-    - if:
-      - payloadType: Pull_Request
       - isActivitySender:
           user: dotnet-maestro[bot]
           issueAuthor: False

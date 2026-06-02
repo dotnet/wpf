@@ -1081,6 +1081,15 @@ namespace System.Windows.Media
                 return;
             }
 
+            // Color glyph support: decompose COLR-font glyph runs into colored geometry
+            // layers. See RenderDataDrawingContext.DrawGlyphRun for the full explanation.
+            Drawing colorDrawing = glyphRun.TryBuildColorGlyphDrawing(foregroundBrush);
+            if (colorDrawing != null)
+            {
+                AddDrawing(colorDrawing);
+                return;
+            }
+
             // Add a GlyphRunDrawing to the Drawing graph
 
             GlyphRunDrawing glyphRunDrawing = new GlyphRunDrawing

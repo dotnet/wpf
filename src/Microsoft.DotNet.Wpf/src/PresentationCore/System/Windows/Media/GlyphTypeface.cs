@@ -985,6 +985,39 @@ namespace System.Windows.Media
         {
             return FontDWrite.HasCharacter(unicodeValue);
         }
+
+        /// <summary>
+        /// Returns true if this GlyphTypeface contains color glyph layers (COLR/CPAL tables).
+        /// The result is lazily computed and cached. The underlying check probes for the
+        /// COLR OpenType table via IDWriteFontFace::TryGetFontTable.
+        ///
+        /// Thread safety: the double-check pattern here may cause a redundant native call
+        /// on concurrent first access, but the result is idempotent — the same font face
+        /// always has the same table set. The flag write order (value before sentinel)
+        /// ensures no thread sees stale data.
+        /// </summary>
+        internal bool IsColorFont
+        {
+            get
+            {
+                CheckInitialized();
+                if (!_isColorFontInitialized)
+                {
+                    MS.Internal.Text.TextInterface.FontFace fontFaceDWrite = _font.GetFontFace();
+                    try
+                    {
+                        bool hasColor = fontFaceDWrite.HasColorGlyphs();
+                        _isColorFont = hasColor;            // write value first
+                        _isColorFontInitialized = true;     // then publish the sentinel
+                    }
+                    finally
+                    {
+                        fontFaceDWrite.Release();
+                    }
+                }
+                return _isColorFont;
+            }
+        }
         
         internal MS.Internal.Text.TextInterface.Font FontDWrite
         {
@@ -1969,6 +2002,9 @@ namespace System.Windows.Media
         private MS.Internal.Text.TextInterface.Font     _font;
 
         private FontSource                  _fontSource;
+
+        private bool                        _isColorFont;
+        private bool                        _isColorFontInitialized;
 
 
         /// <summary>

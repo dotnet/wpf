@@ -7,7 +7,6 @@ function InitializeWpfCustomToolset() {
   if (Test-Path variable:global:_WpfToolsetBuildProj) {
     return $global:_WpfToolsetBuildProj
   }
-  $nugetCache = GetNuGetPackageCachePath
 
   # Get all sdks listed in repo's 'global.json' file
   $msbuild_sdks = $GlobalJson.'msbuild-sdks'

@@ -231,6 +231,7 @@
     <Compile Include="MS\Internal\Interop\DWrite\DWRITE_FONT_FACE_TYPE.cs" />
     <Compile Include="MS\Internal\Interop\DWrite\DWRITE_FONT_SIMULATIONS.cs" />
     <Compile Include="MS\Internal\Interop\DWrite\IDWriteFactory.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteFactory2.cs" />
     <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontCollection.cs" />
     <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontCollectionLoader.cs" />
     <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontFace.cs" />

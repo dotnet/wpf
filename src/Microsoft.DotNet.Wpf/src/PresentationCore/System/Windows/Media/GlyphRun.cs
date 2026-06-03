@@ -1688,7 +1688,11 @@ namespace System.Windows.Media
                         );
 
                     if (colorLayers == null || colorLayers.Count == 0)
+                    {
+                        _cachedColorForeground = foregroundBrush;
+                        _cachedColorDrawing = null;
                         return null;
+                    }
 
                     // Build a DrawingGroup with one GeometryDrawing per color layer
                     DrawingGroup drawingGroup = new DrawingGroup();
@@ -1775,7 +1779,7 @@ namespace System.Windows.Media
             float baselineOriginY)
         {
             GeometryGroup layerGeometry = null;
-            double accAdvance = 0;
+            double accumulatedWidth = 0;
 
             for (int i = 0; i < layerGlyphIndices.Length; i++)
             {
@@ -1792,14 +1796,14 @@ namespace System.Windows.Media
                 double originX;
                 if (IsLeftToRight)
                 {
-                    originX = accAdvance + offsetX;
+                    originX = accumulatedWidth + offsetX;
                 }
                 else
                 {
                     double nominalAdvance = layerGlyphAdvances[i];
-                    originX = -accAdvance - (nominalAdvance + offsetX);
+                    originX = -accumulatedWidth - (nominalAdvance + offsetX);
                 }
-                accAdvance += layerGlyphAdvances[i];
+                accumulatedWidth += layerGlyphAdvances[i];
 
                 double originY = -offsetY;
 
@@ -2689,7 +2693,7 @@ namespace System.Windows.Media
         private object              _inkBoundingBox;    // Used when CacheInkBounds is on
         private Drawing             _cachedColorDrawing;   // Cached result of TryBuildColorGlyphDrawing
         private Brush               _cachedColorForeground; // Foreground brush used for _cachedColorDrawing
-        private TextFormattingMode      _textFormattingMode;
+        private TextFormattingMode  _textFormattingMode;
         private float               _pixelsPerDip = MS.Internal.FontCache.Util.PixelsPerDip;
 
         // the sine of 20 degrees

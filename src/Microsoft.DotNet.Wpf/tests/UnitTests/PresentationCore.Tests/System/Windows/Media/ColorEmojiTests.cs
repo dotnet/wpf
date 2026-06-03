@@ -23,7 +23,7 @@ public class ColorEmojiTests
     [Trait("Category", "ColorEmoji")]
     public void IsColorFont_SegoeUIEmoji_ReturnsTrue()
     {
-        if (!HasSegoeUIEmoji) return;
+        Assert.True(HasSegoeUIEmoji, "Segoe UI Emoji font not found; required for this test.");
 
         var typeface = new GlyphTypeface(new Uri(SegoeUIEmojiPath));
         Assert.True(typeface.IsColorFont);
@@ -33,7 +33,7 @@ public class ColorEmojiTests
     [Trait("Category", "ColorEmoji")]
     public void IsColorFont_SegoeUI_ReturnsFalse()
     {
-        if (!HasSegoeUI) return;
+        Assert.True(HasSegoeUI, "Segoe UI font not found; required for this test.");
 
         var typeface = new GlyphTypeface(new Uri(SegoeUIPath));
         Assert.False(typeface.IsColorFont);
@@ -43,19 +43,20 @@ public class ColorEmojiTests
     [Trait("Category", "ColorEmoji")]
     public void TryBuildColorGlyphDrawing_GrinningFace_ReturnsMultiLayerDrawingGroup()
     {
-        if (!HasSegoeUIEmoji) return;
+        Assert.True(HasSegoeUIEmoji, "Segoe UI Emoji font not found; required for this test.");
 
         var typeface = new GlyphTypeface(new Uri(SegoeUIEmojiPath));
 
         // U+1F600 Grinning Face
-        if (!typeface.CharacterToGlyphMap.TryGetValue(0x1F600, out ushort glyphIndex)) return;
+        Assert.True(typeface.CharacterToGlyphMap.TryGetValue(0x1F600, out ushort glyphIndex),
+            "U+1F600 glyph not found in Segoe UI Emoji.");
 
         var glyphRun = new GlyphRun(
             typeface,
             bidiLevel: 0,
             isSideways: false,
             renderingEmSize: 20.0,
-            pixelsPerDip: 96.0f,
+            pixelsPerDip: 1.0f,
             glyphIndices: new ushort[] { glyphIndex },
             baselineOrigin: new Point(0, 20),
             advanceWidths: new double[] { 20.0 },
@@ -80,18 +81,19 @@ public class ColorEmojiTests
     [Trait("Category", "ColorEmoji")]
     public void TryBuildColorGlyphDrawing_NonColorFont_ReturnsNull()
     {
-        if (!HasSegoeUI) return;
+        Assert.True(HasSegoeUI, "Segoe UI font not found; required for this test.");
 
         var typeface = new GlyphTypeface(new Uri(SegoeUIPath));
 
-        if (!typeface.CharacterToGlyphMap.TryGetValue((int)'A', out ushort glyphIndex)) return;
+        Assert.True(typeface.CharacterToGlyphMap.TryGetValue((int)'A', out ushort glyphIndex),
+            "Glyph for 'A' not found in Segoe UI.");
 
         var glyphRun = new GlyphRun(
             typeface,
             bidiLevel: 0,
             isSideways: false,
             renderingEmSize: 20.0,
-            pixelsPerDip: 96.0f,
+            pixelsPerDip: 1.0f,
             glyphIndices: new ushort[] { glyphIndex },
             baselineOrigin: new Point(0, 20),
             advanceWidths: new double[] { 20.0 },
@@ -111,21 +113,19 @@ public class ColorEmojiTests
     [Trait("Category", "ColorEmoji")]
     public void TryBuildColorGlyphDrawing_LayerBrushesHaveVibrantColors()
     {
-        if (!HasSegoeUIEmoji)
-            return;
+        Assert.True(HasSegoeUIEmoji, "Segoe UI Emoji font not found; required for this test.");
 
         var typeface = new GlyphTypeface(new Uri(SegoeUIEmojiPath));
 
-        var result = typeface.CharacterToGlyphMap.TryGetValue(0x1F600, out ushort glyphIndex);
-        if (!result)
-            return;
+        Assert.True(typeface.CharacterToGlyphMap.TryGetValue(0x1F600, out ushort glyphIndex),
+            "U+1F600 glyph not found in Segoe UI Emoji.");
 
         var glyphRun = new GlyphRun(
             typeface,
             bidiLevel: 0,
             isSideways: false,
             renderingEmSize: 20.0,
-            pixelsPerDip: 96.0f,
+            pixelsPerDip: 1.0f,
             glyphIndices: new ushort[] { glyphIndex },
             baselineOrigin: new Point(0, 20),
             advanceWidths: new double[] { 20.0 },

@@ -2004,7 +2004,7 @@ namespace System.Windows.Media
         private FontSource                  _fontSource;
 
         private bool                        _isColorFont;
-        private bool                        _isColorFontInitialized;
+        private volatile bool               _isColorFontInitialized;
 
 
         /// <summary>

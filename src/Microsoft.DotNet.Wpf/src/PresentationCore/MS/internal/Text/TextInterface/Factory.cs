@@ -41,7 +41,7 @@ namespace MS.Internal.Text.TextInterface
         /// Used for COLR v0 color glyph support (TranslateColorGlyphRun).
         /// Available on Windows 8.1+.
         /// </summary>
-        private void* _pFactory2;
+        private IDWriteFactory2* _pFactory2;
 
         /// <summary>
         /// Constructs a factory object.
@@ -66,7 +66,7 @@ namespace MS.Internal.Text.TextInterface
             void* pFactory2 = null;
             int qiHr = _factory.Value->QueryInterface(&iidFactory2, &pFactory2);
             if (qiHr == 0 && pFactory2 != null)
-                _pFactory2 = pFactory2;
+                _pFactory2 = (IDWriteFactory2*)pFactory2;
 
             _wpfFontFileLoader = new FontFileLoader(fontSourceFactory);
             _wpfFontCollectionLoader = new FontCollectionLoader(
@@ -420,16 +420,16 @@ namespace MS.Internal.Text.TextInterface
                         glyphRun.isSideways = isSideways ? 1 : 0;
                         glyphRun.bidiLevel = bidiLevel;
 
-                        void* pEnum = null;
-
-                        // IDWriteFactory2::TranslateColorGlyphRun is vtable slot 28.
-                        void** factory2Vtbl = *(void***)_pFactory2;
-                        int hr = ((delegate* unmanaged<void*, float, float, DWRITE_GLYPH_RUN*, void*, int, void*, uint, void**, int>)(factory2Vtbl[28]))(
-                            _pFactory2,
-                            baselineOriginX, baselineOriginY,
-                            &glyphRun, null,
-                            (int)measuringMode, null,
-                            0, &pEnum);
+                        IDWriteColorGlyphRunEnumerator* pEnum = null;
+                        int hr = _pFactory2->TranslateColorGlyphRun(
+                            baselineOriginX,
+                            baselineOriginY,
+                            &glyphRun,
+                            null,
+                            (int)measuringMode,
+                            null,
+                            0,
+                            &pEnum);
 
                         // Release the AddRef'd font face now that the DWrite call is complete.
                         ((IDWriteFontFace*)glyphRun.fontFace)->Release();
@@ -565,7 +565,7 @@ namespace MS.Internal.Text.TextInterface
                 // Release the IDWriteFactory2 interface obtained via QueryInterface.
                 if (_managedFactory._pFactory2 != null)
                 {
-                    ((IDWriteFactory*)_managedFactory._pFactory2)->Release();
+                    _managedFactory._pFactory2->Release();
                     _managedFactory._pFactory2 = null;
                 }
 

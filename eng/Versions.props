@@ -81,7 +81,7 @@
 
   <!-- Code Coverage -->
   <PropertyGroup>
-    <MicrosoftTestingExtensionsCodeCoverageVersion>17.14.2</MicrosoftTestingExtensionsCodeCoverageVersion>
+    <MicrosoftTestingExtensionsCodeCoverageVersion>18.7.0</MicrosoftTestingExtensionsCodeCoverageVersion>
     <CodecovVersion>1.12.3</CodecovVersion>
     <ReportGeneratorVersion>5.2.0</ReportGeneratorVersion>
   </PropertyGroup>

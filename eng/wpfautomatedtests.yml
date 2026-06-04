@@ -18,17 +18,6 @@ jobs:
     enablePublishBuildAssets: true
     enablePublishUsingPipelines: true
     enableTelemetry: true
-    enableSourceIndex: true
-    sourceIndexParams:
-      condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
-      binlogPath: artifacts/log/Debug/x86/Build.binlog
-      pool:
-        ${{ if eq(variables['System.TeamProject'], 'public') }}:
-          name: NetCore-Public
-          demands: ImageOverride -equals windows.vs2022preview.amd64.Open
-        ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-          name: NetCore1ESPool-Internal
-          demands: ImageOverride -equals windows.vs2022preview.amd64
     helixRepo: $(repoName)
 
     jobs:

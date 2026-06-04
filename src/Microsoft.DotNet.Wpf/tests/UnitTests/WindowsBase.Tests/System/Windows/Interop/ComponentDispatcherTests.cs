@@ -262,6 +262,10 @@ public class ComponentDispatcherTests
         // Push again.
         ComponentDispatcher.PushModal();
         Assert.True(ComponentDispatcher.IsThreadModal);
+
+        // Clean up to avoid leaking modal state to other tests.
+        ComponentDispatcher.PopModal();
+        ComponentDispatcher.PopModal();
     }
 
     [Fact]

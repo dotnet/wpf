@@ -483,6 +483,13 @@ CGlyphRunGeometrySink::BeginFigure(
     
     if (SUCCEEDED(m_hr))
     {
+        // Reject if adding this figure would exceed safe geometry size.
+        if (m_currentOffset > static_cast<size_t>(INT_MAX) - sizeof(MilPathFigure))
+        {
+            MIL_THRX(m_hr, WGXERR_BADNUMBER);
+            return;
+        }
+
         // Save the offset to the start of this figure.
         m_currentFigureOffset = m_currentOffset;
 
@@ -648,6 +655,14 @@ CGlyphRunGeometrySink::AddGenericPoly(
 
         Assert(m_pCurrentSegment == NULL && m_currentSegmentOffset == SIZE_MAX);
 
+        // Determine segment size and reject if it would exceed safe geometry size.
+        size_t segmentSize = (segmentType == MilSegmentType::Line) ? sizeof(MilSegmentLine) : sizeof(MilSegmentBezier);
+        if (m_currentOffset > static_cast<size_t>(INT_MAX) - segmentSize)
+        {
+            MIL_THRX(m_hr, WGXERR_BADNUMBER);
+            return;
+        }
+
         // Save the offset to this segment.
         m_currentSegmentOffset = m_currentOffset;
 
@@ -758,14 +773,6 @@ CGlyphRunGeometrySink::Close()
     
     if (SUCCEEDED(m_hr))
     {
-        // Guard against excessively large geometry that could exhaust memory.
-        // A single glyph run geometry should never exceed 2GB.
-        if (m_currentOffset > INT_MAX)
-        {
-            MIL_THRX(m_hr, E_OUTOFMEMORY);
-            goto Cleanup;
-        }
-
         // Write our structs out into a contiguous block of memory.
         void *pGeometryStructMem = WPFAlloc(ProcessHeap, Mt(GlyphGeometryDataStructs), m_currentOffset);
         if (pGeometryStructMem == NULL)

@@ -90,6 +90,21 @@ $(PreparePackageAssetsDependsOn):
     </PropertyGroup>
 
     <!--
+      For managed C++/CLI projects (vcxproj with UseDestinationLibFolder), ijwhost.dll is automatically
+      produced in the output directory but must be packaged as a native assembly under runtimes\<rid>\native\
+      rather than alongside managed assemblies under lib\<tfm>\.
+    -->
+    <PropertyGroup Condition="'$(MSBuildProjectExtension)'=='.vcxproj' and '$(UseDestinationLibFolder)' != ''">
+      <NativeRuntimeSubFolder Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='x86' or '$(Platform)'=='Win32'">runtimes\win-x86\native\</NativeRuntimeSubFolder>
+      <NativeRuntimeSubFolder Condition="'$(Platform)'=='x64'">runtimes\win-x64\native\</NativeRuntimeSubFolder>
+      <NativeRuntimeSubFolder Condition="'$(Platform)'=='arm64'">runtimes\win-arm64\native\</NativeRuntimeSubFolder>
+    </PropertyGroup>
+
+    <ItemGroup Condition="'$(MSBuildProjectExtension)'=='.vcxproj' and '$(UseDestinationLibFolder)' != ''">
+      <FileNamesExcludedFromPackaging Include="ijwhost.dll" />
+    </ItemGroup>
+
+    <!--
         Instead of showing an error when $(TargetFramework) or $(RuntimeIdentifier) cannot be identified
         we simply do no further work
 
@@ -115,6 +130,13 @@ $(PreparePackageAssetsDependsOn):
                 Exclude="@(FileNamesExcludedFromPackaging -> '$(OutDir)%(Filename)%(Extension)' )"
                 AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(DestinationSubFolder)"
                 Condition="'$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and '@(PackagingAssemblyContent)'==''">
+      <Output ItemName="PackageAsset" TaskParameter="Include"/>
+    </CreateItem>
+
+    <!-- Route ijwhost.dll to runtimes\<rid>\native\ for managed C++/CLI projects -->
+    <CreateItem Include="$(OutDir)ijwhost.dll"
+                AdditionalMetadata="RelativePath=$(ArtifactsPackagingDir)$(NormalizedPackageName)\$(NativeRuntimeSubFolder)"
+                Condition="'$(NativeRuntimeSubFolder)'!='' and '$(DestinationSubFolder)'!='' and '$(IsPackagingProject)'!='true' and Exists('$(OutDir)ijwhost.dll')">
       <Output ItemName="PackageAsset" TaskParameter="Include"/>
     </CreateItem>
 

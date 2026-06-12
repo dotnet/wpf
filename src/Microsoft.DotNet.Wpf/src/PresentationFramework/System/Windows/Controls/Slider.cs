@@ -1140,6 +1140,26 @@ namespace System.Windows.Controls
         /// </summary>
         /// <param name="value">Value that want to snap to closest Tick.</param>
         /// <returns>Snapped value if IsSnapToTickEnabled is 'true'. Otherwise, returns un-snaped value.</returns>
+
+        /// <summary>
+        /// Returns the number of decimal places in a double value.
+        /// Used to round snapped tick values to avoid floating-point artifacts.
+        /// </summary>
+        private static int GetDecimalPlaces(double value)
+        {
+            // Use invariant culture to ensure '.' as decimal separator
+            string str = value.ToString("G17", System.Globalization.CultureInfo.InvariantCulture);
+            int decimalIndex = str.IndexOf('.');
+            if (decimalIndex < 0)
+                return 0;
+
+            // Trim trailing zeros
+            int end = str.Length - 1;
+            while (end > decimalIndex && str[end] == '0')
+                end--;
+            return end - decimalIndex;
+        }
+
         private double SnapToTick(double value)
         {
             if (IsSnapToTickEnabled)
@@ -1183,6 +1203,13 @@ namespace System.Windows.Controls
                 {
                     previous = Minimum + (Math.Round(((value - Minimum) / TickFrequency)) * TickFrequency);
                     next = Math.Min(Maximum, previous + TickFrequency);
+
+                    // Avoid floating-point precision artifacts (e.g., TickFrequency=0.1 can
+                    // produce 1.9000000000000001 instead of 2.0). Round to the number of
+                    // decimal places implied by TickFrequency.
+                    int decimalPlaces = GetDecimalPlaces(TickFrequency);
+                    previous = Math.Round(previous, decimalPlaces, MidpointRounding.AwayFromZero);
+                    next = Math.Round(next, decimalPlaces, MidpointRounding.AwayFromZero);
                 }
 
                 // Choose the closest value between previous and next. If tie, snap to 'next'.
@@ -1248,6 +1275,8 @@ namespace System.Windows.Controls
                             tickNumber -= 1.0;
 
                         next = Minimum + tickNumber * TickFrequency;
+                        // Avoid floating-point precision artifacts
+                        next = Math.Round(next, GetDecimalPlaces(TickFrequency), MidpointRounding.AwayFromZero);
                     }
                 }
 

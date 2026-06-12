@@ -1484,6 +1484,7 @@ namespace System.Windows.Automation.Peers
             // UpdateSubtree is not called on it yet.
             if (!_childrenValid || _ancestorsInvalid)
             {
+                List<AutomationPeer> oldChildren = _children;
                 _children = GetChildrenCore();
                 if (_children != null)
                 {
@@ -1496,6 +1497,20 @@ namespace System.Windows.Automation.Peers
                     }
                 }
                 _childrenValid = true;
+
+                // Disconnect removed peers (same logic as UpdateChildrenInternal)
+                if (oldChildren != null)
+                {
+                    HashSet<AutomationPeer> newSet = _children != null ? 
+                    new HashSet<AutomationPeer>(_children) : null;
+                    foreach (var old in oldChildren)
+                    {
+                        if (newSet == null || !newSet.Contains(old))
+                        {
+                            DisconnectPeerFromUia(old);
+                        }
+                    }
+                }
             }
         }
 
@@ -1820,27 +1835,47 @@ namespace System.Windows.Automation.Peers
         /// the CCW ref count to drop to zero so the managed objects can be GC'd.
         /// </summary>
         /// <remarks>
-        /// This method intentionally does NOT recursively disconnect children.
-        /// In virtualized controls, a removed item peer's cached _children may
-        /// reference container peers (e.g. DataGridCellAutomationPeer) that have
-        /// been recycled and are now serving new items. Disconnecting those would
-        /// break accessibility on currently visible elements.
-        /// Children are disconnected naturally when their own parent's
-        /// UpdateChildrenInternal runs and detects them as removed.
+        /// After disconnecting a peer from UIA, this method also clears the peer's
+        /// _children list to sever references to child peers.  Without this, a
+        /// disconnected ItemAutomationPeer would still root its cached cell peers,
+        /// which in turn root DataGridCell/DataGridRow containers via their _owner
+        /// field — preventing GC of recycled/discarded containers.
+        /// We do NOT call UiaDisconnectProvider on children (they may be shared with
+        /// recycled containers that are still live), but clearing the parent's
+        /// _children list removes the strong reference chain.
         /// </remarks>
         private static void DisconnectPeerFromUia(AutomationPeer peer)
         {
             if (peer == null)
                 return;
 
-            // Disconnect the peer's own ElementProxy CCW from UIA.
+            // UiaDisconnectProvider MUST NOT be called during a UIA callback
+            // (e.g., during Navigate/FindAll handling).  EnsureChildren and
+            // UpdateChildrenInternal are invoked from within UIA callbacks, so
+            // we must defer the actual disconnect to a separate dispatcher operation.
             WeakReference proxyWeakRef = peer._elementProxyWeakReference;
             if (proxyWeakRef?.Target is ElementProxy proxy)
             {
-                UiaDisconnectProvider(proxy);
+                // Sever the strong reference from proxy back to the peer immediately.
+                // This allows the peer (and its data items) to be GC'd even before
+                // the deferred UiaDisconnectProvider call executes.
+                proxy.ClearPeer();
+
+                // Defer the UIA disconnect to run outside the UIA callback context.
+                peer.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background,
+                    new Action(() =>
+                    {
+                        UiaDisconnectProvider(proxy);
+                    }));
             }
 
             peer._elementProxyWeakReference = null;
+
+            // Sever the reference from this peer to its cached children.
+            // This breaks the chain: disconnected peer → child peers → _owner → UI containers,
+            // allowing old containers (DataGridRow/Cell) to be collected.
+            peer._children = null;
+            peer._childrenValid = false;
         }
 
         [DllImport("UIAutomationCore.dll", EntryPoint = "UiaDisconnectProvider", CharSet = CharSet.Unicode)]

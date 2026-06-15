@@ -540,9 +540,22 @@ namespace MS.Internal.Automation
         //
         //------------------------------------------------------
  
+        #region Internal Methods for Disconnect
+
+        // Called during UIA disconnect to sever the strong reference from this
+        // proxy to the automation peer.  This allows the peer (and its associated
+        // data items) to be garbage collected even if UIA/client still holds a
+        // COM reference to this CCW temporarily.
+        internal void ClearPeer()
+        {
+            _peer = null;
+        }
+
+        #endregion Internal Methods for Disconnect
+
         #region Private Fields
 
-        private readonly object _peer;
+        private object _peer;
 
         #endregion Private Fields
     }

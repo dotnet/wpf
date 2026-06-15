@@ -177,6 +177,24 @@ namespace MS.Internal
 
         #endregion
 
+        #region UseLegacyAutomationPeerDisconnect
+
+        /// <summary>
+        /// Switch to opt-out of the automation peer disconnect behavior.
+        /// When true, removed automation peers are NOT disconnected from UIA (legacy behavior).
+        /// When false (default), removed automation peers are disconnected via UiaDisconnectProvider.
+        /// </summary>
+        public static bool UseLegacyAutomationPeerDisconnect
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return AccessibilitySwitches.UseLegacyAutomationPeerDisconnect;
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region ShouldRenderEvenWhenNoDisplayDevicesAreAvailable and ShouldNotRenderInNonInteractiveWindowStation

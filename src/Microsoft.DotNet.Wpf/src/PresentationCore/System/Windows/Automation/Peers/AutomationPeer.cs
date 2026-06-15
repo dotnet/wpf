@@ -1499,7 +1499,7 @@ namespace System.Windows.Automation.Peers
                 _childrenValid = true;
 
                 // Disconnect removed peers (same logic as UpdateChildrenInternal)
-                if (oldChildren != null)
+                if (oldChildren != null && !CoreAppContextSwitches.UseLegacyAutomationPeerDisconnect)
                 {
                     HashSet<AutomationPeer> newSet = _children != null ? 
                     new HashSet<AutomationPeer>(_children) : null;
@@ -2007,7 +2007,7 @@ namespace System.Windows.Automation.Peers
             // never drops to zero, which prevents the managed peer (and its entire
             // visual sub-tree) from being garbage collected.
             // This must happen regardless of StructureChanged event registration.
-            if (removedCount > 0)
+            if (removedCount > 0 && !CoreAppContextSwitches.UseLegacyAutomationPeerDisconnect)
             {
                 foreach (AutomationPeer removedChild in hs)
                 {

@@ -147,6 +147,29 @@ namespace System.Windows
 
         #endregion
 
+        #region UseLegacyAutomationPeerDisconnect
+
+        internal const string UseLegacyAutomationPeerDisconnectSwitchName = "Switch.System.Windows.Automation.Peers.UseLegacyAutomationPeerDisconnect";
+        private static int _UseLegacyAutomationPeerDisconnect;
+
+        /// <summary>
+        /// Switch to opt-out of the automation peer disconnect behavior.
+        /// When true, compatibility mode is enabled: removed automation peers are NOT
+        /// disconnected from UIA, preserving the legacy element lifetime semantics.
+        /// When false (default), removed automation peers are disconnected via
+        /// UiaDisconnectProvider, allowing CCWs and associated managed objects to be GC'd.
+        /// </summary>
+        public static bool UseLegacyAutomationPeerDisconnect
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(UseLegacyAutomationPeerDisconnectSwitchName, ref _UseLegacyAutomationPeerDisconnect);
+            }
+        }
+
+        #endregion
+
         #endregion
 
         #region Switch Functions
@@ -167,6 +190,7 @@ namespace System.Windows
             LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures3SwitchName, false);
             LocalAppContext.DefineSwitchDefault(UseLegacyToolTipDisplaySwitchName, false);
             LocalAppContext.DefineSwitchDefault(ItemsControlDoesNotSupportAutomationSwitchName, false);
+            LocalAppContext.DefineSwitchDefault(UseLegacyAutomationPeerDisconnectSwitchName, false);
         }
 
         /// <summary>
@@ -217,6 +241,10 @@ namespace System.Windows
             if (!ItemsControlDoesNotSupportAutomation && UseNetFx472CompatibleAccessibilityFeatures)
             {
                 DispatchOnError(dispatcher, String.Format(SR.AccessibilitySwitchDependencyNotSatisfied, ItemsControlDoesNotSupportAutomationSwitchName, UseLegacyAccessibilityFeatures3SwitchName, 3));
+            }
+            if (!UseLegacyAutomationPeerDisconnect && UseNetFx472CompatibleAccessibilityFeatures)
+            {
+                DispatchOnError(dispatcher, String.Format(SR.AccessibilitySwitchDependencyNotSatisfied, UseLegacyAutomationPeerDisconnectSwitchName, UseLegacyAccessibilityFeatures3SwitchName, 3));
             }
         }
 

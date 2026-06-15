@@ -1501,8 +1501,7 @@ namespace System.Windows.Automation.Peers
                 // Disconnect removed peers (same logic as UpdateChildrenInternal)
                 if (oldChildren != null)
                 {
-                    HashSet<AutomationPeer> newSet = _children != null ? 
-                    new HashSet<AutomationPeer>(_children) : null;
+                    HashSet<AutomationPeer> newSet = (_children != null) ? new HashSet<AutomationPeer>(_children) : null;
                     foreach (var old in oldChildren)
                     {
                         if (newSet == null || !newSet.Contains(old))

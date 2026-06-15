@@ -1546,6 +1546,16 @@ HRESULT CGDIRenderTarget::FillLinearGradient(
 
     // Number of gradient bands (regions filled with gradient between 2 colors).
     // Handle padding spread method by adding edge bands.
+    // Cap group range to prevent integer overflow in band/vertex/index calculations.
+    if (!PrintingSwitches::IsPrintingBoundsCheckProtectionDisabled())
+    {
+        const int MaximumGradientGroupRange = 10000;
+        if ((lastGroupIndex - firstGroupIndex) > MaximumGradientGroupRange)
+        {
+            return E_NOTIMPL;
+        }
+    }
+
     int bandCount = (lastGroupIndex - firstGroupIndex + 1) * (stops->Count - 1);
     Debug::Assert(bandCount > 0, "0 gradient bands in FillLinearGradient");
 

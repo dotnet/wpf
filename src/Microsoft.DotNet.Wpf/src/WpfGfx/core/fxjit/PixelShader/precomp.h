@@ -43,6 +43,8 @@
 #include "pstrans.hpp"
 #include "rdpstrans.h"
 
+#include "shared/WpfGfxSwitches.h"
+
 //
 // Disable warnings needed for headers to compile
 //

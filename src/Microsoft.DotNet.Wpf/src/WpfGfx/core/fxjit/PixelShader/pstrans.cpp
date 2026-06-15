@@ -294,6 +294,18 @@ void CPSTrans::Initialize(  const DWORD *pCode,
                    )
 {
     Assert(pCode && ByteCodeSize);     // CPSTrans::Initialize - Invalid input parameters
+
+    //Reject excessively large bytecode to prevent integer overflow in 
+    //allocation size calculations (sizeof(struct) * instruction_count).
+    if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+    {
+        if (ByteCodeSize == 0 || ByteCodeSize > 1024 * 1024)
+        {
+            EXIT_WITH_STATUS(E_FAIL);
+        }
+    }
+
+
     DWORD dwDwordCodeSize = ByteCodeSize/4;    // bytecount -> dword count
     DWORD TexCoordClamp1x = 0; // bitfield for which texcoords to clamp on eval
     DWORD IgnoreD3DTTFF_PROJECTED = UINT_MAX; // bitfield for which texcoords to ignore TTFFProjected on eval.
@@ -382,7 +394,15 @@ void CPSTrans::Initialize(  const DWORD *pCode,
                 }
                 else
                 {
-                    NO_DEFAULT;     // CPSTrans::Initialize - dcl is expected to have 2 tokens only.
+                    if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+                    {
+                        DPFERR("CPSTrans::Initialize - DCL expected 2 tokens!");
+                        EXIT_WITH_STATUS(E_FAIL);
+                    }
+                    else
+                    {
+                        NO_DEFAULT;     // CPSTrans::Initialize - dcl is expected to have 2 tokens only.
+                    }
                 }
                 UINT RegNum = D3DSI_GETREGNUM(DclRegister);
                 D3DSHADER_PARAM_REGISTER_TYPE RegType = D3DSI_GETREGTYPE(DclRegister);
@@ -391,6 +411,14 @@ void CPSTrans::Initialize(  const DWORD *pCode,
                 case D3DSPR_SAMPLER:
                     {
                         Assert(RegNum < PSTR_MAX_TEXTURE_SAMPLERS);     // CPSTrans::Initialize - Sampler register number too high!
+                        if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+                        {
+                            if (RegNum >= PSTR_MAX_TEXTURE_SAMPLERS)
+                            {
+                                DPFERR("CPSTrans::Initialize - Sampler register number out of range!");
+                                EXIT_WITH_STATUS(E_FAIL);
+                            }
+                        }
                         D3DSAMPLER_TEXTURE_TYPE TextureType =
                                 (D3DSAMPLER_TEXTURE_TYPE)(DclDesc & D3DSP_TEXTURETYPE_MASK);
                         m_SamplerRegDcl[RegNum] = TextureType;
@@ -399,6 +427,14 @@ void CPSTrans::Initialize(  const DWORD *pCode,
                 case D3DSPR_INPUT:
                     {
                     Assert(RegNum < PSTR_MAX_NUMINPUTREG);      // CPSTrans::Initialize - Input register number too high!
+                    if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+                    {
+                        if (RegNum >= PSTR_MAX_NUMINPUTREG)
+                        {
+                            DPFERR("CPSTrans::Initialize - Input register number out of range!");
+                            EXIT_WITH_STATUS(E_FAIL);
+                        }
+                    }
                     D3DDECLUSAGE Usage = D3DDECLUSAGE_POSITION;
                     BYTE Index = 0;
                         BOOL bDoCentroid = FALSE;
@@ -434,6 +470,14 @@ void CPSTrans::Initialize(  const DWORD *pCode,
                 case D3DSPR_TEXTURE:
                     {
                     Assert(RegNum < PSTR_MAX_NUMTEXTUREREG);        // CPSTrans::Initialize - Texture register number too high!
+                    if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+                    {
+                        if (RegNum >= PSTR_MAX_NUMTEXTUREREG)
+                        {
+                            DPFERR("CPSTrans::Initialize - Texture register number out of range!");
+                            EXIT_WITH_STATUS(E_FAIL);
+                        }
+                    }
                     Assert(D3DPS_VERSION(3,0) > Version);           // CPSTrans::Initialize - t# registers not available above ps_2_x
                     BOOL bDoCentroid = (D3DSPDM_MSAMPCENTROID & DclRegister);
                     if(FAILED(m_InputRegDclInfo.AddNewDcl(D3DDECLUSAGE_TEXCOORD,RegNum,PSTRREG_TEXTURE,RegNum,
@@ -661,6 +705,14 @@ void CPSTrans::Initialize(  const DWORD *pCode,
             pInst->SrcParamCount = 0;
             while (*pToken & (1L<<31))
             {
+                if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+				{
+					if (pInst->SrcParamCount >= PSTR_MAX_NUMSRCPARAMS)
+					{
+						DPFERR("CPSTrans::Initialize - Too many source parameters!");
+						EXIT_WITH_STATUS(E_FAIL);
+					}
+				}
                 pInst->SrcParam[pInst->SrcParamCount] = *pToken++;
                 if( D3DSHADER_ADDRMODE_RELATIVE == D3DSI_GETADDRESSMODE(pInst->SrcParam[pInst->SrcParamCount]) )
                 {
@@ -912,6 +964,15 @@ void CPSTrans::Initialize(  const DWORD *pCode,
 
                     if( bStageUsed )
                     {
+                        if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+						{
+							if (Stage >= PSTR_MAX_TEXTURE_SAMPLERS)
+							{
+								DPFERR("CPSTrans::Initialize - Sampler stage index out of range!");
+								EXIT_WITH_STATUS(E_FAIL);
+							}
+						}
+
                         if( ((D3DPS_VERSION(2,0) > Version) || (D3DPS_VERSION(254,254) == Version) ) || // legacy
                             (m_SamplerRegDcl[Stage] != D3DSTT_UNKNOWN))  // ps_2_0 texture sampler has a corresponding dcl statement
 

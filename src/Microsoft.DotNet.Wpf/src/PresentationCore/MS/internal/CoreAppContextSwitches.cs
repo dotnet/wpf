@@ -445,5 +445,25 @@ namespace MS.Internal
         }
 
         #endregion
+
+        #region UseStrongReferenceForItemAutomationPeers
+
+        /// <summary>
+        /// When false (the default), <see cref="MS.Internal.Automation.ElementProxy"/> holds data-item automation
+        /// peers (<see cref="System.Windows.Automation.Peers.AutomationPeer.IsDataItemAutomationPeer"/>) weakly,
+        /// fixing a memory leak in virtualized ItemsControls; true restores the legacy strong reference.
+        /// </summary>
+        internal const string UseStrongReferenceForItemAutomationPeersSwitchName = "Switch.System.Windows.Automation.Peers.UseStrongReferenceForItemAutomationPeers";
+        private static int _useStrongReferenceForItemAutomationPeers;
+        public static bool UseStrongReferenceForItemAutomationPeers
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(UseStrongReferenceForItemAutomationPeersSwitchName, ref _useStrongReferenceForItemAutomationPeers);
+            }
+        }
+
+        #endregion
     }
 }

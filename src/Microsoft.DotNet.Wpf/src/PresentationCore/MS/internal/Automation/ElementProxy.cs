@@ -8,6 +8,7 @@
 //
 //
 
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
@@ -38,8 +39,13 @@ namespace MS.Internal.Automation
         // private ctor - the Wrap() pseudo-ctor is used instead.
         private ElementProxy(AutomationPeer peer)
         {
-            if ((AutomationInteropReferenceType == ReferenceType.Weak) && 
-                (peer is UIElementAutomationPeer || peer is ContentElementAutomationPeer || peer is UIElement3DAutomationPeer))
+            // Weak-reference peers whose lifetime is owned elsewhere (the visual tree element, or the parent
+            // ItemsControl/Calendar peer that tracks data-item peers in its own weak storage) so UIA client
+            // references don't pin recycled/virtualized peers - and the controls they root - in memory.
+            // Data-item peers (IsDataItemAutomationPeer) are gated by an opt-out switch.
+            if ((AutomationInteropReferenceType == ReferenceType.Weak) &&
+                (peer is UIElementAutomationPeer || peer is ContentElementAutomationPeer || peer is UIElement3DAutomationPeer ||
+                 (peer.IsDataItemAutomationPeer() && !CoreAppContextSwitches.UseStrongReferenceForItemAutomationPeers)))
             {
                 _peer = new WeakReference(peer);
             }
@@ -275,6 +281,11 @@ namespace MS.Internal.Automation
                         if(peer.IsDataItemAutomationPeer())
                         {
                             peer.AddToParentProxyWeakRefCache();
+
+                            // Root the peer for the duration of the in-flight traversal: it is being surfaced to UIA
+                            // here but is only weakly held by its proxy, so without this it could be collected in the
+                            // window between being returned to UIA and UIA's first call back on it.
+                            PeerKeepAlive.KeepAlive(peer);
                         }
                     }
                 }
@@ -292,6 +303,17 @@ namespace MS.Internal.Automation
                 if (_peer is WeakReference)
                 {
                     AutomationPeer peer = (AutomationPeer)((WeakReference)_peer).Target;
+
+                    // A data-item peer is rooted only by its parent ItemsControl/Calendar peer, whose
+                    // _dataChildren entry and wrapper-peer EventsSource link both vanish in one layout pass when
+                    // the row virtualizes out - so a GC mid-walk could collect it and surface
+                    // ElementNotAvailableException. Park a short-lived strong root (see PeerKeepAlive)
+                    // that outlives the walk but is released once the peer stops being touched.
+                    if (peer != null && peer.IsDataItemAutomationPeer())
+                    {
+                        PeerKeepAlive.KeepAlive(peer);
+                    }
+
                     return peer;
                 }
                 else
@@ -499,6 +521,72 @@ namespace MS.Internal.Automation
 
             return StaticWrap(root, peer);
         }
+
+        #region data-item peer keep-alive
+
+        // Bounds the lifetime of weakly-referenced data-item peers so an in-flight UIA traversal cannot observe one
+        // being collected mid-walk, without reintroducing the unbounded leak the weak reference exists to fix.
+        // Each peer surfaced to UIA (at StaticWrap) or touched on a UIA callback (the Peer getter) is stored in a
+        // strong-rooted "current" bucket; a Background-priority DispatcherTimer rotates the buckets once per window
+        // (drop the oldest, promote "current" to "previous").  A fixed time window is deliberate rather than a
+        // dispatcher-idle callback: under non-concurrent GC, blocking collection pauses leave the dispatcher
+        // transiently idle mid-walk, which an idle-driven rotation would mistake for "walk finished".  The retained
+        // set is bounded by the in-flight working set, not by the data-set size.
+        private static class PeerKeepAlive
+        {
+            // A peer stays rooted until it has gone untouched for at least one full window and at most two (9-18 s).
+            // The lower bound is sized from measurement: under forced-Gen2 GC stress a single FindAll + readback
+            // iteration peaks at ~4.4 s (walk-dominated, stretched by GC pauses) - the worst-case gap between an
+            // element's surface-time touch and its readback touch.  A 9 s window is ~2x that, so the guaranteed
+            // minimum survival (one window) covers it even under blocking GC, while still releasing peers the
+            // client has stopped touching within seconds (bounding the retained set to the in-flight working set).
+            private static readonly TimeSpan Window = TimeSpan.FromSeconds(9);
+            private static readonly object _lock = new object();
+            private static HashSet<AutomationPeer> _current = new HashSet<AutomationPeer>();
+            private static HashSet<AutomationPeer> _previous = new HashSet<AutomationPeer>();
+            private static DispatcherTimer _timer;
+
+            internal static void KeepAlive(AutomationPeer peer)
+            {
+                Dispatcher dispatcher = peer.Dispatcher;
+                if (dispatcher == null)
+                {
+                    return;
+                }
+
+                lock (_lock)
+                {
+                    _current.Add(peer);
+                    if (_timer == null)
+                    {
+                        // The constructor associates the timer with the supplied dispatcher and starts it, so this
+                        // is safe to call from the UIA worker thread that drives the proxy.
+                        _timer = new DispatcherTimer(Window, DispatcherPriority.Background, OnTick, dispatcher);
+                    }
+                }
+            }
+
+            private static void OnTick(object sender, EventArgs e)
+            {
+                lock (_lock)
+                {
+                    // Drop the oldest bucket and promote the current one.
+                    HashSet<AutomationPeer> recycled = _previous;
+                    recycled.Clear();
+                    _previous = _current;
+                    _current = recycled;
+
+                    // Nothing left to keep alive - stop ticking until the next peer is surfaced.
+                    if (_previous.Count == 0)
+                    {
+                        _timer.Stop();
+                        _timer = null;
+                    }
+                }
+            }
+        }
+
+        #endregion data-item peer keep-alive
 
         #region disable switch for ElementProxy weak reference fix
 

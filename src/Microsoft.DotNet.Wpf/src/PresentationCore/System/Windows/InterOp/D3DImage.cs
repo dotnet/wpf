@@ -57,12 +57,12 @@ namespace System.Windows.Interop
 
             if (dpiX < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(dpiX), SR.ParameterMustBeGreaterThanZero);
+                throw new ArgumentOutOfRangeException(nameof(dpiX), SR.ParameterCannotBeNegative);
             }
 
             if (dpiY < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(dpiY), SR.ParameterMustBeGreaterThanZero);
+                throw new ArgumentOutOfRangeException(nameof(dpiY), SR.ParameterCannotBeNegative);
             }
 
             _canWriteEvent = new ManualResetEvent(true);

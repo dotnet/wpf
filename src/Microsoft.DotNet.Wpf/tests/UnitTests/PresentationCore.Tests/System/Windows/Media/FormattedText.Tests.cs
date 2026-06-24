@@ -16,7 +16,7 @@ public sealed class FormattedTextTests
             new Typeface("Arial"),
             12.0,
             System.Windows.Media.Brushes.Black,
-            96.0);
+            1.0);
     }
 
     [Fact]

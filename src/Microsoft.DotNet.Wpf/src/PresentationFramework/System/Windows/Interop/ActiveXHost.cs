@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -21,30 +20,16 @@
 //      The classid of the ActiveX control is specified in the constructor.
 //
 
-using System;
 using System.Collections;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
-
-using System.Windows;
-using System.Windows.Interop;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Markup;
 using MS.Internal;
 using MS.Internal.Controls;
-using MS.Internal.Utility;
 using MS.Win32;
-using System.Security;
-
-// Since we disable PreSharp warnings in this file, PreSharp warning is unknown to C# compiler.
-// We first need to disable warnings about unknown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 namespace System.Windows.Interop
 {
@@ -94,16 +79,13 @@ namespace System.Windows.Interop
         /// constructor for ActiveXHost
         internal ActiveXHost(Guid clsid, bool fTrusted ) : base( fTrusted )
         {
-            // Thread.ApartmentState is [Obsolete]
-            #pragma warning disable 0618
             // What if the control is marked as free-threaded?
-            if (Thread.CurrentThread.ApartmentState != ApartmentState.STA)
+            if (Thread.CurrentThread.GetApartmentState() is not ApartmentState.STA)
             {
                 throw new ThreadStateException(SR.Format(SR.AxRequiresApartmentThread, clsid.ToString()));
             }
-            #pragma warning restore 0618
 
-            _clsid.Value = clsid;
+            _clsid = clsid;
 
             // hookup so we are notified when loading is finished.
             Initialized += new EventHandler(OnInitialized);
@@ -441,7 +423,7 @@ namespace System.Windows.Interop
                                 break;
                             default:
                                 Debug.Fail("bad state");
-                                this.ActiveXState = this.ActiveXState + 1;  // To exit the loop
+                                this.ActiveXState += 1;  // To exit the loop
                                 break;
                         }
 
@@ -497,7 +479,7 @@ namespace System.Windows.Interop
                                 break;
                             default:
                                 Debug.Fail("bad state");
-                                this.ActiveXState = this.ActiveXState - 1;  // To exit the loop
+                                this.ActiveXState -= 1;  // To exit the loop
                                 break;
                         }
 
@@ -570,7 +552,7 @@ namespace System.Windows.Interop
                 // First, create the ActiveX control
                 Debug.Assert(_axInstance == null, "_axInstance must be null");
 
-                _axInstance = CreateActiveXObject(_clsid.Value);
+                _axInstance = CreateActiveXObject(_clsid);
                 Debug.Assert(_axInstance != null, "w/o an exception being thrown we must have an object...");
 
                 //
@@ -976,9 +958,11 @@ namespace System.Windows.Interop
 
         private NativeMethods.SIZE SetExtent(int width, int height)
         {
-            NativeMethods.SIZE sz = new NativeMethods.SIZE();
-            sz.cx = width;
-            sz.cy = height;
+            NativeMethods.SIZE sz = new NativeMethods.SIZE
+            {
+                cx = width,
+                cy = height
+            };
 
             bool resetExtents = false;
             try
@@ -1051,7 +1035,7 @@ namespace System.Windows.Interop
 
         #region ActiveX Related
 
-        private SecurityCriticalDataForSet<Guid>    _clsid;
+        private Guid                        _clsid;
 
         private HandleRef                   _axWindow;
         private BitVector32                 _axHostState    = new BitVector32();

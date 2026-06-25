@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // 
 //
@@ -9,13 +8,9 @@
 //
 
 
-using System;
-using System.Diagnostics;
-using System.Security;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Documents;
-using MS.Internal.Documents;
 using MS.Internal.Text;
 
 using MS.Internal.PtsHost.UnsafeNativeMethods;
@@ -48,7 +43,7 @@ namespace MS.Internal.PtsHost
         {
             // Query paragraph details
             PTS.FSSUBTRACKDETAILS subtrackDetails;
-            PTS.Validate(PTS.FsQuerySubtrackDetails(PtsContext.Context, _paraHandle.Value, out subtrackDetails));
+            PTS.Validate(PTS.FsQuerySubtrackDetails(PtsContext.Context, _paraHandle, out subtrackDetails));
 
             // Draw border and background info.
             MbpInfo mbp = MbpInfo.FromElement(Paragraph.Element, Paragraph.StructuralCache.TextFormatterHost.PixelsPerDip);
@@ -70,7 +65,7 @@ namespace MS.Internal.PtsHost
             if (subtrackDetails.cParas != 0)
             {
                 PTS.FSPARADESCRIPTION [] arrayParaDesc;
-                PtsHelper.ParaListFromSubtrack(PtsContext, _paraHandle.Value, ref subtrackDetails, out arrayParaDesc);
+                PtsHelper.ParaListFromSubtrack(PtsContext, _paraHandle, ref subtrackDetails, out arrayParaDesc);
 
                 using(DrawingContext ctx = _visual.RenderOpen())
                 {

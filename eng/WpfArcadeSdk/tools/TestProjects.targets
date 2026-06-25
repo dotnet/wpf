@@ -35,8 +35,6 @@
     <PackageReference Include="System.Security.AccessControl" Version="$(SystemSecurityAccessControlPackageVersion)" CopyLocal="true" />
     <PackageReference Include="System.Security.Principal.Windows" Version="$(SystemSecurityPrincipalWindowsPackageVersion)" CopyLocal="true" />
 
-
-
     <!-- These exist to ensure that dependencies (esp. native ones) are binplaced with tests correctly -->
     <None Condition="'$(RuntimeIdentifier)'=='win-x64' And '$(Configuration)' != 'Debug'"
           Include="$(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_DncEng)\runtimes\$(RuntimeIdentifier)\native\*.dll"
@@ -44,8 +42,7 @@
     <None Condition="'$(RuntimeIdentifier)'=='win-x64' And '$(Configuration)' == 'Debug'"
       Include="$(Pkgruntime_win-x64_Microsoft_DotNet_Wpf_DncEng_Debug)\runtimes\$(RuntimeIdentifier)\native\*.dll"
       CopyToOutputDirectory="PreserveNewest"/>
-    
-    
+
     <None Condition="'$(RuntimeIdentifier)'=='win-x86' And '$(Configuration)' != 'Debug'"
            Include="$(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_DncEng)\runtimes\$(RuntimeIdentifier)\native\*.dll"
           CopyToOutputDirectory="PreserveNewest"/>
@@ -53,53 +50,11 @@
        Include="$(Pkgruntime_win-x86_Microsoft_DotNet_Wpf_DncEng_Debug)\runtimes\$(RuntimeIdentifier)\native\*.dll"
       CopyToOutputDirectory="PreserveNewest"/>
 
-    <_wpfProjectsNotWindowsBase Include="@(WpfProjectPath)" Exclude="WindowsBase" />
-    <_wpfProjectsWindowsBase Include="@(WpfProjectPath)" Exclude="@(_wpfProjectsWindowsBase)" />
-
-    <!-- 
-    Do not include WindowsBase. There is a bug in the SDK that will prevent proper deps.json generation when WindowsBase.csproj
-    and Microsoft.NetCore.App/WindowsBase.dll clash. Part of the problem is due to https://github.com/dotnet/sdk/issues/2674. 
-    
-    Directly referencing DLL's works correctly and generates good deps.json. So instead of reference WindowsBase.csproj, just
-    obtain the raw path to WindowsBase.dll and add it to @(Reference). This is safe to do since
-    WindowsBase will be built as a transitive reference via PresentationCore, PresentationFramework etc. 
-    
-    Also make sure that Microsoft.NetCore.App/WindowsBase.dll is removed from @(Reference). 
-    -->
-    <ProjectReference Include="@(_wpfProjectsNotWindowsBase->'%(ProjectPath)')" >
+    <ProjectReference Include="@(WpfProjectPath->'%(ProjectPath)')" >
       <Private>True</Private>
       <OutputItemType>_wpfProjectReferenceLocallyBuildAssemblies</OutputItemType>
     </ProjectReference>
-
-    <ProjectReference Include="@(_wpfProjectsWindowsBase->'%(ProjectPath)')" >
-      <Private>True</Private>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <OutputItemType>_windowsBaseAssemblyLocallyBuiltPath</OutputItemType>
-    </ProjectReference>
   </ItemGroup>
-
-  <PropertyGroup Condition="'$(WpfTest)'=='true' or '$(IsTestProject)'=='true'">
-    <ResolveAssemblyReferencesDependsOn>
-      AddWindowsBaseToReferences;
-      $(ResolveAssemblyReferencesDependsOn)
-    </ResolveAssemblyReferencesDependsOn>
-  </PropertyGroup>
-  
-  <Target Name="AddWindowsBaseToReferences">
-    <ItemGroup>
-      <Reference Include="%(_windowsBaseAssemblyLocallyBuiltPath.FullPath)" />
-    </ItemGroup>
-  </Target>
-
-  <Target Name="RemoveWindowsBaseNetCoreAppReference"
-          AfterTargets="ResolveTargetingPacks"
-          Returns="@(Reference)"
-          Condition="'$(WpfTest)'=='true' or '$(IsTestProject)'=='true'">
-    <ItemGroup>
-      <Reference Remove="@(Reference)" Condition="'%(FileName)'=='WindowsBase' and '%(Reference.ResolvedFrom)'=='TargetingPack'" />
-    </ItemGroup>
-  </Target>
-
   <!-- 
     This target ensures that Microsoft.DotNet.Wpf.DncEng would not inadvertently over-supply references that 
     are already satisfied by ProjectReference's from within this repo. This should almost never happen, except
@@ -110,7 +65,7 @@
     AfterTargets="ResolveTargetingPacks"
     Returns="@(Reference)"
     Condition="'$(WpfTest)'=='true' or '$(IsTestProject)'=='true'">
-    
+
     <ItemGroup>
       <_microsoftDotNetDncEngRefs Remove="@(_microsoftDotNetDncEngRefs)" />
       <_microsoftDotNetDncEngRefs Include="@(Reference)"

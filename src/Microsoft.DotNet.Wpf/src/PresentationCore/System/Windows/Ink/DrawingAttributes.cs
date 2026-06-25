@@ -1,22 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-
-using MS.Utility;
-using System;
 using System.ComponentModel;
-using System.Windows;
 using System.Windows.Media;
-using System.Collections.Specialized;
-using System.Collections.Generic;
-using System.Collections;
-using System.Diagnostics;
 using MS.Internal;
-using MS.Internal.Ink;
 using MS.Internal.Ink.InkSerializedFormat;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Ink
 {
@@ -142,7 +130,7 @@ namespace System.Windows.Ink
                 Matrix m = (Matrix) value;
                 if (m.OffsetX != 0 || m.OffsetY != 0)
                 {
-                    throw new ArgumentException(SR.InvalidSttValue, "value");
+                    throw new ArgumentException(SR.InvalidSttValue, nameof(value));
                 }
                 //no need to raise change events, they will bubble up from the EPC
                 //underneath us
@@ -277,12 +265,12 @@ namespace System.Windows.Ink
                 //prevent boxing / unboxing if possible
                 if (!_extendedProperties.Contains(KnownIds.IsHighlighter))
                 {
-                    Debug.Assert(false == (bool)GetDefaultDrawingAttributeValue(KnownIds.IsHighlighter));
+                    Debug.Assert(!(bool)GetDefaultDrawingAttributeValue(KnownIds.IsHighlighter));
                     return false;
                 }
                 else
                 {
-                    Debug.Assert(true == (bool)GetExtendedPropertyBackedProperty(KnownIds.IsHighlighter));
+                    Debug.Assert((bool)GetExtendedPropertyBackedProperty(KnownIds.IsHighlighter));
                     return true;
                 }
             }
@@ -599,7 +587,7 @@ namespace System.Windows.Ink
         {
             if (null == e)
             {
-                throw new ArgumentNullException("e", SR.EventArgIsNull);
+                throw new ArgumentNullException(nameof(e), SR.EventArgIsNull);
             }
 
             try
@@ -628,7 +616,7 @@ namespace System.Windows.Ink
         {
             if (null == e)
             {
-                throw new ArgumentNullException("e", SR.EventArgIsNull);
+                throw new ArgumentNullException(nameof(e), SR.EventArgIsNull);
             }
 
             if (this.PropertyDataChanged != null)
@@ -717,7 +705,7 @@ namespace System.Windows.Ink
                 Type t = propertyData.GetType();
                 if (t == typeof(String))
                 {
-                    throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(Matrix)), "propertyData");
+                    throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(Matrix)), nameof(propertyData));
                 }
             }
         }
@@ -952,7 +940,7 @@ namespace System.Windows.Ink
                 {
                     return DrawingAttributes.GetDefaultDrawingAttributeValue(id);
                 }
-                throw new ArgumentException(SR.EPGuidNotFound, "id");
+                throw new ArgumentException(SR.EPGuidNotFound, nameof(id));
             }
             else
             {
@@ -968,27 +956,27 @@ namespace System.Windows.Ink
         {
             if ( e.PropertyGuid == KnownIds.Color)
             {
-                OnPropertyChanged("Color");
+                OnPropertyChanged(nameof(Color));
             }
             else if ( e.PropertyGuid == KnownIds.StylusTip)
             {
-                OnPropertyChanged("StylusTip");
+                OnPropertyChanged(nameof(StylusTip));
             }
             else if ( e.PropertyGuid == KnownIds.StylusTipTransform)
             {
-                OnPropertyChanged("StylusTipTransform");
+                OnPropertyChanged(nameof(StylusTipTransform));
             }
             else if ( e.PropertyGuid == KnownIds.StylusHeight)
             {
-                OnPropertyChanged("Height");
+                OnPropertyChanged(nameof(Height));
             }
             else if ( e.PropertyGuid == KnownIds.StylusWidth)
             {
-                OnPropertyChanged("Width");
+                OnPropertyChanged(nameof(Width));
             }
             else if ( e.PropertyGuid == KnownIds.IsHighlighter)
             {
-                OnPropertyChanged("IsHighlighter");
+                OnPropertyChanged(nameof(IsHighlighter));
             }
             else if ( e.PropertyGuid == KnownIds.DrawingFlags )
             {
@@ -999,12 +987,12 @@ namespace System.Windows.Ink
                 // we will fire both OnPropertyChangeds in advance the order of the values.
                 if ( (changedBits & DrawingFlags.FitToCurve) != 0 )
                 {
-                    OnPropertyChanged("FitToCurve");
+                    OnPropertyChanged(nameof(FitToCurve));
                 }
 
                 if ( (changedBits & DrawingFlags.IgnorePressure) != 0 )
                 {
-                    OnPropertyChanged("IgnorePressure");
+                    OnPropertyChanged(nameof(IgnorePressure));
                 }
             }
         }

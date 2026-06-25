@@ -1,20 +1,14 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Diagnostics;
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Ink;
 using System.Windows.Input;
-using System.Collections.Generic;
 
 using MS.Internal.Ink.InkSerializedFormat;
 
 namespace MS.Internal.Ink
-{    
+{
     /// <summary>
     /// Bezier curve generation class
     /// </summary>

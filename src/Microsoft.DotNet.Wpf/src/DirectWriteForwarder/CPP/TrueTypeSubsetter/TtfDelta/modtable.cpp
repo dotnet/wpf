@@ -37,6 +37,8 @@
 #include "ttmem.h"
 #include "ttfdelta.h"   /* for format */
 #include "ttferror.h"   /* for error codes */
+#include "intsafe_private_copy.h"
+#include "ttf_safe_checks.h"
 
 /* here's the deal:
 This function may do one of many things.
@@ -170,7 +172,17 @@ const char * xhea_tag;
     /* now collapse the table if we are in Compact form for Subsetting and Delta fonts */
     /* we will use an interrum table for simplification */
         ulCrntOffset = ulXmtxOffset;
-        LongMetricsArray = (LONGXMETRIC *)Mem_Alloc(sizeof(LONGXMETRIC) * usDttfGlyphIndexCount);
+        if (TTF_SAFE_CHECKS_ENABLED())
+        {
+            uint32 ulAllocSize;
+            if (ULongMult32((uint32)sizeof(LONGXMETRIC), (uint32)usDttfGlyphIndexCount, &ulAllocSize) != S_OK)
+                return ERR_MEM;
+            LongMetricsArray = (LONGXMETRIC *)Mem_Alloc(ulAllocSize);
+        }
+        else
+        {
+            LongMetricsArray = (LONGXMETRIC *)Mem_Alloc(sizeof(LONGXMETRIC) * usDttfGlyphIndexCount);
+        }
         if (LongMetricsArray == NULL)
             return ERR_MEM;
         nNewLongMetrics = 0;
@@ -278,8 +290,22 @@ uint16 usBytesWritten;
 
    /* recompute maxp info */
     /* figure a conservative maximum total possible. 3x3 at minimum */
-    usnMaxComponents = max(3,MaxP.maxComponentElements) * max(3,MaxP.maxComponentDepth);
-    pausComponents = (uint16 *) Mem_Alloc(usnMaxComponents * sizeof(uint16));
+    if (TTF_SAFE_CHECKS_ENABLED())
+    {
+        uint32 ulMaxComp, ulAllocSize;
+        if (ULongMult32((uint32)max(3,MaxP.maxComponentElements), (uint32)max(3,MaxP.maxComponentDepth), &ulMaxComp) != S_OK ||
+            ULongMult32(ulMaxComp, (uint32)sizeof(uint16), &ulAllocSize) != S_OK)
+            return ERR_MEM;
+        if (ulMaxComp > (uint32)USHRT_MAX)
+            return ERR_INVALID_MAXP;
+        usnMaxComponents = (uint16)ulMaxComp;
+        pausComponents = (uint16 *) Mem_Alloc(ulAllocSize);
+    }
+    else
+    {
+        usnMaxComponents = max(3,MaxP.maxComponentElements) * max(3,MaxP.maxComponentDepth);
+        pausComponents = (uint16 *) Mem_Alloc(usnMaxComponents * sizeof(uint16));
+    }
     if (pausComponents == NULL)
         return ERR_MEM;
 
@@ -716,7 +742,16 @@ uint32 ulOutSizeDeviceRecord;
             DevRecord.maxWidth = maxWidth;
             if ((errCode = WriteGeneric( pOutputBufferInfo, (uint8 *)&DevRecord, SIZEOF_HDMX_DEVICE_REC, HDMX_DEVICE_REC_CONTROL, ulOutDevOffset, &usBytesWritten )) != NO_ERROR)
                 return errCode;
-            ulInOffset = ulInDevOffset + Hdmx.sizeDeviceRecord;
+            if (TTF_SAFE_CHECKS_ENABLED())
+            {
+                ulInOffset = ulInDevOffset + (uint32)Hdmx.sizeDeviceRecord;
+                if (ulInOffset < ulInDevOffset) /* overflow check */
+                    return ERR_GENERIC;
+            }
+            else
+            {
+                ulInOffset = ulInDevOffset + Hdmx.sizeDeviceRecord;
+            }
             ulOutOffset = ulOutDevOffset + ulOutSizeDeviceRecord;
         }
         /* now need to update hdmx record */
@@ -762,7 +797,16 @@ uint32 ulOutSizeDeviceRecord;
                 if ((errCode = WriteGeneric( pOutputBufferInfo, (uint8 *)&DevRecord, SIZEOF_HDMX_DEVICE_REC, HDMX_DEVICE_REC_CONTROL, ulDevOffset, &usBytesWritten )) != NO_ERROR)
                     return errCode;
             }
-            ulOffset = ulDevOffset + Hdmx.sizeDeviceRecord;
+            if (TTF_SAFE_CHECKS_ENABLED())
+            {
+                ulOffset = ulDevOffset + (uint32)Hdmx.sizeDeviceRecord;
+                if (ulOffset < ulDevOffset) /* overflow check */
+                    return ERR_GENERIC;
+            }
+            else
+            {
+                ulOffset = ulDevOffset + Hdmx.sizeDeviceRecord;
+            }
         }
         *pulNewOutOffset = ulOffset;
     }
@@ -893,7 +937,17 @@ struct groupoffsetrecordkeeper    /* housekeeping structure */
 PRIVATE int16 InitGroupOffsetArray(PGROUPOFFSETRECORDKEEPER pKeeper, 
                                   uint16 usRecordCount)
 {
-    pKeeper->pGroupOffsetArray = (GroupOffsetRecord *) Mem_Alloc(usRecordCount * sizeof(*(pKeeper->pGroupOffsetArray)));
+    if (TTF_SAFE_CHECKS_ENABLED())
+    {
+        uint32 ulAllocSize;
+        if (ULongMult32((uint32)usRecordCount, (uint32)sizeof(*(pKeeper->pGroupOffsetArray)), &ulAllocSize) != S_OK)
+            return ERR_MEM;
+        pKeeper->pGroupOffsetArray = (GroupOffsetRecord *) Mem_Alloc(ulAllocSize);
+    }
+    else
+    {
+        pKeeper->pGroupOffsetArray = (GroupOffsetRecord *) Mem_Alloc(usRecordCount * sizeof(*(pKeeper->pGroupOffsetArray)));
+    }
     if (pKeeper->pGroupOffsetArray == NULL)
         return ERR_MEM;
     pKeeper->usGroupOffsetArrayLen = usRecordCount;
@@ -1018,7 +1072,19 @@ TTFACC_FILEBUFFERINFO * pUnCONSTInputBufferInfo;
     ulSrcOffsetGroups = ulSrcOffsetOffsets + sizeof(uint16) * Vdmx.numRatios;
     memset(&keeper, 0, sizeof(keeper));
 
-    SrcRatioArray = (VDMXRatio *)Mem_Alloc(Vdmx.numRatios * sizeof(VDMXRatio));
+    if (TTF_SAFE_CHECKS_ENABLED())
+    {
+        uint32 ulAllocSize;
+        if (ULongMult32((uint32)Vdmx.numRatios, (uint32)sizeof(VDMXRatio), &ulAllocSize) != S_OK)
+        {
+            return ERR_MEM;
+        }
+        SrcRatioArray = (VDMXRatio *)Mem_Alloc(ulAllocSize);
+    }
+    else
+    {
+        SrcRatioArray = (VDMXRatio *)Mem_Alloc(Vdmx.numRatios * sizeof(VDMXRatio));
+    }
     if (SrcRatioArray == NULL)
         errCode = ERR_MEM;
     else
@@ -1111,7 +1177,19 @@ TTFACC_FILEBUFFERINFO * pUnCONSTInputBufferInfo;
                     if ((errCode = ReadGeneric(pUnCONSTInputBufferInfo, (uint8 *) &GroupHeader, SIZEOF_VDMXGROUP, VDMXGROUP_CONTROL, ulSrcOffset + usCurrGroupSrcOffset, &usBytesRead)) != NO_ERROR)
                         break;
  
-                    ulGroupLength =  usBytesRead + (GroupHeader.recs * GetGenericSize(VDMXVTABLE_CONTROL));
+                    if (TTF_SAFE_CHECKS_ENABLED())
+                    {
+                        ulGroupLength =  usBytesRead + ((uint32)GroupHeader.recs * GetGenericSize(VDMXVTABLE_CONTROL));
+                        if (ulGroupLength < usBytesRead) /* overflow check */
+                        {
+                            errCode = ERR_INVALID_VDMX;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        ulGroupLength =  usBytesRead + (GroupHeader.recs * GetGenericSize(VDMXVTABLE_CONTROL));
+                    }
                     /* read the group data into a buffer */
                     if (ulGroupLength > ulGroupBufferLength)
                     {

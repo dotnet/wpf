@@ -1,20 +1,12 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
 // Implementation of Path shape element.
 //
 
-using System.Windows.Shapes;
-using System.Diagnostics;
-using System.Windows.Threading;
-using System.Security;
-using System.Windows;
 using System.Windows.Media;
-
-using System;
 using MS.Internal.PresentationFramework;
 
 namespace System.Windows.Shapes

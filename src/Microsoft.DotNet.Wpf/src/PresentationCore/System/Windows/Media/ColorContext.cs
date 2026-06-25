@@ -1,33 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-#pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
-
-using System;
 using MS.Internal;
-using MS.Internal.PresentationCore;
 using MS.Win32;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Windows.Media;
 using System.Resources;
-using System.Security;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
 using System.Reflection;
-using System.Diagnostics;
 using System.Globalization;
-using Microsoft.Win32.SafeHandles;
 using System.Net;
-using System.IO.Packaging;
-using System.Windows.Navigation;
-using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
-using SR = MS.Internal.PresentationCore.SR;
 using UnsafeNativeMethodsMilCoreApi = MS.Win32.PresentationCore.UnsafeNativeMethods;
 using IWICCC = MS.Win32.PresentationCore.UnsafeNativeMethods.IWICColorContext;
 
@@ -75,7 +58,7 @@ namespace System.Windows.Media
                             return;
                         }
                         
-                        FromRawBytes(profileData, (int)cbProfileActual, /* dontThrowException = */ true);
+                        FromRawBytes(profileData, (int)cbProfileActual, dontThrowException: true);
                     }
 
                     break;
@@ -145,7 +128,7 @@ namespace System.Windows.Media
                         }
 
                         // Finally, fill in _colorContextHelper
-                        FromRawBytes(sRGBProfile, sRGBProfile.Length, /* dontThrowException = */ true);
+                        FromRawBytes(sRGBProfile, sRGBProfile.Length, dontThrowException: true);
                     }
                     else if (Invariant.Strict)
                     {
@@ -163,11 +146,7 @@ namespace System.Windows.Media
                     break;
             }
 
-
-            // SECURITY NOTE: This constructor does not set a Uri because the profile comes from raw file
-            //                data. Thus, we don't set _isProfileUriNotFromUser to true because we
-            //                don't want get_ProfileUri to demand permission to return null.
-            Debug.Assert(_profileUri.Value == null);
+            Debug.Assert(_profileUri is null);
         }
 
         /// <summary>
@@ -176,7 +155,7 @@ namespace System.Windows.Media
         /// <param name="profileUri">Specifies the URI of a color profile used by the newly created ColorContext.</param>
         public ColorContext(Uri profileUri)
         {
-            Initialize(profileUri, /* isStandardProfileUriNotFromUser = */ false);
+            Initialize(profileUri, isStandardProfileUriNotFromUser: false);
         }
 
         /// <summary>
@@ -199,7 +178,7 @@ namespace System.Windows.Media
                 case PixelFormatEnum.Bgra32:
                 case PixelFormatEnum.Pbgra32:
                 default:
-                    Initialize(GetStandardColorSpaceProfile(), /* isStandardProfileUriNotFromUser = */ true);
+                    Initialize(GetStandardColorSpaceProfile(), isStandardProfileUriNotFromUser: true);
                     break;
 
                 case PixelFormatEnum.Rgba64:
@@ -256,13 +235,13 @@ namespace System.Windows.Media
         {
             get
             {
-                Uri uri = _profileUri.Value;
+                Uri uri = _profileUri;
 
                 //
                 // If the user didn't give us the uri value, then the uri has
                 // to be a file path because we got it from GetStandardColorSpaceProfile
                 //
-                if (_isProfileUriNotFromUser.Value)
+                if (_isProfileUriNotFromUser)
                 {
                     Invariant.Assert(uri.IsFile);
                 }
@@ -419,7 +398,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Equals method
         /// </summary>
-        override public bool Equals(object obj)
+        public override bool Equals(object obj)
         {
             ColorContext context = obj as ColorContext;
 
@@ -429,7 +408,7 @@ namespace System.Windows.Media
         /// <summary>
         /// GetHashCode
         /// </summary>
-        override public int GetHashCode()
+        public override int GetHashCode()
         {
             // phDateTime_2 contains the minute and second that the profile was created. Obviously this 
             // is not a great hash, but the compiler forces us to implement this due to us implementing
@@ -452,7 +431,6 @@ namespace System.Windows.Media
             }
             else if (obj1 != null && obj2 != null)
             {
-                #pragma warning disable 6506
                 return (
                     (context1._profileHeader.phSize == context2._profileHeader.phSize) &&
                     (context1._profileHeader.phCMMType == context2._profileHeader.phCMMType) &&
@@ -476,7 +454,6 @@ namespace System.Windows.Media
                     (context1._profileHeader.phIlluminant_2 == context2._profileHeader.phIlluminant_2) &&
                     (context1._profileHeader.phCreator == context2._profileHeader.phCreator)
                     );
-                #pragma warning restore 6506
             }
             else
             {
@@ -507,11 +484,11 @@ namespace System.Windows.Media
 
             if (!profileUri.IsAbsoluteUri)
             {
-                throw new ArgumentException(SR.UriNotAbsolute, "profileUri");
+                throw new ArgumentException(SR.UriNotAbsolute, nameof(profileUri));
             }
 
-            _profileUri = new SecurityCriticalData<Uri>(profileUri);
-            _isProfileUriNotFromUser = new SecurityCriticalDataForSet<bool>(isStandardProfileUriNotFromUser);
+            _profileUri = profileUri;
+            _isProfileUriNotFromUser = isStandardProfileUriNotFromUser;
 
             Stream profileStream = null;
 
@@ -614,7 +591,7 @@ namespace System.Windows.Media
 
                 if (numBytesRead < bufferSize)
                 {
-                    FromRawBytes(rawBytes, numBytesRead, /* dontThrowException = */ false);
+                    FromRawBytes(rawBytes, numBytesRead, dontThrowException: false);
 
                     using (FactoryMaker factoryMaker = new FactoryMaker())
                     {
@@ -805,9 +782,9 @@ namespace System.Windows.Media
 
         private int _numChannels;
 
-        private SecurityCriticalData<Uri> _profileUri;
+        private Uri _profileUri;
         
-        private SecurityCriticalDataForSet<bool> _isProfileUriNotFromUser;
+        private bool _isProfileUriNotFromUser;
 
         private AbbreviatedPROFILEHEADER _profileHeader;
 
@@ -817,7 +794,7 @@ namespace System.Windows.Media
 
         private const int _maximumColorContextLength = _bufferSizeIncrement * 32; // 32 Mb
 
-        private readonly static NativeMethods.COLORTYPE[] _colorTypeFromChannels =
+        private static readonly NativeMethods.COLORTYPE[] _colorTypeFromChannels =
             new NativeMethods.COLORTYPE[9] {
                 NativeMethods.COLORTYPE.COLOR_UNDEFINED,
                 NativeMethods.COLORTYPE.COLOR_UNDEFINED,

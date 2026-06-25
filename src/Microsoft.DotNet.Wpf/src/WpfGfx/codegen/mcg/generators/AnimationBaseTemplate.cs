@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 //---------------------------------------------------------------------------
@@ -69,56 +68,16 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
                 string fullPath = Path.Combine(resourceModel.OutputDirectory, path);
 
-                string moduleReference;
-                string sridReference = 
-                    [[inline]]
-                        using SR=System.Windows.SR;
-                    [[/inline]];
-
-                // Duplicate AnimatedTypeHelpers class across Core/Framework causes name conflicts,
-                // requiring that they be split across two namespaces.
-                switch (instance.ModuleName)
-                {
-                    case @"Core\CSharp":
-                        moduleReference = "using MS.Internal.PresentationCore;";
-                        sridReference = 
-                            [[inline]]
-                                using SR=MS.Internal.PresentationCore.SR;
-                            [[/inline]];
-                        break;
-                    case "Framework":
-                        moduleReference = "using MS.Internal.PresentationFramework;";
-                        break;
-                    default:
-                        moduleReference = "";
-                        break;
-                }
-               
-
                 using (FileCodeSink csFile = new FileCodeSink(fullPath, fileName, true /* Create dir if necessary */))
                 {
                     csFile.WriteBlock(
                         [[inline]]
                             [[Helpers.ManagedStyle.WriteFileHeader(fileName)]]
 
-                            // Allow use of presharp: #pragma warning suppress <nnnn>
-                            #pragma warning disable 1634, 1691
-
-                            using MS.Internal;
-
-                            using System;
-                            using System.Collections;
-                            using System.ComponentModel;
-                            using System.Diagnostics;
-                            using System.Windows.Media.Animation;   
                             using System.Windows.Media.Media3D;
-              
-                            [[moduleReference]]
-
-                            [[sridReference]]
 
                             namespace System.Windows.Media.Animation
-                            {       
+                            {
                                 /// <summary>
                                 ///
                                 /// </summary>
@@ -296,14 +255,8 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                     nullCheck = 
                         [[inline]]
                             // Verify that object arguments are non-null since we are a value type
-                            if (defaultOriginValue == null)
-                            {
-                                throw new ArgumentNullException("defaultOriginValue");
-                            }
-                            if (defaultDestinationValue == null)
-                            {
-                                throw new ArgumentNullException("defaultDestinationValue");
-                            }
+                            ArgumentNullException.ThrowIfNull(defaultOriginValue);
+                            ArgumentNullException.ThrowIfNull(defaultDestinationValue);
                         [[/inline]];
                 }
 
@@ -312,7 +265,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                         [[inline]]
                             return GetCurrentValue(([[instance.TypeName]])defaultOriginValue, ([[instance.TypeName]])defaultDestinationValue, animationClock);
                         [[/inline]];
-            } 
+            }
         }
 
         //
@@ -324,15 +277,8 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 [[inline]]
                     ReadPreamble();
                     
-                    if (animationClock == null)
-                    {
-                        throw new ArgumentNullException("animationClock");
-                    }
+                    ArgumentNullException.ThrowIfNull(animationClock);
                     
-                    // We check for null above but presharp doesn't notice so we suppress the 
-                    // warning here.
-                    
-                    #pragma warning suppress 6506
                     if (animationClock.CurrentState == ClockState.Stopped)
                     {
                         return defaultDestinationValue;

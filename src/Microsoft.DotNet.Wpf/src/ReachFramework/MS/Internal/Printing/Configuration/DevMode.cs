@@ -1,6 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
+using System.Runtime.InteropServices;
+using System.Text;
 
 /*++
 All rights reserved.
@@ -9,12 +11,6 @@ All rights reserved.
 
 namespace MS.Internal.Printing.Configuration
 {
-    using System;
-    using System.IO;
-    using System.Runtime.InteropServices;
-    using System.Text;
-    using System.Security;
-
     /// <remarks>
     /// Helper class to interpret public DEVMODEA and DEVMODEW fields packed in a byte array
     /// This class only deals with DEVMODE fields relevant to printing

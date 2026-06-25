@@ -1,13 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Root of the RB tree used for live shaping.
 //
 
-using System;
-using System.Collections;
 using System.Collections.Specialized;
 
 namespace MS.Internal.Data
@@ -27,8 +24,10 @@ namespace MS.Internal.Data
             {
                 if (_placeholderBlock == null)
                 {
-                    _placeholderBlock = new LiveShapingBlock(false);
-                    _placeholderBlock.Parent = this;
+                    _placeholderBlock = new LiveShapingBlock(false)
+                    {
+                        Parent = this
+                    };
                 }
                 return _placeholderBlock;
             }
@@ -185,7 +184,7 @@ namespace MS.Internal.Data
 
 #endif // LiveShapingInstrumentation
 
-        LiveShapingList _list;      // my owner
-        LiveShapingBlock _placeholderBlock; // used to handle a race condition arising in live sorting
+        private LiveShapingList _list;      // my owner
+        private LiveShapingBlock _placeholderBlock; // used to handle a race condition arising in live sorting
     }
 }

@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -12,16 +11,10 @@
 #define TRACE
 #endif
 
-using System;
-using System.IO;
 using System.Net;
 using System.Net.Cache;                 // for RequestCachePolicy
-using System.Runtime.Serialization;
-using System.Diagnostics;               // For Assert
-using MS.Utility;                       // for EventTrace
 using MS.Internal.IO.Packaging;         // for PackageCacheEntry
 using MS.Internal.PresentationCore;     // for SR exception strings
-using System.Security;                  // for SecurityCritical
 using MS.Internal;
 
 namespace System.IO.Packaging
@@ -500,10 +493,7 @@ namespace System.IO.Packaging
 
                         // special optimization for ftp - Passive mode won't return lengths on ISA servers
                         FtpWebRequest ftpWebRequest = _webRequest as FtpWebRequest;
-                        if (ftpWebRequest != null)
-                        {
-                            ftpWebRequest.UsePassive = false;  // default but allow override
-                        }
+                        ftpWebRequest?.UsePassive = false;  // default but allow override
 }
                     catch (NotSupportedException)
                     {
@@ -577,12 +567,12 @@ namespace System.IO.Packaging
         private RequestCachePolicy  _cachePolicy;           // outer cache-policy
 
         // statics
-        static private RequestCachePolicy _defaultCachePolicy = new RequestCachePolicy(RequestCacheLevel.CacheIfAvailable);
+        private static RequestCachePolicy _defaultCachePolicy = new RequestCachePolicy(RequestCacheLevel.CacheIfAvailable);
 
         // These are "cached" inner Uri's taken from the available application: and SiteOfOrigin: Uri's.  
         // They are kept in statics to eliminate overhead of reparsing them on every request.
         // We are essentially extracting the "application://" out of "pack://application:,,"
-        static private Uri _siteOfOriginUri = PackUriHelper.GetPackageUri(System.Windows.Navigation.BaseUriHelper.SiteOfOriginBaseUri);
-        static private Uri _appBaseUri = PackUriHelper.GetPackageUri(System.Windows.Navigation.BaseUriHelper.PackAppBaseUri);
+        private static Uri _siteOfOriginUri = PackUriHelper.GetPackageUri(System.Windows.Navigation.BaseUriHelper.SiteOfOriginBaseUri);
+        private static Uri _appBaseUri = PackUriHelper.GetPackageUri(System.Windows.Navigation.BaseUriHelper.PackAppBaseUri);
     }
 }

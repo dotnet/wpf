@@ -1,17 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
-using System.Collections.Generic;           // List<T>
 using System.Collections.Specialized;       // NotifyCollectionChangedAction
 using System.ComponentModel;                // DesignerSerializationVisibility
 using System.Windows.Automation.Peers;      // AutomationPeer
 using System.Windows.Controls.Primitives;   // GridViewRowPresenterBase
-using System.Windows.Data;                  // Binding
 using System.Windows.Input;                 // MouseEventArgs
 using System.Windows.Media;                 // SolidColorBrush
-using System.Diagnostics;
 
 using MS.Internal;                          // Helper
 
@@ -877,10 +873,7 @@ namespace System.Windows.Controls
             }
 
             // link padding header to last header
-            if (_paddingHeader != null)
-            {
-                _paddingHeader.PreviousVisualHeader = lastHeader;
-            }
+            _paddingHeader?.PreviousVisualHeader = lastHeader;
         }
 
         //
@@ -938,17 +931,14 @@ namespace System.Windows.Controls
                                 }
                                 else
                                 {
-                                    Debug.Assert(false, "Head is container for itself, but parent is neither GridViewHeaderRowPresenter nor null.");
+                                    Debug.Fail("Head is container for itself, but parent is neither GridViewHeaderRowPresenter nor null.");
                                 }
                             }
                             else
                             {
                                 // case 2
                                 GridViewColumnHeader parentAsGVCH = parent as GridViewColumnHeader;
-                                if (parentAsGVCH != null)
-                                {
-                                    parentAsGVCH.ClearValue(ContentControl.ContentProperty);
-                                }
+                                parentAsGVCH?.ClearValue(ContentControl.ContentProperty);
                             }
                         }
                     }
@@ -965,8 +955,10 @@ namespace System.Windows.Controls
 
             if (headerContainer == null)
             {
-                headerContainer = new GridViewColumnHeader();
-                headerContainer.IsInternalGenerated = true;
+                headerContainer = new GridViewColumnHeader
+                {
+                    IsInternalGenerated = true
+                };
             }
 
             // Pass column reference to GridViewColumnHeader
@@ -1012,14 +1004,8 @@ namespace System.Windows.Controls
             _headerSV = Parent as ScrollViewer;
             if (oldHeaderSV != _headerSV)
             {
-                if (oldHeaderSV != null)
-                {
-                    oldHeaderSV.ScrollChanged -= new ScrollChangedEventHandler(OnHeaderScrollChanged);
-                }
-                if (_headerSV != null)
-                {
-                    _headerSV.ScrollChanged += new ScrollChangedEventHandler(OnHeaderScrollChanged);
-                }
+                oldHeaderSV?.ScrollChanged -= new ScrollChangedEventHandler(OnHeaderScrollChanged);
+                _headerSV?.ScrollChanged += new ScrollChangedEventHandler(OnHeaderScrollChanged);
             }
 
             ScrollViewer oldSV = _mainSV; // backup the old value
@@ -1027,15 +1013,8 @@ namespace System.Windows.Controls
 
             if (oldSV != _mainSV)
             {
-                if (oldSV != null)
-                {
-                    oldSV.ScrollChanged -= new ScrollChangedEventHandler(OnMasterScrollChanged);
-                }
-
-                if (_mainSV != null)
-                {
-                    _mainSV.ScrollChanged += new ScrollChangedEventHandler(OnMasterScrollChanged);
-                }
+                oldSV?.ScrollChanged -= new ScrollChangedEventHandler(OnMasterScrollChanged);
+                _mainSV?.ScrollChanged += new ScrollChangedEventHandler(OnMasterScrollChanged);
             }
 
             // hook up key down event from ItemsControl,
@@ -1045,20 +1024,11 @@ namespace System.Windows.Controls
 
             if (oldIC != _itemsControl)
             {
-                if (oldIC != null)
-                {
-                    // NOTE: headers have unhooked the KeyDown event in RemoveHeader.
+                // NOTE: headers have unhooked the KeyDown event in RemoveHeader.
+                oldIC?.KeyDown -= new KeyEventHandler(OnColumnHeadersPresenterKeyDown);
 
-                    oldIC.KeyDown -= new KeyEventHandler(OnColumnHeadersPresenterKeyDown);
-                }
-
-                if (_itemsControl != null)
-                {
-                    // register to HeadersPresenter to cancel dragging
-                    _itemsControl.KeyDown += new KeyEventHandler(OnColumnHeadersPresenterKeyDown);
-
-                    // NOTE: headers will hookup the KeyDown event latter in CreateAndInsertHeader.
-                }
+                // register to HeadersPresenter to cancel dragging
+                _itemsControl?.KeyDown += new KeyEventHandler(OnColumnHeadersPresenterKeyDown);
             }
 
             //Set GridViewHeaderRowPresenter to ListView
@@ -1072,19 +1042,13 @@ namespace System.Windows.Controls
         private void UnhookItemsControlKeyboardEvent(GridViewColumnHeader header)
         {
             Debug.Assert(header != null);
-            if (_itemsControl != null)
-            {
-                _itemsControl.KeyDown -= new KeyEventHandler(header.OnColumnHeaderKeyDown);
-            }
+            _itemsControl?.KeyDown -= new KeyEventHandler(header.OnColumnHeaderKeyDown);
         }
 
         private void HookupItemsControlKeyboardEvent(GridViewColumnHeader header)
         {
             Debug.Assert(header != null);
-            if (_itemsControl != null)
-            {
-                _itemsControl.KeyDown += new KeyEventHandler(header.OnColumnHeaderKeyDown);
-            }
+            _itemsControl?.KeyDown += new KeyEventHandler(header.OnColumnHeaderKeyDown);
         }
 
         // The following two scroll changed methods will not be called recursively and lead to dead loop.
@@ -1113,8 +1077,10 @@ namespace System.Windows.Controls
         // Create the last padding column header in GridViewHeaderRowPresenter
         private void AddPaddingColumnHeader()
         {
-            GridViewColumnHeader paddingHeader = new GridViewColumnHeader();
-            paddingHeader.IsInternalGenerated = true;
+            GridViewColumnHeader paddingHeader = new GridViewColumnHeader
+            {
+                IsInternalGenerated = true
+            };
             paddingHeader.SetValue(GridViewColumnHeader.RolePropertyKey, GridViewColumnHeaderRole.Padding);
 
             paddingHeader.Content = null;
@@ -1138,29 +1104,33 @@ namespace System.Windows.Controls
         // Create the indicator for column re-ordering
         private void AddIndicator()
         {
-            Separator indicator = new Separator();
-            indicator.Visibility = Visibility.Hidden;
+            Separator indicator = new Separator
+            {
+                Visibility = Visibility.Hidden,
 
-            // Indicator style:
-            //
-            // <Setter Property="Margin" Value="0" />
-            // <Setter Property="Width" Value="2" />
-            // <Setter Property="Template">
-            //   <Setter.Value>
-            //     <ControlTemplate TargetType="{x:Type Separator}">
-            //        <Border Background="#FF000080"/>
-            //     </ControlTemplate>
-            //   </Setter.Value>
-            // </Setter>
+                // Indicator style:
+                //
+                // <Setter Property="Margin" Value="0" />
+                // <Setter Property="Width" Value="2" />
+                // <Setter Property="Template">
+                //   <Setter.Value>
+                //     <ControlTemplate TargetType="{x:Type Separator}">
+                //        <Border Background="#FF000080"/>
+                //     </ControlTemplate>
+                //   </Setter.Value>
+                // </Setter>
 
-            indicator.Margin = new Thickness(0);
-            indicator.Width = 2.0;
+                Margin = new Thickness(0),
+                Width = 2.0
+            };
 
             FrameworkElementFactory border = new FrameworkElementFactory(typeof(Border));
             border.SetValue(Border.BackgroundProperty, new SolidColorBrush(Color.FromUInt32(0xFF000080)));
 
-            ControlTemplate template = new ControlTemplate(typeof(Separator));
-            template.VisualTree = border;
+            ControlTemplate template = new ControlTemplate(typeof(Separator))
+            {
+                VisualTree = border
+            };
             template.Seal();
 
             indicator.Template = template;
@@ -1522,10 +1492,7 @@ namespace System.Windows.Controls
             _draggingSrcHeader.SuppressClickEvent = true;
 
             // lock Columns during header dragging
-            if (Columns != null)
-            {
-                Columns.BlockWrite();
-            }
+            Columns?.BlockWrite();
 
             // Remove the old floating header,
             // then create & add the new one per the source header's type
@@ -1551,10 +1518,7 @@ namespace System.Windows.Controls
             _indicator.Visibility = Visibility.Hidden;
 
             // unlock Columns during header dragging
-            if (Columns != null)
-            {
-                Columns.UnblockWrite();
-            }
+            Columns?.UnblockWrite();
 
             // if cancelled, do nothing
             if (!isCancel)

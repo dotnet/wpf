@@ -1,12 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Xaml;
 using MS.Internal.Xaml.Runtime;
 using XAML3 = System.Windows.Markup;
@@ -20,7 +16,7 @@ namespace MS.Internal.Xaml.Context
         PropertyValue,             // A TC on a property that returned a FixupToken
         ObjectInitializationValue, // A TC on an object that returned a FixupToken
         UnresolvedChildren,        // An object that can't be EndInited because it has pending fixups on its properties
-    };
+    }
 
     internal class FixupTargetKeyHolder
     {
@@ -96,22 +92,25 @@ namespace MS.Internal.Xaml.Context
             {
                 ex.SetLineInfo(EndInstanceLineNumber, EndInstanceLinePosition);
             }
+
             return ex;
         }
     }
 
     internal class NameFixupToken : IAddLineInfo
     {
-        List<string> _names;
-        List<XAML3.INameScopeDictionary> _nameScopeDictionaryList;
+        private List<string> _names;
+        private List<XAML3.INameScopeDictionary> _nameScopeDictionaryList;
 
         public NameFixupToken()
         {
             _names = new List<string>();
             _nameScopeDictionaryList = new List<XAML3.INameScopeDictionary>();
-            Target = new FixupTarget();
-            Target.TemporaryCollectionIndex = -1;
-            Target.InstanceIsOnTheStack = true;
+            Target = new FixupTarget
+            {
+                TemporaryCollectionIndex = -1,
+                InstanceIsOnTheStack = true
+            };
         }
 
         public bool CanAssignDirectly { get; set; }
@@ -128,7 +127,7 @@ namespace MS.Internal.Xaml.Context
             get { return _runtime; }
             set
             {
-                Debug.Assert(_runtime == null);
+                Debug.Assert(_runtime is null);
                 _runtime = value;
             }
         }
@@ -138,10 +137,11 @@ namespace MS.Internal.Xaml.Context
         {
             get
             {
-                if (_targetContext == null)
+                if (_targetContext is null)
                 {
                     _targetContext = new ObjectWriterContext(SavedContext, null, null, Runtime);
                 }
+
                 return _targetContext;
             }
         }
@@ -159,7 +159,7 @@ namespace MS.Internal.Xaml.Context
             get { return _nameScopeDictionaryList; }
         }
 
-        public List<String> NeededNames
+        public List<string> NeededNames
         {
             get { return _names; }
         }
@@ -180,7 +180,7 @@ namespace MS.Internal.Xaml.Context
                 foreach (XAML3.INameScopeDictionary nameScope in NameScopeDictionaryList)
                 {
                     namedObject = nameScope.FindName(name);
-                    if (namedObject != null)
+                    if (namedObject is not null)
                     {
                         break;
                     }
@@ -191,6 +191,7 @@ namespace MS.Internal.Xaml.Context
                 TargetContext.IsInitializedCallback = null;
                 namedObject = TargetContext.ResolveName(name, out _);
             }
+
             return namedObject;
         }
 
@@ -200,6 +201,7 @@ namespace MS.Internal.Xaml.Context
             {
                 ex.SetLineInfo(LineNumber, LinePosition);
             }
+
             return ex;
         }
     }

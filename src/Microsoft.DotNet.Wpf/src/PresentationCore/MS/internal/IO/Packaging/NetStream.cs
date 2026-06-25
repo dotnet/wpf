@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -37,16 +36,10 @@
 #define TRACE
 #endif
 
-using System;
 using System.IO;
 using System.Net;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Collections;               // for IComparer
-using System.Diagnostics;               // for Debug.Assert
-using System.Security;                  // SecurityCritical, SecurityTreatAsSafe
-using System.IO.IsolatedStorage;        // for IsolatedStorageFileStream
-using MS.Internal.IO.Packaging;         // ByteRangeDownloader
 using MS.Internal.PresentationCore;     // for ExceptionStringTable
 
 namespace MS.Internal.IO.Packaging
@@ -145,7 +138,7 @@ namespace MS.Internal.IO.Packaging
             checked
             {
                 if (offset + count > buffer.Length)
-                    throw new ArgumentException(SR.IOBufferOverflow, "buffer");
+                    throw new ArgumentException(SR.IOBufferOverflow, nameof(buffer));
 
                 // make sure some data is in the stream - block until it is
                 int bytesAvailable = GetData(new Block(_position, count));
@@ -254,7 +247,7 @@ namespace MS.Internal.IO.Packaging
 
                     default:
                         {
-                            throw new ArgumentOutOfRangeException("origin", SR.SeekOriginInvalid);
+                            throw new ArgumentOutOfRangeException(nameof(origin), SR.SeekOriginInvalid);
                         }
                 }
             }
@@ -402,31 +395,20 @@ namespace MS.Internal.IO.Packaging
                             _disposed = true;
 
                             // release any blocked threads - Set() does not throw any exceptions
-                            if (_readEventHandles[(int)ReadEvent.FullDownloadReadEvent] != null)
-                                _readEventHandles[(int)ReadEvent.FullDownloadReadEvent].Set();
-                            if (_readEventHandles[(int)ReadEvent.ByteRangeReadEvent] != null)
-                                _readEventHandles[(int)ReadEvent.ByteRangeReadEvent].Set();
+                            _readEventHandles[(int)ReadEvent.FullDownloadReadEvent]?.Set();
+                            _readEventHandles[(int)ReadEvent.ByteRangeReadEvent]?.Set();
 
                             // Free ByteRangeDownloader
                             FreeByteRangeDownloader();
 
                             // Free Event Handles - should not throw
-                            if (_readEventHandles[(int)ReadEvent.FullDownloadReadEvent] != null)
-                            {
-                                _readEventHandles[(int)ReadEvent.FullDownloadReadEvent].Close();
-                                _readEventHandles[(int)ReadEvent.FullDownloadReadEvent] = null;
-                            }
-                            if (_readEventHandles[(int)ReadEvent.ByteRangeReadEvent] != null)
-                            {
-                                _readEventHandles[(int)ReadEvent.ByteRangeReadEvent].Close();
-                                _readEventHandles[(int)ReadEvent.ByteRangeReadEvent] = null;
-                            }
+                            _readEventHandles[(int)ReadEvent.FullDownloadReadEvent]?.Close();
+                            _readEventHandles[(int)ReadEvent.FullDownloadReadEvent] = null;
+                            _readEventHandles[(int)ReadEvent.ByteRangeReadEvent]?.Close();
+                            _readEventHandles[(int)ReadEvent.ByteRangeReadEvent] = null;
 
                             // Free Full Download
-                            if (_responseStream != null)
-                            {
-                                _responseStream.Close();
-                            }
+                            _responseStream?.Close();
 
                             FreeTempFile();
 #if DEBUG
@@ -597,12 +579,13 @@ namespace MS.Internal.IO.Packaging
                 _byteRangeDownloader = new ByteRangeDownloader(_uri,
                                                                _tempFileStream,
                                                                _readEventHandles[(int)ReadEvent.ByteRangeReadEvent].SafeWaitHandle,
-                                                               _tempFileMutex);
+                                                               _tempFileMutex)
+                {
+                    Proxy = _originalRequest.Proxy,
 
-                _byteRangeDownloader.Proxy = _originalRequest.Proxy;
-
-                _byteRangeDownloader.Credentials = _originalRequest.Credentials;
-                _byteRangeDownloader.CachePolicy = _originalRequest.CachePolicy;
+                    Credentials = _originalRequest.Credentials,
+                    CachePolicy = _originalRequest.CachePolicy
+                };
 
                 _byteRangesAvailable = new ArrayList(); // byte ranges that are downloaded
             }
@@ -1178,19 +1161,13 @@ namespace MS.Internal.IO.Packaging
                         FreeByteRangeDownloader();
 
                         // release the full download read event as it is no longer needed
-                        if (_readEventHandles[(int)ReadEvent.FullDownloadReadEvent] != null)
-                        {
-                            _readEventHandles[(int)ReadEvent.FullDownloadReadEvent].Close();
-                            _readEventHandles[(int)ReadEvent.FullDownloadReadEvent] = null;
-                        }
+                        _readEventHandles[(int)ReadEvent.FullDownloadReadEvent]?.Close();
+                        _readEventHandles[(int)ReadEvent.FullDownloadReadEvent] = null;
                     }
                     finally
                     {
                         // FreeFullDownload
-                        if (_responseStream != null)
-                        {
-                            _responseStream.Close();
-                        }
+                        _responseStream?.Close();
                     }
                 }
                 finally
@@ -1210,12 +1187,8 @@ namespace MS.Internal.IO.Packaging
                 try
                 {
                     ((IDisposable)_byteRangeDownloader).Dispose();
-
-                    if (_readEventHandles[(int)ReadEvent.ByteRangeReadEvent] != null)
-                    {
-                        _readEventHandles[(int)ReadEvent.ByteRangeReadEvent].Close();
-                        _readEventHandles[(int)ReadEvent.ByteRangeReadEvent] = null;
-                    }
+                    _readEventHandles[(int)ReadEvent.ByteRangeReadEvent]?.Close();
+                    _readEventHandles[(int)ReadEvent.ByteRangeReadEvent] = null;
                 }
                 finally
                 {
@@ -1274,11 +1247,11 @@ namespace MS.Internal.IO.Packaging
         //------------------------------------------------------
         private enum ReadEvent { FullDownloadReadEvent = 0, ByteRangeReadEvent = 1, MaxReadEventEnum };
 
-        Uri                     _uri;               // uri we are resolving
+        private Uri                     _uri;               // uri we are resolving
 
-        WebRequest              _originalRequest;   // Proxy member is Critical
-        Stream                  _tempFileStream;    // local temp stream we are writing to and reading from - protected by _tempFileMutex
-        long                    _position;          // our "logical stream position"
+        private WebRequest              _originalRequest;   // Proxy member is Critical
+        private Stream                  _tempFileStream;    // local temp stream we are writing to and reading from - protected by _tempFileMutex
+        private long                    _position;          // our "logical stream position"
 
         // syncObject - provides mutually-exclusive access control to the following entities:
         // 1. _highWaterMark - this is actually queried outside of a lock in get_Length, but this is safe as a stale value only impacts perf

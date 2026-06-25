@@ -1,15 +1,9 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 using MS.Win32.Pointer;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Windows.Input;
-using System.Security;
-using System.Windows.Threading;
-using System.Threading;
 using System.Windows.Input.Tracing;
 
 namespace System.Windows.Input.StylusPointer

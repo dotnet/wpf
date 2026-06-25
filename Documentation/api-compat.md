@@ -16,7 +16,7 @@ This property points to the directory where reference assemblies for `WPF on .NE
 to avoid requiring the  [.NET Framework 4.8 Developer Pack](https://dotnet.microsoft.com/download/dotnet-framework/net48) to be installed on all machines that build `WPF on .NET Core`, a private tools zip is used that
 contains a copy of these assemblies.
 ### RefApiCompatNeededProjects
-This property contains a list of projects that have hand-crafted references assemblies that must be compared against their corresponding runtime assemblies during API Compatibility checks.
+This property contains a list of projects that have hand-crafted reference assemblies that must be compared against their corresponding runtime assemblies during API Compatibility checks.
 
 ## [ApiCompat.targets](/eng/WpfArcadeSdk/tools/ApiCompat.targets)
 This targets file implements necessary targets to run API compatibility checks.
@@ -40,22 +40,22 @@ The various targets both setup and execute API compatibility checks.
 #### ResolveNetFrameworkApiCompatItems
 Sets up [ApiCompatBaseline](#ApiCompatBaseline), [ResolvedMatchingContract](#ResolvedMatchingContract), and [ResolvedImplementationAssembly](#ResolvedImplementationAssembly) for projects that require
 API compatibility checks against `WPF on .NET Framework 4.8`.  This is run before [WpfValidateApiCompatForNetFramework](#WpfValidateApiCompatForNetFramework) to
-ensure that the necessary configuration is availabe for the check.
+ensure that the necessary configuration is available for the check.
 #### ResolveRefApiCompatItems
 Sets up [ApiCompatBaseline](#ApiCompatBaseline), [ResolvedMatchingContract](#ResolvedMatchingContract), and [ResolvedImplementationAssembly](#ResolvedImplementationAssembly) for projects that require
 API compatibility checks between runtime assemblies and hand-crafted reference assemblies.  This is run before [WpfValidateApiCompatForRef](#WpfValidateApiCompatForRef) to
-ensure that the necessary configuration is availabe for the check.
+ensure that the necessary configuration is available for the check.
 #### WpfValidateApiCompatForNetFramework
 Calls the API compatibility tool in order to validate a particular project's reference assembly against the corresponding reference assembly for `WPF on .NET Framework 4.8`.
 The [ResolvedMatchingContract](#ResolvedMatchingContract) is the `.NET Framework 4.8` assembly and the [ResolvedImplementationAssembly](#ResolvedImplementationAssembly) is the
-`.NET Core` assembly.  This will generate and MSBuild error for each compatibility issue found.  A developer can examine the current [baseline files](#Baseline-Files) to get
+`.NET Core` assembly.  This will generate an MSBuild error for each compatibility issue found.  A developer can examine the current [baseline files](#Baseline-Files) to get
 an idea of the kinds of errors that can be reported.
 
 If the tool fails completely, an error of the form "ApiCompat failed for..." will be generated.  If this occurs, please [file an issue](https://github.com/dotnet/wpf/issues/new/choose) and include a link to your fork and branch that failed.
 #### WpfValidateApiCompatForRef
 Calls the API compatibility tool in order to validate a particular project's hand-crafted reference assembly against the corresponding runtime assembly.
 The [ResolvedMatchingContract](#ResolvedMatchingContract) is the runtime assembly and the [ResolvedImplementationAssembly](#ResolvedImplementationAssembly) is the
-hand-crafted reference assembly.  This will generate and MSBuild error for each compatibility issue found.  A developer can examine the current [baseline files](#Baseline-Files) to get
+hand-crafted reference assembly.  This will generate an MSBuild error for each compatibility issue found.  A developer can examine the current [baseline files](#Baseline-Files) to get
 an idea of the kinds of errors that can be reported.
 
 If the tool fails completely, an error of the form "ApiCompat failed for..." will be generated.  If this occurs, please [file an issue](https://github.com/dotnet/wpf/issues/new/choose) and include a link to your fork and branch that failed.
@@ -66,8 +66,8 @@ This directory contains the aggregate baseline files for all initial API compati
 Errors listed in a baseline file are ignored by the API compatibility tool on subsequent runs.
 
 These baselined errors are, generally, one of the following:
-* Intential API changes that diverge from `WPF on .NET Framework 4.8`
+* Intentional API changes that diverge from `WPF on .NET Framework 4.8`
 * Errors resulting from changes to underlying assemblies in `.NET Core` that do not adversely affect product functionality
-* Errors due to build-specific architecture at the time of baselining (e.g. the split nature of WPF's product build).
+* Errors due to build-specific architecture at the time of baselining (e.g., the split nature of WPF's product build).
 
 A developer can re-baseline the entirety of the product by setting the property `BaselineAllAPICompatError` to `true` during a build.

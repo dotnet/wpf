@@ -1,35 +1,21 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Text;
-using System.Windows;
-using System.Windows.Automation.Provider;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Interop;
-using System.Windows.Media;
-
-using MS.Internal;
-using MS.Win32;
 
 namespace System.Windows.Automation.Peers
 {
-   ///
-   public abstract class ButtonBaseAutomationPeer: FrameworkElementAutomationPeer 
+    ///
+    public abstract class ButtonBaseAutomationPeer: FrameworkElementAutomationPeer 
     {
         ///
         protected ButtonBaseAutomationPeer(ButtonBase owner): base(owner)
         {}
 
         ///
-        override protected string GetAcceleratorKeyCore()
+        protected override string GetAcceleratorKeyCore()
         {
             string acceleratorKey = base.GetAcceleratorKeyCore();
             if (acceleratorKey == string.Empty)
@@ -66,7 +52,7 @@ namespace System.Windows.Automation.Peers
 
         // Return the base without the AccessKey character
         ///
-        override protected string GetNameCore()
+        protected override string GetNameCore()
         {
             string result = base.GetNameCore();
             ButtonBase bb = (ButtonBase)Owner;

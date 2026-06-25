@@ -1,17 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ï»¿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: RowCache caches information about Row layouts used by DocumentGrid.
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows;
-using System.Windows.Documents;
 
 namespace MS.Internal.Documents
 {
@@ -674,7 +668,7 @@ namespace MS.Internal.Documents
             //at the top and work our way down, we might not end up with the
             //same pages on this row.
 
-            //Store off the rows we calculate here, we’ll need them later.            
+            //Store off the rows we calculate here, weâ€™ll need them later.            
             List<RowInfo> tempRows = new List<RowInfo>(pivotPage / columns);
             int currentPage = pivotPage;
             while (currentPage > 0)
@@ -685,7 +679,7 @@ namespace MS.Internal.Documents
                 tempRows.Add(newRow);
             }
 
-            //We’ve made it to the top.
+            //Weâ€™ve made it to the top.
             //Now we can calculate the offsets of each row and add them to the Row cache.                       
             for (int i = tempRows.Count - 1; i >= 0; i--)
             {
@@ -709,7 +703,7 @@ namespace MS.Internal.Documents
                 AddRow(newRow);
             }
 
-            //And we’re done.  Whew.
+            //And weâ€™re done.  Whew.
             return pivotRowIndex;
         }
 
@@ -733,7 +727,7 @@ namespace MS.Internal.Documents
             //Populate the struct with initial data.
             RowInfo newRow = new RowInfo();
 
-            //Each row is guaranteed to have at least one page, even if it’s wider
+            //Each row is guaranteed to have at least one page, even if itâ€™s wider
             //than the allotted size, so we add it here.        
             Size pageSize = GetScaledPageSize(startPage);
             newRow.AddPage(pageSize);
@@ -748,7 +742,7 @@ namespace MS.Internal.Documents
                     //Grab the next page.
                     pageSize = GetScaledPageSize(startPage + newRow.PageCount);
 
-                    //We’re out of pages, or out of space.
+                    //Weâ€™re out of pages, or out of space.
                     if (startPage + newRow.PageCount >= PageCache.PageCount ||
                         newRow.RowSize.Width + pageSize.Width > rowWidth)
                     {
@@ -760,7 +754,7 @@ namespace MS.Internal.Documents
                     //Grab the previous page.
                     pageSize = GetScaledPageSize(startPage - newRow.PageCount);
 
-                    //We’re out of pages, or out of space.
+                    //Weâ€™re out of pages, or out of space.
                     if (startPage - newRow.PageCount < 0 ||
                         newRow.RowSize.Width + pageSize.Width > rowWidth)
                     {
@@ -837,15 +831,17 @@ namespace MS.Internal.Documents
             //calculate the width & height and return the resulting RowInfo struct
 
             //Populate the struct with initial data
-            RowInfo newRow = new RowInfo();
-            newRow.FirstPage = startPage;
+            RowInfo newRow = new RowInfo
+            {
+                FirstPage = startPage
+            };
 
             //Keep adding pages until we either:
             // - run out of pages to add
             // - add the appropriate number of pages            
             for (int i = startPage; i < startPage + columns; i++)
             {
-                //We’re out of pages.
+                //Weâ€™re out of pages.
                 if (i > PageCache.PageCount - 1)
                     break;
 
@@ -931,8 +927,10 @@ namespace MS.Internal.Documents
             while (currentPage < lastPage)
             {
                 //Build a new row.
-                RowInfo newRow = new RowInfo();
-                newRow.FirstPage = currentPage;
+                RowInfo newRow = new RowInfo
+                {
+                    FirstPage = currentPage
+                };
 
                 //Add pages until we either run out of pages or need to start a new row.               
                 do
@@ -1015,9 +1013,11 @@ namespace MS.Internal.Documents
                 RowInfo currentRow = _rowCache[rowIndex];
                 //Create a new row and copy pertinent data
                 //from the old one.
-                RowInfo updatedRow = new RowInfo();
-                updatedRow.VerticalOffset = currentRow.VerticalOffset;
-                updatedRow.FirstPage = currentRow.FirstPage;
+                RowInfo updatedRow = new RowInfo
+                {
+                    VerticalOffset = currentRow.VerticalOffset,
+                    FirstPage = currentRow.FirstPage
+                };
 
                 //Now rebuild this row, thus recalculating the row's size
                 //based on the new page sizes.
@@ -1059,7 +1059,7 @@ namespace MS.Internal.Documents
             //Check for invalid indices.  If it's out of range then we just return.
             if (index > _rowCache.Count)
             {
-                Debug.Assert(false, "Requested to update a non-existent row.");
+                Debug.Fail("Requested to update a non-existent row.");
                 return;
             }
 
@@ -1126,9 +1126,11 @@ namespace MS.Internal.Documents
 
             if (oldRow.FirstPage < startPage)
             {
-                RowInfo updatedRow = new RowInfo();
-                updatedRow.VerticalOffset = oldRow.VerticalOffset;
-                updatedRow.FirstPage = oldRow.FirstPage;
+                RowInfo updatedRow = new RowInfo
+                {
+                    VerticalOffset = oldRow.VerticalOffset,
+                    FirstPage = oldRow.FirstPage
+                };
 
                 for (int i = oldRow.FirstPage; i < startPage; i++)
                 {
@@ -1271,7 +1273,7 @@ namespace MS.Internal.Documents
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException("args");
+                            throw new ArgumentOutOfRangeException(nameof(args));
                     }
                 }
 

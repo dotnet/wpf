@@ -20,27 +20,9 @@ using namespace System::Windows::Media::Imaging;
 
 namespace System { namespace Printing
 {
-    [AttributeUsage(
-    AttributeTargets::Class |
-    AttributeTargets::Property |
-    AttributeTargets::Method |
-    AttributeTargets::Struct |
-    AttributeTargets::Enum |
-    AttributeTargets::Interface |
-    AttributeTargets::Delegate |
-    AttributeTargets::Constructor,
-    AllowMultiple = false,
-    Inherited = true)
-    ]
-    private ref class FriendAccessAllowedAttribute sealed : Attribute
-    {
-    };
-
-
     /// <summary>
     /// ILegacyDevice interface  -- this interface should be made internal or use link demand
     /// </summary>
-    [FriendAccessAllowed]
     private interface class ILegacyDevice
     {
     public:

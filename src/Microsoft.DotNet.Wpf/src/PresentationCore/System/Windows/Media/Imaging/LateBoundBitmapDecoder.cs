@@ -1,33 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
-#pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
-
-using System;
 using System.IO;
-using System.IO.Packaging;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
 using System.Collections.ObjectModel;
-using System.Reflection;
-using System.Security;
-using MS.Internal;
-using MS.Win32.PresentationCore;
-using System.Diagnostics;
-using System.Windows.Media;
-using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Windows.Threading;
-using System.Windows.Media.Imaging;
-using MS.Internal.PresentationCore;                        // SecurityHelper
-using SR=MS.Internal.PresentationCore.SR;
-using System.Net;
 using System.Net.Cache;
 
 namespace System.Windows.Media.Imaging
@@ -312,7 +287,7 @@ namespace System.Windows.Media.Imaging
             Stream newStream = (Stream)arg;
 
             // Assert that we are able to seek the new stream
-            Debug.Assert(newStream.CanSeek == true);
+            Debug.Assert(newStream.CanSeek);
 
             _stream = newStream;
 
@@ -326,11 +301,7 @@ namespace System.Windows.Media.Imaging
                 }
                 catch(Exception e)
                 {
-                    #pragma warning disable 6500
-
                     return ExceptionCallback(e);
-
-                    #pragma warning restore 6500
                 }
             }
 

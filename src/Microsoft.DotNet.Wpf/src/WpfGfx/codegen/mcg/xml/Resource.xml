@@ -154,13 +154,6 @@
 
     <Enums ManagedNamespace="System.Windows.Media">
 
-        <Namespaces>
-            <Namespace Name="System" />
-            <Namespace Name="System.ComponentModel" />
-            <Namespace Name="System.Runtime.InteropServices" />
-            <Namespace Name="MS.Internal.PresentationCore" />
-        </Namespaces>
-
         <Enum Name="ColorInterpolationMode" UnmanagedName="MilColorInterpolationMode"
               Comment="This determines how the colors in a gradient are interpolated." >
             <Field Name="ScRgbLinearInterpolation" Value="0"
@@ -230,7 +223,7 @@
                  for Tile before the lower values, since Tile is more common.
                  The value of this optimization has not been tested. -->
             <Field Name="Tile" Value="4"
-                   Comment="The basic tile mode  the base tile is drawn and the remaining area is filled by repeating the base tile such that the right edge of one tile butts the left edge of the next, and similarly for bottom and top" />
+                   Comment="The basic tile mode  the base tile is drawn and the remaining area is filled by repeating the base tile such that the right edge of one tile is adjacent to the left edge of the next, and similarly for bottom and top" />
             <Field Name="FlipX" Value="1"
                    Comment="The same as tile, but alternate columns of tiles are flipped horizontally.  The base tile is drawn untransformed." />
             <Field Name="FlipY" Value="2"
@@ -421,13 +414,6 @@
 
     <Enums ManagedNamespace="System.Windows.Media.Imaging">
 
-        <Namespaces>
-            <Namespace Name="System" />
-            <Namespace Name="System.ComponentModel" />
-            <Namespace Name="System.Runtime.InteropServices" />
-            <Namespace Name="MS.Internal.PresentationCore" />
-        </Namespaces>
-
         <!-- Imaging Enums -->
 
         <Enum Name="Rotation" UnmanagedName="int"
@@ -474,13 +460,6 @@
     </Enums>
 
     <Enums ManagedNamespace="System.Windows">
-
-        <Namespaces>
-            <Namespace Name="System" />
-            <Namespace Name="System.ComponentModel" />
-            <Namespace Name="System.Runtime.InteropServices" />
-            <Namespace Name="MS.Internal.PresentationCore" />
-        </Namespaces>
 
         <Enum Name="TextDecorationLocation"
             Comment="Referenced localization of the text decoration" >
@@ -1675,18 +1654,10 @@
 
         <Namespaces>
             <Namespace Name="MS.Internal"/>
-            <Namespace Name="MS.Internal.WindowsBase" />
-            <Namespace Name="System"/>
-            <Namespace Name="System.Collections"/>
             <Namespace Name="System.ComponentModel"/>
-            <Namespace Name="System.Diagnostics"/>
             <Namespace Name="System.Globalization"/>
-            <Namespace Name="System.Reflection"/>
-            <Namespace Name="System.Runtime.InteropServices"/>
-            <Namespace Name="System.ComponentModel.Design.Serialization"/>
             <Namespace Name="System.Windows.Markup"/>
             <Namespace Name="System.Windows.Converters"/>
-            <Namespace Name="System.Windows"/>
         </Namespaces>
 
         <Resource Name="PointF" ManagedType="Point" UnmanagedName="MilPoint2F"
@@ -1756,19 +1727,10 @@
 
         <Namespaces>
             <Namespace Name="MS.Internal"/>
-            <Namespace Name="MS.Internal.WindowsBase" />
-            <Namespace Name="System"/>
-            <Namespace Name="System.Collections"/>
             <Namespace Name="System.ComponentModel"/>
-            <Namespace Name="System.Diagnostics"/>
             <Namespace Name="System.Globalization"/>
-            <Namespace Name="System.Reflection"/>
-            <Namespace Name="System.Runtime.InteropServices"/>
-            <Namespace Name="System.ComponentModel.Design.Serialization"/>
             <Namespace Name="System.Windows.Markup"/>
             <Namespace Name="System.Windows.Media.Converters"/>
-            <Namespace Name="System.Windows"/>
-            <Namespace Name="System.Windows.Media"/>
         </Namespaces>
 
         <Resource Name="Matrix" UnmanagedName="MilMatrix3x2D" IsValueType="true" SkipProperties="true"
@@ -2306,27 +2268,15 @@
         <Namespaces>
             <Namespace Name="MS.Internal"/>
             <Namespace Name="MS.Internal.Collections"/>
-            <Namespace Name="MS.Internal.PresentationCore" />
             <Namespace Name="MS.Utility"/>
-            <Namespace Name="System"/>
             <Namespace Name="System.Collections"/>
-            <Namespace Name="System.Collections.Generic"/>
             <Namespace Name="System.ComponentModel"/>
-            <Namespace Name="System.ComponentModel.Design.Serialization"/>
-            <Namespace Name="System.Diagnostics"/>
             <Namespace Name="System.Globalization"/>
-            <Namespace Name="System.Reflection"/>
-            <Namespace Name="System.Runtime.InteropServices"/>
             <Namespace Name="System.Text"/>
             <Namespace Name="System.Windows.Markup"/>
             <Namespace Name="System.Windows.Media.Media3D.Converters"/>
-            <Namespace Name="System.Windows.Media"/>
             <Namespace Name="System.Windows.Media.Animation"/>
             <Namespace Name="System.Windows.Media.Composition"/>
-            <Namespace Name="System.Security" />
-            <Namespace Name="System.Security.Permissions" />
-            <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
-            <Namespace Name="System.Windows.Media.Imaging"/>
         </Namespaces>
 
         <!--
@@ -2705,30 +2655,11 @@
     <Resources ManagedNamespace="System.Windows.Media.Effects">
         <Namespaces>
             <Namespace Name="MS.Internal"/>
-            <Namespace Name="MS.Internal.Collections"/>
-            <Namespace Name="MS.Internal.KnownBoxes"/>
-            <Namespace Name="MS.Internal.PresentationCore" />
             <Namespace Name="MS.Utility"/>
-            <Namespace Name="System"/>
             <Namespace Name="System.Collections"/>
-            <Namespace Name="System.Collections.Generic"/>
-            <Namespace Name="System.ComponentModel"/>
-            <Namespace Name="System.Diagnostics"/>
-            <Namespace Name="System.Globalization"/>
-            <Namespace Name="System.Reflection"/>
-            <Namespace Name="System.Runtime.InteropServices"/>
-            <Namespace Name="System.ComponentModel.Design.Serialization"/>
-            <Namespace Name="System.Text"/>
-            <Namespace Name="System.Windows"/>
-            <Namespace Name="System.Windows.Media"/>
-            <Namespace Name="System.Windows.Media.Media3D"/>
             <Namespace Name="System.Windows.Media.Animation"/>
             <Namespace Name="System.Windows.Media.Composition"/>
             <Namespace Name="System.Windows.Media.Imaging"/>
-            <Namespace Name="System.Windows.Markup"/>
-            <Namespace Name="System.Security" />
-            <Namespace Name="System.Security.Permissions" />
-            <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
         </Namespaces>
 
         <Resource Name="PixelShader" SkipToString="true" SkipUpdate="true" CanIntroduceCycles="false" >
@@ -2867,30 +2798,16 @@
             <Namespace Name="MS.Internal"/>
             <Namespace Name="MS.Internal.KnownBoxes"/>
             <Namespace Name="MS.Internal.Collections"/>
-            <Namespace Name="MS.Internal.PresentationCore" />
             <Namespace Name="MS.Utility"/>
-            <Namespace Name="System"/>
             <Namespace Name="System.Collections"/>
-            <Namespace Name="System.Collections.Generic"/>
             <Namespace Name="System.ComponentModel"/>
-            <Namespace Name="System.Diagnostics"/>
             <Namespace Name="System.Globalization"/>
-            <Namespace Name="System.Reflection"/>
-            <Namespace Name="System.Runtime.InteropServices"/>
-            <Namespace Name="System.ComponentModel.Design.Serialization"/>
             <Namespace Name="System.Text"/>
-            <Namespace Name="System.Windows"/>
-            <Namespace Name="System.Windows.Media"/>
             <Namespace Name="System.Windows.Media.Effects"/>
-            <Namespace Name="System.Windows.Media.Media3D"/>
             <Namespace Name="System.Windows.Media.Animation"/>
             <Namespace Name="System.Windows.Media.Composition"/>
-            <Namespace Name="System.Windows.Media.Imaging"/>
             <Namespace Name="System.Windows.Markup"/>
             <Namespace Name="System.Windows.Media.Converters"/>
-            <Namespace Name="System.Security" />
-            <Namespace Name="System.Security.Permissions" />
-            <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
         </Namespaces>
 
         <!--
@@ -3482,31 +3399,8 @@
     <Resources ManagedNamespace="System.Windows.Media.Animation">
         <Namespaces>
             <Namespace Name="MS.Internal"/>
-            <Namespace Name="MS.Internal.KnownBoxes"/>
-            <Namespace Name="MS.Internal.Collections"/>
-            <Namespace Name="MS.Internal.PresentationCore" />
             <Namespace Name="MS.Utility"/>
-            <Namespace Name="System"/>
             <Namespace Name="System.Collections"/>
-            <Namespace Name="System.Collections.Generic"/>
-            <Namespace Name="System.ComponentModel"/>
-            <Namespace Name="System.Diagnostics"/>
-            <Namespace Name="System.Globalization"/>
-            <Namespace Name="System.Reflection"/>
-            <Namespace Name="System.Runtime.InteropServices"/>
-            <Namespace Name="System.ComponentModel.Design.Serialization"/>
-            <Namespace Name="System.Text"/>
-            <Namespace Name="System.Windows"/>
-            <Namespace Name="System.Windows.Media"/>
-            <Namespace Name="System.Windows.Media.Media3D"/>
-            <Namespace Name="System.Windows.Media.Animation"/>
-            <Namespace Name="System.Windows.Media.Composition"/>
-            <Namespace Name="System.Windows.Media.Imaging"/>
-            <Namespace Name="System.Windows.Markup"/>
-            <Namespace Name="System.Windows.Media.Converters"/>
-            <Namespace Name="System.Security" />
-            <Namespace Name="System.Security.Permissions" />
-            <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
         </Namespaces>
 
         <Resource Name="Timeline" IsAbstract="true" IsAnimatable="true" HasUnmanagedResource="false" SkipToString="true" />
@@ -3529,24 +3423,10 @@
     <Resources ManagedNamespace="System.Windows">
 
         <Namespaces>
-            <Namespace Name="MS.Internal.PresentationCore" />
-            <Namespace Name="System"/>
             <Namespace Name="System.Collections"/>
-            <Namespace Name="System.Collections.Generic"/>
-            <Namespace Name="System.ComponentModel"/>
-            <Namespace Name="System.ComponentModel.Design.Serialization"/>
-            <Namespace Name="System.Diagnostics"/>
-            <Namespace Name="System.Globalization"/>
-            <Namespace Name="System.Reflection"/>
-            <Namespace Name="System.Runtime.InteropServices"/>
             <Namespace Name="System.Windows.Media"/>
             <Namespace Name="System.Windows.Media.Animation"/>
-            <Namespace Name="System.Windows.Media.Imaging"/>
-            <Namespace Name="System.Windows.Markup"/>
-            <Namespace Name="System.Windows.Converters"/>
-            <Namespace Name="MS.Internal.Collections" />
             <Namespace Name="MS.Utility"/>
-            <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
         </Namespaces>
 
         <Resource Name="TextDecoration" IsAnimatable="true" IsAbstract="false" SkipToString="true" HasUnmanagedResource="false" >
@@ -3580,22 +3460,9 @@
     <Resources ManagedNamespace="System.Windows.Media.Imaging">
 
         <Namespaces>
-            <Namespace Name="MS.Internal"/>
-            <Namespace Name="MS.Internal.PresentationCore" />
-            <Namespace Name="System"/>
             <Namespace Name="System.IO"/>
-            <Namespace Name="System.Collections"/>
             <Namespace Name="System.ComponentModel"/>
             <Namespace Name="System.Net.Cache"/>
-            <Namespace Name="System.Runtime.InteropServices"/>
-            <Namespace Name="System.Windows.Threading"/>
-            <Namespace Name="System.Windows"/>
-            <Namespace Name="System.Windows.Media"/>
-            <Namespace Name="System.Windows.Media.Animation"/>
-            <Namespace Name="System.Windows.Media.Composition"/>
-            <Namespace Name="System.Windows.Media.Imaging"/>
-            <Namespace Name="System.Windows.Media.Media3D"/>
-            <Namespace Name="System.Diagnostics"/>
         </Namespaces>
     <!--
         Imaging primitives and resources
@@ -3669,9 +3536,6 @@
     <Resources ManagedNamespace="System.Windows.Interop">
         <Namespaces>
             <Namespace Name="MS.Internal"/>
-            <Namespace Name="MS.Internal.PresentationCore" />
-            <Namespace Name="System"/>
-            <Namespace Name="System.IO"/>
             <Namespace Name="System.Collections"/>
             <Namespace Name="System.ComponentModel"/>
             <Namespace Name="System.Net.Cache"/>
@@ -3683,7 +3547,6 @@
             <Namespace Name="System.Windows.Media.Composition"/>
             <Namespace Name="System.Windows.Media.Imaging"/>
             <Namespace Name="System.Windows.Media.Media3D"/>
-            <Namespace Name="System.Diagnostics"/>
         </Namespaces>
 
         <Resource Name="D3DImage" Extends="ImageSource" LeaveUnsealed="true" IsAnimatable="true" SkipToString="true" CanIntroduceCycles="false" />
@@ -3695,29 +3558,17 @@
 
     <RenderDataInstructions
         ManagedNamespace="System.Windows.Media"
-        ManagedDestinationDir="src\Core\CSharp\System\Windows\Media\Generated"
-        NativeDestinationDir="src\Graphics\core\resources"
-        ExportDestinationDir="src\Graphics\Include\Generated">
+        ManagedDestinationDir="src\PresentationCore\System\Windows\Media\Generated"
+        NativeDestinationDir="src\WpfGfx\core\resources"
+        ExportDestinationDir="src\WpfGfx\Include\Generated">
 
         <Namespaces>
             <Namespace Name="MS.Internal"/>
-            <Namespace Name="MS.Internal.PresentationCore" />
-            <Namespace Name="System"/>
-            <Namespace Name="System.Collections"/>
-            <Namespace Name="System.Collections.Generic"/>
             <Namespace Name="System.Runtime.InteropServices"/>
             <Namespace Name="System.Windows.Threading"/>
-            <Namespace Name="System.Windows"/>
-            <Namespace Name="System.Windows.Media"/>
             <Namespace Name="System.Windows.Media.Animation"/>
             <Namespace Name="System.Windows.Media.Composition"/>
             <Namespace Name="System.Windows.Media.Effects"/>
-            <Namespace Name="System.Windows.Media.Imaging"/>
-            <Namespace Name="System.Windows.Media.Media3D"/>
-            <Namespace Name="System.Diagnostics"/>
-            <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
-            <Namespace Name="System.Security" />
-            <Namespace Name="System.Security.Permissions" />
         </Namespaces>
 
         <RenderDataInstruction Name="DrawLine"
@@ -3958,9 +3809,9 @@
     <!-- Enums that we generate only for managed code-->
 
     <GenerationControl
-        ManagedDestinationDir="src\Core\CSharp\System\Windows\Media\Generated"
+        ManagedDestinationDir="src\PresentationCore\System\Windows\Media\Generated"
         ManagedSharedDestinationDir="src\Shared\Ms\Internal\Generated"
-        NativeDestinationDir="src\Graphics\Include\Generated">
+        NativeDestinationDir="src\WpfGfx\Include\Generated">
         <Generate Name="ColorInterpolationMode" ManagedClass="true" />
         <Generate Name="BrushMappingMode" ManagedClass="true" />
         <Generate Name="GradientSpreadMethod" ManagedClass="true" />
@@ -3984,7 +3835,7 @@
     </GenerationControl>
 
     <GenerationControl
-        ManagedDestinationDir="src\Core\CSharp\System\Windows\Generated"
+        ManagedDestinationDir="src\PresentationCore\System\Windows\Generated"
         ManagedSharedDestinationDir="src\Shared\Ms\Internal\Generated">
         <Generate Name="TextDecorationLocation" ManagedClass="true"/>
         <Generate Name="TextDecorationUnit" ManagedClass="true"/>
@@ -3995,8 +3846,8 @@
     <!-- Consider renaming "ManagedClass" to "Managed" or "ManagedDefinition" -->
 
     <GenerationControl
-        ManagedDestinationDir="src\Base\System\Windows\Generated"
-        ConverterDestinationDir="src\Base\System\Windows\Converters\Generated"
+        ManagedDestinationDir="src\WindowsBase\System\Windows\Generated"
+        ConverterDestinationDir="src\WindowsBase\System\Windows\Converters\Generated"
         OldStyle="true">
         <Generate Name="Point" ManagedClass="true" ManagedValueMethods="true" ManagedTypeConverter="true" NativeRetriever="true" AnimationResource="true"/>
         <Generate Name="Size" ManagedClass="true" ManagedValueMethods="true" ManagedTypeConverter="true" NativeRetriever="true" AnimationResource="true"/>
@@ -4007,15 +3858,15 @@
     </GenerationControl>
 
     <GenerationControl
-        ManagedDestinationDir="src\Base\System\Windows\Media\Generated"
-        ConverterDestinationDir="src\Base\System\Windows\Media\Converters\Generated"
+        ManagedDestinationDir="src\WindowsBase\System\Windows\Media\Generated"
+        ConverterDestinationDir="src\WindowsBase\System\Windows\Media\Converters\Generated"
         OldStyle="true">
         <Generate Name="Matrix" ManagedClass="true" ManagedValueMethods="true" ManagedTypeConverter="true"/>
     </GenerationControl>
 
     <GenerationControl
-        ManagedDestinationDir="src\Core\CSharp\System\Windows\Media3d\Generated"
-        ConverterDestinationDir="src\Core\CSharp\System\Windows\Media3d\Converters\Generated"
+        ManagedDestinationDir="src\PresentationCore\System\Windows\Media3d\Generated"
+        ConverterDestinationDir="src\PresentationCore\System\Windows\Media3d\Converters\Generated"
         OldStyle="true">
 
         <!-- Generate just retrievers for these types -->
@@ -4076,7 +3927,7 @@
     </GenerationControl>
 
     <GenerationControl
-        ManagedDestinationDir="src\Core\CSharp\System\Windows\Media\Effects\Generated"
+        ManagedDestinationDir="src\PresentationCore\System\Windows\Media\Effects\Generated"
         ManagedSharedDestinationDir="src\Shared\Ms\Internal\Generated">
 
         <Generate Name="BlurBitmapEffect" ManagedClass="true"/>
@@ -4107,8 +3958,8 @@
     </GenerationControl>
 
     <GenerationControl
-        ManagedDestinationDir="src\Core\CSharp\System\Windows\Media\Generated"
-        ConverterDestinationDir="src\Core\CSharp\System\Windows\Media\Converters\Generated"
+        ManagedDestinationDir="src\PresentationCore\System\Windows\Media\Generated"
+        ConverterDestinationDir="src\PresentationCore\System\Windows\Media\Converters\Generated"
         OldStyle="true"
         >
 
@@ -4131,8 +3982,8 @@
 
 
     <GenerationControl
-        ManagedDestinationDir="src\Core\CSharp\System\Windows\Media\Generated"
-        ConverterDestinationDir="src\Core\CSharp\System\Windows\Media\Converters\Generated"
+        ManagedDestinationDir="src\PresentationCore\System\Windows\Media\Generated"
+        ConverterDestinationDir="src\PresentationCore\System\Windows\Media\Converters\Generated"
         >
 
         <!-- Collection resource types -->
@@ -4214,7 +4065,7 @@
     </GenerationControl>
 
     <GenerationControl
-        ManagedDestinationDir="src\Core\CSharp\System\Windows\Media\Animation\Generated">
+        ManagedDestinationDir="src\PresentationCore\System\Windows\Media\Animation\Generated">
         <Generate Name="Timeline" ManagedClass="true"/>
         <Generate Name="TimelineGroup" ManagedClass="true" />
         <Generate Name="ParallelTimeline" ManagedClass="true" />
@@ -4222,7 +4073,7 @@
     </GenerationControl>
 
     <GenerationControl
-        ManagedDestinationDir="src\Core\CSharp\System\Windows\Media\Imaging\Generated">
+        ManagedDestinationDir="src\PresentationCore\System\Windows\Media\Imaging\Generated">
 
         <!-- Imaging classes -->
 
@@ -4235,7 +4086,7 @@
     </GenerationControl>
 
     <GenerationControl
-        ManagedDestinationDir="src\Core\CSharp\System\Windows\Interop\Generated">
+        ManagedDestinationDir="src\PresentationCore\System\Windows\Interop\Generated">
 
         <Generate Name="D3DImage" ManagedClass="false" NativeDuce="false" />
     </GenerationControl>
@@ -4395,249 +4246,249 @@
     <TemplateGenerationControl>
 
       <Template Name="MS.Internal.MilCodeGen.ResourceModel.AnimatableTemplate">
-        <TemplateInstance ClassName="Animatable" Namespace="System.Windows.Media.Animation" ManagedDestinationDir="src\Core\CSharp\System\Windows\Media\Animation\Generated" />
-        <TemplateInstance ClassName="Visual3D" Namespace="System.Windows.Media.Media3D" ManagedDestinationDir="src\Core\CSharp\System\Windows\Media3D\Generated" />
+        <TemplateInstance ClassName="Animatable" Namespace="System.Windows.Media.Animation" ManagedDestinationDir="src\PresentationCore\System\Windows\Media\Animation\Generated" />
+        <TemplateInstance ClassName="Visual3D" Namespace="System.Windows.Media.Media3D" ManagedDestinationDir="src\PresentationCore\System\Windows\Media3D\Generated" />
       </Template>
 
       <Template Name="MS.Internal.MilCodeGen.ResourceModel.PolySegmentTemplate">
-        <TemplateInstance ManagedDestinationDir="src\Core\CSharp\System\Windows\Media\Generated"
+        <TemplateInstance ManagedDestinationDir="src\PresentationCore\System\Windows\Media\Generated"
           ClassName="PolyLineSegment" TypeName="PolyLine"
           VerifyFlag="false" VerifyCount="1" IsCurved="false" CountRemainder="0"/>
-        <TemplateInstance ManagedDestinationDir="src\Core\CSharp\System\Windows\Media\Generated"
+        <TemplateInstance ManagedDestinationDir="src\PresentationCore\System\Windows\Media\Generated"
           ClassName="PolyBezierSegment" TypeName="PolyBezier"
           VerifyFlag="true" VerifyCount="3"
           IsCurved="true" CountRemainder="(count%3)"/>
-        <TemplateInstance ManagedDestinationDir="src\Core\CSharp\System\Windows\Media\Generated"
+        <TemplateInstance ManagedDestinationDir="src\PresentationCore\System\Windows\Media\Generated"
           ClassName="PolyQuadraticBezierSegment" TypeName="PolyQuadraticBezier"
           VerifyFlag="true" VerifyCount="2"
           IsCurved="true" CountRemainder="(count&amp;1)"/>
       </Template>
 
       <Template Name="MS.Internal.MilCodeGen.ResourceModel.FrameworkElementTemplate">
-        <TemplateInstance ManagedDestinationDir="src\Framework\System\Windows\Generated"
+        <TemplateInstance ManagedDestinationDir="src\PresentationFramework\System\Windows\Generated"
           ClassName="FrameworkElement" ClassNamespace="System.Windows" ThisString="/* fe = */ this, /* fce = */ null"/>
-        <TemplateInstance ManagedDestinationDir="src\Framework\System\Windows\Generated"
+        <TemplateInstance ManagedDestinationDir="src\PresentationFramework\System\Windows\Generated"
           ClassName="FrameworkContentElement" ClassNamespace="System.Windows" ThisString="/* fe = */ null, /* fce = */ this"/>
       </Template>
 
       <Template Name="MS.Internal.MilCodeGen.ResourceModel.AnimationResourceTemplate">
-        <TemplateInstance ManagedDestinationDir="src\Core\CSharp\System\Windows\Media\Animation\Generated" TypeName="Color"/>
-        <TemplateInstance ManagedDestinationDir="src\Core\CSharp\System\Windows\Media\Animation\Generated" TypeName="Double"/>
-        <TemplateInstance ManagedDestinationDir="src\Core\CSharp\System\Windows\Media\Animation\Generated" TypeName="Point"/>
-        <TemplateInstance ManagedDestinationDir="src\Core\CSharp\System\Windows\Media\Animation\Generated" TypeName="Point3D"/>
-        <TemplateInstance ManagedDestinationDir="src\Core\CSharp\System\Windows\Media\Animation\Generated" TypeName="Quaternion"/>
-        <TemplateInstance ManagedDestinationDir="src\Core\CSharp\System\Windows\Media\Animation\Generated" TypeName="Rect"/>
-        <TemplateInstance ManagedDestinationDir="src\Core\CSharp\System\Windows\Media\Animation\Generated" TypeName="Size"/>
-        <TemplateInstance ManagedDestinationDir="src\Core\CSharp\System\Windows\Media\Animation\Generated" TypeName="Vector3D"/>
-        <TemplateInstance ManagedDestinationDir="src\Core\CSharp\System\Windows\Media\Animation\Generated" TypeName="Matrix"/>
+        <TemplateInstance ManagedDestinationDir="src\PresentationCore\System\Windows\Media\Animation\Generated" TypeName="Color"/>
+        <TemplateInstance ManagedDestinationDir="src\PresentationCore\System\Windows\Media\Animation\Generated" TypeName="Double"/>
+        <TemplateInstance ManagedDestinationDir="src\PresentationCore\System\Windows\Media\Animation\Generated" TypeName="Point"/>
+        <TemplateInstance ManagedDestinationDir="src\PresentationCore\System\Windows\Media\Animation\Generated" TypeName="Point3D"/>
+        <TemplateInstance ManagedDestinationDir="src\PresentationCore\System\Windows\Media\Animation\Generated" TypeName="Quaternion"/>
+        <TemplateInstance ManagedDestinationDir="src\PresentationCore\System\Windows\Media\Animation\Generated" TypeName="Rect"/>
+        <TemplateInstance ManagedDestinationDir="src\PresentationCore\System\Windows\Media\Animation\Generated" TypeName="Size"/>
+        <TemplateInstance ManagedDestinationDir="src\PresentationCore\System\Windows\Media\Animation\Generated" TypeName="Vector3D"/>
+        <TemplateInstance ManagedDestinationDir="src\PresentationCore\System\Windows\Media\Animation\Generated" TypeName="Matrix"/>
       </Template>
 
         <Template Name="MS.Internal.MilCodeGen.ResourceModel.AnimationTemplate">
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Byte" NewDefaultValue="new Byte()" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Color" NewDefaultValue="new Color()" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Decimal" NewDefaultValue="new Decimal()" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Double" NewDefaultValue="new Double()" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int16" NewDefaultValue="new Int16()" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int32" NewDefaultValue="new Int32()" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int64" NewDefaultValue="new Int64()" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Point" NewDefaultValue="new Point()" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Quaternion" NewDefaultValue="Quaternion.Identity" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Point3D" NewDefaultValue="new Point3D()" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Rotation3D" NewDefaultValue="Rotation3D.Identity" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Rect" NewDefaultValue="new Rect()" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Single" NewDefaultValue="new Single()" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Size" NewDefaultValue="new Size()" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Vector" NewDefaultValue="new Vector()" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Vector3D" NewDefaultValue="new Vector3D()" />
-            <TemplateInstance ModuleName="Framework" TypeName="Thickness" NewDefaultValue="new Thickness()" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Byte" NewDefaultValue="new Byte()" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Color" NewDefaultValue="new Color()" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Decimal" NewDefaultValue="new Decimal()" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Double" NewDefaultValue="new Double()" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int16" NewDefaultValue="new Int16()" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int32" NewDefaultValue="new Int32()" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int64" NewDefaultValue="new Int64()" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Point" NewDefaultValue="new Point()" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Quaternion" NewDefaultValue="Quaternion.Identity" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Point3D" NewDefaultValue="new Point3D()" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Rotation3D" NewDefaultValue="Rotation3D.Identity" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Rect" NewDefaultValue="new Rect()" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Single" NewDefaultValue="new Single()" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Size" NewDefaultValue="new Size()" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Vector" NewDefaultValue="new Vector()" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Vector3D" NewDefaultValue="new Vector3D()" />
+            <TemplateInstance ModuleName="PresentationFramework" TypeName="Thickness" NewDefaultValue="new Thickness()" />
         </Template>
 
         <Template Name="MS.Internal.MilCodeGen.ResourceModel.AnimationBaseTemplate">
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Boolean" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Byte" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Char" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Color" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Decimal" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Double" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int16" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int32" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int64" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Matrix" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Object" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Point" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Point3D" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Quaternion" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Rotation3D" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Rect" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Single" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Size" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="String" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Vector" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Vector3D" />
-            <TemplateInstance ModuleName="Framework" TypeName="Thickness" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Boolean" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Byte" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Char" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Color" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Decimal" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Double" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int16" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int32" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int64" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Matrix" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Object" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Point" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Point3D" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Quaternion" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Rotation3D" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Rect" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Single" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Size" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="String" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Vector" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Vector3D" />
+            <TemplateInstance ModuleName="PresentationFramework" TypeName="Thickness" />
         </Template>
 
         <Template Name="MS.Internal.MilCodeGen.ResourceModel.KeyFrameTemplate">
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Boolean" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Byte" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Char"/>
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Color"/>
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Decimal" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Double" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int16" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int32"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int64" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Matrix" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Object" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Point" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Point3D" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Quaternion" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Rotation3D"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Rect" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Single"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Size"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="String"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Vector" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Vector3D"  />
-            <TemplateInstance ModuleName="Framework" TypeName="Thickness" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Boolean" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Byte" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Char"/>
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Color"/>
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Decimal" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Double" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int16" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int32"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int64" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Matrix" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Object" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Point" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Point3D" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Quaternion" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Rotation3D"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Rect" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Single"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Size"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="String"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Vector" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Vector3D"  />
+            <TemplateInstance ModuleName="PresentationFramework" TypeName="Thickness" />
         </Template>
 
 
         <Template Name="MS.Internal.MilCodeGen.ResourceModel.DiscreteKeyFrameTemplate">
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Boolean" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Byte" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Char"/>
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Color"/>
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Decimal" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Double" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int16" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int32"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int64" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Matrix" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Object" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Point" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Point3D" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Quaternion" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Rotation3D"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Rect" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Single"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Size"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="String"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Vector" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Vector3D"  />
-            <TemplateInstance ModuleName="Framework" TypeName="Thickness" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Boolean" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Byte" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Char"/>
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Color"/>
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Decimal" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Double" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int16" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int32"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int64" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Matrix" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Object" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Point" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Point3D" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Quaternion" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Rotation3D"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Rect" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Single"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Size"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="String"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Vector" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Vector3D"  />
+            <TemplateInstance ModuleName="PresentationFramework" TypeName="Thickness" />
         </Template>
 
         <Template Name="MS.Internal.MilCodeGen.ResourceModel.KeyFrameCollectionTemplate">
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Boolean" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Byte" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Char"/>
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Color"/>
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Decimal" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Double" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int16" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int32"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int64" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Matrix" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Object" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Point" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Point3D" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Quaternion" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Rotation3D"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Rect" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Single"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Size"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="String"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Vector" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Vector3D"  />
-            <TemplateInstance ModuleName="Framework" TypeName="Thickness" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Boolean" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Byte" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Char"/>
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Color"/>
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Decimal" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Double" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int16" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int32"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int64" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Matrix" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Object" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Point" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Point3D" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Quaternion" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Rotation3D"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Rect" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Single"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Size"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="String"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Vector" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Vector3D"  />
+            <TemplateInstance ModuleName="PresentationFramework" TypeName="Thickness" />
         </Template>
 
         <Template Name="MS.Internal.MilCodeGen.ResourceModel.AnimationUsingKeyFramesTemplate">
-            <TemplateInstance ModuleName="Core\CSharp" CanInterpolate="false" TypeName="Boolean" />
-            <TemplateInstance ModuleName="Core\CSharp" CanInterpolate="true" TypeName="Byte" />
-            <TemplateInstance ModuleName="Core\CSharp" CanInterpolate="false" TypeName="Char"/>
-            <TemplateInstance ModuleName="Core\CSharp" CanInterpolate="true" TypeName="Color"/>
-            <TemplateInstance ModuleName="Core\CSharp" CanInterpolate="true" TypeName="Decimal" />
-            <TemplateInstance ModuleName="Core\CSharp" CanInterpolate="true" TypeName="Double" />
-            <TemplateInstance ModuleName="Core\CSharp" CanInterpolate="true" TypeName="Int16" />
-            <TemplateInstance ModuleName="Core\CSharp" CanInterpolate="true" TypeName="Int32"  />
-            <TemplateInstance ModuleName="Core\CSharp" CanInterpolate="true" TypeName="Int64" />
-            <TemplateInstance ModuleName="Core\CSharp" CanInterpolate="false" TypeName="Matrix" />
-            <TemplateInstance ModuleName="Core\CSharp" CanInterpolate="false" TypeName="Object" />
-            <TemplateInstance ModuleName="Core\CSharp" CanInterpolate="true" TypeName="Point" />
-            <TemplateInstance ModuleName="Core\CSharp" CanInterpolate="true" TypeName="Point3D" />
-            <TemplateInstance ModuleName="Core\CSharp" CanInterpolate="true" TypeName="Quaternion" />
-            <TemplateInstance ModuleName="Core\CSharp" CanInterpolate="true" TypeName="Rotation3D"  />
-            <TemplateInstance ModuleName="Core\CSharp" CanInterpolate="true" TypeName="Rect" />
-            <TemplateInstance ModuleName="Core\CSharp" CanInterpolate="true" TypeName="Single"  />
-            <TemplateInstance ModuleName="Core\CSharp" CanInterpolate="true" TypeName="Size"  />
-            <TemplateInstance ModuleName="Core\CSharp" CanInterpolate="false" TypeName="String"  />
-            <TemplateInstance ModuleName="Core\CSharp" CanInterpolate="true" TypeName="Vector" />
-            <TemplateInstance ModuleName="Core\CSharp" CanInterpolate="true" TypeName="Vector3D"  />
-            <TemplateInstance ModuleName="Framework" CanInterpolate="true" TypeName="Thickness" />
+            <TemplateInstance ModuleName="PresentationCore" CanInterpolate="false" TypeName="Boolean" />
+            <TemplateInstance ModuleName="PresentationCore" CanInterpolate="true" TypeName="Byte" />
+            <TemplateInstance ModuleName="PresentationCore" CanInterpolate="false" TypeName="Char"/>
+            <TemplateInstance ModuleName="PresentationCore" CanInterpolate="true" TypeName="Color"/>
+            <TemplateInstance ModuleName="PresentationCore" CanInterpolate="true" TypeName="Decimal" />
+            <TemplateInstance ModuleName="PresentationCore" CanInterpolate="true" TypeName="Double" />
+            <TemplateInstance ModuleName="PresentationCore" CanInterpolate="true" TypeName="Int16" />
+            <TemplateInstance ModuleName="PresentationCore" CanInterpolate="true" TypeName="Int32"  />
+            <TemplateInstance ModuleName="PresentationCore" CanInterpolate="true" TypeName="Int64" />
+            <TemplateInstance ModuleName="PresentationCore" CanInterpolate="false" TypeName="Matrix" />
+            <TemplateInstance ModuleName="PresentationCore" CanInterpolate="false" TypeName="Object" />
+            <TemplateInstance ModuleName="PresentationCore" CanInterpolate="true" TypeName="Point" />
+            <TemplateInstance ModuleName="PresentationCore" CanInterpolate="true" TypeName="Point3D" />
+            <TemplateInstance ModuleName="PresentationCore" CanInterpolate="true" TypeName="Quaternion" />
+            <TemplateInstance ModuleName="PresentationCore" CanInterpolate="true" TypeName="Rotation3D"  />
+            <TemplateInstance ModuleName="PresentationCore" CanInterpolate="true" TypeName="Rect" />
+            <TemplateInstance ModuleName="PresentationCore" CanInterpolate="true" TypeName="Single"  />
+            <TemplateInstance ModuleName="PresentationCore" CanInterpolate="true" TypeName="Size"  />
+            <TemplateInstance ModuleName="PresentationCore" CanInterpolate="false" TypeName="String"  />
+            <TemplateInstance ModuleName="PresentationCore" CanInterpolate="true" TypeName="Vector" />
+            <TemplateInstance ModuleName="PresentationCore" CanInterpolate="true" TypeName="Vector3D"  />
+            <TemplateInstance ModuleName="PresentationFramework" CanInterpolate="true" TypeName="Thickness" />
         </Template>
 
 
         <Template Name="MS.Internal.MilCodeGen.ResourceModel.LinearKeyFrameTemplate">
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Byte"/>
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Color"/>
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Decimal" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Double" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int16" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int32"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int64" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Point" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Point3D" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Quaternion" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Rotation3D"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Rect" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Single"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Size"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Vector" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Vector3D"  />
-            <TemplateInstance ModuleName="Framework" TypeName="Thickness" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Byte"/>
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Color"/>
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Decimal" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Double" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int16" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int32"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int64" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Point" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Point3D" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Quaternion" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Rotation3D"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Rect" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Single"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Size"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Vector" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Vector3D"  />
+            <TemplateInstance ModuleName="PresentationFramework" TypeName="Thickness" />
         </Template>
 
 
         <Template Name="MS.Internal.MilCodeGen.ResourceModel.SplineKeyFrameTemplate">
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Byte"/>
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Color"/>
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Decimal" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Double" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int16" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int32"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int64" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Point" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Point3D" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Quaternion" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Rotation3D"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Rect" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Single"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Size"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Vector" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Vector3D"  />
-            <TemplateInstance ModuleName="Framework" TypeName="Thickness" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Byte"/>
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Color"/>
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Decimal" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Double" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int16" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int32"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int64" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Point" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Point3D" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Quaternion" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Rotation3D"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Rect" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Single"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Size"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Vector" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Vector3D"  />
+            <TemplateInstance ModuleName="PresentationFramework" TypeName="Thickness" />
         </Template>
 
         <Template Name="MS.Internal.MilCodeGen.ResourceModel.EasingKeyFrameTemplate">
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Byte"/>
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Color"/>
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Decimal" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Double" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int16" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int32"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Int64" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Point" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Point3D" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Quaternion" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Rotation3D"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Rect" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Single"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Size"  />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Vector" />
-            <TemplateInstance ModuleName="Core\CSharp" TypeName="Vector3D"  />
-            <TemplateInstance ModuleName="Framework" TypeName="Thickness" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Byte"/>
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Color"/>
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Decimal" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Double" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int16" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int32"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Int64" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Point" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Point3D" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Quaternion" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Rotation3D"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Rect" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Single"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Size"  />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Vector" />
+            <TemplateInstance ModuleName="PresentationCore" TypeName="Vector3D"  />
+            <TemplateInstance ModuleName="PresentationFramework" TypeName="Thickness" />
         </Template>
 
     </TemplateGenerationControl>

@@ -1,11 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // The C++ version of these definitions is in inc\BuildInfo.hxx.
-
-using System;
-using System.Text;
 
 #if WINDOWS_BASE
 namespace MS.Internal.WindowsBase
@@ -51,6 +47,7 @@ namespace Microsoft.Internal
         internal const string PresentationFrameworkAero2 = $"PresentationFramework.Aero2, PublicKey={WCP_PUBLIC_KEY_STRING}";
         internal const string PresentationFrameworkAeroLite = $"PresentationFramework.AeroLite, PublicKey={WCP_PUBLIC_KEY_STRING}";
         internal const string PresentationFrameworkClassic = $"PresentationFramework.Classic, PublicKey={WCP_PUBLIC_KEY_STRING}";
+        internal const string PresentationFrameworkFluent = $"PresentationFramework.Fluent, PublicKey={WCP_PUBLIC_KEY_STRING}";
         internal const string PresentationFrameworkSystemCore = $"PresentationFramework-SystemCore, PublicKey={DEVDIV_PUBLIC_KEY_STRING}";
         internal const string PresentationFrameworkSystemData = $"PresentationFramework-SystemData, PublicKey={DEVDIV_PUBLIC_KEY_STRING}";
         internal const string PresentationFrameworkSystemDrawing = $"PresentationFramework-SystemDrawing, PublicKey={DEVDIV_PUBLIC_KEY_STRING}";

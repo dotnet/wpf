@@ -6,4 +6,5 @@
   <PropertyGroup>
     <WpfTestsDir>$(MsBuildThisFileDirectory)</WpfTestsDir>
   </PropertyGroup>
+
 </Project>

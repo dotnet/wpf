@@ -148,6 +148,8 @@ Thanks,
 #include "ttferror.h" /* for error codes */
 #include "ttfdelta.h"
 #include "sfntoff.h"
+#include "intsafe_private_copy.h"
+#include "ttf_safe_checks.h"
 
 #define WIN_ANSI_MIDDLEDOT 0xB7
 #define WIN_ANSI_BULLET 0x2219
@@ -176,7 +178,18 @@ USHORT usHighByte;
         {
             if (usFirstChar >= 0xf000)
             {
-                if (*ppulKeepSymbolCodeList = (CHAR_ID *)Mem_Alloc(usCharListCount * sizeof(CHAR_ID)))
+                if (TTF_SAFE_CHECKS_ENABLED())
+                {
+                    uint32 ulAllocSize;
+                    if (ULongMult32((uint32)usCharListCount, (uint32)sizeof(CHAR_ID), &ulAllocSize) != S_OK)
+                        return ERR_MEM;
+                    *ppulKeepSymbolCodeList = (CHAR_ID *)Mem_Alloc(ulAllocSize);
+                }
+                else
+                {
+                    *ppulKeepSymbolCodeList = (CHAR_ID *)Mem_Alloc(usCharListCount * sizeof(CHAR_ID));
+                }
+                if (*ppulKeepSymbolCodeList)
                 {
                     /* In user range -> this is a symbol font so go ahead offseting it */
                     usHighByte = (unsigned short)(usFirstChar & 0xff00);
@@ -220,7 +233,18 @@ int16 EnsureNonEmptyGlyfTable(
     uint32 * aulLoca;
 
     /* allocate memory for and read loca table */
-    aulLoca = (uint32 *)Mem_Alloc( (usGlyphCount + 1) * sizeof( uint32 ));
+    if (TTF_SAFE_CHECKS_ENABLED())
+    {
+        uint32 ulLocaCount = (uint32)usGlyphCount + 1;
+        uint32 ulAllocSize;
+        if (ULongMult32(ulLocaCount, (uint32)sizeof( uint32 ), &ulAllocSize) != S_OK)
+            return ERR_MEM;
+        aulLoca = (uint32 *)Mem_Alloc( ulAllocSize );
+    }
+    else
+    {
+        aulLoca = (uint32 *)Mem_Alloc( (usGlyphCount + 1) * sizeof(uint32) );
+    }
     if ( aulLoca == NULL )
         return ERR_MEM;
 
@@ -328,8 +352,22 @@ CMAP_SUBHEADER_GEN CmapSubHeader;
     if ((ulGlyfOffset = TTTableOffset( pInputBufferInfo, GLYF_TAG )) == DIRECTORY_ERROR)
         return (ERR_MISSING_GLYF);
 
-    usnMaxComponents = Maxp.maxComponentElements * Maxp.maxComponentDepth; /* maximum total possible */
-    pausComponents = (uint16 *)Mem_Alloc(usnMaxComponents * sizeof(uint16));
+    if (TTF_SAFE_CHECKS_ENABLED())
+    {
+        uint32 ulMaxComp, ulAllocSize;
+        if (ULongMult32((uint32)Maxp.maxComponentElements, (uint32)Maxp.maxComponentDepth, &ulMaxComp) != S_OK ||
+            ULongMult32(ulMaxComp, (uint32)sizeof(uint16), &ulAllocSize) != S_OK)
+            return(ERR_MEM);
+        if (ulMaxComp > (uint32)USHRT_MAX)
+            return(ERR_INVALID_MAXP);
+        usnMaxComponents = (uint16)ulMaxComp;
+        pausComponents = (uint16 *)Mem_Alloc(ulAllocSize);
+    }
+    else
+    {
+        usnMaxComponents = Maxp.maxComponentElements * Maxp.maxComponentDepth;
+        pausComponents = (uint16 *)Mem_Alloc(usnMaxComponents * sizeof(uint16));
+    }
     if (pausComponents == NULL)
         return(ERR_MEM);
 

@@ -1,15 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-
-using System;
 using System.Threading;
 using System.Diagnostics.CodeAnalysis;
-using System.Security;
-using MS.Internal;
-using MS.Win32;
-using MS.Internal.WindowsBase;
 
 namespace System.Windows.Interop
 {
@@ -86,13 +79,11 @@ namespace System.Windows.Interop
         ///</summary>
         internal static MSG UnsecureCurrentKeyboardMessage
         {
-            [FriendAccessAllowed] // Built into Base, used by Core or Framework.
             get
             {
                 return ComponentDispatcher.CurrentThreadData.CurrentKeyboardMessage;
             }
 
-            [FriendAccessAllowed] // Built into Base, used by Core or Framework.
             set
             {
                 ComponentDispatcher.CurrentThreadData.CurrentKeyboardMessage = value;
@@ -176,7 +167,6 @@ namespace System.Windows.Interop
         /// Components register delegates with this event to handle
         /// Keyboard Messages (first chance processing).
         ///</summary>
-        [SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")]
         public static event ThreadMessageEventHandler ThreadFilterMessage
         {
             add {
@@ -191,7 +181,6 @@ namespace System.Windows.Interop
         /// Components register delegates with this event to handle
         /// Keyboard Messages (second chance processing).
         ///</summary>
-        [SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")]
         public static event ThreadMessageEventHandler ThreadPreprocessMessage
         {
             add

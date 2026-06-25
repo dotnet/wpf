@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -11,37 +10,21 @@
 
 using MS.Internal;
 using MS.Internal.Collections;
-using MS.Internal.PresentationCore;
 using MS.Utility;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
 using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Markup;
 using System.Windows.Media.Media3D.Converters;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
-using System.Windows.Media.Imaging;
-// These types are aliased to match the unamanaged names used in interop
-using BOOL = System.UInt32;
-using WORD = System.UInt16;
-using Float = System.Single;
 
 namespace System.Windows.Media.Media3D
 {
     /// <summary>
     /// A collection of Vector3Ds.
     /// </summary>
-
     [TypeConverter(typeof(Vector3DCollectionConverter))]
     [ValueSerializer(typeof(Vector3DCollectionValueSerializer))] // Used by MarkupWriter
     public sealed partial class Vector3DCollection : Freezable, IFormattable, IList, IList<Vector3D>
@@ -132,6 +115,8 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public void Insert(int index, Vector3D value)
         {
+
+
             WritePreamble();
             _collection.Insert(index, value);
 
@@ -209,6 +194,8 @@ namespace System.Windows.Media.Media3D
             }
             set
             {
+
+
                 WritePreamble();
                 _collection[ index ] = value;
 
@@ -533,7 +520,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            Vector3DCollection sourceVector3DCollection = (Vector3DCollection) source;
+            Vector3DCollection sourceVector3DCollection = (Vector3DCollection)source;
 
             base.CloneCore(source);
 
@@ -545,13 +532,14 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourceVector3DCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            Vector3DCollection sourceVector3DCollection = (Vector3DCollection) source;
+            Vector3DCollection sourceVector3DCollection = (Vector3DCollection)source;
 
             base.CloneCurrentValueCore(source);
 
@@ -563,13 +551,14 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourceVector3DCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            Vector3DCollection sourceVector3DCollection = (Vector3DCollection) source;
+            Vector3DCollection sourceVector3DCollection = (Vector3DCollection)source;
 
             base.GetAsFrozenCore(source);
 
@@ -581,13 +570,14 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourceVector3DCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            Vector3DCollection sourceVector3DCollection = (Vector3DCollection) source;
+            Vector3DCollection sourceVector3DCollection = (Vector3DCollection)source;
 
             base.GetCurrentValueAsFrozenCore(source);
 
@@ -599,7 +589,8 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourceVector3DCollection._collection[i]);
             }
-}
+
+        }
 
 
         #endregion ProtectedMethods
@@ -696,7 +687,7 @@ namespace System.Windows.Media.Media3D
             // Helper to get the numeric list separator for a given culture.
             // char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(provider);
 
-            for (int i=0; i<_collection.Count; i++)
+            for (int i = 0; i < _collection.Count; i++)
             {
                 str.AppendFormat(
                     provider,
@@ -793,6 +784,7 @@ namespace System.Windows.Media.Media3D
 
             void IDisposable.Dispose()
             {
+
             }
 
             /// <summary>
@@ -933,6 +925,7 @@ namespace System.Windows.Media.Media3D
 
             ArgumentNullException.ThrowIfNull(collection);
 
+
             ICollection<Vector3D> icollectionOfT = collection as ICollection<Vector3D>;
 
             if (icollectionOfT != null)
@@ -953,8 +946,11 @@ namespace System.Windows.Media.Media3D
 
                     foreach (Vector3D item in collection)
                     {
+
                         _collection.Add(item);
                     }
+
+
                 }
             }
 

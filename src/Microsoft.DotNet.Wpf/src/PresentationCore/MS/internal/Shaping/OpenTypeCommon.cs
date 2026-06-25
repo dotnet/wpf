@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //+-----------------------------------------------------------------------
 //
@@ -12,11 +11,7 @@
 //
 //
 
-using System.Diagnostics;
-using System.Security;
-using System;
 using System.IO;
-using MS.Internal;
 
 namespace MS.Internal.Shaping
 {
@@ -596,7 +591,7 @@ namespace MS.Internal.Shaping
                         break;
                     }
                     default:
-                        Debug.Assert(false,"Unknown OpenType layout table!");
+                        Debug.Fail("Unknown OpenType layout table!");
                         break;
                 }
             }
@@ -1077,7 +1072,7 @@ namespace MS.Internal.Shaping
                                     break;
 
                                 case 7: //Extension lookup
-                                    Debug.Assert(false,"Ext.Lookup processed earlier!");
+                                    Debug.Fail("Ext.Lookup processed earlier!");
                                     break;
 
                                 case 8: //ReverseCahiningSubst
@@ -1162,7 +1157,7 @@ namespace MS.Internal.Shaping
                                     break;
 
                                 case 9: //Extension lookup
-                                    Debug.Assert(false,"Ext.Lookup processed earlier!");
+                                    Debug.Fail("Ext.Lookup processed earlier!");
                                     break;
 
                                 default:
@@ -1175,7 +1170,7 @@ namespace MS.Internal.Shaping
                         }
 
                         default:
-                            Debug.Assert(false,"Unknown OpenType layout table!");
+                            Debug.Fail("Unknown OpenType layout table!");
                             break;
                     }
                 }

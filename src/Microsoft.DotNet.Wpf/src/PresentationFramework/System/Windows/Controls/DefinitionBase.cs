@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Specs
@@ -15,14 +14,7 @@
 //
 
 using MS.Internal;
-using MS.Internal.KnownBoxes;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Threading;
 
 namespace System.Windows.Controls
 {
@@ -104,11 +96,8 @@ namespace System.Windows.Controls
         internal void OnExitParentTree()
         {
             _offset = 0;
-            if (_sharedState != null)
-            {
-                _sharedState.RemoveMember(this);
-                _sharedState = null;
-            }
+            _sharedState?.RemoveMember(this);
+            _sharedState = null;
         }
 
         /// <summary>
@@ -121,7 +110,7 @@ namespace System.Windows.Controls
             LayoutWasUpdated = true;
 
             //  defer verification for shared definitions
-            if (_sharedState != null)   {   _sharedState.EnsureDeferredValidation(grid);    }
+            _sharedState?.EnsureDeferredValidation(grid);
         }
 
         /// <summary>
@@ -517,13 +506,10 @@ namespace System.Windows.Controls
             {
                 string sharedSizeGroupId = (string) e.NewValue;
 
-                if (definition._sharedState != null)
-                {
-                    //  if definition is already registered AND shared size group id is changing,
-                    //  then un-register the definition from the current shared size state object.
-                    definition._sharedState.RemoveMember(definition);
-                    definition._sharedState = null;
-                }
+                //  if definition is already registered AND shared size group id is changing,
+                //  then un-register the definition from the current shared size state object.
+                definition._sharedState?.RemoveMember(definition);
+                definition._sharedState = null;
 
                 if ((definition._sharedState == null) && (sharedSizeGroupId != null))
                 {
@@ -599,13 +585,10 @@ namespace System.Windows.Controls
             {
                 SharedSizeScope privateSharedSizeScope = (SharedSizeScope) e.NewValue;
 
-                if (definition._sharedState != null)
-                {
-                    //  if definition is already registered And shared size scope is changing,
-                    //  then un-register the definition from the current shared size state object.
-                    definition._sharedState.RemoveMember(definition);
-                    definition._sharedState = null;
-                }
+                //  if definition is already registered And shared size scope is changing,
+                //  then un-register the definition from the current shared size state object.
+                definition._sharedState?.RemoveMember(definition);
+                definition._sharedState = null;
 
                 if ((definition._sharedState == null) && (privateSharedSizeScope != null))
                 {

@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Interface exposed by multi-value converters -
@@ -10,19 +9,16 @@
 // See spec at Data Binding.mht
 //
 
-using System;
-using System.Windows;
 using System.Globalization;
-using System.Reflection;
 
 namespace System.Windows.Data
 {
-/// <summary>
-/// Interface for MultiValueConverter object -
-/// used by MultiBinding to convert and combine source values to target values
-/// and to convert and split target values to source values.
-/// </summary>
-public interface IMultiValueConverter
+    /// <summary>
+    /// Interface for MultiValueConverter object -
+    /// used by MultiBinding to convert and combine source values to target values
+    /// and to convert and split target values to source values.
+    /// </summary>
+    public interface IMultiValueConverter
 {
     /// <summary>
     ///     Convert a value.  Called when moving values from sources to target.

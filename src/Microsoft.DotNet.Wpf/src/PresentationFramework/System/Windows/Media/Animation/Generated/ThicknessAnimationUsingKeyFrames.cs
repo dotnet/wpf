@@ -1,28 +1,18 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
+//
 //
 // This file was generated, please do not edit it directly.
 //
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
 using MS.Internal.KnownBoxes;
-
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Markup;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Media3D;   
-
-using SR=System.Windows.SR;
-
+using System.Windows.Media.Media3D;
 using MS.Internal.PresentationFramework;
 
 namespace System.Windows.Media.Animation
@@ -122,7 +112,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCore(Freezable sourceFreezable)
         {
-            ThicknessAnimationUsingKeyFrames sourceAnimation = (ThicknessAnimationUsingKeyFrames) sourceFreezable;
+            ThicknessAnimationUsingKeyFrames sourceAnimation = (ThicknessAnimationUsingKeyFrames)sourceFreezable;
             base.CloneCore(sourceFreezable);
 
             CopyCommon(sourceAnimation, /* isCurrentValueClone = */ false);
@@ -133,7 +123,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable sourceFreezable)
         {
-            ThicknessAnimationUsingKeyFrames sourceAnimation = (ThicknessAnimationUsingKeyFrames) sourceFreezable;
+            ThicknessAnimationUsingKeyFrames sourceAnimation = (ThicknessAnimationUsingKeyFrames)sourceFreezable;
             base.CloneCurrentValueCore(sourceFreezable);
 
             CopyCommon(sourceAnimation, /* isCurrentValueClone = */ true);
@@ -144,7 +134,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            ThicknessAnimationUsingKeyFrames sourceAnimation = (ThicknessAnimationUsingKeyFrames) source;
+            ThicknessAnimationUsingKeyFrames sourceAnimation = (ThicknessAnimationUsingKeyFrames)source;
             base.GetAsFrozenCore(source);
 
             CopyCommon(sourceAnimation, /* isCurrentValueClone = */ false);
@@ -155,7 +145,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            ThicknessAnimationUsingKeyFrames sourceAnimation = (ThicknessAnimationUsingKeyFrames) source;
+            ThicknessAnimationUsingKeyFrames sourceAnimation = (ThicknessAnimationUsingKeyFrames)source;
             base.GetCurrentValueAsFrozenCore(source);
 
             CopyCommon(sourceAnimation, /* isCurrentValueClone = */ true);
@@ -234,7 +224,7 @@ namespace System.Windows.Media.Animation
             }
             else
             {        
-                throw new ArgumentException(SR.Animation_ChildMustBeKeyFrame, "child");
+                throw new ArgumentException(SR.Animation_ChildMustBeKeyFrame, nameof(child));
             }
         }
 
@@ -801,8 +791,10 @@ namespace System.Windows.Media.Animation
                                 hasPacedKeyTimes = true;
                             }
 
-                            KeyTimeBlock block = new KeyTimeBlock();
-                            block.BeginIndex = index;
+                            KeyTimeBlock block = new KeyTimeBlock
+                            {
+                                BeginIndex = index
+                            };
 
                             // NOTE: We don't want to go all the way up to the
                             // last frame because if it is Uniform or Paced its
@@ -822,11 +814,11 @@ namespace System.Windows.Media.Animation
                                     || type == KeyTimeType.TimeSpan)
                                 {
                                     break;
-                                }   
+                                }
                                 else if (type == KeyTimeType.Paced)
                                 {
                                     hasPacedKeyTimes = true;
-                                }                                
+                                }
                             }
 
                             Debug.Assert(index < keyFrameCount, 
@@ -992,7 +984,7 @@ namespace System.Windows.Media.Animation
                 {
                     index++;
                 }
-            } 
+            }
             while (index < maxKeyFrameIndex);
         }
 

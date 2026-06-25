@@ -1,6 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
+using System.Windows.Media;
 
 /*++                                            
     Description:
@@ -9,13 +10,6 @@
 
 namespace System.Windows.Documents
 {
-    using System.Windows.Shapes;
-    using System.Windows.Media;
-    using System.Windows.Markup;
-    using System.Diagnostics;
-    using System.Windows;
-    using System.Globalization;
-
     internal sealed class FixedSOMTable : FixedSOMPageElement
     {
         //--------------------------------------------------------------------
@@ -282,7 +276,7 @@ namespace System.Windows.Documents
             }
         }
 
-          
+
 
         #endregion Internal methods
 
@@ -292,13 +286,12 @@ namespace System.Windows.Documents
         //
         //---------------------------------------------------------------------
         #region Private Fields
-        const double _minColumnWidth = 5; // empty columns narrower than this will be deleted
-        const double _minRowHeight = 10; //empty rows smaller than this will be deleted
+        private const double _minColumnWidth = 5; // empty columns narrower than this will be deleted
+        private const double _minRowHeight = 10; //empty rows smaller than this will be deleted
 
         private int _RTLCount;
         private int _LTRCount;
-
-        int _numCols;
+        private int _numCols;
 
         #endregion Private Fields
     }

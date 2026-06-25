@@ -1,6 +1,12 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
+using System.Runtime.InteropServices;
+using MS.Internal;
+using MS.Win32;
+using System.Globalization;
+using System.Windows.Controls;
+using MS.Internal.PresentationFramework;
 
 //
 // Description: Custom COM marshalling code and interfaces for interaction
@@ -9,17 +15,6 @@
 
 namespace System.Windows.Documents
 {
-    using System.Collections;
-    using System.Runtime.InteropServices;
-    using MS.Internal;
-    using MS.Win32;
-    using System.Globalization;
-    using System.Security;
-    using System.IO;
-    using System.Collections.Generic;
-    using System.Windows.Controls;
-    using MS.Internal.PresentationFramework;
-
     // Custom COM marshalling code and interfaces for interaction
     // with the Natural Language Group's nl6 proofing engine.
     internal class NLGSpellerInterop : SpellerInteropBase
@@ -606,7 +601,7 @@ namespace System.Windows.Documents
                         // Convert the VARIANT to string, and add it to our list.
                         // There's some special magic here.  The VARIANT is VT_UI2/ByRef.
                         // But under the hood it's really a raw WCHAR *.
-                        suggestions.Add(Marshal.PtrToStringUni(variant.data1.Value));
+                        suggestions.Add(Marshal.PtrToStringUni(variant.data1));
                     }
                 }
                 finally

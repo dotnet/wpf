@@ -1,24 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Wraps some of IAccessible to support getting basic properties
 //              and default action
 //
 
-
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
 using System;
 using System.Diagnostics;
-using System.Collections;
 using System.Globalization;
-using System.Threading;
 using System.Windows.Automation;
 using System.Windows;
 using Accessibility;
-using System.Text;
 using System.Runtime.InteropServices;
 using MS.Win32;
 
@@ -164,7 +156,7 @@ namespace MS.Internal.AutomationProxies
             // DuplicateHandle back to this process.)
             IntPtr wParam = IntPtr.Zero;
             if(Environment.OSVersion.Version.Major >= 6)
-                wParam = new IntPtr(UnsafeNativeMethods.GetCurrentProcessId());
+                wParam = new IntPtr(Environment.ProcessId);
 
             // send the window a WM_GETOBJECT message requesting the specific object id.
             IntPtr lResult = Misc.ProxySendMessage(hwnd, NativeMethods.WM_GETOBJECT, wParam, new IntPtr(idObject));
@@ -397,12 +389,9 @@ namespace MS.Internal.AutomationProxies
                     catch (Exception e)
                     {
                         if (HandleIAccessibleException(e))
-                        {
-                            // PerSharp/PreFast will flag this as a warning, 6503/56503: Property get methods should not throw exceptions.
-                            // We are communicate with the underlying control to get the information.  
+                        { 
                             // The control may not be able to give us the information we need.
                             // Throw the correct exception to communicate the failure.
-#pragma warning suppress 6503
                             throw;
                         }
                         return null;
@@ -497,11 +486,8 @@ namespace MS.Internal.AutomationProxies
                 {
                     if (HandleIAccessibleException(e))
                     {
-                        // PerSharp/PreFast will flag this as a warning, 6503/56503: Property get methods should not throw exceptions.
-                        // We are communicate with the underlying control to get the information.  
                         // The control may not be able to give us the information we need.
                         // Throw the correct exception to communicate the failure.
-#pragma warning suppress 6503
                         throw;
                     }
                     return AccessibleState.Unavailable;
@@ -516,21 +502,16 @@ namespace MS.Internal.AutomationProxies
                 try
                 {
                     string value = FixBstr(_acc.get_accValue(_idChild));
-                    // PerSharp/PreFast will flag this as warning 6507/56507: Prefer 'string.IsNullOrEmpty(value)' over checks for null and/or emptiness.
                     // Need to convert nulls into an empty string, so need to just test for a null.
                     // Therefore we can not use IsNullOrEmpty() here, suppress the warning.
-#pragma warning suppress 6507
-                    return value != null ? value : "";
+                    return value ?? "";
                 }
                 catch (Exception e)
                 {
                     if (HandleIAccessibleException(e))
                     {
-                        // PerSharp/PreFast will flag this as a warning, 6503/56503: Property get methods should not throw exceptions.
-                        // We are communicate with the underlying control to get the information.  
                         // The control may not be able to give us the information we need.
                         // Throw the correct exception to communicate the failure.
-#pragma warning suppress 6503
                         throw;
                     }
                     return "";
@@ -577,9 +558,8 @@ namespace MS.Internal.AutomationProxies
                 {
                     return Accessible.Wrap(accChild);
                 }
-                else if (child is int)
+                else if (child is int idChild)
                 {
-                    int idChild = (int)child;
                     return Accessible.Wrap(accParent.IAccessible, idChild);
                 }
             }
@@ -638,16 +618,15 @@ namespace MS.Internal.AutomationProxies
                 children = new Accessible[1];
                 children[0] = AccessibleFromObject(obj, _acc);
             }
-            else if (obj is object)
+            else if (obj is not null)
             {
                 children = new Accessible[1];
                 children[0] = AccessibleFromObject(obj, _acc);
             }
-            else if (obj is object [])
+            else if (obj is object[] objs)
             {
-                object [] objs = (object [])obj;
                 children = new Accessible[objs.Length];
-                for (int i=0;i<objs.Length;i++)
+                for (int i = 0; i < objs.Length; i++)
                 {
                     children[i] = AccessibleFromObject(objs[i], _acc);
                 }
@@ -731,11 +710,8 @@ namespace MS.Internal.AutomationProxies
                 {
                     if (HandleIAccessibleException(e))
                     {
-                        // PerSharp/PreFast will flag this as a warning, 6503/56503: Property get methods should not throw exceptions.
-                        // We are communicate with the underlying control to get the information.  
                         // The control may not be able to give us the information we need.
                         // Throw the correct exception to communicate the failure.
-#pragma warning suppress 6503
                         throw;
                     }
                     return "";
@@ -771,10 +747,8 @@ namespace MS.Internal.AutomationProxies
                 // point is not on this object or one of its children
                 rval = null;
             }
-            else if (scan is int)
+            else if (scan is int idChild) // point is on child or self. If self then return 'this'
             {
-                // point is on child or self. If self then return 'this'
-                int idChild = (int)scan;
                 if (idChild == NativeMethods.CHILD_SELF)
                 {
                     rval = this;
@@ -872,12 +846,9 @@ namespace MS.Internal.AutomationProxies
                     catch (Exception e)
                     {
                         if (HandleIAccessibleException(e))
-                        {
-                            // PerSharp/PreFast will flag this as a warning, 6503/56503: Property get methods should not throw exceptions.
-                            // We are communicate with the underlying control to get the information.  
+                        { 
                             // The control may not be able to give us the information we need.
                             // Throw the correct exception to communicate the failure.
-#pragma warning suppress 6503
                             throw;
                         }
 
@@ -942,7 +913,7 @@ namespace MS.Internal.AutomationProxies
                     // Get the raw children because accNavigate doesn't work
                     if (UnsafeNativeMethods.AccessibleChildren(accessibleObject, 0, childCount, aChildren, out childrenReturned) == NativeMethods.E_INVALIDARG)
                     {
-                        System.Diagnostics.Debug.Assert(false, "Call to AccessibleChildren() returned E_INVALIDARG.");
+                        System.Diagnostics.Debug.Fail("Call to AccessibleChildren() returned E_INVALIDARG.");
                         throw new ElementNotAvailableException();
                     }
                 }
@@ -995,10 +966,7 @@ namespace MS.Internal.AutomationProxies
                 index = children.Length - 1; 
 
             Accessible nav = AccessibleFromObject(children[index], parent);
-            if (nav != null)
-            {
-                nav._accessibleChildrenIndex = index;
-            }
+            nav?._accessibleChildrenIndex = index;
 
             return nav;
         }
@@ -1399,7 +1367,7 @@ namespace MS.Internal.AutomationProxies
 
                     default:
                         // we want to know when we get an exception we haven't seen before
-                        Debug.Assert(false, string.Format(CultureInfo.CurrentCulture, "MsaaNativeProvider: IAccessible threw a COMException: {0}", e.Message));
+                        Debug.Fail(string.Format(CultureInfo.CurrentCulture, "MsaaNativeProvider: IAccessible threw a COMException: {0}", e.Message));
                         break;
                 }
             }
@@ -1416,7 +1384,7 @@ namespace MS.Internal.AutomationProxies
             else
             {
                 // we want to know when we get an exception we haven't seen before
-                Debug.Assert(false, string.Format(CultureInfo.CurrentCulture, "Unexpected IAccessible exception: {0}", e));
+                Debug.Fail(string.Format(CultureInfo.CurrentCulture, "Unexpected IAccessible exception: {0}", e));
             }
 
             // rethrow the exception
@@ -1433,7 +1401,7 @@ namespace MS.Internal.AutomationProxies
         // released, so we need a way to work with the existing code anyway; and this error
         // appears to be a side-effect of other security-related code in the Winforms impl
         // which Winforms really do not want to modify), we use this workaround.
-        static IAccessible WashPartialTrustWinformsAccessible(IAccessible old)
+        private static IAccessible WashPartialTrustWinformsAccessible(IAccessible old)
         {
             // Basic alg: get the parent, get all its children, then check each
             // one looking for the one that corresponds to the same element as the

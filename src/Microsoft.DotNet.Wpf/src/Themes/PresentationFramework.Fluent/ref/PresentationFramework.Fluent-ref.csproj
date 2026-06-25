@@ -1,0 +1,31 @@
+<!-- Fluent -->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>Fluent</AssemblyName>
+    <PackageId>Fluent-ref</PackageId>
+    <TargetOutputRelPath>$(TargetGroup)-$(PackageId)/</TargetOutputRelPath>
+
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <Platforms>AnyCPU</Platforms>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+
+    <!-- THEME_Fluent #DEFINE is used in KnownTypeHelper.cs -->
+    <DefineConstants>$(DefineConstants);THEME_Fluent</DefineConstants>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
+    <Compile Include="$(WpfSharedDir)ref\AttributesForReferenceAssemblies.cs" />
+  </ItemGroup>
+
+  <!-- Project References -->
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)PresentationUI\ref\PresentationUI-ref.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\ref\System.Xaml-ref.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\ref\WindowsBase-ref.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\ref\PresentationCore-ref.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationFramework\ref\PresentationFramework-ref.csproj" />
+  </ItemGroup>
+</Project>

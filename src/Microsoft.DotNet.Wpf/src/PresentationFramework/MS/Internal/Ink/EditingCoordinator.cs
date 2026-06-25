@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -9,24 +8,9 @@
 //
 
 
-using System;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Security;
-using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Interop;
-using System.Windows.Navigation;
-using System.Windows.Media;
-using MS.Utility;
 
 namespace MS.Internal.Ink
 {
@@ -613,10 +597,7 @@ namespace MS.Internal.Ink
             EditingBehavior behavior = ActiveEditingBehavior;
 
             // Deactivate the previous behavior
-            if ( behavior != null )
-            {
-                behavior.Deactivate();
-            }
+            behavior?.Deactivate();
 
             // Activate the new behavior.
             _activationStack.Push(newEditingBehavior);
@@ -886,11 +867,8 @@ namespace MS.Internal.Ink
                 {
                     // The follow code raises variety editing events.
                     // The out-side code could throw exception in the their handlers. We use try/finally block to protect our status.
-                    if ( ActiveEditingBehavior != null )
-                    {
-                        // Commit the current editing.
-                        ActiveEditingBehavior.Commit(true);
-                    }
+                    // Commit the current editing.
+                    ActiveEditingBehavior?.Commit(true);
                 }
                 finally
                 {
@@ -964,10 +942,7 @@ namespace MS.Internal.Ink
                 {
                     // Reset the dynamic renderer for InkCollectionBehavior
                     InkCollectionBehavior inkCollectionBehavior = stylusEditingBehavior as InkCollectionBehavior;
-                    if ( inkCollectionBehavior != null )
-                    {
-                        inkCollectionBehavior.ResetDynamicRenderer();
-                    }
+                    inkCollectionBehavior?.ResetDynamicRenderer();
                 }
 
                 stylusEditingBehavior.AddStylusPoints(stylusPoints, userInitiated);
@@ -1200,7 +1175,7 @@ namespace MS.Internal.Ink
             }
             else
             {
-                Debug.Assert(false, "Unknown behavior");
+                Debug.Fail("Unknown behavior");
             }
 
             return flag;
@@ -1237,7 +1212,7 @@ namespace MS.Internal.Ink
             }
             else
             {
-                Debug.Assert(false, "Unknown behavior");
+                Debug.Fail("Unknown behavior");
             }
 
             return flag;

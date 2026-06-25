@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Defines BindingExpression object, the run-time instance of data binding.
@@ -8,25 +7,16 @@
 // See spec at Data Binding.mht
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Threading;
 using System.Threading;
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows.Markup;
-using MS.Utility;
 using MS.Internal;
-using MS.Internal.Controls; // Validation
 using MS.Internal.Data;
-using MS.Internal.KnownBoxes;
-using MS.Internal.Utility;  // TraceLog
 
 namespace System.Windows.Data
 {
@@ -202,10 +192,7 @@ namespace System.Windows.Data
             if (IsDetached)
                 throw new InvalidOperationException(SR.BindingExpressionIsDetached);
 
-            if (Worker != null)
-            {
-                Worker.RefreshValue();  // calls TransferValue
-            }
+            Worker?.RefreshValue();  // calls TransferValue
         }
 
 #region Expression overrides
@@ -364,13 +351,13 @@ namespace System.Windows.Data
         // the item whose property changes when we UpdateSource
         internal object SourceItem
         {
-            get { return (Worker != null) ? Worker.SourceItem : null; }
+            get { return Worker?.SourceItem; }
         }
 
         // the name of the property that changes when we UpdateSource
         internal string SourcePropertyName
         {
-            get { return (Worker != null) ? Worker.SourcePropertyName : null; }
+            get { return Worker?.SourcePropertyName; }
         }
 
         // the value of the source property
@@ -404,7 +391,7 @@ namespace System.Windows.Data
             FrameworkPropertyMetadata fwMetaData = dp.GetMetadata(d.DependencyObjectType) as FrameworkPropertyMetadata;
 
             if ((fwMetaData != null && !fwMetaData.IsDataBindingAllowed) || dp.ReadOnly)
-                throw new ArgumentException(SR.Format(SR.PropertyNotBindable, dp.Name), "dp");
+                throw new ArgumentException(SR.Format(SR.PropertyNotBindable, dp.Name), nameof(dp));
 
             // create the BindingExpression
             BindingExpression bindExpr = new BindingExpression(binding, parent);
@@ -606,7 +593,7 @@ namespace System.Windows.Data
         // just return (with status == Unattached).  The binding engine will try
         // again later. For hard failures, set an error status;  no more chances.
         // During the "last chance" attempt, treat all failures as "hard".
-        void AttachToContext(AttachAttempt attempt)
+        private void AttachToContext(AttachAttempt attempt)
         {
             // if the target has been GC'd, just give up
             DependencyObject target = TargetElement;
@@ -1053,7 +1040,7 @@ namespace System.Windows.Data
         //      In the two-way subcase, instead of a source-to-target transfer, we set the
         //      the target property to the (saved) raw proposed value, as if the user
         //      had edited this property.
-        object GetInitialValue(DependencyObject target, out ValidationError error)
+        private object GetInitialValue(DependencyObject target, out ValidationError error)
         {
             object proposedValue;
 
@@ -1121,8 +1108,7 @@ namespace System.Windows.Data
             CancelPendingTasks();
 
             // detach from data item
-            if (Worker != null)
-                Worker.DetachDataItem();
+            Worker?.DetachDataItem();
 
             // restore default value, in case source/converter fail to provide a good value
             ChangeValue(DefaultValueObject, false);
@@ -1249,12 +1235,12 @@ namespace System.Windows.Data
             ChangeSources(newSources);
         }
 
-#endregion Worker
+        #endregion Worker
 
-#region Value
+        #region Value
 
         // transfer a value from the source to the target
-        void TransferValue()
+        private void TransferValue()
         {
             TransferValue(DependencyProperty.UnsetValue, false);
         }
@@ -1603,7 +1589,7 @@ namespace System.Windows.Data
             UpdateValidationError(validationError);
         }
 
-        ValidationError RunValidationRule(ValidationRule validationRule, object value, CultureInfo culture)
+        private ValidationError RunValidationRule(ValidationRule validationRule, object value, CultureInfo culture)
         {
             ValidationError error;
 
@@ -1635,14 +1621,6 @@ namespace System.Windows.Data
             // use the StringFormat (if appropriate) in preference to the default converter
             string stringFormat = EffectiveStringFormat;
             Invariant.Assert(converter != null || stringFormat != null);
-
-            // PreSharp uses message numbers that the C# compiler doesn't know about.
-            // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
-
-            // PreSharp complains about catching NullReference (and other) exceptions.
-            // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-            #pragma warning disable 56500
 
             object convertedValue = null;
             try
@@ -1693,9 +1671,6 @@ namespace System.Windows.Data
                 convertedValue = DependencyProperty.UnsetValue;
             }
 
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
-
             return convertedValue;
         }
 
@@ -1706,14 +1681,6 @@ namespace System.Windows.Data
                                          CultureInfo culture)
         {
             Invariant.Assert(converter != null);
-
-            // PreSharp uses message numbers that the C# compiler doesn't know about.
-            // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
-
-            // PreSharp complains about catching NullReference (and other) exceptions.
-            // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-            #pragma warning disable 56500
 
             object convertedValue = null;
             try
@@ -1757,9 +1724,6 @@ namespace System.Windows.Data
                 convertedValue = DependencyProperty.UnsetValue;
             }
 
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
-
             return convertedValue;
         }
 
@@ -1774,8 +1738,7 @@ namespace System.Windows.Data
             TransferValue(DependencyProperty.UnsetValue, isASubPropertyChange);
         }
 
-
-        void OnTargetUpdated()
+        private void OnTargetUpdated()
         {
             if (NotifyOnTargetUpdated)
             {
@@ -1806,7 +1769,7 @@ namespace System.Windows.Data
             }
         }
 
-        void OnSourceUpdated()
+        private void OnSourceUpdated()
         {
             if (NotifyOnSourceUpdated)
             {
@@ -2003,15 +1966,6 @@ namespace System.Windows.Data
                 return value;
             }
 
-
-            // PreSharp uses message numbers that the C# compiler doesn't know about.
-            // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
-
-            // PreSharp complains about catching NullReference (and other) exceptions.
-            // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-            #pragma warning disable 56500
-
             try
             {
                 BeginSourceUpdate();
@@ -2046,9 +2000,6 @@ namespace System.Windows.Data
             {
                 EndSourceUpdate();
             }
-
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
 
             OnSourceUpdated();
 
@@ -2361,7 +2312,7 @@ namespace System.Windows.Data
             }
         }
 
-        void UpdateNotifyDataErrors(object value)
+        private void UpdateNotifyDataErrors(object value)
         {
             if (!ValidatesOnNotifyDataErrors)
                 return;
@@ -2410,7 +2361,7 @@ namespace System.Windows.Data
             return result;
         }
 
-        List<object> MergeErrors(List<object> list1, List<object> list2)
+        private List<object> MergeErrors(List<object> list1, List<object> list2)
         {
             if (list1 == null)
                 return list2;
@@ -2476,7 +2427,7 @@ namespace System.Windows.Data
             // Consider Cancel if anything goes wrong.
         }
 
-        void OnDataChanged(object sender, EventArgs e)
+        private void OnDataChanged(object sender, EventArgs e)
         {
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Events))
             {
@@ -2490,7 +2441,7 @@ namespace System.Windows.Data
             Activate(sender);
         }
 
-        void OnInheritanceContextChanged(object sender, EventArgs e)
+        private void OnInheritanceContextChanged(object sender, EventArgs e)
         {
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Events))
             {
@@ -2538,7 +2489,7 @@ namespace System.Windows.Data
             Update();
         }
 
-        void OnErrorsChanged(object sender, DataErrorsChangedEventArgs e)
+        private void OnErrorsChanged(object sender, DataErrorsChangedEventArgs e)
         {
             // if notification was on the right thread, just do the work (normal case)
             if (Dispatcher.Thread == Thread.CurrentThread)
@@ -2610,7 +2561,7 @@ namespace System.Windows.Data
         }
 
         // replace this BindingExpression with a new one
-        void Replace()
+        private void Replace()
         {
             DependencyObject target = TargetElement;
             if (target != null)
@@ -2625,8 +2576,10 @@ namespace System.Windows.Data
         // raise the TargetUpdated event (explicit polymorphism)
         internal static void OnTargetUpdated(DependencyObject d, DependencyProperty dp)
         {
-            DataTransferEventArgs args = new DataTransferEventArgs(d, dp);
-            args.RoutedEvent = Binding.TargetUpdatedEvent;
+            DataTransferEventArgs args = new DataTransferEventArgs(d, dp)
+            {
+                RoutedEvent = Binding.TargetUpdatedEvent
+            };
             FrameworkObject fo = new FrameworkObject(d);
 
             if (!fo.IsValid && d != null)
@@ -2640,8 +2593,10 @@ namespace System.Windows.Data
         // raise the SourceUpdatedEvent event (explicit polymorphism)
         internal static void OnSourceUpdated(DependencyObject d, DependencyProperty dp)
         {
-            DataTransferEventArgs args = new DataTransferEventArgs(d, dp);
-            args.RoutedEvent = Binding.SourceUpdatedEvent;
+            DataTransferEventArgs args = new DataTransferEventArgs(d, dp)
+            {
+                RoutedEvent = Binding.SourceUpdatedEvent
+            };
             FrameworkObject fo = new FrameworkObject(d);
 
             if (!fo.IsValid && d != null)
@@ -2691,10 +2646,7 @@ namespace System.Windows.Data
                 TransferValue();
             }
 
-            if (Worker != null)
-            {
-                Worker.OnSourceInvalidation(d, dp, args.IsASubPropertyChange);
-            }
+            Worker?.OnSourceInvalidation(d, dp, args.IsASubPropertyChange);
         }
 
 
@@ -2712,17 +2664,17 @@ namespace System.Windows.Data
                 GC.SuppressFinalize(this);
             }
 
-            BindingExpression _bindingExpression;
+            private BindingExpression _bindingExpression;
         }
 
-        void SetDataItem(object newItem)
+        private void SetDataItem(object newItem)
         {
             _dataItem = CreateReference(newItem);
         }
 
         // find the DataSource object (if any) that produced the DataContext
         // for element d
-        object GetDataSourceForDataContext(DependencyObject d)
+        private object GetDataSourceForDataContext(DependencyObject d)
         {
             // look for ancestor that contributed the inherited value
             DependencyObject ancestor;
@@ -2745,7 +2697,7 @@ namespace System.Windows.Data
             return null;
         }
 
-#endregion Helper functions
+        #endregion Helper functions
 
         //------------------------------------------------------
         //
@@ -2753,10 +2705,10 @@ namespace System.Windows.Data
         //
         //------------------------------------------------------
 
-        WeakReference           _ctxElement;
-        object                  _dataItem;
-        BindingWorker           _worker;
-        Type                    _sourceType;
+        private WeakReference           _ctxElement;
+        private object                  _dataItem;
+        private BindingWorker           _worker;
+        private Type                    _sourceType;
 
         internal static readonly object NullDataItem = new NamedObject("NullDataItem");
         internal static readonly object IgnoreDefaultValue = new NamedObject("IgnoreDefaultValue");

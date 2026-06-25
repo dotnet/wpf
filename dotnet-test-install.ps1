@@ -1040,8 +1040,8 @@ function Get-AkaMsLink-And-Version([string] $NormalizedChannel, [string] $Normal
 function Get-Feeds-To-Use()
 {
     $feeds = @(
-    "https://dotnetcli.azureedge.net/dotnet",
-    "https://dotnetbuilds.azureedge.net/public"
+    "https://builds.dotnet.microsoft.com/dotnet",
+    "https://ci.dot.net/public"
     )
 
     if (-not [string]::IsNullOrEmpty($AzureFeed)) {
@@ -1050,8 +1050,8 @@ function Get-Feeds-To-Use()
 
     if ($NoCdn) {
         $feeds = @(
-        "https://dotnetcli.blob.core.windows.net/dotnet",
-        "https://dotnetbuilds.blob.core.windows.net/public"
+        "https://builds.dotnet.microsoft.com/dotnet",
+        "https://ci.dot.net/public"
         )
 
         if (-not [string]::IsNullOrEmpty($UncachedFeed)) {

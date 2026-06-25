@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -32,13 +31,13 @@ namespace System.Windows.Markup
 
         public override void CallBase()
         {
-            if (CurrentType != null)
+            if (CurrentType is not null)
             {
                 XamlType baseType = CurrentType.BaseType;
-                if (baseType != null)
+                if (baseType is not null)
                 {
                     CurrentType = baseType;
-                    if (baseType.SetMarkupExtensionHandler != null)
+                    if (baseType.SetMarkupExtensionHandler is not null)
                     {
                         baseType.SetMarkupExtensionHandler(TargetObject, this);
                     }

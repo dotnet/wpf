@@ -1,15 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: The arguments sent when a TextChangedEvent is fired in a TextContainer.
 //
 
-using System;
-using System.Windows;
 using System.Windows.Controls;
-using System.Collections.Generic;
 
 namespace System.Windows.Documents
 {
@@ -214,8 +210,10 @@ namespace System.Windows.Documents
             }
             else
             {
-                change = new TextChange();
-                change.Offset = offset;
+                change = new TextChange
+                {
+                    Offset = offset
+                };
                 Changes.Add(offset, change);
                 keyIndex = Changes.IndexOfKey(offset);
             }

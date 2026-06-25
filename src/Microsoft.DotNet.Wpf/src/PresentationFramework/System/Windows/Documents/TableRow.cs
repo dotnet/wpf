@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Table row implementation
@@ -8,25 +7,10 @@
 //              See spec at WPP TableOM.doc
 //
 
-using MS.Internal;
-using MS.Internal.PtsHost;
 using MS.Internal.PtsTable;
-using MS.Internal.Text;
-using MS.Utility;
-
-using System;
-using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Security;
-using System.Windows.Threading;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Markup;
-using System.Collections.Generic;
 using MS.Internal.Documents;
-using MS.Internal.PtsHost.UnsafeNativeMethods;
 
 namespace System.Windows.Documents
 {
@@ -78,7 +62,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            throw (new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(TableCell)), "value"));
+            throw (new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(TableCell)), nameof(value)));
         }
 
         /// <summary>
@@ -170,10 +154,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal void OnEnterParentTree()
         {
-            if (Table != null)
-            {
-                Table.OnStructureChanged();
-            }
+            Table?.OnStructureChanged();
         }
 
         /// <summary>
@@ -250,7 +231,7 @@ namespace System.Windows.Documents
             Debug.Assert(_spannedCells != null);
 
             if ((_formatCellCount > 0) ||
-               isLastRowOfAnySpan == true)
+               isLastRowOfAnySpan)
             {
                 SetFlags(true, Flags.HasRealCells);
             }
@@ -284,7 +265,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// Table owner accessor
         /// </summary>
-        internal Table Table { get { return (RowGroup != null ? RowGroup.Table : null); } }
+        internal Table Table { get { return (RowGroup?.Table); } }
 
         /// <summary>
         /// Returns the row's cell collection

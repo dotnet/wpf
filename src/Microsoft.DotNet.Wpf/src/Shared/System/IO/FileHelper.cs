@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //---------------------------------------------------------------------------
 //
@@ -12,13 +11,9 @@
 //
 //---------------------------------------------------------------------------
 
-using System;
-using System.IO;
-using System.Security;
-
 namespace System.IO
 {
-    static internal class FileHelper
+    internal static class FileHelper
     {
         // The normal way to create and open a temp file fails when an impolite
         // process opens the new file before we can
@@ -89,7 +84,7 @@ namespace System.IO
         /// <param name="fileOptions">desired options for the temp file (defaults to None)</param>
         /// <param name="extension">desired extension, or null (defaults to null)</param>
         /// <param name="subFolder">desired subfolder of temp folder, or null (defaults to "WPF")</param>
-        static internal FileStream CreateAndOpenTemporaryFile(
+        internal static FileStream CreateAndOpenTemporaryFile(
                     out string filePath,
                     FileAccess fileAccess=FileAccess.Write,
                     FileOptions fileOptions=FileOptions.None,
@@ -145,16 +140,11 @@ namespace System.IO
             return stream;
         }
 
-        // PreSharp uses message numbers that the C# compiler doesn't know about.
-        // Disable the C# complaints, per the PreSharp documentation.
-        #pragma warning disable 1634, 1691
-        #pragma warning disable 56502 // disable PreSharp warning about empty catch blocks
-
         ///<summary>
         /// Delete a temporary file robustly.
         ///</summary>
         /// <param name="filePath">Path to the temp file.</param>
-        static internal void DeleteTemporaryFile(string filePath)
+        internal static void DeleteTemporaryFile(string filePath)
         {
             if (!String.IsNullOrEmpty(filePath))
             {
@@ -175,6 +165,5 @@ namespace System.IO
                 }
             }
         }
-        #pragma warning restore 56502
     }
 }

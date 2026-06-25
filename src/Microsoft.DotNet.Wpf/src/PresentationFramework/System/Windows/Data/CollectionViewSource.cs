@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Defines CollectionViewSource object, the markup-accessible entry
@@ -9,7 +8,6 @@
 // See spec at CollectionViewSource.mht
 //
 
-using System;
 using System.Collections;           // IEnumerable
 using System.Collections.ObjectModel;   // ObservableCollection<T>
 using System.Collections.Specialized;   // NotifyCollectionChanged*
@@ -803,7 +801,7 @@ namespace System.Windows.Data
         // Return the default view for the given source.  This view is never
         // affiliated with any CollectionViewSource.  It may be a
         // CollectionViewProxy over the original view
-        static internal CollectionView GetDefaultCollectionView(object source, bool createView, Func<object, object> GetSourceItem=null)
+        internal static CollectionView GetDefaultCollectionView(object source, bool createView, Func<object, object> GetSourceItem=null)
         {
             if (!IsValidSourceForView(source))
                 return null;
@@ -905,12 +903,12 @@ namespace System.Windows.Data
 
         // Obtain the view affiliated with the current source.  This may create
         // a new view, or re-use an existing one.
-        void EnsureView()
+        private void EnsureView()
         {
             EnsureView(Source, CollectionViewType);
         }
 
-        void EnsureView(object source, Type collectionViewType)
+        private void EnsureView(object source, Type collectionViewType)
         {
             if (_isInitializing || _deferLevel > 0)
                 return;
@@ -950,7 +948,7 @@ namespace System.Windows.Data
                     (object x) =>
                     {
                         BindingExpressionBase beb = BindingOperations.GetBindingExpressionBase(this, SourceProperty);
-                        return (beb != null) ? beb.GetSourceItem(x) : null;
+                        return beb?.GetSourceItem(x);
                     });
 
                 if (viewRecord != null)
@@ -972,7 +970,7 @@ namespace System.Windows.Data
         }
 
         // Forward properties from the CollectionViewSource to the CollectionView
-        void ApplyPropertiesToView(ICollectionView view)
+        private void ApplyPropertiesToView(ICollectionView view)
         {
             if (view == null || _deferLevel > 0)
                 return;
@@ -1106,7 +1104,7 @@ namespace System.Windows.Data
         }
 
         // return the original (un-proxied) view for the given view
-        static ICollectionView GetOriginalView(ICollectionView view)
+        private static ICollectionView GetOriginalView(ICollectionView view)
         {
             for (   CollectionViewProxy proxy = view as CollectionViewProxy;
                     proxy != null;
@@ -1118,7 +1116,7 @@ namespace System.Windows.Data
             return view;
         }
 
-        Predicate<object> FilterWrapper
+        private Predicate<object> FilterWrapper
         {
             get
             {
@@ -1131,7 +1129,7 @@ namespace System.Windows.Data
             }
         }
 
-        bool WrapFilter(object item)
+        private bool WrapFilter(object item)
         {
             FilterEventArgs args = new FilterEventArgs(item);
             FilterEventHandler handlers = FilterHandlersField.GetValue(this);
@@ -1144,19 +1142,19 @@ namespace System.Windows.Data
             return args.Accepted;
         }
 
-        void OnDataChanged(object sender, EventArgs e)
+        private void OnDataChanged(object sender, EventArgs e)
         {
             EnsureView();
         }
 
         // a change occurred in one of the collections that we forward to the view
-        void OnForwardedCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnForwardedCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             OnForwardedPropertyChanged();
         }
 
         // a change occurred in one of the properties that we forward to the view
-        void OnForwardedPropertyChanged()
+        private void OnForwardedPropertyChanged()
         {
             // increment the version number.  This causes the change to get applied
             // to dormant views when they become active.
@@ -1167,12 +1165,12 @@ namespace System.Windows.Data
         }
 
         // defer changes
-        void BeginDefer()
+        private void BeginDefer()
         {
             ++ _deferLevel;
         }
 
-        void EndDefer()
+        private void EndDefer()
         {
             if (--_deferLevel == 0)
             {
@@ -1238,7 +1236,7 @@ namespace System.Windows.Data
                 get { return _filterWrapper; }
             }
 
-            bool WrapFilter(object item)
+            private bool WrapFilter(object item)
             {
                 CollectionViewSource parent = (CollectionViewSource)_parent.Target;
                 if (parent != null)
@@ -1251,8 +1249,8 @@ namespace System.Windows.Data
                 }
             }
 
-            WeakReference _parent;
-            Predicate<object> _filterWrapper;
+            private WeakReference _parent;
+            private Predicate<object> _filterWrapper;
         }
 
         #endregion Private Types
@@ -1264,25 +1262,25 @@ namespace System.Windows.Data
         //
 
         // properties that get forwarded to the view
-        CultureInfo                             _culture;
-        SortDescriptionCollection               _sort;
-        ObservableCollection<GroupDescription>  _groupBy;
-        ObservableCollection<string>            _liveSortingProperties;
-        ObservableCollection<string>            _liveFilteringProperties;
-        ObservableCollection<string>            _liveGroupingProperties;
+        private CultureInfo                             _culture;
+        private SortDescriptionCollection               _sort;
+        private ObservableCollection<GroupDescription>  _groupBy;
+        private ObservableCollection<string>            _liveSortingProperties;
+        private ObservableCollection<string>            _liveFilteringProperties;
+        private ObservableCollection<string>            _liveGroupingProperties;
 
         // other state
-        bool                _isInitializing;
-        bool                _isViewInitialized; // view is initialized when it is first retrieved externally
-        int                 _version;       // timestamp of last change to a forwarded property
-        int                 _deferLevel;    // counts nested calls to BeginDefer
-        DataSourceProvider  _dataProvider;  // DataSourceProvider whose DataChanged event we want
-        FilterStub          _filterStub;    // used to support the Filter event
+        private bool                _isInitializing;
+        private bool                _isViewInitialized; // view is initialized when it is first retrieved externally
+        private int                 _version;       // timestamp of last change to a forwarded property
+        private int                 _deferLevel;    // counts nested calls to BeginDefer
+        private DataSourceProvider  _dataProvider;  // DataSourceProvider whose DataChanged event we want
+        private FilterStub          _filterStub;    // used to support the Filter event
 
         // Fields to implement DO's inheritance context
-        DependencyObject    _inheritanceContext;
-        bool                _hasMultipleInheritanceContexts;
-        DependencyProperty  _propertyForInheritanceContext;
+        private DependencyObject    _inheritanceContext;
+        private bool                _hasMultipleInheritanceContexts;
+        private DependencyProperty  _propertyForInheritanceContext;
 
         // the placeholder source for all default views
         internal static readonly CollectionViewSource DefaultSource = new CollectionViewSource();

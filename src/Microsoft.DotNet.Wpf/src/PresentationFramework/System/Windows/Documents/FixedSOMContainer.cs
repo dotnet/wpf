@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 /*++                                                                    
     Description:
@@ -9,10 +8,6 @@
 
 namespace System.Windows.Documents
 {
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Windows.Media;
-    
     internal abstract class FixedSOMContainer :FixedSOMSemanticBox, IComparable
     {
         //--------------------------------------------------------------------
@@ -39,7 +34,7 @@ namespace System.Windows.Documents
             Debug.Assert(This != null);
             if (compared == null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, comparedObj.GetType(), typeof(FixedSOMContainer)), "comparedObj");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, comparedObj.GetType(), typeof(FixedSOMContainer)), nameof(comparedObj));
             }
             SpatialComparison compareHor = base._CompareHorizontal(compared, false);
             SpatialComparison compareVer = base._CompareVertical(compared);
@@ -208,7 +203,7 @@ namespace System.Windows.Documents
 
         #region Private methods
 
-        void _ConstructFixedNodes()
+        private void _ConstructFixedNodes()
         {
             _fixedNodes = new List<FixedNode>();
             foreach (FixedSOMSemanticBox box in _semanticBoxes)
@@ -231,7 +226,7 @@ namespace System.Windows.Documents
             }
         }
 
-        void _UpdateBoundingRect(Rect rect)
+        private void _UpdateBoundingRect(Rect rect)
         {
             if (_boundingRect.IsEmpty)
             {

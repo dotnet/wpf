@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: A trace logging manager for collecting debug information. 
@@ -11,8 +10,6 @@
 //
 
 using MS.Internal;
-using MS.Internal.Telemetry;
-using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 
 namespace System.Windows.Documents.Tracing
@@ -157,7 +154,7 @@ namespace System.Windows.Documents.Tracing
                         NumCallsMeasured = new Dictionary<Actions, long>()
                     };
 
-                    foreach (Actions a in Enum.GetValues(typeof(Actions)))
+                    foreach (Actions a in Enum.GetValues<Actions>())
                     {
                         instanceInfo.CumulativeCallTime100Ns.Add(a, 0);
                         instanceInfo.NumCallsMeasured.Add(a, 0);

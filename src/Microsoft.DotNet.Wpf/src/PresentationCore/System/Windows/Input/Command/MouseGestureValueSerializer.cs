@@ -1,18 +1,12 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
 // Description: MouseGestureValueSerializer - Serializes a MouseGesture 
 //
 
-using System;
 using System.ComponentModel;    // for TypeConverter
-using System.Globalization;     // for CultureInfo
-using System.Reflection;
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Markup;
 
 namespace System.Windows.Input

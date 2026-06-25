@@ -1,25 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  This is an internal class that is build around ArrayList of Memory streams to enable really large (63 bit size)
 //  virtual streams.
-//
-//
-//
-//
-//
 
-using System;
-using System.Diagnostics;
-using System.Collections.Generic;
 using System.IO;
-using System.IO.IsolatedStorage;
-using System.Windows;
-using MS.Internal.WindowsBase;
 
 namespace MS.Internal.IO.Packaging
 {
@@ -30,7 +16,7 @@ namespace MS.Internal.IO.Packaging
         //  Public Methods
         //
         //------------------------------------------------------
-        override public bool CanRead
+        public override bool CanRead
         {
             get
             {
@@ -38,7 +24,7 @@ namespace MS.Internal.IO.Packaging
             }
         }
 
-        override public bool CanSeek
+        public override bool CanSeek
         {
             get
             {
@@ -46,7 +32,7 @@ namespace MS.Internal.IO.Packaging
             }
         }
 
-        override public bool CanWrite
+        public override bool CanWrite
         {
             get
             {
@@ -54,7 +40,7 @@ namespace MS.Internal.IO.Packaging
             }
         }
 
-        override public long Length
+        public override long Length
         {
             get
             {
@@ -64,7 +50,7 @@ namespace MS.Internal.IO.Packaging
             }
         }
 
-        override public long Position
+        public override long Position
         {
             get
             {
@@ -146,7 +132,7 @@ namespace MS.Internal.IO.Packaging
 #endif
         }
 
-        override public long Seek(long offset, SeekOrigin origin)
+        public override long Seek(long offset, SeekOrigin origin)
         {
             CheckDisposed();
             long newStreamPosition = _currentStreamPosition;
@@ -165,7 +151,7 @@ namespace MS.Internal.IO.Packaging
             }
             else
             {
-                throw new ArgumentOutOfRangeException("origin");
+                throw new ArgumentOutOfRangeException(nameof(origin));
             }
 
             if (newStreamPosition  < 0)
@@ -177,7 +163,7 @@ namespace MS.Internal.IO.Packaging
             return _currentStreamPosition;
         }
 
-        override public int Read(byte[] buffer, int offset, int count)
+        public override int Read(byte[] buffer, int offset, int count)
         {
             CheckDisposed();
 
@@ -254,7 +240,7 @@ namespace MS.Internal.IO.Packaging
             }
         }
 
-        override public void Write(byte[] buffer, int offset, int count)
+        public override void Write(byte[] buffer, int offset, int count)
         {
             CheckDisposed();
 #if DEBUG
@@ -295,7 +281,7 @@ namespace MS.Internal.IO.Packaging
 #endif
         }
 
-        override public void Flush()
+        public override void Flush()
         {
             CheckDisposed();
         }
@@ -319,8 +305,8 @@ namespace MS.Internal.IO.Packaging
                     {
                         _isolatedStorageStream.Seek(0, SeekOrigin.Begin);
                         PackagingUtilities.CopyStream(_isolatedStorageStream, stream,
-                                                Int64.MaxValue/*bytes to copy*/,
-                                                0x80000 /*512K buffer size */);
+                                                bytesToCopy: Int64.MaxValue,
+                                                bufferSize: 0x80000 /* 512K */);
                     }
                  }
                 else
@@ -417,11 +403,8 @@ namespace MS.Internal.IO.Packaging
                         }
 
                         // clean up isolated storage resources if in use
-                        if (_isolatedStorageStream != null)
-                        {
-                            // can only rely on _isolatedStorageStream behaving correctly if we are not in our finalizer
-                            _isolatedStorageStream.Close();
-                        }
+                        // can only rely on _isolatedStorageStream behaving correctly if we are not in our finalizer
+                        _isolatedStorageStream?.Close();
                     }
                 }
             }
@@ -670,8 +653,8 @@ namespace MS.Internal.IO.Packaging
                             _isolatedStorageStream.Seek(0, SeekOrigin.Begin);
                             newMemStreamBlock.Stream.Seek(0, SeekOrigin.Begin);
                             PackagingUtilities.CopyStream(_isolatedStorageStream, newMemStreamBlock.Stream,
-                                                    Int64.MaxValue/*bytes to copy*/,
-                                                    0x80000 /*512K buffer size */);
+                                                    bytesToCopy: Int64.MaxValue,
+                                                    bufferSize: 0x80000 /* 512K */);
                         }
 
                         Debug.Assert(newMemStreamBlock.Stream.Length > 0);

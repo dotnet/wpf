@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // 
@@ -12,13 +11,8 @@
 //
 
 using MS.Internal;
-using MS.Utility;
 using System.ComponentModel;
-using System.Windows;
-using System;
-using System.Security;
 using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using System.Windows.Markup;
@@ -203,7 +197,7 @@ namespace System.Windows
         /// <param name="gl">GridLength instance to convert.</param>
         /// <param name="cultureInfo">Culture Info.</param>
         /// <returns>String representation of the object.</returns>
-        static internal string ToString(GridLength gl, CultureInfo cultureInfo)
+        internal static string ToString(GridLength gl, CultureInfo cultureInfo)
         {
             switch (gl.GridUnitType)
             {
@@ -243,7 +237,7 @@ namespace System.Windows
         ///     As above, but the value is assumed to be 1.0
         ///     This is only acceptable for a subset of GridUnitType: Auto
         /// </remarks>
-        static internal GridLength FromString(string s, CultureInfo cultureInfo)
+        internal static GridLength FromString(string s, CultureInfo cultureInfo)
         {
             double value;
             GridUnitType unit;

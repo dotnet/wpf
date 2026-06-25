@@ -1,21 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-// 
-// Description: FloaterBaseParagraph class provides a wrapper for floater 
-//              and UIElement objects.
-//
-#pragma warning disable 1634, 1691  // avoid generating warnings about unknown
-// message numbers and unknown pragmas for PRESharp contol
-
-using System;
-using System.Diagnostics;
-using System.Security;              // SecurityCritical
-using System.Windows;
 using System.Windows.Documents;
-using MS.Internal.Documents;
-using MS.Internal.Text;
 
 using MS.Internal.PtsHost.UnsafeNativeMethods;
 
@@ -88,13 +74,13 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // CreateParaclient
         //-------------------------------------------------------------------
-        internal override abstract void CreateParaclient(
+        internal abstract override void CreateParaclient(
             out IntPtr paraClientHandle);       // OUT: opaque to PTS paragraph client
         
         //-------------------------------------------------------------------
         // CollapseMargin
         //-------------------------------------------------------------------
-        internal override abstract void CollapseMargin(
+        internal abstract override void CollapseMargin(
             BaseParaClient paraClient,          // IN:
             MarginCollapsingState mcs,          // IN:  input margin collapsing state
             uint fswdir,                        // IN:  current direction (of the track, in which margin collapsing is happening)
@@ -112,7 +98,7 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // GetFloaterPolygons
         //-------------------------------------------------------------------
-        internal unsafe virtual void GetFloaterPolygons(
+        internal virtual unsafe void GetFloaterPolygons(
             FloaterBaseParaClient paraClient,       // IN:
             uint fswdirTrack,                   // IN:  direction of Track
             int ncVertices,                     // IN:  size of array of vertex counts (= number of polygons)
@@ -123,7 +109,7 @@ namespace MS.Internal.PtsHost
             out int cfspt,                      // OUT: actual total number of vertices in all polygons
             out int fWrapThrough)               // OUT: fill text in empty areas within obstacles?
         {
-            Debug.Assert(false, "Tight wrap is not currently supported.");
+            Debug.Fail("Tight wrap is not currently supported.");
             ccVertices = cfspt = fWrapThrough = 0;
         }
 
@@ -216,5 +202,3 @@ namespace MS.Internal.PtsHost
         #endregion PTS callbacks
     }
 }
-
-#pragma warning enable 1634, 1691

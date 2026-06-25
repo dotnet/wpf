@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -12,9 +11,7 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Markup;
@@ -23,9 +20,6 @@ using System.ComponentModel.Design.Serialization;
 using System.Windows.Media.Composition;
 using System.Reflection;
 using MS.Internal;
-using System.Security;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media
 {
@@ -89,7 +83,7 @@ namespace System.Windows.Media
                     Point pt = new Point();
                     int count = points.Count;             
 
-                    for (int i=0; i<count; i++)
+                    for (int i = 0; i < count; i++)
                     {
                         pt = points.Internal_GetItem(i);
                         pt *= matrix;
@@ -120,7 +114,7 @@ namespace System.Windows.Media
         internal override void SerializeData(StreamGeometryContext ctx)
         {
             ctx.PolyLineTo(Points, IsStroked, IsSmoothJoin);
-        }                                    
+        }
         #endregion
     }
     #endregion

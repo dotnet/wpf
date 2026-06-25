@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -10,11 +9,11 @@ namespace System.Xaml
     // It turns XamlWriter calls into nodes and passes them up to the
     // provided _addDelegate.
     //
-    class WriterDelegate : XamlWriter, IXamlLineInfoConsumer
+    internal class WriterDelegate : XamlWriter, IXamlLineInfoConsumer
     {
-        XamlNodeAddDelegate _addDelegate;
-        XamlLineInfoAddDelegate _addLineInfoDelegate;
-        XamlSchemaContext _schemaContext;
+        private XamlNodeAddDelegate _addDelegate;
+        private XamlLineInfoAddDelegate _addLineInfoDelegate;
+        private XamlSchemaContext _schemaContext;
 
         public WriterDelegate(XamlNodeAddDelegate add, XamlLineInfoAddDelegate addlineInfoDelegate, XamlSchemaContext xamlSchemaContext)
         {
@@ -75,7 +74,7 @@ namespace System.Xaml
                 {
                     _addDelegate(XamlNodeType.None, XamlNode.InternalNodeType.EndOfStream);
                     _addDelegate = delegate { throw new XamlException(SR.WriterIsClosed); };
-                    if (_addLineInfoDelegate != null)
+                    if (_addLineInfoDelegate is not null)
                     {
                         _addLineInfoDelegate = delegate { throw new XamlException(SR.WriterIsClosed); };
                     }
@@ -109,7 +108,7 @@ namespace System.Xaml
             get
             {
                 ThrowIsDisposed();
-                return _addLineInfoDelegate != null;
+                return _addLineInfoDelegate is not null;
             }
         }
         #endregion
@@ -118,6 +117,5 @@ namespace System.Xaml
         {
             ObjectDisposedException.ThrowIf(IsDisposed, typeof(XamlWriter)); // Can't say ReaderMultiIndexDelegate because its internal.
         }
-
     }
 }

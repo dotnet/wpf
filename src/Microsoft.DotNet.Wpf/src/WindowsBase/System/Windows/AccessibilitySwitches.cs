@@ -1,13 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using MS.Internal.WindowsBase;
-using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Security;
 using System.Threading;
 using System.Windows.Threading;
 
@@ -28,26 +23,21 @@ namespace System.Windows
         /// <summary>
         /// This id is used by .NET to report a fatal error.
         /// </summary>
-        const int EventId = 1023;
+        private const int EventId = 1023;
 
         /// <summary>
         /// This source is used by .NET to report events.
         /// </summary>
-        const string EventSource = ".NET Runtime";
+        private const string EventSource = ".NET Runtime";
 
         #endregion
 
         #region Fields
 
         /// <summary>
-        /// Guards against multiple definitions of default switch values.
-        /// </summary>
-        static int s_DefaultsSet = 0;
-
-        /// <summary>
         /// Guards against multiple verifications of the switch values.
         /// </summary>
-        static int s_SwitchesVerified = 0;
+        private static bool s_switchesVerified = false;
 
         #endregion
 
@@ -172,41 +162,11 @@ namespace System.Windows
         /// <param name="targetFrameworkVersion"></param>
         internal static void SetSwitchDefaults(string platformIdentifier, int targetFrameworkVersion)
         {
-            switch (platformIdentifier)
-            {
-
-                case ".NETFramework":
-                    if (Interlocked.CompareExchange(ref s_DefaultsSet, 1, 0) == 0)
-                    {
-                        if (targetFrameworkVersion <= 40700)
-                        {
-                            LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeaturesSwitchName, true);
-                        }
-
-                        if (targetFrameworkVersion <= 40701)
-                        {
-                            LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures2SwitchName, true);
-                        }
-
-                        if (targetFrameworkVersion <= 40702)
-                        {
-                            LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures3SwitchName, true);
-                            LocalAppContext.DefineSwitchDefault(UseLegacyToolTipDisplaySwitchName, true);
-                            LocalAppContext.DefineSwitchDefault(ItemsControlDoesNotSupportAutomationSwitchName, true);
-                        }
-                    }
-                    break;
-
-                case ".NETCoreApp":
-                    {
-                        LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeaturesSwitchName, false);
-                        LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures2SwitchName, false);
-                        LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures3SwitchName, false);
-                        LocalAppContext.DefineSwitchDefault(UseLegacyToolTipDisplaySwitchName, false);
-                        LocalAppContext.DefineSwitchDefault(ItemsControlDoesNotSupportAutomationSwitchName, false);
-                    }
-                    break;
-            }
+            LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeaturesSwitchName, false);
+            LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures2SwitchName, false);
+            LocalAppContext.DefineSwitchDefault(UseLegacyAccessibilityFeatures3SwitchName, false);
+            LocalAppContext.DefineSwitchDefault(UseLegacyToolTipDisplaySwitchName, false);
+            LocalAppContext.DefineSwitchDefault(ItemsControlDoesNotSupportAutomationSwitchName, false);
         }
 
         /// <summary>
@@ -222,31 +182,19 @@ namespace System.Windows
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void VerifySwitches(Dispatcher dispatcher)
         {
-            if (Interlocked.CompareExchange(ref s_SwitchesVerified, 1, 0) == 0)
+            if (!Interlocked.CompareExchange(ref s_switchesVerified, true, false))
             {
+                bool netFx47 = UseNetFx47CompatibleAccessibilityFeatures;
+                bool netFx471 = UseNetFx471CompatibleAccessibilityFeatures;
+                bool netFx472 = UseNetFx472CompatibleAccessibilityFeatures;
+
                 // If a flag is set to false, we also must ensure the prior accessibility switches are also false.
                 // Otherwise we should inform the developer, via an exception, to enable all the flags.
-                var orderedFlagValues =
-                typeof(AccessibilitySwitches).GetProperties(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public)
-                .Where(x => x.Name.EndsWith("CompatibleAccessibilityFeatures"))
-                .OrderBy(x => x.Name.Remove(x.Name.IndexOf("CompatibleAccessibilityFeatures", 0)), StringComparer.OrdinalIgnoreCase)
-                .Select(x => (bool)x.GetValue(null));
-
-                bool? lastFlag = null;
-                bool foundInvalidSwitchState = false;
-
-                foreach (var flag in orderedFlagValues)
-                {
-                    if (foundInvalidSwitchState = (!flag && lastFlag == true))
-                    {
-                        break;
-                    }
-
-                    lastFlag = flag;
-                }
-
-                if (foundInvalidSwitchState)
-                {
+                if (!((!netFx47 && !netFx471 && !netFx472) ||
+                      (!netFx47 && !netFx471 && netFx472) ||
+                      (!netFx47 && netFx471 && netFx472) ||
+                      (netFx47 && netFx471 && netFx472)))
+                { 
                     // Dispatch an EventLog and error throw so we get loaded UI, then the crash.
                     // This ensures the WER dialog shows.
                     DispatchOnError(dispatcher, SR.CombinationOfAccessibilitySwitchesNotSupported);

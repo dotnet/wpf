@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -9,15 +8,8 @@
 //
 //
 
-using System;
-using System.Diagnostics;
-using MS.Internal;
-using System.Windows;
-using System.Security;
-using System.Collections;
 using System.Runtime.InteropServices;
 using System.Windows.Media.TextFormatting;
-using MS.Internal.PresentationCore;
 
 namespace MS.Internal
 {
@@ -99,9 +91,9 @@ namespace MS.Internal
             /* Mirror               */    false,
         };
 
-        static private ClassificationUtility _classificationUtilityInstance = new ClassificationUtility();
+        private static ClassificationUtility _classificationUtilityInstance = new ClassificationUtility();
 
-        static internal ClassificationUtility Instance
+        internal static ClassificationUtility Instance
         {
             get
             {
@@ -213,18 +205,17 @@ namespace MS.Internal
                 RawClassificationTables ct = new RawClassificationTables();
                 MILGetClassificationTables(out ct);
 
-                _unicodeClassTable   = new SecurityCriticalData<IntPtr>(ct.UnicodeClasses);
-                _charAttributeTable  = new SecurityCriticalData<IntPtr>(ct.CharacterAttributes);
-                _mirroredCharTable   = new SecurityCriticalData<IntPtr>(ct.Mirroring);
-                
-                _combiningMarksClassification = new SecurityCriticalData<CombiningMarksClassificationData>(ct.CombiningMarksClassification);
+                _unicodeClassTable = ct.UnicodeClasses;
+                _charAttributeTable = ct.CharacterAttributes;
+                _mirroredCharTable = ct.Mirroring;
+                _combiningMarksClassification = ct.CombiningMarksClassification;
             }
         }
 
         /// <summary>
         /// Lookup Unicode character class for a Unicode UTF16 value
         /// </summary>
-        static public short GetUnicodeClassUTF16(char codepoint)
+        public static short GetUnicodeClassUTF16(char codepoint)
         {
             unsafe 
             {
@@ -241,7 +232,7 @@ namespace MS.Internal
         /// <summary>
         /// Lookup Unicode character class for a Unicode scalar value
         /// </summary>
-        static public short GetUnicodeClass(int unicodeScalar)
+        public static short GetUnicodeClass(int unicodeScalar)
         {
             unsafe
             {
@@ -264,7 +255,7 @@ namespace MS.Internal
         /// <summary>
         /// Lookup script ID for a Unicode scalar value
         /// </summary>
-        static public ScriptID GetScript(int unicodeScalar)
+        public static ScriptID GetScript(int unicodeScalar)
         {
             unsafe
             {
@@ -276,7 +267,7 @@ namespace MS.Internal
         /// <summary>
         /// Compute Unicode scalar value from unicode codepoint stream
         /// </summary>
-        static internal int UnicodeScalar(
+        internal static int UnicodeScalar(
             CharacterBufferRange unicodeString,
             out int              sizeofChar
             )
@@ -302,7 +293,7 @@ namespace MS.Internal
         /// <summary>
         /// Check whether the character is combining mark
         /// </summary>
-        static public bool IsCombining(int unicodeScalar)
+        public static bool IsCombining(int unicodeScalar)
         {
             unsafe
             {
@@ -317,7 +308,7 @@ namespace MS.Internal
         /// <summary>
         /// Check whether the character is a joiner character
         /// </summary>
-        static public bool IsJoiner(int unicodeScalar)
+        public static bool IsJoiner(int unicodeScalar)
         {
             unsafe
             {
@@ -330,7 +321,7 @@ namespace MS.Internal
         /// <summary>
         /// Check whether the character is an IVS selector character
         /// </summary>
-        static public bool IsIVS(int unicodeScalar)
+        public static bool IsIVS(int unicodeScalar)
         {
             // An Ideographic Variation Sequence (IVS) is a sequence of two
             // coded characters, the first being a character with the
@@ -343,7 +334,7 @@ namespace MS.Internal
         /// Scan UTF16 character string until a character with specified attributes is found
         /// </summary>
         /// <returns>character index of first character matching the attribute.</returns>
-        static public int AdvanceUntilUTF16(
+        public static int AdvanceUntilUTF16(
             CharacterBuffer     charBuffer,
             int                 offsetToFirstChar,
             int                 stringLength,
@@ -375,7 +366,7 @@ namespace MS.Internal
         /// Scan character string until a character that is not the specified ItemClass is found
         /// </summary>
         /// <returns>character index of first character that is not the specified ItemClass</returns>
-        static public int AdvanceWhile(
+        public static int AdvanceWhile(
             CharacterBufferRange unicodeString, 
             ItemClass            itemClass 
             )
@@ -404,27 +395,22 @@ namespace MS.Internal
             return i;
         }
 
-        private static unsafe short*** UnicodeClassTable
-        {
-            get { return (short***)_unicodeClassTable.Value; }
-        }
-        private static unsafe CharacterAttribute* CharAttributeTable
-        {
-            get { return (CharacterAttribute*)_charAttributeTable.Value; }
-        }
+        private static unsafe short*** UnicodeClassTable => (short***)_unicodeClassTable;
+
+        private static unsafe CharacterAttribute* CharAttributeTable => (CharacterAttribute*)_charAttributeTable;
 
         internal static CharacterAttribute CharAttributeOf(int charClass)
-        {   
-            unsafe 
-            { 
+        {
+            unsafe
+            {
                 Invariant.Assert(charClass >= 0 && charClass < (int) UnicodeClass.Max);
                 return CharAttributeTable[charClass]; 
             }
         }
 
-        static private readonly SecurityCriticalData<IntPtr>  _unicodeClassTable;
-        static private readonly SecurityCriticalData<IntPtr> _charAttributeTable;
-        static private readonly SecurityCriticalData<IntPtr> _mirroredCharTable;
-        static private readonly SecurityCriticalData<CombiningMarksClassificationData> _combiningMarksClassification;
+        private static readonly IntPtr _unicodeClassTable;
+        private static readonly IntPtr _charAttributeTable;
+        private static readonly IntPtr _mirroredCharTable;
+        private static readonly CombiningMarksClassificationData _combiningMarksClassification;
     }
 }

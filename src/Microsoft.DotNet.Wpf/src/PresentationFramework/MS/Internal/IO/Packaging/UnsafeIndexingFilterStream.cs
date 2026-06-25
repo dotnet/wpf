@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //  Description:    The class UnsafeIndexingFilterStream uses an OLE IStream component
@@ -12,13 +11,11 @@
 //                  in Adam Nathan's ".Net and COM".
 //
 
-using System;
 using System.IO;
 using System.Runtime.InteropServices;           // For Marshal
 using System.Windows;                           // for ExceptionStringTable
 using MS.Win32;                                 // For NativeMethods
 using MS.Internal.Interop;	                // for IStream
-using System.Security;                          // For SecurityCritical
 
 
 namespace MS.Internal.IO.Packaging
@@ -81,7 +78,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="offset">The zero-based byte offset in buffer at which to begin storing the data read from the current stream.</param>
         /// <param name="count">How many bytes requested.</param>
         /// <returns>How many bytes were written into buffer.</returns>
-        public unsafe override int Read(byte[] buffer, int offset, int count)
+        public override unsafe int Read(byte[] buffer, int offset, int count)
         {
             ThrowIfStreamDisposed();
 
@@ -128,7 +125,7 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         /// <param name="offset">Offset in byte.</param>
         /// <param name="origin">Offset origin (start, current, or end).</param>
-        public unsafe override long Seek(long offset, SeekOrigin origin)
+        public override unsafe long Seek(long offset, SeekOrigin origin)
         {
             ThrowIfStreamDisposed();
 

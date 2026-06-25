@@ -16,26 +16,9 @@ rem (see test\CsProject for an example of that).
 
 setlocal enabledelayedexpansion
 
-rem 
-rem       calculate this.
-rem       Candidates: build.hostarch build_hostarch HOST_PROCESSOR_ARCHITECTURE
-rem                   PROCESSOR_ARCHITECTURE
-set hostarch=i386
-
 pushd %~dp0
-set TOOLSRCPATH=..\..
-set TOOLPATH=%TOOLSRCPATH%\obj%BUILD_ALT_DIR%\%hostarch%
 
-if not exist %TOOLPATH%\Csp.exe call :needToBuild %TOOLSRCPATH% & goto:end
+%CspExePath%\csp.exe -s:CsProjectTest.cs
 
-%TOOLPATH%\Csp -s:CsProjectTest.cs
-goto :end
-
-:needToBuild
-echo RunTest.cmd(0) : error : Csp.exe not found (need to build in %~dp1)
-goto :eof
-
-
-:end
 popd
 

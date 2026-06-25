@@ -1,20 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-#pragma warning disable 1634, 1691 // To enable presharp warning disables (#pragma suppress) below.
 //
 // Description: IEnumerator for TextRange and TextElement content.
 //
 
-using System;
 using System.Collections;
 using MS.Internal;
-using System.Text;
-using MS.Utility;
-using System.Windows.Controls;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Documents
 {
@@ -70,9 +62,6 @@ namespace System.Windows.Documents
 
                 if (_navigator == null)
                 {
-                    // Disable presharp 6503: Property get methods should not throw exceptions.
-                    // We must throw here -- it's part of the IEnumerator contract.
-                    #pragma warning suppress 6503
                     throw new InvalidOperationException(SR.EnumeratorNotStarted);
                 }
 
@@ -87,7 +76,7 @@ namespace System.Windows.Documents
 
                 if (_navigator.CompareTo(_end) >= 0)
                 {
-                    #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                    // IEnumerator.Current is documented to throw this exception
                     throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                 }
 
@@ -97,7 +86,7 @@ namespace System.Windows.Documents
                 // which in turn can modify the TextContainer.
                 if (_generation != _start.TextContainer.Generation && !IsLogicalChildrenIterationInProgress)
                 {
-                    #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                    // IEnumerator.Current is documented to throw this exception
                     throw new InvalidOperationException(SR.EnumeratorVersionChanged);
                 }
 

@@ -1,23 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-
-//
-// Description: SubpageParagraph represents a PTS subpage.
-//
-
-#pragma warning disable 1634, 1691  // avoid generating warnings about unknown 
-                                    // message numbers and unknown pragmas for PRESharp contol
-
-using System;
-using System.Diagnostics;
-using System.Security;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
-using MS.Internal.Documents;
 using MS.Internal.Text;
 
 using MS.Internal.PtsHost.UnsafeNativeMethods;
@@ -54,12 +40,8 @@ namespace MS.Internal.PtsHost
         public override void Dispose()
         {
             base.Dispose();
-
-            if(_mainTextSegment != null)
-            {
-                _mainTextSegment.Dispose();
-                _mainTextSegment = null;
-            }
+            _mainTextSegment?.Dispose();
+            _mainTextSegment = null;
             GC.SuppressFinalize(this);
         }
 
@@ -96,14 +78,12 @@ namespace MS.Internal.PtsHost
         {
             SubpageParaClient paraClient;
 
-#pragma warning disable 6518
-            // Disable PRESharp warning 6518. SubpageParaClient is an UnmamangedHandle, that adds itself
+            // SubpageParaClient is an UnmamangedHandle, that adds itself
             // to HandleMapper that holds a reference to it. PTS manages lifetime of this object, and 
             // calls DestroyParaclient to get rid of it. DestroyParaclient will call Dispose() on the object
             // and remove it from HandleMapper.
             paraClient =  new SubpageParaClient(this);
             paraClientHandle = paraClient.Handle;
-#pragma warning restore 6518
         }
 
         //-------------------------------------------------------------------
@@ -190,11 +170,8 @@ namespace MS.Internal.PtsHost
                 }
                 subpageHeight = Math.Max(1, subpageHeight - (marginTop + mbp.BPTop));
                 // Destroy top margin collapsing state (not needed anymore).
-                if (mcsSubpage != null)
-                {
-                    mcsSubpage.Dispose();
-                    mcsSubpage = null;
-                }
+                mcsSubpage?.Dispose();
+                mcsSubpage = null;
             }
             else
             {
@@ -299,12 +276,8 @@ namespace MS.Internal.PtsHost
 
             // Since MCS returned by PTS is never passed back, destroy MCS provided by PTS.
             // If necessary, new MCS is created and passed back to PTS (see above).
-            if (mcsSubpage != null)
-            {
-                mcsSubpage.Dispose();
-                mcsSubpage = null;
-            }
-
+            mcsSubpage?.Dispose();
+            mcsSubpage = null;
 
             // Update information about first/last chunk
             paraClient.SetChunkInfo(pbrkrecIn == IntPtr.Zero, pbrkrecOut == IntPtr.Zero);
@@ -368,12 +341,11 @@ namespace MS.Internal.PtsHost
 
             subpageWidth = Math.Max(1, subpageWidth - (mbp.MBPLeft + mbp.MBPRight));
             MarginCollapsingState.CollapseTopMargin(PtsContext, mbp, mcs, out mcsSubpage, out marginTop);
+
             // Destroy top margin collapsing state (not needed anymore).
-            if (mcsSubpage != null)
-            {
-                mcsSubpage.Dispose();
-                mcsSubpage = null;
-            }
+            mcsSubpage?.Dispose();
+            mcsSubpage = null;
+
             durSubpageMargin = subpageWidth;
 
             // Initialize column info
@@ -428,11 +400,8 @@ namespace MS.Internal.PtsHost
 
                 // Since MCS returned by PTS is never passed back, destroy MCS provided by PTS.
                 // If necessary, new MCS is created and passed back to PTS.
-                if (mcsSubpage != null)
-                {
-                    mcsSubpage.Dispose();
-                    mcsSubpage = null;
-                }
+                mcsSubpage?.Dispose();
+                mcsSubpage = null;
 
                 if (PTS.ToBoolean(fsbbox.fDefined))
                 {
@@ -528,12 +497,11 @@ namespace MS.Internal.PtsHost
 
             subpageWidth = Math.Max(1, subpageWidth - (mbp.MBPLeft + mbp.MBPRight));
             MarginCollapsingState.CollapseTopMargin(PtsContext, mbp, mcs, out mcsSubpage, out marginTop);
+
             // Destroy top margin collapsing state (not needed anymore).
-            if (mcsSubpage != null)
-            {
-                mcsSubpage.Dispose();
-                mcsSubpage = null;
-            }
+            mcsSubpage?.Dispose();
+            mcsSubpage = null;
+
             durSubpageMargin = subpageWidth;
 
             // Initialize column info
@@ -587,11 +555,8 @@ namespace MS.Internal.PtsHost
 
                 // Since MCS returned by PTS is never passed back, destroy MCS provided by PTS.
                 // If necessary, new MCS is created and passed back to PTS.
-                if (mcsSubpage != null)
-                {
-                    mcsSubpage.Dispose();
-                    mcsSubpage = null;
-                }
+                mcsSubpage?.Dispose();
+                mcsSubpage = null;
 
                 if (PTS.ToBoolean(fsbbox.fDefined))
                 {
@@ -645,10 +610,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal override void ClearUpdateInfo()
         {
-            if (_mainTextSegment != null)
-            {
-                _mainTextSegment.ClearUpdateInfo();
-            }
+            _mainTextSegment?.ClearUpdateInfo();
             base.ClearUpdateInfo();
         }
 
@@ -678,10 +640,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal override void InvalidateFormatCache()
         {
-            if (_mainTextSegment != null)
-            {
-                _mainTextSegment.InvalidateFormatCache();
-            }
+            _mainTextSegment?.InvalidateFormatCache();
         }
 
         /// <summary>
@@ -711,6 +670,3 @@ namespace MS.Internal.PtsHost
         #endregion Private Fields
     }
 }
-
-#pragma warning enable 1634, 1691
-

@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Contains the ScrollContentPresenter class.
@@ -8,26 +7,16 @@
 
 using MS.Internal;
 using MS.Utility;
-using System;
-using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Threading;
-using System.Windows;
-using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Markup;
 
 namespace System.Windows.Controls
 {
     /// <summary>
     /// </summary>
-    sealed public class ScrollContentPresenter : ContentPresenter, IScrollInfo
+    public sealed class ScrollContentPresenter : ContentPresenter, IScrollInfo
     {
         //-------------------------------------------------------------------
         //
@@ -349,7 +338,7 @@ namespace System.Windows.Controls
             //check if there is a TemplateChild on FrameworkElement
             if (base.TemplateChild == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
             else
             {
@@ -362,7 +351,7 @@ namespace System.Windows.Controls
                         return _adornerLayer;
 
                     default:
-                        throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                        throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
                 }
             }
          }
@@ -370,7 +359,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Gets or sets the template child of the FrameworkElement.
         /// </summary>
-        override internal UIElement TemplateChild
+        internal override UIElement TemplateChild
         {
             get
             {
@@ -578,13 +567,8 @@ namespace System.Windows.Controls
                 return Rect.Empty;
             }
 
-            // This is a false positive by PreSharp. visual cannot be null because of the 'if' check above
-#pragma warning disable 1634, 1691
-#pragma warning disable 56506
             // Compute the child's rect relative to (0,0) in our coordinate space.
             GeneralTransform childTransform = visual.TransformToAncestor(this);
-#pragma warning restore 56506
-#pragma warning restore 1634, 1691
 
             rectangle = childTransform.TransformBounds(rectangle);
 
@@ -688,7 +672,7 @@ namespace System.Windows.Controls
             return topView;
         }
 
-        static internal double ValidateInputOffset(double offset, string parameterName)
+        internal static double ValidateInputOffset(double offset, string parameterName)
         {
             if (double.IsNaN(offset))
             {
@@ -790,7 +774,7 @@ namespace System.Windows.Controls
             // back into a totally unlinked state.
             else if (_scrollInfo != null)
             {
-                if (_scrollInfo.ScrollOwner != null) { _scrollInfo.ScrollOwner.ScrollInfo = null; }
+                _scrollInfo.ScrollOwner?.ScrollInfo = null;
                 _scrollInfo.ScrollOwner = null;
                 _scrollInfo = null;
                 _scrollData = null;
@@ -829,7 +813,7 @@ namespace System.Windows.Controls
 
         // Returns an offset coerced into the [0, Extent - Viewport] range.
         // Internal because it is also used by other Avalon ISI implementations (just to avoid code duplication).
-        static internal double CoerceOffset(double offset, double extent, double viewport)
+        internal static double CoerceOffset(double offset, double extent, double viewport)
         {
             if (offset > extent - viewport) { offset = extent - viewport; }
             if (offset < 0) { offset = 0; }
@@ -851,7 +835,7 @@ namespace System.Windows.Controls
 
         // This property is structurally important; we can't do layout without it set right.
         // So, we synchronously make changes.
-        static private void OnCanContentScrollChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnCanContentScrollChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ScrollContentPresenter scp = (ScrollContentPresenter)d;
             if (scp._scrollInfo == null)

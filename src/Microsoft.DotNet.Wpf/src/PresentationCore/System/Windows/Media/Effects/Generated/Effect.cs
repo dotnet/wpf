@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -10,37 +9,15 @@
 //
 
 using MS.Internal;
-using MS.Internal.Collections;
-using MS.Internal.KnownBoxes;
-using MS.Internal.PresentationCore;
 using MS.Utility;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.ComponentModel.Design.Serialization;
-using System.Text;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Media3D;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Imaging;
-using System.Windows.Markup;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
-// These types are aliased to match the unamanaged names used in interop
-using BOOL = System.UInt32;
-using WORD = System.UInt16;
-using Float = System.Single;
 
 namespace System.Windows.Media.Effects
 {
-    abstract partial class Effect : Animatable, DUCE.IResource
+    public abstract partial class Effect : Animatable, DUCE.IResource
     {
         //------------------------------------------------------
         //
@@ -173,6 +150,7 @@ namespace System.Windows.Media.Effects
             // must already be in composition lock here
             return GetChannelCore(index);
         }
+
 
         #endregion Internal Methods
 

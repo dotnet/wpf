@@ -37,7 +37,6 @@ namespace MS.Internal.FontCache
     /// <summary>
     /// FontCacheFullException is raised when the cache limit is reached
     /// </summary>
-    [FriendAccessAllowed]
     internal class FontCacheFullException : ApplicationException
     {
         internal FontCacheFullException()
@@ -51,7 +50,6 @@ namespace MS.Internal.FontCache
     /// 4 byte element type
     /// Everything else is element-specific
     /// </summary>
-    [FriendAccessAllowed]
     internal interface IFontCacheElement
     {
         /// <summary>
@@ -121,7 +119,6 @@ namespace MS.Internal.FontCache
     /// - fixed size hash table, 4 bytes per element
     /// - user data pool, active length is variable, maximum length is determined by the font cache file size
     /// </summary>
-    [FriendAccessAllowed]
     internal unsafe class ElementCacher
     {
         private const int numberOfBuckets = 512;

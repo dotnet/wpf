@@ -79,7 +79,7 @@
       </trans-unit>
       <trans-unit id="LocalizedControlTypeImage">
         <source>image</source>
-        <target state="translated">image</target>
+        <target state="translated">이미지</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedControlTypeListItem">

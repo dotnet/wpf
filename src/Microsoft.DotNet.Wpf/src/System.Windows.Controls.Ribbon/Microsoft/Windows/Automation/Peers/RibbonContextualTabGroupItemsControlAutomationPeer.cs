@@ -1,7 +1,12 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-        
+
+
+
+#region Using declarations
+
+#if RIBBON_IN_FRAMEWORK
+using System.Windows.Controls.Ribbon;
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Automation.Peers
@@ -9,15 +14,6 @@ namespace System.Windows.Automation.Peers
 namespace Microsoft.Windows.Automation.Peers
 #endif
 {
-
-    #region Using declarations
-
-    using System;
-    using System.Windows.Automation.Peers;
-    using System.Windows.Automation.Provider;
-    using System.Windows;
-#if RIBBON_IN_FRAMEWORK
-    using System.Windows.Controls.Ribbon;
 #else
     using Microsoft.Windows.Controls.Ribbon;
 #endif

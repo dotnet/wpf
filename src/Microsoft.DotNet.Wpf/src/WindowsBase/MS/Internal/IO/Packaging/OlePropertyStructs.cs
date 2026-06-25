@@ -1,21 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//   These structures and constants are managed equivalents to COM structures
-//   used to access OLE properties.
-//
-//
-//
-
-
-using System;
 using System.Runtime.InteropServices;
-
-using MS.Internal.WindowsBase;        // for FriendAccessAllowedAttribute
 
 namespace MS.Internal.IO.Packaging
 {
@@ -23,21 +9,21 @@ namespace MS.Internal.IO.Packaging
     internal struct STATPROPSTG
     {
         [MarshalAs(UnmanagedType.LPWStr)]
-        string lpwstrName; 
-        UInt32 propid;
-        VARTYPE vt;
+        private string lpwstrName;
+        private UInt32 propid;
+        private VARTYPE vt;
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 0)]
     internal struct STATPROPSETSTG
     {
-        Guid fmtid;
-        Guid clsid;
-        UInt32 grfFlags;
-        System.Runtime.InteropServices.ComTypes.FILETIME mtime;
-        System.Runtime.InteropServices.ComTypes.FILETIME ctime;
-        System.Runtime.InteropServices.ComTypes.FILETIME atime;
-        UInt32 dwOSVersion;
+        private Guid fmtid;
+        private Guid clsid;
+        private UInt32 grfFlags;
+        private System.Runtime.InteropServices.ComTypes.FILETIME mtime;
+        private System.Runtime.InteropServices.ComTypes.FILETIME ctime;
+        private System.Runtime.InteropServices.ComTypes.FILETIME atime;
+        private UInt32 dwOSVersion;
     }
 
     #region PROPVARIANT
@@ -85,7 +71,6 @@ namespace MS.Internal.IO.Packaging
     /// } PROPVARIANT;
     /// </remarks>
     [StructLayout(LayoutKind.Sequential, Pack = 0)]
-    [FriendAccessAllowed]
     internal struct PROPVARIANT
     {
         /// <summary>
@@ -118,7 +103,6 @@ namespace MS.Internal.IO.Packaging
     /// enumeration for all legal types of a PROPVARIANT
     /// </summary>
     /// <remarks>add definitions as needed</remarks>
-    [FriendAccessAllowed]
     internal enum VARTYPE : short
     {
         /// <summary>
@@ -157,7 +141,6 @@ namespace MS.Internal.IO.Packaging
     ///     managed equivalent types.
     /// </remarks>
     [StructLayout(LayoutKind.Explicit)]
-    [FriendAccessAllowed]
     internal struct PropVariantUnion
     {
         /// <summary>
@@ -487,7 +470,6 @@ namespace MS.Internal.IO.Packaging
     /// CY, used in PropVariantUnion.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 0)]
-    [FriendAccessAllowed]
     internal struct CY
     {
         public uint Lo;
@@ -498,7 +480,6 @@ namespace MS.Internal.IO.Packaging
     /// BSTRBLOB, used in PropVariantUnion.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 0)]
-    [FriendAccessAllowed]
     internal struct BSTRBLOB
     {
         public uint cbSize;
@@ -509,7 +490,6 @@ namespace MS.Internal.IO.Packaging
     /// BLOB, used in PropVariantUnion.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 0)]
-    [FriendAccessAllowed]
     internal struct BLOB
     {
         public uint cbSize;
@@ -520,7 +500,6 @@ namespace MS.Internal.IO.Packaging
     /// CArray, used in PropVariantUnion.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 0)]
-    [FriendAccessAllowed]
     internal struct CArray
     {
         public uint cElems;
@@ -535,7 +514,6 @@ namespace MS.Internal.IO.Packaging
     /// <summary>
     /// Selector for union
     /// </summary>
-    [FriendAccessAllowed]
     internal enum PropSpecType : int
     {
         /// <summary>
@@ -552,7 +530,6 @@ namespace MS.Internal.IO.Packaging
     /// Explicitly packed union
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    [FriendAccessAllowed]
     internal struct PROPSPECunion
     {
         /// <summary>
@@ -582,7 +559,6 @@ namespace MS.Internal.IO.Packaging
     /// } PROPSPEC;
     /// </remarks>
     [StructLayout(LayoutKind.Sequential, Pack = 0)]
-    [FriendAccessAllowed]
     internal struct PROPSPEC
     {
         /// <summary>
@@ -603,7 +579,6 @@ namespace MS.Internal.IO.Packaging
     /// <summary>
     /// Format identifiers.
     /// </summary>
-    [FriendAccessAllowed]
     internal static class FormatId
     {
         /// <summary>
@@ -627,7 +602,6 @@ namespace MS.Internal.IO.Packaging
     /// <summary>
     /// Property identifiers.
     /// </summary>
-    [FriendAccessAllowed]
     internal static class PropertyId
     {
         /// <summary>

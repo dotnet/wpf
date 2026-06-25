@@ -1,12 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;            // DesignerSerializationVisibility
 using System.Windows.Automation.Peers;
 using System.Windows.Markup;
-using System.Diagnostics;               // Debug
 
 using MS.Internal;                      // Helper
 using MS.Internal.KnownBoxes;
@@ -96,7 +94,7 @@ namespace System.Windows.Controls
         /// </summary>
         /// <param name="parent">listview reference</param>
         /// <returns>GridView automation peer</returns>
-        internal protected override IViewAutomationPeer GetAutomationPeer(ListView parent)
+        protected internal override IViewAutomationPeer GetAutomationPeer(ListView parent)
         {
             return new GridViewAutomationPeer(this, parent);
         }
@@ -227,11 +225,12 @@ namespace System.Windows.Controls
             {
                 if (_columns == null)
                 {
-                    _columns = new GridViewColumnCollection();
-
-                    // Give the collection a back-link, this is used for the inheritance context
-                    _columns.Owner = this;
-                    _columns.InViewMode = true;
+                    _columns = new GridViewColumnCollection
+                    {
+                        // Give the collection a back-link, this is used for the inheritance context
+                        Owner = this,
+                        InViewMode = true
+                    };
                 }
 
                 return _columns;

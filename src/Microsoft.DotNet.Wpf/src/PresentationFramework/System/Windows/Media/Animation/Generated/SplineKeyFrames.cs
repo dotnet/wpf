@@ -1,7 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
+//
 //
 // This file was generated, please do not edit it directly.
 //
@@ -10,10 +10,8 @@
 
 using MS.Internal;
 
-using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 
@@ -21,6 +19,8 @@ using MS.Internal.PresentationFramework;
 
 namespace System.Windows.Media.Animation
 {
+
+
     /// <summary>
     /// This class is used as part of a ThicknessKeyFrameCollection in
     /// conjunction with a KeyFrameThicknessAnimation to animate a
@@ -145,4 +145,6 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
+
+
 }

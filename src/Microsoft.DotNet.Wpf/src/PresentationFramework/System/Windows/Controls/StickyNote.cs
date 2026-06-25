@@ -1,50 +1,22 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-// In order to disable Presharp warning 6507 - Prefer 'string.IsNullOrEmpty(value)' over checks for null and/or emptiness,
-// we have to disable warnings 1634 and 1691 to make the compiler happy first.
-#pragma warning disable 1634, 1691
-
-//
-// Description: Implementation of StickyNoteControl control.
-//
-//              See spec at StickyNoteControlSpec.mht
-//
-
-using System;
-using System.ComponentModel;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Diagnostics;                           // Assert
 using System.Globalization;
-using System.IO;
-using System.Reflection;
 using System.Xml;
-using System.Xml.Serialization;
-using Microsoft.Win32;              // SystemEvents
 using MS.Internal;
 using MS.Internal.Annotations.Component;
 using MS.Internal.Controls.StickyNote;
 using MS.Internal.Commands;
 using MS.Internal.KnownBoxes;
 using System.Windows.Threading;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Annotations;
-using System.Windows.Automation;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.Text;
-using System.Text.RegularExpressions;
 using MS.Utility;
-
 
 namespace System.Windows.Controls
 {
@@ -194,18 +166,12 @@ namespace System.Windows.Controls
             if (!this.IsExpanded)
             {
                 Button button = GetIconButton();
-                if (button != null)
-                {
-                    button.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
-                }
+                button?.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
             }
             else
             {
                 Button closeButton = GetCloseButton();
-                if (closeButton != null)
-                {
-                    closeButton.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
-                }
+                closeButton?.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
 
                 Thumb titleThumb = GetTitleThumb();
                 if (titleThumb != null)
@@ -591,7 +557,7 @@ namespace System.Windows.Controls
             ApplyTemplate();
 
             // We are interested in the expanded note.
-            if ( IsExpanded == true )
+            if (IsExpanded)
             {
                 Invariant.Assert(Content != null);
 
@@ -603,7 +569,7 @@ namespace System.Windows.Controls
                     Invariant.Assert(innerControl != null, "InnerControl is null or not a UIElement.");
 
                     // Don't mess with focus if its already on our inner control
-                    if ( innerControl.IsKeyboardFocused == false )
+                    if (!innerControl.IsKeyboardFocused)
                     {
                         // We should set the focus to the inner control after it is added the visual tree.
                         innerControl.Focus();
@@ -810,8 +776,7 @@ namespace System.Windows.Controls
             if (stickyNoteControl.Content != null && stickyNoteControl.Content.Type != StickyNoteType.Ink)
             {
                 FrameworkElement innerControl = stickyNoteControl.Content.InnerControl;
-                if (innerControl != null)
-                    innerControl.SetValue(e.Property, e.NewValue);
+                innerControl?.SetValue(e.Property, e.NewValue);
             }
         }
 
@@ -827,8 +792,7 @@ namespace System.Windows.Controls
             if (e.Property == ForegroundProperty && stickyNoteControl.Content != null && stickyNoteControl.Content.Type != StickyNoteType.Ink)
             {
                 FrameworkElement innerControl = stickyNoteControl.Content.InnerControl;
-                if (innerControl != null)
-                    innerControl.SetValue(ForegroundProperty, e.NewValue);
+                innerControl?.SetValue(ForegroundProperty, e.NewValue);
             }
         }
 
@@ -952,13 +916,13 @@ namespace System.Windows.Controls
                 if (newRectangle.X < 0)
                 {
                     //newRect.X is negative, simply add it to width to subtract it
-                    newRectangle.Width = newRectangle.Width + newRectangle.X;
+                    newRectangle.Width += newRectangle.X;
                     newRectangle.X = 0d;
                 }
                 if (newRectangle.Y < 0)
                 {
                     //newRect.Y is negative, simply add it to height to subtract it
-                    newRectangle.Height = newRectangle.Height + newRectangle.Y;
+                    newRectangle.Height += newRectangle.Y;
                     newRectangle.Y = 0d;
                 }
                 e.NewRectangle = newRectangle;
@@ -992,11 +956,8 @@ namespace System.Windows.Controls
                 Invariant.Assert(Content != null && Content.InnerControl is InkCanvas);
                 FrameworkElement parent = VisualTreeHelper.GetParent(Content.InnerControl) as FrameworkElement;
 
-                if (parent != null)
-                {
-                    // Invalidate ContentArea's measure so that scrollbar could be updated correctly.
-                    parent.InvalidateMeasure();
-                }
+                // Invalidate ContentArea's measure so that scrollbar could be updated correctly.
+                parent?.InvalidateMeasure();
             }
 
             //fire trace event
@@ -1091,7 +1052,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void OnDragDelta(object sender, DragDeltaEventArgs args)
         {
-            Invariant.Assert(IsExpanded == true, "Dragging occurred when the StickyNoteControl was not expanded.");
+            Invariant.Assert(IsExpanded, "Dragging occurred when the StickyNoteControl was not expanded.");
 
             Thumb source = args.Source as Thumb;
             double horizontalChange = args.HorizontalChange;
@@ -1124,7 +1085,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void OnTitleDragDelta(double horizontalChange, double verticalChange)
         {
-            Invariant.Assert(IsExpanded != false);
+            Invariant.Assert(IsExpanded);
 
             Rect rectNote = StickyNoteBounds;
             Rect rectPage = PageBounds;
@@ -1165,7 +1126,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void OnResizeDragDelta(double horizontalChange, double verticalChange)
         {
-            Invariant.Assert(IsExpanded != false);
+            Invariant.Assert(IsExpanded);
 
             Rect rectNote = StickyNoteBounds;
 
@@ -1253,7 +1214,7 @@ namespace System.Windows.Controls
                     Focus();
                 }
 
-                if (eatEvent == true)
+                if (eatEvent)
                 {
                     args.Handled = true;
                 }
@@ -1300,16 +1261,10 @@ namespace System.Windows.Controls
             }
 
             Button closeButton = GetCloseButton();
-            if (closeButton != null)
-            {
-                closeButton.RemoveHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
-            }
+            closeButton?.RemoveHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
 
             Button iconButton = GetIconButton();
-            if (iconButton != null)
-            {
-                iconButton.RemoveHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
-            }
+            iconButton?.RemoveHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
 
             Thumb titleThumb = GetTitleThumb();
             if (titleThumb != null)
@@ -1411,10 +1366,7 @@ namespace System.Windows.Controls
         private void BringToFront()
         {
             PresentationContext pc = ((IAnnotationComponent)this).PresentationContext;
-            if ( pc != null )
-            {
-                pc.BringToFront(this);
-            }
+            pc?.BringToFront(this);
         }
 
         /// <summary>
@@ -1425,10 +1377,7 @@ namespace System.Windows.Controls
         private void SendToBack()
         {
             PresentationContext pc = ((IAnnotationComponent)this).PresentationContext;
-            if (pc != null)
-            {
-                pc.SendToBack(this);
-            }
+            pc?.SendToBack(this);
         }
 
         /// <summary>
@@ -1437,10 +1386,7 @@ namespace System.Windows.Controls
         private void InvalidateTransform()
         {
             PresentationContext pc = ((IAnnotationComponent)this).PresentationContext;
-            if ( pc != null )
-            {
-                pc.InvalidateTransform(this);
-            }
+            pc?.InvalidateTransform(this);
         }
 
         /// <summary>
@@ -1483,20 +1429,26 @@ namespace System.Windows.Controls
                 // both StickyNoteControl.InkEditingMode and StickyNoteControl.IsKeyboardFocusWithin
                 // If StickyNoteControl.IsKeyboardFocusWithin is false, the InkCanvas.EditingMode should be none.
                 // Otherwise InkCanvas.EditingMode is same as the StickyNoteControl.InkEditingMode.
-                MultiBinding inkCanvasEditingMode = new MultiBinding();
-                inkCanvasEditingMode.Mode = BindingMode.TwoWay;
-                inkCanvasEditingMode.Converter = new InkEditingModeIsKeyboardFocusWithin2EditingMode();
+                MultiBinding inkCanvasEditingMode = new MultiBinding
+                {
+                    Mode = BindingMode.TwoWay,
+                    Converter = new InkEditingModeIsKeyboardFocusWithin2EditingMode()
+                };
 
-                Binding stickyNoteInkEditingMode = new Binding();
-                stickyNoteInkEditingMode.Mode = BindingMode.TwoWay;
-                stickyNoteInkEditingMode.Path = new PropertyPath(StickyNoteControl.InkEditingModeProperty);
-                stickyNoteInkEditingMode.Source = this;
+                Binding stickyNoteInkEditingMode = new Binding
+                {
+                    Mode = BindingMode.TwoWay,
+                    Path = new PropertyPath(StickyNoteControl.InkEditingModeProperty),
+                    Source = this
+                };
 
                 inkCanvasEditingMode.Bindings.Add(stickyNoteInkEditingMode);
 
-                Binding stickyNoteIsKeyboardFocusWithin = new Binding();
-                stickyNoteIsKeyboardFocusWithin.Path = new PropertyPath(UIElement.IsKeyboardFocusWithinProperty);
-                stickyNoteIsKeyboardFocusWithin.Source = this;
+                Binding stickyNoteIsKeyboardFocusWithin = new Binding
+                {
+                    Path = new PropertyPath(UIElement.IsKeyboardFocusWithinProperty),
+                    Source = this
+                };
 
                 inkCanvasEditingMode.Bindings.Add(stickyNoteIsKeyboardFocusWithin);
 
@@ -1649,11 +1601,13 @@ namespace System.Windows.Controls
             if (inkMenuItem != null)
             {
                 // Bind the EditingMode to item's IsChecked DP.
-                Binding checkedBind = new Binding("InkEditingMode");
-                checkedBind.Mode = BindingMode.OneWay;
-                checkedBind.RelativeSource = RelativeSource.TemplatedParent;
-                checkedBind.Converter = new InkEditingModeConverter();
-                checkedBind.ConverterParameter = InkCanvasEditingMode.Ink;
+                Binding checkedBind = new Binding("InkEditingMode")
+                {
+                    Mode = BindingMode.OneWay,
+                    RelativeSource = RelativeSource.TemplatedParent,
+                    Converter = new InkEditingModeConverter(),
+                    ConverterParameter = InkCanvasEditingMode.Ink
+                };
                 inkMenuItem.SetBinding(MenuItem.IsCheckedProperty, checkedBind);
             }
 
@@ -1661,11 +1615,13 @@ namespace System.Windows.Controls
             if (selectMenuItem != null)
             {
                 // Bind the EditingMode to item's IsChecked DP.
-                Binding checkedBind = new Binding("InkEditingMode");
-                checkedBind.Mode = BindingMode.OneWay;
-                checkedBind.RelativeSource = RelativeSource.TemplatedParent;
-                checkedBind.Converter = new InkEditingModeConverter();
-                checkedBind.ConverterParameter = InkCanvasEditingMode.Select;
+                Binding checkedBind = new Binding("InkEditingMode")
+                {
+                    Mode = BindingMode.OneWay,
+                    RelativeSource = RelativeSource.TemplatedParent,
+                    Converter = new InkEditingModeConverter(),
+                    ConverterParameter = InkCanvasEditingMode.Select
+                };
                 selectMenuItem.SetBinding(MenuItem.IsCheckedProperty, checkedBind);
             }
 
@@ -1673,26 +1629,22 @@ namespace System.Windows.Controls
             if (eraseMenuItem != null)
             {
                 // Bind the EditingMode to item's IsChecked DP.
-                Binding checkedBind = new Binding("InkEditingMode");
-                checkedBind.Mode = BindingMode.OneWay;
-                checkedBind.RelativeSource = RelativeSource.TemplatedParent;
-                checkedBind.Converter = new InkEditingModeConverter();
-                checkedBind.ConverterParameter = InkCanvasEditingMode.EraseByStroke;
+                Binding checkedBind = new Binding("InkEditingMode")
+                {
+                    Mode = BindingMode.OneWay,
+                    RelativeSource = RelativeSource.TemplatedParent,
+                    Converter = new InkEditingModeConverter(),
+                    ConverterParameter = InkCanvasEditingMode.EraseByStroke
+                };
                 eraseMenuItem.SetBinding(MenuItem.IsCheckedProperty, checkedBind);
             }
 
             // Set the target for the Copy/Paste commands to our inner control
             MenuItem copyMenuItem = GetCopyMenuItem();
-            if (copyMenuItem != null)
-            {
-                copyMenuItem.CommandTarget = Content.InnerControl;
-            }
+            copyMenuItem?.CommandTarget = Content.InnerControl;
 
             MenuItem pasteMenuItem = GetPasteMenuItem();
-            if (pasteMenuItem != null)
-            {
-                pasteMenuItem.CommandTarget = Content.InnerControl;
-            }
+            pasteMenuItem?.CommandTarget = Content.InnerControl;
         }
 
 

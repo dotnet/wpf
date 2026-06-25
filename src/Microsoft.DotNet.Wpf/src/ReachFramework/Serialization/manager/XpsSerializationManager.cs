@@ -1,30 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-
-
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Reflection;
 using System.Xml;
-using System.IO;
 using System.Printing;
-using System.Security;
-using System.ComponentModel.Design.Serialization;
 using System.Windows.Xps.Packaging;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Markup;
-using System.Windows.Xps;
 using MS.Utility;
-
-#pragma warning disable 1634, 1691 //Allows suppression of certain PreSharp messages
 
 namespace System.Windows.Xps.Serialization
 {
@@ -113,9 +98,6 @@ namespace System.Windows.Xps.Serialization
 
             if( serializedObject is DocumentPaginator )
             {
-                // Prefast complains that serializedObject is not tested for null
-                // It is tested a few lines up
-                #pragma warning suppress 56506
                 if((serializedObject as DocumentPaginator).Source is FixedDocument &&
                     serializedObject.GetType().ToString().Contains( "FixedDocumentPaginator") )
                 {
@@ -587,10 +569,7 @@ namespace System.Windows.Xps.Serialization
             if( subsetComplete && refCnt == 0 )
             {
                 XpsPackagingPolicy xpsPackagingPolicy = _packagingPolicy as  XpsPackagingPolicy;
-                if(xpsPackagingPolicy != null )
-                {
-                    xpsPackagingPolicy.InterleavingPolicy.SignalSubsetComplete();
-                }
+                xpsPackagingPolicy?.InterleavingPolicy.SignalSubsetComplete();
             }
 
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXReleaseWriterEnd);
@@ -849,10 +828,7 @@ namespace System.Windows.Xps.Serialization
             string relationshipName
             )
         {
-            if (_packagingPolicy != null)
-            {
-                _packagingPolicy.RelateResourceToCurrentPage(targetUri, relationshipName);
-            }
+            _packagingPolicy?.RelateResourceToCurrentPage(targetUri, relationshipName);
         }
 
         internal
@@ -1468,8 +1444,8 @@ namespace System.Windows.Xps.Serialization
         private
         IDictionary     _typeNoneSerializableClrProperties;
 
-        static
         private
+        static
         Type[]          _xpsTypesRequiringXMLNS =
         {
             typeof(FixedDocumentSequence),

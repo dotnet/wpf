@@ -1,48 +1,38 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using System;
-using System.IO;
-using System.Net; // HttpWebRequest
-using System.Net.Cache; // HttpRequestCachePolicy
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Text; 
+using System.Text;
 using System.Windows.Navigation; // BaseUriHelper
 
 #if !PBTCOMPILER
-using MS.Win32;
 #endif
 
-using System.Security;
 // The functionality in this class is shared across framework and core. The functionality in core
 // is a subset of the functionality in framework, so rather than create a dependency from core to
 // framework we have choses to duplicate this chunk of  code.
 #if PRESENTATION_CORE
 namespace MS.Internal.PresentationCore
 #elif PRESENTATIONFRAMEWORK
-using MS.Internal.PresentationFramework; // SecurityHelper
+using MS.Internal.PresentationFramework;
 
 namespace MS.Internal.Utility
 #elif PBTCOMPILER
-using MS.Internal.PresentationBuildTasks // SecurityHelper
+using MS.Internal.PresentationBuildTasks
 
 namespace MS.Internal.Utility
 #elif REACHFRAMEWORK
-using MS.Internal.ReachFramework; // SecurityHelper
+using MS.Internal.ReachFramework;
 
 namespace MS.Internal.Utility
 #else
 #error Class is being used from an unknown assembly.
 #endif
 {
-   // 
-   // Methods in this partial class are shared by PresentationFramework and PresentationBuildTasks.
-   // See also WpfWebRequestHelper.
-   //
-   internal static  partial class BindUriHelper
+    // 
+    // Methods in this partial class are shared by PresentationFramework and PresentationBuildTasks.
+    // See also WpfWebRequestHelper.
+    //
+    internal static  partial class BindUriHelper
    {
         private const int MAX_PATH_LENGTH = 2048 ;
         private const int MAX_SCHEME_LENGTH = 32;
@@ -73,7 +63,7 @@ namespace MS.Internal.Utility
         
 #if PRESENTATION_CORE || PRESENTATIONFRAMEWORK
         // Base Uri.
-        static internal Uri BaseUri
+        internal static Uri BaseUri
         {
             get
             {
@@ -85,13 +75,13 @@ namespace MS.Internal.Utility
             }
         }
 
-        static internal bool DoSchemeAndHostMatch(Uri first, Uri second)
+        internal static bool DoSchemeAndHostMatch(Uri first, Uri second)
         {
             // Check that both the scheme and the host match. 
-           return (SecurityHelper.AreStringTypesEqual(first.Scheme, second.Scheme) && first.Host.Equals(second.Host) == true);
+            return string.Equals(first.Scheme, second.Scheme, StringComparison.OrdinalIgnoreCase) && string.Equals(first.Host, second.Host);
         }
 
-        static internal Uri GetResolvedUri(Uri baseUri, Uri orgUri)
+        internal static Uri GetResolvedUri(Uri baseUri, Uri orgUri)
         {
             Uri newUri;
             
@@ -99,11 +89,11 @@ namespace MS.Internal.Utility
             {
                 newUri = null;
             }
-            else if (orgUri.IsAbsoluteUri == false)
+            else if (!orgUri.IsAbsoluteUri)
             {
                 // if the orgUri is an absolute Uri, don't need to resolve it again.
                 
-                Uri baseuri = (baseUri == null) ? BindUriHelper.BaseUri : baseUri;
+                Uri baseuri = baseUri ?? BindUriHelper.BaseUri;
 
 #if CF_Envelope_Activation_Enabled
                 bool isContainer = false ;
@@ -145,37 +135,9 @@ namespace MS.Internal.Utility
             }
 
             return newUri;
-        }        
+        }
 
-        /// <summary>
-        /// Gets the referer to set as a header on the HTTP request.
-        /// We do not set the referer if we are navigating to a 
-        /// differnet security zone or to a different Uri scheme.
-        /// </summary>
-        internal static string GetReferer(Uri destinationUri)
-        {
-            string referer = null;
 
-            Uri sourceUri = MS.Internal.AppModel.SiteOfOriginContainer.BrowserSource;
-            if (sourceUri != null)
-            {
-                int sourceZone = MS.Internal.AppModel.CustomCredentialPolicy.MapUrlToZone(sourceUri);
-                int targetZone = MS.Internal.AppModel.CustomCredentialPolicy.MapUrlToZone(destinationUri);
-
-                // We don't send any referer when crossing zone
-                if (sourceZone == targetZone)
-                {
-                    // We don't send any referer when going cross-scheme
-                    if (SecurityHelper.AreStringTypesEqual(sourceUri.Scheme, destinationUri.Scheme))
-                    {
-                        // HTTPHeader requires the referer uri to be escaped. 
-                        referer = sourceUri.GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped);
-                    }
-                }
-            }
-
-            return referer;
-        }       
 
 
 #endif // PRESENTATION_CORE || PRESENTATIONFRAMEWORK

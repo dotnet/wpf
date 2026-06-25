@@ -38,7 +38,7 @@ int CGDIRenderTarget::StartDocument(String ^ printerName, String^ jobName, Strin
                 // The best fix would be waiting for those jobs to be completed.
                 // Heuristics: Release fonts which are more than 10 minutes old.
                 
-                DateTime cutoffTime = DateTime::Now - TimeSpan::FromMinutes(10);
+                DateTime cutoffTime = DateTime::Now - TimeSpan::FromMinutes(10.0);
 
                 int i = 0;
 

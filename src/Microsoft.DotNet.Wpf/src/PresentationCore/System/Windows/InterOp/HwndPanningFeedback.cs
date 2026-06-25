@@ -1,16 +1,10 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
 
-using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Security;
-using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Threading;
 using MS.Win32;
 
@@ -49,7 +43,7 @@ namespace System.Windows.Interop
             {
                 if (_hwndSource != null)
                 {
-                    IntPtr handle = _hwndSource.CriticalHandle;
+                    IntPtr handle = _hwndSource.Handle;
                     if (handle != IntPtr.Zero)
                     {
                         return new HandleRef(_hwndSource, handle);
@@ -115,11 +109,8 @@ namespace System.Windows.Interop
             if (_hwndSource != null && _isProvidingPanningFeedback)
             {
                 _isProvidingPanningFeedback = false;
-                if (_updatePanningOperation != null)
-                {
-                    _updatePanningOperation.Abort();
-                    _updatePanningOperation = null;
-                }
+                _updatePanningOperation?.Abort();
+                _updatePanningOperation = null;
                 UnsafeNativeMethods.EndPanningFeedback(Handle, animateBack);
             }
         }

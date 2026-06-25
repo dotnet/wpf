@@ -1,27 +1,25 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description:
 //  Interacts with user on file based information for XpsViewer.
 
 using System;
 using System.IO;
-using System.Security;
 using System.Windows.Forms;
 using System.Windows.TrustUI;
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// Interacts with user on file based information for XpsViewer.
-/// </summary>
-/// <remarks>
-/// Responsibility:
-/// Should be the only class that interacts with the user with or for file
-/// location information.
-/// </remarks>
-internal static class FilePresentation
+    /// <summary>
+    /// Interacts with user on file based information for XpsViewer.
+    /// </summary>
+    /// <remarks>
+    /// Responsibility:
+    /// Should be the only class that interacts with the user with or for file
+    /// location information.
+    /// </remarks>
+    internal static class FilePresentation
 {
     #region Internal Methods
     //--------------------------------------------------------------------------
@@ -88,7 +86,7 @@ internal static class FilePresentation
                 Path.GetExtension(filePath), 
                 StringComparison.OrdinalIgnoreCase))
             {
-                filePath = filePath + extension;
+                filePath += extension;
             }
 
             Uri file = new Uri(filePath);

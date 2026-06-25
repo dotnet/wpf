@@ -1,32 +1,18 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //   Stream interface for manipulating data within a container stream.
-//
-//
-//
-//
-//
-//
 
-using System;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.IO.Packaging;
-using MS.Internal.WindowsBase;
-
-using System.Windows;
 
 namespace MS.Internal.IO.Packaging.CompoundFile
 {
-/// <summary>
-/// Class for manipulating data within container streams
-/// </summary>
-internal class CFStream : Stream
+    /// <summary>
+    /// Class for manipulating data within container streams
+    /// </summary>
+    internal class CFStream : Stream
 {
     //------------------------------------------------------
     //
@@ -170,7 +156,7 @@ internal class CFStream : Stream
                 translatedSeekOrigin = SafeNativeCompoundFileConstants.STREAM_SEEK_SET;
                 if( 0 > offset )
                 {
-                    throw new ArgumentOutOfRangeException("offset",
+                    throw new ArgumentOutOfRangeException(nameof(offset),
                         SR.SeekNegative);
                 }
                 break;
@@ -208,7 +194,7 @@ internal class CFStream : Stream
 
         if( 0 > newLength )
         {
-            throw new ArgumentOutOfRangeException("newLength",
+            throw new ArgumentOutOfRangeException(nameof(newLength),
                 SR.StreamLengthNegative);
         }
         
@@ -354,8 +340,8 @@ internal class CFStream : Stream
     //  Private Members
     //
     //------------------------------------------------------
-    IStream _safeIStream;
-    FileAccess access;
+    private IStream _safeIStream;
+    private FileAccess access;
 
     /// <summary>
     /// If only this stream object is held open, and the rest of the container
@@ -363,6 +349,6 @@ internal class CFStream : Stream
     /// tree open because the CLR GC doesn't realize that our IStream has
     /// a dependency on the rest of the container object tree.
     /// </summary>
-    StreamInfo backReference;
+    private StreamInfo backReference;
 }
 }

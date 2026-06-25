@@ -372,9 +372,6 @@
   <data name="ExpandPositionalParametersinTypeWithNoDefaultConstructor" space_="preserve">
     <value>Cannot write positional parameters in the current state.  The writer cannot write the positional parameters in attribute form because the writer has started to write elements, nor can the writer expand the positional parameters due to the lack of a default constructor on the markup extension that contains the positional parameters.  Try moving the positional parameter member earlier in the node stream, to a place where XamlXmlWriter can still write attributes.</value>
   </data>
-  <data name="ExpectedLoadPermission" space_="preserve">
-    <value>Expected permission of type XamlLoadPermission.</value>
-  </data>
   <data name="ExpectedObjectMarkupInfo" space_="preserve">
     <value>Expected value of type ObjectMarkupInfo.</value>
   </data>
@@ -452,12 +449,6 @@
   </data>
   <data name="InvalidExpression" space_="preserve">
     <value>Invalid expression: '{0}'</value>
-  </data>
-  <data name="InvalidPermissionStateValue" space_="preserve">
-    <value>PermissionState value '{0}' is not valid for this Permission.</value>
-  </data>
-  <data name="InvalidPermissionType" space_="preserve">
-    <value>Permission type is not valid. Expected '{0}'.</value>
   </data>
   <data name="InvalidTypeArgument" space_="preserve">
     <value>Type argument '{0}' is not a valid type.</value>
@@ -797,18 +788,6 @@
   </data>
   <data name="SchemaContextNull" space_="preserve">
     <value>SchemaContext cannot be null.</value>
-  </data>
-  <data name="SecurityExceptionForSettingSandboxExternalToTrue" space_="preserve">
-    <value>Cannot set SandboxExternalContent to true in partial trust.</value>
-  </data>
-  <data name="SecurityXmlMissingAttribute" space_="preserve">
-    <value>Invalid security XML. Missing expected attribute '{0}'.</value>
-  </data>
-  <data name="SecurityXmlUnexpectedTag" space_="preserve">
-    <value>Invalid security XML. Unexpected tag '{0}', expected '{1}'.</value>
-  </data>
-  <data name="SecurityXmlUnexpectedValue" space_="preserve">
-    <value>Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.</value>
   </data>
   <data name="ServiceTypeAlreadyAdded" space_="preserve">
     <value>This serviceType is already registered to another service.</value>

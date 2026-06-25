@@ -1,6 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
+using System.Windows.Documents;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media;
+using System.Windows.Threading;
+using System.Collections.ObjectModel;
+using MS.Internal;
+using MS.Internal.Text;
+using MS.Internal.Documents;
+using MS.Internal.PtsHost;
+using System.Windows.Media.TextFormatting;
 
 //
 // Description: Content presenter for the TextBox.
@@ -8,19 +18,6 @@
 
 namespace System.Windows.Controls
 {
-    using System.Windows.Documents;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Media;
-    using System.Windows.Threading;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using MS.Internal;
-    using MS.Internal.Telemetry.PresentationFramework;
-    using MS.Internal.Text;
-    using MS.Internal.Documents;
-    using MS.Internal.PtsHost;
-    using System.Windows.Media.TextFormatting;
-
     // Content presenter for the TextBox.
     internal class TextBoxView : FrameworkElement, ITextView, IScrollInfo, IServiceProvider
     {
@@ -75,10 +72,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.LineUp()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.LineUp(this);
-            }
+            _scrollData?.LineUp(this);
         }
 
         /// <summary>
@@ -86,10 +80,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.LineDown()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.LineDown(this);
-            }
+            _scrollData?.LineDown(this);
         }
 
         /// <summary>
@@ -97,10 +88,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.LineLeft()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.LineLeft(this);
-            }
+            _scrollData?.LineLeft(this);
         }
 
         /// <summary>
@@ -108,10 +96,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.LineRight()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.LineRight(this);
-            }
+            _scrollData?.LineRight(this);
         }
 
         /// <summary>
@@ -119,10 +104,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.PageUp()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.PageUp(this);
-            }
+            _scrollData?.PageUp(this);
         }
 
         /// <summary>
@@ -130,10 +112,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.PageDown()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.PageDown(this);
-            }
+            _scrollData?.PageDown(this);
         }
 
         /// <summary>
@@ -141,10 +120,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.PageLeft()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.PageLeft(this);
-            }
+            _scrollData?.PageLeft(this);
         }
 
         /// <summary>
@@ -152,10 +128,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.PageRight()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.PageRight(this);
-            }
+            _scrollData?.PageRight(this);
         }
 
         /// <summary>
@@ -163,10 +136,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.MouseWheelUp()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.MouseWheelUp(this);
-            }
+            _scrollData?.MouseWheelUp(this);
         }
 
         /// <summary>
@@ -174,10 +144,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.MouseWheelDown()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.MouseWheelDown(this);
-            }
+            _scrollData?.MouseWheelDown(this);
         }
 
         /// <summary>
@@ -185,10 +152,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.MouseWheelLeft()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.MouseWheelLeft(this);
-            }
+            _scrollData?.MouseWheelLeft(this);
         }
 
         /// <summary>
@@ -196,10 +160,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.MouseWheelRight()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.MouseWheelRight(this);
-            }
+            _scrollData?.MouseWheelRight(this);
         }
 
         /// <summary>
@@ -207,10 +168,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.SetHorizontalOffset(double offset)
         {
-            if (_scrollData != null)
-            {
-                _scrollData.SetHorizontalOffset(this, offset);
-            }
+            _scrollData?.SetHorizontalOffset(this, offset);
         }
 
         /// <summary>
@@ -218,10 +176,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.SetVerticalOffset(double offset)
         {
-            if (_scrollData != null)
-            {
-                _scrollData.SetVerticalOffset(this, offset);
-            }
+            _scrollData?.SetVerticalOffset(this, offset);
         }
 
         /// <summary>
@@ -252,10 +207,7 @@ namespace System.Windows.Controls
             }
             set
             {
-                if (_scrollData != null)
-                {
-                    _scrollData.CanVerticallyScroll = value;
-                }
+                _scrollData?.CanVerticallyScroll = value;
             }
         }
 
@@ -270,10 +222,7 @@ namespace System.Windows.Controls
             }
             set
             {
-                if (_scrollData != null)
-                {
-                    _scrollData.CanHorizontallyScroll = value;
-                }
+                _scrollData?.CanHorizontallyScroll = value;
             }
         }
 
@@ -382,7 +331,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (_scrollData != null) ? _scrollData.ScrollOwner : null;
+                return _scrollData?.ScrollOwner;
             }
 
             set
@@ -1135,8 +1084,10 @@ namespace System.Windows.Controls
                 // Start up a timer.  Until the timer fires, we'll disable
                 // all background layout.  This leaves the TextBox responsive
                 // to user input.
-                _throttleBackgroundTimer = new DispatcherTimer(DispatcherPriority.Background);
-                _throttleBackgroundTimer.Interval = new TimeSpan(0, 0, _throttleBackgroundSeconds);
+                _throttleBackgroundTimer = new DispatcherTimer(DispatcherPriority.Background)
+                {
+                    Interval = new TimeSpan(0, 0, _throttleBackgroundSeconds)
+                };
                 _throttleBackgroundTimer.Tick += new EventHandler(OnThrottleBackgroundTimeout);
             }
             else
@@ -2723,18 +2674,12 @@ namespace System.Windows.Controls
 
                 for (int i = 0; i < lineIndex - oldLineVisualsIndex; i++)
                 {
-                    if (oldLineVisuals[i] != null)
-                    {
-                        oldLineVisuals[i].DiscardOnArrange = true;
-                    }
+                    oldLineVisuals[i]?.DiscardOnArrange = true;
                 }
 
                 for (int i = lineIndex - oldLineVisualsIndex + lineCount; i < oldLineVisuals.Count; i++)
                 {
-                    if (oldLineVisuals[i] != null)
-                    {
-                        oldLineVisuals[i].DiscardOnArrange = true;
-                    }
+                    oldLineVisuals[i]?.DiscardOnArrange = true;
                 }
             }
             else
@@ -2760,10 +2705,7 @@ namespace System.Windows.Controls
         // Adds a Visual to the line Visuals cache.
         private void SetLineVisual(int lineIndex, TextBoxLineDrawingVisual lineVisual)
         {
-            if (_viewportLineVisuals != null)
-            {
-                _viewportLineVisuals[lineIndex - _viewportLineVisualsIndex] = lineVisual;
-            }
+            _viewportLineVisuals?[lineIndex - _viewportLineVisualsIndex] = lineVisual;
         }
 
         // Adds an empty entry to the line Visuals cache.
@@ -2818,10 +2760,7 @@ namespace System.Windows.Controls
 
                     for (int i = 0; i < count; i++)
                     {
-                        if (_viewportLineVisuals[start + i] != null)
-                        {
-                            _viewportLineVisuals[start + i].DiscardOnArrange = true;
-                        }
+                        _viewportLineVisuals[start + i]?.DiscardOnArrange = true;
                     }
 
                     _viewportLineVisuals.RemoveRange(start, count);

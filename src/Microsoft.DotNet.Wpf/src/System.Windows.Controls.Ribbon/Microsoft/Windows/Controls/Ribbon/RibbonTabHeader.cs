@@ -1,7 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
+
+using System.Windows.Automation;
+using System.Windows.Automation.Peers;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Threading;
+using MS.Internal;
+#if RIBBON_IN_FRAMEWORK
+using Microsoft.Windows.Controls;
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
@@ -9,17 +17,6 @@ namespace System.Windows.Controls.Ribbon
 namespace Microsoft.Windows.Controls.Ribbon
 #endif
 {
-    using System;
-    using System.Windows;
-    using System.Windows.Automation;
-    using System.Windows.Automation.Peers;
-    using System.Windows.Controls;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using System.Windows.Threading;
-    using MS.Internal;
-#if RIBBON_IN_FRAMEWORK
-    using Microsoft.Windows.Controls;
 #else
     using Microsoft.Windows.Automation.Peers;
 #endif
@@ -336,10 +333,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             base.OnGotKeyboardFocus(e);
             RibbonTab ribbonTab = RibbonTab;
-            if (ribbonTab != null)
-            {
-                ribbonTab.IsSelected = true;
-            }
+            ribbonTab?.IsSelected = true;
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
@@ -524,10 +518,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             Panel parentPanel = VisualTreeHelper.GetParent(this) as Panel;
-            if (parentPanel != null)
-            {
-                parentPanel.InvalidateMeasure();
-            }
+            parentPanel?.InvalidateMeasure();
         }
 
         private static void OnIsRibbonTabSelectedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

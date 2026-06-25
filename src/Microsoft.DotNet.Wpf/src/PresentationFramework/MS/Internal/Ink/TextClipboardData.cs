@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -8,13 +7,8 @@
 //      It also can get the unicode text from the IDataObject and create a corresponding textbox.
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Markup;
-using System.Text;
 
 namespace MS.Internal.Ink
 {
@@ -86,10 +80,11 @@ namespace MS.Internal.Ink
             if ( !String.IsNullOrEmpty(text) )
             {
                 // Now, create a text box and set the text to it.
-                TextBox textBox = new TextBox();
-
-                textBox.Text = text;
-                textBox.TextWrapping = TextWrapping.Wrap;
+                TextBox textBox = new TextBox
+                {
+                    Text = text,
+                    TextWrapping = TextWrapping.Wrap
+                };
 
                 // Add the textbox to the internal array list.
                 ElementList.Add(textBox);

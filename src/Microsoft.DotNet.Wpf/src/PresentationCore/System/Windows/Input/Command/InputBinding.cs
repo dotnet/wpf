@@ -1,21 +1,16 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
 
-using System;
-using System.Security;              // SecurityCritical, TreatAsSafe
-using System.Windows;
-using System.Windows.Markup;
 using System.ComponentModel;
 
 using MS.Internal;
 using MS.Internal.PresentationCore;
 
 
-namespace System.Windows.Input 
+namespace System.Windows.Input
 {
     /// <summary>
     /// InputBinding - InputGesture and ICommand combination

@@ -1,6 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
+using MS.Internal.Documents;
+using System.Collections.Generic;
 
 //
 // Description: DocumentSequence's HighlightLayer for TextSelection.
@@ -8,12 +10,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal.Documents;
-    using System;
-    using System.Diagnostics;
-    using System.Collections;
-    using System.Collections.Generic;
-
     // A special HighlightLayer that exists only to notify a FixedDocument
     // of changes to its highlights when the highlights are stored on a
     // DocumentSequenceTextContainer.
@@ -52,7 +48,7 @@ namespace System.Windows.Documents
         // Method is not implemented.  Should not need to be called for constructing the event args.
         internal override object GetHighlightValue(StaticTextPointer staticTextPointer, LogicalDirection direction)
         {
-            Debug.Assert(false, "This method is not implemented and not expected to be called.");
+            Debug.Fail("This method is not implemented and not expected to be called.");
             return null;
         }
 
@@ -72,7 +68,7 @@ namespace System.Windows.Documents
 
         // Called by the DocumentSequenceTextContainer to communicate changes to its highlight layer
         // to the FixedDocumentTextContainer which contains this layer.
-        internal void RaiseHighlightChangedEvent(IList ranges)
+        internal void RaiseHighlightChangedEvent(IList<TextSegment> ranges)
         {
             DocumentsTrace.FixedDocumentSequence.Highlights.Trace($"DSHL.RaiseHighlightChangedEvent ranges={ranges.Count}");
             Debug.Assert(ranges.Count > 0);
@@ -140,16 +136,16 @@ namespace System.Windows.Documents
 
         #region Private Classes
         // Argument for the Changed event, encapsulates a highlight change.
-        private class DocumentSequenceHighlightChangedEventArgs : HighlightChangedEventArgs
+        private sealed class DocumentSequenceHighlightChangedEventArgs : HighlightChangedEventArgs
         {
             // Constructor.
-            internal DocumentSequenceHighlightChangedEventArgs(IList ranges)
+            internal DocumentSequenceHighlightChangedEventArgs(IList<TextSegment> ranges)
             {
                 _ranges = ranges;
             }
 
             // Collection of changed content ranges.
-            internal override IList Ranges
+            internal override IList<TextSegment> Ranges
             {
                 get
                 {
@@ -167,7 +163,7 @@ namespace System.Windows.Documents
             }
 
             // Collection of changed content ranges.
-            private readonly IList _ranges;
+            private readonly IList<TextSegment> _ranges;
         }
         #endregion Private Classes
     }

@@ -1,0 +1,5 @@
+-rsp:main\SimpleGenerator.rsp
+-s:Generators\Elements.cs
+-s:Generators\IAnimatableHelper.cs
+-s:ResourceModel\Elements.cs
+-s:ResourceModel\Generated\Elements.cs

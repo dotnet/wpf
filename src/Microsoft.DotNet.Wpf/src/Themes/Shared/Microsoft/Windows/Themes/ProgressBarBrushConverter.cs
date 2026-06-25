@@ -1,13 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-        
+
 using System;
 using System.Globalization;
-using System.Threading;
 
 using System.Windows;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -106,9 +103,11 @@ namespace Microsoft.Windows.Themes
 
                 double milliseconds = blocks * 100; // 100 milliseconds on each position
 
-                DoubleAnimationUsingKeyFrames animation = new DoubleAnimationUsingKeyFrames();
-                animation.Duration = new Duration(TimeSpan.FromMilliseconds(milliseconds));  // Repeat every 3 seconds
-                animation.RepeatBehavior = RepeatBehavior.Forever;
+                DoubleAnimationUsingKeyFrames animation = new DoubleAnimationUsingKeyFrames
+                {
+                    Duration = new Duration(TimeSpan.FromMilliseconds(milliseconds)),  // Repeat every 3 seconds
+                    RepeatBehavior = RepeatBehavior.Forever
+                };
 
                 // Add a keyframe to translate by each block
                 for (int i = 1; i <= blocks; i++)

@@ -1,12 +1,9 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Security;
 using System.Windows.Markup;
@@ -29,17 +26,17 @@ namespace MS.Internal.Xaml.Runtime
     // We start out by forwarding all calls to the transparent runtime.
     // If a call fails with a MethodAccessException, we fall back to the elevated runtime.
     // After the first failure, we automatically go to the elevated runtime for non-public types.
-    class PartialTrustTolerantRuntime : XamlRuntime
+    internal class PartialTrustTolerantRuntime : XamlRuntime
     {
-        bool _memberAccessPermissionDenied;
-        ClrObjectRuntime _transparentRuntime;
-        ClrObjectRuntime _elevatedRuntime;
-        XamlAccessLevel _accessLevel;
-        XamlSchemaContext _schemaContext;
+        private bool _memberAccessPermissionDenied;
+        private ClrObjectRuntime _transparentRuntime;
+        private ClrObjectRuntime _elevatedRuntime;
+        private XamlAccessLevel _accessLevel;
+        private XamlSchemaContext _schemaContext;
 
         public PartialTrustTolerantRuntime(XamlRuntimeSettings runtimeSettings, XamlAccessLevel accessLevel, XamlSchemaContext schemaContext)
         {
-            _transparentRuntime = new ClrObjectRuntime(runtimeSettings, true /*isWriter*/);
+            _transparentRuntime = new ClrObjectRuntime(runtimeSettings, isWriter: true);
             _accessLevel = accessLevel;
             _schemaContext = schemaContext;
         }
@@ -53,10 +50,7 @@ namespace MS.Internal.Xaml.Runtime
             set
             {
                 _transparentRuntime.LineInfo = value;
-                if (_elevatedRuntime != null)
-                {
-                    _elevatedRuntime.LineInfo = value;
-                }
+                _elevatedRuntime?.LineInfo = value;
             }
         }
 
@@ -84,6 +78,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     return _transparentRuntime.CreateFromValue(serviceContext, ts, value, property);
                 }
+
                 // We don't know if MissingMethodException is due to visibility or not.
                 // So we fall back to the elevated runtime, but we don't set _memberAccessPermissionDenied.
                 catch (MissingMethodException)
@@ -95,6 +90,7 @@ namespace MS.Internal.Xaml.Runtime
                     MemberAccessPermissionDenied = true;
                 }
             }
+
             return _elevatedRuntime.CreateFromValue(serviceContext, ts, value, property);
         }
 
@@ -148,6 +144,7 @@ namespace MS.Internal.Xaml.Runtime
                     {
                         MemberAccessPermissionDenied = true;
                     }
+
                     // We don't know if MissingMethodException is due to visibility or not.
                     // So we fall back to the elevated runtime, but we don't set _memberAccessPermissionDenied.
                     else if (ex.InnerException is MissingMethodException)
@@ -160,6 +157,7 @@ namespace MS.Internal.Xaml.Runtime
                     }
                 }
             }
+
             return _elevatedRuntime.CreateInstance(xamlType, args);
         }
 
@@ -177,6 +175,7 @@ namespace MS.Internal.Xaml.Runtime
                     {
                         MemberAccessPermissionDenied = true;
                     }
+
                     // We don't know if MissingMethodException is due to visibility or not.
                     // So we fall back to the elevated runtime, but we don't set _memberAccessPermissionDenied.
                     else if (ex.InnerException is MissingMethodException)
@@ -189,6 +188,7 @@ namespace MS.Internal.Xaml.Runtime
                     }
                 }
             }
+
             return _elevatedRuntime.CreateWithFactoryMethod(xamlType, methodName, args);
         }
 
@@ -218,6 +218,7 @@ namespace MS.Internal.Xaml.Runtime
                     }
                 }
             }
+
             return _elevatedRuntime.DeferredLoad(serviceContext, deferringLoader, deferredContent);
         }
 
@@ -253,6 +254,7 @@ namespace MS.Internal.Xaml.Runtime
                     MemberAccessPermissionDenied = true;
                 }
             }
+
             return _elevatedRuntime.DeferredSave(context, deferringLoader, value);
         }
 
@@ -264,6 +266,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     return _transparentRuntime.GetConverterInstance(converter);
                 }
+
                 // We don't know if MissingMethodException is due to visibility or not.
                 // So we fall back to the elevated runtime, but we don't set _memberAccessPermissionDenied.
                 catch (MissingMethodException)
@@ -279,6 +282,7 @@ namespace MS.Internal.Xaml.Runtime
                     MemberAccessPermissionDenied = true;
                 }
             }
+
             return _elevatedRuntime.GetConverterInstance(converter);
         }
 
@@ -306,6 +310,7 @@ namespace MS.Internal.Xaml.Runtime
                     MemberAccessPermissionDenied = true;
                 }
             }
+
             return _elevatedRuntime.GetValue(obj, property, failIfWriteOnly);
         }
 
@@ -352,6 +357,7 @@ namespace MS.Internal.Xaml.Runtime
                     MemberAccessPermissionDenied = true;
                 }
             }
+
             _elevatedRuntime.SetValue(obj, property, value);
         }
 
@@ -380,6 +386,7 @@ namespace MS.Internal.Xaml.Runtime
                     MemberAccessPermissionDenied = true;
                 }
             }
+
             _elevatedRuntime.SetXmlInstance(inst, property, xData);
             return;
         }
@@ -415,11 +422,13 @@ namespace MS.Internal.Xaml.Runtime
 
         private void EnsureElevatedRuntime()
         {
-            if (_elevatedRuntime == null)
+            if (_elevatedRuntime is null)
             {
                 _elevatedRuntime = new DynamicMethodRuntime(
-                    _transparentRuntime.GetSettings(), _schemaContext, _accessLevel);
-                _elevatedRuntime.LineInfo = LineInfo;
+                    _transparentRuntime.GetSettings(), _schemaContext, _accessLevel)
+                {
+                    LineInfo = LineInfo
+                };
             }
         }
 

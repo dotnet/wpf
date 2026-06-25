@@ -1,25 +1,23 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: IDigSigProvider is a facade to the XPS Document signature implementation.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Security.Cryptography.X509Certificates;
 
 namespace MS.Internal.Documents
 {
-/// <summary>
-/// IDigSigProvider is a facade to the XPS Document signature implementation.
-/// </summary>
-/// <remarks>
-/// The responsiblity of the facade in this case is to simplify implementation
-/// and encapsulate changes.
-/// </remarks>
-internal interface IDigitalSignatureProvider
+    /// <summary>
+    /// IDigSigProvider is a facade to the XPS Document signature implementation.
+    /// </summary>
+    /// <remarks>
+    /// The responsiblity of the facade in this case is to simplify implementation
+    /// and encapsulate changes.
+    /// </remarks>
+    internal interface IDigitalSignatureProvider
 {
     #region Methods
     //--------------------------------------------------------------------------

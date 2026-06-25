@@ -1,13 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using System;
-using System.Security;
 using System.Security.RightsManagement;
 using System.Windows.TrustUI;
 
-namespace MS.Internal.Documents 
+namespace MS.Internal.Documents
 {
 
     /// <summary>
@@ -160,7 +157,7 @@ namespace MS.Internal.Documents
         /// If this such user was granted rights dutring publishing; server will issue Use License 
         /// to anyone who requests one, but it will be attached to the requesting user.  
         /// </summary>
-        internal new static ContentUser AnyoneUser
+        internal static new ContentUser AnyoneUser
         {
             get
             {
@@ -176,12 +173,12 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (_anyoneUserInstance.Value == null)
+                if (_anyoneUserInstance == null)
                 {
-                    _anyoneUserInstance.Value = CreateUser(AnyoneUser);
+                    _anyoneUserInstance = CreateUser(AnyoneUser);
                 }
 
-                return _anyoneUserInstance.Value;
+                return _anyoneUserInstance;
             }
         }
 
@@ -195,7 +192,7 @@ namespace MS.Internal.Documents
         /// <summary>
         /// The Anyone user as a RightsManagementUser.
         /// </summary>
-        private static SecurityCriticalDataForSet<RightsManagementUser> _anyoneUserInstance;
+        private static RightsManagementUser _anyoneUserInstance;
 
         private int _hashCode;
 

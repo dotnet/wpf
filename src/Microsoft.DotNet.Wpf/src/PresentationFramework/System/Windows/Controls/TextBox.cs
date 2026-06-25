@@ -1,6 +1,20 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
+using MS.Internal;
+using System.Collections; // IEnumerator
+using System.ComponentModel; // DefaultValue
+using System.Windows.Media;
+using System.Windows.Data; // Binding
+using System.Windows.Documents;
+using System.Windows.Automation.Peers;
+using System.Windows.Input; // CanExecuteRoutedEventArgs, ExecuteRoutedEventArgs
+
+using System.Windows.Controls.Primitives; // TextBoxBase
+using System.Windows.Markup; // IAddChild, XamlDesignerSerializer, ContentPropertyAttribute
+using MS.Internal.Documents;    // Undo
+using MS.Internal.Commands;     // CommandHelpers
+using MS.Internal.Telemetry.PresentationFramework;
 
 //
 // Description: The stock plain text editing control.
@@ -8,28 +22,6 @@
 
 namespace System.Windows.Controls
 {
-    using MS.Internal;
-    using System.Threading;
-    using System.Collections; // IEnumerator
-    using System.ComponentModel; // DefaultValue
-    using System.Globalization;
-    using System.Windows;
-    using System.Windows.Media;
-    using System.Windows.Data; // Binding
-    using System.Windows.Documents;
-    using System.Windows.Automation.Peers;
-    using System.Windows.Input; // CanExecuteRoutedEventArgs, ExecuteRoutedEventArgs
-
-    using System.Windows.Controls.Primitives; // TextBoxBase
-    using System.Windows.Navigation;
-    using System.Windows.Markup; // IAddChild, XamlDesignerSerializer, ContentPropertyAttribute
-    using MS.Utility;
-    using MS.Internal.Text;
-    using MS.Internal.Automation;   // TextAdaptor
-    using MS.Internal.Documents;    // Undo
-    using MS.Internal.Commands;     // CommandHelpers
-    using MS.Internal.Telemetry.PresentationFramework;
-
     /// <summary>
     /// The stock text editing control.
     /// </summary>
@@ -76,6 +68,8 @@ namespace System.Windows.Controls
              new CoerceValueCallback(CoerceHorizontalScrollBarVisibility)));
 
             ControlsTraceLogger.AddControl(TelemetryControls.TextBox);
+            
+            CommandHelpers.RegisterCommandHandler(typeof(TextBox), EditingCommands.Clear, OnClearCommand, new CanExecuteRoutedEventHandler(OnCanExecuteClearCommand));
         }
 
         /// <summary>
@@ -91,12 +85,15 @@ namespace System.Windows.Controls
             TextEditor.RegisterCommandHandlers(typeof(TextBox), /*acceptsRichContent:*/false, /*readOnly*/false, /*registerEventListeners*/false);
 
             // Create TextContainer and TextEditor associated with it
-            TextContainer container = new TextContainer(this, true /* plainTextOnly */);
-            container.CollectTextChanges = true;
+            TextContainer container = new TextContainer(this, true /* plainTextOnly */)
+            {
+                CollectTextChanges = true
+            };
             InitializeTextContainer(container);
 
             // TextBox only accepts plain text, so change TextEditor's default to that.
             this.TextEditor.AcceptsRichContent = false;
+
         }
 
         #endregion Constructors
@@ -945,6 +942,50 @@ namespace System.Windows.Controls
             {
                 return new Typography(this);
             }
+        }
+
+        /// <summary>
+        /// Property for <see cref="TemplateButtonCommand"/>.
+        /// </summary>
+        internal static readonly DependencyProperty TemplateButtonCommandProperty = DependencyProperty.Register(
+            nameof(TemplateButtonCommand),
+            typeof(RoutedCommand),
+            typeof(TextBox),
+            new PropertyMetadata(EditingCommands.Clear)
+        );
+
+        #region Properties
+
+        /// <summary>
+        /// Command triggered after clicking the button.
+        /// </summary>
+        internal RoutedCommand TemplateButtonCommand => (RoutedCommand)GetValue(TemplateButtonCommandProperty);
+
+        #endregion
+
+        /// <summary>
+        /// Triggered when the user clicks the clear text button.
+        /// </summary>
+        private static void OnClearCommand(object target, ExecutedRoutedEventArgs args)
+        {
+            if (target is TextBox textBox)
+                textBox.OnClearButtonClick();
+        }
+
+        private static void OnCanExecuteClearCommand(object target, CanExecuteRoutedEventArgs args)
+        {
+            if (target is TextBox textBox)
+            {
+                args.CanExecute =  !textBox.IsReadOnly
+                                    && textBox.IsEnabled
+                                    && textBox.Text.Length > 0;
+            }
+        }
+
+        private void OnClearButtonClick()
+        {
+            if (Text.Length > 0)
+                Text = string.Empty;
         }
 
         #endregion Public Properties
@@ -1919,6 +1960,7 @@ namespace System.Windows.Controls
 
         // depth of nested calls to OnTextContainerChanged.
         private int _changeEventNestingCount;
+
 
         #endregion Private Fields
     }

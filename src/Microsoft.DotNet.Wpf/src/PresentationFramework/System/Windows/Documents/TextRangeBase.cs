@@ -1,6 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
+using MS.Internal;
+using System.Collections;
+using System.Globalization;
+using System.Text;
+using System.Xml;
+using System.IO;
+using System.Windows.Controls; // TextBlock
 
 //
 // Description: Provides an abstract level of TextRange implementation
@@ -23,17 +30,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Globalization;
-    using System.Text;
-    using System.Xml;
-    using System.IO;
-    using MS.Internal.Documents;
-    using System.Windows.Controls; // TextBlock
-
     /// <summary>
     /// A class a portion of text content.
     /// Can be contigous or disjoint; supports rectangular table ranges.
@@ -66,7 +62,7 @@ namespace System.Windows.Documents
 
             if (textPointer.TextContainer != thisRange.Start.TextContainer)
             {
-                throw new ArgumentException(SR.NotInAssociatedTree, "textPointer");
+                throw new ArgumentException(SR.NotInAssociatedTree, nameof(textPointer));
             }
 
             // Correct position normalization on range boundary so that
@@ -162,8 +158,8 @@ namespace System.Windows.Documents
             }
             else
             {
-                ValidationHelper.VerifyPosition(thisRange.Start.TextContainer, position1, "position1");
-                ValidationHelper.VerifyPosition(thisRange.Start.TextContainer, position2, "position2");
+                ValidationHelper.VerifyPosition(thisRange.Start.TextContainer, position1, nameof(position1));
+                ValidationHelper.VerifyPosition(thisRange.Start.TextContainer, position2, nameof(position2));
 
                 TextRangeBase.BeginChange(thisRange);
                 try
@@ -1348,7 +1344,7 @@ namespace System.Windows.Documents
                 // which can create paragraphs etc.
                 if (textData.Length > 0)
                 {
-                    ITextPointer insertPosition = (explicitInsertPosition == null) ? thisRange.Start : explicitInsertPosition;
+                    ITextPointer insertPosition = explicitInsertPosition ?? thisRange.Start;
 
                     // Ensure last paragraph existence and prepare ends for the new selection
                     bool pastedFragmentEndsWithNewLine = textData.EndsWith("\n", StringComparison.Ordinal);
@@ -1539,7 +1535,7 @@ namespace System.Windows.Documents
             else
             {
                 // Unsupported format - thows exception
-                throw new ArgumentException(SR.Format(SR.TextRange_UnsupportedDataFormat, dataFormat), "dataFormat");
+                throw new ArgumentException(SR.Format(SR.TextRange_UnsupportedDataFormat, dataFormat), nameof(dataFormat));
             }
         }
 
@@ -1573,7 +1569,7 @@ namespace System.Windows.Documents
                 object element = WpfPayload.LoadElement(stream);
                 if (!(element is Section) && !(element is Span))
                 {
-                    throw new ArgumentException(SR.Format(SR.TextRange_UnrecognizedStructureInDataFormat, dataFormat), "stream");
+                    throw new ArgumentException(SR.Format(SR.TextRange_UnrecognizedStructureInDataFormat, dataFormat), nameof(stream));
                 }
                 thisRange.SetXmlVirtual((TextElement)element);
             }
@@ -1585,19 +1581,19 @@ namespace System.Windows.Documents
                 MemoryStream memoryStream = TextEditorCopyPaste.ConvertRtfToXaml(rtfText);
                 if (memoryStream == null)
                 {
-                    throw new ArgumentException(SR.Format(SR.TextRange_UnrecognizedStructureInDataFormat, dataFormat), "stream");
+                    throw new ArgumentException(SR.Format(SR.TextRange_UnrecognizedStructureInDataFormat, dataFormat), nameof(stream));
                 }
                 TextElement textElement = WpfPayload.LoadElement(memoryStream) as TextElement;
                 if (!(textElement is Section) && !(textElement is Span))
                 {
-                    throw new ArgumentException(SR.Format(SR.TextRange_UnrecognizedStructureInDataFormat, dataFormat), "stream");
+                    throw new ArgumentException(SR.Format(SR.TextRange_UnrecognizedStructureInDataFormat, dataFormat), nameof(stream));
                 }
                 thisRange.SetXmlVirtual(textElement);
             }
             else
             {
                 // Unsupported format - thows exception
-                throw new ArgumentException(SR.Format(SR.TextRange_UnsupportedDataFormat, dataFormat), "dataFormat");
+                throw new ArgumentException(SR.Format(SR.TextRange_UnsupportedDataFormat, dataFormat), nameof(dataFormat));
             }
         }
 
@@ -1742,9 +1738,8 @@ namespace System.Windows.Documents
                 else
                 {
                     // Handle Floater/Figure boundaries: non-empty ranges never cross them
-                    if (start is TextPointer)
+                    if (start is TextPointer adjustedStart)
                     {
-                        TextPointer adjustedStart = (TextPointer)start;
                         TextPointer adjustedEnd = (TextPointer)end;
                         NormalizeAnchoredBlockBoundaries(ref adjustedStart, ref adjustedEnd);
                         start = adjustedStart;

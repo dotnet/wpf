@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Holds an existing collection structure
@@ -11,19 +10,11 @@
 //
 
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Controls;
-using MS.Utility;
 using MS.Internal;              // Invariant.Assert
 using MS.Internal.Utility;
 using MS.Internal.Data;         // IndexedEnumerable
-
-using System;
 
 namespace System.Windows.Data
 {
@@ -105,10 +96,7 @@ namespace System.Windows.Data
             IEnumerator enumerator = Collection.GetEnumerator();
             bool result = enumerator.MoveNext();
             IDisposable d = enumerator as IDisposable;
-            if (d != null)
-            {
-                d.Dispose();
-            }
+            d?.Dispose();
 
             return result;
         }
@@ -355,8 +343,7 @@ namespace System.Windows.Data
             {
                 CollectionChangedEventManager.RemoveHandler(View, OnCollectionChanged);
 
-                if (_traceLog != null)
-                    _traceLog.Add("Unsubscribe to CollectionChange from {0}",
+                _traceLog?.Add("Unsubscribe to CollectionChange from {0}",
                             TraceLog.IdFor(View));
             }
 
@@ -371,8 +358,7 @@ namespace System.Windows.Data
             {
                 CollectionChangedEventManager.AddHandler(View, OnCollectionChanged);
 
-                if (_traceLog != null)
-                    _traceLog.Add("Subscribe to CollectionChange from {0}", TraceLog.IdFor(View));
+                _traceLog?.Add("Subscribe to CollectionChange from {0}", TraceLog.IdFor(View));
             }
 
             if (shouldRaiseChangeEvent) // it's as if this were a refresh of the container's collection
@@ -389,7 +375,7 @@ namespace System.Windows.Data
 
         // this method is here just to avoid the compiler error
         // error CS0649: Warning as Error: Field '..._traceLog' is never assigned to, and will always have its default value null
-        void InitializeTraceLog()
+        private void InitializeTraceLog()
         {
             _traceLog = new TraceLog(20);
         }

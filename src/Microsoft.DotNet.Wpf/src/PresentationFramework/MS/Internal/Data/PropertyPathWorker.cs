@@ -1,26 +1,19 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Defines PropertyPathWorker object, workhorse for CLR bindings
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Reflection;
 using System.Globalization;
 using System.Text;
-using System.Windows.Threading;
 using System.Windows;
 using System.Windows.Controls;                      // Validation
 using System.Windows.Data;
 using System.Windows.Markup;
-using MS.Internal;
-using MS.Internal.Hashing.PresentationFramework;    // HashHelper
 
 namespace MS.Internal.Data
 {
@@ -128,7 +121,7 @@ namespace MS.Internal.Data
                         return (dp != null) ? dp.Name :
                                 (pi != null) ? pi.Name :
                                 (pd != null) ? pd.Name :
-                                (dpa != null) ? dpa.PropertyName : null;
+                                dpa?.PropertyName;
 
                     case SourceValueType.Indexer:
                         // return the indexer string, e.g. "[foo]"
@@ -370,9 +363,9 @@ namespace MS.Internal.Data
                     {
                         ((DependencyObject)item).SetValue(dp, value);
                     }
-                    else if (dpa != null)
+                    else
                     {
-                        dpa.SetValue(item, value);
+                        dpa?.SetValue(item, value);
                     }
                     break;
 
@@ -539,13 +532,6 @@ namespace MS.Internal.Data
         {
             bool result = false;
 
-            // PreSharp uses message numbers that the C# compiler doesn't know about.
-            // Disable the C# complaints, per the PreSharp documentation.
-#pragma warning disable 1634, 1691
-
-            // PreSharp complains about catching NullReference (and other) exceptions.
-            // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-#pragma warning disable 56500
             try
             {
                 result = (pi != null) && pi.GetIndexParameters().Length > 0;
@@ -557,9 +543,6 @@ namespace MS.Internal.Data
                     throw;
             }
 
-#pragma warning restore 56500
-#pragma warning restore 1634, 1691
-
             return result;
         }
 
@@ -570,9 +553,11 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        bool IsDynamic { get { return _isDynamic; } }
-        SourceValueInfo[] SVI { get { return _parent.SVI; } }
-        DataBindEngine Engine { get { return _engine; } }
+        private bool IsDynamic { get { return _isDynamic; } }
+
+        private SourceValueInfo[] SVI { get { return _parent.SVI; } }
+
+        private DataBindEngine Engine { get { return _engine; } }
 
         //------------------------------------------------------
         //
@@ -704,8 +689,7 @@ namespace MS.Internal.Data
                 if (oldO == BindingExpression.StaticSource)
                 {
                     Type declaringType = (oldPI != null) ? oldPI.DeclaringType
-                                        : (oldPD != null) ? oldPD.ComponentType
-                                        : null;
+                                        : oldPD?.ComponentType;
                     if (declaringType != null)
                     {
                         StaticPropertyChangedEventManager.RemoveHandler(declaringType, OnStaticPropertyChanged, SVI[k].propertyName);
@@ -876,8 +860,7 @@ namespace MS.Internal.Data
                 if (newO == BindingExpression.StaticSource)
                 {
                     Type declaringType = (newPI != null) ? newPI.DeclaringType
-                                        : (newPD != null) ? newPD.ComponentType
-                                        : null;
+                                        : newPD?.ComponentType;
                     if (declaringType != null)
                     {
                         StaticPropertyChangedEventManager.AddHandler(declaringType, OnStaticPropertyChanged, SVI[k].propertyName);
@@ -926,12 +909,12 @@ namespace MS.Internal.Data
             }
         }
 
-        void ReportNoInfoError(int k, object parent)
+        private void ReportNoInfoError(int k, object parent)
         {
             // report cannot find info.  Ignore when in priority bindings.
             if (TraceData.IsEnabled)
             {
-                BindingExpression bindingExpression = (_host != null) ? _host.ParentBindingExpression : null;
+                BindingExpression bindingExpression = _host?.ParentBindingExpression;
                 if (bindingExpression == null || !bindingExpression.IsInPriorityBindingExpression)
                 {
                     if (!SystemXmlHelper.IsEmptyXmlDataCollection(parent))
@@ -1016,7 +999,7 @@ namespace MS.Internal.Data
         // different value every time the getter is called.   For the purpose of
         // detecting event leapfrogging, the value produced by such a property
         // should be ignored.
-        bool IsNonIdempotentProperty(int level)
+        private bool IsNonIdempotentProperty(int level)
         {
             PropertyDescriptor pd;
             if (level < 0 || (pd = _arySVS[level].info as PropertyDescriptor) == null)
@@ -1378,14 +1361,6 @@ namespace MS.Internal.Data
                         return false;
                 }
 
-                // PreSharp uses message numbers that the C# compiler doesn't know about.
-                // Disable the C# complaints, per the PreSharp documentation.
-#pragma warning disable 1634, 1691
-
-                // PreSharp complains about catching NullReference (and other) exceptions.
-                // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-#pragma warning disable 56500
-
                 try
                 {
                     object arg = null;
@@ -1442,9 +1417,6 @@ namespace MS.Internal.Data
                 {
                     return false;
                 }
-
-#pragma warning restore 56500
-#pragma warning restore 1634, 1691
             }
 
             // common case is IList - one arg of type Int32.  Wrap the arg so
@@ -1541,14 +1513,6 @@ namespace MS.Internal.Data
                     }
                 }
 
-                // PreSharp uses message numbers that the C# compiler doesn't know about.
-                // Disable the C# complaints, per the PreSharp documentation.
-#pragma warning disable 1634, 1691
-
-                // PreSharp complains about catching NullReference (and other) exceptions.
-                // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-#pragma warning disable 56500
-
                 try
                 {
                     o = GetValue(item, k);
@@ -1561,38 +1525,29 @@ namespace MS.Internal.Data
                     if (CriticalExceptions.IsCriticalApplicationException(ex))
                         throw;
                     BindingOperations.LogException(ex);
-                    if (_host != null)
-                        _host.ReportGetValueError(k, item, ex);
+                    _host?.ReportGetValueError(k, item, ex);
                 }
                 catch // non CLS compliant exception
                 {
-                    if (_host != null)
-                        _host.ReportGetValueError(k, item, new InvalidOperationException(SR.Format(SR.NonCLSException, "GetValue")));
+                    _host?.ReportGetValueError(k, item, new InvalidOperationException(SR.Format(SR.NonCLSException, "GetValue")));
                 }
 
                 // catch the pseudo-exception as well
                 if (o == IListIndexOutOfRange)
                 {
                     o = DependencyProperty.UnsetValue;
-                    if (_host != null)
-                        _host.ReportGetValueError(k, item, new ArgumentOutOfRangeException("index"));
+                    _host?.ReportGetValueError(k, item, new ArgumentOutOfRangeException("index"));
                 }
-
-#pragma warning restore 56500
-#pragma warning restore 1634, 1691
 
                 return o;
             }
 
-            if (_host != null)
-            {
-                _host.ReportRawValueErrors(k, item, info);
-            }
+            _host?.ReportRawValueErrors(k, item, info);
 
             return DependencyProperty.UnsetValue;
         }
 
-        void SetPropertyInfo(object info, out PropertyInfo pi, out PropertyDescriptor pd, out DependencyProperty dp, out DynamicPropertyAccessor dpa)
+        private void SetPropertyInfo(object info, out PropertyInfo pi, out PropertyDescriptor pd, out DependencyProperty dp, out DynamicPropertyAccessor dpa)
         {
             pi = null;
             pd = null;
@@ -1612,7 +1567,7 @@ namespace MS.Internal.Data
             }
         }
 
-        void CheckReadOnly(object item, object info)
+        private void CheckReadOnly(object item, object info)
         {
             PropertyInfo pi;
             PropertyDescriptor pd;
@@ -1642,20 +1597,12 @@ namespace MS.Internal.Data
             }
         }
 
-        bool IsPropertyReadOnly(object item, PropertyInfo pi)
+        private bool IsPropertyReadOnly(object item, PropertyInfo pi)
         {
             // Custom properties obtained from ICustomTypeProvider often don't
             // implement all the methods we call below.  In those cases, we catch
             // the (arbitrary) exception they throw, and just use the result of
             // CanWrite.
-
-            // PreSharp uses message numbers that the C# compiler doesn't know about.
-            // Disable the C# complaints, per the PreSharp documentation.
-#pragma warning disable 1634, 1691
-
-            // PreSharp complains about catching NullReference (and other) exceptions.
-            // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-#pragma warning disable 56500
 
             // CanWrite says whether we're even allowed to call SetValue
             // (there's no try-block here - if a custom property doesn't even
@@ -1692,13 +1639,10 @@ namespace MS.Internal.Data
             // if we get here, the property has CanWrite=true, and a non-public
             // setter. Returning true causes the caller to throw.
             return true;
-
-#pragma warning restore 56500
-#pragma warning restore 1634, 1691
         }
 
         // see whether DBNull is a valid value for update, and cache the answer
-        void DetermineWhetherDBNullIsValid()
+        private void DetermineWhetherDBNullIsValid()
         {
             bool result = false;
             object item = GetItem(Length - 1);
@@ -1711,7 +1655,7 @@ namespace MS.Internal.Data
             _isDBNullValidForUpdate = result;
         }
 
-        bool DetermineWhetherDBNullIsValid(object item)
+        private bool DetermineWhetherDBNullIsValid(object item)
         {
             PropertyInfo pi;
             PropertyDescriptor pd;
@@ -1720,7 +1664,7 @@ namespace MS.Internal.Data
             SetPropertyInfo(_arySVS[Length - 1].info, out pi, out pd, out dp, out dpa);
 
             string columnName = (pd != null) ? pd.Name :
-                                (pi != null) ? pi.Name : null;
+                                pi?.Name;
 
             object arg = (columnName == "Item" && pi != null) ? _arySVS[Length - 1].args[0] : null;
 
@@ -1735,7 +1679,7 @@ namespace MS.Internal.Data
             return false;   // this method is no longer used (but must remain, for compat)
         }
 
-        void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (IsExtendedTraceEnabled(TraceDataLevel.Events))
             {
@@ -1750,7 +1694,7 @@ namespace MS.Internal.Data
             _host.OnSourcePropertyChanged(sender, e.PropertyName);
         }
 
-        void OnValueChanged(object sender, ValueChangedEventArgs e)
+        private void OnValueChanged(object sender, ValueChangedEventArgs e)
         {
             if (IsExtendedTraceEnabled(TraceDataLevel.Events))
             {
@@ -1765,7 +1709,7 @@ namespace MS.Internal.Data
             _host.OnSourcePropertyChanged(sender, e.PropertyDescriptor.Name);
         }
 
-        void OnErrorsChanged(object sender, DataErrorsChangedEventArgs e)
+        private void OnErrorsChanged(object sender, DataErrorsChangedEventArgs e)
         {
             if (e.PropertyName == SourcePropertyName)
             {
@@ -1773,7 +1717,7 @@ namespace MS.Internal.Data
             }
         }
 
-        void OnStaticPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnStaticPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (IsExtendedTraceEnabled(TraceDataLevel.Events))
             {
@@ -1788,7 +1732,7 @@ namespace MS.Internal.Data
             _host.OnSourcePropertyChanged(sender, e.PropertyName);
         }
 
-        bool IsExtendedTraceEnabled(TraceDataLevel level)
+        private bool IsExtendedTraceEnabled(TraceDataLevel level)
         {
             if (_host != null)
             {
@@ -1807,9 +1751,9 @@ namespace MS.Internal.Data
         //------------------------------------------------------
 
         // helper for setting context via the "using" pattern
-        class ContextHelper : IDisposable
+        private class ContextHelper : IDisposable
         {
-            PropertyPathWorker _owner;
+            private PropertyPathWorker _owner;
 
             public ContextHelper(PropertyPathWorker owner)
             {
@@ -1831,7 +1775,7 @@ namespace MS.Internal.Data
         }
 
         // wrapper for arguments to IList indexer
-        class IListIndexerArg
+        private class IListIndexerArg
         {
             public IListIndexerArg(int arg)
             {
@@ -1840,7 +1784,7 @@ namespace MS.Internal.Data
 
             public int Value { get { return _arg; } }
 
-            int _arg;
+            private int _arg;
         }
 
         //------------------------------------------------------
@@ -1849,7 +1793,7 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        struct SourceValueState
+        private struct SourceValueState
         {
             public ICollectionView collectionView;
             public object item;
@@ -1858,17 +1802,16 @@ namespace MS.Internal.Data
             public object[] args;           // for indexers
         }
 
-        static readonly Char[] s_comma = new Char[] { ',' };
-        static readonly Char[] s_dot = new Char[] { '.' };
-
-        static readonly object NoParent = new NamedObject("NoParent");
-        static readonly object AsyncRequestPending = new NamedObject("AsyncRequestPending");
+        private static readonly Char[] s_comma = new Char[] { ',' };
+        private static readonly Char[] s_dot = new Char[] { '.' };
+        private static readonly object NoParent = new NamedObject("NoParent");
+        private static readonly object AsyncRequestPending = new NamedObject("AsyncRequestPending");
         internal static readonly object IListIndexOutOfRange = new NamedObject("IListIndexOutOfRange");
 
         // a list of types that declare indexers known to be consistent
         // with IList.Item[int index].  It is safe to replace these indexers
         // with the IList one.
-        static readonly IList<Type> IListIndexerAllowlist = new Type[]
+        private static readonly IList<Type> IListIndexerAllowlist = new Type[]
         {
             typeof(System.Collections.ArrayList),
             typeof(System.Collections.IList),
@@ -1888,20 +1831,18 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        PropertyPath _parent;
-        PropertyPathStatus _status;
-        object _treeContext;
-        object _rootItem;
-        SourceValueState[] _arySVS;
-        ContextHelper _contextHelper;
-
-        ClrBindingWorker _host;
-        DataBindEngine _engine;
-
-        bool _dependencySourcesChanged;
-        bool _isDynamic;
-        bool _needsDirectNotification;
-        bool? _isDBNullValidForUpdate;
+        private PropertyPath _parent;
+        private PropertyPathStatus _status;
+        private object _treeContext;
+        private object _rootItem;
+        private SourceValueState[] _arySVS;
+        private ContextHelper _contextHelper;
+        private ClrBindingWorker _host;
+        private DataBindEngine _engine;
+        private bool _dependencySourcesChanged;
+        private bool _isDynamic;
+        private bool _needsDirectNotification;
+        private bool? _isDBNullValidForUpdate;
     }
 }
 

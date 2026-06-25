@@ -1,13 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
@@ -188,7 +183,7 @@ namespace System.Windows.Controls
         /// <param name="newBinding">The new binding.</param>
         protected virtual void OnSelectedValueBindingChanged(BindingBase oldBinding, BindingBase newBinding)
         {
-            NotifyPropertyChanged("SelectedValueBinding");
+            NotifyPropertyChanged(nameof(SelectedValueBinding));
         }
 
         /// <summary>
@@ -198,7 +193,7 @@ namespace System.Windows.Controls
         /// <param name="newBinding">The new binding.</param>
         protected virtual void OnSelectedItemBindingChanged(BindingBase oldBinding, BindingBase newBinding)
         {
-            NotifyPropertyChanged("SelectedItemBinding");
+            NotifyPropertyChanged(nameof(SelectedItemBinding));
         }
 
         /// <summary>
@@ -208,7 +203,7 @@ namespace System.Windows.Controls
         /// <param name="newBinding">The new binding.</param>
         protected virtual void OnTextBindingChanged(BindingBase oldBinding, BindingBase newBinding)
         {
-            NotifyPropertyChanged("TextBinding");
+            NotifyPropertyChanged(nameof(TextBinding));
         }
 
         #endregion
@@ -410,12 +405,11 @@ namespace System.Windows.Controls
 
         protected internal override void RefreshCellContent(FrameworkElement element, string propertyName)
         {
-            DataGridCell cell = element as DataGridCell;
-            if (cell != null)
+            if (element is DataGridCell cell)
             {
                 bool isCellEditing = cell.IsEditing;
-                if ((string.Compare(propertyName, "ElementStyle", StringComparison.Ordinal) == 0 && !isCellEditing) ||
-                    (string.Compare(propertyName, "EditingElementStyle", StringComparison.Ordinal) == 0 && isCellEditing))
+                if ((string.Equals(propertyName, "ElementStyle", StringComparison.Ordinal) && !isCellEditing) ||
+                    (string.Equals(propertyName, "EditingElementStyle", StringComparison.Ordinal) && isCellEditing))
                 {
                     cell.BuildVisualTree();
                 }

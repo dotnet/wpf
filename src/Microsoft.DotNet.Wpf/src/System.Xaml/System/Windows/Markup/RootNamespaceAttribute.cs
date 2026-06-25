@@ -1,8 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-#nullable disable
 
 using System.Runtime.CompilerServices;
 
@@ -21,7 +18,7 @@ namespace System.Windows.Markup
         /// RootNamespace property in a project file.
         /// </summary>
         /// <param name="nameSpace">The root namespace value</param>
-        public RootNamespaceAttribute(string nameSpace)
+        public RootNamespaceAttribute(string? nameSpace)
         {
             Namespace = nameSpace;
         }
@@ -30,6 +27,6 @@ namespace System.Windows.Markup
         /// The root namespace value corresponding to the value of the RootNamespace
         /// property in a project file.
         /// </summary>
-        public string Namespace { get; }
+        public string? Namespace { get; }
     }
 }

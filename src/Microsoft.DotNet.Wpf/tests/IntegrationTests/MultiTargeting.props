@@ -13,14 +13,6 @@
        to true.
   -->
   <ItemGroup Condition="'$(IsUnitTestProject)'!='true' and '$(IsXUnitProject)'=='true'">
-    <PackageReference Include="xunit" Version="$(XUnitVersion)" />
-    <PackageReference Include="xunit.runner.console" Version="$(XUnitRunnerConsoleVersion)">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="xunit.runner.visualstudio" Version="$(XUnitRunnerVisualStudioVersion)">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="xunit.v3" Version="$(XUnitV3Version)" />
   </ItemGroup>
 </Project>

@@ -7,7 +7,7 @@
 <xs:schema id="Api" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
 
   <!-- "CG" is the root node for the codegen input.  An OutputDirectory property will automatically
-        be added and will default to %sdxroot%\wpf -->
+        be added and will default to the root of the repo -->
   <xs:element name="CG" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
     <xs:complexType>
       <xs:sequence>
@@ -23,7 +23,7 @@
                   <!-- The namespace in which the element appears (e.g., "System.Windows") -->
                   <xs:attribute name="Namespace" type="xs:string" />
                   <!-- The path where the generator should output the code
-                       relative to %sdxroot%\wpf (e.g., "src\Core\CSharp\System\Windows\Generated")
+                       relative to the root of the repo (e.g., "src\PresentationCore\System\Windows\Generated")
                        This path should end in a "\Generated" subdir by convention. -->
                   <xs:attribute name="ManagedDestinationDir" type="xs:string" />
                   <!-- Whether the element should implement the IAnimatable interface -->

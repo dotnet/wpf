@@ -1,29 +1,11 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
 //      AttachedAnnotationChangedEventArgs Is the event argument class
 //      for the AttachedAnnotationChanged event fired by the AnnotationService
 //
-
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Windows.Threading;
-using System.Windows;
-using System.Windows.Annotations.Storage;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Xml;
-using System.Diagnostics;
-using MS.Internal;
-using MS.Utility;
-using System.Reflection;        // for BindingFlags
-using System.Globalization;     // for CultureInfo
 
 namespace MS.Internal.Annotations
 {

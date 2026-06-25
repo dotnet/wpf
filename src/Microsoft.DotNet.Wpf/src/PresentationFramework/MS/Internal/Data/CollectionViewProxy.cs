@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // See spec at CollectionView.mht
@@ -9,9 +8,7 @@
 //              doesn't already have it.
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -44,8 +41,7 @@ namespace MS.Internal.Data
             view.CurrentChanged += new EventHandler(_OnCurrentChanged);
 
             INotifyPropertyChanged ipc = view as INotifyPropertyChanged;
-            if (ipc != null)
-                ipc.PropertyChanged += new PropertyChangedEventHandler(_OnPropertyChanged);
+            ipc?.PropertyChanged += new PropertyChangedEventHandler(_OnPropertyChanged);
         }
 
 
@@ -171,10 +167,7 @@ namespace MS.Internal.Data
         public override void Refresh()
         {
             IndexedEnumerable indexer = (IndexedEnumerable)Interlocked.Exchange(ref _indexer, null);
-            if (indexer != null)
-            {
-                indexer.Invalidate();
-            }
+            indexer?.Invalidate();
 
             ProxiedView.Refresh();
         }
@@ -370,8 +363,7 @@ namespace MS.Internal.Data
                 _view.CurrentChanged -= new EventHandler(_OnCurrentChanged);
 
                 INotifyPropertyChanged ipc = _view as INotifyPropertyChanged;
-                if (ipc != null)
-                    ipc.PropertyChanged -= new PropertyChangedEventHandler(_OnPropertyChanged);
+                ipc?.PropertyChanged -= new PropertyChangedEventHandler(_OnPropertyChanged);
 
                 _view = null;
             }
@@ -805,7 +797,7 @@ namespace MS.Internal.Data
             get
             {
                 ICollectionViewLiveShaping cvls = ProxiedView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.IsLiveSorting : null;
+                return cvls?.IsLiveSorting;
             }
             set
             {
@@ -828,7 +820,7 @@ namespace MS.Internal.Data
             get
             {
                 ICollectionViewLiveShaping cvls = ProxiedView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.IsLiveFiltering : null;
+                return cvls?.IsLiveFiltering;
             }
             set
             {
@@ -851,7 +843,7 @@ namespace MS.Internal.Data
             get
             {
                 ICollectionViewLiveShaping cvls = ProxiedView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.IsLiveGrouping : null;
+                return cvls?.IsLiveGrouping;
             }
             set
             {
@@ -1023,19 +1015,19 @@ namespace MS.Internal.Data
 
         #region Private Methods
 
-        void _OnPropertyChanged(object sender, PropertyChangedEventArgs args)
+        private void _OnPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
             OnPropertyChanged(args);
         }
 
-        void _OnViewChanged(object sender, NotifyCollectionChangedEventArgs args)
+        private void _OnViewChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
             //             VerifyAccess();    // will throw an exception if caller is not in correct UiContext
 
             OnCollectionChanged(args);
         }
 
-        void _OnCurrentChanging(object sender, CurrentChangingEventArgs args)
+        private void _OnCurrentChanging(object sender, CurrentChangingEventArgs args)
         {
             //             VerifyAccess();    // will throw an exception if caller is not in correct UiContext
 
@@ -1043,7 +1035,7 @@ namespace MS.Internal.Data
                 PrivateCurrentChanging(this, args);
         }
 
-        void _OnCurrentChanged(object sender, EventArgs args)
+        private void _OnCurrentChanged(object sender, EventArgs args)
         {
             //             VerifyAccess();    // will throw an exception if caller is not in correct UiContext
 
@@ -1073,16 +1065,15 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        ICollectionView _view;
+        private ICollectionView _view;
+        private IndexedEnumerable _indexer;
 
-        IndexedEnumerable _indexer;
+        private event CurrentChangingEventHandler PrivateCurrentChanging;
+        private event EventHandler PrivateCurrentChanged;
 
-        event CurrentChangingEventHandler PrivateCurrentChanging;
-        event EventHandler PrivateCurrentChanged;
-
-        ObservableCollection<string> _liveSortingProperties;    // dummy collection
-        ObservableCollection<string> _liveFilteringProperties;  // dummy collection
-        ObservableCollection<string> _liveGroupingProperties;   // dummy collection
+        private ObservableCollection<string> _liveSortingProperties;    // dummy collection
+        private ObservableCollection<string> _liveFilteringProperties;  // dummy collection
+        private ObservableCollection<string> _liveGroupingProperties;   // dummy collection
     }
 }
 

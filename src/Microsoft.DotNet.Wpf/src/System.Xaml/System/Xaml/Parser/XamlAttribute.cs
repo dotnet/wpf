@@ -1,11 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
-using System;
-using System.Diagnostics;
 using System.Xaml;
 using System.Xaml.MS.Impl;
 using System.Xml;
@@ -31,7 +28,7 @@ namespace MS.Internal.Xaml.Parser
             Name = propName;
             Value = val;
             Kind = ScannerAttributeKind.Property;  // non-"namespace" default;
-            if (lineInfo != null)
+            if (lineInfo is not null)
             {
                 LineNumber = lineInfo.LineNumber;
                 LinePosition = lineInfo.LinePosition;
@@ -62,7 +59,7 @@ namespace MS.Internal.Xaml.Parser
             }
             else if (Property.IsDirective)
             {
-                if(Property == XamlLanguage.Space)
+                if (Property == XamlLanguage.Space)
                 {
                     Kind = ScannerAttributeKind.XmlSpace;
                 }
@@ -81,7 +78,7 @@ namespace MS.Internal.Xaml.Parser
                     Kind = ScannerAttributeKind.Directive;
                 }
             }
-            else if(Property.IsAttachable)
+            else if (Property.IsAttachable)
             {
                 Kind = ScannerAttributeKind.AttachableProperty;
             }
@@ -95,12 +92,11 @@ namespace MS.Internal.Xaml.Parser
             }
         }
 
-
         // FxCop says this is not called
-        //public bool IsXamlNsDefinition
-        //{
+        // public bool IsXamlNsDefinition
+        // {
         //    get { return (!String.IsNullOrEmpty(_xmlnsDefinitionUri)); }
-        //}
+        // }
 
         // These properties are only defined if this Xml-Attribute is a XmlNs definition.
         public string XmlNsPrefixDefined
@@ -113,7 +109,7 @@ namespace MS.Internal.Xaml.Parser
             get { return _xmlnsDefinitionUri; }
         }
 
-        //  ========================== internal ================================
+        // ========================== internal ================================
 
         internal bool CheckIsXmlNamespaceDefinition(out string definingPrefix, out string uri)
         {
@@ -126,20 +122,22 @@ namespace MS.Internal.Xaml.Parser
                 uri = Value;
                 definingPrefix = !Name.IsDotted
                     ? Name.Name
-                    : Name.OwnerName + "." + Name.Name;
+                    : $"{Name.OwnerName}.{Name.Name}";
                 return true;
             }
+
             // case where:  xmlns="ValueUri"
-            if (String.IsNullOrEmpty(Name.Prefix) && KS.Eq(Name.Name, KnownStrings.XmlNsPrefix))
+            if (string.IsNullOrEmpty(Name.Prefix) && KS.Eq(Name.Name, KnownStrings.XmlNsPrefix))
             {
                 uri = Value;
                 definingPrefix = string.Empty;
                 return true;
             }
+
             return false;
         }
 
-        //  ========================== private ================================
+        // ========================== private ================================
 
         private XamlMember GetXamlAttributeProperty(XamlParserContext context, XamlPropertyName propName,
                                                     XamlType tagType, string tagNamespace, bool tagIsRoot)
@@ -148,18 +146,19 @@ namespace MS.Internal.Xaml.Parser
             string ns = context.GetAttributeNamespace(propName, tagNamespace);
 
             // No Namespace, == Unknown Property
-            if (ns == null)
+            if (ns is null)
             {
                 XamlMember unknownProperty;
                 if (propName.IsDotted)
                 {
                     XamlType attachedOwnerType = new XamlType(string.Empty, propName.OwnerName, null, context.SchemaContext);
-                    unknownProperty = new XamlMember(propName.Name, attachedOwnerType, true /*isAttachable*/);
+                    unknownProperty = new XamlMember(propName.Name, attachedOwnerType, isAttachable: true);
                 }
                 else
                 {
                     unknownProperty = new XamlMember(propName.Name, tagType, false);
                 }
+
                 return unknownProperty;
             }
 

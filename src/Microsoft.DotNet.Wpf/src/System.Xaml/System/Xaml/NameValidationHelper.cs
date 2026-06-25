@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -32,7 +31,7 @@ namespace System.Xaml
             UnicodeCategory uc;
             for (int i = 0; i < name.Length; i++)
             {
-                uc = Char.GetUnicodeCategory(name[i]);
+                uc = char.GetUnicodeCategory(name[i]);
                 bool idStart = (uc == UnicodeCategory.UppercaseLetter || // (Lu)
                              uc == UnicodeCategory.LowercaseLetter || // (Ll)
                              uc == UnicodeCategory.TitlecaseLetter || // (Lt)
@@ -55,6 +54,7 @@ namespace System.Xaml
                     return false;
                 }
             }
+
             return true;
         }
     }

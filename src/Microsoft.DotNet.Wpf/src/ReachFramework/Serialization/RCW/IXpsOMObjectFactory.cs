@@ -1,12 +1,9 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
-using System.Security;
 
 namespace System.Windows.Xps.Serialization.RCW
 {
@@ -20,7 +17,7 @@ namespace System.Windows.Xps.Serialization.RCW
     /// iii.Decompile the DLL and copy out the RCW by hand.
     ///      ILDASM xpsobjectmodel.dll
     /// </summary>
-    
+
     [Guid("F9B2A685-A50D-4FC2-B764-B56E093EA0CA"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [ComImport]
     internal interface IXpsOMObjectFactory

@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: 
@@ -8,10 +7,8 @@
 //      See spec at Undo spec.htm 
 //
 
-using System;
 using System.Windows;
 using System.Collections;
-using MS.Utility;
 
 namespace MS.Internal.Documents
 {
@@ -73,17 +70,11 @@ namespace MS.Internal.Documents
                 }
 
                 _openedUnit = newUnit;
-                if (newUnit != null)
-                {
-                    newUnit.Container = this;
-                }
+                newUnit?.Container = this;
             }
             else
             {
-                if (newUnit != null)
-                {
-                    newUnit.Container = deepestOpen;
-                }
+                newUnit?.Container = deepestOpen;
 
                 deepestOpen.Open(newUnit);
             }
@@ -136,7 +127,7 @@ namespace MS.Internal.Documents
 
                 if (closeParent.OpenedUnit == null)
                 {
-                    throw new ArgumentException(SR.UndoUnitNotFound, "unit");
+                    throw new ArgumentException(SR.UndoUnitNotFound, nameof(unit));
                 }
 
                 if (closeParent != this)
@@ -156,10 +147,7 @@ namespace MS.Internal.Documents
             if (closeAction != UndoCloseAction.Commit)
             {
                 // discard unit
-                if (undoManager != null)
-                {
-                    undoManager.IsEnabled = false;
-                }
+                undoManager?.IsEnabled = false;
 
                 if (OpenedUnit.OpenedUnit != null)
                 {
@@ -183,10 +171,7 @@ namespace MS.Internal.Documents
                     ((IParentUndoUnit)TopContainer).OnNextDiscard();
                 }
 
-                if (undoManager != null)
-                {
-                    undoManager.IsEnabled = true;
-                }
+                undoManager?.IsEnabled = true;
             }
             else
             {
@@ -602,7 +587,7 @@ namespace MS.Internal.Documents
         /// <returns>
         /// true if the unit is already in the parent chain, false otherwise
         /// </returns>
-        bool IsInParentUnitChain(IUndoUnit unit)
+        private bool IsInParentUnitChain(IUndoUnit unit)
         {
             if (unit is IParentUndoUnit)
             {

@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 /*++                                                           
     Description:
@@ -9,13 +8,6 @@
 
 namespace System.Windows.Documents
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Windows.Shapes;
-    using System.Windows.Controls;
-    using System.Diagnostics;
-    using System.Windows.Media;
-
     internal class FixedSOMLineRanges
     {
         public void AddRange(double start, double end)
@@ -115,7 +107,7 @@ namespace System.Windows.Documents
             get { return Start.Count; }
         }
 
-        static public double MinLineSeparation
+        public static double MinLineSeparation
         {
             get { return _minLineSeparation; }
         }

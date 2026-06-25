@@ -23,6 +23,8 @@
 #include "util.h"
 #include "modglyf.h"
 #include "ttferror.h"    /* for error codes */
+#include "intsafe_private_copy.h"
+#include "ttf_safe_checks.h"
 
 /* ------------------------------------------------------------------- */
 /* this function modifies the glyf and loca tables by copying only glyfs
@@ -60,7 +62,18 @@ HEAD Head;
 
 /* allocate memory for and read loca table */
 
-    aulLoca = (uint32 *)Mem_Alloc( (usGlyphCount + 1) * sizeof( uint32 ));
+    if (TTF_SAFE_CHECKS_ENABLED()) 
+    {
+        uint32 ulLocaCount = (uint32)usGlyphCount + 1;
+        uint32 ulAllocSize;
+        if (ULongMult32(ulLocaCount, (uint32)sizeof( uint32 ), &ulAllocSize) != S_OK)
+            return ERR_MEM;
+        aulLoca = (uint32 *)Mem_Alloc( ulAllocSize );
+    }
+    else 
+    {
+        aulLoca = (uint32 *)Mem_Alloc( (usGlyphCount + 1) * sizeof( uint32 ));
+    }
     if ( aulLoca == NULL )
         return ERR_MEM;
 
@@ -120,18 +133,56 @@ HEAD Head;
 
             if ( ulGlyphLength )
             {
-                if ((errCode = CopyBlockOver( pOutputBufferInfo, pInputBufferInfo, ulOutGlyfOffset + ulOutLoca, 
-                        ulGlyfOffset + aulLoca[ i ], ulGlyphLength )) != NO_ERROR)
-                    break;
+               if (TTF_SAFE_CHECKS_ENABLED()) 
+               {
+                    uint32 ulOutOff, ulInOff;
+                    if (UIntAdd32(ulOutGlyfOffset, ulOutLoca, &ulOutOff) != S_OK ||
+                        UIntAdd32(ulGlyfOffset, aulLoca[i], &ulInOff) != S_OK)
+                    {
+                        errCode = ERR_GENERIC;
+                        break;
+                    }
+                    if ((errCode = CopyBlockOver( pOutputBufferInfo, pInputBufferInfo, ulOutOff, 
+                            ulInOff, ulGlyphLength )) != NO_ERROR)
+                        break;
+                }
+                else 
+                {
+                    if ((errCode = CopyBlockOver( pOutputBufferInfo, pInputBufferInfo, ulOutGlyfOffset + ulOutLoca, 
+                            ulGlyfOffset + aulLoca[ i ], ulGlyphLength )) != NO_ERROR)
+                        break;
+                }
             }
         }
         assert((ulOutLoca & 1) != 1);
         aulLoca[ i ] = ulOutLoca;
         ulOutLoca += ulGlyphLength;
+        if (TTF_SAFE_CHECKS_ENABLED())
+        {
+            if (ulOutLoca < ulGlyphLength)
+            {
+                errCode = ERR_GENERIC;
+                break;
+            }
+        }
         if (ulOutLoca & 1)
         {       /* the glyph offset is on an odd-byte boundry. get ready for next time */
-            if ((errCode = WriteByte( pOutputBufferInfo, 0, ulOutGlyfOffset + ulOutLoca)) != NO_ERROR)
-                break;
+            if (TTF_SAFE_CHECKS_ENABLED()) 
+            {
+                uint32 ulPadOff;
+                if (UIntAdd32(ulOutGlyfOffset, ulOutLoca, &ulPadOff) != S_OK)
+                {
+                    errCode = ERR_GENERIC;
+                    break;
+                }
+                if ((errCode = WriteByte( pOutputBufferInfo, 0, ulPadOff)) != NO_ERROR)
+                    break;
+            }
+            else 
+            {
+                if ((errCode = WriteByte( pOutputBufferInfo, 0, ulOutGlyfOffset + ulOutLoca)) != NO_ERROR)
+                    break;
+            }
             ++ulOutLoca;
         }
     }

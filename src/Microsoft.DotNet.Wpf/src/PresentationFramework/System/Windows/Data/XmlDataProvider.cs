@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Implementation of XmlDataProvider object.
@@ -9,21 +8,15 @@
 //              XmlDataSource.mht
 //
 
-using System;
 using System.IO;                    // Stream
-using System.Collections;
 using System.ComponentModel;        // ISupportInitialize, AsyncCompletedEventHandler, [DesignerSerialization*], [DefaultValue]
-using System.Diagnostics;
 using System.IO.Packaging;          // PackUriHelper
-using System.Globalization;         // CultureInfo
 using System.Net;                   // WebRequest, IWebRequestCreate
 using System.Threading;             // ThreadPool, WaitCallback
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;     // IXmlSerializable
 using System.Xml.XPath;
-using System.Windows;
-using System.Windows.Data;
 using System.Windows.Threading;     // Dispatcher*
 using System.Windows.Markup; // IUriContext, [XamlDesignerSerializer]
 using MS.Internal;                  // CriticalExceptions
@@ -80,7 +73,7 @@ namespace System.Windows.Data
                     _domSetDocument = null;
                     _source = value;
 
-                    OnPropertyChanged(new PropertyChangedEventArgs("Source"));
+                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(Source)));
 
                     if (!IsRefreshDeferred)
                         Refresh();
@@ -121,7 +114,7 @@ namespace System.Windows.Data
                     _domSetDocument = value;
 
                     _source = null;
-                    OnPropertyChanged(new PropertyChangedEventArgs("Source"));
+                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(Source)));
 
                     ChangeDocument(value); // set immediately so that next get_Document returns this value,
                                        // even when data provider is in deferred or asynch mode
@@ -149,7 +142,7 @@ namespace System.Windows.Data
                 if (_xPath != value)
                 {
                     _xPath = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs("XPath"));
+                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(XPath)));
 
                     if (!IsRefreshDeferred)
                         Refresh();
@@ -185,7 +178,7 @@ namespace System.Windows.Data
                 if (_nsMgr != value)
                 {
                     _nsMgr = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs("XmlNamespaceManager"));
+                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(XmlNamespaceManager)));
 
                     if (!IsRefreshDeferred)
                         Refresh();
@@ -356,9 +349,9 @@ namespace System.Windows.Data
         {
             // convert the Source into an absolute URI
             Uri sourceUri = this.Source;
-            if (sourceUri.IsAbsoluteUri == false)
+            if (!sourceUri.IsAbsoluteUri)
             {
-                Uri baseUri = (_baseUri != null) ? _baseUri : BindUriHelper.BaseUri;
+                Uri baseUri = _baseUri ?? BindUriHelper.BaseUri;
                 sourceUri = BindUriHelper.GetResolvedUri(baseUri, sourceUri);
             }
 
@@ -400,8 +393,7 @@ namespace System.Windows.Data
             public void WriteXml(XmlWriter writer)
             {
                 XmlDocument doc = _host.DocumentForSerialization;
-                if (doc != null)
-                    doc.Save(writer);
+                doc?.Save(writer);
             }
 
             public void ReadXml(XmlReader reader)
@@ -441,8 +433,7 @@ namespace System.Windows.Data
                 if (_tryInlineDoc || (_savedDocument != null) || (_domSetDocument != null))
                 {
                     // if inline or assigned doc hasn't been parsed yet, wait for it
-                    if (_waitForInlineDoc != null)
-                        _waitForInlineDoc.WaitOne();
+                    _waitForInlineDoc?.WaitOne();
                     return _document;
                 }
                 return null;
@@ -465,8 +456,7 @@ namespace System.Windows.Data
             if (!_tryInlineDoc)
             {
                 _savedDocument = null;
-                if (_waitForInlineDoc != null)
-                    _waitForInlineDoc.Set();
+                _waitForInlineDoc?.Set();
                 return;
             }
 
@@ -510,8 +500,7 @@ namespace System.Windows.Data
 
                 // If serializer had to wait for the inline doc, it's available now.
                 // If there was an error, null will be returned for DocumentForSerialization.
-                if (_waitForInlineDoc != null)
-                    _waitForInlineDoc.Set();
+                _waitForInlineDoc?.Set();
             }
 
             // warn the user if the default xmlns wasn't set explicitly (bug 1006946)
@@ -713,7 +702,7 @@ namespace System.Windows.Data
                 if (_document != null)
                     Hook();
 
-                OnPropertyChanged(new PropertyChangedEventArgs("Document"));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(Document)));
             }
         }
 
@@ -725,8 +714,7 @@ namespace System.Windows.Data
         {
             _tryInlineDoc = false;
             _savedDocument = null;
-            if (_waitForInlineDoc != null)
-                _waitForInlineDoc.Set();
+            _waitForInlineDoc?.Set();
         }
 
         private void Hook()
@@ -849,8 +837,8 @@ namespace System.Windows.Data
         private bool    _tryInlineDoc = true;
         private bool    _isListening = false;
         private XmlIslandSerializer _xmlSerializer;
-        bool            _isAsynchronous = true;
-        bool            _inEndInit;
+        private bool _isAsynchronous = true;
+        private bool _inEndInit;
         private DispatcherOperationCallback _onCompletedCallback;
         private XmlNodeChangedEventHandler _nodeChangedHandler;
     }

@@ -1,25 +1,39 @@
 {
+  "sdk": {
+    "version": "11.0.100-preview.5.26227.104",
+    "allowPrerelease": true,
+    "rollForward": "latestFeature",
+    "paths": [
+      ".dotnet",
+      "$host$"
+    ],
+    "errorMessage": "The required .NET SDK wasn't found. Please run ./eng/common/dotnet.cmd/sh to install it."
+  },
   "tools": {
-    "dotnet": "9.0.100-alpha.1.23615.4",
+    "dotnet": "11.0.100-preview.5.26227.104",
     "runtimes": {
-      "dotnet": [
-        "2.1.7",
-        "$(VSRedistCommonNetCoreSharedFrameworkx6490PackageVersion)"
+      "dotnet/x64": [
+        "$(MicrosoftNETCoreAppRefVersion)"
+      ],
+      "dotnet/x86": [
+        "$(MicrosoftNETCoreAppRefVersion)"
       ]
     },
     "vs": {
       "version": "17.2"
     }
   },
-  "msbuild-sdks": {
-    "Microsoft.DotNet.Arcade.Sdk": "9.0.0-beta.24069.2",
-    "Microsoft.DotNet.Helix.Sdk": "9.0.0-beta.24069.2"
+  "test": {
+    "runner": "Microsoft.Testing.Platform"
   },
-  "sdk": {
-    "version": "9.0.100-alpha.1.23615.4"
+  "msbuild-sdks": {
+    "Microsoft.DotNet.Arcade.Sdk": "11.0.0-beta.26319.105",
+    "Microsoft.DotNet.Helix.Sdk": "11.0.0-beta.26319.105",
+    "Microsoft.Build.NoTargets": "3.7.56"
   },
   "native-tools": {
     "strawberry-perl": "5.38.0.1",
-    "net-framework-48-ref-assemblies": "0.0.0.1"
+    "net-framework-48-ref-assemblies": "0.0.0.1",
+    "windows-sdk-d3d-redist": "1.0.0"
   }
 }

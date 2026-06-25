@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // 
 // Description: BreakRecordTable manages cached informaion bout pages and 
@@ -8,8 +7,6 @@
 //
 
 
-using System;                           // WeakReference, ...
-using System.Collections.Generic;       // List<T>
 using System.Collections.ObjectModel;   // ReadOnlyCollection<T>
 using System.Windows.Documents;         // FlowDocument, TextPointer
 using MS.Internal.Documents;            // TextDocumentView
@@ -267,11 +264,13 @@ namespace MS.Internal.PtsHost
             isClean = this.IsClean;
 
             // Add new entry into BreakRecordTable
-            entry = new BreakRecordTableEntry();
-            entry.BreakRecord = brOut;
-            entry.DocumentPage = new WeakReference(page);
-            entry.TextSegments = textView.TextSegments;
-            entry.DependentMax = dependentMax;
+            entry = new BreakRecordTableEntry
+            {
+                BreakRecord = brOut,
+                DocumentPage = new WeakReference(page),
+                TextSegments = textView.TextSegments,
+                DependentMax = dependentMax
+            };
             if (pageNumber == _breakRecords.Count)
             {
                 _breakRecords.Add(entry);
@@ -415,10 +414,7 @@ namespace MS.Internal.PtsHost
                 {
                     ((FlowDocumentPage)pageRef.Target).Dispose();
                 }
-                if (_breakRecords[index].BreakRecord != null)
-                {
-                    _breakRecords[index].BreakRecord.Dispose();
-                }
+                _breakRecords[index].BreakRecord?.Dispose();
                 // Remov the entry.
                 _breakRecords.RemoveAt(index);
                 index--;

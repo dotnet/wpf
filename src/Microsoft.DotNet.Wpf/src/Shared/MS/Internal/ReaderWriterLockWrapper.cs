@@ -1,25 +1,10 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
-//
 // Description:
 // Wrapper that allows a ReaderWriterLock to work with C#'s using() clause
-//
-//
-//
-//
 
-
-
-using System;
-using System.Runtime.ConstrainedExecution;
-using System.Security;
 using System.Threading;
-using System.Windows.Threading;
-using MS.Internal.WindowsBase;
 
 namespace MS.Internal
 {
@@ -34,7 +19,6 @@ namespace MS.Internal
     // no raising events, no calling out to user code, etc.
     // !!! It is the caller's responsibility to obey this rule. !!!
     // ------------------------
-    [FriendAccessAllowed] // Built into Base, used by Core and Framework.
     internal class ReaderWriterLockWrapper
     {
         //------------------------------------------------------

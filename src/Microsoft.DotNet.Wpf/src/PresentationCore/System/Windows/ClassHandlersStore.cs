@@ -1,9 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using System;
-using System.Diagnostics;
 using MS.Utility;
 
 
@@ -43,12 +40,14 @@ namespace System.Windows
 
             // Check if we need to create a new node in the linked list
             RoutedEventHandlerInfoList handlers =  _eventHandlersList.List[index].Handlers;
-            if (handlers == null || _eventHandlersList.List[index].HasSelfHandlers == false)
+            if (handlers == null || !_eventHandlersList.List[index].HasSelfHandlers)
             {
                 // Create a new node in the linked list of class 
                 // handlers for this type and routed event.
-                handlers = new RoutedEventHandlerInfoList();
-                handlers.Handlers = new RoutedEventHandlerInfo[1];
+                handlers = new RoutedEventHandlerInfoList
+                {
+                    Handlers = new RoutedEventHandlerInfo[1]
+                };
                 handlers.Handlers[0] = routedEventHandlerInfo;
                 handlers.Next = _eventHandlersList.List[index].Handlers;
                 _eventHandlersList.List[index].Handlers = handlers;
@@ -85,10 +84,12 @@ namespace System.Windows
         {
             Debug.Assert(GetHandlersIndex(routedEvent) == -1, "There should not exist a set of handlers for the given routedEvent");
 
-            ClassHandlers classHandlers = new ClassHandlers();
-            classHandlers.RoutedEvent = routedEvent;
-            classHandlers.Handlers = handlers;
-            classHandlers.HasSelfHandlers = false;
+            ClassHandlers classHandlers = new ClassHandlers
+            {
+                RoutedEvent = routedEvent,
+                Handlers = handlers,
+                HasSelfHandlers = false
+            };
             _eventHandlersList.Add(classHandlers);
 
             return _eventHandlersList.Count - 1;

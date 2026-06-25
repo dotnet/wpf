@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -13,21 +12,12 @@
 #define TRACE
 #endif
 
-using System;
-using System.IO;
 using System.Net;
-using System.Runtime.Serialization;
-using System.Diagnostics;               // For Assert
 using System.Threading;                 // for ManualResetEvent
-using System.Globalization;             // for CultureInfo
 using MS.Internal.PresentationCore;     // for ExceptionStringTable
 using MS.Internal.IO.Packaging;              // for ResponseStream
-using System.Security;
-using System.Windows.Navigation;
 using MS.Utility;
 using MS.Internal;
-
-#pragma warning disable 1634, 1691      // disable warning about unknown Presharp warnings
 
 namespace System.IO.Packaging
 {
@@ -450,9 +440,8 @@ namespace System.IO.Packaging
         /// <remarks>assumes caller has locked the syncObject and that we are not disposed</remarks>
         private void AbortResponse()
         {
-// Disable the PreSharp warning about empty catch blocks - we need this one because sub-classes of WebResponse may or may
-// not implement Abort() and we want to silently ignore this if they don't.
-#pragma warning disable 56502
+            // We need this one because sub-classes of WebResponse may or may
+            // not implement Abort() and we want to silently ignore this if they don't.
             // Close was called - abort the response if necessary
             try
             {
@@ -467,7 +456,6 @@ namespace System.IO.Packaging
             {
                 // Ignore - innerRequest class chose to implement BeginGetResponse but not Abort.  This is allowed.
             }
-#pragma warning restore 56502
         }
 
         protected override void Dispose(bool disposing)
@@ -509,6 +497,7 @@ namespace System.IO.Packaging
                             // prevent recursion in our call to _responseStream.Close()
                             _disposed = true;
 
+#pragma warning disable IDE0031
                             if (_responseStream != null)
                             {
 #if DEBUG
@@ -520,7 +509,7 @@ namespace System.IO.Packaging
 #endif
                                 _responseStream.Close();
                             }
-
+#pragma warning restore IDE0031
                             // FullResponse
                             if (_fullResponse != null)
                             {
@@ -539,10 +528,7 @@ namespace System.IO.Packaging
                             _responseAvailable.Close();     // this call can not throw an exception
 
                             // timer
-                            if (_timeoutTimer != null)
-                            {
-                                _timeoutTimer.Dispose();
-                            }
+                            _timeoutTimer?.Dispose();
 }
                         finally
                         {
@@ -622,7 +608,7 @@ namespace System.IO.Packaging
                         // full container request?
                         if (_parent._partName == null)
                         {
-                            Debug.Assert(false, "Cannot return full-container stream from cached container object");
+                            Debug.Fail("Cannot return full-container stream from cached container object");
                         }
                         else
                         {
@@ -704,8 +690,7 @@ namespace System.IO.Packaging
                     // Prevent recursion - this sync-protected member is safe to set in a CachedResponse
                     // mode because we have no other thread in operation.
                     _parent._disposed = true;
-                    if (_parent._responseStream != null)
-                        _parent._responseStream.Close();
+                    _parent._responseStream?.Close();
                 }
                 finally
                 {
@@ -777,8 +762,7 @@ namespace System.IO.Packaging
                     if (!_disposed)
                     {
                         // dispose the timer - it is no longer needed
-                        if (_timeoutTimer != null)
-                            _timeoutTimer.Dispose();
+                        _timeoutTimer?.Dispose();
 #if DEBUG
                         if (PackWebRequestFactory._traceSwitch.Enabled)
                             System.Diagnostics.Trace.TraceInformation(
@@ -911,10 +895,7 @@ namespace System.IO.Packaging
                     }
 #endif
                     // clean up
-                    if (_timeoutTimer != null)
-                    {
-                        _timeoutTimer.Dispose();
-                    }
+                    _timeoutTimer?.Dispose();
                 }
                 finally
                 {

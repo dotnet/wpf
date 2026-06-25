@@ -1,13 +1,10 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: TextView implementation for DocumentPageView.
 // 
 
-using System;                               // InvalidOperationException, ...
-using System.Collections.Generic;           // List<T>
 using System.Collections.ObjectModel;       // ReadOnlyCollection
 using System.Windows;                       // Point, Rect, ...
 using System.Windows.Controls.Primitives;   // DocumentPageView
@@ -50,10 +47,7 @@ namespace MS.Internal.Documents
             {
                 _pageTextView = ((IServiceProvider)_page).GetService(typeof(ITextView)) as ITextView;
             }
-            if (_pageTextView != null)
-            {
-                _pageTextView.Updated += new EventHandler(HandlePageTextViewUpdated);
-            }
+            _pageTextView?.Updated += new EventHandler(HandlePageTextViewUpdated);
         }
 
         /// <summary>
@@ -76,10 +70,7 @@ namespace MS.Internal.Documents
             {
                 _pageTextView = ((IServiceProvider)_page).GetService(typeof(ITextView)) as ITextView;
             }
-            if (_pageTextView != null)
-            {
-                _pageTextView.Updated += new EventHandler(HandlePageTextViewUpdated);
-            }
+            _pageTextView?.Updated += new EventHandler(HandlePageTextViewUpdated);
         }
 
         #endregion Constructors
@@ -315,7 +306,7 @@ namespace MS.Internal.Documents
             }
             if (IsPageMissing)
             {
-                return new ReadOnlyCollection<GlyphRun>(new List<GlyphRun>());
+                return ReadOnlyCollection<GlyphRun>.Empty;
             }
             return _pageTextView.GetGlyphRuns(start, end);
         }
@@ -356,10 +347,9 @@ namespace MS.Internal.Documents
             {
                 _pageTextView = ((IServiceProvider)_page).GetService(typeof(ITextView)) as ITextView;
             }
-            if (_pageTextView != null)
-            {
-                _pageTextView.Updated += new EventHandler(HandlePageTextViewUpdated);
-            }
+
+            _pageTextView?.Updated += new EventHandler(HandlePageTextViewUpdated);
+
             if (IsValid)
             {
                 OnUpdated(EventArgs.Empty);
@@ -371,10 +361,7 @@ namespace MS.Internal.Documents
         /// </summary>
         internal void OnPageDisconnected()
         {
-            if (_pageTextView != null)
-            {
-                _pageTextView.Updated -= new EventHandler(HandlePageTextViewUpdated);
-            }
+            _pageTextView?.Updated -= new EventHandler(HandlePageTextViewUpdated);
             _pageTextView = null;
             _page = null;
         }
@@ -530,7 +517,7 @@ namespace MS.Internal.Documents
             {
                 if (!IsValid || IsPageMissing)
                 {
-                    return new ReadOnlyCollection<TextSegment>(new List<TextSegment>());
+                    return ReadOnlyCollection<TextSegment>.Empty;
                 }
                 return _pageTextView.TextSegments;
             }

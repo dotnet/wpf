@@ -1,15 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections;
 using System.Windows.Media;
-using System.Security;
-using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input.StylusPlugIns
 {
@@ -34,7 +26,7 @@ namespace System.Windows.Input.StylusPlugIns
             ArgumentNullException.ThrowIfNull(report);
             if (tabletToElementTransform.Inverse == null)
             {
-                throw new ArgumentException(SR.Stylus_MatrixNotInvertable, "tabletToElementTransform");
+                throw new ArgumentException(SR.Stylus_MatrixNotInvertable, nameof(tabletToElementTransform));
             }
             ArgumentNullException.ThrowIfNull(targetPlugInCollection);
 
@@ -108,11 +100,11 @@ namespace System.Windows.Input.StylusPlugIns
             if (!StylusPointDescription.AreCompatible(  stylusPoints.Description,
                                                         _report.StylusPointDescription))
             {
-                throw new ArgumentException(SR.IncompatibleStylusPointDescriptions, "stylusPoints");
+                throw new ArgumentException(SR.IncompatibleStylusPointDescriptions, nameof(stylusPoints));
             }
             if (stylusPoints.Count == 0)
             {
-                throw new ArgumentException(SR.Stylus_StylusPointsCantBeEmpty, "stylusPoints");
+                throw new ArgumentException(SR.Stylus_StylusPointsCantBeEmpty, nameof(stylusPoints));
             }
 
             _stylusPoints = stylusPoints.Clone();
@@ -211,11 +203,11 @@ namespace System.Windows.Input.StylusPlugIns
 
         /////////////////////////////////////////////////////////////////////
 
-        RawStylusInputReport    _report;
-        GeneralTransform        _tabletToElementTransform;
-        StylusPlugInCollection  _targetPlugInCollection;
-        StylusPointCollection   _stylusPoints;
-        StylusPlugIn            _currentNotifyPlugIn;
-        RawStylusInputCustomDataList    _customData;
-}
+        private RawStylusInputReport    _report;
+        private GeneralTransform        _tabletToElementTransform;
+        private StylusPlugInCollection  _targetPlugInCollection;
+        private StylusPointCollection   _stylusPoints;
+        private StylusPlugIn            _currentNotifyPlugIn;
+        private RawStylusInputCustomDataList _customData;
+    }
 }

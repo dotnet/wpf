@@ -1,7 +1,14 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-        
+
+
+#region Using declarations
+
+using System.Windows.Automation.Peers;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+#if RIBBON_IN_FRAMEWORK
+using Microsoft.Windows.Controls;
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
@@ -9,16 +16,6 @@ namespace System.Windows.Controls.Ribbon
 namespace Microsoft.Windows.Controls.Ribbon
 #endif
 {
-    #region Using declarations
-
-    using System;
-    using System.Windows;
-    using System.Windows.Automation.Peers;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Input;
-#if RIBBON_IN_FRAMEWORK
-    using Microsoft.Windows.Controls;
 #else
     using Microsoft.Windows.Automation.Peers;
 #endif
@@ -294,10 +291,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             base.OnApplyTemplate();
 
             // Cleanup the previous template elements
-            if (_popup != null)
-            {
-                _popup.Opened -= new EventHandler(this.OnPopupOpened);
-            }
+            _popup?.Opened -= new EventHandler(this.OnPopupOpened);
 
             _popup = this.GetTemplateChild(PopupTemplateName) as Popup;
             SubmenuPlaceholder = this.GetTemplateChild(SubmenuTemplateName) as FrameworkElement;
@@ -305,10 +299,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             _footerPaneHost = this.GetTemplateChild(FooterPaneTemplateName) as ContentPresenter;
             _auxiliaryPaneHost = this.GetTemplateChild(AuxiliaryPaneTemplateName) as ContentPresenter;
 
-            if (_popup != null)
-            {
-                _popup.Opened += new EventHandler(this.OnPopupOpened);
-            }
+            _popup?.Opened += new EventHandler(this.OnPopupOpened);
         }
 
         /// <summary>

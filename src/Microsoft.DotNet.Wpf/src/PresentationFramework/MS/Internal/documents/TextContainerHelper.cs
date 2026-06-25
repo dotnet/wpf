@@ -1,20 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Helper services for TextContainer.
 //
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Automation.Peers;            // AutomationPeer
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
-using MS.Internal.Text;
 
 namespace MS.Internal.Documents
 {
@@ -703,13 +699,11 @@ namespace MS.Internal.Documents
         {
             Invariant.Assert(edge == ElementEdge.BeforeStart || edge == ElementEdge.AfterEnd, "Cannot retrieve CP from the content of embedded object.");
             int cp = -1;
-            if (embeddedObject is FrameworkElement)
+            if (embeddedObject is FrameworkElement fe)
             {
-                FrameworkElement fe = (FrameworkElement)embeddedObject;
                 //likely the embedded element is hosted by some TextElement, like InlineUIContainer or BlockUIContainer
-                if (fe.Parent is TextElement)
+                if (fe.Parent is TextElement uiContainer)
                 {
-                    TextElement uiContainer = (TextElement)fe.Parent;
                     cp = (edge == ElementEdge.BeforeStart) ? uiContainer.ContentStartOffset : uiContainer.ContentEndOffset;
                 }
             }

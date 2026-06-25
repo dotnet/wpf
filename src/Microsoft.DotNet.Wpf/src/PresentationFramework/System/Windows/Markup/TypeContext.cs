@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -9,7 +8,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Xml;
 
 #if PBTCOMPILER
 namespace MS.Internal.Markup
@@ -66,7 +64,7 @@ namespace System.Windows.Markup
         ///<returns>
         /// Service object or null if service is not found
         ///</returns>
-        virtual public object GetService(Type serviceType)
+        public virtual object GetService(Type serviceType)
         {
             if (serviceType == typeof(IUriContext))
             {
@@ -176,11 +174,11 @@ namespace System.Windows.Markup
 
 #region Data
 
-        ParserContext _parserContext;
+        private ParserContext _parserContext;
 
         // _attribStringValue is never set when !PBTCOMPILER
         #pragma warning disable 0649
-        string _attribStringValue;
+        private string _attribStringValue;
         #pragma warning restore 0649
 
 #endregion Data

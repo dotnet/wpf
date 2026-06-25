@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // 
@@ -8,13 +7,8 @@
 // Description: Facade class that contains client configutation options (eg. proxies)
 //
 
-using System.Windows.Automation;
-using System;
-using System.Runtime.InteropServices;
 using System.Reflection;
-using System.Diagnostics;
 using MS.Internal.Automation;
-using MS.Win32;
 
 namespace System.Windows.Automation
 {

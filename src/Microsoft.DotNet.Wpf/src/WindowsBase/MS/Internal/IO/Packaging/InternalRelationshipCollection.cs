@@ -1,9 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  This is a class for representing a PackageRelationshipCollection. This is an internal
 //  class for manipulating relationships associated with a part 
@@ -12,27 +9,9 @@
 //   This class handles serialization to/from relationship parts, creation of those parts
 //   and offers methods to create, delete and enumerate relationships. This code was
 //   moved from the PackageRelationshipCollection class.
-//
-//
-//
-//
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Xml;                           // for XmlReader/Writer
+using System.Xml;
 using System.IO.Packaging;
-using System.Windows;                       // For Exception strings - SR
-using System.IO;
-using System.Diagnostics;
-using System.Windows.Markup;                // For XMLCompatibilityReader
-
-using MS.Internal;                          // For Invariant.
-using MS.Internal.WindowsBase;
-
-using MS.Internal.IO.Packaging.Extensions;
-using PackageRelationship = MS.Internal.IO.Packaging.Extensions.PackageRelationship;
 
 namespace MS.Internal.IO.Packaging
 {

@@ -1,23 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
-using MS.Utility;
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media;
-using System.Windows.Threading;
 
 namespace System.Windows.Controls.Primitives
 {
@@ -274,10 +264,7 @@ namespace System.Windows.Controls.Primitives
                 MaxLength = (horizontal ? stackDesiredSize.Width : stackDesiredSize.Height) + overflowExtent;
 
                 ToolBar toolbar = ToolBar;
-                if (toolbar != null)
-                {
-                    toolbar.SetValue(ToolBar.HasOverflowItemsPropertyKey, hasAlwaysOverflowItems || hasAsNeededOverflowItems);
-                }
+                toolbar?.SetValue(ToolBar.HasOverflowItemsPropertyKey, hasAlwaysOverflowItems || hasAsNeededOverflowItems);
             }
             else
             {
@@ -336,9 +323,11 @@ namespace System.Windows.Controls.Primitives
 
             if (TemplatedParent is ToolBar && !HasNonDefaultValue(OrientationProperty))
             {
-                Binding binding = new Binding();
-                binding.RelativeSource = RelativeSource.TemplatedParent;
-                binding.Path = new PropertyPath(ToolBar.OrientationProperty);
+                Binding binding = new Binding
+                {
+                    RelativeSource = RelativeSource.TemplatedParent,
+                    Path = new PropertyPath(ToolBar.OrientationProperty)
+                };
                 SetBinding(OrientationProperty, binding);
             }
         }
@@ -425,10 +414,7 @@ namespace System.Windows.Controls.Primitives
                     else
                     {
                         ItemContainerGenerator icg = Generator as ItemContainerGenerator;
-                        if (icg != null)
-                        {
-                            icg.Verify();
-                        }
+                        icg?.Verify();
                     }
                 }
             }
@@ -484,10 +470,7 @@ namespace System.Windows.Controls.Primitives
                     else
                     {
                         ItemContainerGenerator icg = Generator as ItemContainerGenerator;
-                        if (icg != null)
-                        {
-                            icg.Verify();
-                        }
+                        icg?.Verify();
                     }
                 }
             }
@@ -532,7 +515,7 @@ namespace System.Windows.Controls.Primitives
             get
             {
                 ToolBar tb = ToolBar;
-                return tb == null ? null : tb.ToolBarOverflowPanel;
+                return tb?.ToolBarOverflowPanel;
             }
         }
 

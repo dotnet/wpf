@@ -1,11 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
-
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace System.Xaml
 {
@@ -16,12 +12,12 @@ namespace System.Xaml
 
     public class XamlNodeQueue
     {
-        Queue<XamlNode> _nodeQueue;
-        XamlNode _endOfStreamNode;
+        private Queue<XamlNode> _nodeQueue;
+        private XamlNode _endOfStreamNode;
 
-        ReaderDelegate _reader;
-        XamlWriter _writer;
-        bool _hasLineInfo;
+        private ReaderDelegate _reader;
+        private XamlWriter _writer;
+        private bool _hasLineInfo;
 
         public XamlNodeQueue(XamlSchemaContext schemaContext)
         {
@@ -35,10 +31,11 @@ namespace System.Xaml
         {
             get
             {
-                if (_reader == null)
+                if (_reader is null)
                 {
                     _reader = new ReaderDelegate(_writer.SchemaContext, Next, _hasLineInfo);
                 }
+
                 return _reader;
             }
         }
@@ -68,6 +65,7 @@ namespace System.Xaml
                 _nodeQueue.Enqueue(node);
                 return;
             }
+
             Debug.Assert(XamlNode.IsEof_Helper(nodeType, data));
             _nodeQueue.Enqueue(_endOfStreamNode);
         }
@@ -81,7 +79,8 @@ namespace System.Xaml
             {
                 _hasLineInfo = true;
             }
-            if (_reader != null && !_reader.HasLineInfo)
+
+            if (_reader is not null && !_reader.HasLineInfo)
             {
                 _reader.HasLineInfo = true;
             }
@@ -98,6 +97,7 @@ namespace System.Xaml
             {
                 node = _endOfStreamNode;
             }
+
             return node;
         }
     }

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ProjectGuid>{440d06b8-e3de-4c0d-ad25-cd4f43d836e1}</ProjectGuid>
     
-    <Platforms>AnyCPU;x64;arm64</Platforms>
+    <Platforms>x86;x64;arm64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -25,6 +25,10 @@
     <PackagingContent Include="Sdk\*" SubFolder="root\Sdk" />
     <PackagingContent Include="targets\*" SubFolder="root\targets" />
     <PackagingContent Include="useSharedDesignerContext.txt" SubFolder="root" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(RepoRoot)src/Microsoft.DotNet.Wpf/src/PresentationBuildTasks/PresentationBuildTasks.csproj" ReferenceOutputAssembly="false" SkipGetTargetFrameworkProperties="true" />
   </ItemGroup>
 
   <!-- Windows Forms validation and packaging -->

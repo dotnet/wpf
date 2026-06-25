@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: TextOptions groups attached properties that affect the way 
@@ -8,7 +7,6 @@
 //              and TextRenderingMode.
 //
 
-using System.Windows;
 using MS.Internal.Media;
 
 namespace System.Windows.Media

@@ -1,17 +1,12 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Spinner Proxy
 
 using System;
-using System.Collections;
-using System.Text;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.ComponentModel;
 using MS.Win32;
 
 
@@ -21,7 +16,7 @@ namespace MS.Internal.AutomationProxies
     // there is a win32 title bar contant for the ime button.  There really is no such thing as an ims button
     // it's bogus.  So when this code apears to by using 1 for the item for the system menu it will never
     // conflict because the ime button does not exist.
-    class WindowsTitleBar: ProxyFragment
+    internal class WindowsTitleBar: ProxyFragment
     {
         // ------------------------------------------------------
         //
@@ -238,7 +233,7 @@ namespace MS.Internal.AutomationProxies
 
         #region TitleBarButton
 
-        class TitleBarButton: ProxySimple, IInvokeProvider
+        private class TitleBarButton: ProxySimple, IInvokeProvider
         {
             //------------------------------------------------------
             //

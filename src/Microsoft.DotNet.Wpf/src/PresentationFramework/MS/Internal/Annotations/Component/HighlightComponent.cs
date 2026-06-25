@@ -1,29 +1,20 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
 // Description: AnnotationComponent that visualizes highlights
 //
 
-using System;
-using MS.Internal;
-using System.Diagnostics;
 using System.Collections;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using MS.Internal.Text;
 using System.Xml;
 using System.IO;
 using System.Windows.Annotations;
-using System.Reflection;
-using System.Windows.Annotations.Storage;
 using System.Windows.Controls;
-using MS.Internal.Annotations.Anchoring;
 using MS.Utility;
 
 
@@ -273,7 +264,7 @@ namespace MS.Internal.Annotations.Component
 
             if (attachedAnnotation != _attachedAnnotation)
             {
-                throw new ArgumentException(SR.InvalidAttachedAnnotation, "attachedAnnotation");
+                throw new ArgumentException(SR.InvalidAttachedAnnotation, nameof(attachedAnnotation));
             }
 
             Invariant.Assert(_range != null, "null highlight range");
@@ -518,7 +509,7 @@ namespace MS.Internal.Annotations.Component
             TextAnchor textAnchor = attachedAnnotation.AttachedAnchor as TextAnchor;
             if (textAnchor == null)
             {
-                throw new ArgumentException(SR.InvalidAttachedAnchor, "attachedAnnotation");
+                throw new ArgumentException(SR.InvalidAttachedAnchor, nameof(attachedAnnotation));
             }
 
             //this should be in a fixed or flow textcontainer
@@ -528,13 +519,13 @@ namespace MS.Internal.Annotations.Component
 
             if (attachedAnnotation.Annotation == null)
             {
-                throw new ArgumentException(SR.AnnotationIsNull, "attachedAnnotation");
+                throw new ArgumentException(SR.AnnotationIsNull, nameof(attachedAnnotation));
             }
 
             //check annotation type
             if (!_type.Equals(attachedAnnotation.Annotation.AnnotationType))
             {
-                throw new ArgumentException(SR.Format(SR.NotHighlightAnnotationType, attachedAnnotation.Annotation.AnnotationType.ToString()), "attachedAnnotation");
+                throw new ArgumentException(SR.Format(SR.NotHighlightAnnotationType, attachedAnnotation.Annotation.AnnotationType.ToString()), nameof(attachedAnnotation));
             }
 
             return textContainer;

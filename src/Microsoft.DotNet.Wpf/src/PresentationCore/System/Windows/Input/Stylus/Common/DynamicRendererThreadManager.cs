@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -10,18 +9,8 @@
 //
 //
 
-using System;
-using System.Diagnostics;
-using System.Collections.Specialized;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Threading;
 using System.Windows.Threading;
-using MS.Utility;
-using System.Security;
-using MS.Internal;
 
 namespace System.Windows.Input.StylusPlugIns
 {
@@ -241,7 +230,7 @@ namespace System.Windows.Input.StylusPlugIns
         /// Handles disposing of internal object data.
         /// </summary>
         /// <param name="disposing">true when freeing managed and unmanaged resources; false if freeing just unmanaged resources.</param>
-        void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if(!_disposed)
             {

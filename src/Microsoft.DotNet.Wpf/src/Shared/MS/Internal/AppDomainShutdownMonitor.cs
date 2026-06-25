@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //---------------------------------------------------------------------------
 //
@@ -11,11 +10,6 @@
 //      to know when the AppDomain is going down
 //
 //---------------------------------------------------------------------------
-
-using System;
-using System.Diagnostics;           // Assert
-using System.Collections.Generic;   // Dictionary
-using System.Threading;             // [ThreadStatic]
 
 namespace MS.Internal
 {

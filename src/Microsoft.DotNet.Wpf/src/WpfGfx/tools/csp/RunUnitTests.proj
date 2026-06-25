@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.Build.NoTargets">
+
+  <Target Name="RunTool" BeforeTargets="AfterBuild">
+    <MSBuild Projects="..\..\tools\csp\csp.csproj" Targets="Restore;Build">
+      <Output TaskParameter="TargetOutputs" ItemName="CspBuildOutput" />
+    </MSBuild>
+    <PropertyGroup>
+      <CspExe>@(CspBuildOutput)</CspExe>
+      <CspExeDirectory>$([System.IO.Directory]::GetParent('$(CspExe)'))</CspExeDirectory>
+    </PropertyGroup>
+    <Exec Command="RunUnitTests.cmd" EnvironmentVariables="CspExePath=$(CspExeDirectory)" />
+  </Target>
+
+</Project>

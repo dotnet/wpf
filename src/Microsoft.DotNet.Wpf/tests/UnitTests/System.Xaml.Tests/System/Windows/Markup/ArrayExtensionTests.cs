@@ -1,7 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-#nullable disable
+
 using System.Collections;
 using System.Collections.Generic;
 using Xunit;
@@ -39,9 +38,9 @@ public class ArrayExtensionTests
 
     public static IEnumerable<object[]> Ctor_Array_TestData()
     {
-        yield return new object[] { new object[0], typeof(object) };
+        yield return new object[] { Array.Empty<object>(), typeof(object) };
         yield return new object[] { new object[1], typeof(object) };
-        yield return new object[] { new int[0], typeof(int) };
+        yield return new object[] { Array.Empty<int>(), typeof(int) };
         yield return new object[] { new int[] { 1, 2, 3, 4, 5, 6 }, typeof(int) };
         yield return new object[] { new int[0, 0], typeof(int) };
         yield return new object[] { new int[0, 1], typeof(int) };
@@ -75,7 +74,7 @@ public class ArrayExtensionTests
     [InlineData(null)]
     [InlineData("string")]
     [InlineData(1)]
-    public void AddChild_Invoke_AddsToItems(object value)
+    public void AddChild_Invoke_AddsToItems(object? value)
     {
         var extension = new ArrayExtension();
         extension.AddChild(value);
@@ -86,7 +85,7 @@ public class ArrayExtensionTests
     [InlineData(null)]
     [InlineData("")]
     [InlineData("string")]
-    public void AddText_Invoke_AddsToItems(string text)
+    public void AddText_Invoke_AddsToItems(string? text)
     {
         var extension = new ArrayExtension();
         extension.AddText(text);
@@ -120,12 +119,14 @@ public class ArrayExtensionTests
     [Theory]
     [InlineData(null)]
     [InlineData(typeof(int))]
-    public void Type_Set_GetReturnsExpected(Type value)
+    public void Type_Set_GetReturnsExpected(Type? value)
     {
-        var extension = new ArrayExtension();
+        ArrayExtension extension = new()
+        {
+            // Set.
+            Type = value
+        };
 
-        // Set.
-        extension.Type = value;
         Assert.Equal(value, extension.Type);
 
         // Set same.

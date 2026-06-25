@@ -74,7 +74,7 @@
       </trans-unit>
       <trans-unit id="LocalizedControlTypeHyperlink">
         <source>hyperlink</source>
-        <target state="translated">Köprü</target>
+        <target state="translated">köprü</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedControlTypeImage">

@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -10,13 +9,6 @@
 //  Spec:      Text Formatting API.doc
 //
 //
-
-
-using System;
-using System.Collections.Generic;
-using System.Windows;
-using MS.Internal.PresentationCore;
-
 
 namespace System.Windows.Media.TextFormatting
 {
@@ -143,10 +135,8 @@ namespace System.Windows.Media.TextFormatting
         private TextLexicalService  _hyphenator;
         internal virtual TextLexicalService Hyphenator
         {
-            [FriendAccessAllowed]   // used by Framework
             get { return _hyphenator; }
 
-            [FriendAccessAllowed]   // used by Framework
             set { _hyphenator = value; }
         }
 #endif

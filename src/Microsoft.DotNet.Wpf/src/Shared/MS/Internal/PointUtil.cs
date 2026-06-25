@@ -1,10 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using System;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Interop;
@@ -12,22 +9,20 @@ using System.Windows.Interop;
 using MS.Win32;
 
 #if PRESENTATION_CORE
-using MS.Internal.PresentationCore;
 #else
 #error There is an attempt to use this class from an unexpected assembly.
 #endif
 
 namespace MS.Internal
 {
-     /// <summary>
-     ///    A utility class for converting Point and Rect data between co-ordinate spaces
-     /// </summary>
-     /// <remarks>
-     ///    To avoid confusion, Avalon based Point and Rect variables are prefixed with
-     ///    "point" and "rect" respectively, whereas Win32 POINT and RECT variables are
-     ///    prefixed with "pt" and "rc" respectively.
-     /// </remarks>
-    [FriendAccessAllowed] // Built into Core, also used by Framework.
+    /// <summary>
+    ///    A utility class for converting Point and Rect data between co-ordinate spaces
+    /// </summary>
+    /// <remarks>
+    ///    To avoid confusion, Avalon based Point and Rect variables are prefixed with
+    ///    "point" and "rect" respectively, whereas Win32 POINT and RECT variables are
+    ///    prefixed with "pt" and "rc" respectively.
+    /// </remarks>
     internal static class PointUtil
     {
         /// <summary>
@@ -173,7 +168,7 @@ namespace MS.Internal
             {
                 return pointClient;
             }
-            HandleRef handleRef = new HandleRef(inputSource, inputSource.CriticalHandle);
+            HandleRef handleRef = new HandleRef(inputSource, inputSource.Handle);
 
             NativeMethods.POINT ptClient            = FromPoint(pointClient);
             NativeMethods.POINT ptClientRTLAdjusted = AdjustForRightToLeft(ptClient, handleRef);
@@ -196,7 +191,7 @@ namespace MS.Internal
                 return pointScreen;
             }
 
-            HandleRef handleRef = new HandleRef(inputSource, inputSource.CriticalHandle);
+            HandleRef handleRef = new HandleRef(inputSource, inputSource.Handle);
 
             NativeMethods.POINT ptClient = FromPoint(pointScreen);
 
@@ -404,12 +399,13 @@ namespace MS.Internal
         /// </returns>
         internal static NativeMethods.RECT FromRect(Rect rect)
         {
-            NativeMethods.RECT rc = new NativeMethods.RECT();
-
-            rc.top      = DoubleUtil.DoubleToInt(rect.Y);
-            rc.left     = DoubleUtil.DoubleToInt(rect.X);
-            rc.bottom   = DoubleUtil.DoubleToInt(rect.Bottom);
-            rc.right    = DoubleUtil.DoubleToInt(rect.Right);
+            NativeMethods.RECT rc = new NativeMethods.RECT
+            {
+                top = DoubleUtil.DoubleToInt(rect.Y),
+                left = DoubleUtil.DoubleToInt(rect.X),
+                bottom = DoubleUtil.DoubleToInt(rect.Bottom),
+                right = DoubleUtil.DoubleToInt(rect.Right)
+            };
 
             return rc;
         }
@@ -425,12 +421,13 @@ namespace MS.Internal
         /// </returns>
         internal static Rect ToRect(NativeMethods.RECT rc)
         {
-            Rect rect = new Rect();
-
-            rect.X      = rc.left;
-            rect.Y      = rc.top;
-            rect.Width  = rc.right  - rc.left;
-            rect.Height = rc.bottom - rc.top;
+            Rect rect = new Rect
+            {
+                X = rc.left,
+                Y = rc.top,
+                Width = rc.right - rc.left,
+                Height = rc.bottom - rc.top
+            };
 
             return rect;
         }

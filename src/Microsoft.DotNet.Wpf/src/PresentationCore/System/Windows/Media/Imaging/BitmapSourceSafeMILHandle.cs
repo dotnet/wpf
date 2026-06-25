@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -9,13 +8,9 @@
 //      A sub-class of SafeMILHandle that can estimate size for bitmap
 //      source objects.
 
-using System;
-using System.Diagnostics;
-using System.Security;
 using MS.Internal;
-using MS.Win32;
 
-using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
+using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media.Imaging
 {

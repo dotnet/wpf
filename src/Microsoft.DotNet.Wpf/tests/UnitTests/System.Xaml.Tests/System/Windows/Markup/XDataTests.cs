@@ -1,7 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-#nullable disable
+
 using System.IO;
 using System.Xml;
 using Xunit;
@@ -21,7 +20,7 @@ public class XDataTests
     [InlineData(null)]
     [InlineData("")]
     [InlineData("text")]
-    public void Text_Set_GetReturnsExpected(string value)
+    public void Text_Set_GetReturnsExpected(string? value)
     {
         var data = new XData { Text = value };
         Assert.Equal(value, data.Text);

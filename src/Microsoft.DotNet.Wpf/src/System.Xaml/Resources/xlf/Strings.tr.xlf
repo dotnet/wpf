@@ -427,11 +427,6 @@
         <target state="translated">Geçerli durumda konum parametreleri yazılamıyor. Yazıcı öznitelik formuna konum parametrelerini yazamıyor çünkü yazıcı öğeleri yazmaya başladı ancak konum parametrelerini içeren işaretleme uzantısında varsayılan oluşturucunun bulunmaması nedeniyle yazıcı konum parametrelerini genişletemedi. Konum parametresi üyesini düğüm akışında XamlXmlWriter'ın hala öznitelikleri yazabildiği önceki bir yere taşımayı deneyin.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExpectedLoadPermission">
-        <source>Expected permission of type XamlLoadPermission.</source>
-        <target state="translated">Beklenen XamlLoadPermission türündeki izin.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExpectedObjectMarkupInfo">
         <source>Expected value of type ObjectMarkupInfo.</source>
         <target state="translated">ObjectMarkupInfo türünün beklenen değeri.</target>
@@ -560,16 +555,6 @@
       <trans-unit id="InvalidExpression">
         <source>Invalid expression: '{0}'</source>
         <target state="translated">Geçersiz ifade: '{0}'</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionStateValue">
-        <source>PermissionState value '{0}' is not valid for this Permission.</source>
-        <target state="translated">'{0}' PermissionState değeri bu İzin için geçerli değil.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">İzin türü geçerli değil. Beklenen: '{0}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidTypeArgument">
@@ -1135,26 +1120,6 @@
       <trans-unit id="SchemaContextNull">
         <source>SchemaContext cannot be null.</source>
         <target state="translated">SchemaContext null olamaz.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">Kısmi güvende SandboxExternalContent true olarak ayarlanamaz.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityXmlMissingAttribute">
-        <source>Invalid security XML. Missing expected attribute '{0}'.</source>
-        <target state="translated">Geçersiz güvenlik XML'si. Beklenen '{0}' özniteliği eksik.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityXmlUnexpectedTag">
-        <source>Invalid security XML. Unexpected tag '{0}', expected '{1}'.</source>
-        <target state="translated">Geçersiz güvenlik XML'si. '{0}' etiketi beklenmiyordu; '{1}' bekleniyordu.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityXmlUnexpectedValue">
-        <source>Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.</source>
-        <target state="translated">Geçersiz güvenlik XML'si. '{1}' özniteliğinde '{0}' değeri beklenmiyordu; '{2}' bekleniyordu.</target>
         <note />
       </trans-unit>
       <trans-unit id="ServiceTypeAlreadyAdded">

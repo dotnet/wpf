@@ -1,24 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Threading;
-using System.Windows.Threading;
-
-using System.Windows.Automation;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using MS.Utility;
 using MS.Internal.Telemetry.PresentationFramework;
 
 // Disable CS3001: Warning as Error: not CLS-compliant
-#pragma warning disable 3001
+#pragma warning disable CS3001
 
 namespace System.Windows.Controls
 {
@@ -161,7 +152,7 @@ namespace System.Windows.Controls
                         else
                         {
                             // Uncheck all checked RadioButtons different from the current one
-                            if (rb != this && (rb.IsChecked == true) && rootScope == KeyboardNavigation.GetVisualRoot(rb) && rootScope != null)
+                            if (rb != this && (rb.IsChecked == true) && rootScope == KeyboardNavigation.GetVisualRoot(rb))
                                 rb.UncheckRadioButton();
                             i++;
                         }

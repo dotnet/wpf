@@ -1,19 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Diagnostics;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Xml;
 using System.ComponentModel;
-using System.Security;
-
-using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
@@ -27,22 +19,6 @@ using System.Windows.Xps.Packaging;
 
 namespace MS.Internal.ReachFramework
 {
-    [AttributeUsage(
-    AttributeTargets.Class |
-    AttributeTargets.Property |
-    AttributeTargets.Method |
-    AttributeTargets.Struct |
-    AttributeTargets.Enum |
-    AttributeTargets.Interface |
-    AttributeTargets.Delegate |
-    AttributeTargets.Constructor,
-    AllowMultiple = false,
-    Inherited = true)
-    ]
-    internal sealed class FriendAccessAllowedAttribute : Attribute
-    {
-    }
-
     internal class MyColorTypeConverter : ColorTypeConverter
     {
         public
@@ -63,8 +39,8 @@ namespace MS.Internal.ReachFramework
 
     internal class LooseImageSourceTypeConverter : ImageSourceTypeConverter
     {
-        int m_bitmapId;
-        String m_mainFile;
+        private int m_bitmapId;
+        private String m_mainFile;
 
         public LooseImageSourceTypeConverter(String mainFile)
         {
@@ -138,13 +114,13 @@ namespace MS.Internal.ReachFramework
                 {
                     encoder = new WmpBitmapEncoder();
 
-                    bitmapName = bitmapName + ".wmp";
+                    bitmapName += ".wmp";
                 }
                 else
                 {
                     encoder = new PngBitmapEncoder();
 
-                    bitmapName = bitmapName + ".png";
+                    bitmapName += ".png";
                 }
             }
 
@@ -164,7 +140,7 @@ namespace MS.Internal.ReachFramework
                 index = m_mainFile.Length;
             }
 
-            string uri = m_mainFile.Substring(0, index) + "_" + bitmapName;
+            string uri = string.Concat(m_mainFile.Substring(0, index), "_", bitmapName);
 
             Stream bitmapStreamDest = new System.IO.FileStream(uri, FileMode.Create, FileAccess.ReadWrite, FileShare.None);
 
@@ -182,8 +158,8 @@ namespace MS.Internal.ReachFramework
 
     internal class LooseFileSerializationManager : PackageSerializationManager
     {
-        String m_mainFile;
-        LooseImageSourceTypeConverter m_imageConverter;
+        private String m_mainFile;
+        private LooseImageSourceTypeConverter m_imageConverter;
 
         public LooseFileSerializationManager(String mainFile)
         {
@@ -316,13 +292,12 @@ namespace System.Windows.Xps.Serialization
     /// Main class for converting visual tree to fixed DrawingContext primitives
     /// </summary>
     #region public class VisualTreeFlattener
-    [MS.Internal.ReachFramework.FriendAccessAllowed]
     internal class VisualTreeFlattener
     {
         #region Private Fields
 
-        DrawingContextFlattener _dcf;
-        Dictionary<String, int>      _nameList;
+        private DrawingContextFlattener _dcf;
+        private Dictionary<String, int>      _nameList;
 
         //
         // Fix bug 1514270: Any VisualBrush.Visual rasterization occurs in brush-space, which
@@ -399,7 +374,7 @@ namespace System.Windows.Xps.Serialization
         /// 1: single primitive
         /// 2: complex
         /// </summary>
-        static int Complexity(System.Windows.Media.Drawing drawing)
+        private static int Complexity(System.Windows.Media.Drawing drawing)
         {
             if (drawing == null)
             {
@@ -526,7 +501,7 @@ namespace System.Windows.Xps.Serialization
                 int dummy;
                 // Some classes like DocumentViewer, in its visual tree, will implicitly generate
                 // some named elements. We will avoid create the duplicate names. 
-                if (_nameList.TryGetValue(fe.Name, out dummy) == false)
+                if (!_nameList.TryGetValue(fe.Name, out dummy))
                 {
                     nameAttr = fe.Name;
                     _nameList.Add(fe.Name, 0);
@@ -784,8 +759,7 @@ namespace System.Windows.Xps.Serialization
         /// <param name="resWriter"></param>
         /// <param name="bodyWriter"></param>
         /// <param name="fileName"></param>
-        [MS.Internal.ReachFramework.FriendAccessAllowed]
-        static internal void SaveAsXml(Visual visual, System.Xml.XmlWriter resWriter, System.Xml.XmlWriter bodyWriter, String fileName)
+        internal static void SaveAsXml(Visual visual, System.Xml.XmlWriter resWriter, System.Xml.XmlWriter bodyWriter, String fileName)
         {
             // Check for testing hooks
             FrameworkElement el = visual as FrameworkElement;
@@ -849,7 +823,7 @@ namespace System.Windows.Xps.Serialization
         /// <param name="dc"></param>
         /// <param name="pageSize">Raw size of parent fixed page in pixels.  Does not account for margins</param>
         /// <param name="treeWalkProgress">Used to detect visual tree cycles caused by VisualBrush</param>
-        static internal void Walk(Visual visual, IMetroDrawingContext dc, Size pageSize, TreeWalkProgress treeWalkProgress)
+        internal static void Walk(Visual visual, IMetroDrawingContext dc, Size pageSize, TreeWalkProgress treeWalkProgress)
         {
             VisualTreeFlattener flattener = new VisualTreeFlattener(dc, pageSize, treeWalkProgress);
 
@@ -863,7 +837,7 @@ namespace System.Windows.Xps.Serialization
         /// <param name="geometry">Geometry to write</param>
         /// <param name="pageSize">Raw size of parent fixed page in pixels.  Does not account for margins</param>
         /// <returns>True if written as element, False if written as attribute</returns>
-        static internal bool WritePath(System.Xml.XmlWriter bodyWriter, Geometry geometry, Size pageSize)
+        internal static bool WritePath(System.Xml.XmlWriter bodyWriter, Geometry geometry, Size pageSize)
         {
             VisualSerializer vs = new VisualSerializer(null, bodyWriter, null);
 

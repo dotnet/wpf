@@ -1,23 +1,12 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 
-using System;
-using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using System.Windows.Media.Animation;
-using System.Windows.Threading;
 using System.Windows.Media.Effects;
-
-using System.Collections;
-using System.Diagnostics;
 using MS.Internal;
 using MS.Internal.Media;
-using MS.Internal.PresentationCore;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media
 {
@@ -47,7 +36,6 @@ namespace System.Windows.Media
         /// <remarks>
 		/// This could be considered to be made public
 		/// </remarks>
-        [FriendAccessAllowed]
         internal static bool IsVisualType(DependencyObject reference)
         {
             return (reference is Visual) || (reference is Visual3D);
@@ -151,7 +139,6 @@ namespace System.Windows.Media
         /// It is also different in that null is allowed as an argument, in which case
         /// it returns null.
         /// </summary>
-        [FriendAccessAllowed]
         internal static DependencyObject GetParentInternal(DependencyObject reference)
         {
             Visual visual;
@@ -446,7 +433,6 @@ namespace System.Windows.Media
 
         /// <summary>
         /// </summary>
-        [FriendAccessAllowed]
         internal static HitTestResult HitTest(Visual reference, Point point, bool include2DOn3D)
         {
             CheckVisualReferenceArgument(reference);

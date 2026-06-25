@@ -1,15 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
-using MS.Internal.PresentationCore;
-using MS.Win32;
-using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Security;
-using System.Text;
 
 namespace MS.Win32.Pointer
 {

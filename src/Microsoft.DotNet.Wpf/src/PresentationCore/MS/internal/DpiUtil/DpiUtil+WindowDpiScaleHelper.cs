@@ -1,17 +1,14 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
+
+using MS.Win32;
+using System.Runtime.InteropServices;
+
+using MONITOR_DPI_TYPE = MS.Win32.NativeMethods.MONITOR_DPI_TYPE;
 
 namespace MS.Internal
 {
-    using MS.Win32;
-    using System;
-    using System.Runtime.InteropServices;
-    using System.Security;
-
-    using MONITOR_DPI_TYPE = MS.Win32.NativeMethods.MONITOR_DPI_TYPE;
-
     /// <content>
     /// Contains definition of <see cref="WindowDpiScaleHelper"/>
     /// </content>

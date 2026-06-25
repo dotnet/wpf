@@ -1,21 +1,9 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
-//
-// Description: dynamic collection of SortDescriptions
-//
-
-
-using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Windows;
-
-using MS.Utility;
 
 namespace System.ComponentModel
 {
@@ -121,8 +109,9 @@ namespace System.ComponentModel
                 CollectionChanged(this, new NotifyCollectionChangedEventArgs(action, item, index));
             }
         }
+
         // raise CollectionChanged event to any listeners
-        void OnCollectionChanged(NotifyCollectionChangedAction action)
+        private void OnCollectionChanged(NotifyCollectionChangedAction action)
         {
             if (CollectionChanged != null)
             {
@@ -135,7 +124,7 @@ namespace System.ComponentModel
         /// <summary>
         /// Immutable, read-only SortDescriptionCollection
         /// </summary>
-        class EmptySortDescriptionCollection : SortDescriptionCollection, IList
+        private class EmptySortDescriptionCollection : SortDescriptionCollection, IList
         {
             //------------------------------------------------------
             //

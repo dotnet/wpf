@@ -1,6 +1,11 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
+using MS.Internal;
+using System.Xml;
+using System.Windows.Markup; // TypeConvertContext, ParserContext
+using System.Windows.Controls;
+using System.Globalization;
 
 //
 // Description: Set of static methods implementing text range serialization
@@ -8,18 +13,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using System.Text;
-    using System.Xml;
-    using System.IO;
-    using System.Windows.Markup; // TypeConvertContext, ParserContext
-    using System.Windows.Controls;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Globalization;
-    using System.Security;
-
     /// <summary>
     ///     TextRangeSerialization is a static class containing
     ///     an implementation for TextRange serialization functionality.
@@ -198,7 +191,7 @@ namespace System.Windows.Documents
             if (elementLevel == EmptyDocumentDepth && typeof(Run).IsAssignableFrom(rangeStart.ParentType))
             {
                 elementLevel++;
-                xmlWriter.WriteStartElement(typeof(Run).Name);
+                xmlWriter.WriteStartElement(nameof(Run));
             }
 
             // Create text navigator for reading the range's content
@@ -1191,8 +1184,8 @@ namespace System.Windows.Documents
                         // Write Source property as the complex property to specify the BitmapImage
                         // cache option as "OnLoad" instead of the default "OnDeman". Otherwise,
                         // we couldn't load the image by disposing WpfPayload package.
-                        xmlWriter.WriteStartElement($"{typeof(Image).Name}.{Image.SourceProperty.Name}");
-                        xmlWriter.WriteStartElement(typeof(System.Windows.Media.Imaging.BitmapImage).Name);
+                        xmlWriter.WriteStartElement($"{nameof(Image)}.{Image.SourceProperty.Name}");
+                        xmlWriter.WriteStartElement(nameof(Media.Imaging.BitmapImage));
                         xmlWriter.WriteAttributeString(System.Windows.Media.Imaging.BitmapImage.UriSourceProperty.Name, imageSource);
                         xmlWriter.WriteAttributeString(System.Windows.Media.Imaging.BitmapImage.CacheOptionProperty.Name, "OnLoad");
                         xmlWriter.WriteEndElement();
@@ -1940,8 +1933,7 @@ namespace System.Windows.Documents
 
         private static string FilterNaNStringValueForDoublePropertyType(string stringValue, Type propertyType)
         {
-            if (propertyType == typeof(double) &&
-                String.Compare(stringValue, "NaN", StringComparison.OrdinalIgnoreCase) == 0)
+            if (propertyType == typeof(double) && string.Equals(stringValue, "NaN", StringComparison.OrdinalIgnoreCase))
             {
                 return "Auto"; // convert NaN to Auto, to keep parser happy
             }

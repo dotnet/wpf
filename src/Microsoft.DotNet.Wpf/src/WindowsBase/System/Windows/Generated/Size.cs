@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -10,29 +9,18 @@
 //
 
 using MS.Internal;
-using MS.Internal.WindowsBase;
-using System;
-using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.ComponentModel.Design.Serialization;
 using System.Windows.Markup;
 using System.Windows.Converters;
-using System.Windows;
-// These types are aliased to match the unamanaged names used in interop
-using BOOL = System.UInt32;
-using WORD = System.UInt16;
-using Float = System.Single;
 
 namespace System.Windows
 {
+
     [Serializable]
     [TypeConverter(typeof(SizeConverter))]
     [ValueSerializer(typeof(SizeValueSerializer))] // Used by MarkupWriter
-    partial struct Size : IFormattable
+    public partial struct Size : IFormattable
     {
         //------------------------------------------------------
         //
@@ -56,7 +44,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='size1'>The first Size to compare</param>
         /// <param name='size2'>The second Size to compare</param>
-        public static bool operator == (Size size1, Size size2)
+        public static bool operator ==(Size size1, Size size2)
         {
             return size1.Width == size2.Width &&
                    size1.Height == size2.Height;
@@ -73,7 +61,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='size1'>The first Size to compare</param>
         /// <param name='size2'>The second Size to compare</param>
-        public static bool operator != (Size size1, Size size2)
+        public static bool operator !=(Size size1, Size size2)
         {
             return !(size1 == size2);
         }
@@ -89,7 +77,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='size1'>The first Size to compare</param>
         /// <param name='size2'>The second Size to compare</param>
-        public static bool Equals (Size size1, Size size2)
+        public static bool Equals(Size size1, Size size2)
         {
             if (size1.IsEmpty)
             {
@@ -259,6 +247,7 @@ namespace System.Windows
         /// </returns>
         public override string ToString()
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, null /* format provider */);
         }
@@ -272,6 +261,7 @@ namespace System.Windows
         /// </returns>
         public string ToString(IFormatProvider provider)
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, provider);
         }
@@ -287,6 +277,7 @@ namespace System.Windows
         /// </returns>
         string IFormattable.ToString(string format, IFormatProvider provider)
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(format, provider);
         }
@@ -343,6 +334,9 @@ namespace System.Windows
 
         internal double _width;
         internal double _height;
+
+
+
 
         #endregion Internal Fields
 

@@ -1,14 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
@@ -153,20 +147,9 @@ namespace System.Windows.Controls.Primitives
         {
             base.OnApplyTemplate();
 
-            if (this._previousButton != null)
-            {
-                this._previousButton.Click -= new RoutedEventHandler(PreviousButton_Click);
-            }
-
-            if (this._nextButton != null)
-            {
-                this._nextButton.Click -= new RoutedEventHandler(NextButton_Click);
-            }
-
-            if (this._headerButton != null)
-            {
-                this._headerButton.Click -= new RoutedEventHandler(HeaderButton_Click);
-            }
+            this._previousButton?.Click -= new RoutedEventHandler(PreviousButton_Click);
+            this._nextButton?.Click -= new RoutedEventHandler(NextButton_Click);
+            this._headerButton?.Click -= new RoutedEventHandler(HeaderButton_Click);
 
             _monthView = GetTemplateChild(ElementMonthView) as Grid;
             _yearView = GetTemplateChild(ElementYearView) as Grid;
@@ -206,10 +189,7 @@ namespace System.Windows.Controls.Primitives
                 this._nextButton.Click += new RoutedEventHandler(NextButton_Click);
             }
 
-            if (this._headerButton != null)
-            {
-                this._headerButton.Click += new RoutedEventHandler(HeaderButton_Click);
-            }
+            this._headerButton?.Click += new RoutedEventHandler(HeaderButton_Click);
 
             PopulateGrids();
 
@@ -878,10 +858,7 @@ namespace System.Windows.Controls.Primitives
                 this._isMonthPressed = true;
                 Mouse.Capture(this, CaptureMode.SubTree);
 
-                if (this.Owner != null)
-                {
-                    this.Owner.OnCalendarButtonPressed(b, false);
-                }
+                this.Owner?.OnCalendarButtonPressed(b, false);
             }
         }
 
@@ -936,18 +913,12 @@ namespace System.Windows.Controls.Primitives
 
         private void PreviousButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Owner != null)
-            {
-                this.Owner.OnPreviousClick();
-            }
+            this.Owner?.OnPreviousClick();
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Owner != null)
-            {
-                this.Owner.OnNextClick();
-            }
+            this.Owner?.OnNextClick();
         }
 
         private void PopulateGrids()
@@ -966,9 +937,10 @@ namespace System.Windows.Controls.Primitives
                 {
                     for (int j = 0; j < COLS; j++)
                     {
-                        CalendarDayButton dayCell = new CalendarDayButton();
-
-                        dayCell.Owner = this.Owner;
+                        CalendarDayButton dayCell = new CalendarDayButton
+                        {
+                            Owner = this.Owner
+                        };
                         dayCell.SetValue(Grid.RowProperty, i);
                         dayCell.SetValue(Grid.ColumnProperty, j);
                         dayCell.SetBinding(CalendarDayButton.StyleProperty, GetOwnerBinding("CalendarDayButtonStyle"));
@@ -992,9 +964,10 @@ namespace System.Windows.Controls.Primitives
                 {
                     for (int j = 0; j < YEAR_COLS; j++)
                     {
-                        monthCell = new CalendarButton();
-
-                        monthCell.Owner = this.Owner;
+                        monthCell = new CalendarButton
+                        {
+                            Owner = this.Owner
+                        };
                         monthCell.SetValue(Grid.RowProperty, i);
                         monthCell.SetValue(Grid.ColumnProperty, j);
                         monthCell.SetBinding(CalendarButton.StyleProperty, GetOwnerBinding("CalendarButtonStyle"));
@@ -1166,9 +1139,8 @@ namespace System.Windows.Controls.Primitives
                 for (int childIndex = COLS; childIndex < count; childIndex++)
                 {
                     CalendarDayButton childButton = _monthView.Children[childIndex] as CalendarDayButton;
-                    if (childButton.DataContext is DateTime)
+                    if (childButton.DataContext is DateTime date)
                     {
-                        DateTime date = (DateTime)childButton.DataContext;
                         childButton.SetValue(
                             CalendarDayButton.IsHighlightedPropertyKey,
                             (daysToHighlight != 0) && DateTimeHelper.InRange(date, hStart, hEnd));
@@ -1409,8 +1381,10 @@ namespace System.Windows.Controls.Primitives
         /// <returns></returns>
         private BindingBase GetOwnerBinding(string propertyName)
         {
-            Binding result = new Binding(propertyName);
-            result.Source = this.Owner;
+            Binding result = new Binding(propertyName)
+            {
+                Source = this.Owner
+            };
             return result;
         }
 

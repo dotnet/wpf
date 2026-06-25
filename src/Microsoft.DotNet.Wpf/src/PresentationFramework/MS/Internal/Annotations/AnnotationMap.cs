@@ -1,18 +1,11 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
 //      AnnotationMap contains the implementation of the map
 //      map between annotation id and attached annotations used by the service
 //
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows.Annotations;
 
 namespace MS.Internal.Annotations
 {

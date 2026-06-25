@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -27,18 +26,14 @@
 // and that does not prompt the user.
 // 
 
-using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Runtime.InteropServices;
-using System.Security;
 
 using MS.Internal.PresentationCore;
 using MS.Win32;
 
 namespace MS.Internal.AppModel
 {
-    [FriendAccessAllowed]
     internal class CustomCredentialPolicy : ICredentialPolicy
     {
         static CustomCredentialPolicy()
@@ -47,7 +42,7 @@ namespace MS.Internal.AppModel
             _initialized = false;
         }
 
-        static internal void EnsureCustomCredentialPolicy()
+        internal static void EnsureCustomCredentialPolicy()
         {
             if (!_initialized)
             {

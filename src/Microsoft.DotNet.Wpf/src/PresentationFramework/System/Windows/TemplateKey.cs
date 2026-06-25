@@ -1,17 +1,14 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
 // Description: Base class for DataTemplateKey, TableTemplateKey.
 //
 
-using System;
 using System.Reflection;
 using System.ComponentModel;
 using System.Windows.Markup;
-using MS.Internal.Data;         // DataBindEngine.EnglishUSCulture
 
 namespace System.Windows
 {
@@ -173,9 +170,9 @@ namespace System.Windows
             return result;
         }
 
-        object _dataType;
-        TemplateType _templateType;
-        bool _initializing;
+        private object _dataType;
+        private TemplateType _templateType;
+        private bool _initializing;
     }
 }
 

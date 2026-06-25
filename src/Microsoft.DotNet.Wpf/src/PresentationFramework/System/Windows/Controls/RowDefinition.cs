@@ -1,21 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using MS.Utility;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Markup;
-using MS.Internal;
-using System.Reflection;
 using System.ComponentModel;
 
-using BuildInfo=MS.Internal.PresentationFramework.BuildInfo;
+using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
 
 //---------------------------------------------------------------------------
 //
@@ -32,14 +21,7 @@ using BuildInfo=MS.Internal.PresentationFramework.BuildInfo;
 //                  \wcp\Framework\Ms\Utility\GridContentElementCollection.tb
 //                  \wcp\Framework\Ms\Utility\RowDefinitionCollection.ti
 //
-//
-//
-//
-
-//
 //---------------------------------------------------------------------------
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Controls
 {
@@ -64,7 +46,7 @@ namespace System.Windows.Controls
         /// <summary>
         ///     Default ctor.
         /// </summary>
-        internal RowDefinitionCollection(Grid owner)
+        internal RowDefinitionCollection(Grid owner = null)
         {
             _owner = owner;
             PrivateOnModified();
@@ -393,8 +375,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (    _owner.MeasureOverrideInProgress
-                        ||  _owner.ArrangeOverrideInProgress    );
+                return _owner is not null && (_owner.MeasureOverrideInProgress || _owner.ArrangeOverrideInProgress);
             }
         }
 
@@ -406,8 +387,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (    _owner.MeasureOverrideInProgress
-                        ||  _owner.ArrangeOverrideInProgress    );
+                return _owner is not null && (_owner.MeasureOverrideInProgress || _owner.ArrangeOverrideInProgress);
             }
         }
 
@@ -512,6 +492,52 @@ namespace System.Windows.Controls
         #region Internal Properties
 
         /// <summary>
+        ///    Owner property.
+        /// </summary>
+        internal Grid Owner
+        {
+            get => _owner;
+            set
+            {
+                if (_owner == value)
+                {
+                    return;
+                }
+
+                if (_owner is null)
+                {
+                    if (value.RowDefinitions.Count > 0)
+                    {
+                        throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, nameof(Grid), nameof(RowDefinitionCollection)));
+                    }
+                    _owner = value;
+                    PrivateOnModified();
+                    for (int i = 0; i < _size; i++)
+                    {
+                        DefinitionBase item = _items[i];
+                        _owner.AddLogicalChild(item);
+                        item.OnEnterParentTree();
+                    }
+                }
+                else if (value is null)
+                {
+                    PrivateOnModified();
+                    for (int i = 0; i < _size; i++)
+                    {
+                        DefinitionBase item = _items[i];
+                        item.OnExitParentTree();
+                        _owner.RemoveLogicalChild(item);
+                    }
+                    _owner = null;
+                }
+                else
+                {
+                    throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, nameof(RowDefinitionCollection), nameof(Grid)));
+                }
+            }
+        }
+
+        /// <summary>
         ///     Internal version of Count.
         /// </summary>
         internal int InternalCount
@@ -604,7 +630,7 @@ namespace System.Windows.Controls
             _items[index] = value;
             value.Index = index;
 
-            _owner.AddLogicalChild(value);
+            _owner?.AddLogicalChild(value);
             value.OnEnterParentTree();
         }
 
@@ -623,7 +649,7 @@ namespace System.Windows.Controls
             _items[value.Index] = null;
             value.Index = -1;
 
-            _owner.RemoveLogicalChild(value);
+            _owner?.RemoveLogicalChild(value);
         }
 
         /// <summary>
@@ -696,8 +722,11 @@ namespace System.Windows.Controls
         private void PrivateOnModified()
         {
             _version++;
-            _owner.RowDefinitionCollectionDirty = true;
-            _owner.Invalidate();
+            if (_owner is not null)
+            {
+                _owner.RowDefinitionCollectionDirty = true;
+                _owner.Invalidate();
+            }
         }
 
         /// <summary>
@@ -731,7 +760,7 @@ namespace System.Windows.Controls
         //------------------------------------------------------
 
         #region Private Fields
-        private readonly Grid _owner;      //  owner of the collection
+        private Grid _owner;      //  owner of the collection
         private DefinitionBase[] _items;            //  storage of items
         private int _size;                          //  size of the collection
         private int _version;                       //  version tracks updates in the collection
@@ -808,12 +837,12 @@ namespace System.Windows.Controls
                     {
                         if (_index == -1)
                         {
-                            #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                            // IEnumerator.Current is documented to throw this exception
                             throw new InvalidOperationException(SR.EnumeratorNotStarted);
                         }
                         else
                         {
-                            #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                            // IEnumerator.Current is documented to throw this exception
                             throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                         }
                     }
@@ -834,12 +863,12 @@ namespace System.Windows.Controls
                     {
                         if (_index == -1)
                         {
-                            #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                            // IEnumerator.Current is documented to throw this exception
                             throw new InvalidOperationException(SR.EnumeratorNotStarted);
                         }
                         else
                         {
-                            #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                            // IEnumerator.Current is documented to throw this exception
                             throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                         }
                     }

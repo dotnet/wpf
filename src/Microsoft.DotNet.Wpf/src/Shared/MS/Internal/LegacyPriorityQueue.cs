@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //-----------------------------------------------------------------------
 //
@@ -47,10 +46,6 @@
 // less-than-best physical font, when the best candidate fonts don't match.
 // (We have no reports of this actually happening, possibly because it might escape
 // notice by all but the most font-obsessed users.)
-
-using System;
-using System.Diagnostics;
-using System.Collections.Generic;
 
 namespace MS.Internal
 {

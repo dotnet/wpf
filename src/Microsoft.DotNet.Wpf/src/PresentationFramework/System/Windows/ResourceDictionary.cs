@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
 *
@@ -9,30 +8,20 @@
 *
 *
 \***************************************************************************/
-using System;
 using System.IO;
 using System.Net;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Diagnostics;
 using System.ComponentModel;
-using System.Security;
 using System.Windows.Threading;
 using System.Windows.Media;
 using System.Windows.Diagnostics;
-using System.IO.Packaging;
-using MS.Internal.IO.Packaging;         // for PackageCacheEntry
-using System.Globalization;
-using System.Windows.Navigation;
 
 using MS.Internal;
 using MS.Internal.Utility;
 using MS.Internal.AppModel;
-using MS.Utility;
 using System.Xaml;
-using System.Xaml.Permissions;
 using System.Windows.Baml2006;
 using System.Windows.Markup;
 
@@ -109,7 +98,7 @@ namespace System.Windows
                 entry.Value = value; // refresh the entry value in case it was changed in the previous call
             }
         }
-        
+
         // This is set when the RD is loaded from unsafe xps doc. This will be checked while creating reader for RD source.
         internal bool IsUnsafe { get; set; }
 
@@ -157,7 +146,7 @@ namespace System.Windows
                 // that it is being passed down by the Baml parsing code, and it is trying to give us more
                 // information to avoid possible ambiguities in assembly resolving. Use the VersionedUri
                 // to resolve, and the set _source to the OriginalUri so we don't change the return of Source property.
-                // The versioned Uri is not stored, if the version info is needed while debugging, once this method 
+                // The versioned Uri is not stored, if the version info is needed while debugging, once this method
                 // returns _reader should be set, from there BamlSchemaContext.LocalAssembly contains the version info.
                 if (uriWrapper == null)
                 {
@@ -169,10 +158,10 @@ namespace System.Windows
                     _source = uriWrapper.OriginalUri;
                     sourceUri = uriWrapper.VersionedUri;
                 }
-                
+
                 Clear();
-                
-                
+
+
                 Uri uri = BindUriHelper.GetResolvedUri(_baseUri, sourceUri);
 
                 WebRequest request = WpfWebRequestHelper.CreateRequest(uri);
@@ -353,7 +342,7 @@ namespace System.Windows
             {
                 WritePrivateFlag(PrivateFlags.IsReadOnly, value);
 
-                if (value == true)
+                if (value)
                 {
                     // Seal all the styles and templates in this dictionary
                     SealValues();
@@ -706,6 +695,8 @@ namespace System.Windows
                 // to the old resource before we clear it.
                 ValidateDeferredResourceReferences(null);
 
+                _weakDeferredResourceReferencesMap?.Clear();
+
                 // remove inheritance context from all values that got it from
                 // this dictionary
                 RemoveInheritanceContextFromValues();
@@ -714,6 +705,61 @@ namespace System.Windows
 
                 // Notify owners of the change and fire invalidate if already initialized
                 NotifyOwners(ResourcesChangeInfo.CatastrophicDictionaryChangeInfo);
+            }
+        }
+
+        // optimized contains method used in FetchResource
+        private void Contains(object key, bool mustReturnDeferredResourceReference, out bool contains, out bool containsBamlObjectFactory)
+        {
+            contains = false;
+            containsBamlObjectFactory = false;
+
+            bool result = _baseDictionary.Contains(key);
+
+            if (result)
+            {
+                KeyRecord keyRecord = _baseDictionary[key] as KeyRecord;
+                if (keyRecord != null && _deferredLocationList.Contains(keyRecord))
+                {
+                    contains = false;
+                }
+                else
+                {
+                    contains = true;
+                }
+
+                if (mustReturnDeferredResourceReference
+                    && contains)
+                {
+                    return;
+                }
+
+                containsBamlObjectFactory = keyRecord is not null;
+
+                if (containsBamlObjectFactory)
+                {
+                    return;
+                }
+            }
+
+            //Search for the value in the Merged Dictionaries
+            if (_mergedDictionaries != null)
+            {
+                for (int i = MergedDictionaries.Count - 1; i > -1; i--)
+                {
+                    // Note that MergedDictionaries collection can also contain null values
+                    ResourceDictionary mergedDictionary = MergedDictionaries[i];
+                    if (mergedDictionary != null)
+                    {
+                        mergedDictionary.Contains(key, mustReturnDeferredResourceReference, out contains, out containsBamlObjectFactory);
+
+                        if (containsBamlObjectFactory
+                            || (mustReturnDeferredResourceReference && contains))
+                        {
+                            return;
+                        }
+                    }
+                }
             }
         }
 
@@ -960,7 +1006,7 @@ namespace System.Windows
             {
                 throw new InvalidOperationException(SR.EndInitWithoutBeginInitNotSupported);
             }
-            Debug.Assert(IsInitialized == false, "Dictionary should not be initialized when EndInit is called");
+            Debug.Assert(!IsInitialized, "Dictionary should not be initialized when EndInit is called");
 
             IsInitializePending = false;
             IsInitialized = true;
@@ -1098,10 +1144,12 @@ namespace System.Windows
             Debug.Assert(deferrableContent.ServiceProvider != null);
             Debug.Assert(deferrableContent.RootObject != null);
 
-            Baml2006ReaderSettings settings = new Baml2006ReaderSettings(deferrableContent.SchemaContext.Settings);
-            settings.IsBamlFragment = true;
-            settings.OwnsStream = true;
-            settings.BaseUri = null;    // Base URI can only be set on the root object, not on deferred content.
+            Baml2006ReaderSettings settings = new Baml2006ReaderSettings(deferrableContent.SchemaContext.Settings)
+            {
+                IsBamlFragment = true,
+                OwnsStream = true,
+                BaseUri = null    // Base URI can only be set on the root object, not on deferred content.
+            };
 
             Baml2006Reader reader = new Baml2006Reader(deferrableContent.Stream,
                 deferrableContent.SchemaContext, settings);
@@ -1296,7 +1344,7 @@ namespace System.Windows
                     }
                     else
                     {
-                        Debug.Assert(false, "StaticResources[] entry is not a StaticResource not OptimizedStaticResource");
+                        Debug.Fail("StaticResources[] entry is not a StaticResource not OptimizedStaticResource");
                         continue;  // other types of entries are not processed.
                     }
                 }
@@ -1727,31 +1775,21 @@ namespace System.Windows
 
             if (allowDeferredResourceReference)
             {
-                if (ContainsBamlObjectFactory(resourceKey) ||
-                    (mustReturnDeferredResourceReference && Contains(resourceKey)))
+                Contains(resourceKey, mustReturnDeferredResourceReference, out bool contains, out bool containsBamlObjectFactory);
+
+                if (containsBamlObjectFactory
+                    || (mustReturnDeferredResourceReference && contains))
                 {
                     canCache = false;
 
                     DeferredResourceReference deferredResourceReference;
                     if (!IsThemeDictionary)
                     {
-                        if (_ownerApps != null)
-                        {
-                            deferredResourceReference = new DeferredAppResourceReference(this, resourceKey);
-                        }
-                        else
-                        {
-                            deferredResourceReference = new DeferredResourceReference(this, resourceKey);
-                        }
-
+                        
                         // Cache the deferredResourceReference so that it can be validated
                         // in case of a dictionary change prior to its inflation
-                        if (_deferredResourceReferences == null)
-                        {
-                            _deferredResourceReferences = new WeakReferenceList();
-                        }
-
-                        _deferredResourceReferences.Add( deferredResourceReference, true /*SkipFind*/);
+                        deferredResourceReference = _ownerApps is not null ? new DeferredAppResourceReference(this, resourceKey) : new DeferredResourceReference(this, resourceKey);
+                        GetOrCreateWeakReferenceList(resourceKey).Add(deferredResourceReference, true /*SkipFind*/);
                     }
                     else
                     {
@@ -1767,29 +1805,75 @@ namespace System.Windows
             return GetValue(resourceKey, out canCache);
         }
 
+        private WeakReferenceList GetOrCreateWeakReferenceList(object resourceKey)
+        {
+            this._weakDeferredResourceReferencesMap ??= new();
+
+            if (!this._weakDeferredResourceReferencesMap.TryGetValue(resourceKey, out var weakDeferredResourceReferences))
+            {
+                weakDeferredResourceReferences = new WeakReferenceList();
+                this._weakDeferredResourceReferencesMap[resourceKey] = weakDeferredResourceReferences;
+            }
+
+            return weakDeferredResourceReferences;
+        }
+
+        internal void RemoveDeferredResourceReference(DeferredResourceReference deferredResourceReference)
+        {
+            
+            if (this._weakDeferredResourceReferencesMap?.TryGetValue(deferredResourceReference.Key, out var weakDeferredResourceReferences) is true)
+            {
+                weakDeferredResourceReferences.Remove(deferredResourceReference);
+            }
+        }
+
         /// <summary>
         /// Validate the deferredResourceReference with the given key. Key could be null meaning
         /// some catastrophic operation occurred so simply validate all DeferredResourceReferences
         /// </summary>
         private void ValidateDeferredResourceReferences(object resourceKey)
         {
-            if (_deferredResourceReferences != null)
+            
+            if (_weakDeferredResourceReferencesMap is null)
             {
-                foreach (Object o in _deferredResourceReferences)
-                {
+                return;
+            }
 
-                    DeferredResourceReference deferredResourceReference = o as DeferredResourceReference;
-                    if (deferredResourceReference != null && (resourceKey == null || Object.Equals(resourceKey, deferredResourceReference.Key)))
+            if (resourceKey is null)
+            {
+                foreach (var weakDeferredResourceReferences in _weakDeferredResourceReferencesMap.Values)
+                {
+                    foreach (var weakResourceReference in weakDeferredResourceReferences)
                     {
-                        // This will inflate the deferred reference, causing it
-                        // to be removed from the list.  The list may also be
-                        // purged of dead references.
-                        deferredResourceReference.GetValue(BaseValueSourceInternal.Unknown);
+                        DeferredResourceReference deferredResourceReference = weakResourceReference as DeferredResourceReference;
+
+                        Inflate(deferredResourceReference);
                     }
                 }
             }
-        }
+            else
+            {
+                if (_weakDeferredResourceReferencesMap.TryGetValue(resourceKey, out var weakDeferredResourceReferences))
+                {
+                    foreach (var weakResourceReference in weakDeferredResourceReferences)
+                    {
+                        DeferredResourceReference deferredResourceReference = weakResourceReference as DeferredResourceReference;
 
+                        Inflate(deferredResourceReference);
+                    }
+                }
+            }
+
+            return;
+
+            void Inflate(DeferredResourceReference deferredResourceReference)
+            {
+                // This will inflate the deferred reference, causing it
+                // to be removed from the list.  The list may also be
+                // purged of dead references.
+                deferredResourceReference?.GetValue(BaseValueSourceInternal.Unknown);
+            }
+        }
 
         /// <summary>
         /// Called when the MergedDictionaries collection changes
@@ -2051,15 +2135,6 @@ namespace System.Windows
 
         #endregion HelperMethods
 
-        #region Properties
-
-        internal WeakReferenceList DeferredResourceReferences
-        {
-            get { return _deferredResourceReferences; }
-        }
-
-        #endregion Properties
-
         #region Enumeration
 
         /// <summary>
@@ -2296,10 +2371,7 @@ namespace System.Windows
                 // This makes sure the resource always gets inheritance-related information
                 // from its point of definition, not from its point of use.
                 DependencyObject doValue = value as DependencyObject;
-                if (doValue != null)
-                {
-                    doValue.IsInheritanceContextSealed = true;
-                }
+                doValue?.IsInheritanceContextSealed = true;
             }
         }
 
@@ -2470,17 +2542,20 @@ namespace System.Windows
             IsUnsafe = loadedRD.IsUnsafe;
         }
 
-        private void  MoveDeferredResourceReferencesFrom(ResourceDictionary loadedRD)
+        private void MoveDeferredResourceReferencesFrom(ResourceDictionary loadedRD)
         {
-            // copy the list
-            _deferredResourceReferences = loadedRD._deferredResourceReferences;
+            // move the map and thus the lists
+            _weakDeferredResourceReferencesMap = loadedRD._weakDeferredResourceReferencesMap;
 
-            // redirect each entry toward its new owner
-            if (_deferredResourceReferences != null)
+            if (_weakDeferredResourceReferencesMap is not null)
             {
-                foreach (DeferredResourceReference drr in _deferredResourceReferences)
+                // redirect each entry toward its new owner
+                foreach (var weakDeferredResourceReferences in _weakDeferredResourceReferencesMap.Values)
                 {
-                    drr.Dictionary = this;
+                    foreach (DeferredResourceReference drr in weakDeferredResourceReferences)
+                    {
+                        drr.Dictionary = this;
+                    }
                 }
             }
         }
@@ -2503,9 +2578,9 @@ namespace System.Windows
 
         /// <summary>
         /// This wrapper class exists so SourceUriTypeConverterMarkupExtension can pass
-        /// a more complete Uri to help resolve to the correct assembly, while also passing 
+        /// a more complete Uri to help resolve to the correct assembly, while also passing
         /// the original Uri so that ResourceDictionary.Source still returns the original value.
-        /// </summary> 
+        /// </summary>
         internal class ResourceDictionarySourceUriWrapper : Uri
         {
             public ResourceDictionarySourceUriWrapper(Uri originalUri, Uri versionedUri) : base(originalUri.OriginalString, UriKind.RelativeOrAbsolute)
@@ -2548,7 +2623,7 @@ namespace System.Windows
         private WeakReferenceList                         _ownerFEs = null;
         private WeakReferenceList                         _ownerFCEs = null;
         private WeakReferenceList                         _ownerApps = null;
-        private WeakReferenceList                         _deferredResourceReferences = null;
+        private Dictionary<object, WeakReferenceList>     _weakDeferredResourceReferencesMap = null;
         private ObservableCollection<ResourceDictionary>  _mergedDictionaries = null;
         private Uri                                       _source = null;
         private Uri                                       _baseUri = null;
@@ -2584,8 +2659,7 @@ namespace System.Windows
         // a dummy DO, used as the InheritanceContext when the dictionary's owner is
         // not itself a DO
         private static readonly DependencyObject DummyInheritanceContext = new DependencyObject();
-
-        XamlObjectIds _contextXamlObjectIds  = new XamlObjectIds();
+        private XamlObjectIds _contextXamlObjectIds  = new XamlObjectIds();
 
         private IXamlObjectWriterFactory _objectWriterFactory;
         private XamlObjectWriterSettings _objectWriterSettings;

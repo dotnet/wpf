@@ -1,23 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
 //   Attributes used by parser for Avalon
 //
 
-using System;
-using System.Xml;
-using System.IO;
 using System.Collections;
 using System.ComponentModel;
-using System.Globalization;
-
-using System.Diagnostics;
 using System.Reflection;
-
-using MS.Utility;
 
 #if !PBTCOMPILER
 
@@ -191,7 +182,7 @@ namespace System.Windows.Markup
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( "dependencyObject" );
+                throw new ArgumentNullException( nameof(dependencyObject));
             }
 
             return (string)dependencyObject.GetValue(XmlSpaceProperty);
@@ -204,7 +195,7 @@ namespace System.Windows.Markup
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( "dependencyObject" );
+                throw new ArgumentNullException( nameof(dependencyObject));
             }
 
             dependencyObject.SetValue(XmlSpaceProperty, value);
@@ -225,7 +216,7 @@ namespace System.Windows.Markup
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( "dependencyObject" );
+                throw new ArgumentNullException( nameof(dependencyObject));
             }
 
             return (XmlnsDictionary)dependencyObject.GetValue(XmlnsDictionaryProperty);
@@ -238,10 +229,10 @@ namespace System.Windows.Markup
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( "dependencyObject" );
+                throw new ArgumentNullException( nameof(dependencyObject));
             }
 
-            if (dependencyObject.IsSealed == false)
+            if (!dependencyObject.IsSealed)
             {
                 dependencyObject.SetValue(XmlnsDictionaryProperty, value);
             }
@@ -263,7 +254,7 @@ namespace System.Windows.Markup
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( "dependencyObject" );
+                throw new ArgumentNullException( nameof(dependencyObject));
             }
 
             return (string)dependencyObject.GetValue(XmlnsDefinitionProperty);
@@ -276,7 +267,7 @@ namespace System.Windows.Markup
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( "dependencyObject" );
+                throw new ArgumentNullException( nameof(dependencyObject));
             }
 
             dependencyObject.SetValue(XmlnsDefinitionProperty, value);
@@ -296,14 +287,14 @@ namespace System.Windows.Markup
         /// </remarks>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
-        public static string GetXmlNamespaceMaps(DependencyObject dependencyObject)
+        public static Hashtable GetXmlNamespaceMaps(DependencyObject dependencyObject)
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( "dependencyObject" );
+                throw new ArgumentNullException( nameof(dependencyObject));
             }
 
-            return (string)dependencyObject.GetValue(XmlNamespaceMapsProperty);
+            return (Hashtable)dependencyObject.GetValue(XmlNamespaceMapsProperty);
         }
 
         /// <summary>
@@ -312,11 +303,11 @@ namespace System.Windows.Markup
         /// <remarks>
         /// XmlNamespaceMaps map xml namespace uri to Assembly/CLR namespaces
         /// </remarks>
-        public static void SetXmlNamespaceMaps(DependencyObject dependencyObject, string value)
+        public static void SetXmlNamespaceMaps(DependencyObject dependencyObject, Hashtable value)
         {
             if (dependencyObject == null)
             {
-                throw new ArgumentNullException( "dependencyObject" );
+                throw new ArgumentNullException( nameof(dependencyObject));
             }
 
             dependencyObject.SetValue(XmlNamespaceMapsProperty, value);

@@ -1,31 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-#pragma warning disable 1634, 1691
-//
-//
-// Description:
-//     DataIdProcessor walks the tree and loads annotations based on unique ids
-//     identified by the DataIdProperty.  It loads annotations when it
-//     reaches a leaf in the tree or when it runs into a node with the
-//     FetchAnnotationsAsBatch property set to true.
-//     Spec: Anchoring Namespace Spec.doc
-//
-
-using System;
-using System.Diagnostics;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Annotations;
-using System.Windows.Annotations.Storage;
-using System.Windows.Markup;
-using System.Windows.Threading;
 using System.Xml;
-
-using MS.Utility;
 
 namespace MS.Internal.Annotations.Anchoring
 {
@@ -199,7 +178,7 @@ namespace MS.Internal.Annotations.Anchoring
             ArgumentNullException.ThrowIfNull(startNode);
 
             if (DataIdElementName != locatorPart.PartType)
-                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), "locatorPart");
+                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), nameof(locatorPart));
 
             // Initial value
             continueResolving = true;
@@ -208,7 +187,7 @@ namespace MS.Internal.Annotations.Anchoring
             string id = locatorPart.NameValuePairs[ValueAttributeName];
             if (id == null)
             {
-                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), "locatorPart");
+                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), nameof(locatorPart));
             }
 
             // and from the node to examine.
@@ -274,7 +253,6 @@ namespace MS.Internal.Annotations.Anchoring
         ///     logical tree node.  Attach this property to the element with a
         ///     unique value.
         /// </summary>
-#pragma warning suppress 7009
         public static readonly DependencyProperty DataIdProperty =
                 DependencyProperty.RegisterAttached(
                         "DataId",
@@ -319,7 +297,6 @@ namespace MS.Internal.Annotations.Anchoring
         ///     processor should load all annotations for the subtree rooted
         ///     a the element as a batch.
         /// </summary>
-#pragma warning suppress 7009
         public static readonly DependencyProperty FetchAnnotationsAsBatchProperty = DependencyProperty.RegisterAttached(
                 "FetchAnnotationsAsBatch",
                 typeof(bool),

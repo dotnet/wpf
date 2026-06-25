@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|ARM64">
+    <ProjectConfiguration Include="Debug|arm64">
       <Configuration>Debug</Configuration>
-      <Platform>ARM64</Platform>
+      <Platform>arm64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|ARM64">
+    <ProjectConfiguration Include="Release|arm64">
       <Configuration>Release</Configuration>
-      <Platform>ARM64</Platform>
+      <Platform>arm64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
@@ -39,7 +39,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup>
     <Keyword>NetCoreCProj</Keyword>
-    <CLRSupport>pure</CLRSupport>
+    <CLRSupport>NetCore</CLRSupport>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
   </PropertyGroup>
@@ -57,7 +57,7 @@
     <ClCompile>
       <AdditionalOptions>%(AdditionalOptions) /clr:initLocals</AdditionalOptions>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(WpfSharedDir)\inc;.\;.\CPP</AdditionalIncludeDirectories>
-      <CompileAsManaged>pure</CompileAsManaged>
+      <CompileAsManaged>NetCore</CompileAsManaged>
       <PreprocessorDefinitions>$(CDefines);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>precomp.hxx</PrecompiledHeaderFile>
       <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
@@ -92,14 +92,9 @@
   <ItemGroup>
     <AdditionalPackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
   </ItemGroup>
-  <!--
-    Ignore ijwhost.dll during packaging
-  -->
-  <ItemGroup>
-    <FileNamesExcludedFromPackaging Include="ijwhost.dll" />
-  </ItemGroup>
+  <!-- ijwhost.dll packaging is handled centrally in eng/WpfArcadeSdk/tools/Packaging.targets -->
   <Target Name="AddWindowsBaseDefine" AfterTargets="ResolveProjectReferences">
-    <Error Text="Unexpected result from _WindowsBaseReference" Condition="'@(_WindowsBaseReference->Count())' != '1'" />
+    <Error Text="Unexpected result from _WindowsBaseReference '@(_WindowsBaseReference->Count())'" Condition="'@(_WindowsBaseReference->Count())' != '1'" />
     <PropertyGroup>
       <_windowsBasePath>%(_WindowsBaseReference.FullPath)</_windowsBasePath>
     </PropertyGroup>

@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using Xunit;
 
@@ -21,12 +20,12 @@ public class XmlnsCompatibleWithAttributeTests
     [Fact]
     public void Ctor_NullOldNamespace_ThrowsArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>("oldNamespace", () => new XmlnsCompatibleWithAttribute(null, "newNamespace"));
+        Assert.Throws<ArgumentNullException>("oldNamespace", () => new XmlnsCompatibleWithAttribute(null!, "newNamespace"));
     }
 
     [Fact]
     public void Ctor_NullNewNamespace_ThrowsArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>("newNamespace", () => new XmlnsCompatibleWithAttribute("oldNamespace", null));
+        Assert.Throws<ArgumentNullException>("newNamespace", () => new XmlnsCompatibleWithAttribute("oldNamespace", null!));
     }
 }

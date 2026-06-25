@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -10,9 +9,7 @@
 //
 //
 
-using System;
 using System.Globalization;
-using System.Diagnostics;
 using MS.Internal.PresentationCore;
 using System.Windows.Markup;
 
@@ -60,7 +57,7 @@ namespace MS.Internal.TextFormatting
                             try
                             {
                                 CultureInfo culture = CultureInfo.CreateSpecificCulture(cultureName);
-                                specificCulture = SafeSecurityHelper.GetCultureInfoByIetfLanguageTag(culture.IetfLanguageTag);
+                                specificCulture = CultureInfo.GetCultureInfoByIetfLanguageTag(culture.IetfLanguageTag);
                             }
                             catch (ArgumentException)
                             {

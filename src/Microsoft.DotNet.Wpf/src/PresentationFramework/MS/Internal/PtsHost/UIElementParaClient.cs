@@ -1,16 +1,11 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: UIElementParaClient class is responsible for handling display
 //              related data of BlockUIContainers.
 //
 
-using System;                                   // IntPtr
-using System.Collections.Generic;               // List<T>
-using System.Collections.ObjectModel;           // ReadOnlyCollection<T>
-using System.Security;                          // SecurityCritical
 using System.Windows;                           // FrameworkElement             
 using System.Windows.Media;                     // Visual
 using System.Windows.Documents;                 // BlockUIContainer
@@ -61,7 +56,7 @@ namespace MS.Internal.PtsHost
             base.OnArrange();
 
             PTS.FSFLOATERDETAILS floaterDetails;
-            PTS.Validate(PTS.FsQueryFloaterDetails(PtsContext.Context, _paraHandle.Value, out floaterDetails));
+            PTS.Validate(PTS.FsQueryFloaterDetails(PtsContext.Context, _paraHandle, out floaterDetails));
 
             // Get paragraph's rectangle.
             _rect = floaterDetails.fsrcFloater;

@@ -1,6 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
+using MS.Internal.Documents;
+using MS.Internal;
 
 //
 // Description:
@@ -11,13 +13,6 @@
 
 namespace System.Windows.Documents
 {
-    using System;
-    using System.Diagnostics;
-    using System.Windows.Threading;
-    using System.Windows;                // DependencyID etc.
-    using MS.Internal.Documents;
-    using MS.Internal;
-
     //=====================================================================
     /// <summary>
     /// NullTextContainer is an immutable empty TextContainer that contains 
@@ -218,7 +213,7 @@ namespace System.Windows.Documents
             get
             {
                 //agurcan: The following line makes it hard to use debugger on FDS code so I'm commenting it out
-                //Debug.Assert(false, "Unexpected Highlights access on NullTextContainer!");
+                //Debug.Fail("Unexpected Highlights access on NullTextContainer!");
                 return null;
             }
         }
@@ -253,7 +248,7 @@ namespace System.Windows.Documents
 
             set
             {
-                Debug.Assert(false, "Unexpected call to NullTextContainer.set_TextView!");
+                Debug.Fail("Unexpected call to NullTextContainer.set_TextView!");
             }
         }
 

@@ -1,26 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-// 
-//
-// Description: Contains the CornerRadiusConverter: TypeConverter for the CornerRadiusclass.
-//
-//
-
-using System;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Globalization;
 using System.Reflection;
-using System.Text;
-using System.Windows;
-using System.Security;
 using MS.Internal;
-using MS.Utility;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows
 {
@@ -110,9 +95,6 @@ namespace System.Windows
             throw GetConvertFromException(source);
         }
 
-//Workaround for PreSharp bug - it complains about value being possibly null even though there is a check above
-#pragma warning disable 56506
-
         /// <summary>
         /// ConvertTo - Attempt to convert a CornerRadius to the given type
         /// </summary>
@@ -138,8 +120,7 @@ namespace System.Windows
 
             if (!(value is CornerRadius))
             {
-                #pragma warning suppress 6506 // value is obviously not null
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(CornerRadius)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(CornerRadius)), nameof(value));
             }
 
             CornerRadius cr = (CornerRadius)value;
@@ -153,9 +134,6 @@ namespace System.Windows
             throw new ArgumentException(SR.Format(SR.CannotConvertType, typeof(CornerRadius), destinationType.FullName));
         }
 
-//Workaround for PreSharp bug - it complains about value being possibly null even though there is a check above
-#pragma warning restore 56506
-
         #endregion Public Methods
 
         //-------------------------------------------------------------------
@@ -166,14 +144,14 @@ namespace System.Windows
 
         #region Internal Methods
 
-        static internal string ToString(CornerRadius cr, CultureInfo cultureInfo)
+        internal static string ToString(CornerRadius cr, CultureInfo cultureInfo)
         {
             char listSeparator = TokenizerHelper.GetNumericListSeparator(cultureInfo);
 
             return string.Create(cultureInfo, stackalloc char[64], $"{cr.TopLeft}{listSeparator}{cr.TopRight}{listSeparator}{cr.BottomRight}{listSeparator}{cr.BottomLeft}");
         }
 
-        static internal CornerRadius FromString(string s, CultureInfo cultureInfo)
+        internal static CornerRadius FromString(string s, CultureInfo cultureInfo)
         {
             TokenizerHelper th = new TokenizerHelper(s, cultureInfo);
             double[] radii = new double[4];

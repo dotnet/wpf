@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 //---------------------------------------------------------------------------
@@ -92,7 +91,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     );
 
                     first = false;
-                }        
+                }
 
 
                 //
@@ -103,7 +102,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 
                 WriteEnumValidationFile(enumType, checkEnumValues);
             }
-        }        
+        }
 
         /// <summary>
         ///     Writes an enumerated type's header block and namespace block
@@ -135,18 +134,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         using [[s]];
                     [[/inline]]
                 ); 
-            }            
-
-            // Write the string resource declaration
-            enumFile.Write(
-                [[inline]]
-                    #if PRESENTATION_CORE
-                    using SR=MS.Internal.PresentationCore.SR;
-                    #else
-                    using SR=System.Windows.SR;
-                    #endif
-                [[/inline]]
-            ); 
+            }
 
             // Open namespace this enum exists in            
             enumFile.Write(
@@ -186,7 +174,7 @@ namespace MS.Internal.MilCodeGen.Generators
                             public enum [[enumType.ManagedName]]
                             {
                                 [[enumValuesCS]]
-                            }   
+                            }
                      [[/inline]]
                      );
 
@@ -196,8 +184,8 @@ namespace MS.Internal.MilCodeGen.Generators
                         }
                     [[/inline]] 
                     );
-            }                
-        }        
+            }
+        }
 
         /// <summary>
         ///     This method writes the enum validation file that contains CheckIfValid 
@@ -241,13 +229,13 @@ namespace MS.Internal.MilCodeGen.Generators
                                     [[enumType.ManagedName]] value = ([[enumType.ManagedName]]) valueObject;
     
                                     return [[checkEnumValues]];
-                                }                                
+                                }
                             }
                         }
                     [[/inline]] 
                     );
             }
-        }    
+        }
         
         #endregion Public Methods        
     }

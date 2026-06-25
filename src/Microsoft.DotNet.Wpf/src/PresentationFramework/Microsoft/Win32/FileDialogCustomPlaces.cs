@@ -1,12 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 
 namespace Microsoft.Win32
 {
-    using System;
-
     // Guids defined here are copied from the KnownFolders.h file, part of the Windows SDK.
     // Not all folders in that header will work for FileDialogs.  The WPF implementation limits the list to locations that have a physical backing,
     // e.g. not ControlPanel, Computer, etc.  The real file dialogs work at a higher level of abstraction (shell namespaces instead of the file system)

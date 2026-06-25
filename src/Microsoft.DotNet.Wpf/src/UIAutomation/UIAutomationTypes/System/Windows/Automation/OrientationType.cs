@@ -1,14 +1,12 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Orientation types
 
 
-using System;
 using System.Runtime.InteropServices;
 
-namespace System.Windows.Automation 
+namespace System.Windows.Automation
 {
     /// <summary>
     /// Used to represent Orientation property enumerated types.

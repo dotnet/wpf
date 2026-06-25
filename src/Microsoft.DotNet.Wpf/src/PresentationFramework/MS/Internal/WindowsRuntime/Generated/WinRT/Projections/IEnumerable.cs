@@ -1,16 +1,13 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-using System;
+
 using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using WinRT;
 using WinRT.Interop;
-using System.Diagnostics;
+using global::System.Runtime.CompilerServices;
 
 #pragma warning disable 0169 // warning CS0169: The field '...' is never used
 #pragma warning disable 0649 // warning CS0169: Field '...' is never assigned to
@@ -34,9 +31,6 @@ namespace MS.Internal.WindowsRuntime.Windows.Foundation.Collections
 
 namespace MS.Internal.WindowsRuntime.ABI.System.Collections.Generic
 {
-    using global::System;
-    using global::System.Runtime.CompilerServices;
-
     [Guid("FAA585EA-6214-4217-AFDA-7F46DE5869B3")]
     internal class IEnumerable<T> : global::System.Collections.Generic.IEnumerable<T>, global::MS.Internal.WindowsRuntime.Windows.Foundation.Collections.IIterable<T>
     {
@@ -169,7 +163,8 @@ namespace MS.Internal.WindowsRuntime.ABI.System.Collections.Generic
             _obj = obj;
             _FromIterable = new FromAbiHelper(this);
         }
-        FromAbiHelper _FromIterable;
+
+        private FromAbiHelper _FromIterable;
 
         unsafe global::MS.Internal.WindowsRuntime.Windows.Foundation.Collections.IIterator<T> global::MS.Internal.WindowsRuntime.Windows.Foundation.Collections.IIterable<T>.First()
         {
@@ -575,7 +570,8 @@ namespace MS.Internal.WindowsRuntime.ABI.System.Collections.Generic
             _obj = obj;
             _FromIterator = new FromAbiHelper(this);
         }
-        FromAbiHelper _FromIterator;
+
+        private FromAbiHelper _FromIterator;
 
         public unsafe bool _MoveNext()
         {

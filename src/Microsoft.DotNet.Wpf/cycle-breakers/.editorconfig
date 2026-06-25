@@ -1,0 +1,45 @@
+# editorconfig.org
+
+# This file contains temporary overrides for higher level .editorconfig rules.
+# For cycle-breakers matching most rules is not as critical. Overrides that
+# should NOT be re-enabled are marked as "none". Ones that can be fixed and
+# removed are marked as "suggestion".
+
+# C# and VB files
+[*.{cs,vb}]
+
+# CA1066: Implement IEquatable when overriding Object.Equals
+dotnet_diagnostic.CA1066.severity = none
+
+# CA1725: Parameter names should match base declaration
+dotnet_diagnostic.CA1725.severity = none
+
+# CA1812: Remove empty finalizers
+dotnet_diagnostic.CA1821.severity = none
+
+# CA1822: Mark members as static
+dotnet_diagnostic.CA1822.severity = none
+
+# CA1823: Avoid unused private fields
+dotnet_diagnostic.CA1823.severity = none
+
+# IDE0034: Simplify 'default' expression
+dotnet_diagnostic.IDE0034.severity = suggestion
+
+# IDE0036: Order modifiers
+dotnet_diagnostic.IDE0036.severity = suggestion
+
+# IDE0044: Add readonly modifier
+dotnet_diagnostic.IDE0044.severity = none
+
+# IDE0051: Remove unused private members
+dotnet_diagnostic.IDE0051.severity = none
+
+# IDE0251: Make member 'readonly'
+dotnet_diagnostic.IDE0251.severity = none
+
+# IDE1006: Naming Styles
+dotnet_diagnostic.IDE1006.severity = suggestion
+
+# SA1206: Keyword ordering
+dotnet_diagnostic.SA1206.severity = suggestion

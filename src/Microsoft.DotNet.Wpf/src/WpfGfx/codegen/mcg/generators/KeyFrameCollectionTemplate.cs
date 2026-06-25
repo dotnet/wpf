@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 //---------------------------------------------------------------------------
@@ -69,16 +68,8 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                         [[inline]]
                             [[Helpers.ManagedStyle.WriteFileHeader(fileName)]]
 
-                            using MS.Internal;
-
-                            using System;
                             using System.Collections;
-                            using System.Collections.Generic;
-                            using System.ComponentModel;
-                            using System.Diagnostics;
                             using System.Globalization;
-                            using System.Windows.Media.Animation;
-                            using System.Windows.Media.Media3D;
 
                             namespace System.Windows.Media.Animation
                             {
@@ -119,9 +110,10 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         {
                                             if (s_emptyCollection == null)
                                             {
-                                                [[instance.TypeName]]KeyFrameCollection emptyCollection = new [[instance.TypeName]]KeyFrameCollection();
-                                                
-                                                emptyCollection._keyFrames = new List< [[instance.TypeName]]KeyFrame>(0);
+                                                [[instance.TypeName]]KeyFrameCollection emptyCollection = new [[instance.TypeName]]KeyFrameCollection
+                                                {
+                                                    _keyFrames = new List<[[instance.TypeName]]KeyFrame>(0)
+                                                };
                                                 emptyCollection.Freeze();
                                                 
                                                 s_emptyCollection = emptyCollection;
@@ -158,7 +150,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     protected override void CloneCore(Freezable sourceFreezable)
                                     {
-                                        [[instance.TypeName]]KeyFrameCollection sourceCollection = ([[instance.TypeName]]KeyFrameCollection) sourceFreezable;
+                                        [[instance.TypeName]]KeyFrameCollection sourceCollection = ([[instance.TypeName]]KeyFrameCollection)sourceFreezable;
                                         base.CloneCore(sourceFreezable);
                                         
                                         int count = sourceCollection._keyFrames.Count;
@@ -179,7 +171,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     protected override void CloneCurrentValueCore(Freezable sourceFreezable)
                                     {
-                                        [[instance.TypeName]]KeyFrameCollection sourceCollection = ([[instance.TypeName]]KeyFrameCollection) sourceFreezable;
+                                        [[instance.TypeName]]KeyFrameCollection sourceCollection = ([[instance.TypeName]]KeyFrameCollection)sourceFreezable;
                                         base.CloneCurrentValueCore(sourceFreezable);
                                         
                                         int count = sourceCollection._keyFrames.Count;
@@ -200,7 +192,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     protected override void GetAsFrozenCore(Freezable sourceFreezable)
                                     {
-                                        [[instance.TypeName]]KeyFrameCollection sourceCollection = ([[instance.TypeName]]KeyFrameCollection) sourceFreezable;
+                                        [[instance.TypeName]]KeyFrameCollection sourceCollection = ([[instance.TypeName]]KeyFrameCollection)sourceFreezable;
                                         base.GetAsFrozenCore(sourceFreezable);
                                         
                                         int count = sourceCollection._keyFrames.Count;
@@ -221,7 +213,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     protected override void GetCurrentValueAsFrozenCore(Freezable sourceFreezable)
                                     {
-                                        [[instance.TypeName]]KeyFrameCollection sourceCollection = ([[instance.TypeName]]KeyFrameCollection) sourceFreezable;
+                                        [[instance.TypeName]]KeyFrameCollection sourceCollection = ([[instance.TypeName]]KeyFrameCollection)sourceFreezable;
                                         base.GetCurrentValueAsFrozenCore(sourceFreezable);
                                         
                                         int count = sourceCollection._keyFrames.Count;
@@ -347,10 +339,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     public int Add([[instance.TypeName]]KeyFrame keyFrame)
                                     {
-                                        if (keyFrame == null)
-                                        {
-                                            throw new ArgumentNullException("keyFrame");
-                                        }
+                                        ArgumentNullException.ThrowIfNull(keyFrame);
 
                                         WritePreamble();
                                         
@@ -431,10 +420,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     public void Insert(int index, [[instance.TypeName]]KeyFrame keyFrame)
                                     {
-                                        if (keyFrame == null)
-                                        {
-                                            throw new ArgumentNullException("keyFrame");
-                                        }
+                                        ArgumentNullException.ThrowIfNull(keyFrame);
 
                                         WritePreamble();
                                         

@@ -1,20 +1,9 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  Structure that keeps Right name as a string not as enum, so it can be used to carry 
 //  names that are not part of the ContentRights enum. 
-//
-//
-//
-//
-
-using System;
-using System.Diagnostics;
-using System.Security;
 
 namespace MS.Internal.Security.RightsManagement
 {
@@ -28,7 +17,7 @@ namespace MS.Internal.Security.RightsManagement
             _validFrom = validFrom;
             _validUntil = validUntil;
         }
-            
+
         /// <summary>
         /// We keep Right as a string for forward compatibility in case new
         /// rights get invented we would like be able to encrypt decrypt using them,

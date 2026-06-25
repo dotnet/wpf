@@ -1,19 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Miscellaneous helper routines
-
-
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 using Microsoft.Win32.SafeHandles;
 using MS.Win32;
 using System;
-using System.Collections;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Automation;
@@ -25,7 +18,7 @@ using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.Na
 
 namespace MS.Internal.AutomationProxies
 {
-    static class Misc
+    internal static class Misc
     {
 
         //------------------------------------------------------
@@ -160,12 +153,11 @@ namespace MS.Internal.AutomationProxies
             // The return value specifies the value returned by the window procedure.
             // Although its meaning depends on the message being dispatched, the return
             // value generally is ignored.
-#pragma warning suppress 6031, 6523
             return UnsafeNativeMethods.DispatchMessage(ref msg);
         }
 
 
-        internal unsafe static bool EnumChildWindows(IntPtr hwnd, NativeMethods.EnumChildrenCallbackVoid lpEnumFunc, void* lParam)
+        internal static unsafe bool EnumChildWindows(IntPtr hwnd, NativeMethods.EnumChildrenCallbackVoid lpEnumFunc, void* lParam)
         {
             bool result = UnsafeNativeMethods.EnumChildWindows(hwnd, lpEnumFunc, lParam);
             int lastWin32Error = Marshal.GetLastWin32Error();
@@ -346,10 +338,12 @@ namespace MS.Internal.AutomationProxies
                 uint processId;
                 uint threadId = GetWindowThreadProcessId(hwnd, out processId);
 
-                UnsafeNativeMethods.ENUMTOOLTIPWINDOWINFO info = new UnsafeNativeMethods.ENUMTOOLTIPWINDOWINFO();
-                info.hwnd = hwnd;
-                info.id = item;
-                info.name = "";
+                UnsafeNativeMethods.ENUMTOOLTIPWINDOWINFO info = new UnsafeNativeMethods.ENUMTOOLTIPWINDOWINFO
+                {
+                    hwnd = hwnd,
+                    id = item,
+                    name = ""
+                };
 
                 UnsafeNativeMethods.EnumThreadWndProc enumToolTipWindows = new UnsafeNativeMethods.EnumThreadWndProc(EnumToolTipWindows);
                 GCHandle gch = GCHandle.Alloc(enumToolTipWindows);
@@ -389,7 +383,6 @@ namespace MS.Internal.AutomationProxies
             IntPtr peer = hwnd;
 
             // If GetWindow fails we're going to exit, no need to call Marshal.GetLastWin32Error
-#pragma warning suppress 56523
             while ((peer = NativeMethodsSetLastError.GetWindow(peer, NativeMethods.GW_HWNDPREV)) != IntPtr.Zero)
             {
                 //
@@ -410,7 +403,6 @@ namespace MS.Internal.AutomationProxies
                 // Using invisible statics is an easy workaround to add names to controls without changing the visual UI.
                 //
                 // If GetWindowLong fails we're going to exit, no need to call Marshal.GetLastWin32Error
-#pragma warning suppress 56523
                 int error = 0;
                 int style = UnsafeNativeMethods.GetWindowLong(peer, NativeMethods.GWL_STYLE, out error);
                 if ((style & NativeMethods.WS_VISIBLE) != 0)
@@ -703,8 +695,6 @@ namespace MS.Internal.AutomationProxies
         internal static uint GetWindowThreadProcessId(IntPtr hwnd, out uint processId)
         {
             // GetWindowThreadProcessId does use SetLastError().  So a call to GetLastError() would be meanless.
-            // Disabling the PreSharp warning.
-#pragma warning suppress 6523
             uint threadId = UnsafeNativeMethods.GetWindowThreadProcessId(hwnd, out processId);
 
             if (threadId == 0)
@@ -817,7 +807,7 @@ namespace MS.Internal.AutomationProxies
         // and that they are clipped by there parent.  For example this is called by the WindowsListBox.
         // In that case the hwnd is the list box and the itemRect would be a list item this code checks to see
         // if the item is scrolled out of view.
-        static internal bool IsItemVisible(IntPtr hwnd, ref NativeMethods.Win32Rect itemRect)
+        internal static bool IsItemVisible(IntPtr hwnd, ref NativeMethods.Win32Rect itemRect)
         {
             NativeMethods.Win32Rect clientRect = new NativeMethods.Win32Rect(0, 0, 0, 0);
             if (!GetClientRectInScreenCoordinates(hwnd, ref clientRect))
@@ -830,7 +820,7 @@ namespace MS.Internal.AutomationProxies
             return IntersectRect(ref intersection, ref clientRect, ref itemRect);
         }
 
-        static internal bool IsItemVisible(ref NativeMethods.Win32Rect parentRect, ref NativeMethods.Win32Rect itemRect)
+        internal static bool IsItemVisible(ref NativeMethods.Win32Rect parentRect, ref NativeMethods.Win32Rect itemRect)
         {
             NativeMethods.Win32Rect intersection = new NativeMethods.Win32Rect(0, 0, 0, 0);
 
@@ -839,7 +829,7 @@ namespace MS.Internal.AutomationProxies
             return IntersectRect(ref intersection, ref parentRect, ref itemRect);
         }
 
-        static internal bool IsItemVisible(ref NativeMethods.Win32Rect parentRect, ref Rect itemRect)
+        internal static bool IsItemVisible(ref NativeMethods.Win32Rect parentRect, ref Rect itemRect)
         {
             NativeMethods.Win32Rect itemRc = new NativeMethods.Win32Rect(itemRect);
             NativeMethods.Win32Rect intersection = new NativeMethods.Win32Rect(0, 0, 0, 0);
@@ -849,7 +839,7 @@ namespace MS.Internal.AutomationProxies
             return IntersectRect(ref intersection, ref parentRect, ref itemRc);
         }
 
-        static internal bool IsItemVisible(ref Rect parentRect, ref NativeMethods.Win32Rect itemRect)
+        internal static bool IsItemVisible(ref Rect parentRect, ref NativeMethods.Win32Rect itemRect)
         {
             NativeMethods.Win32Rect parentRc = new NativeMethods.Win32Rect(parentRect);
             NativeMethods.Win32Rect intersection = new NativeMethods.Win32Rect(0, 0, 0, 0);
@@ -859,7 +849,7 @@ namespace MS.Internal.AutomationProxies
             return IntersectRect(ref intersection, ref parentRc, ref itemRect);
         }
 
-        static internal bool IsItemVisible(ref Rect parentRect, ref Rect itemRect)
+        internal static bool IsItemVisible(ref Rect parentRect, ref Rect itemRect)
         {
             NativeMethods.Win32Rect itemRc = new NativeMethods.Win32Rect(itemRect);
             NativeMethods.Win32Rect parentRc = new NativeMethods.Win32Rect(parentRect);
@@ -1445,9 +1435,7 @@ namespace MS.Internal.AutomationProxies
 
         internal static int ReleaseDC(IntPtr hwnd, IntPtr hdc)
         {
-            // If ReleaseDC fails we will not do anything with that information so just ignore the
-            // PRESHARP warnings.
-#pragma warning suppress 6031, 6523
+            // If ReleaseDC fails we will not do anything with that information
             return UnsafeNativeMethods.ReleaseDC(hwnd, hdc);
         }
 
@@ -1466,11 +1454,8 @@ namespace MS.Internal.AutomationProxies
 
         internal static IntPtr SelectObject(IntPtr hdc, IntPtr hObject)
         {
-            // There is no indication in the Windows SDK documentation that SelectObject()
-            // will set an error to be retrieved with GetLastError, so set the pragma to ignore
-            // the PRESHARP warning.  Anyway if ReleaseDC() fails here, nothing more can be done
-            // since the code is restoring the orginal object and discarding the temp object.
-#pragma warning suppress 6031, 6523
+            // There is no indication in the Windows SDK documentation that SelectObject() will set an error to be retrieved with GetLastError.
+            // Anyway if ReleaseDC() fails here, nothing more can be done since the code is restoring the orginal object and discarding the temp object.
             return UnsafeNativeMethods.SelectObject(hdc, hObject);
         }
 
@@ -1492,7 +1477,7 @@ namespace MS.Internal.AutomationProxies
         // This is implemented here to work around this behavior.
         // Fake keystroke are sent to a specific hwnd to force
         // Windows to give the focus to that hwnd.
-        static internal bool SetFocus(IntPtr hwnd)
+        internal static bool SetFocus(IntPtr hwnd)
         {
             // First Check for ComboLBox
             // Because it uses Keystrokes it dismisses the ComboLBox
@@ -1587,17 +1572,13 @@ namespace MS.Internal.AutomationProxies
                     if (!GetMessage(ref msg, IntPtr.Zero, 0, 0))
                         break;
 
-                    // TranslateMessage() will not set an error to be retrieved with GetLastError,
-                    // so set the pragma to ignore the PERSHARP warning.
-                    // the PERSHARP warning.
-#pragma warning suppress 6031, 6523
+                    // TranslateMessage() will not set an error to be retrieved with GetLastError
                     UnsafeNativeMethods.TranslateMessage(ref msg);
 
                     // From the Windows SDK documentation:
                     // The return value specifies the value returned by the window procedure.
                     // Although its meaning depends on the message being dispatched, the return
                     // value generally is ignored.
-#pragma warning suppress 6031, 6523
                     UnsafeNativeMethods.DispatchMessage(ref msg);
 
                     if (msg.message == NativeMethods.WM_HOTKEY && (short)msg.wParam == atom)
@@ -1635,9 +1616,7 @@ namespace MS.Internal.AutomationProxies
         internal static IntPtr SetWinEventHook(int eventMin, int eventMax, IntPtr hmodWinEventProc, NativeMethods.WinEventProcDef WinEventReentrancyFilter, uint idProcess, uint idThread, int dwFlags)
         {
             // There is no indication in the Windows SDK documentation that SetWinEventHook()
-            // will set an error to be retrieved with GetLastError, so set the pragma to ignore
-            // the PERSHARP warning.
-#pragma warning suppress 6523
+            // will set an error to be retrieved with GetLastError
             return UnsafeNativeMethods.SetWinEventHook(eventMin, eventMax, hmodWinEventProc, WinEventReentrancyFilter, idProcess, idThread, dwFlags);
         }
 
@@ -1659,7 +1638,7 @@ namespace MS.Internal.AutomationProxies
             for (int source = 0; source < ach.Length; source++)
             {
                 // get rid of leading spaces
-                if (ach[source] == ' ' && leadingSpace == false)
+                if (ach[source] == ' ' && !leadingSpace)
                 {
                     continue;
                 }
@@ -1669,7 +1648,7 @@ namespace MS.Internal.AutomationProxies
                 }
 
                 // get rid of &
-                if (ach[source] == '&' && amper == false)
+                if (ach[source] == '&' && !amper)
                 {
                     amper = true;
                 }
@@ -1730,9 +1709,7 @@ namespace MS.Internal.AutomationProxies
         internal static bool UnhookWinEvent(IntPtr winEventHook)
         {
             // There is no indication in the Windows SDK documentation that UnhookWinEvent()
-            // will set an error to be retrieved with GetLastError, so set the pragma to ignore
-            // the PERSHARP warning.
-#pragma warning suppress 6523
+            // will set an error to be retrieved with GetLastError
             return UnsafeNativeMethods.UnhookWinEvent(winEventHook);
         }
 

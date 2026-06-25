@@ -1,10 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
-using System.Diagnostics;
 using System.Xaml;
 using System.Xml;
 
@@ -15,7 +13,7 @@ namespace MS.Internal.Xaml.Parser
     {
         public XamlScannerNode(IXmlLineInfo lineInfo)
         {
-            if (lineInfo != null)
+            if (lineInfo is not null)
             {
                 LineNumber = lineInfo.LineNumber;
                 LinePosition = lineInfo.LinePosition;

@@ -1,39 +1,25 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-#pragma warning disable 1634, 1691
 //
 // Description:
 //      AnnotationService provides DynamicProperties and API for configuring
 //      and invoking the annotation framework.
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Windows.Threading;
-using System.IO;
-using System.Windows;
 using System.Windows.Annotations.Storage;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Markup;
-using System.Xml;
 using MS.Internal;
 using MS.Internal.Annotations;
 using MS.Internal.Annotations.Anchoring;
 using MS.Internal.Annotations.Component;
-using MS.Internal.Documents;
 using MS.Utility;
-using System.Reflection;        // for BindingFlags
-using System.Globalization;     // for CultureInfo
-using System.Threading;
 
 namespace System.Windows.Annotations
 {
@@ -145,7 +131,7 @@ namespace System.Windows.Annotations
             ArgumentNullException.ThrowIfNull(root);
 
             if (!(root is FrameworkElement || root is FrameworkContentElement))
-                throw new ArgumentException(SR.ParameterMustBeLogicalNode, "root");
+                throw new ArgumentException(SR.ParameterMustBeLogicalNode, nameof(root));
 
             Initialize(root);
         }
@@ -241,11 +227,8 @@ namespace System.Windows.Annotations
             // If it hasn't been run yet, abort the pending operation.  Still need to
             // unregister and unload annotations.  They may have been loaded due to a
             // store event.
-            if (_asyncLoadOperation != null)
-            {
-                _asyncLoadOperation.Abort();
-                _asyncLoadOperation = null;
-            }
+            _asyncLoadOperation?.Abort();
+            _asyncLoadOperation = null;
 
             // Unregister for changes to the store - add/deletes/anchor changes - before
             // unloading annotations.  We don't want any events between unloading and unregistering.
@@ -273,10 +256,7 @@ namespace System.Windows.Annotations
                     // in Scroll mode, we need to unregister for TextViewUpdated events
                     ITextView textView = GetTextView(document);
                     // ITextView may have gone away already
-                    if (textView != null)
-                    {
-                        textView.Updated -= OnContentChanged;
-                    }
+                    textView?.Updated -= OnContentChanged;
                 }
 
                 // Unload annotations
@@ -364,7 +344,7 @@ namespace System.Windows.Annotations
             ArgumentNullException.ThrowIfNull(element);
 
             if (!(element is FrameworkElement || element is FrameworkContentElement))
-                throw new ArgumentException(SR.ParameterMustBeLogicalNode, "element");
+                throw new ArgumentException(SR.ParameterMustBeLogicalNode, nameof(element));
 
             VerifyAccess();
 
@@ -399,7 +379,7 @@ namespace System.Windows.Annotations
             ArgumentNullException.ThrowIfNull(element);
 
             if (!(element is FrameworkElement || element is FrameworkContentElement))
-                throw new ArgumentException(SR.ParameterMustBeLogicalNode, "element");
+                throw new ArgumentException(SR.ParameterMustBeLogicalNode, nameof(element));
 
             VerifyAccess();
 
@@ -543,7 +523,6 @@ namespace System.Windows.Annotations
         /// out of box annotation component.  If the DP is set to AnnotationComponentChooser.None, no annotation components will be choosen
         /// for this subtree, in essence disabling the mechanism for the subtree.
         /// </summary>
-#pragma warning suppress 7009
         internal static readonly DependencyProperty ChooserProperty = DependencyProperty.RegisterAttached("Chooser", typeof(AnnotationComponentChooser), typeof(AnnotationService), new FrameworkPropertyMetadata(new AnnotationComponentChooser(), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.OverridesInheritanceBehavior));
 
         /// <summary>
@@ -567,7 +546,6 @@ namespace System.Windows.Annotations
         ///     processed, you should set this property and call LoadAnnotations/
         ///     UnloadAnnotations on the service.
         /// </summary>
-#pragma warning suppress 7009
         internal static readonly DependencyProperty SubTreeProcessorIdProperty = LocatorManager.SubTreeProcessorIdProperty.AddOwner(typeof(AnnotationService));
 
         /// <summary>
@@ -606,7 +584,6 @@ namespace System.Windows.Annotations
         ///     logical tree node.  Attach this property to the element with a
         ///     unique value.
         /// </summary>
-#pragma warning suppress 7009
         internal static readonly DependencyProperty DataIdProperty = DataIdProcessor.DataIdProperty.AddOwner(typeof(AnnotationService));
 
         /// <summary>
@@ -705,7 +682,6 @@ namespace System.Windows.Annotations
         ///     in order to make direct calls such as CreateAnnotation.  Kept internal because
         ///     PathNode uses it to short-circuit the path building when there is a service set.
         /// </summary>
-#pragma warning suppress 7009
         internal static readonly DependencyProperty ServiceProperty = DependencyProperty.RegisterAttached("Service", typeof(AnnotationService), typeof(AnnotationService), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.OverridesInheritanceBehavior));
 
         #endregion Internal Fields
@@ -783,10 +759,7 @@ namespace System.Windows.Annotations
                 // happens synchronously which is not true for the FDPV - we register OnPageConnected
                 // for each page there.
                 ITextView textView = GetTextView(document);
-                if (textView != null)
-                {
-                    textView.Updated += OnContentChanged;
-                }
+                textView?.Updated += OnContentChanged;
             }
 
             //if there are too many visible annotations the application will freeze if we load them
@@ -954,8 +927,7 @@ namespace System.Windows.Annotations
         {
             // Unregister for the event
             UIElement root = _root as UIElement;
-            if (root != null)
-                root.LayoutUpdated -= OnLayoutUpdated;
+            root?.LayoutUpdated -= OnLayoutUpdated;
 
             UpdateAnnotations();
         }
@@ -1016,16 +988,13 @@ namespace System.Windows.Annotations
                 }
             }
 
-            if (_asyncLoadFromListOperation != null)
-            {
-                //stop this one - we  will set a new one in the queue
-                _asyncLoadFromListOperation.Abort();
-                _asyncLoadFromListOperation = null;
-            }
+            //stop this one - we  will set a new one in the queue
+            _asyncLoadFromListOperation?.Abort();
+            _asyncLoadFromListOperation = null;
 
-            if ((attachedAnnotations != null) && (attachedAnnotations.Count > 0))
+            if (attachedAnnotations?.Count > 0)
                 LoadAnnotationsFromListAsync(attachedAnnotations);
-		}
+        }
 
         /// <summary>
         /// Mark all AnnotationAdorners that Annotate this element as Dirty
@@ -1059,7 +1028,7 @@ namespace System.Windows.Annotations
         /// </summary>
         /// <param name="root">the proposed root for a new AnnotationService being enabled</param>
         /// <exception cref="InvalidOperationException">Other Instance of AnnotationService Is Already Set</exception>
-        static private void VerifyServiceConfiguration(DependencyObject root)
+        private static void VerifyServiceConfiguration(DependencyObject root)
         {
             Invariant.Assert(root != null, "Parameter 'root' is null.");
 
@@ -1079,7 +1048,7 @@ namespace System.Windows.Annotations
         /// <param name="root">root the service is enabled on</param>
         /// <param name="documentViewerBase">DocumentViewerBase used by the viewer</param>
         /// <param name="document">document for the viewer</param>
-        static private void GetViewerAndDocument(DependencyObject root, out DocumentViewerBase documentViewerBase, out IDocumentPaginatorSource document)
+        private static void GetViewerAndDocument(DependencyObject root, out DocumentViewerBase documentViewerBase, out IDocumentPaginatorSource document)
         {
             documentViewerBase = root as DocumentViewerBase;
 
@@ -1117,7 +1086,7 @@ namespace System.Windows.Annotations
         /// </summary>
         /// <param name="document">the document</param>
         /// <returns>the ITextView</returns>
-        static private ITextView GetTextView(IDocumentPaginatorSource document)
+        private static ITextView GetTextView(IDocumentPaginatorSource document)
         {
             ITextView textView = null;
             IServiceProvider provider = document as IServiceProvider;
@@ -1141,7 +1110,7 @@ namespace System.Windows.Annotations
         /// <param name="node">the node to check for a service</param>
         /// <param name="data">this parameter is ignored</param>
         /// <returns>always returns true, to continue the traversal</returns>
-        static private bool VerifyNoServiceOnNode(DependencyObject node, object data, bool visitedViaVisualTree)
+        private static bool VerifyNoServiceOnNode(DependencyObject node, object data, bool visitedViaVisualTree)
         {
             Invariant.Assert(node != null, "Parameter 'node' is null.");
 
@@ -1721,8 +1690,7 @@ namespace System.Windows.Annotations
         private void OnContentChanged(object sender, EventArgs e)
         {
             UIElement root = _root as UIElement;
-            if (root != null)
-                root.LayoutUpdated += OnLayoutUpdated;
+            root?.LayoutUpdated += OnLayoutUpdated;
         }
 
         #endregion DocumentViewerBase handling
@@ -1742,7 +1710,6 @@ namespace System.Windows.Annotations
         ///     Private DynamicProperty used to attach lists of AttachedAnnotations to
         ///     Elements in the tree.
         /// </summary>
-#pragma warning suppress 7009
         private static readonly DependencyProperty AttachedAnnotationsProperty = DependencyProperty.RegisterAttached("AttachedAnnotations", typeof(IList<IAttachedAnnotation>), typeof(AnnotationService));
 
         // The root of the subtree for which this AnnotationService is managing annotations.

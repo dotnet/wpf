@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 //------------------------------------------------------------------------------
@@ -48,9 +47,9 @@ namespace MS.Internal.MilCodeGen.Generators
 
         public override void Go()
         {
-            // AnimationClockResources end up in src\Core\CSharp\system\windows\media\animation
+            // AnimationClockResources end up in src\PresentationCore\system\windows\media\animation
             string generatedPath = Path.Combine(_resourceModel.OutputDirectory,
-                                                "src\\Core\\CSharp\\system\\windows\\media\\animation\\generated");
+                                                "src\\PresentationCore\\System\\Windows\\Media\\Animation\\Generated");
 
             foreach (McgResource resource in _resourceModel.Resources)
             {
@@ -71,13 +70,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         [[inline]]
                             [[Helpers.ManagedStyle.WriteFileHeader(fileName)]]
 
-                            using System;
-                            using System.Windows;
-                            using System.Windows.Media;
                             using System.Windows.Media.Composition;
-                            using System.Diagnostics;
-                            using System.Runtime.InteropServices;
-                            using System.Security;
 
                             namespace System.Windows.Media.Animation
                             {
@@ -173,21 +166,16 @@ namespace MS.Internal.MilCodeGen.Generators
                                     /// </summary>
                                     /// <param name="handle"> The DUCE.ResourceHandle for this resource on this channel. </param>
                                     /// <param name="channel"> The channel on which to update the render-thread resource. </param>
-                                    /// <SecurityNote>
-                                    ///     Critical: This code calls into an unsafe code block
-                                    ///     TreatAsSafe: This code does not return any critical data.It is ok to expose
-                                    ///     Channels can handle bad pointers and will not affect other appdomains or processes
-                                    /// </SecurityNote>
-                                    [SecurityCritical,SecurityTreatAsSafe]
                                     protected override void UpdateResource(
                                         DUCE.ResourceHandle handle,
                                         DUCE.Channel channel)
                                     {
-                                        DUCE.MILCMD_[[nameAsUpper]]RESOURCE cmd = new DUCE.MILCMD_[[nameAsUpper]]RESOURCE();
-
-                                        cmd.Type = MILCMD.MilCmd[[resource.Name]]Resource;
-                                        cmd.Handle = handle;
-                                        cmd.Value = CurrentValue;
+                                        DUCE.MILCMD_[[nameAsUpper]]RESOURCE cmd = new DUCE.MILCMD_[[nameAsUpper]]RESOURCE
+                                        {
+                                            Type = MILCMD.MilCmd[[resource.Name]]Resource,
+                                            Handle = handle,
+                                            Value = CurrentValue
+                                        };
 
                                         unsafe
                                         {

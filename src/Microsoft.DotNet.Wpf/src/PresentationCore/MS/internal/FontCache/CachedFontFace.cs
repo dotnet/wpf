@@ -151,7 +151,7 @@ namespace MS.Internal.FontCache
                 return new GlyphTypeface(
                     _familyCollection.GetFontUri(CachedPhysicalFace),
                     CachedPhysicalFace->styleSimulations,
-                    /* fromPublic = */ false
+                    fromPublic: false
                 );
             }
         }

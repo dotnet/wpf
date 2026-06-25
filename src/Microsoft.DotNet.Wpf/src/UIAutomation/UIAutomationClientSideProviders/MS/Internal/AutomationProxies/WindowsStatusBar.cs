@@ -1,22 +1,18 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Windows Status Proxy
 
 using System;
-using System.Collections;
-using System.Text;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.ComponentModel;
 using System.Windows;
 using System.Globalization;
 using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsStatusBar : ProxyHwnd, IGridProvider, IRawElementProviderHwndOverride
+    internal class WindowsStatusBar : ProxyHwnd, IGridProvider, IRawElementProviderHwndOverride
     {
         // ------------------------------------------------------
         //
@@ -239,7 +235,7 @@ namespace MS.Internal.AutomationProxies
                 if (Misc.PtInRect(ref rc, x, y))
                 {
                     ProxySimple grip = StatusBarGrip.Create(_hwnd, this, -1);
-                    return (ProxySimple)(grip != null ? grip : this);
+                    return (ProxySimple)(grip ?? this);
                 }
             }
             return this;
@@ -256,12 +252,12 @@ namespace MS.Internal.AutomationProxies
             // NOTE: Status bar has only 1 row
             if (row != 0)
             {
-                throw new ArgumentOutOfRangeException("row", row, SR.GridRowOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(row), row, SR.GridRowOutOfRange);
             }
 
             if (column < 0 || column >= Count)
             {
-                throw new ArgumentOutOfRangeException("column", column, SR.GridColumnOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(column), column, SR.GridColumnOutOfRange);
             }
 
             return CreateStatusBarPane(column);
@@ -346,11 +342,12 @@ namespace MS.Internal.AutomationProxies
             }
         }
 
-        unsafe static private IntPtr GetChildHwnd(IntPtr hwnd, Rect rc)
+        private static unsafe IntPtr GetChildHwnd(IntPtr hwnd, Rect rc)
         {
-            UnsafeNativeMethods.ENUMCHILDWINDOWFROMRECT info = new UnsafeNativeMethods.ENUMCHILDWINDOWFROMRECT();
-
-            info.hwnd = IntPtr.Zero;
+            UnsafeNativeMethods.ENUMCHILDWINDOWFROMRECT info = new UnsafeNativeMethods.ENUMCHILDWINDOWFROMRECT
+            {
+                hwnd = IntPtr.Zero
+            };
             info.rc.left = (int)rc.Left;
             info.rc.top = (int)rc.Top;
             info.rc.right = (int)rc.Right;
@@ -361,7 +358,7 @@ namespace MS.Internal.AutomationProxies
             return info.hwnd;
         }
 
-        unsafe static private bool FindChildFromRect(IntPtr hwnd, void* lParam)
+        private static unsafe bool FindChildFromRect(IntPtr hwnd, void* lParam)
         {
             NativeMethods.Win32Rect rc = NativeMethods.Win32Rect.Empty;
             if (!Misc.GetClientRectInScreenCoordinates(hwnd, ref rc))
@@ -409,7 +406,7 @@ namespace MS.Internal.AutomationProxies
 
         #region WindowsStatusBarPane 
 
-        class WindowsStatusBarPane : ProxySimple, IGridItemProvider, IValueProvider
+        private class WindowsStatusBarPane : ProxySimple, IGridItemProvider, IValueProvider
         {
 
             // ------------------------------------------------------
@@ -556,7 +553,7 @@ namespace MS.Internal.AutomationProxies
             #region Internal Methods
 
             // Retrieves the bounding rectangle of the Status Bar Pane.
-            static internal Rect GetBoundingRectangle (IntPtr hwnd, int item)
+            internal static Rect GetBoundingRectangle (IntPtr hwnd, int item)
             {
                 if( !WindowsFormsHelper.IsWindowsFormsControl(hwnd))
                 {
@@ -635,7 +632,7 @@ namespace MS.Internal.AutomationProxies
 
         #region WindowsStatusBarPaneChildOverrideProxy
 
-        class WindowsStatusBarPaneChildOverrideProxy : ProxyHwnd, IGridItemProvider
+        private class WindowsStatusBarPaneChildOverrideProxy : ProxyHwnd, IGridItemProvider
         {
             // ------------------------------------------------------
             //
@@ -741,7 +738,7 @@ namespace MS.Internal.AutomationProxies
 
         #region StatusBarGrip
 
-        class StatusBarGrip: ProxyFragment
+        private class StatusBarGrip: ProxyFragment
         {
             // ------------------------------------------------------
             //

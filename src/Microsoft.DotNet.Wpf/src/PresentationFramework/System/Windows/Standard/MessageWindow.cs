@@ -1,20 +1,16 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
+
+using System.Runtime.ConstrainedExecution;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Threading;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Standard
 {
-    using System;
-    using System.Runtime.ConstrainedExecution;
-    using System.Runtime.InteropServices;
-    using System.Security;
-    using System.Windows;
-    using System.Windows.Threading;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-
     internal sealed class MessageWindow : CriticalFinalizerObject
     {
         static MessageWindow()
@@ -29,7 +25,7 @@ namespace Standard
         private WndProc _wndProcCallback;
         private string _className;
         private bool _isDisposed;
-        Dispatcher _dispatcher;
+        private Dispatcher _dispatcher;
 
         public IntPtr Handle 
         { 
@@ -38,7 +34,6 @@ namespace Standard
             private set; 
         }
 
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public MessageWindow(CS classStyle, WS style, WS_EX exStyle, Rect location, string name, WndProc callback)
         {
             // A null callback means just use DefWindowProc.

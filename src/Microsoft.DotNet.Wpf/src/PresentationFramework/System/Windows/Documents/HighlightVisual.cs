@@ -1,6 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
+using MS.Internal.Documents;
+using System.Windows.Media;         // Visual
+using System.Collections;
 
 //
 // Description:
@@ -10,20 +13,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;                  // DoubleUtil
-    using MS.Internal.Documents;
-    using MS.Utility;                   // ExceptionStringTable
-    using System.ComponentModel;
-    using System.Windows.Threading;             // Dispatcher
-    using System.Windows;               // DependencyID etc.
-    using System.Windows.Media;         // Visual
-    using System.Windows.Shapes;        // Glyphs
-    using System;
-    using System.Collections;
-    using System.IO;
-    using System.Diagnostics;
-        
-
     internal sealed class HighlightVisual : Adorner
     {
         //--------------------------------------------------------------------
@@ -81,7 +70,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// Draw highlight
         /// </summary>
-        override protected void OnRender(DrawingContext dc)
+        protected override void OnRender(DrawingContext dc)
         {
 #if DEBUG
             DocumentsTrace.FixedTextOM.Highlight.Trace("HightlightVisual Rendering");
@@ -232,9 +221,11 @@ namespace System.Windows.Documents
                     backgroundRect.Intersect(clipRect);
                     //thisGeometry = Geometry.Combine(thisGeometry, fh.Element.Clip, GeometryCombineMode.Intersect, t);
                 }
-                
-                Geometry thisGeometry = new RectangleGeometry(backgroundRect);
-                thisGeometry.Transform = t;
+
+                Geometry thisGeometry = new RectangleGeometry(backgroundRect)
+                {
+                    Transform = t
+                };
 
                 backgroundRect = transform.TransformBounds(backgroundRect);
 

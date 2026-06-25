@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // 
@@ -15,7 +14,6 @@
 //              This event is fired on navigation container and refired on the NavigationApplication
 //
 
-using System.ComponentModel;
 using System.Net;
 
 namespace System.Windows.Navigation
@@ -121,12 +119,12 @@ namespace System.Windows.Navigation
             }
         }
 
-        Uri _uri;
-        Object _extraData;
-        Object _navigator;
-        WebRequest _request;
-        WebResponse _response;
-        Exception _exception;
-        bool _handled = false;
+        private Uri _uri;
+        private Object _extraData;
+        private Object _navigator;
+        private WebRequest _request;
+        private WebResponse _response;
+        private Exception _exception;
+        private bool _handled = false;
     }
 }

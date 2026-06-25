@@ -1,7 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-        
+
+
+#region Using declarations
+
+using System.Windows.Media;
+#if RIBBON_IN_FRAMEWORK
+using System.Windows.Controls.Ribbon.Primitives;
+using Microsoft.Windows.Controls;
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
@@ -9,20 +15,6 @@ namespace System.Windows.Controls.Ribbon
 namespace Microsoft.Windows.Controls.Ribbon
 #endif
 {
-    #region Using declarations
-
-    using System;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Reflection;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Input;
-    using System.Windows.Media;
-#if RIBBON_IN_FRAMEWORK
-    using System.Windows.Controls.Ribbon.Primitives;
-    using Microsoft.Windows.Controls;
 #else
     using Microsoft.Windows.Controls.Ribbon.Primitives;
 #endif
@@ -674,10 +666,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 if (ribbonGroupItemsPanel != null)
                 {
                     RibbonGroup ribbonGroup = TreeHelper.FindVisualAncestor<RibbonGroup>(ribbonGroupItemsPanel);
-                    if (ribbonGroup != null)
-                    {
-                        ribbonGroup.UpdateGroupSizeDefinitionsAsync();
-                    }
+                    ribbonGroup?.UpdateGroupSizeDefinitionsAsync();
                 }
             }
 
@@ -713,10 +702,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (RibbonControlService.GetIsInControlGroup(d))
             {
                 RibbonControlGroup controlGroup = TreeHelper.FindVisualAncestor<RibbonControlGroup>(d);
-                if (controlGroup != null)
-                {
-                    controlGroup.CoerceValue(DefaultControlSizeDefinitionProperty);
-                }
+                controlGroup?.CoerceValue(DefaultControlSizeDefinitionProperty);
             }
         }
 

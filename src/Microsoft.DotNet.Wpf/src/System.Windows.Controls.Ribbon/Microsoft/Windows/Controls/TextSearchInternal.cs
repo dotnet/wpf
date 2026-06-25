@@ -1,11 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-        
 
-using System;
-using System.Windows;
-using System.Windows.Controls;
+
 using System.Windows.Data;
 using System.Globalization;
 using System.Windows.Markup;
@@ -119,8 +115,7 @@ namespace Microsoft.Windows.Controls
             //     Fallback search is if they type "bob" and then press "b"
             //     we'll look for "bobb" and when we don't find it we should
             //     find the next item starting with "bob".
-            if (_charsEntered.Count > 0
-                && (String.Compare(_charsEntered[_charsEntered.Count - 1], nextChar, true, GetCulture(_attachedTo)) == 0))
+            if (_charsEntered.Count > 0 && string.Compare(_charsEntered[_charsEntered.Count - 1], nextChar, true, GetCulture(_attachedTo)) == 0)
             {
                 repeatedChar = true;
             }
@@ -261,8 +256,7 @@ namespace Microsoft.Windows.Controls
             //     Fallback search is if they type "bob" and then press "b"
             //     we'll look for "bobb" and when we don't find it we should
             //     find the next item starting with "bob".
-            if (_charsEntered.Count > 0
-                && (String.Compare(_charsEntered[_charsEntered.Count - 1], nextChar, true, GetCulture(_attachedTo))==0))
+            if (_charsEntered.Count > 0 && string.Compare(_charsEntered[_charsEntered.Count - 1], nextChar, true, GetCulture(_attachedTo)) == 0)
             {
                 repeatedChar = true;
             }
@@ -678,8 +672,10 @@ namespace Microsoft.Windows.Controls
 
         private static Binding CreateBinding(object item, string primaryTextPath)
         {
-            Binding binding = new Binding();
-            binding.Mode = BindingMode.OneWay;
+            Binding binding = new Binding
+            {
+                Mode = BindingMode.OneWay
+            };
 
             // Use xpath for xmlnodes (See Selector.PrepareItemValueBinding)
             if (AssemblyHelper.IsXmlNode(item))
@@ -716,10 +712,7 @@ namespace Microsoft.Windows.Controls
                 _charsEntered.Clear();
             }
 
-            if(_timeoutTimer != null)
-            {
-                _timeoutTimer.Stop();
-            }
+            _timeoutTimer?.Stop();
             _timeoutTimer = null;
 
         }
@@ -849,10 +842,8 @@ namespace Microsoft.Windows.Controls
         {
             get
             {
-                if (_dummyElement == null)
-                {
-                    _dummyElement = new DummyObject();
-                }
+                _dummyElement ??= new DummyObject();
+
                 return _dummyElement;
             }
         }
@@ -892,7 +883,7 @@ namespace Microsoft.Windows.Controls
         private DispatcherTimer _timeoutTimer;
 
         [ThreadStatic]
-        private static DummyObject _dummyElement = new DummyObject();
+        private static DummyObject _dummyElement;
 
         #endregion
 

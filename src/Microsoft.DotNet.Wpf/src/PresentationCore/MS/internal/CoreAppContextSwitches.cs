@@ -1,9 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-//
-//
 
 using System;
 using System.Runtime.CompilerServices;
@@ -11,11 +7,6 @@ using System.Windows;
 
 namespace MS.Internal
 {
-    // WPF's builds are seeing new warnings as as result of using LocalAppContext in PresentationFramework, PresentationCore and WindowsBase.
-    // These binaries have internalsVisibleTo attribute set between them - which results in the warning.
-    // We don't have a way of suppressing this warning effectively until the shared copies of LocalAppContext and
-    // AppContextDefaultValues have pragmas added to suppress warning 436
-#pragma warning disable 436
     internal static class CoreAppContextSwitches
     {
         #region DoNotScaleForDpiChanges
@@ -395,6 +386,64 @@ namespace MS.Internal
 
         #endregion
 
+        #region DisableSpecialCharacterLigature
+
+        internal const string DisableSpecialCharacterLigatureSwitchName = "Switch.System.Windows.DisableSpecialCharacterLigature";
+        private static int _disableSpecialCharacterLigature;
+        public static bool DisableSpecialCharacterLigature
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(DisableSpecialCharacterLigatureSwitchName, ref _disableSpecialCharacterLigature);
+            }
+        }
+
+        #endregion
+
+        #region DisableDirectWriteForwarderBoundsCheckProtection
+
+        internal const string DisableDirectWriteForwarderBoundsCheckProtectionSwitchName = "Switch.MS.Internal.TtfDelta.DisableDirectWriteForwarderBoundsCheckProtection";
+        private static int _disableDirectWriteForwarderBoundsCheckProtection;
+        public static bool DisableDirectWriteForwarderBoundsCheckProtection
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(DisableDirectWriteForwarderBoundsCheckProtectionSwitchName, ref _disableDirectWriteForwarderBoundsCheckProtection);
+            }
+        }
+
+        #endregion
+
+        #region DisablePenImcBoundsCheckProtection
+
+        internal const string DisablePenImcBoundsCheckProtectionSwitchName = "Switch.MS.Internal.PenImc.DisablePenImcBoundsCheckProtection";
+        private static int _disablePenImcBoundsCheckProtection;
+        public static bool DisablePenImcBoundsCheckProtection
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(DisablePenImcBoundsCheckProtectionSwitchName, ref _disablePenImcBoundsCheckProtection);
+            }
+        }
+
+        #endregion
+
+        #region DisableWpfGfxBoundsCheckProtection
+
+        internal const string DisableWpfGfxBoundsCheckProtectionSwitchName = "Switch.MS.Internal.WpfGfx.DisableWpfGfxBoundsCheckProtection";
+        private static int _disableWpfGfxBoundsCheckProtection;
+        public static bool DisableWpfGfxBoundsCheckProtection
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(DisableWpfGfxBoundsCheckProtectionSwitchName, ref _disableWpfGfxBoundsCheckProtection);
+            }
+        }
+
+        #endregion
     }
-#pragma warning restore 436
 }

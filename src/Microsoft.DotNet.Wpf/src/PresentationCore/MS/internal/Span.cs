@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //+-----------------------------------------------------------------------
 //
@@ -11,14 +10,11 @@
 //             [As of this creation, C# has no real generic type system]
 //
 
-using System.Windows;
-using System;
 using System.Collections;
 using MS.Utility;
-using System.Diagnostics;
 
 namespace MS.Internal
-{    
+{
     /// <summary>
     /// VECTOR: A series of spans
     /// </summary>
@@ -441,11 +437,11 @@ namespace MS.Internal
             return true;
         }
 
-        static private Equals _referenceEquals = new Equals(Object.ReferenceEquals);
-        static private Equals _equals = new Equals(Object.Equals);
+        private static Equals _referenceEquals = new Equals(Object.ReferenceEquals);
+        private static Equals _equals = new Equals(Object.Equals);
 
-        FrugalStructList<Span>  _spans;
-        object                  _defaultObject;
+        private FrugalStructList<Span>  _spans;
+        private object                  _defaultObject;
         #endregion
     }
 
@@ -492,8 +488,8 @@ namespace MS.Internal
             _current = -1;
         }
 
-        SpanVector  _spans;
-        int         _current;    // current span
+        private SpanVector  _spans;
+        private int         _current;    // current span
     }
 
 
@@ -629,10 +625,10 @@ namespace MS.Internal
         #endregion
 
         #region Private members
-        SpanVector      _spans;         // vector of spans
-        SpanPosition    _spanPosition;  // index and cp of current span
-        int             _cp;            // current cp (may be greater than start of span)
-        int             _cch;           // distance from current cp to end of current span
+        private SpanVector      _spans;         // vector of spans
+        private SpanPosition    _spanPosition;  // index and cp of current span
+        private int             _cp;            // current cp (may be greater than start of span)
+        private int _cch;           // distance from current cp to end of current span
         #endregion
     }
 }

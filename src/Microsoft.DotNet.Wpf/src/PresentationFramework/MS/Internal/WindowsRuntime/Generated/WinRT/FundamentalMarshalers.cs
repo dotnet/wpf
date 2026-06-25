@@ -1,15 +1,11 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ABI.System
 {
     internal struct Boolean
     {
-        byte value;
+        private byte value;
         public static bool CreateMarshaler(bool value) => value;
         public static Boolean GetAbi(bool value) => new Boolean() { value = (byte)(value ? 1 : 0) };
         public static bool FromAbi(Boolean abi) => abi.value != 0;
@@ -22,7 +18,7 @@ namespace ABI.System
 
     internal struct Char
     {
-        ushort value;
+        private ushort value;
         public static char CreateMarshaler(char value) => value;
         public static Char GetAbi(char value) => new Char() { value = (ushort)value };
         public static char FromAbi(Char abi) => (char)abi.value;

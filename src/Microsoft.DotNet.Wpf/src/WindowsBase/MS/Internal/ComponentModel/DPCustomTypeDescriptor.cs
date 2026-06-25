@@ -1,21 +1,13 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
+using System.Collections;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Markup;
 
-namespace MS.Internal.ComponentModel 
+namespace MS.Internal.ComponentModel
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Reflection;
-    using System.Windows;
-    using System.Windows.Markup;
-    using System.Text;
-
-
     /// <summary>
     ///     This class is a custom type descriptor for dependency properties.  We could simply
     ///     derive from the CustomTypeDescriptor class, but because these are allocated a lot
@@ -63,11 +55,10 @@ namespace MS.Internal.ComponentModel
         {
             if (_instance != null) 
             {
-                RuntimeNamePropertyAttribute nameAttr = GetAttributes()[typeof(RuntimeNamePropertyAttribute)] as RuntimeNamePropertyAttribute;
-                if (nameAttr != null && nameAttr.Name != null) 
+                if (GetAttributes()[typeof(RuntimeNamePropertyAttribute)] is RuntimeNamePropertyAttribute nameAttr && nameAttr.Name != null)
                 {
                     PropertyDescriptor nameProp = GetProperties()[nameAttr.Name];
-                    if (nameProp != null) 
+                    if (nameProp != null)
                     {
                         return nameProp.GetValue(_instance) as string;
                     }
@@ -104,8 +95,7 @@ namespace MS.Internal.ComponentModel
             {
                 foreach (Attribute attr in attributes) 
                 {
-                    PropertyFilterAttribute filterAttr = attr as PropertyFilterAttribute;
-                    if (filterAttr != null) 
+                    if (attr is PropertyFilterAttribute filterAttr)
                     {
                         filter = filterAttr.Filter;
                         break;
@@ -195,9 +185,9 @@ namespace MS.Internal.ComponentModel
                         }
                     }
                 }
-                else if (newDescriptors != null) 
+                else 
                 {
-                    newDescriptors.Add(prop);
+                    newDescriptors?.Add(prop);
                 }
             }
 

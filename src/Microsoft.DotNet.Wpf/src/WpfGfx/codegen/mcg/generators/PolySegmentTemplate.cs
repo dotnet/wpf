@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 //---------------------------------------------------------------------------
@@ -72,11 +71,8 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                         [[inline]]
                             [[Helpers.ManagedStyle.WriteFileHeader(fileName,  @"wpf\src\Graphics\codegen\mcg\generators\PolySegmentTemplate.cs")]]
 
-                            using System;
                             using System.Collections;
-                            using System.Collections.Generic;
                             using System.ComponentModel;
-                            using System.Security.Permissions;
                             using System.Windows;
                             using System.Windows.Markup;
                             using System.Windows.Media.Animation;
@@ -84,9 +80,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                             using System.Windows.Media.Composition;
                             using System.Reflection;
                             using MS.Internal;
-                            using System.Security;
-
-                            using SR=MS.Internal.PresentationCore.SR;
 
                             namespace System.Windows.Media
                             {
@@ -110,10 +103,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     public [[instance.ClassName.Name]](IEnumerable<Point> points, bool isStroked)
                                     {
-                                        if (points == null)
-                                        {
-                                            throw new System.ArgumentNullException("points");
-                                        }
+                                        ArgumentNullException.ThrowIfNull(points);
 
                                         Points = new PointCollection(points);
                                         IsStroked = isStroked;
@@ -124,10 +114,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     internal [[instance.ClassName.Name]](IEnumerable<Point> points, bool isStroked, bool isSmoothJoin)
                                     {
-                                        if (points == null)
-                                        {
-                                            throw new System.ArgumentNullException("points");
-                                        }
+                                        ArgumentNullException.ThrowIfNull(points);
 
                                         Points = new PointCollection(points);
                                         IsStroked = isStroked;
@@ -156,7 +143,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                                 Point pt = new Point();
                                                 int count = points.Count;             
                                                 
-                                                for (int i=0; i<count; i++)
+                                                for (int i = 0; i < count; i++)
                                                 {
                                                     pt = points.Internal_GetItem(i);
                                                     pt *= matrix;
@@ -187,7 +174,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     internal override void SerializeData(StreamGeometryContext ctx)
                                     {
                                         ctx.[[instance.TypeName]]To(Points, IsStroked, IsSmoothJoin);
-                                    }                                    
+                                    }
                                     #endregion
                                 }
                                 #endregion

@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Text highlights associated with a TextContainer.
@@ -404,7 +403,7 @@ namespace System.Windows.Documents
         #region Private Types
 
         // EventArgs for the Changed event.
-        private class LayerHighlightChangedEventArgs : HighlightChangedEventArgs
+        private sealed class LayerHighlightChangedEventArgs : HighlightChangedEventArgs
         {
             // Constructor.
             internal LayerHighlightChangedEventArgs(ReadOnlyCollection<TextSegment> ranges, Type ownerType)
@@ -414,7 +413,7 @@ namespace System.Windows.Documents
             }
 
             // List of changed ranges.
-            internal override IList Ranges
+            internal override IList<TextSegment> Ranges
             {
                 get
                 {

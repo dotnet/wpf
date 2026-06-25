@@ -1,3 +1,8 @@
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using System.Diagnostics.CodeAnalysis;
+
 namespace System.IO.Packaging
 {
     public static partial class PackageStore
@@ -65,6 +70,9 @@ namespace System.Windows
         Subscript = 6,
         Superscript = 7,
     }
+
+    #nullable enable
+    #pragma warning disable CS8597
     public static partial class Clipboard
     {
         public static void Clear() { }
@@ -75,24 +83,30 @@ namespace System.Windows
         public static bool ContainsText() { throw null; }
         public static bool ContainsText(System.Windows.TextDataFormat format) { throw null; }
         public static void Flush() { }
-        public static System.IO.Stream GetAudioStream() { throw null; }
-        public static object GetData(string format) { throw null; }
-        public static System.Windows.IDataObject GetDataObject() { throw null; }
+        public static System.IO.Stream? GetAudioStream() { throw null; }
+        public static object? GetData(string format) { throw null; }
+        public static System.Windows.IDataObject? GetDataObject() { throw null; }
         public static System.Collections.Specialized.StringCollection GetFileDropList() { throw null; }
-        public static System.Windows.Media.Imaging.BitmapSource GetImage() { throw null; }
+        public static System.Windows.Media.Imaging.BitmapSource? GetImage() { throw null; }
         public static string GetText() { throw null; }
         public static string GetText(System.Windows.TextDataFormat format) { throw null; }
         public static bool IsCurrent(System.Windows.IDataObject data) { throw null; }
         public static void SetAudio(byte[] audioBytes) { }
         public static void SetAudio(System.IO.Stream audioStream) { }
         public static void SetData(string format, object data) { }
+        public static void SetDataAsJson<T>(string format, T data) { }
         public static void SetDataObject(object data) { }
         public static void SetDataObject(object data, bool copy) { }
         public static void SetFileDropList(System.Collections.Specialized.StringCollection fileDropList) { }
         public static void SetImage(System.Windows.Media.Imaging.BitmapSource image) { }
         public static void SetText(string text) { }
         public static void SetText(string text, System.Windows.TextDataFormat format) { }
+        [CLSCompliant(false)]
+        public static bool TryGetData<T>(string format, Func<Reflection.Metadata.TypeName, Type?> resolver, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
+        public static bool TryGetData<T>(string format, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
     }
+    #pragma warning restore CS8597
+    #nullable disable
     public partial class ContentElement : System.Windows.DependencyObject, System.Windows.IInputElement, System.Windows.Media.Animation.IAnimatable
     {
         public static readonly System.Windows.DependencyProperty AllowDropProperty;
@@ -471,11 +485,15 @@ namespace System.Windows
         public static System.Windows.DataFormat GetDataFormat(int id) { throw null; }
         public static System.Windows.DataFormat GetDataFormat(string format) { throw null; }
     }
-    public sealed partial class DataObject : System.Runtime.InteropServices.ComTypes.IDataObject, System.Windows.IDataObject
+    #nullable enable
+    #pragma warning disable CS8597
+    public sealed partial class DataObject : System.Runtime.InteropServices.ComTypes.IDataObject, System.Windows.IDataObject, System.Windows.ITypedDataObject
     {
+        #pragma warning disable CS8618
         public static readonly System.Windows.RoutedEvent CopyingEvent;
         public static readonly System.Windows.RoutedEvent PastingEvent;
         public static readonly System.Windows.RoutedEvent SettingDataEvent;
+        #pragma warning restore CS8618
         public DataObject() { }
         public DataObject(object data) { }
         public DataObject(string format, object data) { }
@@ -490,9 +508,9 @@ namespace System.Windows
         public bool ContainsText() { throw null; }
         public bool ContainsText(System.Windows.TextDataFormat format) { throw null; }
         public System.IO.Stream GetAudioStream() { throw null; }
-        public object GetData(string format) { throw null; }
-        public object GetData(string format, bool autoConvert) { throw null; }
-        public object GetData(System.Type format) { throw null; }
+        public object? GetData(string format) { throw null; }
+        public object? GetData(string format, bool autoConvert) { throw null; }
+        public object? GetData(System.Type format) { throw null; }
         public bool GetDataPresent(string format) { throw null; }
         public bool GetDataPresent(string format, bool autoConvert) { throw null; }
         public bool GetDataPresent(System.Type format) { throw null; }
@@ -507,24 +525,33 @@ namespace System.Windows
         public static void RemoveSettingDataHandler(System.Windows.DependencyObject element, System.Windows.DataObjectSettingDataEventHandler handler) { }
         public void SetAudio(byte[] audioBytes) { }
         public void SetAudio(System.IO.Stream audioStream) { }
-        public void SetData(object data) { }
-        public void SetData(string format, object data) { }
-        public void SetData(string format, object data, bool autoConvert) { }
-        public void SetData(System.Type format, object data) { }
+        public void SetData(object? data) { }
+        public void SetData(string format, object? data) { }
+        public void SetData(string format, object? data, bool autoConvert) { }
+        public void SetData(System.Type format, object? data) { }
         public void SetFileDropList(System.Collections.Specialized.StringCollection fileDropList) { }
         public void SetImage(System.Windows.Media.Imaging.BitmapSource image) { }
         public void SetText(string textData) { }
         public void SetText(string textData, System.Windows.TextDataFormat format) { }
         int System.Runtime.InteropServices.ComTypes.IDataObject.DAdvise(ref System.Runtime.InteropServices.ComTypes.FORMATETC pFormatetc, System.Runtime.InteropServices.ComTypes.ADVF advf, System.Runtime.InteropServices.ComTypes.IAdviseSink pAdvSink, out int pdwConnection) { throw null; }
         void System.Runtime.InteropServices.ComTypes.IDataObject.DUnadvise(int dwConnection) { }
-        int System.Runtime.InteropServices.ComTypes.IDataObject.EnumDAdvise(out System.Runtime.InteropServices.ComTypes.IEnumSTATDATA enumAdvise) { throw null; }
+        int System.Runtime.InteropServices.ComTypes.IDataObject.EnumDAdvise(out System.Runtime.InteropServices.ComTypes.IEnumSTATDATA? enumAdvise) { throw null; }
         System.Runtime.InteropServices.ComTypes.IEnumFORMATETC System.Runtime.InteropServices.ComTypes.IDataObject.EnumFormatEtc(System.Runtime.InteropServices.ComTypes.DATADIR dwDirection) { throw null; }
         int System.Runtime.InteropServices.ComTypes.IDataObject.GetCanonicalFormatEtc(ref System.Runtime.InteropServices.ComTypes.FORMATETC pformatetcIn, out System.Runtime.InteropServices.ComTypes.FORMATETC pformatetcOut) { throw null; }
         void System.Runtime.InteropServices.ComTypes.IDataObject.GetData(ref System.Runtime.InteropServices.ComTypes.FORMATETC formatetc, out System.Runtime.InteropServices.ComTypes.STGMEDIUM medium) { throw null; }
         void System.Runtime.InteropServices.ComTypes.IDataObject.GetDataHere(ref System.Runtime.InteropServices.ComTypes.FORMATETC formatetc, ref System.Runtime.InteropServices.ComTypes.STGMEDIUM medium) { }
         int System.Runtime.InteropServices.ComTypes.IDataObject.QueryGetData(ref System.Runtime.InteropServices.ComTypes.FORMATETC formatetc) { throw null; }
         void System.Runtime.InteropServices.ComTypes.IDataObject.SetData(ref System.Runtime.InteropServices.ComTypes.FORMATETC pFormatetcIn, ref System.Runtime.InteropServices.ComTypes.STGMEDIUM pmedium, bool fRelease) { }
+        public bool TryGetData<T>([NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
+        public bool TryGetData<T>(string format, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
+        public bool TryGetData<T>(string format, bool autoConvert, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
+        [System.CLSCompliant(false)]
+        public bool TryGetData<T>(string format, Func<Reflection.Metadata.TypeName, Type?> resolver, bool autoConvert, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
+        public void SetDataAsJson<T>(T data) { }
+        public void SetDataAsJson<T>(string format, T data) { }
     }
+    #pragma warning restore CS8597
+    #nullable disable
     public sealed partial class DataObjectCopyingEventArgs : System.Windows.DataObjectEventArgs
     {
         public DataObjectCopyingEventArgs(System.Windows.IDataObject dataObject, bool isDragDrop) { }
@@ -538,6 +565,14 @@ namespace System.Windows
         public bool CommandCancelled { get { throw null; } }
         public bool IsDragDrop { get { throw null; } }
         public void CancelCommand() { }
+    }
+    public static class DataObjectExtensions
+    {
+        public static bool TryGetData<T>(this IDataObject dataObject, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
+        public static bool TryGetData<T>(this IDataObject dataObject, string format, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
+        public static bool TryGetData<T>(this IDataObject dataObject, string format, bool autoConvert, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
+        [CLSCompliant(false)]
+        public static bool TryGetData<T>(this IDataObject dataObject, string format, Func<Reflection.Metadata.TypeName, Type> resolver, bool autoConvert, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
     }
     public sealed partial class DataObjectPastingEventArgs : System.Windows.DataObjectEventArgs
     {
@@ -651,7 +686,7 @@ namespace System.Windows
     }
     public delegate void DragEventHandler(object sender, System.Windows.DragEventArgs e);
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.DurationConverter))]
-    public partial struct Duration
+    public readonly partial struct Duration
     {
         public Duration(System.TimeSpan timeSpan) { throw null; }
         public static System.Windows.Duration Automatic { get { throw null; } }
@@ -1043,6 +1078,13 @@ namespace System.Windows
         void ReleaseMouseCapture();
         void ReleaseStylusCapture();
         void RemoveHandler(System.Windows.RoutedEvent routedEvent, System.Delegate handler);
+    }
+    public interface ITypedDataObject : System.Windows.IDataObject
+    {
+        bool TryGetData<T>([NotNullWhen(true), MaybeNullWhen(false)] out T data);
+        bool TryGetData<T>(string format, [NotNullWhen(true), MaybeNullWhen(false)] out T data);
+        bool TryGetData<T>(string format, bool autoConvert, [NotNullWhen(true), MaybeNullWhen(false)] out T data);
+        bool TryGetData<T>(string format, Func<Reflection.Metadata.TypeName, Type> resolver, bool autoConvert, [NotNullWhen(true), MaybeNullWhen(false)] out T data);
     }
     public partial class KeySplineConverter : System.ComponentModel.TypeConverter
     {
@@ -7012,14 +7054,14 @@ namespace System.Windows.Media
     public partial struct PixelFormat : System.IEquatable<System.Windows.Media.PixelFormat>
     {
         public int BitsPerPixel { get { throw null; } }
-        public System.Collections.Generic.IList<System.Windows.Media.PixelFormatChannelMask> Masks { get { throw null; } }
-        public override bool Equals(object obj) { throw null; }
-        public bool Equals(System.Windows.Media.PixelFormat pixelFormat) { throw null; }
+        public readonly System.Collections.Generic.IList<System.Windows.Media.PixelFormatChannelMask> Masks { get { throw null; } }
+        public override readonly bool Equals(object obj) { throw null; }
+        public readonly bool Equals(System.Windows.Media.PixelFormat pixelFormat) { throw null; }
         public static bool Equals(System.Windows.Media.PixelFormat left, System.Windows.Media.PixelFormat right) { throw null; }
-        public override int GetHashCode() { throw null; }
+        public override readonly int GetHashCode() { throw null; }
         public static bool operator ==(System.Windows.Media.PixelFormat left, System.Windows.Media.PixelFormat right) { throw null; }
         public static bool operator !=(System.Windows.Media.PixelFormat left, System.Windows.Media.PixelFormat right) { throw null; }
-        public override string ToString() { throw null; }
+        public override readonly string ToString() { throw null; }
     }
     public partial struct PixelFormatChannelMask
     {
@@ -10119,7 +10161,7 @@ namespace System.Windows.Media.Animation
         void System.Collections.IList.Remove(object keyFrame) { }
     }
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Media.Animation.RepeatBehaviorConverter))]
-    public partial struct RepeatBehavior : System.IFormattable
+    public readonly partial struct RepeatBehavior : System.IFormattable
     {
         public RepeatBehavior(double count) { throw null; }
         public RepeatBehavior(System.TimeSpan duration) { throw null; }
@@ -12443,7 +12485,7 @@ namespace System.Windows.Media.Media3D
     public partial class ModelVisual3D : System.Windows.Media.Media3D.Visual3D, System.Windows.Markup.IAddChild
     {
         public static readonly System.Windows.DependencyProperty ContentProperty;
-        public static readonly new System.Windows.DependencyProperty TransformProperty;
+        public static new readonly System.Windows.DependencyProperty TransformProperty;
         public ModelVisual3D() { }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Media.Media3D.Visual3DCollection Children { get { throw null; } }

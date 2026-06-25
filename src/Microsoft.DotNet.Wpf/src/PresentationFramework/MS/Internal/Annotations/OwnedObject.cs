@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -10,8 +9,6 @@
 //    This restriction is in place to prevent OM structures that cannot be
 //    reproduced from a round-trip serialization/deserialization.
 //
-
-using System;
 
 namespace MS.Internal.Annotations
 {

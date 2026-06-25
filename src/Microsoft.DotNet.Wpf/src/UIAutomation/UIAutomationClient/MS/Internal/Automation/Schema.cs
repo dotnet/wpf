@@ -1,31 +1,20 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: property/pattern/event information
-
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 using System;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Text;
-using System.Windows.Automation.Provider;
-using System.Collections;
-using System.Runtime.InteropServices;
 using System.Globalization;
 using System.Diagnostics;
-using MS.Internal.Automation;
-
 
 namespace MS.Internal.Automation
 {
-    // Disable warning for obsolete types.  These are scheduled to be removed in M8.2 so 
-    // only need the warning to come out for components outside of APT.
-    #pragma warning disable 0618
-
-    // Information about automation properties and patterns
+    /// <summary>
+    /// Information about automation properties and patterns
+    /// </summary>
     internal sealed class Schema
     {
         //------------------------------------------------------
@@ -76,7 +65,7 @@ namespace MS.Internal.Automation
 
             if (!Schema.GetPropertyInfo(property, out pi))
             {
-                Debug.Assert(false, "GetDefaultValue was passed an unknown property");
+                Debug.Fail("GetDefaultValue was passed an unknown property");
                 return null;
             }
 
@@ -349,7 +338,7 @@ namespace MS.Internal.Automation
             new AutomationPropertyInfo( null,                            ScrollPattern.VerticalViewSizeProperty,                 typeof(double),                (double)100                    ),
             new AutomationPropertyInfo( convertToBool,                   ScrollPattern.HorizontallyScrollableProperty,           typeof(bool),                  false                          ),
             new AutomationPropertyInfo( convertToBool,                   ScrollPattern.VerticallyScrollableProperty,             typeof(bool),                  false                          ),
-            new AutomationPropertyInfo( convertToElementArray,           SelectionPattern.SelectionProperty,                     typeof(AutomationElement[]),   new AutomationElement[]{}      ),
+            new AutomationPropertyInfo( convertToElementArray,           SelectionPattern.SelectionProperty,                     typeof(AutomationElement[]),   Array.Empty<AutomationElement>()),
             new AutomationPropertyInfo( convertToBool,                   SelectionPattern.CanSelectMultipleProperty,             typeof(bool),                  false                          ),
             new AutomationPropertyInfo( convertToBool,                   SelectionPattern.IsSelectionRequiredProperty,           typeof(bool),                  false                          ),
             new AutomationPropertyInfo( null,                            GridPattern.RowCountProperty,                           typeof(int),                   0                              ),
@@ -362,7 +351,7 @@ namespace MS.Internal.Automation
             new AutomationPropertyInfo( convertToDockPosition,           DockPattern.DockPositionProperty,                       typeof(DockPosition),          DockPosition.None              ),
             new AutomationPropertyInfo( convertToExpandCollapseState,    ExpandCollapsePattern.ExpandCollapseStateProperty,      typeof(ExpandCollapseState),   ExpandCollapseState.LeafNode   ),
             new AutomationPropertyInfo( null,                            MultipleViewPattern.CurrentViewProperty,                typeof(int),                   0                              ),
-            new AutomationPropertyInfo( null,                            MultipleViewPattern.SupportedViewsProperty,             typeof(int []),                new int [0]                    ),
+            new AutomationPropertyInfo( null,                            MultipleViewPattern.SupportedViewsProperty,             typeof(int []),                Array.Empty<int>()             ),
             new AutomationPropertyInfo( convertToBool,                   WindowPattern.CanMaximizeProperty,                      typeof(bool),                  false                          ),
             new AutomationPropertyInfo( convertToBool,                   WindowPattern.CanMinimizeProperty,                      typeof(bool),                  false                          ),
             new AutomationPropertyInfo( convertToWindowVisualState,      WindowPattern.WindowVisualStateProperty,                typeof(WindowVisualState),     WindowVisualState.Normal       ),
@@ -371,11 +360,11 @@ namespace MS.Internal.Automation
             new AutomationPropertyInfo( convertToBool,                   WindowPattern.IsTopmostProperty,                        typeof(bool),                  false                          ),
             new AutomationPropertyInfo( convertToBool,                   SelectionItemPattern.IsSelectedProperty,                typeof(bool),                  false                          ),
             new AutomationPropertyInfo( convertToElement,                SelectionItemPattern.SelectionContainerProperty,        typeof(AutomationElement),     null                           ),
-            new AutomationPropertyInfo( convertToElementArray,           TablePattern.RowHeadersProperty,                        typeof(AutomationElement []),  new AutomationElement [0]      ),
-            new AutomationPropertyInfo( convertToElementArray,           TablePattern.ColumnHeadersProperty,                     typeof(AutomationElement []),  new AutomationElement [0]      ),
+            new AutomationPropertyInfo( convertToElementArray,           TablePattern.RowHeadersProperty,                        typeof(AutomationElement[]),   Array.Empty<AutomationElement>()),
+            new AutomationPropertyInfo( convertToElementArray,           TablePattern.ColumnHeadersProperty,                     typeof(AutomationElement[]),   Array.Empty<AutomationElement>()),
             new AutomationPropertyInfo( convertToRowOrColumnMajor,       TablePattern.RowOrColumnMajorProperty,                  typeof(RowOrColumnMajor),      RowOrColumnMajor.Indeterminate ),
-            new AutomationPropertyInfo( convertToElementArray,           TableItemPattern.RowHeaderItemsProperty,                typeof(AutomationElement []),  new AutomationElement [0]      ),
-            new AutomationPropertyInfo( convertToElementArray,           TableItemPattern.ColumnHeaderItemsProperty,             typeof(AutomationElement []),  new AutomationElement [0]      ),
+            new AutomationPropertyInfo( convertToElementArray,           TableItemPattern.RowHeaderItemsProperty,                typeof(AutomationElement[]),   Array.Empty<AutomationElement>()),
+            new AutomationPropertyInfo( convertToElementArray,           TableItemPattern.ColumnHeaderItemsProperty,             typeof(AutomationElement[]),   Array.Empty<AutomationElement>()),
             new AutomationPropertyInfo( convertToToggleState,            TogglePattern.ToggleStateProperty,                      typeof(ToggleState),           ToggleState.Indeterminate      ),
             new AutomationPropertyInfo( convertToBool,                   TransformPattern.CanMoveProperty,                       typeof(bool),                  false                          ),
             new AutomationPropertyInfo( convertToBool,                   TransformPattern.CanResizeProperty,                     typeof(bool),                  false                          ),

@@ -1,8 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-#nullable disable
 
 using System.Runtime.CompilerServices;
 
@@ -22,7 +19,7 @@ namespace System.Windows.Markup
         /// type this attribute is declared on.
         /// </summary>
         /// <param name="contentWrapper"></param>
-        public ContentWrapperAttribute(Type contentWrapper)
+        public ContentWrapperAttribute(Type? contentWrapper)
         {
             ContentWrapper = contentWrapper;
         }
@@ -31,7 +28,7 @@ namespace System.Windows.Markup
         /// The type that is declared as a content wrapper for the collection type
         /// this attribute is declared on.
         /// </summary>
-        public Type ContentWrapper { get; }
+        public Type? ContentWrapper { get; }
 
         /// <summary>
         /// Override to ensure AttributeCollection perserves all instances
@@ -42,7 +39,7 @@ namespace System.Windows.Markup
         /// Overrides Object.Equals to implement correct equality semantics for this
         /// attribute.
         /// </summary>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return
                 obj is ContentWrapperAttribute other &&

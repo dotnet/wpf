@@ -1,0 +1,8 @@
+schemaVersion: 0.0.1
+isProduction: true
+accountableOwners:
+  service: 174e5b50-35f9-4c31-8d9e-0e1cf9efaf85
+routing:
+  defaultAreaPath:
+    org: devdiv
+    path: DevDiv\NET Fundamentals\NET Partners\WPF\Security\SDL

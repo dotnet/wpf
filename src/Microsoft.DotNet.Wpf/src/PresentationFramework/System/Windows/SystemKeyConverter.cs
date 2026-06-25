@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -9,10 +8,8 @@
 //
 //
 
-using System;
 using System.ComponentModel;
 using System.Globalization;
-using System.ComponentModel.Design.Serialization;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
@@ -252,7 +249,7 @@ namespace System.Windows.Markup
                 ((SystemResourceKeyID.GridViewScrollViewerStyle <= id) &&
                  (id <= SystemResourceKeyID.GridViewItemContainerStyle)))
             {
-                return $"{Enum.GetName(typeof(SystemResourceKeyID), id)}Key";
+                return $"{Enum.GetName(id)}Key";
             }
             else if (SystemResourceKeyID.MenuItemSeparatorStyle == id ||
                      SystemResourceKeyID.StatusBarSeparatorStyle == id)
@@ -262,7 +259,7 @@ namespace System.Windows.Markup
             else if ((SystemResourceKeyID.ToolBarButtonStyle <= id) &&
                      (id <= SystemResourceKeyID.ToolBarMenuStyle))
             {
-                string propName = $"{Enum.GetName(typeof(SystemResourceKeyID), id)}Key";
+                string propName = $"{Enum.GetName(id)}Key";
                 return propName.Remove(0, 7); // Remove the "ToolBar" prefix
             }
 
@@ -274,7 +271,7 @@ namespace System.Windows.Markup
             if ((SystemResourceKeyID.InternalSystemColorsStart < id) &&
                 (id < SystemResourceKeyID.InternalSystemColorsExtendedEnd))
             {
-                return Enum.GetName(typeof(SystemResourceKeyID), id);
+                return Enum.GetName(id);
             }
 
             return String.Empty;

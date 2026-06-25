@@ -1,27 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
 using MS.Internal;
 using MS.Win32.PresentationCore;
-using System.Diagnostics;
-using System.Globalization;
-using System.Runtime.InteropServices;
-using System.IO;
-using System.Security;
-using System.Windows.Media.Imaging;
-using System.Windows.Threading;
-using System.Text;
 using MS.Internal.PresentationCore;                        // SecurityHelper
 
 namespace System.Windows.Media.Imaging
@@ -31,7 +15,7 @@ namespace System.Windows.Media.Imaging
     /// <summary>
     /// Metadata Class for BitmapImage.
     /// </summary>
-    sealed public partial class InPlaceBitmapMetadataWriter : BitmapMetadata
+    public sealed partial class InPlaceBitmapMetadataWriter : BitmapMetadata
     {
         #region Constructors
 
@@ -57,7 +41,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///
         /// </summary>
-        static internal InPlaceBitmapMetadataWriter CreateFromFrameDecode(BitmapSourceSafeMILHandle frameHandle, object syncObject)
+        internal static InPlaceBitmapMetadataWriter CreateFromFrameDecode(BitmapSourceSafeMILHandle frameHandle, object syncObject)
         {
             Invariant.Assert(frameHandle != null);
 
@@ -85,7 +69,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         ///
         /// </summary>
-        static internal InPlaceBitmapMetadataWriter CreateFromDecoder(SafeMILHandle decoderHandle, object syncObject)
+        internal static InPlaceBitmapMetadataWriter CreateFromDecoder(SafeMILHandle decoderHandle, object syncObject)
         {
             Invariant.Assert(decoderHandle != null);
 

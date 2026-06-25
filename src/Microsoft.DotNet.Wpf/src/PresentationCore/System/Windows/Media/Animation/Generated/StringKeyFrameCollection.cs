@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -9,16 +8,8 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Media3D;
 
 namespace System.Windows.Media.Animation
 {
@@ -59,9 +50,10 @@ namespace System.Windows.Media.Animation
             {
                 if (s_emptyCollection == null)
                 {
-                    StringKeyFrameCollection emptyCollection = new StringKeyFrameCollection();
-
-                    emptyCollection._keyFrames = new List< StringKeyFrame>(0);
+                    StringKeyFrameCollection emptyCollection = new StringKeyFrameCollection
+                    {
+                        _keyFrames = new List<StringKeyFrame>(0)
+                    };
                     emptyCollection.Freeze();
 
                     s_emptyCollection = emptyCollection;
@@ -98,7 +90,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCore(Freezable sourceFreezable)
         {
-            StringKeyFrameCollection sourceCollection = (StringKeyFrameCollection) sourceFreezable;
+            StringKeyFrameCollection sourceCollection = (StringKeyFrameCollection)sourceFreezable;
             base.CloneCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;
@@ -119,7 +111,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable sourceFreezable)
         {
-            StringKeyFrameCollection sourceCollection = (StringKeyFrameCollection) sourceFreezable;
+            StringKeyFrameCollection sourceCollection = (StringKeyFrameCollection)sourceFreezable;
             base.CloneCurrentValueCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;
@@ -140,7 +132,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetAsFrozenCore(Freezable sourceFreezable)
         {
-            StringKeyFrameCollection sourceCollection = (StringKeyFrameCollection) sourceFreezable;
+            StringKeyFrameCollection sourceCollection = (StringKeyFrameCollection)sourceFreezable;
             base.GetAsFrozenCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;
@@ -161,7 +153,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable sourceFreezable)
         {
-            StringKeyFrameCollection sourceCollection = (StringKeyFrameCollection) sourceFreezable;
+            StringKeyFrameCollection sourceCollection = (StringKeyFrameCollection)sourceFreezable;
             base.GetCurrentValueAsFrozenCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;

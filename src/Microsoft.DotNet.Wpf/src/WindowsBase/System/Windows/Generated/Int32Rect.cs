@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -10,29 +9,18 @@
 //
 
 using MS.Internal;
-using MS.Internal.WindowsBase;
-using System;
-using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.ComponentModel.Design.Serialization;
 using System.Windows.Markup;
 using System.Windows.Converters;
-using System.Windows;
-// These types are aliased to match the unamanaged names used in interop
-using BOOL = System.UInt32;
-using WORD = System.UInt16;
-using Float = System.Single;
 
 namespace System.Windows
 {
+
     [Serializable]
     [TypeConverter(typeof(Int32RectConverter))]
     [ValueSerializer(typeof(Int32RectValueSerializer))] // Used by MarkupWriter
-    partial struct Int32Rect : IFormattable
+    public partial struct Int32Rect : IFormattable
     {
         //------------------------------------------------------
         //
@@ -56,7 +44,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='int32Rect1'>The first Int32Rect to compare</param>
         /// <param name='int32Rect2'>The second Int32Rect to compare</param>
-        public static bool operator == (Int32Rect int32Rect1, Int32Rect int32Rect2)
+        public static bool operator ==(Int32Rect int32Rect1, Int32Rect int32Rect2)
         {
             return int32Rect1.X == int32Rect2.X &&
                    int32Rect1.Y == int32Rect2.Y &&
@@ -75,7 +63,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='int32Rect1'>The first Int32Rect to compare</param>
         /// <param name='int32Rect2'>The second Int32Rect to compare</param>
-        public static bool operator != (Int32Rect int32Rect1, Int32Rect int32Rect2)
+        public static bool operator !=(Int32Rect int32Rect1, Int32Rect int32Rect2)
         {
             return !(int32Rect1 == int32Rect2);
         }
@@ -91,7 +79,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='int32Rect1'>The first Int32Rect to compare</param>
         /// <param name='int32Rect2'>The second Int32Rect to compare</param>
-        public static bool Equals (Int32Rect int32Rect1, Int32Rect int32Rect2)
+        public static bool Equals(Int32Rect int32Rect1, Int32Rect int32Rect2)
         {
             if (int32Rect1.IsEmpty)
             {
@@ -228,7 +216,8 @@ namespace System.Windows
             {
                 _x = value;
             }
-}
+
+        }
 
         /// <summary>
         ///     Y - int.  Default value is 0.
@@ -244,7 +233,8 @@ namespace System.Windows
             {
                 _y = value;
             }
-}
+
+        }
 
         /// <summary>
         ///     Width - int.  Default value is 0.
@@ -260,7 +250,8 @@ namespace System.Windows
             {
                 _width = value;
             }
-}
+
+        }
 
         /// <summary>
         ///     Height - int.  Default value is 0.
@@ -276,7 +267,8 @@ namespace System.Windows
             {
                 _height = value;
             }
-}
+
+        }
 
         #endregion Public Properties
 
@@ -329,6 +321,7 @@ namespace System.Windows
         /// </returns>
         public override string ToString()
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, null /* format provider */);
         }
@@ -342,6 +335,7 @@ namespace System.Windows
         /// </returns>
         public string ToString(IFormatProvider provider)
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, provider);
         }
@@ -357,6 +351,7 @@ namespace System.Windows
         /// </returns>
         string IFormattable.ToString(string format, IFormatProvider provider)
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(format, provider);
         }
@@ -417,6 +412,9 @@ namespace System.Windows
         internal int _y;
         internal int _width;
         internal int _height;
+
+
+
 
         #endregion Internal Fields
 

@@ -1,20 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 
-using System;
-using System.Windows.Threading;
-
-using System.Windows.Media;
 using System.Windows.Media.Composition;
-using System.Diagnostics;
-using System.Collections.Generic;
-using MS.Internal;
-using MS.Win32;
-using System.Resources;
-using System.Runtime.InteropServices;
 
 namespace System.Windows.Media
 {
@@ -26,7 +15,7 @@ namespace System.Windows.Media
     {
         // bbox in inner coordinate space. Note that this bbox does not
         // contain the childrens extent.
-        IDrawingContent _content;
+        private IDrawingContent _content;
 
         /// <summary>
         /// HitTestCore implements precise hit testing against render contents
@@ -102,7 +91,7 @@ namespace System.Windows.Media
                 // Remove the notification handlers.
                 //
 
-                oldContent.PropagateChangedHandler(ContentsChangedHandler, false /* remove */);
+                oldContent.PropagateChangedHandler(ContentsChangedHandler, adding: false);
 
 
                 //
@@ -119,11 +108,8 @@ namespace System.Windows.Media
             // Prepare the new content.
             // 
 
-            if (newContent != null)
-            {
-                // Propagate notification handlers.
-                newContent.PropagateChangedHandler(ContentsChangedHandler, true /* adding */);                
-            }
+            // Propagate notification handlers.
+            newContent?.PropagateChangedHandler(ContentsChangedHandler, adding: true);
 
             _content = newContent;
 
@@ -204,10 +190,7 @@ namespace System.Windows.Media
         {
             VerifyAPIReadOnly();
 
-            if (_content != null)
-            {
-                _content.WalkContent(walker);
-            }
+            _content?.WalkContent(walker);
         }
 
         /// <summary>

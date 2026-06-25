@@ -827,26 +827,6 @@
         <target state="translated">パート URI は、Open Packaging Conventions 仕様で定義されたルールにより無効です。</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionLevel">
-        <source>Permission level is not valid.</source>
-        <target state="translated">アクセス許可のレベルが有効ではありません。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionState">
-        <source>Permission state is not valid.</source>
-        <target state="translated">アクセス許可の状態が有効ではありません。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionStateValue">
-        <source>PermissionState value '{0}' is not valid for this Permission.</source>
-        <target state="translated">PermissionState 値 '{0}' は、このアクセス許可に対して無効です。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">アクセス許可の種類が無効です。'{0}' を指定してください。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPriority">
         <source>Specified priority is not valid.</source>
         <target state="translated">指定された優先順位は無効です。</target>
@@ -2240,16 +2220,6 @@
       <trans-unit id="StringEmpty">
         <source>Parameter cannot be a zero-length string.</source>
         <target state="translated">パラメーターを長さゼロの文字列にすることはできません。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="TargetNotMediaPermissionLevel">
-        <source>Target is not a MediaPermission.</source>
-        <target state="translated">ターゲットは MediaPermission ではありません。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="TargetNotWebBrowserPermissionLevel">
-        <source>Target is not a WebBrowserPermission.</source>
-        <target state="translated">ターゲットは WebBrowserPermission ではありません。</target>
         <note />
       </trans-unit>
       <trans-unit id="ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread">

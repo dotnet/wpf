@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // 
@@ -8,15 +7,8 @@
 //
 //
 
-using System;
 using System.Runtime.InteropServices;
-using System.Windows;
 using System.Windows.Threading;
-using System.Threading;
-using System.Diagnostics;
-using System.Security;
-using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
 using MS.Win32;
 
 namespace System.Windows.Input
@@ -245,10 +237,10 @@ namespace System.Windows.Input
 
         // Pointer to ITfDocumentMgr interface.
         internal UnsafeNativeMethods.ITfDocumentMgr DocumentManager
-        { 
-            get { return _doc.Value;}
-            
-            set { _doc = new SecurityCriticalData<UnsafeNativeMethods.ITfDocumentMgr>(value); }
+        {
+            get => _doc;
+
+            set => _doc = value;
         }
 
         // EditCookie for ITfContext.
@@ -346,7 +338,7 @@ namespace System.Windows.Input
         private TextComposition _composition;
 
         // The TSF document object.  This is a native resource.
-        private SecurityCriticalData<UnsafeNativeMethods.ITfDocumentMgr> _doc;
+        private UnsafeNativeMethods.ITfDocumentMgr _doc;
 
         // The edit cookie TSF returns from CreateContext.
         private int _editCookie;

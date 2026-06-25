@@ -1,23 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
-//
-
-using System;
-using System.Diagnostics;
-using System.IO.Packaging;
 using System.Globalization;
-using System.Net;
-using System.Security;
 using System.Text;
-using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Reflection;
-using System.IO;
 
 using MS.Internal;
 using MS.Internal.AppModel;
@@ -25,10 +13,6 @@ using MS.Internal.IO.Packaging;
 using MS.Internal.PresentationCore;
 
 using PackUriHelper = System.IO.Packaging.PackUriHelper;
-// In order to avoid generating warnings about unknown message numbers and
-// unknown pragmas when compiling your C# source code with the actual C# compiler,
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 namespace System.Windows.Navigation
 {
@@ -42,7 +26,7 @@ namespace System.Windows.Navigation
         private const string APPBASE = "application://";
         private static readonly Uri _packAppBaseUri = PackUriHelper.Create(new Uri(APPBASE));
 
-        private static SecurityCriticalDataForSet<Uri> _baseUri;
+        private static Uri _baseUri;
 
         // Cached result of calling
         // PackUriHelper.GetPackageUri(BaseUriHelper.PackAppBaseUri).GetComponents(
@@ -53,7 +37,7 @@ namespace System.Windows.Navigation
 
         static BaseUriHelper()
         {
-            _baseUri = new SecurityCriticalDataForSet<Uri>(_packAppBaseUri);
+            _baseUri = _packAppBaseUri;
             // Add an instance of the ResourceContainer to PreloadedPackages so that PackWebRequestFactory can find it
             // and mark it as thread-safe so PackWebResponse won't protect returned streams with a synchronizing wrapper
             PreloadedPackages.AddPackage(PackUriHelper.GetPackageUri(SiteOfOriginBaseUri), new SiteOfOriginContainer(), true);
@@ -102,7 +86,7 @@ namespace System.Windows.Navigation
             }
             else
             {
-                if (baseUri.IsAbsoluteUri == false)
+                if (!baseUri.IsAbsoluteUri)
                 {
                     // Most likely the BaseUriDP in element or IUriContext.BaseUri
                     // is set to a relative Uri programmatically in user's code.
@@ -127,18 +111,16 @@ namespace System.Windows.Navigation
 
         #region internal properties and methods
 
-        static internal Uri SiteOfOriginBaseUri
+        internal static Uri SiteOfOriginBaseUri
         {
-            [FriendAccessAllowed]
             get
             {
                 return _siteOfOriginBaseUri;
             }
         }
 
-        static internal Uri PackAppBaseUri
+        internal static Uri PackAppBaseUri
         {
-            [FriendAccessAllowed]
             get
             {
                 return _packAppBaseUri;
@@ -155,12 +137,12 @@ namespace System.Windows.Navigation
                 uri.IsAbsoluteUri && 
 
                 // Does the "outer" URI have the pack: scheme?
-                SecurityHelper.AreStringTypesEqual(uri.Scheme, System.IO.Packaging.PackUriHelper.UriSchemePack) &&
+                string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) &&
 
                 // Does the "inner" URI have the application: scheme
-                SecurityHelper.AreStringTypesEqual(
-                    PackUriHelper.GetPackageUri(uri).GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped),
-                    _packageApplicationBaseUriEscaped);
+                string.Equals(PackUriHelper.GetPackageUri(uri).GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped),
+                              _packageApplicationBaseUriEscaped,
+                              StringComparison.OrdinalIgnoreCase);
         }
 
         // The method accepts a relative or absolute Uri and returns the appropriate assembly.
@@ -172,13 +154,12 @@ namespace System.Windows.Navigation
         // assembly name matches the text string in the first segment. otherwise, this method
         // would return EntryAssembly in the AppDomain.
         //
-        [FriendAccessAllowed]
         internal static void GetAssemblyAndPartNameFromPackAppUri(Uri uri, out Assembly assembly, out string partName)
         {
             // The input Uri is assumed to be a valid absolute pack application Uri.
             // The caller should guarantee that.
             // Perform a sanity check to make sure the assumption stays.
-            Debug.Assert(uri != null && uri.IsAbsoluteUri && SecurityHelper.AreStringTypesEqual(uri.Scheme, System.IO.Packaging.PackUriHelper.UriSchemePack) && IsPackApplicationUri(uri));
+            Debug.Assert(uri is not null && uri.IsAbsoluteUri && string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) && IsPackApplicationUri(uri));
 
             // Generate a relative Uri which gets rid of the pack://application:,,, authority part.
             Uri partUri = new Uri(uri.AbsolutePath, UriKind.Relative);
@@ -189,7 +170,7 @@ namespace System.Windows.Navigation
 
             GetAssemblyNameAndPart(partUri, out partName, out assemblyName, out assemblyVersion, out assemblyKey);
 
-            if (String.IsNullOrEmpty(assemblyName))
+            if (string.IsNullOrEmpty(assemblyName))
             {
                 // The uri doesn't contain ";component". it should map to the enty application assembly.
                 assembly = ResourceAssembly;
@@ -206,16 +187,16 @@ namespace System.Windows.Navigation
 
         //
         //
-        [FriendAccessAllowed]
         internal static Assembly GetLoadedAssembly(string assemblyName, string assemblyVersion, string assemblyKey)
         {
             Assembly assembly;
-            AssemblyName asmName = new AssemblyName(assemblyName);
-
-            // We always use the primary assembly (culture neutral) for resource manager.
-            // if the required resource lives in satellite assembly, ResourceManager can find
-            // the right satellite assembly later.
-            asmName.CultureInfo = new CultureInfo(String.Empty);
+            AssemblyName asmName = new AssemblyName(assemblyName)
+            {
+                // We always use the primary assembly (culture neutral) for resource manager.
+                // if the required resource lives in satellite assembly, ResourceManager can find
+                // the right satellite assembly later.
+                CultureInfo = new CultureInfo(String.Empty)
+            };
 
             if (!String.IsNullOrEmpty(assemblyVersion))
             {
@@ -243,10 +224,9 @@ namespace System.Windows.Navigation
         //
         // Return assembly Name, Version, Key and package Part from a relative Uri.
         //
-        [FriendAccessAllowed]
         internal static void GetAssemblyNameAndPart(Uri uri, out string partName, out string assemblyName, out string assemblyVersion, out string assemblyKey)
         {
-            Invariant.Assert(uri != null && uri.IsAbsoluteUri == false, "This method accepts relative uri only.");
+            Invariant.Assert(uri != null && !uri.IsAbsoluteUri, "This method accepts relative uri only.");
 
             string original = uri.ToString(); // only relative Uri here (enforced by Package)
 
@@ -331,8 +311,7 @@ namespace System.Windows.Navigation
             } // end of if fHasComponent
         }
 
-        [FriendAccessAllowed]
-        static internal bool IsComponentEntryAssembly(string component)
+        internal static bool IsComponentEntryAssembly(string component)
         {
             if (component.EndsWith(COMPONENT, StringComparison.OrdinalIgnoreCase))
             {
@@ -347,7 +326,7 @@ namespace System.Windows.Navigation
 
                     if (assembly != null)
                     {
-                        return (string.Equals(SafeSecurityHelper.GetAssemblyPartialName(assembly), assemblyName, StringComparison.OrdinalIgnoreCase));
+                        return ReflectionUtils.GetAssemblyPartialName(assembly).Equals(assemblyName, StringComparison.OrdinalIgnoreCase);
                     }
                     else
                     {
@@ -358,14 +337,12 @@ namespace System.Windows.Navigation
             return false;
         }
                 
-        [FriendAccessAllowed]
-        static internal Uri GetResolvedUri(Uri baseUri, Uri orgUri)
+        internal static Uri GetResolvedUri(Uri baseUri, Uri orgUri)
         {
             return new Uri(baseUri, orgUri);
         }
 
-        [FriendAccessAllowed]
-        static internal Uri MakeRelativeToSiteOfOriginIfPossible(Uri sUri)
+        internal static Uri MakeRelativeToSiteOfOriginIfPossible(Uri sUri)
         {
             if (Uri.Compare(sUri, SiteOfOriginBaseUri, UriComponents.Scheme, UriFormat.UriEscaped, StringComparison.OrdinalIgnoreCase) == 0)
             {                
@@ -379,10 +356,9 @@ namespace System.Windows.Navigation
             return sUri;
         }
 
-        [FriendAccessAllowed]
-        static internal Uri ConvertPackUriToAbsoluteExternallyVisibleUri(Uri packUri)
+        internal static Uri ConvertPackUriToAbsoluteExternallyVisibleUri(Uri packUri)
         {
-            Invariant.Assert(packUri.IsAbsoluteUri && SecurityHelper.AreStringTypesEqual(packUri.Scheme, PackAppBaseUri.Scheme));
+            Invariant.Assert(packUri.IsAbsoluteUri && string.Equals(packUri.Scheme, PackAppBaseUri.Scheme, StringComparison.OrdinalIgnoreCase));
 
             Uri relative = MakeRelativeToSiteOfOriginIfPossible(packUri);
 
@@ -400,10 +376,10 @@ namespace System.Windows.Navigation
         // object will not correctly resolve relative Uris in some cases.  This method
         // detects and fixes this by constructing a new Uri with an original string
         // that contains the scheme file://.
-        [FriendAccessAllowed]
-        static internal Uri FixFileUri(Uri uri)
+        internal static Uri FixFileUri(Uri uri)
         {
-            if (uri != null && uri.IsAbsoluteUri && SecurityHelper.AreStringTypesEqual(uri.Scheme, Uri.UriSchemeFile) &&
+            if (uri is not null && uri.IsAbsoluteUri &&
+                string.Equals(uri.Scheme, Uri.UriSchemeFile, StringComparison.OrdinalIgnoreCase) &&
                 string.Compare(uri.OriginalString, 0, Uri.UriSchemeFile, 0, Uri.UriSchemeFile.Length, StringComparison.OrdinalIgnoreCase) != 0)
             {
                 return new Uri(uri.AbsoluteUri);
@@ -412,23 +388,21 @@ namespace System.Windows.Navigation
             return uri;
         }
 
-        static internal Uri BaseUri
+        internal static Uri BaseUri
         {
-            [FriendAccessAllowed]
             get
             {
-                return _baseUri.Value;
+                return _baseUri;
             }
-            [FriendAccessAllowed]
             set
             {
                 // This setter should only be called from Framework through
                 // BindUriHelper.set_BaseUri.
-                _baseUri.Value = value;
+                _baseUri = value;
             }
         }
 
-        static internal Assembly ResourceAssembly
+        internal static Assembly ResourceAssembly
         {
             get
             {
@@ -438,7 +412,6 @@ namespace System.Windows.Navigation
                 }
                 return _resourceAssembly;
             }
-            [FriendAccessAllowed]
             set
             {
                 // This should only be called from Framework through Application.ResourceAssembly setter.
@@ -451,7 +424,7 @@ namespace System.Windows.Navigation
         // if the Uri provided the public Key token we must also verify that it matches the one in assemblyInfo.
         // We only add the version if the Uri is missing both the version and the key, otherwise returns null.
         // If the Uri is not a pack Uri, or we can't extract the information we need this method returns null.
-        static internal Uri AppendAssemblyVersion(Uri uri, Assembly assemblyInfo)
+        internal static Uri AppendAssemblyVersion(Uri uri, Assembly assemblyInfo)
         {
             Uri source = null;
             Uri baseUri = null;

@@ -28,25 +28,17 @@ call %~dp0\ParseMcgOpt.cmd %McgOpt%
 pushd %~dp0\..
 
 call %~dp0\SetClrPath.cmd
-set OutputDir=%SdxRoot%\wpf
-
-:: Check out generated files
-call %~dp0\tf_GeneratedFiles %OutputDir% %~dp0\GeneratedElements.txt edit 
+set OutputDir=%RepoRoot%\src\Microsoft.DotNet.Wpf
 
 :: Build resource model
-call tf edit ResourceModel\Generated\Elements.cs
-%clrpath%\xsd.exe /classes /namespace:MS.Internal.MilCodeGen.ResourceModel /out:ResourceModel\Generated xml\Elements.xsd
+"%clrpath%\xsd.exe" /classes /namespace:MS.Internal.MilCodeGen.ResourceModel /out:ResourceModel\Generated xml\Elements.xsd
 if %ERRORLEVEL% NEQ 0 (
     echo mcg : error : Updating the resource model with XSD.exe failed.
     exit /b 1
 )
-call tfpt uu /noget ResourceModel\Generated\Elements.cs
 
 :: Execute the MilCodeGen project
-call %~dp0\InvokeCSP.cmd %Options% -rsp:main\Elements.rsp -enableCsPrime -clrdir:%clr_ref_path% -r:%clr_ref_path%\System.Xml.dll -- %_SdFlag% -xmlFile:xml\Elements.xml -dataType:MS.Internal.MilCodeGen.ResourceModel.CG -o:%OutputDir%
-
-:: Revert any generated files which haven't changed
-if {%_NoRevertFlag%} EQU {} call %~dp0\tf_GeneratedFiles %OutputDir% %~dp0\GeneratedElements.txt revert -a
+call %~dp0\InvokeCSP.cmd %Options% -rsp:main\Elements.rsp -enableCsPrime -r:"System.Xml.dll" -- %_SdFlag% -xmlFile:xml\Elements.xml -dataType:MS.Internal.MilCodeGen.ResourceModel.CG -o:"%OutputDir%"
 
 popd
 endlocal

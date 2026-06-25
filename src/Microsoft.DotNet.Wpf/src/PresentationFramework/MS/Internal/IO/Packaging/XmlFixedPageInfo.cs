@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -8,11 +7,8 @@
 //              The class functions as an array of XmlGlyphRunInfo's in markup order.
 //
 
-using System;
 using System.Windows;                   // For ExceptionStringTable
 using System.Xml;                       // For DOM objects
-using System.Diagnostics;               // For Assert
-using System.Globalization;             // For CultureInfo
 
 namespace MS.Internal.IO.Packaging
 {

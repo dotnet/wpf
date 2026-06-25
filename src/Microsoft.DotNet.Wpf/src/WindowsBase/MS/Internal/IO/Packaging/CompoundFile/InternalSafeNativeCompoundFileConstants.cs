@@ -1,18 +1,11 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  The COM and P/Invoke interop code necessary for the managed compound
 //  file layer to call the existing APIs in OLE32.DLL.
 //
 //  Constants related to CompoundFile
-
-//
-
-using System;
 
 namespace MS.Internal.IO.Packaging.CompoundFile
 {

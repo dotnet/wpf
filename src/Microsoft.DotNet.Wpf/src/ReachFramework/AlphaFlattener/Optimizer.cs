@@ -1,15 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Diagnostics;
-using System.Collections;              // for ArrayList
 using System.Windows;                  // for Rect                        WindowsBase.dll
 using System.Windows.Media;            // for Geometry, Brush, ImageData. PresentationCore.dll
 using System.Windows.Media.Imaging;
-using System.Collections.Generic;
 using System.Windows.Xps.Serialization;
 using MS.Utility;
 
@@ -93,13 +88,14 @@ namespace Microsoft.Internal.AlphaFlattener
                             }
                             else
                             {
-                                CombinedGeometry cg = new CombinedGeometry();
-
-                                // Opt-out of inheritance through the new Freezable.
-                                cg.CanBeInheritanceContext = false;
-                                cg.GeometryCombineMode     = GeometryCombineMode.Union;
-                                cg.Geometry1               = clip;
-                                cg.Geometry2               = geometry;
+                                CombinedGeometry cg = new CombinedGeometry
+                                {
+                                    // Opt-out of inheritance through the new Freezable.
+                                    CanBeInheritanceContext = false,
+                                    GeometryCombineMode = GeometryCombineMode.Union,
+                                    Geometry1 = clip,
+                                    Geometry2 = geometry
+                                };
 
                                 clip = cg;
                             }

@@ -1,16 +1,12 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Bottomless content formatter associated with FlowDocument.
 //
 
-using System;                       // Object
 using System.Windows;               // Size
 using System.Windows.Documents;     // FlowDocument
-using System.Windows.Media;         // Visual
-using System.Windows.Threading;     // DispatcherOperationCallback
 using MS.Internal.PtsHost;          // FlowDocumentPage
 using MS.Internal.PtsHost.UnsafeNativeMethods;  // PTS
 

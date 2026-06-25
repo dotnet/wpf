@@ -1,10 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
-
-using System.Diagnostics;
 
 namespace System.Xaml
 {
@@ -18,7 +15,7 @@ namespace System.Xaml
         EndMember,
         Value,
         NamespaceDeclaration,
-    };
+    }
 
     internal delegate void XamlNodeAddDelegate(XamlNodeType nodeType, object data);
     internal delegate void XamlLineInfoAddDelegate(int lineNumber, int linePosition);
@@ -30,8 +27,8 @@ namespace System.Xaml
     {
         internal enum InternalNodeType:byte { None, StartOfStream, EndOfStream, EndOfAttributes, LineInfo }
 
-        XamlNodeType _nodeType;
-        InternalNodeType _internalNodeType;
+        private XamlNodeType _nodeType;
+        private InternalNodeType _internalNodeType;
         private object _data;
 
         public XamlNodeType NodeType
@@ -50,7 +47,7 @@ namespace System.Xaml
                 break;
 
             default:
-                Debug.Assert(false, "XamlNode Ctor missing data argument");
+                Debug.Fail("XamlNode Ctor missing data argument");
                 break;
             }
 #endif
@@ -62,7 +59,7 @@ namespace System.Xaml
         public XamlNode(XamlNodeType nodeType, object data)
         {
 #if DEBUG
-            switch(nodeType)
+            switch (nodeType)
             {
             case XamlNodeType.StartObject:
                 Debug.Assert(data is XamlType, "XamlNode ctor, StartObject data is not a XamlType");
@@ -83,11 +80,11 @@ namespace System.Xaml
             case XamlNodeType.EndObject:
             case XamlNodeType.EndMember:
             case XamlNodeType.GetObject:
-                Debug.Assert(data == null, "XamlNode ctor, Internal XamlNode data must be null for this Node type");
+                Debug.Assert(data is null, "XamlNode ctor, Internal XamlNode data must be null for this Node type");
                 break;
 
             default:
-                Debug.Assert(false, "XamlNode ctor, incorrect ctor called.");
+                Debug.Fail("XamlNode ctor, incorrect ctor called.");
                 break;
             }
 #endif
@@ -115,8 +112,8 @@ namespace System.Xaml
 
         public override string ToString()
         {
-            string str = String.Format(TypeConverterHelper.InvariantEnglishUS, "{0}: ", NodeType);
-            switch(NodeType)
+            string str = string.Create(TypeConverterHelper.InvariantEnglishUS, $"{NodeType}: ");
+            switch (NodeType)
             {
             case XamlNodeType.StartObject:
                 str += XamlType.Name;
@@ -135,7 +132,7 @@ namespace System.Xaml
                 break;
 
             case XamlNodeType.None:
-                switch(_internalNodeType)
+                switch (_internalNodeType)
                 {
                 case InternalNodeType.EndOfAttributes:
                     str += "End Of Attributes";
@@ -150,11 +147,13 @@ namespace System.Xaml
                     break;
 
                 case InternalNodeType.LineInfo:
-                    str += "LineInfo: " + LineInfo.ToString();
+                    str += $"LineInfo: {LineInfo}";
                     break;
                 }
+
                 break;
             }
+
             return str;
         }
 
@@ -166,6 +165,7 @@ namespace System.Xaml
                 {
                     return (NamespaceDeclaration)_data;
                 }
+
                 return null;
             }
         }
@@ -178,6 +178,7 @@ namespace System.Xaml
                 {
                     return (XamlType)_data;
                 }
+
                 return null;
             }
         }
@@ -190,6 +191,7 @@ namespace System.Xaml
                 {
                     return _data;
                 }
+
                 return null;
             }
         }
@@ -202,6 +204,7 @@ namespace System.Xaml
                 {
                     return (XamlMember)_data;
                 }
+
                 return null;
             }
         }
@@ -214,6 +217,7 @@ namespace System.Xaml
                 {
                     return _data as LineInfo;  // might be null for EOF and EOA.
                 }
+
                 return null;
             }
         }
@@ -226,6 +230,7 @@ namespace System.Xaml
                 {
                     return true;
                 }
+
                 return false;
             }
         }
@@ -238,6 +243,7 @@ namespace System.Xaml
                 {
                     return true;
                 }
+
                 return false;
             }
         }
@@ -250,6 +256,7 @@ namespace System.Xaml
                 {
                     return true;
                 }
+
                 return false;
             }
         }
@@ -260,14 +267,15 @@ namespace System.Xaml
             {
                 return false;
             }
-            if (data is InternalNodeType)
+
+            if (data is InternalNodeType internalNodeType)
             {
-                InternalNodeType internalNodeType = (InternalNodeType)data;
                 if (internalNodeType == InternalNodeType.EndOfStream)
                 {
                     return true;
                 }
             }
+
             return false;
         }
     }

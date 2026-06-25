@@ -827,26 +827,6 @@
         <target state="translated">Identyfikator URI części jest nieprawidłowy według specyfikacji otwartych konwencji pakietów.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionLevel">
-        <source>Permission level is not valid.</source>
-        <target state="translated">Nieprawidłowy poziom uprawnień.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionState">
-        <source>Permission state is not valid.</source>
-        <target state="translated">Nieprawidłowy stan uprawnień.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionStateValue">
-        <source>PermissionState value '{0}' is not valid for this Permission.</source>
-        <target state="translated">Wartość PermissionState „{0}” jest nieprawidłowa dla tego uprawnienia.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">Nieprawidłowy typ uprawnień. Oczekiwano „{0}”.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPriority">
         <source>Specified priority is not valid.</source>
         <target state="translated">Określony priorytet jest nieprawidłowy.</target>
@@ -2240,16 +2220,6 @@
       <trans-unit id="StringEmpty">
         <source>Parameter cannot be a zero-length string.</source>
         <target state="translated">Parametr nie może być ciągiem o zerowej długości.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="TargetNotMediaPermissionLevel">
-        <source>Target is not a MediaPermission.</source>
-        <target state="translated">Obiekt docelowy nie jest typu MediaPermission.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="TargetNotWebBrowserPermissionLevel">
-        <source>Target is not a WebBrowserPermission.</source>
-        <target state="translated">Obiekt docelowy nie jest typu WebBrowserPermission.</target>
         <note />
       </trans-unit>
       <trans-unit id="ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread">

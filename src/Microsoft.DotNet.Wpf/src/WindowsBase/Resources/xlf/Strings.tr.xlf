@@ -827,26 +827,6 @@
         <target state="translated">Bölüm URI'si Açık Paketleme Kuralları belirtiminde tanımlanan kurallara göre geçerli değil.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionLevel">
-        <source>Permission level is not valid.</source>
-        <target state="translated">İzin düzeyi geçerli değil.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionState">
-        <source>Permission state is not valid.</source>
-        <target state="translated">İzin durumu geçerli değil.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionStateValue">
-        <source>PermissionState value '{0}' is not valid for this Permission.</source>
-        <target state="translated">'{0}' PermissionState değeri bu İzin için geçerli değil.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">İzin türü geçerli değil. Beklenen '{0}'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPriority">
         <source>Specified priority is not valid.</source>
         <target state="translated">Belirtilen öncelik geçerli değil.</target>
@@ -2240,16 +2220,6 @@
       <trans-unit id="StringEmpty">
         <source>Parameter cannot be a zero-length string.</source>
         <target state="translated">Parametre sıfır uzunlukta bir dize olamaz.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="TargetNotMediaPermissionLevel">
-        <source>Target is not a MediaPermission.</source>
-        <target state="translated">Hedef bir MediaPermission değil.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="TargetNotWebBrowserPermissionLevel">
-        <source>Target is not a WebBrowserPermission.</source>
-        <target state="translated">Hedef bir WebBrowserPermission değil.</target>
         <note />
       </trans-unit>
       <trans-unit id="ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread">

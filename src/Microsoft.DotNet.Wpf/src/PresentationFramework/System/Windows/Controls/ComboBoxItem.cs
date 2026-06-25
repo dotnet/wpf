@@ -1,22 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
-using MS.Internal;
 using MS.Internal.KnownBoxes;
-using System;
-using System.ComponentModel;
-
-using System.Diagnostics;
-using System.Windows.Threading;
-
-using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System.Windows.Media;
 using System.Windows.Input;
-using System.Windows.Controls.Primitives;
-using System.Windows.Shapes;
 
 namespace System.Windows.Controls
 {
@@ -108,10 +96,7 @@ namespace System.Windows.Controls
 
             ComboBox parent = ParentComboBox;
 
-            if (parent != null)
-            {
-                parent.NotifyComboBoxItemMouseDown(this);
-            }
+            parent?.NotifyComboBoxItemMouseDown(this);
 
             base.OnMouseLeftButtonDown(e);
         }
@@ -126,10 +111,7 @@ namespace System.Windows.Controls
 
             ComboBox parent = ParentComboBox;
 
-            if (parent != null)
-            {
-                parent.NotifyComboBoxItemMouseUp(this);
-            }
+            parent?.NotifyComboBoxItemMouseUp(this);
 
             base.OnMouseLeftButtonUp(e);
         }
@@ -144,10 +126,7 @@ namespace System.Windows.Controls
 
             ComboBox parent = ParentComboBox;
 
-            if (parent != null)
-            {
-                parent.NotifyComboBoxItemEnter(this);
-            }
+            parent?.NotifyComboBoxItemEnter(this);
 
             base.OnMouseEnter(e);
         }
@@ -194,10 +173,7 @@ namespace System.Windows.Controls
             
             ComboBox parent = ParentComboBox;
 
-            if (parent != null)
-            {
-                parent.NotifyComboBoxItemEnter(this);
-            }
+            parent?.NotifyComboBoxItemEnter(this);
 
             base.OnGotKeyboardFocus(e);
         }

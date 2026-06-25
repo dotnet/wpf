@@ -1,8 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-#nullable disable
 
 using System.Runtime.CompilerServices;
 
@@ -35,7 +32,7 @@ namespace System.Windows.Markup
     /// </summary>
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     [TypeForwardedFrom("WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")]
-    public sealed class XmlnsDefinitionAttribute: Attribute
+    public sealed class XmlnsDefinitionAttribute : Attribute
     {
         /// <summary>
         /// Constructor
@@ -74,6 +71,6 @@ namespace System.Windows.Markup
         /// If the assemblyName is not set, the code should take the assembly
         /// for which the instance of this attribute is created.
         /// </summary>
-        public string AssemblyName { get; set; }
+        public string? AssemblyName { get; set; }
    }
 }

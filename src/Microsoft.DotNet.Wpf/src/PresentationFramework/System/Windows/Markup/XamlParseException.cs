@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -8,17 +7,9 @@
 //
 
 using System;
-using System.Xml;
-using System.IO;
-using System.Collections;
-using System.Diagnostics;
 using System.Reflection;
 using System.Text;
-using System.Globalization;
-using System.ComponentModel;
-using System.Security;
 using System.Runtime.Serialization;
-using MS.Utility;
 using MS.Internal;
 
 #if PBTCOMPILER
@@ -547,12 +538,12 @@ namespace System.Windows.Markup
 
         #region Data
 
-        int _lineNumber = 0;
-        int _linePosition = 0;
-        object _keyContext = null;
-        string _uidContext = null;
-        string _nameContext = null;
-        Uri _baseUri = null;
+        private int _lineNumber = 0;
+        private int _linePosition = 0;
+        private object _keyContext = null;
+        private string _uidContext = null;
+        private string _nameContext = null;
+        private Uri _baseUri = null;
 
         #endregion Data
 

@@ -1,26 +1,19 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Class to manage UIAutomation events and how they relate to winevents
 
 using System;
-using System.Text;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Runtime.InteropServices;
-using System.ComponentModel;
 using System.Collections;
-using Accessibility;
-using System.Windows;
-using System.Windows.Input;
 using System.Globalization;
 using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
     // Class to manage UIAutomation events and how they relate to winevents
-    static class EventManager
+    internal static class EventManager
     {
         // ------------------------------------------------------
         //
@@ -107,7 +100,7 @@ namespace MS.Internal.AutomationProxies
                 default:
                     // Commented out to remove annoying asserts temporarily.
                     // (See work item PS1254940.)
-                    //System.Diagnostics.Debug.Assert(false, "Unexpected idObject " + idObject);
+                    //System.Diagnostics.Debug.Fail("Unexpected idObject " + idObject);
                     return;
             }
             

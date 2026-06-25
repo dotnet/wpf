@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -9,15 +8,6 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using System;
-using System.ComponentModel;
-using System.Runtime.InteropServices;
-using MS.Internal.PresentationCore;
-#if PRESENTATION_CORE
-using SR=MS.Internal.PresentationCore.SR;
-#else
-using SR=System.Windows.SR;
-#endif
 
 namespace System.Windows.Media
 {
@@ -50,5 +40,5 @@ namespace System.Windows.Media
         ///     first geometry but not the second geometry.
         /// </summary>
         Exclude = 3,
-    }   
+    }
 }

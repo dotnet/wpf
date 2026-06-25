@@ -43,6 +43,6 @@ GenAPI generates a lot of code that is either private, internal, or causes build
 * Extract just the new surface area and related code from the generated code (this is typically a very small fraction of the diff)
 * Restore the generated file
 * Add back the new surface area to the reference assembly code
-* Ensure that nothing in the new surface area is private or internal unless requried by XAML compilation or other reference assemblies
+* Ensure that nothing in the new surface area is private or internal unless required by XAML compilation or other reference assemblies
 * Restore all other files GenAPI may have generated
 * Rebuild without GenAPI enabled and verify there are no ApiCompat errors

@@ -19,7 +19,7 @@ typedef unsigned __int64    ULONGLONG;
 //
 #if defined(MIDL_PASS) || defined(RC_INVOKED) || defined(_M_CEE_PURE) \
     || defined(_68K_) || defined(_MPPC_) \
-    || defined(_M_IA64) || defined(_M_AMD64)
+    || defined(_M_IA64) || defined(_M_AMD64) || defined(_M_ARM64)
 // DevDiv LKG RC Changes
 // Description: Define only if it is not already defined.
 // added conditional to note conflict with public\ddk\inc\ntdef.h
@@ -138,4 +138,18 @@ ULongSub(
     
     return hr;
 }
+
+//
+// Convenience wrappers for the codebase's uint32 type (unsigned long).
+// These forward to the UINT/ULONG versions above, bridging the type mismatch.
+//
+static __inline HRESULT UIntAdd32(uint32 a, uint32 b, uint32 *pResult)
+{
+    return UIntAdd((UINT)a, (UINT)b, (UINT *)pResult);
+}
+static __inline HRESULT ULongMult32(uint32 a, uint32 b, uint32 *pResult)
+{
+    return ULongMult((ULONG)a, (ULONG)b, (ULONG *)pResult);
+}
+
 #endif //__INTSAFE_PRIVATE_COPY_H

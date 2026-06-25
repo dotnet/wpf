@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -9,15 +8,6 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using System;
-using System.ComponentModel;
-using System.Runtime.InteropServices;
-using MS.Internal.PresentationCore;
-#if PRESENTATION_CORE
-using SR=MS.Internal.PresentationCore.SR;
-#else
-using SR=System.Windows.SR;
-#endif
 
 namespace System.Windows.Media
 {
@@ -34,8 +24,8 @@ namespace System.Windows.Media
 
         /// <summary>
         ///     Tile - The basic tile mode  the base tile is drawn and the remaining area is filled 
-        ///     by repeating the base tile such that the right edge of one tile is adjacent to the left edge 
-        ///     of the next, and similarly for bottom and top
+        ///     by repeating the base tile such that the right edge of one tile is adjacent to the 
+        ///     left edge of the next, and similarly for bottom and top
         /// </summary>
         Tile = 4,
 
@@ -55,5 +45,5 @@ namespace System.Windows.Media
         ///     FlipXY - The combination of FlipX and FlipY.  The base tile is drawn untransformed.
         /// </summary>
         FlipXY = 3,
-    }   
+    }
 }

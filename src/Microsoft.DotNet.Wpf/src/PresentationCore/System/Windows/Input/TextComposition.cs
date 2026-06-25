@@ -1,27 +1,14 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-// 
 // Description: TextComposition class is the object that contains
 //              the input text. The text from keyboard input
 //              is packed in this class when TextInput event is generated.
 //              And this class also packs the state of the composition text when
 //              the input text is being composed (for EA input, Speech).
-//
-//
 
-using System;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Text;
 using System.Windows.Threading;
-using System.Windows;
-using System.Security; 
-using MS.Win32;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {

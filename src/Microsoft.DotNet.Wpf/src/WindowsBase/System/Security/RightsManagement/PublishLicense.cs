@@ -1,32 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//  This class implements the UnsignedPublishLicense class 
-//   this class is the first step in the RightsManagement publishing process
-//
-//
-//
-//
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Windows;
 using MS.Internal.Security.RightsManagement;
-using SecurityHelper=MS.Internal.WindowsBase.SecurityHelper; 
 
-// Disable message about unknown message numbers so as to allow the suppression
-// of PreSharp warnings (whose numbers are unknown to the compiler).
-#pragma warning disable 1634, 1691
-
-namespace System.Security.RightsManagement 
+namespace System.Security.RightsManagement
 {
     /// <summary>
     /// A Publish License is a list of rights, users, metadata, and other information that specifies how a specific user on 
@@ -163,12 +140,9 @@ namespace System.Security.RightsManagement
         /// </summary>
         public UseLicense AcquireUseLicense(SecureEnvironment secureEnvironment)
         {
-
             ArgumentNullException.ThrowIfNull(secureEnvironment);
 
             // The SecureEnvironment constructor makes sure ClientSession cannot be null.
-            // Accordingly suppressing preSharp warning about having to validate ClientSession.
-#pragma warning suppress 6506
             return secureEnvironment.ClientSession.AcquireUseLicense(_serializedPublishLicense, false);
         }
 
@@ -182,12 +156,9 @@ namespace System.Security.RightsManagement
         /// </summary>
         public UseLicense AcquireUseLicenseNoUI(SecureEnvironment secureEnvironment)
         {
-
             ArgumentNullException.ThrowIfNull(secureEnvironment);
 
             // The SecureEnvironment constructor makes sure ClientSession cannot be null.
-            // Accordingly suppressing preSharp warning about having to validate ClientSession.
-#pragma warning suppress 6506
             return secureEnvironment.ClientSession.AcquireUseLicense(_serializedPublishLicense, true);
         }        
 

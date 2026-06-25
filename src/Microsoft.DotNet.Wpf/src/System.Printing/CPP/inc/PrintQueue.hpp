@@ -1239,20 +1239,17 @@ namespace Printing
         /// <remarks>
         /// This is only used by XpsFramework.DLL. It should be made internal or using link demand.
         /// </remarks>
-        [FriendAccessAllowed]
         ILegacyDevice ^
         GetLegacyDevice(
             void
             );
 
-        [FriendAccessAllowed]
         static
         unsigned
         GetDpiX(
             ILegacyDevice ^legacyDevice
             );
 
-        [FriendAccessAllowed]
         static
         unsigned
         GetDpiY(

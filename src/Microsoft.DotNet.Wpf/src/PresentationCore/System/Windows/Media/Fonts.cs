@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // 
@@ -10,21 +9,8 @@
 //
 //
 
-using System;
-using System.Text;
-using System.IO;
-using System.Globalization;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows;
-
-using MS.Internal;
 using MS.Internal.FontCache;
-using MS.Internal.FontFace;
 using MS.Internal.PresentationCore;
-using MS.Internal.Shaping;
-using System.Security;
 
 namespace System.Windows.Media
 {
@@ -95,7 +81,7 @@ namespace System.Windows.Media
         {
             // Both Uri parameters are optional but neither can be relative.
             if (baseUri != null && !baseUri.IsAbsoluteUri)
-                throw new ArgumentException(SR.UriNotAbsolute, "baseUri");
+                throw new ArgumentException(SR.UriNotAbsolute, nameof(baseUri));
 
             // Determine the font location from the base URI and location string.
             Uri fontLocation;
@@ -103,7 +89,7 @@ namespace System.Windows.Media
             {
                 // absolute location; make sure we support absolute font family references for this scheme
                 if (!Util.IsSupportedSchemeForAbsoluteFontFamilyUri(fontLocation))
-                    throw new ArgumentException(SR.InvalidAbsoluteUriInFontFamilyName, "location");
+                    throw new ArgumentException(SR.InvalidAbsoluteUriInFontFamilyName, nameof(location));
 
                 // make sure the absolute location is a valid URI reference rather than a Win32 path as
                 // we don't support the latter in a font family reference
@@ -113,7 +99,7 @@ namespace System.Windows.Media
             {
                 // relative location; we need a base URI
                 if (baseUri == null)
-                    throw new ArgumentNullException("baseUri", SR.Format(SR.NullBaseUriParam, "baseUri", "location"));
+                    throw new ArgumentNullException(nameof(baseUri), SR.Format(SR.NullBaseUriParam, "baseUri", "location"));
 
                 // the location part must include a path component, otherwise we'll look in windows fonts and ignore the base URI
                 if (string.IsNullOrEmpty(location))

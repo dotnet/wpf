@@ -1,12 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.InteropServices;       // SafeHandle
-using System.Security;                      // 
 using System.Windows.Automation.Peers;      // AutomationPeer
 using System.Windows.Controls.Primitives;   // ButtonBase
 using System.Windows.Input;                 // MouseButtonEventArgs
@@ -14,7 +10,6 @@ using System.Windows.Media;                 // VisualBrush
 
 using MS.Internal;                          // DoubleUtil
 using MS.Internal.KnownBoxes;               // BooleanBoxes
-using MS.Win32;                             // SafeNativeMethods
 
 
 namespace System.Windows.Controls
@@ -291,7 +286,7 @@ namespace System.Windows.Controls
             if (IsInternalGenerated)
             {
                 // we should never reach here since this header is instantiated by HeaderRowPresenter.
-                Debug.Assert(false, "Method ShouldSerializeProperty is called on an internally generated GridViewColumnHeader.");
+                Debug.Fail("Method ShouldSerializeProperty is called on an internally generated GridViewColumnHeader.");
 
                 // nothing should be serialized from this object.
                 return false;
@@ -387,10 +382,7 @@ namespace System.Windows.Controls
                 hideGripperRightHalf = DoubleUtil.LessThan(ActualWidth, _headerGripper.Width);
             }
 
-            if (_previousHeader != null)
-            {
-                _previousHeader.HideGripperRightHalf(hideGripperRightHalf);
-            }
+            _previousHeader?.HideGripperRightHalf(hideGripperRightHalf);
 
             UpdateGripperCursor();
         }
@@ -402,10 +394,7 @@ namespace System.Windows.Controls
         // frame, causing high CPU consumption when a large realization tree is present.
         internal void ResetFloatingHeaderCanvasBackground()
         {
-            if (_floatingHeaderCanvas != null)
-            {
-                _floatingHeaderCanvas.Background = null;
-            }
+            _floatingHeaderCanvas?.Background = null;
         }
 
         /// <summary>
@@ -575,10 +564,7 @@ namespace System.Windows.Controls
                         header.SetFlag(flag, false);
 
                         GridViewHeaderRowPresenter headerRowPresenter = header.Parent as GridViewHeaderRowPresenter;
-                        if (headerRowPresenter != null)
-                        {
-                            headerRowPresenter.UpdateHeaderProperty(header, e.Property);
-                        }
+                        headerRowPresenter?.UpdateHeaderProperty(header, e.Property);
                     }
                 }
             }
@@ -638,10 +624,7 @@ namespace System.Windows.Controls
             {
                 // hide gripper's right half by setting Parent.ClipToBounds=true
                 FrameworkElement gripperContainer = _headerGripper.Parent as FrameworkElement;
-                if (gripperContainer != null)
-                {
-                    gripperContainer.ClipToBounds = hide;
-                }
+                gripperContainer?.ClipToBounds = hide;
             }
         }
 
@@ -657,10 +640,7 @@ namespace System.Windows.Controls
         private void MakeParentGotFocus()
         {
             GridViewHeaderRowPresenter headerRP = this.Parent as GridViewHeaderRowPresenter;
-            if (headerRP != null)
-            {
-                headerRP.MakeParentItemsControlGotFocus();
-            }
+            headerRP?.MakeParentItemsControlGotFocus();
         }
 
         // Resize the header
@@ -813,8 +793,7 @@ namespace System.Windows.Controls
             if (AutomationPeer.ListenerExists(AutomationEvents.InvokePatternOnInvoked))
             {
                 AutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this);
-                if (peer != null)
-                    peer.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
+                peer?.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
             }
 
             base.OnClick();
@@ -847,11 +826,12 @@ namespace System.Windows.Controls
                 // map the appropriate area(viewbox) in the source header to visual brush
                 // to avoid a distorded image on the floating header.
                 Vector offsetVector = VisualTreeHelper.GetOffset(FloatSourceHeader);
-                VisualBrush visualBrush = new VisualBrush(FloatSourceHeader);
-
-                // set visual brush's mapping
-                visualBrush.ViewboxUnits = BrushMappingMode.Absolute;
-                visualBrush.Viewbox = new Rect(offsetVector.X, offsetVector.Y, FloatSourceHeader.ActualWidth, FloatSourceHeader.ActualHeight);
+                VisualBrush visualBrush = new VisualBrush(FloatSourceHeader)
+                {
+                    // set visual brush's mapping
+                    ViewboxUnits = BrushMappingMode.Absolute,
+                    Viewbox = new Rect(offsetVector.X, offsetVector.Y, FloatSourceHeader.ActualWidth, FloatSourceHeader.ActualHeight)
+                };
 
                 _floatingHeaderCanvas.Background = visualBrush;
                 FloatSourceHeader = null;
@@ -918,7 +898,7 @@ namespace System.Windows.Controls
             }
         }
 
-        static private Cursor _splitCursorCache = null;
+        private static Cursor _splitCursorCache = null;
 
         #endregion SplitCursor
 
@@ -936,7 +916,7 @@ namespace System.Windows.Controls
             }
         }
 
-        static private Cursor _splitOpenCursorCache = null;
+        private static Cursor _splitOpenCursorCache = null;
 
         #endregion SplitOpenCursor
 

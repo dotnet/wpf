@@ -1,6 +1,15 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
+using MS.Internal;
+using System.Runtime.InteropServices;
+using System.Windows.Input;
+using System.Windows.Interop;  // WindowInteropHelper
+using System.Windows.Controls; // ScrollChangedEventArgs
+using System.Windows.Controls.Primitives;  // CharacterCasing, TextBoxBase
+using System.Windows.Data; // BindingExpression
+using System.Windows.Media;
+using MS.Win32;
 
 // 
 // Description: A Component of TextEditor class supposrtinng Drag-and-drop 
@@ -9,33 +18,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using System.Globalization;
-    using System.Threading;
-    using System.ComponentModel;
-    using System.Text;
-    using System.Collections; // ArrayList
-    using System.Runtime.InteropServices;
-
-    using System.Windows.Threading;
-    using System.Windows.Input;
-    using System.Windows.Interop;  // WindowInteropHelper
-    using System.Windows.Controls; // ScrollChangedEventArgs
-    using System.Windows.Controls.Primitives;  // CharacterCasing, TextBoxBase
-    using System.Windows.Data; // BindingExpression
-    using System.Windows.Media;
-    using System.Windows.Markup;
-    using System.Windows;
-    using System.Security;
-
-    using MS.Utility;
-    using MS.Win32;
-    using MS.Internal.Documents;
-    using MS.Internal.Commands; // CommandHelpers
-    using MS.Internal.PresentationFramework;  //Demand for drag and drop
-    
-    using SecurityHelper=MS.Internal.SecurityHelper;
-
     /// <summary>
     /// Text editing service for controls.
     /// </summary>

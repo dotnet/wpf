@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 //---------------------------------------------------------------------------
@@ -326,5 +325,3 @@ BEGIN_MILENUM( MilPixelFormat )
     CMYKAlpha40bpp = 0x2C,
     CMYKAlpha80bpp = 0x2D,
 END_MILENUM
-
-

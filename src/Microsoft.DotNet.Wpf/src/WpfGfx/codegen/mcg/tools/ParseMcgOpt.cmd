@@ -13,7 +13,6 @@
 ::  -windbg    - Like -rascal, but uses windbg.exe.
 ::  -ntsd      - Like -rascal, but uses ntsd.exe.
 ::  -noRevert  - Do not revert identical files at the end of running this script.
-::  -noSd      - Do not use SD support in MilCodeGen (passes -disablesd to the project)
 ::  -echo      - Turns echo on (for debugging this script). Output goes to buildchk.log.
 
 :ParseArgs
@@ -23,7 +22,6 @@
 :ParseLoop    
     if {%1}=={} goto :EOF
     if /i "%1"=="-echo" echo on
-    if /i "%1"=="-nosd" set _SdFlag=-disableSD
     if /i "%1"=="-noRevert" set _NoRevertFlag=1
     if /i "%1"=="-debug" (
         set Options=-debugMode

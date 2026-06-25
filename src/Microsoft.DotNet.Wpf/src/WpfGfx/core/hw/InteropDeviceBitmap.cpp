@@ -845,6 +845,10 @@ CInteropDeviceBitmap::GetDisplayFromUserDevice(
     IFC(pID3DUserDevice->GetDirect3D(&pID3DUserObject));
 
     HMONITOR hMon = pID3DUserObject->GetAdapterMonitor(m_uAdapter);
+    if(hMon == NULL)
+    {
+        hMon = ::MonitorFromWindow(NULL, MONITOR_DEFAULTTOPRIMARY);
+    }
 
     g_DisplayManager.GetCurrentDisplaySet(&pDisplaySet);
     UINT uDisplayIndex;

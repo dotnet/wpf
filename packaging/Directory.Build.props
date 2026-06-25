@@ -16,10 +16,11 @@
       Set $(IsPackable) = true, except when
           $(CreateArchNeutralPackage) == true && $(Platform) != x86
         The idea here is that for arch-neutral packages, only the x86 build phase will generate the nuget package
-        The platform/RID specific packages will be generated in their respective $(Platform) specific build phases
+        The platform/RID specific packages will be generated in their respective $(Platform) specific build phases.
+        Platform neutral packages should always get generated when building the product (DotNetBuild=true).
     -->
     <IsPackable>true</IsPackable>
-    <IsPackable Condition="('$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32' and '$(Platform)'!='x86') and '$(CreateArchNeutralPackage)'=='true'">false</IsPackable>
+    <IsPackable Condition="('$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32' and '$(Platform)'!='x86') and '$(CreateArchNeutralPackage)'=='true' and '$(DotNetBuild)' != 'true'">false</IsPackable>
   </PropertyGroup>
 
   <PropertyGroup>

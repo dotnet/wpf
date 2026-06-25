@@ -1,23 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Diagnostics;
 using System.Collections;              // for ArrayList
 using System.Windows;                  // for Rect                        WindowsBase.dll
 using System.Windows.Media;            // for Geometry, Brush, ImageData. PresentationCore.dll
 using System.Windows.Media.Imaging;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Globalization;
 
 using System.Windows.Xps.Serialization;
 using System.Printing;
-
-using System.Security;
 using MS.Utility;
 
 namespace Microsoft.Internal.AlphaFlattener
@@ -173,10 +167,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     }
 #endif
 
-                    if (opacityMask != null)
-                    {
-                        opacityMask.ApplyTransform(transform);
-                    }
+                    opacityMask?.ApplyTransform(transform);
 
                     // Flatten sub-tree structure into a new DisplayList
                     fl.TreeFlatten(ntree, clip, transform, 1.0, null);
@@ -228,7 +219,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
 
                 // Push transform/clip/opacity to leaf node
-                tree.Transform = tree.Transform * transform;
+                tree.Transform *= transform;
 
                 if (tree.Clip == null)
                 {
@@ -366,10 +357,7 @@ namespace Microsoft.Internal.AlphaFlattener
 #if DEBUG
             for (int i = 0; i < count; i ++)
             {
-                if (commands[i] != null)
-                {
-                    commands[i].SetID(i);
-                }
+                commands[i]?.SetID(i);
             }
 
             Console.WriteLine();
@@ -461,15 +449,16 @@ namespace Microsoft.Internal.AlphaFlattener
 
 #if DEBUG
 
-        static int vipID; // = 0;
+        private static int vipID; // = 0;
 
-        static void SerializeVisual(Visual visual, double width, double height, String filename)
+        private static void SerializeVisual(Visual visual, double width, double height, String filename)
         {
             FileStream    stream = new FileStream(filename, FileMode.Create, FileAccess.ReadWrite);
-            XmlTextWriter writer = new System.Xml.XmlTextWriter(stream, System.Text.Encoding.UTF8);
-
-            writer.Formatting  = System.Xml.Formatting.Indented;
-            writer.Indentation = 4;
+            XmlTextWriter writer = new System.Xml.XmlTextWriter(stream, System.Text.Encoding.UTF8)
+            {
+                Formatting = System.Xml.Formatting.Indented,
+                Indentation = 4
+            };
             writer.WriteStartElement("FixedDocument");
             writer.WriteAttributeString("xmlns", "http://schemas.microsoft.com/winfx/2006/xaml/presentation");
             writer.WriteAttributeString("xmlns:x", "http://schemas.microsoft.com/winfx/2006/xaml");
@@ -483,15 +472,19 @@ namespace Microsoft.Internal.AlphaFlattener
 
             System.IO.StringWriter resString = new StringWriter(CultureInfo.InvariantCulture);
 
-            System.Xml.XmlTextWriter resWriter = new System.Xml.XmlTextWriter(resString);
-            resWriter.Formatting = System.Xml.Formatting.Indented;
-            resWriter.Indentation = 4;
+            System.Xml.XmlTextWriter resWriter = new System.Xml.XmlTextWriter(resString)
+            {
+                Formatting = System.Xml.Formatting.Indented,
+                Indentation = 4
+            };
 
             System.IO.StringWriter bodyString = new StringWriter(CultureInfo.InvariantCulture);
 
-            System.Xml.XmlTextWriter bodyWriter = new System.Xml.XmlTextWriter(bodyString);
-            bodyWriter.Formatting = System.Xml.Formatting.Indented;
-            bodyWriter.Indentation = 4;
+            System.Xml.XmlTextWriter bodyWriter = new System.Xml.XmlTextWriter(bodyString)
+            {
+                Formatting = System.Xml.Formatting.Indented,
+                Indentation = 4
+            };
 
             VisualTreeFlattener.SaveAsXml(visual, resWriter, bodyWriter, filename);
 
@@ -541,7 +534,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="j">second command</param>
         /// <param name="pj">command[j]</param>
         /// <param name="disconnect">Disconnect (i,j) overlap/underlay relationship</param>
-        static private void SwitchCommands(List<PrimitiveInfo> commands, int i, PrimitiveInfo pi, int j, PrimitiveInfo pj, bool disconnect)
+        private static void SwitchCommands(List<PrimitiveInfo> commands, int i, PrimitiveInfo pi, int j, PrimitiveInfo pj, bool disconnect)
         {
             if ((pi != null) && (pj != null) && disconnect)
             {
@@ -696,7 +689,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     {
                         // Blend it with brush underneath
                         BrushProxy blendedBrush = gp.Brush;
-                        BrushProxy blendedPenBrush = gp.Pen == null ? null : gp.Pen.StrokeBrush;
+                        BrushProxy blendedPenBrush = gp.Pen?.StrokeBrush;
 
                         if (blendedBrush != null)
                         {
@@ -725,10 +718,7 @@ namespace Microsoft.Internal.AlphaFlattener
                         if (proceedBlending)
                         {
                             gp.Brush = blendedBrush;
-                            if (gp.Pen != null)
-                            {
-                                gp.Pen.StrokeBrush = blendedPenBrush;
-                            }
+                            gp.Pen?.StrokeBrush = blendedPenBrush;
                         }
 
                         if (proceedBlending && pi.primitive.IsOpaque)
@@ -961,7 +951,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
 #if DEBUG
 
-        static bool HasUnmanagedCodePermission()
+        private static bool HasUnmanagedCodePermission()
         {
             return true;
         }
@@ -1022,8 +1012,10 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 using (DrawingContext ctx = dv.RenderOpen())
                 {
-                    Pen black = new Pen(Brushes.Black, 0.8);
-                    black.DashStyle = DashStyles.Dash;
+                    Pen black = new Pen(Brushes.Black, 0.8)
+                    {
+                        DashStyle = DashStyles.Dash
+                    };
 
                     for (int i = 0; i < count; i++)
                     {
@@ -1045,9 +1037,10 @@ namespace Microsoft.Internal.AlphaFlattener
                         }
                     }
 
-                    Pen pen = new Pen(Brushes.Blue, 0.8);
-
-                    pen.DashStyle = DashStyles.Dot;
+                    Pen pen = new Pen(Brushes.Blue, 0.8)
+                    {
+                        DashStyle = DashStyles.Dot
+                    };
 
                     for (int i = 0; i < transparentCluster.Count; i++)
                     {
@@ -1107,15 +1100,16 @@ namespace Microsoft.Internal.AlphaFlattener
                 overlapping = null;
             }
 
-            PrimitiveRenderer ri = new PrimitiveRenderer();
-
-            ri.Clip        = primitive.Clip;
-            ri.Brush       = null;
-            ri.Pen         = null;
-            ri.Overlapping = overlapping;
-            ri.Commands    = _dl.Commands;
-            ri.DC          = _dc;
-            ri.Disjoint    = disjoint;
+            PrimitiveRenderer ri = new PrimitiveRenderer
+            {
+                Clip = primitive.Clip,
+                Brush = null,
+                Pen = null,
+                Overlapping = overlapping,
+                Commands = _dl.Commands,
+                DC = _dc,
+                Disjoint = disjoint
+            };
 
             GeometryPrimitive p = primitive as GeometryPrimitive;
 
@@ -1174,7 +1168,7 @@ namespace Microsoft.Internal.AlphaFlattener
             }
             else
             {
-                Debug.Assert(false, "Wrong Primitive type");
+                Debug.Fail("Wrong Primitive type");
             }
         }
 

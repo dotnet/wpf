@@ -1745,9 +1745,13 @@
                 Target      = "MingLiU-ExtB"
                 Scale       = "1.0" />
             <!-- Other -->
+            <!-- CHT/KO/All
+                MingLiU-ExtB is not in UapFonts so Yu Gothic is specified as a fallback.
+                YaHei, Simsun-ExtB, and MingLiU_HKSCS-ExtB are included at the end of this catch-all category because each includes some characters
+                not present in other fonts. -->
             <FontFamilyMap
                 Unicode     = "20000-2A6DF"
-                Target      = "MingLiU-ExtB"
+                Target      = "MingLiU-ExtB, Yu Gothic UI, Microsoft YaHei UI, Simsun-ExtB, MingLiU_HKSCS-ExtB"
                 Scale       = "1.0" />
 
             <!-- (unassigned)                  2A6E0-2A6FF -->
@@ -1790,9 +1794,13 @@
                 Target      = "MingLiU-ExtB"
                 Scale       = "1.0" />
             <!-- Other -->
+            <!-- All
+                MingLiU-ExtB is not in UapFonts so Yu Gothic is specified as a fallback.
+                YaHei, Simsun-ExtB, and MingLiU_HKSCS-ExtB are included at the end of this catch-all category because each includes some characters
+                not present in other fonts. -->
             <FontFamilyMap
                 Unicode     = "2A700-2B81F"
-                Target      = "MingLiU-ExtB"
+                Target      = "MingLiU-ExtB, Yu Gothic UI, Microsoft YaHei UI, Simsun-ExtB, MingLiU_HKSCS-ExtB"
                 Scale       = "1.0" />
 
             <!--
@@ -1801,10 +1809,13 @@
             -->
             <FontFamilyMap
                 Unicode     = "2B820-2EBEF"
-                Target      = "SimSun-ExtB"
+                Target      = "SimSun-ExtB, Yu Gothic UI, Yu Gothic, Microsoft YaHei UI, Microsoft YaHei"
                 Scale       = "1.0" />
 
-            <!-- (unassigned)                  2EBF0-2F7FF -->
+            <FontFamilyMap
+                Unicode     = "2EBF0-2EE5F"
+                Target      = "SimSun-ExtG"
+                Scale       = "1.0" />
 
             <!-- CJK Compatibility Ideographs Supplement 2F800-2FA1F -->
             <!-- Vista, Win7, Win8:
@@ -1845,12 +1856,15 @@
             <!-- Other -->
             <FontFamilyMap
                 Unicode     = "2F800-2FA1F"
-                Target      = "Yu Gothic UI, Meiryo UI, Meiryo, MingLiU-ExtB"
+                Target      = "Yu Gothic UI, Meiryo UI, Meiryo, MingLiU-ExtB, MingLiU_MSCS-ExtB"
                 Scale       = "1.0" />
 
             <!-- (unassigned)                  2FA20-2FFFF -->
 
-            <!-- (unassigned)                  30000-3FFFF -->
+            <FontFamilyMap
+                Unicode     = "30000-323AF"
+                Target      = "SimSun-ExtG"
+                Scale       = "1.0" />
 
             <!-- Ignoring planes 4 to 16 -->
 

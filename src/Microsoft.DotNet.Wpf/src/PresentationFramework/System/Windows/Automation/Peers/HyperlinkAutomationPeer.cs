@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Automation peer for hyperlink
@@ -62,7 +61,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        override protected string GetClassNameCore()
+        protected override string GetClassNameCore()
         {
             return "Hyperlink";
         }
@@ -70,7 +69,7 @@ namespace System.Windows.Automation.Peers
         /// <summary>
         /// <see cref="AutomationPeer.IsControlElementCore"/>
         /// </summary>
-        override protected bool IsControlElementCore()
+        protected override bool IsControlElementCore()
         {
             // We only want this peer to show up in the Control view if it is visible
             // For compat we allow falling back to legacy behavior (returning true always)

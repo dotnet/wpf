@@ -1,11 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Base proxy for HWNDs. Provides HWND-based children, HWND properties such as Enabled, Visible etc.
-
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 using System;
 using System.Windows;
@@ -17,16 +13,11 @@ using System.Globalization;
 using System.Collections;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
-using System.ComponentModel;
 using MS.Win32;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClient.NativeMethodsSetLastError;
 
 namespace MS.Internal.Automation
 {
-    // Disable warning for obsolete types.  These are scheduled to be removed in M8.2 so
-    // only need the warning to come out for components outside of APT.
-    #pragma warning disable 0618
-
     // Base proxy for HWNDs. Provides HWND-based children, HWND properties such as Enabled, Visible etc.
     internal class HwndProxyElementProvider:
         IRawElementProviderSimple,
@@ -49,7 +40,7 @@ namespace MS.Internal.Automation
 
             if( hwnd == NativeMethods.HWND.NULL )
             {
-                throw new ArgumentNullException( "hwnd" );
+                throw new ArgumentNullException( nameof(hwnd));
             }
 
             _hwnd = hwnd;
@@ -150,8 +141,6 @@ namespace MS.Internal.Automation
                 // pid that this proxy lives in
                 int pid;
                 // GetWindowThreadProcessId does use SetLastError().  So a call to GetLastError() would be meanless.
-                // Disabling the PreSharp warning.
-#pragma warning suppress 6523
                 if (SafeNativeMethods.GetWindowThreadProcessId(_hwnd, out pid) == 0)
                 {
                     throw new ElementNotAvailableException();
@@ -316,12 +305,13 @@ namespace MS.Internal.Automation
                     }
 
                     ClearMenuMode();
-                    UnsafeNativeMethods.WINDOWPLACEMENT wp = new UnsafeNativeMethods.WINDOWPLACEMENT();
+                        UnsafeNativeMethods.WINDOWPLACEMENT wp = new UnsafeNativeMethods.WINDOWPLACEMENT
+                        {
+                            length = Marshal.SizeOf(typeof(UnsafeNativeMethods.WINDOWPLACEMENT))
+                        };
 
-                    wp.length = Marshal.SizeOf(typeof(UnsafeNativeMethods.WINDOWPLACEMENT));
-
-                    // get the WINDOWPLACEMENT information
-                    if (!Misc.GetWindowPlacement(_hwnd, ref wp))
+                        // get the WINDOWPLACEMENT information
+                        if (!Misc.GetWindowPlacement(_hwnd, ref wp))
                     {
                         throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
@@ -382,8 +372,8 @@ namespace MS.Internal.Automation
 
                 default:
                 {
-                    Debug.Assert(false,"unexpected switch() case:");
-                    throw new ArgumentException(SR.UnexpectedWindowState,"state");
+                    Debug.Fail("unexpected switch() case:");
+                    throw new ArgumentException(SR.UnexpectedWindowState,nameof(state));
                 }
 
             }
@@ -420,8 +410,6 @@ namespace MS.Internal.Automation
             //
             int pid;
             // GetWindowThreadProcessId does use SetLastError().  So a call to GetLastError() would be meanless.
-            // Disabling the PreSharp warning.
-#pragma warning suppress 6523
             int guiThreadId = SafeNativeMethods.GetWindowThreadProcessId(_hwnd, out pid);
             if ( guiThreadId == 0 )
             {
@@ -534,10 +522,8 @@ namespace MS.Internal.Automation
             {
                 if (!SafeNativeMethods.IsWindow(_hwnd))
                 {
-                    // PreFast will flag this as a warning, 56503/6503: Property get methods should not throw exceptions.
                     // Since we communicate with the underlying control to get the information
                     // it is correct to throw an exception if that control is no longer there.
-#pragma warning suppress 6503
                     throw new ElementNotAvailableException();
                 }
 
@@ -583,9 +569,6 @@ namespace MS.Internal.Automation
                 // will test if that window is responding and will timeout after 5 seconds
                 // (Uses a timeout of 0 so that the check for non-responsive state returns immediately)
                 IntPtr dwResult;
-                // This is just a ping to the hwnd and no data is being returned so suppressing presharp:
-                // Call 'Marshal.GetLastWin32Error' or 'Marshal.GetHRForLastWin32Error' before any other interop call.
-#pragma warning suppress 56523
                 IntPtr ret = UnsafeNativeMethods.SendMessageTimeout(_hwnd, UnsafeNativeMethods.WM_NULL, IntPtr.Zero, IntPtr.Zero, UnsafeNativeMethods.SMTO_ABORTIFHUNG, 0, out dwResult);
                 if ( ret == IntPtr.Zero )
                 {
@@ -708,8 +691,10 @@ namespace MS.Internal.Automation
                 throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
-            UnsafeNativeMethods.WINDOWPLACEMENT wp = new UnsafeNativeMethods.WINDOWPLACEMENT();
-            wp.length = Marshal.SizeOf(typeof(UnsafeNativeMethods.WINDOWPLACEMENT));
+            UnsafeNativeMethods.WINDOWPLACEMENT wp = new UnsafeNativeMethods.WINDOWPLACEMENT
+            {
+                length = Marshal.SizeOf(typeof(UnsafeNativeMethods.WINDOWPLACEMENT))
+            };
 
             // get the WINDOWPLACEMENT information.  This includes the coordinates in
             // terms of the workarea.
@@ -820,8 +805,10 @@ namespace MS.Internal.Automation
             if ( heightInt > minMaxInfo.ptMaxTrackSize.y )
                 heightInt = minMaxInfo.ptMaxTrackSize.y;
 
-            UnsafeNativeMethods.WINDOWPLACEMENT wp = new UnsafeNativeMethods.WINDOWPLACEMENT();
-            wp.length = Marshal.SizeOf(typeof(UnsafeNativeMethods.WINDOWPLACEMENT));
+            UnsafeNativeMethods.WINDOWPLACEMENT wp = new UnsafeNativeMethods.WINDOWPLACEMENT
+            {
+                length = Marshal.SizeOf(typeof(UnsafeNativeMethods.WINDOWPLACEMENT))
+            };
 
             // get the WINDOWPLACEMENT information
             if (!Misc.GetWindowPlacement(_hwnd, ref wp))
@@ -939,10 +926,8 @@ namespace MS.Internal.Automation
                 // if the hwnd is not valid there is nothing we can do
                 if (!SafeNativeMethods.IsWindow(_hwnd))
                 {
-                    // PreFast will flag this as a warning, 56503/6503: Property get methods should not throw exceptions.
                     // Since we communicate with the underlying control to get the information
                     // it is correct to throw an exception if that control is no longer there.
-#pragma warning suppress 6503
                     throw new ElementNotAvailableException();
                 }
 
@@ -978,10 +963,12 @@ namespace MS.Internal.Automation
         #region Private Methods
 
         // wrapper for GetMenuBarInfo
-        unsafe private static bool GetMenuBarInfo(NativeMethods.HWND hwnd, int idObject, uint idItem, out UnsafeNativeMethods.MENUBARINFO mbi)
+        private static unsafe bool GetMenuBarInfo(NativeMethods.HWND hwnd, int idObject, uint idItem, out UnsafeNativeMethods.MENUBARINFO mbi)
         {
-            mbi = new UnsafeNativeMethods.MENUBARINFO();
-            mbi.cbSize = sizeof(UnsafeNativeMethods.MENUBARINFO);
+            mbi = new UnsafeNativeMethods.MENUBARINFO
+            {
+                cbSize = sizeof(UnsafeNativeMethods.MENUBARINFO)
+            };
             bool result = Misc.GetMenuBarInfo(hwnd, idObject, idItem, ref mbi);
 
 #if _NEED_DEBUG_OUTPUT
@@ -1420,18 +1407,15 @@ namespace MS.Internal.Automation
                     }
                 }
             }
-// PRESHARP: Warning - Catch statements should not have empty bodies
-#pragma warning disable 6502
             catch (ElementNotAvailableException)
             {
                 // the subtree or its children are gone so quit trying to work with this UI
             }
-#pragma warning restore 6502
 
             if (SanityLoopCount == 0)
             {
                 // Should we come up with something better here?
-                Debug.Assert(false, "too many children or inf loop?");
+                Debug.Fail("too many children or inf loop?");
             }
         }
 
@@ -1582,8 +1566,6 @@ namespace MS.Internal.Automation
         {
             int process;
             // GetWindowThreadProcessId does use SetLastError().  So a call to GetLastError() would be meanless.
-            // Disabling the PreSharp warning.
-#pragma warning suppress 6523
             int thread = SafeNativeMethods.GetWindowThreadProcessId(_hwnd, out process);
             if (thread == 0)
             {
@@ -1619,7 +1601,7 @@ namespace MS.Internal.Automation
 
         // Checks to see if the process owning the hwnd is currently in menu mode
         // and takes steps to exit menu mode if it is
-        static private void ClearMenuMode()
+        private static void ClearMenuMode()
         {
             // Check if we're in menu mode with helper method.
             if (InMenuMode())
@@ -1891,7 +1873,7 @@ namespace MS.Internal.Automation
 
             if( SanityLoopCount == 0 )
             {
-                Debug.Assert(false, "too many children or inf loop?");
+                Debug.Fail("too many children or inf loop?");
                 return NativeMethods.HWND.NULL;
             }
 
@@ -2075,16 +2057,13 @@ namespace MS.Internal.Automation
                     if (Misc.GetMessage(ref msg, NativeMethods.HWND.NULL, 0, 0) == 0)
                         break;
 
-                    // TranslateMessage() will not set an error to be retrieved with GetLastError,
-                    // so set the pragma to ignore the PERSHARP warning.
-#pragma warning suppress 6031, 6523
+                    // TranslateMessage() will not set an error to be retrieved with GetLastError.
                     UnsafeNativeMethods.TranslateMessage(ref msg);
 
                     // From the Windows SDK documentation:
                     // The return value specifies the value returned by the window procedure.
                     // Although its meaning depends on the message being dispatched, the return
                     // value generally is ignored.
-#pragma warning suppress 6031, 6523
                     UnsafeNativeMethods.DispatchMessage(ref msg);
 
                     if (msg.message == UnsafeNativeMethods.WM_HOTKEY

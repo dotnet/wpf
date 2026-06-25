@@ -1,12 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Input;
 
 namespace System.Windows.Controls
@@ -34,7 +29,13 @@ namespace System.Windows.Controls
             {
                 if (_defaultElementStyle == null)
                 {
-                    Style style = new Style(typeof(CheckBox));
+                    Style baseStyle = null;
+                    if (ThemeManager.IsFluentThemeEnabled)
+                    {
+                        baseStyle = Application.Current.FindResource(typeof(CheckBox)) as Style;
+                    }
+                    
+                    Style style = new Style(typeof(CheckBox), baseStyle);
 
                     // When not in edit mode, the end-user should not be able to toggle the state
                     style.Setters.Add(new Setter(UIElement.IsHitTestVisibleProperty, false));
@@ -60,7 +61,13 @@ namespace System.Windows.Controls
             {
                 if (_defaultEditingElementStyle == null)
                 {
-                    Style style = new Style(typeof(CheckBox));
+                    Style baseStyle = null;
+                    if (ThemeManager.IsFluentThemeEnabled)
+                    {
+                        baseStyle = Application.Current.FindResource(typeof(CheckBox)) as Style;
+                    }
+                    
+                    Style style = new Style(typeof(CheckBox), baseStyle);
 
                     style.Setters.Add(new Setter(CheckBox.HorizontalAlignmentProperty, HorizontalAlignment.Center));
                     style.Setters.Add(new Setter(CheckBox.VerticalAlignmentProperty, VerticalAlignment.Top));
@@ -111,12 +118,9 @@ namespace System.Windows.Controls
 
         protected internal override void RefreshCellContent(FrameworkElement element, string propertyName)
         {
-            DataGridCell cell = element as DataGridCell;
-            if (cell != null &&
-                string.Compare(propertyName, "IsThreeState", StringComparison.Ordinal) == 0)
+            if (element is DataGridCell cell && string.Equals(propertyName, "IsThreeState", StringComparison.Ordinal))
             {
-                var checkBox = cell.Content as CheckBox;
-                if (checkBox != null)
+                if (cell.Content is CheckBox checkBox)
                 {
                     checkBox.IsThreeState = IsThreeState;
                 }

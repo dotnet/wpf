@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // 
@@ -9,12 +8,11 @@
 //          that have been opened in the current application.
 // 
 using System.Collections;
-using System.Diagnostics;
 
 namespace System.Windows
 {
     #region WindowCollection class
-    
+
     /// <summary>
     /// WindowCollection can be used to interate over all the windows that have been 
     /// opened in the current application.

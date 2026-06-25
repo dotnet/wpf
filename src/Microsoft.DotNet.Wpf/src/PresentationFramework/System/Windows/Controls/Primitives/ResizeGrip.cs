@@ -1,18 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Implements the ResizeGrip control
 //
 
-using System;
-using System.Diagnostics;
-
-using System.Windows;
-using System.Windows.Threading;
-using System.Windows.Media;
-using System.Windows.Shapes;
 #if OLD_AUTOMATION
 using System.Windows.Automation.Provider;
 #endif
@@ -87,10 +79,7 @@ namespace System.Windows.Controls.Primitives
                 oldWindow.ClearResizeGripControl(this);
             }
 
-            if (newWindow != null)
-            {
-                newWindow.SetResizeGripControl(this);
-            }
+            newWindow?.SetResizeGripControl(this);
         }
 
         #region DTypeThemeStyleKey

@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Text Object Models Text pattern provider
@@ -8,10 +7,7 @@
 // Spec for Text Object Model (TOM) at Text Object Model.doc
 //
 
-using System;                               // Exception
-using System.Collections.Generic;           // List<T>
 using System.Collections.ObjectModel;       // ReadOnlyCollection
-using System.Security;                      // SecurityCritical, ...
 using System.Windows;                       // PresentationSource
 using System.Windows.Automation;            // SupportedTextSelection
 using System.Windows.Automation.Peers;      // AutomationPeer
@@ -49,10 +45,7 @@ namespace MS.Internal.Automation
             _textPeer = textPeer;
             _textContainer = textContainer;
             _textContainer.Changed += new TextContainerChangedEventHandler(OnTextContainerChanged);
-            if (_textContainer.TextSelection != null)
-            {
-                _textContainer.TextSelection.Changed += new EventHandler(OnTextSelectionChanged);
-            }
+            _textContainer.TextSelection?.Changed += new EventHandler(OnTextSelectionChanged);
         }
 
         /// <summary>
@@ -103,7 +96,7 @@ namespace MS.Internal.Automation
             {
                 if (!textView.Contains(start) && start.CompareTo(textSegments[0].Start) < 0)
                 {
-                    start = textSegments[0].Start.CreatePointer(); ;
+                    start = textSegments[0].Start.CreatePointer();
                 }
                 if (!textView.Contains(end) && end.CompareTo(textSegments[textSegments.Count-1].End) > 0)
                 {
@@ -114,6 +107,9 @@ namespace MS.Internal.Automation
             {
                 return Array.Empty<Rect>();
             }
+
+            start = start.CreatePointer();
+            end = end.CreatePointer();
 
             TextRangeAdaptor.MoveToInsertionPosition(start, LogicalDirection.Forward);
             TextRangeAdaptor.MoveToInsertionPosition(end, LogicalDirection.Backward);
@@ -202,10 +198,7 @@ namespace MS.Internal.Automation
         internal void Select(ITextPointer start, ITextPointer end)
         {
             // Update the selection range
-            if (_textContainer.TextSelection != null)
-            {
-                _textContainer.TextSelection.Select(start, end);
-            }
+            _textContainer.TextSelection?.Select(start, end);
         }
 
         /// <summary>
@@ -266,10 +259,7 @@ namespace MS.Internal.Automation
                 }
 
                 FrameworkElement fe = renderScope as FrameworkElement;
-                if (fe != null)
-                {
-                    fe.BringIntoView(rangeVisibleBounds);
-                }
+                fe?.BringIntoView(rangeVisibleBounds);
             }
             else
             {
@@ -277,10 +267,7 @@ namespace MS.Internal.Automation
                 ITextPointer pointer = alignToTop ? start.CreatePointer() : end.CreatePointer();
                 pointer.MoveToElementEdge(alignToTop ? ElementEdge.AfterStart : ElementEdge.AfterEnd);
                 FrameworkContentElement element = pointer.GetAdjacentElement(LogicalDirection.Backward) as FrameworkContentElement;
-                if (element != null)
-                {
-                    element.BringIntoView();
-                }
+                element?.BringIntoView();
             }
         }
 
@@ -293,8 +280,8 @@ namespace MS.Internal.Automation
                 return null;
 
             // map null into the appropriate endpoint
-            rangeStart = rangeStart ?? _textContainer.Start;
-            rangeEnd = rangeEnd ?? _textContainer.End;
+            rangeStart ??= _textContainer.Start;
+            rangeEnd ??= _textContainer.End;
 
             // if either pointer belongs to the wrong tree, return null (meaning "entire range")
             if (rangeStart.TextContainer != _textContainer || rangeEnd.TextContainer != _textContainer)

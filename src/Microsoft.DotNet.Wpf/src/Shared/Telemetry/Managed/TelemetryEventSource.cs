@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Diagnostics.Tracing;
 
@@ -156,13 +155,7 @@ namespace MS.Internal.Telemetry
         /// MicrosoftTelemetry group.
         /// </summary>
         /// <param name="eventSourceName">The name of the event source.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811", Justification = "Shared class with tiny helper methods - not all constructors/methods are used by all consumers")]
-        internal TelemetryEventSource(string eventSourceName)
-            : base(
-            eventSourceName,
-            EventSourceSettings.EtwSelfDescribingEventFormat,
-            telemetryTraits
-            )
+        internal TelemetryEventSource(string eventSourceName) : base(eventSourceName, EventSourceSettings.EtwSelfDescribingEventFormat, telemetryTraits)
         {
             return;
         }
@@ -172,12 +165,7 @@ namespace MS.Internal.Telemetry
         /// Sets the EtwSelfDescribingEventFormat option and joins the
         /// MicrosoftTelemetry group.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811", Justification = "Shared class with tiny helper methods - not all constructors/methods are used by all consumers")]
-        protected TelemetryEventSource()
-            : base(
-            EventSourceSettings.EtwSelfDescribingEventFormat,
-            telemetryTraits
-            )
+        protected TelemetryEventSource() : base(EventSourceSettings.EtwSelfDescribingEventFormat, telemetryTraits)
         {
             return;
         }
@@ -186,7 +174,6 @@ namespace MS.Internal.Telemetry
         /// Returns an instance of EventSourceOptions with the TelemetryKeyword set.
         /// </summary>
         /// <returns>Returns an instance of EventSourceOptions with the TelemetryKeyword set.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811", Justification = "Shared class with tiny helper methods - not all constructors/methods are used by all consumers")]
         internal static EventSourceOptions TelemetryOptions()
         {
             return new EventSourceOptions { Keywords = TelemetryKeyword };
@@ -196,7 +183,6 @@ namespace MS.Internal.Telemetry
         /// Returns an instance of EventSourceOptions with the MeasuresKeyword set.
         /// </summary>
         /// <returns>Returns an instance of EventSourceOptions with the MeasuresKeyword set.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811", Justification = "Shared class with tiny helper methods - not all constructors/methods are used by all consumers")]
         internal static EventSourceOptions MeasuresOptions()
         {
             return new EventSourceOptions { Keywords = MeasuresKeyword };
@@ -206,7 +192,6 @@ namespace MS.Internal.Telemetry
         /// Returns an instance of EventSourceOptions with the CriticalDataKeyword set.
         /// </summary>
         /// <returns>Returns an instance of EventSourceOptions with the CriticalDataKeyword set.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811", Justification = "Shared class with tiny helper methods - not all constructors/methods are used by all consumers")]
         internal static EventSourceOptions CriticalDataOptions()
         {
             return new EventSourceOptions { Keywords = CriticalDataKeyword };

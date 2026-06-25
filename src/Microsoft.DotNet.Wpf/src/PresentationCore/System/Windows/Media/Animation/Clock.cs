@@ -1,26 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ï»¿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-//
 
 #if DEBUG
 #define TRACE
 #endif // DEBUG
 
-using MS.Internal;
-using MS.Utility;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Media.Composition;
-using System.Windows.Markup;
 using System.Windows.Threading;
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.Animation
 {
@@ -249,11 +235,11 @@ namespace System.Windows.Media.Animation
 
 
         /// <summary>
-        /// Gets a value indicating whether the Clock’s current time is inside the Active period
+        /// Gets a value indicating whether the Clockâ€™s current time is inside the Active period
         /// (meaning properties may change frame to frame), inside the Fill period, or Stopped.
         /// </summary>
         /// <remarks>
-        /// You can tell whether you’re in FillBegin or FillEnd by the value of CurrentProgress
+        /// You can tell whether youâ€™re in FillBegin or FillEnd by the value of CurrentProgress
         /// (0 for FillBegin, 1 for FillEnd).
         /// </remarks>
         public ClockState CurrentState
@@ -499,7 +485,7 @@ namespace System.Windows.Media.Animation
         {
             Debug.Assert(!IsTimeManager);
 
-            return _currentTime.HasValue ? _currentTime.Value : TimeSpan.Zero;
+            return _currentTime ?? TimeSpan.Zero;
         }
 
         /// <summary>
@@ -620,7 +606,7 @@ namespace System.Windows.Media.Animation
                 if (!_resolvedDuration.HasTimeSpan || _resolvedDuration.TimeSpan > TimeSpan.Zero)
                 {
                     // Verify that we only use SlipBehavior in supported scenarios
-                    if ((_timeline.AutoReverse == true) ||
+                    if ((_timeline.AutoReverse) ||
                         (_timeline.AccelerationRatio > 0) ||
                         (_timeline.DecelerationRatio > 0))
                     {
@@ -1185,10 +1171,7 @@ namespace System.Windows.Media.Animation
         // We do this whenever a discontinuous interactive action (seek/begin/stop) is performed.
         internal virtual void ResetNodesWithSlip()
         {
-            if (_syncData != null)
-            {
-                _syncData.IsInSyncPeriod = false;  // Reset sync tracking
-            }
+            _syncData?.IsInSyncPeriod = false;  // Reset sync tracking
         }
 
 
@@ -1962,8 +1945,7 @@ namespace System.Windows.Media.Animation
             RepeatBehavior repeatBehavior = _timeline.RepeatBehavior;
 
             // Apply speed and offset, convert down to TimeSpan
-            TimeSpan beginTimeForOffsetComputation = _currentIterationBeginTime.HasValue ? _currentIterationBeginTime.Value
-                                                                                         : _beginTime.Value;
+            TimeSpan beginTimeForOffsetComputation = _currentIterationBeginTime ?? _beginTime.Value;
             TimeSpan offsetFromBegin = MultiplyTimeSpan(parentTime - beginTimeForOffsetComputation, _appliedSpeedRatio);
 
             // This may be set redundantly in one case, but simplifies code
@@ -2144,7 +2126,7 @@ namespace System.Windows.Media.Animation
                             IsBackwardsProgressingGlobal = !IsBackwardsProgressingGlobal;
                             parentSpeed = -parentSpeed;  // Negate parent speed here for tick logic, since we negated localProgress
                         }
-                        newIteration = newIteration / 2;  // Definition of iteration with AutoReverse is a front and back segment, divide by 2
+                        newIteration /= 2;  // Definition of iteration with AutoReverse is a front and back segment, divide by 2
                     }
 
                     _currentIteration = 1 + newIteration;  // Officially, iterations are numbered from 1
@@ -2819,7 +2801,7 @@ namespace System.Windows.Media.Animation
 
             if (parentIntervalCollection.Intersects(fillPeriod))  // We enter or leave Fill period
             {
-                TimeSpan relativeBeginTime = _currentIterationBeginTime.HasValue ? _currentIterationBeginTime.Value : _beginTime.Value;
+                TimeSpan relativeBeginTime = _currentIterationBeginTime ?? _beginTime.Value;
                 ComputeCurrentFillInterval(parentIntervalCollection,
                                            relativeBeginTime, endOfActivePeriod.Value,
                                            _currentDuration, _appliedSpeedRatio,
@@ -2846,7 +2828,7 @@ namespace System.Windows.Media.Animation
             Duration postFillDuration)
         {
             // Make sure that our periodic function is aligned to the boundary of the current iteration, regardless of prior slip
-            TimeSpan relativeBeginTime = _currentIterationBeginTime.HasValue ? _currentIterationBeginTime.Value : _beginTime.Value;
+            TimeSpan relativeBeginTime = _currentIterationBeginTime ?? _beginTime.Value;
             
             RaiseCurrentTimeInvalidated();
 
@@ -2870,10 +2852,7 @@ namespace System.Windows.Media.Animation
                 relativeBeginTime, _currentDuration, _appliedSpeedRatio))
             {
                 HasDiscontinuousTimeMovementOccured = true;
-                if (_syncData != null)
-                {
-                    _syncData.SyncClockDiscontinuousEvent = true;  // Notify the syncing node of discontinuity
-                }
+                _syncData?.SyncClockDiscontinuousEvent = true;  // Notify the syncing node of discontinuity
             }
 
             // Compute our output intervals
@@ -3184,14 +3163,14 @@ namespace System.Windows.Media.Animation
             Debug.Assert(!_syncData.IsInSyncPeriod);
 
             // Verify our limitations on slip functionality, but don't throw here for perf
-            Debug.Assert(_timeline.AutoReverse == false);
+            Debug.Assert(!_timeline.AutoReverse);
             Debug.Assert(_timeline.AccelerationRatio == 0);
             Debug.Assert(_timeline.DecelerationRatio == 0);
 
             // With these limitations, we can easily preview our CurrentTime:
             if (_beginTime.HasValue && currentParentTimePT >= _beginTime.Value)
             {
-                TimeSpan relativeBeginTimePT = _currentIterationBeginTime.HasValue ? _currentIterationBeginTime.Value : _beginTime.Value;
+                TimeSpan relativeBeginTimePT = _currentIterationBeginTime ?? _beginTime.Value;
                 TimeSpan previewCurrentOffsetPT = currentParentTimePT - relativeBeginTimePT;  // This is our time offset (not yet scaled by speed)
                 TimeSpan previewCurrentTimeLT = MultiplyTimeSpan(previewCurrentOffsetPT, _appliedSpeedRatio);  // This is what our time would be
 
@@ -3717,13 +3696,10 @@ namespace System.Windows.Media.Animation
                 current = current._parent;  
             }
 
-            if (_timeManager != null)
-            {
-                // If we get here from within a Tick, this will force MediaContext to perform another subsequent Tick
-                // on the TimeManager.  This will apply the requested interactive operations, so their results will
-                // immediately become visible.
-                _timeManager.SetDirty();
-            }
+            // If we get here from within a Tick, this will force MediaContext to perform another subsequent Tick
+            // on the TimeManager.  This will apply the requested interactive operations, so their results will
+            // immediately become visible.
+            _timeManager?.SetDirty();
         }
 
 
@@ -3842,10 +3818,7 @@ namespace System.Windows.Media.Animation
         // This wrapper is invoked anytime we invalidate the _beginTime
         private void UpdateSyncBeginTime()
         {
-            if (_syncData != null)
-            {
-                _syncData.UpdateClockBeginTime();
-            }
+            _syncData?.UpdateClockBeginTime();
         }
 
         private void VerifyNeedsTicksWhenActive()
@@ -3981,8 +3954,6 @@ namespace System.Windows.Media.Animation
             /// </summary>
             ~SubtreeFinalizer()
             {
-#pragma warning disable 1634, 1691
-#pragma warning suppress 6525
                 _timeManager.ScheduleClockCleanup();
             }
 
@@ -4200,8 +4171,10 @@ namespace System.Windows.Media.Animation
         /// </summary>
         internal void Dump()
         {
-            System.Text.StringBuilder builder = new System.Text.StringBuilder();
-            builder.Capacity = 1024;
+            System.Text.StringBuilder builder = new System.Text.StringBuilder
+            {
+                Capacity = 1024
+            };
             builder.Append("======================================================================\n");
             builder.Append("Clocks rooted at Clock ");
             builder.Append(_debugIdentity);
@@ -4322,10 +4295,7 @@ namespace System.Windows.Media.Animation
             {
                 Clock child = (Clock)children[index].Target;
 
-                if (child != null)
-                {
-                    child.BuildInfoRecursive(builder, 1);
-                }
+                child?.BuildInfoRecursive(builder, 1);
             }
         }
 
@@ -4497,7 +4467,7 @@ namespace System.Windows.Media.Animation
         internal int                _childIndex;
         internal int                _depth;
 
-        static Int64                 s_TimeSpanTicksPerSecond = TimeSpan.FromSeconds(1).Ticks;
+        private static Int64        s_TimeSpanTicksPerSecond = TimeSpan.FromSeconds(1).Ticks;
 
         #endregion // Linking data
 

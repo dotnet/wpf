@@ -1,19 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//  This class represents the rights-management information stored in an
-//  EncryptedPackageEnvelope. Specifically, it represents the PublishLicense and the
-//  UseLicenses stored in the compound file that embodies the RM protected Package.
-//
-//
-//
-//
-
-using System.Collections.Generic;
 using System.Security.RightsManagement;
 
 using MS.Internal.IO.Packaging.CompoundFile;

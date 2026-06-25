@@ -1,0 +1,152 @@
+trigger:
+  batch: true 
+  branches:
+    include: 
+    - main
+    - release/*
+    - internal/release/*
+    - experimental/*
+  paths:
+    exclude:
+    - Documentation/*
+
+pr:
+  autoCancel: true
+  branches:
+    include:
+    - main
+    - release/* 
+  paths:
+    exclude:
+    - Documentation/*
+
+variables:
+- name: repoName
+  value: dotnet/wpf
+
+stages:
+- stage: build
+  displayName: Build 
+  jobs:
+  - template: /eng/common/templates/jobs/jobs.yml@self
+    parameters:
+      enablePublishBuildArtifacts: true
+      enablePublishTestResults: false
+      enablePublishBuildAssets: false
+      enablePublishUsingPipelines: false
+      enableTelemetry: true
+      helixRepo: $(repoName)
+
+      jobs:
+      - job: Windows_NT
+        timeoutInMinutes: 120  # how long to run the job before automatically cancelling; see https://github.com/dotnet/wpf/issues/952
+        pool:
+          # For public jobs, use the hosted pool.  For internal jobs use the internal pool.
+          # Will eventually change this to two BYOC pools.
+          # agent pool can't be read from a user-defined variable (Azure DevOps limitation)
+          ${{ if eq(variables['System.TeamProject'], 'public') }}:
+            name: NetCore-Public
+            demands: ImageOverride -equals windows.vs2026preview.scout.amd64.Open
+          ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+            name: NetCore1ESPool-Internal
+            demands: ImageOverride -equals windows.vs2026preview.scout.amd64
+        variables:
+        - name: _Platform
+          value: x86
+        - name: _PlatformArgs
+          value: /p:Platform=$(_Platform)
+        - name: _TestHelixAgentPool
+          value: 'Windows.10.Amd64.ClientRS5.Open' # Preferred:'Windows.10.Amd64.Open%3bWindows.7.Amd64.Open%3bWindows.10.Amd64.ClientRS5.Open'; See https://github.com/dotnet/wpf/issues/952
+        - name: _HelixStagingDir
+          value: $(BUILD.STAGINGDIRECTORY)\helix\functests
+        - name: _HelixSource
+          value: $(repoName)/$(Build.SourceBranch)
+        - name: _HelixToken
+          value: ''
+        - name: _HelixCreator
+          value: $(repoName)
+        - name: _programfilesx86
+          value: ${Env:ProgramFiles(x86)}/dotnet
+        - name: _programfiles
+          value:  ${Env:ProgramFiles}/dotnet
+        - ${{ if ne(variables['System.TeamProject'], 'internal') }}:
+          - name: _InternalRuntimeDownloadArgs
+            value: ''
+        - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
+          - group: AzureDevOps-Artifact-Feeds-Pats
+          - group: DotNet-HelixApi-Access
+          - name: _InternalRuntimeDownloadArgs
+            value: >-
+              /p:DotNetRuntimeSourceFeed=https://ci.dot.net/internal
+              /p:DotNetRuntimeSourceFeedKey=$(dotnetbuilds-internal-container-read-token-base64)
+          - name: _HelixSource
+            value: official/$(repoName)/$(Build.SourceBranch)
+          - name: _HelixToken
+            value: '$(HelixApiAccessToken)' # from DotNet-HelixApi-Access group
+          - name: _HelixCreator
+            value: '' #if _HelixToken is set, Creator must be empty
+          - name: _TestHelixAgentPool
+            value: 'Windows.10.Amd64.ClientRS5' # Preferred: 'Windows.10.Amd64%3bWindows.7.Amd64%3bWindows.10.Amd64.ClientRS5'
+
+        strategy:
+          matrix:
+            Build_Debug_x86:
+              _BuildConfig: Debug
+            Build_Release_x86:
+              _BuildConfig: Release
+            Build_Debug_x64:
+              _BuildConfig: Debug
+              _Coverage: true
+              # override some variables for debug
+              # _SignType has to be real for package publishing to succeed - do not override to test.
+              _Platform: x64
+            Build_Release_x64:
+              _BuildConfig: Release
+              _Platform: x64
+            Build_Debug_arm64:
+              _BuildConfig: Debug
+              # override some variables for debug
+              # _SignType has to be real for package publishing to succeed - do not override to test.
+              _Platform: arm64
+            Build_Release_arm64:
+              _BuildConfig: Release
+              _Platform: arm64
+        steps:
+        # Set VSO Variable(s)
+        - powershell: eng\pre-build.ps1
+          displayName: Pre-Build - Set VSO Variables
+
+        - template: /eng/common/templates/steps/enable-internal-sources.yml
+        - template: /eng/common/templates/steps/enable-internal-runtimes.yml
+
+        # Use utility script to run script command dependent on agent OS.
+        - script: eng\scripts\cibuild.cmd
+            -configuration $(_BuildConfig)
+            -prepareMachine
+            $(_PlatformArgs)
+            $(_InternalRuntimeDownloadArgs)
+            /p:Coverage=$(_Coverage)
+          displayName: Windows Build / Publish
+
+        - script: eng\scripts\ciunittest.cmd
+            -configuration $(_BuildConfig)
+            -prepareMachine
+            $(_PlatformArgs)
+            $(_InternalRuntimeDownloadArgs)
+            /bl:$(Build.SourcesDirectory)\artifacts\log\$(_BuildConfig)\Test.binlog
+            /p:Coverage=$(_Coverage)
+          displayName: Run xUnit Tests
+          condition: eq(variables['_Platform'], 'x64')
+
+        - task: PublishTestResults@2
+          displayName: Publish XUnit Test Results
+          inputs:
+            testRunner: VSTest
+            testResultsFiles: '$(Build.SourcesDirectory)/artifacts/TestResults/$(_BuildConfig)/*.trx'
+            mergeTestResults: true
+          condition: and(succeededOrFailed(), eq(variables['_BuildConfig'], 'Debug'), eq(variables['_Platform'], 'x64'))
+            
+        # Upload code coverage data
+        - script: dotnet msbuild -binaryLogger:artifacts\log\$(_BuildConfig)\uploadCodeCov.binlog;ProjectImports=Embed -restore eng/CodeCoverage.proj
+          displayName: Upload coverage to codecov.io
+          condition: and(succeeded(), eq(variables['_Coverage'], True), eq(variables['_BuildConfig'], 'Debug'), eq(variables['_Platform'], 'x64'))

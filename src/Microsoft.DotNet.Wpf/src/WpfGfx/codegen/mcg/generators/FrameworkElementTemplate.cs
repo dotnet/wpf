@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 //---------------------------------------------------------------------------
@@ -74,22 +73,15 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 {
                     csFile.WriteBlock(
                         [[inline]]
-                            [[Helpers.ManagedStyle.WriteFileHeader(fileName,  @"wpf\src\Graphics\codegen\mcg\generators\FrameworkElementTemplate.cs")]]
+                            [[Helpers.ManagedStyle.WriteFileHeader(fileName,  @"wpf\src\WpfGfx\codegen\mcg\generators\FrameworkElementTemplate.cs")]]
 
                             using MS.Internal;
                             using MS.Utility;
-
-                            using System;
                             using System.Collections;
-                            using System.Diagnostics;
-                            using System.Security;
-                            using System.Security.Permissions;
                             using System.Windows.Controls;
                             using System.Windows.Diagnostics;
                             using System.Windows.Media;
                             using System.Windows.Markup;
-
-                            using SR=System.Windows.SR;
 
                             namespace [[instance.ClassNamespace]]
                             {
@@ -247,7 +239,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         return _parent;
                                     }
 
-                                    // Consider marking whether Add should be called *before* or *after* the element adds it to its structure
+                                    // mark whether Add should be called *before* or *after* the element adds it to its structure
                                     /// <summary>
                                     ///     Called by an element when that element adds the given object to
                                     ///     its logical tree.  FrameworkElement updates the affected
@@ -284,7 +276,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                             {
                                                 if (exceptionThrown)
                                                 {
-                                                    // 
+                                                    // Future: ILTN removal: make this more robust
                                                     // At the very least we should disconnect the child that we failed to add.
 
                                                     // Consider doing this...
@@ -295,7 +287,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     }
 
 
-                                    // 
+                                    // mark whether Remove should be called *before* or *after* the element removes it from it's structure
                                     /// <summary>
                                     ///     Called by an element when that element removes the given object from
                                     ///     its logical tree.  FrameworkElement updates the affected
@@ -363,13 +355,10 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         // to the dispatchers that the elements belong to.
                                         //
                                         this.VerifyAccess();
-                                        if(newParent != null)
-                                        {
-                                            newParent.VerifyAccess();
-                                        }
+                                        newParent?.VerifyAccess();
 
                                         // Logical Parent must first be dropped before you are attached to a newParent
-                                        // This mitigates illegal tree state caused by logical child stealing
+                                        // This mitigates illegal tree state caused by logical child stealing as illustrated in bug 970706
                                         if (_parent != null && newParent != null && _parent != newParent)
                                         {
                                             throw new System.InvalidOperationException(SR.HasLogicalParent);
@@ -408,7 +397,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         ///////////////////
 
                                         // Invalidate relevant properties for this subtree
-                                        DependencyObject parent = (newParent != null) ? newParent : oldParent;
+                                        DependencyObject parent = newParent ?? oldParent;
                                         TreeWalkHelper.InvalidateOnTreeChange([[instance.ThisString]], parent, (newParent != null));
 
                                         // If no one has called BeginInit then mark the element initialized and fire Initialized event
@@ -432,7 +421,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
                                         [[conditional(instance.ClassName == "FrameworkContentElement")]]
                                         // Synchronize ForceInherit properties
-                                        if(_parent != null)
+                                        if (_parent != null)
                                         {
                                             UIElement.SynchronizeForceInheritProperties(null, this, null, _parent);
                                         }
@@ -443,11 +432,11 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         [[/conditional]]
                                         [[conditional(instance.ClassName == "FrameworkElement")]]
                                         // Synchronize ForceInherit properties
-                                        if(_parent != null && _parent is ContentElement)
+                                        if (_parent != null && _parent is ContentElement)
                                         {
                                             UIElement.SynchronizeForceInheritProperties(this, null, null, _parent);
                                         }
-                                        else if(oldParent is ContentElement)
+                                        else if (oldParent is ContentElement)
                                         {
                                             UIElement.SynchronizeForceInheritProperties(this, null, null, oldParent);
                                         }
@@ -462,13 +451,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
                                     // OnAncestorChangedInternal variant when we know what type (FE/FCE) the
                                     //  tree node is.
-                                    /// <SecurityNote>
-                                    ///     Critical: This code calls into PresentationSource.OnAncestorChanged which is link demand protected
-                                    ///     it does so only for content elements and not for FEs. But if called externally and configured
-                                    ///     inappropriately it can be used to change the tree
-                                    ///     TreatAsSafe: This does not let you get at the presentationsource which is what we do not want to expose
-                                    /// </SecurityNote>
-                                    [SecurityCritical,SecurityTreatAsSafe]
                                         internal void OnAncestorChangedInternal(TreeChangeInfo parentTreeState)
                                     {
                                         // Cache the IsSelfInheritanceParent flag
@@ -655,21 +637,21 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                                         return true;
                                                     }
                                                 }
-                                                if(null != Style && Style.HasLoadedChangeHandler)
+                                                if (null != Style && Style.HasLoadedChangeHandler)
                                                 {
                                                     return true;
                                                 }
-                                                if(null != ThemeStyle && ThemeStyle.HasLoadedChangeHandler)
+                                                if (null != ThemeStyle && ThemeStyle.HasLoadedChangeHandler)
                                                 {
                                                     return true;
                                                 }
                                                 [[conditional(instance.ClassName == "FrameworkElement")]]
-                                                if(null != TemplateInternal && TemplateInternal.HasLoadedChangeHandler)
+                                                if (null != TemplateInternal && TemplateInternal.HasLoadedChangeHandler)
                                                 {
                                                     return true;
                                                 }
                                                 [[/conditional]]
-                                                if(HasFefLoadedChangeHandler)
+                                                if (HasFefLoadedChangeHandler)
                                                 {
                                                     return true;
                                                 }
@@ -681,17 +663,17 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     {
                                         get
                                         {
-                                            if(null == TemplatedParent)
+                                            if (null == TemplatedParent)
                                             {
                                                 return false;
                                             }
                                             FrameworkElementFactory fefRoot = BroadcastEventHelper.GetFEFTreeRoot(TemplatedParent);
-                                            if(null == fefRoot)
+                                            if (null == fefRoot)
                                             {
                                                 return false;
                                             }
                                             FrameworkElementFactory fef = StyleHelper.FindFEF(fefRoot, TemplateChildIndex);
-                                            if(null == fef)
+                                            if (null == fef)
                                             {
                                                 return false;
                                             }
@@ -964,7 +946,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     }
 
                                     // connect to a new mentor
-                                    void ConnectMentor(DependencyObject mentor)
+                                    private void ConnectMentor(DependencyObject mentor)
                                     {
                                         FrameworkObject foMentor = new FrameworkObject(mentor);
 
@@ -998,7 +980,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     }
 
                                     // disconnect from an old mentor
-                                    void DisconnectMentor(DependencyObject mentor)
+                                    private void DisconnectMentor(DependencyObject mentor)
                                     {
                                         FrameworkObject foMentor = new FrameworkObject(mentor);
 
@@ -1048,7 +1030,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     }
 
                                     // handle the Loaded event from the mentor
-                                    void OnMentorLoaded(object sender, RoutedEventArgs e)
+                                    private void OnMentorLoaded(object sender, RoutedEventArgs e)
                                     {
                                         FrameworkObject foMentor = new FrameworkObject((DependencyObject)sender);
 
@@ -1062,7 +1044,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     }
 
                                     // handle the Unloaded event from the mentor
-                                    void OnMentorUnloaded(object sender, RoutedEventArgs e)
+                                    private void OnMentorUnloaded(object sender, RoutedEventArgs e)
                                     {
                                         FrameworkObject foMentor = new FrameworkObject((DependencyObject)sender);
 
@@ -1075,7 +1057,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         BroadcastEventHelper.BroadcastUnloadedSynchronously(this, IsLoaded);
                                     }
 
-                                    void ConnectLoadedEvents(ref FrameworkObject foMentor, bool isLoaded)
+                                    private void ConnectLoadedEvents(ref FrameworkObject foMentor, bool isLoaded)
                                     {
                                         if (foMentor.IsValid)
                                         {
@@ -1090,7 +1072,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         }
                                     }
 
-                                    void DisconnectLoadedEvents(ref FrameworkObject foMentor, bool isLoaded)
+                                    private void DisconnectLoadedEvents(ref FrameworkObject foMentor, bool isLoaded)
                                     {
                                         if (foMentor.IsValid)
                                         {
@@ -1106,7 +1088,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     }
 
                                     // handle the InheritedPropertyChanged event from the mentor
-                                    void OnMentorInheritedPropertyChanged(object sender, InheritedPropertyChangedEventArgs e)
+                                    private void OnMentorInheritedPropertyChanged(object sender, InheritedPropertyChangedEventArgs e)
                                     {
                                         TreeWalkHelper.InvalidateOnInheritablePropertyChange(
                                                 [[conditional(instance.ClassName == "FrameworkElement")]]this, null,[[/conditional]]
@@ -1115,7 +1097,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     }
 
                                     // handle the ResourcesChanged event from the mentor
-                                    void OnMentorResourcesChanged(object sender, EventArgs e)
+                                    private void OnMentorResourcesChanged(object sender, EventArgs e)
                                     {
                                         TreeWalkHelper.InvalidateOnResourcesChange(
                                                 [[conditional(instance.ClassName == "FrameworkElement")]]this, null,[[/conditional]]
@@ -1272,13 +1254,13 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     // Says if there is a loaded event pending
                                     internal object[] LoadedPending
                                     {
-                                        get { return (object[]) GetValue(LoadedPendingProperty); }
+                                        get { return (object[])GetValue(LoadedPendingProperty); }
                                     }
 
                                     // Says if there is an unloaded event pending
                                     internal object[] UnloadedPending
                                     {
-                                        get { return (object[]) GetValue(UnloadedPendingProperty); }
+                                        get { return (object[])GetValue(UnloadedPendingProperty); }
                                     }
 
                                     // Indicates if this instance has multiple inheritance contexts
@@ -1356,19 +1338,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
 
                                     #endregion Internal Properties
-
-                                    //------------------------------------------------------
-                                    //
-                                    //  Internal Fields
-                                    //
-                                    //------------------------------------------------------
-
-                                    #region Internal Fields
-
-                                    // Optimization, to avoid calling FromSystemType too often
-                                    internal new static DependencyObjectType DType = DependencyObjectType.FromSystemTypeInternal(typeof([[instance.ClassName]]));
-
-                                    #endregion Internal Fields
 
                                     //------------------------------------------------------
                                     //

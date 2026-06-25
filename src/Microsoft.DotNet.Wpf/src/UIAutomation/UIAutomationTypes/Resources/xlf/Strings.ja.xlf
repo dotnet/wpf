@@ -74,12 +74,12 @@
       </trans-unit>
       <trans-unit id="LocalizedControlTypeHyperlink">
         <source>hyperlink</source>
-        <target state="translated">hyperlink</target>
+        <target state="translated">ハイパーリンク</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedControlTypeImage">
         <source>image</source>
-        <target state="translated">image</target>
+        <target state="translated">画像</target>
         <note />
       </trans-unit>
       <trans-unit id="LocalizedControlTypeListItem">

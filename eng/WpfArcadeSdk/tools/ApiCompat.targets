@@ -8,6 +8,7 @@
     <RunNetFrameworkApiCompat Condition="'$(Net48CompatNeededProjects)'!='' 
                                           and $(Net48CompatNeededProjects.Contains('$(MSBuildProjectName);'))
                                           and !($(MSBuildProjectName.Contains('_wpftmp')))">true</RunNetFrameworkApiCompat>
+    <RunNetFrameworkApiCompat Condition="'$(OS)' != 'Windows_NT'">false</RunNetFrameworkApiCompat>
   </PropertyGroup>
 
   <!-- Only enable Ref API Compat for the lib projects using hand-crafted reference assemblies,
@@ -61,14 +62,7 @@
       <ResolvedMatchingContract Include="$(OutputPath)$(AssemblyName).dll" Condition="'$(ManagedCxx)'=='true'" />
       <!-- Work backwards to find the output for a hand-crafted ref assembly. -->
       <ResolvedImplementationAssembly Remove="@(ResolvedImplementationAssembly)" />
-      <ResolvedImplementationAssembly Include="$(BaseOutputPath)..\$(AssemblyName)-ref\$(Platform)\$(Configuration)\**\$(AssemblyName).dll"
-                                     Condition="'$(WpfRuntimeIdentifier)'=='win-x64' or '$(WpfRuntimeIdentifier)'=='win-arm64'"/>
-      <ResolvedImplementationAssembly Include="$(BaseOutputPath)..\$(AssemblyName)-ref\$(Configuration)\**\$(AssemblyName).dll"
-                                      Condition="'$(WpfRuntimeIdentifier)'=='win-x86'"/>
-      <!-- If building a single project, Platform is used in win-x86.  Below handles this case. -->
-      <ResolvedImplementationAssembly Include="$(BaseOutputPath)..\$(AssemblyName)-ref\$(Platform)\$(Configuration)\**\$(AssemblyName).dll"
-                                      Condition="'$(WpfRuntimeIdentifier)'=='win-x86' and @(ResolvedImplementationAssembly->Count()) == 0"/>
-
+      <ResolvedImplementationAssembly Include="$(BaseOutputPath)..\$(AssemblyName)-ref\$(Configuration)\**\$(AssemblyName).dll" />
       <Error Condition="@(ResolvedImplementationAssembly->Count()) &gt; 1" Text="More than one reference assembly was added to ResolvedImplementationAssembly!" />
     </ItemGroup>
   </Target>

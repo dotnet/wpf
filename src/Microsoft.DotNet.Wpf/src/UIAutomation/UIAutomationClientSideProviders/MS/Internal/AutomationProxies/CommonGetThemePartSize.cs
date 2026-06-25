@@ -1,17 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System;
-using System.Security;
 using System.Runtime.InteropServices;
-using System.Runtime.CompilerServices;
-using Microsoft.Win32.SafeHandles;
 using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    class ThemePart: IDisposable
+    internal class ThemePart: IDisposable
     {
         // ------------------------------------------------------
         //
@@ -184,7 +180,7 @@ namespace MS.Internal.AutomationProxies
             SP_GRIPPER = 3,
         };
 
-        enum THEMESIZE
+        private enum THEMESIZE
         {
             TS_MIN,             // minimum size
             TS_TRUE,            // size without stretching
@@ -202,7 +198,7 @@ namespace MS.Internal.AutomationProxies
         #region Private Methods
 
         [DllImport ("UxTheme.dll", CharSet = CharSet.Auto)]
-        private static unsafe extern IntPtr GetThemePartSize(SafeThemeHandle hTheme, IntPtr hdc, int iPartId, int iStateId, IntPtr prc, int eSize, NativeMethods.SIZE* psz);
+        private static extern unsafe IntPtr GetThemePartSize(SafeThemeHandle hTheme, IntPtr hdc, int iPartId, int iStateId, IntPtr prc, int eSize, NativeMethods.SIZE* psz);
 
         [DllImport ("UxTheme.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr OpenThemeData(IntPtr hwnd, [MarshalAs(UnmanagedType.LPWStr)]string s);

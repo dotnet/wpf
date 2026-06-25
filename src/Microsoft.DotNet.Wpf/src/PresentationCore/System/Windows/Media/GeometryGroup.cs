@@ -1,30 +1,12 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
 // Description: Implementation of GeometryGroup
 //
 
-using System;
-using MS.Internal;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Reflection;
-using System.Collections;
-using System.Text;
-using System.Globalization;
-using System.Windows.Media;
-using System.Windows;
-using System.Windows.Media.Composition;
-using System.Text.RegularExpressions;
-using System.Windows.Media.Animation;
 using System.Windows.Markup;
-using System.Runtime.InteropServices;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media
 {

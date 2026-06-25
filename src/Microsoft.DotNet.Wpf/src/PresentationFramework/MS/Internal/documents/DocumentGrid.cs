@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: DocumentGrid displays DocumentPaginator content in a grid-like
@@ -8,11 +7,7 @@
 //
 
 
-using MS.Internal;
-using MS.Internal.Media;
 using MS.Utility;
-using MS.Win32;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -20,11 +15,8 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace MS.Internal.Documents
 {
@@ -432,7 +424,7 @@ namespace MS.Internal.Documents
 
                 if (!Helper.IsDoubleValid(scale))
                 {
-                    throw new ArgumentOutOfRangeException("scale");
+                    throw new ArgumentOutOfRangeException(nameof(scale));
                 }
 
                 QueueSetScale(scale);
@@ -599,7 +591,7 @@ namespace MS.Internal.Documents
             {
                 if (Double.IsNaN(offset))
                 {
-                    throw new ArgumentOutOfRangeException("offset");
+                    throw new ArgumentOutOfRangeException(nameof(offset));
                 }
 
                 // If there aren't any pending document layout delegates, then change
@@ -642,7 +634,7 @@ namespace MS.Internal.Documents
             {
                 if (Double.IsNaN(offset))
                 {
-                    throw new ArgumentOutOfRangeException("offset");
+                    throw new ArgumentOutOfRangeException(nameof(offset));
                 }
 
                 // If there aren't any pending document layout delegates, then change
@@ -684,10 +676,7 @@ namespace MS.Internal.Documents
                     _textContainer = null;
 
                     //Remove our old events from the content
-                    if (_pageCache.Content != null)
-                    {
-                        _pageCache.Content.GetPageNumberCompleted -= new GetPageNumberCompletedEventHandler(OnGetPageNumberCompleted);
-                    }
+                    _pageCache.Content?.GetPageNumberCompleted -= new GetPageNumberCompletedEventHandler(OnGetPageNumberCompleted);
 
                     //Remove our ScrollChanged events from our ScrollViewer
                     if (ScrollOwner != null)
@@ -699,11 +688,8 @@ namespace MS.Internal.Documents
                     //Assign the new content
                     _pageCache.Content = value;
 
-                    if (_pageCache.Content != null)
-                    {
-                        //Add our new events to the content
-                        _pageCache.Content.GetPageNumberCompleted += new GetPageNumberCompletedEventHandler(OnGetPageNumberCompleted);
-                    }
+                    //Add our new events to the content
+                    _pageCache.Content?.GetPageNumberCompleted += new GetPageNumberCompletedEventHandler(OnGetPageNumberCompleted);
 
                     //Clear out our visual collection so that the old pages (pointing to old content)
                     //will be replaced with new ones on the next Measure/Arrange pass.
@@ -808,7 +794,7 @@ namespace MS.Internal.Documents
             {
                 if (!Helper.IsDoubleValid(value))
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 _rowCache.VerticalPageSpacing = value;
@@ -830,7 +816,7 @@ namespace MS.Internal.Documents
             {
                 if (!Helper.IsDoubleValid(value))
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 _rowCache.HorizontalPageSpacing = value;
@@ -861,10 +847,7 @@ namespace MS.Internal.Documents
                     {
                         DocumentGridPage dp = _childrenCollection[i] as DocumentGridPage;
 
-                        if (dp != null)
-                        {
-                            dp.ShowPageBorders = _showPageBorders;
-                        }
+                        dp?.ShowPageBorders = _showPageBorders;
                     }
                 }
             }
@@ -1006,7 +989,7 @@ namespace MS.Internal.Documents
         {
             if (_childrenCollection == null || index < 0 || index >= _childrenCollection.Count)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
 
             return _childrenCollection[index];
@@ -1292,11 +1275,8 @@ namespace MS.Internal.Documents
             else if (!altKeyDown && _rubberBandSelector != null)
             {
                 //Detach the Rubberband Selector
-                if (_rubberBandSelector != null)
-                {
-                    _rubberBandSelector.DetachRubberbandSelector();
-                    _rubberBandSelector = null;
-                }
+                _rubberBandSelector?.DetachRubberbandSelector();
+                _rubberBandSelector = null;
 
                 DocumentViewerOwner.IsSelectionEnabled = true;
             }
@@ -1436,9 +1416,11 @@ namespace MS.Internal.Documents
                         if (j < firstPage || j > lastPage || _childrenCollection.Count <= _firstPageVisualIndex)
                         {
                             //Create a new page and add it to our temporary visual collection.
-                            DocumentGridPage dp = new DocumentGridPage(Content);
-                            dp.ShowPageBorders = ShowPageBorders;
-                            dp.PageNumber = j;
+                            DocumentGridPage dp = new DocumentGridPage(Content)
+                            {
+                                ShowPageBorders = ShowPageBorders,
+                                PageNumber = j
+                            };
 
                             //Attach the Loaded event handler
                             dp.PageLoaded += new EventHandler(OnPageLoaded);
@@ -1678,8 +1660,10 @@ namespace MS.Internal.Documents
                 //We create a Border with a transparent background so that it can
                 //participate in Hit-Testing (which allows click events like those
                 //for our Context Menu to work).
-                _documentGridBackground = new Border();
-                _documentGridBackground.Background = Brushes.Transparent;
+                _documentGridBackground = new Border
+                {
+                    Background = Brushes.Transparent
+                };
 
                 //Add the background in.
                 _childrenCollection.Add(_documentGridBackground);
@@ -1714,9 +1698,8 @@ namespace MS.Internal.Documents
             //Ensure that the UserState passed with this event contains an
             //MakeVisibleData object. If not, we ignore it as this event
             //could have originated from someone else calling GetPageNumberAsync.
-            if (e.UserState is MakeVisibleData)
+            if (e.UserState is MakeVisibleData data)
             {
-                MakeVisibleData data = (MakeVisibleData)e.UserState;
                 MakeVisibleAsync(data, e.PageNumber);
             }
         }
@@ -2146,7 +2129,7 @@ namespace MS.Internal.Documents
             {
                 if (Double.IsNaN(offset))
                 {
-                    throw new ArgumentOutOfRangeException("offset");
+                    throw new ArgumentOutOfRangeException(nameof(offset));
                 }
 
                 _horizontalOffset = offset;
@@ -2166,7 +2149,7 @@ namespace MS.Internal.Documents
             {
                 if (Double.IsNaN(offset))
                 {
-                    throw new ArgumentOutOfRangeException("offset");
+                    throw new ArgumentOutOfRangeException(nameof(offset));
                 }
 
                 _verticalOffset = offset;
@@ -2182,10 +2165,7 @@ namespace MS.Internal.Documents
         private void UpdateTextView()
         {
             MultiPageTextView tv = TextView as MultiPageTextView;
-            if (tv != null)
-            {
-                tv.OnPageLayoutChanged();
-            }
+            tv?.OnPageLayoutChanged();
         }
 
         /// <summary>
@@ -2283,10 +2263,7 @@ namespace MS.Internal.Documents
             {
                 UIElement page = _childrenCollection[i] as UIElement;
 
-                if (page != null)
-                {
-                    page.InvalidateMeasure();
-                }
+                page?.InvalidateMeasure();
             }
         }
 
@@ -2491,8 +2468,10 @@ namespace MS.Internal.Documents
             _pageCache = new PageCache();
             _childrenCollection = new VisualCollection(this);
 
-            _rowCache = new RowCache();
-            _rowCache.PageCache = _pageCache;
+            _rowCache = new RowCache
+            {
+                PageCache = _pageCache
+            };
             _rowCache.RowCacheChanged += new RowCacheChangedEventHandler(OnRowCacheChanged);
             _rowCache.RowLayoutCompleted += new RowLayoutCompletedEventHandler(OnRowLayoutCompleted);
         }
@@ -2504,15 +2483,9 @@ namespace MS.Internal.Documents
         /// </summary>
         private void InvalidateDocumentScrollInfo()
         {
-            if (ScrollOwner != null)
-            {
-                ScrollOwner.InvalidateScrollInfo();
-            }
+            ScrollOwner?.InvalidateScrollInfo();
 
-            if (DocumentViewerOwner != null)
-            {
-                DocumentViewerOwner.InvalidateDocumentScrollInfo();
-            }
+            DocumentViewerOwner?.InvalidateDocumentScrollInfo();
         }
 
         /// <summary>
@@ -2649,7 +2622,7 @@ namespace MS.Internal.Documents
         {
             //Hit test to find the DocumentPageView
             HitTestResult result = VisualTreeHelper.HitTest(this, point);
-            DependencyObject currentVisual = (result != null) ? result.VisualHit : null;
+            DependencyObject currentVisual = result?.VisualHit;
 
             DocumentPageView page = null;
 
@@ -2974,7 +2947,7 @@ namespace MS.Internal.Documents
             }
             if (args.PivotRowIndex >= _rowCache.RowCount)
             {
-                throw new ArgumentOutOfRangeException("args");
+                throw new ArgumentOutOfRangeException(nameof(args));
             }
 
             //Get the pivot row

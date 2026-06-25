@@ -427,11 +427,6 @@
         <target state="translated">Impossibile scrivere parametri posizionali nello stato corrente. Il writer non può scrivere i parametri posizionali in forma di attributo perché è già stata avviata la scrittura di elementi, né espandere i parametri posizionali a causa della mancanza di un costruttore predefinito sull'estensione di markup contenente i parametri posizionali. Provare a spostare il membro del parametro posizionale in una posizione precedente nel flusso del nodo dove XamlXmlWriter è ancora in grado di scrivere attributi.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExpectedLoadPermission">
-        <source>Expected permission of type XamlLoadPermission.</source>
-        <target state="translated">Prevista autorizzazione di tipo XamlLoadPermission.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExpectedObjectMarkupInfo">
         <source>Expected value of type ObjectMarkupInfo.</source>
         <target state="translated">Previsto valore di tipo ObjectMarkupInfo.</target>
@@ -560,16 +555,6 @@
       <trans-unit id="InvalidExpression">
         <source>Invalid expression: '{0}'</source>
         <target state="translated">Espressione non valida: '{0}'</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionStateValue">
-        <source>PermissionState value '{0}' is not valid for this Permission.</source>
-        <target state="translated">Valore PermissionState '{0}' non valido per l'autorizzazione corrente.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">Tipo di autorizzazione non valido. Previsto '{0}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidTypeArgument">
@@ -1135,26 +1120,6 @@
       <trans-unit id="SchemaContextNull">
         <source>SchemaContext cannot be null.</source>
         <target state="translated">SchemaContext non può essere null.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">Impossibile impostare SandboxExternalContent su true in condizioni di attendibilità parziale.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityXmlMissingAttribute">
-        <source>Invalid security XML. Missing expected attribute '{0}'.</source>
-        <target state="translated">XML di sicurezza non valido. Attributo previsto '{0}' mancante.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityXmlUnexpectedTag">
-        <source>Invalid security XML. Unexpected tag '{0}', expected '{1}'.</source>
-        <target state="translated">XML di sicurezza non valido. Tag imprevisto '{0}', previsto '{1}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityXmlUnexpectedValue">
-        <source>Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.</source>
-        <target state="translated">XML di sicurezza non valido. Valore imprevisto '{0}' nell'attributo '{1}', previsto '{2}'.</target>
         <note />
       </trans-unit>
       <trans-unit id="ServiceTypeAlreadyAdded">

@@ -1,0 +1,20 @@
+<Project>
+  <!-- Set code coverage properties that reference properties not available in Directory.Build.props -->
+  <PropertyGroup Condition="'$(Coverage)' == 'true'">
+    <TestRunnerAdditionalArguments>$(TestRunnerAdditionalArguments) --coverage --coverage-output $(ArtifactsDir)TestResults\$(Configuration)\$(MSBuildProjectName).coverage --coverage-settings "$(RepoRoot)/eng/CodeCoverage.config"</TestRunnerAdditionalArguments>
+    <!-- https://github.com/tonerdo/coverlet/issues/363 -->
+    <DeterministicSourcePaths>false</DeterministicSourcePaths>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true'">
+    <TestRunnerAdditionalArguments>$(TestRunnerAdditionalArguments) --hangdump</TestRunnerAdditionalArguments>
+    <TestRunnerAdditionalArguments>$(TestRunnerAdditionalArguments) --hangdump-timeout 10min</TestRunnerAdditionalArguments>
+    <TestRunnerAdditionalArguments>$(TestRunnerAdditionalArguments) --crashdump</TestRunnerAdditionalArguments>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+    <PackageReference Include="Microsoft.Testing.Extensions.HangDump" Version="$(MicrosoftTestingPlatformVersion)" />
+    <PackageReference Include="Microsoft.Testing.Extensions.CrashDump" Version="$(MicrosoftTestingPlatformVersion)" />
+    <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" Condition="'$(Coverage)' == 'true'" Version="$(MicrosoftTestingExtensionsCodeCoverageVersion)" />
+  </ItemGroup>
+</Project>

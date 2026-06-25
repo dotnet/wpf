@@ -1,17 +1,12 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
 //   Manages the ContextStack for a particular run of Serialization.
 //
 
-using System;
-using System.Collections;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
 using System.Xml;
 
 namespace System.Windows.Markup

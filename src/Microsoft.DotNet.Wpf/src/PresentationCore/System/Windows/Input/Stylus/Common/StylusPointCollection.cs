@@ -1,19 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-
-using System;
-using System.Windows;
 using System.ComponentModel;
-using System.Windows.Ink;
 using MS.Internal.Ink.InkSerializedFormat;
 using System.Windows.Media;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using MS.Utility;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {
@@ -51,7 +42,7 @@ namespace System.Windows.Input
         {
             if (initialCapacity < 0)
             {
-                throw new ArgumentException(SR.InvalidStylusPointConstructionZeroLengthCollection, "initialCapacity");
+                throw new ArgumentException(SR.InvalidStylusPointConstructionZeroLengthCollection, nameof(initialCapacity));
             }
             ((List<StylusPoint>)this.Items).Capacity = initialCapacity;
         }
@@ -76,7 +67,7 @@ namespace System.Windows.Input
         {
             if (initialCapacity < 0)
             {
-                throw new ArgumentException(SR.InvalidStylusPointConstructionZeroLengthCollection, "initialCapacity");
+                throw new ArgumentException(SR.InvalidStylusPointConstructionZeroLengthCollection, nameof(initialCapacity));
             }
             ((List<StylusPoint>)this.Items).Capacity = initialCapacity;
         }
@@ -94,7 +85,7 @@ namespace System.Windows.Input
             List<StylusPoint> points = new List<StylusPoint>(stylusPoints);
             if (points.Count == 0)
             {
-                throw new ArgumentException(SR.InvalidStylusPointConstructionZeroLengthCollection, "stylusPoints");
+                throw new ArgumentException(SR.InvalidStylusPointConstructionZeroLengthCollection, nameof(stylusPoints));
             }
 
             //
@@ -129,7 +120,7 @@ namespace System.Windows.Input
 
             if (stylusPoints.Count == 0)
             {
-                throw new ArgumentException(SR.InvalidStylusPointConstructionZeroLengthCollection, "points");
+                throw new ArgumentException(SR.InvalidStylusPointConstructionZeroLengthCollection, nameof(points));
             }
 
             ((List<StylusPoint>)this.Items).Capacity = stylusPoints.Count;
@@ -210,7 +201,7 @@ namespace System.Windows.Input
             if (!StylusPointDescription.AreCompatible(stylusPoints.Description,
                                                         _stylusPointDescription))
             {
-                throw new ArgumentException(SR.IncompatibleStylusPointDescriptions, "stylusPoints");
+                throw new ArgumentException(SR.IncompatibleStylusPointDescriptions, nameof(stylusPoints));
             }
 
             // cache count outside of the loop, so if this SPC is ever passed
@@ -249,7 +240,7 @@ namespace System.Windows.Input
         /// called by base class Collection&lt;T&gt; when the list is being cleared;
         /// raises a CollectionChanged event to any listeners
         /// </summary>
-        protected override sealed void ClearItems()
+        protected sealed override void ClearItems()
         {
             if (CanGoToZero())
             {
@@ -266,7 +257,7 @@ namespace System.Windows.Input
         /// called by base class Collection&lt;T&gt; when an item is removed from list;
         /// raises a CollectionChanged event to any listeners
         /// </summary>
-        protected override sealed void RemoveItem(int index)
+        protected sealed override void RemoveItem(int index)
         {
             if (this.Count > 1 || CanGoToZero())
             {
@@ -283,12 +274,12 @@ namespace System.Windows.Input
         /// called by base class Collection&lt;T&gt; when an item is added to list;
         /// raises a CollectionChanged event to any listeners
         /// </summary>
-        protected override sealed void InsertItem(int index, StylusPoint stylusPoint)
+        protected sealed override void InsertItem(int index, StylusPoint stylusPoint)
         {
             if (!StylusPointDescription.AreCompatible(stylusPoint.Description,
                                                     _stylusPointDescription))
             {
-                throw new ArgumentException(SR.IncompatibleStylusPointDescriptions, "stylusPoint");
+                throw new ArgumentException(SR.IncompatibleStylusPointDescriptions, nameof(stylusPoint));
             }
 
             stylusPoint.Description = _stylusPointDescription;
@@ -301,12 +292,12 @@ namespace System.Windows.Input
         /// called by base class Collection&lt;T&gt; when an item is set in list;
         /// raises a CollectionChanged event to any listeners
         /// </summary>
-        protected override sealed void SetItem(int index, StylusPoint stylusPoint)
+        protected sealed override void SetItem(int index, StylusPoint stylusPoint)
         {
             if (!StylusPointDescription.AreCompatible(stylusPoint.Description,
                                                     _stylusPointDescription))
             {
-                throw new ArgumentException(SR.IncompatibleStylusPointDescriptions, "stylusPoint");
+                throw new ArgumentException(SR.IncompatibleStylusPointDescriptions, nameof(stylusPoint));
             }
 
             stylusPoint.Description = _stylusPointDescription;
@@ -454,7 +445,7 @@ namespace System.Windows.Input
         {
             if (!subsetToReformatTo.IsSubsetOf(this.Description))
             {
-                throw new ArgumentException(SR.InvalidStylusPointDescriptionSubset, "subsetToReformatTo");
+                throw new ArgumentException(SR.InvalidStylusPointDescriptionSubset, nameof(subsetToReformatTo));
             }
 
             StylusPointDescription subsetToReformatToWithCurrentMetrics =
@@ -508,7 +499,7 @@ namespace System.Windows.Input
                 for (int x = StylusPointDescription.RequiredCountOfProperties/*3*/; x < properties.Count; x++)
                 {
                     int value = stylusPoint.GetPropertyValue(properties[x]);
-                    newStylusPoint.SetPropertyValue(properties[x], value, false/*copy on write*/);
+                    newStylusPoint.SetPropertyValue(properties[x], value, copyBeforeWrite: false);
                 }
                 //bypass validation
                 ((List<StylusPoint>)newCollection.Items).Add(newStylusPoint);
@@ -640,8 +631,10 @@ namespace System.Windows.Input
                 return true;
             }
 
-            CancelEventArgs e = new CancelEventArgs();
-            e.Cancel = false;
+            CancelEventArgs e = new CancelEventArgs
+            {
+                Cancel = false
+            };
 
             //
             // call the listeners

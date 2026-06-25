@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
 *
@@ -11,18 +10,15 @@
 *
 \***************************************************************************/
 using System.ComponentModel;            // DefaultValueAttribute
-using System.Diagnostics;               // Debug.Assert
-using System.Windows;                   // SR.Get
-using System.Windows.Documents;         // TableTemplate
 using System.Windows.Markup;     // IAddChild
 
 namespace System.Windows.Media.Animation
 {
-/// <summary>
-/// BeginStoryboard will call begin on its Storyboard reference when
-///  it is triggered.
-/// </summary>
-[RuntimeNameProperty("Name")] // Enables INameScope.FindName to find BeginStoryboard objects.
+    /// <summary>
+    /// BeginStoryboard will call begin on its Storyboard reference when
+    ///  it is triggered.
+    /// </summary>
+    [RuntimeNameProperty("Name")] // Enables INameScope.FindName to find BeginStoryboard objects.
 [ContentProperty("Storyboard")] // Enables <Storyboard> child without explicit <BeginStoryboard.Storyboard> tag.
 public sealed class BeginStoryboard : TriggerAction
 {

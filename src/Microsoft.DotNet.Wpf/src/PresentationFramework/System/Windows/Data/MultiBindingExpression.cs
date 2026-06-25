@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Defines MultiBindingExpression object, uses a collection of BindingExpressions together.
@@ -8,33 +7,22 @@
 // See spec at Data Binding.mht
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Windows.Threading;
-using System.Threading;
 using System.Windows.Controls;
-using System.Windows.Input;         // FocusChangedEvent
-using System.Windows.Markup;
-using MS.Internal.Controls; // Validation
-using MS.Internal.KnownBoxes;
 using MS.Internal.Data;
-using MS.Utility;
 using MS.Internal;                  // Invariant.Assert
 
 namespace System.Windows.Data
 {
-/// <summary>
-///  Describes a collection of BindingExpressions attached to a single property.
-///     The inner BindingExpressions contribute their values to the MultiBindingExpression,
-///     which combines/converts them into a resultant final value.
-///     In the reverse direction, the target value is tranlated to
-///     a set of values that are fed back into the inner BindingExpressions.
-/// </summary>
-public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngineClient
+    /// <summary>
+    ///  Describes a collection of BindingExpressions attached to a single property.
+    ///     The inner BindingExpressions contribute their values to the MultiBindingExpression,
+    ///     which combines/converts them into a resultant final value.
+    ///     In the reverse direction, the target value is tranlated to
+    ///     a set of values that are fed back into the inner BindingExpressions.
+    /// </summary>
+    public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngineClient
 {
     //------------------------------------------------------
     //
@@ -168,7 +156,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         FrameworkPropertyMetadata fwMetaData = dp.GetMetadata(d.DependencyObjectType) as FrameworkPropertyMetadata;
 
         if ((fwMetaData != null && !fwMetaData.IsDataBindingAllowed) || dp.ReadOnly)
-            throw new ArgumentException(SR.Format(SR.PropertyNotBindable, dp.Name), "dp");
+            throw new ArgumentException(SR.Format(SR.PropertyNotBindable, dp.Name), nameof(dp));
 
         // create the BindingExpression
         MultiBindingExpression bindExpr = new MultiBindingExpression(binding, owner);
@@ -178,8 +166,8 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         return bindExpr;
     }
 
-    // Attach to things that may require tree context (parent, root, etc.)
-    void AttachToContext(bool lastChance)
+        // Attach to things that may require tree context (parent, root, etc.)
+        private void AttachToContext(bool lastChance)
     {
         DependencyObject target = TargetElement;
         if (target == null)
@@ -614,7 +602,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         return success;
     }
 
-    object GetValuesForChildBindings(object rawValue)
+        private object GetValuesForChildBindings(object rawValue)
     {
         if (Converter == null)
         {
@@ -984,20 +972,20 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         get { return _list; }
     }
 
-    IMultiValueConverter Converter
+        private IMultiValueConverter Converter
     {
         get { return _converter; }
         set { _converter = value; }
     }
 
-    //------------------------------------------------------
-    //
-    //  Private Methods
-    //
-    //------------------------------------------------------
+        //------------------------------------------------------
+        //
+        //  Private Methods
+        //
+        //------------------------------------------------------
 
-    // Create a BindingExpression for position i
-    BindingExpressionBase AttachBindingExpression(int i, bool replaceExisting)
+        // Create a BindingExpression for position i
+        private BindingExpressionBase AttachBindingExpression(int i, bool replaceExisting)
     {
         DependencyObject target = TargetElement;
         if (target == null)
@@ -1107,14 +1095,14 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         Update();
     }
 
-#region Value
+        #region Value
 
-    /// <summary> Force a data transfer from source(s) to target </summary>
-    /// <param name="includeInnerBindings">
-    ///     use true to propagate UpdateTarget call to all inner BindingExpressions;
-    ///     use false to avoid forcing data re-transfer from one-time inner BindingExpressions
-    /// </param>
-    void UpdateTarget(bool includeInnerBindings)
+        /// <summary> Force a data transfer from source(s) to target </summary>
+        /// <param name="includeInnerBindings">
+        ///     use true to propagate UpdateTarget call to all inner BindingExpressions;
+        ///     use false to avoid forcing data re-transfer from one-time inner BindingExpressions
+        /// </param>
+        private void UpdateTarget(bool includeInnerBindings)
     {
         TransferIsDeferred = true;
 
@@ -1133,8 +1121,8 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         NeedsUpdate = false;
     }
 
-    // transfer a value from the source to the target
-    void Transfer()
+        // transfer a value from the source to the target
+        private void Transfer()
     {
         // required state for transfer
         if (    NeedsDataTransfer       // Transfer is needed
@@ -1145,8 +1133,8 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         }
     }
 
-    // transfer a value from the source to the target
-    void TransferValue()
+        // transfer a value from the source to the target
+        private void TransferValue()
     {
         IsInTransfer = true;
         NeedsDataTransfer = false;
@@ -1369,7 +1357,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         IsInTransfer = false;
     }
 
-    void OnTargetUpdated()
+        private void OnTargetUpdated()
     {
         if (NotifyOnTargetUpdated)
         {
@@ -1392,7 +1380,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         }
     }
 
-    void OnSourceUpdated()
+        private void OnSourceUpdated()
     {
         if (NotifyOnSourceUpdated)
         {
@@ -1431,17 +1419,17 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         return UpdateValue();
     }
 
-#endregion Value
+        #endregion Value
 
-    //------------------------------------------------------
-    //
-    //  Private Fields
-    //
-    //------------------------------------------------------
+        //------------------------------------------------------
+        //
+        //  Private Fields
+        //
+        //------------------------------------------------------
 
-    Collection<BindingExpressionBase>  _list = new Collection<BindingExpressionBase>();
-    IMultiValueConverter    _converter;
-    object[]                _tempValues;
-    Type[]                  _tempTypes;
+        private Collection<BindingExpressionBase>  _list = new Collection<BindingExpressionBase>();
+        private IMultiValueConverter    _converter;
+        private object[]                _tempValues;
+        private Type[]                  _tempTypes;
 }
 }

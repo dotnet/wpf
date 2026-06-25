@@ -1,12 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: 
 //    DialogBaseForm:  Base class for all DRP dialogs
-using System;
 using System.Windows.Forms;
-using System.Drawing;
 using System.Globalization;
 using System.Windows.TrustUI;
 
@@ -31,9 +28,11 @@ namespace MS.Internal.Documents
         public DialogBaseForm()
         {
             // Setup ToolTip object for dialogs
-            _toolTip = new ToolTip();
-            _toolTip.Active = true;
-            _toolTip.ShowAlways = true;
+            _toolTip = new ToolTip
+            {
+                Active = true,
+                ShowAlways = true
+            };
 
             InitializeComponent();
             ApplyStyle();

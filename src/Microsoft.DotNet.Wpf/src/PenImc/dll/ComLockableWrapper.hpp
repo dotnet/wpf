@@ -40,6 +40,11 @@ namespace ComUtils
         // The apartment is verified during this call.
         HRESULT Unlock();
 
+        // Unlocking a wrapper permanently nulls out the server object pointer, so a
+        // wrapper contains a non-null server object pointer if and only if it is
+        // bound to a server object which has never been unlocked.
+        bool HasNotBeenUnlocked() { return (m_serverObject != nullptr); }
+
     private:
 
         IUnknown *m_serverObject;

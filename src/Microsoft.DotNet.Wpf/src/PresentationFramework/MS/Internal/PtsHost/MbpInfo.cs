@@ -1,18 +1,15 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 //
 // Description: Provides paragraph level margin collapsing support. 
 //
 
-using System;
 using System.Windows;                       // DependencyObject
 using System.Windows.Documents;             // Block
 using MS.Internal.Text;                     // TextDpi
 using System.Windows.Media;                 // Brush
-using MS.Internal.PtsHost.UnsafeNativeMethods;  // Pts
 
 namespace MS.Internal.PtsHost
 {

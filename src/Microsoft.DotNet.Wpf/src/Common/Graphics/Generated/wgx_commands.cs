@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -11,11 +10,8 @@
 
 // This code is generated from mcg\generators\CommandStructure.cs
 
-using System;
-using System.Windows.Media.Composition;
 using System.Runtime.InteropServices;
 using System.Windows.Media.Effects;
-using System.Security;
 
 using BOOL = System.UInt32;
 

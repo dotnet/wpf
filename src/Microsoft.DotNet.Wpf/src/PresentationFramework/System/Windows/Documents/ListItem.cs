@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // 
 // Description: ListItem acts by default like a Paragraph, but with 
@@ -8,12 +7,11 @@
 //              such as bullets and numbering. 
 //
 
-using MS.Internal;                  // Invariant
 using System.Windows.Markup; // ContentProperty
 using System.ComponentModel;        // TypeConverter
 using System.Windows.Media;         // Brush
 
-namespace System.Windows.Documents 
+namespace System.Windows.Documents
 {
     /// <summary>
     /// ListItem acts by default like a Paragraph, but with different 

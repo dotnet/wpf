@@ -1,23 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
 //      Defined our Delegates, EventHandlers and EventArgs
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Documents;
 using System.Windows.Ink;
 using Swi = System.Windows.Ink;
-using MS.Utility;
 
 namespace System.Windows.Controls
 {
@@ -310,14 +302,14 @@ namespace System.Windows.Controls
             ArgumentNullException.ThrowIfNull(strokes);
             if (strokes.Count < 1)
             {
-                throw new ArgumentException(SR.InvalidEmptyStrokeCollection, "strokes");
+                throw new ArgumentException(SR.InvalidEmptyStrokeCollection, nameof(strokes));
             }
             ArgumentNullException.ThrowIfNull(gestureRecognitionResults);
             List<GestureRecognitionResult> results = 
                 new List<GestureRecognitionResult>(gestureRecognitionResults);
             if (results.Count == 0)
             {
-                throw new ArgumentException(SR.InvalidEmptyArray, "gestureRecognitionResults");
+                throw new ArgumentException(SR.InvalidEmptyArray, nameof(gestureRecognitionResults));
             }
             _strokes = strokes;
             _gestureRecognitionResults = results;

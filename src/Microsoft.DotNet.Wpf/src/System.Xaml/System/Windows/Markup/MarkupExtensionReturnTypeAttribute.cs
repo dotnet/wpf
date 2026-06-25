@@ -1,8 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-#nullable disable
 
 namespace System.Windows.Markup
 {
@@ -16,7 +13,7 @@ namespace System.Windows.Markup
         {
         }
 
-        public MarkupExtensionReturnTypeAttribute(Type returnType)
+        public MarkupExtensionReturnTypeAttribute(Type? returnType)
         {
             ReturnType = returnType;
         }
@@ -24,15 +21,15 @@ namespace System.Windows.Markup
         [Obsolete("The expressionType argument is not used by the XAML parser. To specify the expected return type, " +
             "use MarkupExtensionReturnTypeAttribute(Type). To specify custom handling for expression types, use " +
             "XamlSetMarkupExtensionAttribute.")]
-        public MarkupExtensionReturnTypeAttribute(Type returnType, Type expressionType)
+        public MarkupExtensionReturnTypeAttribute(Type? returnType, Type? expressionType)
         {
             ReturnType = returnType;
             ExpressionType = expressionType;
         }
 
-        public Type ReturnType { get; }
+        public Type? ReturnType { get; }
 
         [Obsolete("This is not used by the XAML parser. Please look at XamlSetMarkupExtensionAttribute.")]
-        public Type ExpressionType { get; }
+        public Type? ExpressionType { get; }
     }
 }

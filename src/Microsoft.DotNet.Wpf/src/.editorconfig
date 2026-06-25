@@ -1,0 +1,230 @@
+# editorconfig.org
+
+# This file contains temporary overrides for higher level .editorconfig rules.
+# These need removed as particular rules get fixed. Marking as suggestion so
+# codefixes and defaults are still available.
+
+# C# and VB files
+[*.{cs,vb}]
+
+dotnet_style_prefer_collection_expression = when_types_exactly_match:suggestion
+csharp_prefer_system_threading_lock = true:suggestion
+csharp_style_pattern_matching_over_as_with_null_check = true:suggestion
+
+# NOTE: If existing public API, CA1036 should be suppressed individually
+# in the GlobalSuppressions file.
+
+# CA1036: Override methods on comparable types
+dotnet_diagnostic.CA1036.severity = suggestion
+
+# CA1052: Static holder types should be Static or NotInheritable
+dotnet_diagnostic.CA1052.severity = suggestion
+
+# NOTE: If existing public API, CA1066 should be suppressed individually
+# in the GlobalSuppressions file.
+
+# CA1066: Implement IEquatable when overriding Object.Equals
+dotnet_diagnostic.CA1066.severity = suggestion
+
+# NOTE: If existing public API, CA1067 should be suppressed individually
+# in the GlobalSuppressions file.
+
+# CA1067: Override Object.Equals(object) when implementing IEquatable<T>
+dotnet_diagnostic.CA1067.severity = suggestion
+
+# NOTE: If existing public API, CA1070 should be suppressed individually
+# in the GlobalSuppressions file.
+
+# CA1070: Do not declare event fields as virtual
+dotnet_diagnostic.CA1070.severity = suggestion
+
+# CA1310: Specify StringComparison for correctness
+dotnet_diagnostic.CA1310.severity = suggestion
+
+# CA1419: Provide a parameterless constructor that is as visible as the containing type for concrete types derived from 'System.Runtime.InteropServices.SafeHandle'
+dotnet_diagnostic.CA1419.severity = suggestion
+
+# CA1510: Use ArgumentNullException throw helper
+dotnet_diagnostic.CA1510.severity = suggestion
+
+# NOTE: If existing public API, CA2211 should be suppressed individually
+# in the GlobalSuppressions file.
+
+# CA2211: Non-constant fields should not be visible
+dotnet_diagnostic.CA2211.severity = suggestion
+
+# CA1513: Use ObjectDisposedException throw helper
+dotnet_diagnostic.CA1513.severity = suggestion
+
+# CA1514: Avoid redundant length argument
+dotnet_diagnostic.CA1514.severity = suggestion
+
+# CA5394: Do not use insecure randomness
+dotnet_diagnostic.CA5394.severity = suggestion
+
+# NOTE: If existing public API, CA1725 should be suppressed individually
+# in the GlobalSuppressions file.
+
+# CA1725: Parameter names should match base declaration
+dotnet_diagnostic.CA1725.severity = suggestion
+
+# CA1802: Use literals where appropriate
+dotnet_diagnostic.CA1802.severity = suggestion
+
+# CA1805: Do not initialize unnecessarily
+dotnet_diagnostic.CA1805.severity = suggestion
+
+# CA1810: Initialize reference type static fields inline
+dotnet_diagnostic.CA1810.severity = suggestion
+
+# NOTE: If existing public API, CA1815 should be suppressed individually
+# in the GlobalSuppressions file.
+
+# CA1815: Override equals and operator equals on value types
+dotnet_diagnostic.CA1815.severity = suggestion
+
+# CA1822: Mark members as static
+dotnet_diagnostic.CA1822.severity = suggestion
+
+# CA1823: Avoid unused private fields
+dotnet_diagnostic.CA1823.severity = suggestion
+
+# CA1834: Use StringBuilder.Append(char) for single character strings
+dotnet_diagnostic.CA1834.severity = suggestion
+
+# This will go away as part of porting to CsWin32
+# CA1838: Avoid StringBuilder parameters for P/Invokes
+dotnet_diagnostic.CA1838.severity = suggestion
+
+# CA1851: Possible multiple enumerations of IEnumerable collection
+dotnet_diagnostic.CA1851.severity = suggestion
+
+# CA1852: Seal internal types
+dotnet_diagnostic.CA1852.severity = suggestion
+
+# CA1853: Unnecessary call to 'Dictionary.ContainsKey(key)'
+dotnet_diagnostic.CA1853.severity = suggestion
+
+# CA1854: Prefer the IDictionary.TryGetValue(TKey, out TValue) method
+dotnet_diagnostic.CA1854.severity = suggestion
+
+# CA1858: Use StartsWith instead of IndexOf
+dotnet_diagnostic.CA1858.severity = suggestion
+
+# CA1859: Use concrete types when possible for improved performance
+dotnet_diagnostic.CA1859.severity = suggestion
+
+# CA2011: Do not assign property within its setter
+dotnet_diagnostic.CA2011.severity = suggestion
+
+# Should change all internal IntPtr/UIntPtr to nint/uint. IntPtr/UIntPtr no
+# longer do checked operations so they are now equivalent.
+# CA2020: Prevent behavioral change caused by built-in operators of IntPtr/UIntPtr
+dotnet_diagnostic.CA2020.severity = suggestion
+
+# NOTE: If thrown externally, CA2201 should be suppressed individually
+# in the GlobalSuppressions file.
+
+# CA2201: Do not raise reserved exception types
+dotnet_diagnostic.CA2201.severity = suggestion
+
+# CA2207: Initialize value type static fields inline
+dotnet_diagnostic.CA2207.severity = suggestion
+
+# CA2208: Instantiate argument exceptions correctly
+dotnet_diagnostic.CA2208.severity = suggestion
+
+# CA2219: Do not raise exceptions in finally clauses
+dotnet_diagnostic.CA2219.severity = suggestion
+
+# CA2242: Test for NaN correctly
+dotnet_diagnostic.CA2242.severity = suggestion
+
+# CA2300: Do not use insecure deserializer BinaryFormatter
+dotnet_diagnostic.CA2300.severity = suggestion
+
+# CA2302: Ensure BinaryFormatter.Binder is set before calling BinaryFormatter.Deserialize
+dotnet_diagnostic.CA2302.severity = suggestion
+
+# CA5350: Do Not Use Weak Cryptographic Algorithms
+dotnet_diagnostic.CA5350.severity = suggestion
+
+# CA5351: Do Not Use Broken Cryptographic Algorithms
+dotnet_diagnostic.CA5351.severity = suggestion
+
+# CA5362: Potential reference cycle in deserialized object graph
+dotnet_diagnostic.CA5362.severity = suggestion
+
+# IDE0005: Using directive is unnecessary.
+dotnet_diagnostic.IDE0005.severity = suggestion
+
+# IDE0034: Simplify 'default' expression
+dotnet_diagnostic.IDE0034.severity = suggestion
+
+# IDE0041: Use 'is null' check
+dotnet_diagnostic.IDE0041.severity = suggestion
+
+# IDE0044: Add readonly modifier
+dotnet_diagnostic.IDE0044.severity = suggestion
+
+# IDE0051: Remove unused private members
+dotnet_diagnostic.IDE0051.severity = suggestion
+
+# IDE0052: Remove unread private members
+dotnet_diagnostic.IDE0052.severity = suggestion
+
+# IDE0057: Use range operator
+dotnet_diagnostic.IDE0057.severity = suggestion
+
+# IDE0059: Unnecessary assignment of a value
+dotnet_diagnostic.IDE0059.severity = suggestion
+
+# IDE0060: Remove unused parameter
+dotnet_diagnostic.IDE0060.severity = suggestion
+
+# IDE0062: Make local function 'static'
+dotnet_diagnostic.IDE0062.severity = suggestion
+
+# IDE0063: Use simple 'using' statement
+dotnet_diagnostic.IDE0063.severity = suggestion
+
+# IDE0066: Convert switch statement to expression
+dotnet_diagnostic.IDE0066.severity = suggestion
+
+# IDE0074: Use compound assignment
+dotnet_diagnostic.IDE0074.severity = suggestion
+
+# IDE0075: Simplify conditional expression
+dotnet_diagnostic.IDE0075.severity = suggestion
+
+# IDE0077: Avoid legacy global suppression format
+dotnet_diagnostic.IDE0077.severity = suggestion
+
+# IDE0078: Use pattern matching
+dotnet_diagnostic.IDE0078.severity = suggestion
+
+# IDE0180: Use tuple to swap values
+dotnet_diagnostic.IDE0180.severity = suggestion
+
+# IDE0251: Make member 'readonly'
+dotnet_diagnostic.IDE0251.severity = suggestion
+
+# IDE0270: Use coalesce expression
+dotnet_diagnostic.IDE0270.severity = suggestion
+
+# IDE0300: Simplify collection initialization
+dotnet_diagnostic.IDE0300.severity = suggestion
+
+# NOTE: For thread statics (t_), IDE1006 should be suppressed individually
+# in the GlobalSuppressions file.
+
+# IDE1006: Naming Styles
+dotnet_diagnostic.IDE1006.severity = suggestion
+
+# ---------------------
+# Ref specific C# files
+# ---------------------
+[*/ref/*.cs]
+
+# CA1812: Remove empty finalizers
+dotnet_diagnostic.CA1821.severity = none

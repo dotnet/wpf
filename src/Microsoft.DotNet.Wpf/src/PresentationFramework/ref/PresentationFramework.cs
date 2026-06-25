@@ -1,3 +1,6 @@
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 namespace Microsoft.Win32
 {
     public abstract partial class CommonDialog
@@ -132,6 +135,9 @@ namespace System.Windows
         public System.Windows.ResourceDictionary Resources { get { throw null; } set { } }
         public System.Windows.ShutdownMode ShutdownMode { get { throw null; } set { } }
         public System.Uri StartupUri { get { throw null; } set { } }
+        [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.ThemeModeConverter))]
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("WPF0001")]
+        public System.Windows.ThemeMode ThemeMode { get { throw null; } set { } }
         public System.Windows.WindowCollection Windows { get { throw null; } }
         public event System.EventHandler Activated { add { } remove { } }
         public event System.EventHandler Deactivated { add { } remove { } }
@@ -968,8 +974,11 @@ namespace System.Windows
     {
         OK = 0,
         OKCancel = 1,
+        AbortRetryIgnore = 2,
         YesNoCancel = 3,
         YesNo = 4,
+        RetryCancel = 5,
+        CancelTryContinue = 6,
     }
     public enum MessageBoxImage
     {
@@ -997,8 +1006,13 @@ namespace System.Windows
         None = 0,
         OK = 1,
         Cancel = 2,
+        Abort = 3,
+        Retry = 4,
+        Ignore = 5,
         Yes = 6,
         No = 7,
+        TryAgain = 10,
+        Continue = 11,
     }
     [System.Windows.Markup.ContentPropertyAttribute("Setters")]
     public sealed partial class MultiDataTrigger : System.Windows.TriggerBase, System.Windows.Markup.IAddChild
@@ -1258,6 +1272,34 @@ namespace System.Windows
     }
     public static partial class SystemColors
     {
+        public static System.Windows.Media.Color AccentColor { get { throw null; } }
+        public static System.Windows.Media.SolidColorBrush AccentColorBrush { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorBrushKey { get { throw null; } }
+        public static System.Windows.Media.Color AccentColorDark1 { get { throw null; } }
+        public static System.Windows.Media.SolidColorBrush AccentColorDark1Brush { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorDark1BrushKey { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorDark1Key { get { throw null; } }
+        public static System.Windows.Media.Color AccentColorDark2 { get { throw null; } }
+        public static System.Windows.Media.SolidColorBrush AccentColorDark2Brush { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorDark2BrushKey { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorDark2Key { get { throw null; } }
+        public static System.Windows.Media.Color AccentColorDark3 { get { throw null; } }
+        public static System.Windows.Media.SolidColorBrush AccentColorDark3Brush { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorDark3BrushKey { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorDark3Key { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorKey { get { throw null; } }
+        public static System.Windows.Media.Color AccentColorLight1 { get { throw null; } }
+        public static System.Windows.Media.SolidColorBrush AccentColorLight1Brush { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorLight1BrushKey { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorLight1Key { get { throw null; } }
+        public static System.Windows.Media.Color AccentColorLight2 { get { throw null; } }
+        public static System.Windows.Media.SolidColorBrush AccentColorLight2Brush { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorLight2BrushKey { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorLight2Key { get { throw null; } }
+        public static System.Windows.Media.Color AccentColorLight3 { get { throw null; } }
+        public static System.Windows.Media.SolidColorBrush AccentColorLight3Brush { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorLight3BrushKey { get { throw null; } }
+        public static System.Windows.ResourceKey AccentColorLight3Key { get { throw null; } }
         public static System.Windows.Media.SolidColorBrush ActiveBorderBrush { get { throw null; } }
         public static System.Windows.ResourceKey ActiveBorderBrushKey { get { throw null; } }
         public static System.Windows.Media.Color ActiveBorderColor { get { throw null; } }
@@ -1804,6 +1846,32 @@ namespace System.Windows
         public System.Windows.ResourceDictionaryLocation GenericDictionaryLocation { get { throw null; } }
         public System.Windows.ResourceDictionaryLocation ThemeDictionaryLocation { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("WPF0001")]
+    public readonly partial struct ThemeMode : System.IEquatable<System.Windows.ThemeMode>
+    {
+        public ThemeMode(string value) { throw null; }
+        public static System.Windows.ThemeMode Dark { get { throw null; } }
+        public static System.Windows.ThemeMode Light { get { throw null; } }
+        public static System.Windows.ThemeMode None { get { throw null; } }
+        public static System.Windows.ThemeMode System { get { throw null; } }
+        public string Value { get { throw null; } }
+        public override bool Equals(object obj) { throw null; }
+        public bool Equals(System.Windows.ThemeMode other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(System.Windows.ThemeMode left, System.Windows.ThemeMode right) { throw null; }
+        public static bool operator !=(System.Windows.ThemeMode left, System.Windows.ThemeMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("WPF0001")]
+    public partial class ThemeModeConverter : System.ComponentModel.TypeConverter
+    {
+        public ThemeModeConverter() { }
+        public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type sourceType) { throw null; }
+        public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type destinationType) { throw null; }
+        public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object source) { throw null; }
+        public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object value, System.Type destinationType) { throw null; }
+    }
+
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.ThicknessConverter))]
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public partial struct Thickness : System.IEquatable<System.Windows.Thickness>
@@ -2016,6 +2084,9 @@ namespace System.Windows
         public bool ShowInTaskbar { get { throw null; } set { } }
         public System.Windows.SizeToContent SizeToContent { get { throw null; } set { } }
         public System.Windows.Shell.TaskbarItemInfo TaskbarItemInfo { get { throw null; } set { } }
+        [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.ThemeModeConverter))]
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("WPF0001")]
+        public System.Windows.ThemeMode ThemeMode { get { throw null; } set { } }
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Title)]
         public string Title { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute("System.Windows.LengthConverter, PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, Custom=null")]
@@ -5046,6 +5117,18 @@ namespace System.Windows.Controls
         public override bool ShouldSerializeContent() { throw null; }
         public void StopLoading() { }
     }
+    internal partial class ColumnDefinitionCollectionConverter : System.ComponentModel.TypeConverter
+    {
+        public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type sourceType) { throw null; }
+        public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type destinationType) { throw null; }
+        public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object source) { throw null; }
+    }
+    internal partial class RowDefinitionCollectionConverter : System.ComponentModel.TypeConverter
+    {
+        public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type sourceType) { throw null; }
+        public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type destinationType) { throw null; }
+        public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object source) { throw null; }
+    }
     public partial class Grid : System.Windows.Controls.Panel, System.Windows.Markup.IAddChild
     {
         public static readonly System.Windows.DependencyProperty ColumnProperty;
@@ -5055,11 +5138,13 @@ namespace System.Windows.Controls
         public static readonly System.Windows.DependencyProperty RowSpanProperty;
         public static readonly System.Windows.DependencyProperty ShowGridLinesProperty;
         public Grid() { }
+        [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Controls.ColumnDefinitionCollectionConverter))]
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public System.Windows.Controls.ColumnDefinitionCollection ColumnDefinitions { get { throw null; } }
+        public System.Windows.Controls.ColumnDefinitionCollection ColumnDefinitions { get { throw null; } set { } }
         protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
+        [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Controls.RowDefinitionCollectionConverter))]
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public System.Windows.Controls.RowDefinitionCollection RowDefinitions { get { throw null; } }
+        public System.Windows.Controls.RowDefinitionCollection RowDefinitions { get { throw null; } set { } }
         public bool ShowGridLines { get { throw null; } set { } }
         protected override int VisualChildrenCount { get { throw null; } }
         protected override System.Windows.Size ArrangeOverride(System.Windows.Size arrangeSize) { throw null; }
@@ -7679,9 +7764,9 @@ namespace System.Windows.Controls
     public partial class VirtualizingStackPanel : System.Windows.Controls.VirtualizingPanel, System.Windows.Controls.Primitives.IScrollInfo
     {
         public static readonly System.Windows.RoutedEvent CleanUpVirtualizedItemEvent;
-        public static readonly new System.Windows.DependencyProperty IsVirtualizingProperty;
+        public static new readonly System.Windows.DependencyProperty IsVirtualizingProperty;
         public static readonly System.Windows.DependencyProperty OrientationProperty;
-        public static readonly new System.Windows.DependencyProperty VirtualizationModeProperty;
+        public static new readonly System.Windows.DependencyProperty VirtualizationModeProperty;
         public VirtualizingStackPanel() { }
         protected override bool CanHierarchicallyScrollAndVirtualizeCore { get { throw null; } }
         [System.ComponentModel.DefaultValueAttribute(false)]
@@ -11505,7 +11590,7 @@ namespace System.Windows.Markup
         public static readonly System.Windows.DependencyProperty XmlSpaceProperty;
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         [System.Windows.AttachedPropertyBrowsableForTypeAttribute(typeof(System.Windows.DependencyObject))]
-        public static string GetXmlNamespaceMaps(System.Windows.DependencyObject dependencyObject) { throw null; }
+        public static System.Collections.Hashtable GetXmlNamespaceMaps(System.Windows.DependencyObject dependencyObject) { throw null; }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
         [System.Windows.AttachedPropertyBrowsableForTypeAttribute(typeof(System.Windows.DependencyObject))]
         [System.Windows.Markup.DesignerSerializationOptionsAttribute(System.Windows.Markup.DesignerSerializationOptions.SerializeAsAttribute)]
@@ -11516,7 +11601,7 @@ namespace System.Windows.Markup
         [System.Windows.AttachedPropertyBrowsableForTypeAttribute(typeof(System.Windows.DependencyObject))]
         [System.Windows.Markup.DesignerSerializationOptionsAttribute(System.Windows.Markup.DesignerSerializationOptions.SerializeAsAttribute)]
         public static string GetXmlSpace(System.Windows.DependencyObject dependencyObject) { throw null; }
-        public static void SetXmlNamespaceMaps(System.Windows.DependencyObject dependencyObject, string value) { }
+        public static void SetXmlNamespaceMaps(System.Windows.DependencyObject dependencyObject, System.Collections.Hashtable value) { }
         public static void SetXmlnsDefinition(System.Windows.DependencyObject dependencyObject, string value) { }
         public static void SetXmlnsDictionary(System.Windows.DependencyObject dependencyObject, System.Windows.Markup.XmlnsDictionary value) { }
         public static void SetXmlSpace(System.Windows.DependencyObject dependencyObject, string value) { }

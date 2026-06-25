@@ -1,28 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
-
-using System;
-using System.Security;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
 using MS.Internal;
 using MS.Win32.PresentationCore;
-using MS.Internal.PresentationCore; //SecurityHelper
-using System.Diagnostics;
+using System.Collections.ObjectModel;
 using System.Windows.Threading;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Globalization;
 using System.Runtime.InteropServices;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.Imaging
 {
@@ -61,7 +44,7 @@ namespace System.Windows.Media.Imaging
                 colorArray[i] = colors[i];
             }
 
-            _colors = new PartialList<Color>(colorArray);
+            _colors = new ReadOnlyCollection<Color>(colorArray);
 
             _palette = CreateInternalPalette();
 
@@ -160,7 +143,7 @@ namespace System.Windows.Media.Imaging
         /// bitmap is not paletteized, we return BitmapPalette.Empty. If the
         /// palette is of a known type, we will use BitmapPalettes.
         /// </summary>
-        static internal BitmapPalette CreateFromBitmapSource(BitmapSource source)
+        internal static BitmapPalette CreateFromBitmapSource(BitmapSource source)
         {
             Debug.Assert(source != null);
 
@@ -258,7 +241,7 @@ namespace System.Windows.Media.Imaging
             return false;
         }
 
-        static internal SafeMILHandle CreateInternalPalette()
+        internal static SafeMILHandle CreateInternalPalette()
         {
             SafeMILHandle palette = null;
 
@@ -278,7 +261,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         /// Critical - is an unsafe method, calls into native code
         /// TreatAsSafe - No inputs are provided, no information is exposed.
-        unsafe private void UpdateUnmanaged()
+        private unsafe void UpdateUnmanaged()
         {
             Debug.Assert(_palette != null && !_palette.IsInvalid);
 
@@ -347,7 +330,7 @@ namespace System.Windows.Media.Imaging
                 }
             }
 
-            _colors = new PartialList<Color>(colors);
+            _colors = new ReadOnlyCollection<Color>(colors);
         }
 
         #endregion // Private Methods
@@ -382,7 +365,7 @@ namespace System.Windows.Media.Imaging
         // the behavior that we want.
         private SafeMILHandle _palette = null; // IWICPalette*
 
-        private IList<Color> _colors = new PartialList<Color>(new List<Color>());
+        private IList<Color> _colors = ReadOnlyCollection<Color>.Empty;
     }
 }
 

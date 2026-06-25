@@ -1,13 +1,10 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
+using System.ComponentModel;
 
-namespace System.Windows 
+namespace System.Windows
 {
-    using System;
-    using System.ComponentModel;
-
     /// <summary>
     ///     This attribute declares that an attached property can only be attached 
     ///     to an object that defines the given attribute on its class. 
@@ -66,8 +63,8 @@ namespace System.Windows
         /// </summary>
         public override bool Equals(object obj) 
         {
-            AttachedPropertyBrowsableWhenAttributePresentAttribute other = obj as AttachedPropertyBrowsableWhenAttributePresentAttribute;
-            if (other == null) return false;
+            if (obj is not AttachedPropertyBrowsableWhenAttributePresentAttribute other)
+                return false;
             return _attributeType == other._attributeType;
         }
 

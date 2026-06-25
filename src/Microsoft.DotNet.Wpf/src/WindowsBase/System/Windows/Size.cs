@@ -1,20 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-//
-
-using System;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
-using System.Text;
-using System.Collections;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Media;
-using System.Runtime.InteropServices;
-using MS.Internal.WindowsBase;
 
 namespace System.Windows
 {
@@ -157,13 +142,15 @@ namespace System.Windows
 
         #region Private Methods
             
-        static private Size CreateEmptySize()
+        private static Size CreateEmptySize()
         {
-            Size size = new Size();
-            // We can't set these via the property setters because negatives widths
-            // are rejected in those APIs.
-            size._width = Double.NegativeInfinity;
-            size._height = Double.NegativeInfinity;
+            Size size = new Size
+            {
+                // We can't set these via the property setters because negatives widths
+                // are rejected in those APIs.
+                _width = Double.NegativeInfinity,
+                _height = Double.NegativeInfinity
+            };
             return size;
         }
 
@@ -171,7 +158,7 @@ namespace System.Windows
             
         #region Private Fields
 
-        private readonly static Size s_empty = CreateEmptySize();
+        private static readonly Size s_empty = CreateEmptySize();
 
         #endregion Private Fields
     }

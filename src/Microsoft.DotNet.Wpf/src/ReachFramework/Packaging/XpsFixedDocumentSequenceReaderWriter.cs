@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 /*++
 
@@ -15,14 +14,10 @@
 
 
 --*/
-using System;
 using System.IO;
-using System.Collections;
 using System.Collections.ObjectModel;
-using System.Collections.Generic;
 using System.IO.Packaging;
 using System.Xml;
-using System.Security.Cryptography.X509Certificates;
 using System.Printing;
 
 using MS.Internal.IO.Packaging.Extensions;

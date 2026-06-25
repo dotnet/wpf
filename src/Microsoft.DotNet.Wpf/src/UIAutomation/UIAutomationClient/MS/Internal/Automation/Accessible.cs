@@ -1,18 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Wraps some of IAccessible to support Focus and top-level window creates
 
-using System.Windows.Automation;
 using System;
 using Accessibility;
-using System.Text;
 using System.Diagnostics;
 using MS.Win32;
-
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 namespace MS.Internal.Automation
 {
@@ -49,9 +43,6 @@ namespace MS.Internal.Automation
                 catch (Exception e)
                 {
                     if (IsCriticalMSAAException(e))
-                        // PRESHARP will flag this as a warning 56503/6503: Property get methods should not throw exceptions
-                        // Since this Property is internal, we CAN throw an exception
-#pragma warning suppress 6503
                         throw;
 
                     return UnsafeNativeMethods.STATE_SYSTEM_UNAVAILABLE;
@@ -75,9 +66,6 @@ namespace MS.Internal.Automation
                     catch( Exception e )
                     {
                         if (IsCriticalMSAAException(e))
-                            // PRESHARP will flag this as a warning 56503/6503: Property get methods should not throw exceptions
-                            // Since this Property is internal, we CAN throw an exception
-#pragma warning suppress 6503
                             throw;
 
                         _hwnd = IntPtr.Zero;

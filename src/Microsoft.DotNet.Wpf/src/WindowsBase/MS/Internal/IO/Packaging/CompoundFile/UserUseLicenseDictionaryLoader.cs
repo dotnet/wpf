@@ -1,30 +1,14 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  This class is a helper to load a set of associations between a user and the use license
 //  granted to that user.
-//
-//
-//
-//
-// 
-//
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Text;
 using System.IO;
 using System.IO.Packaging;
-using System.Windows;
 using System.Security.RightsManagement;
-
-using MS.Internal;
 
 namespace MS.Internal.IO.Packaging.CompoundFile
 {

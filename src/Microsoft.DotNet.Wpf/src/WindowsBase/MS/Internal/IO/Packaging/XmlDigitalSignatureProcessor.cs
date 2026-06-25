@@ -1,24 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
+
 // Description:
 //  Implementation of the W3C Digital Signature Handler.
 //  Generates and consumes XmlDSig-compliant digital signatures based on the subset
 //  specified by the Opc file format.
-//
 
 
-using System;
-using System.Diagnostics;
 using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
-using System.Security;                      // for SecurityCritical and SecurityTreatAsSafe
 using System.Security.Cryptography;
 using System.Security.Cryptography.Xml;
 using System.Security.Cryptography.X509Certificates;
@@ -26,9 +16,6 @@ using System.Xml;
 using System.IO;
 using System.Windows;
 using System.IO.Packaging;
-using Microsoft.Win32;
-using MS.Internal;
-using MS.Internal.WindowsBase;
 
 using MS.Internal.IO.Packaging.Extensions;
 
@@ -106,7 +93,7 @@ namespace MS.Internal.IO.Packaging
 
             // Validate the Reference tags in the SignedInfo as per the 
             // restrictions imposed by the OPC spec
-            ValidateReferences(xmlSig.SignedInfo.References, true /*allowPackageSpecificReference*/);
+            ValidateReferences(xmlSig.SignedInfo.References, allowPackageSpecificReferences: true);
 
             // verify "standard" XmlSignature portions
             result = xmlSig.CheckSignature(signer, true);
@@ -510,8 +497,8 @@ namespace MS.Internal.IO.Packaging
 
                 // generate a valid Relationship tag according to the Opc schema
                 InternalRelationshipCollection.WriteRelationshipsAsXml(writer, relationships,
-                        true,  /* systematically write target mode */
-                        false  /* not in streaming production */
+                        alwaysWriteTargetModeAttribute: true,
+                        inStreamingProduction: false
                         );
 
                 // end of Relationships tag
@@ -536,8 +523,7 @@ namespace MS.Internal.IO.Packaging
             // we should attempt to dispose it if it offers IDisposable.
             if (algorithm == null && o != null)
             {
-                IDisposable disposable = o as IDisposable;
-                if (disposable != null)
+                if (o is IDisposable disposable)
                     disposable.Dispose();
             }
 
@@ -605,8 +591,10 @@ namespace MS.Internal.IO.Packaging
                 _signedXml = new CustomSignedXml();
 
                 // Load the XML
-                XmlDocument xmlDocument = new XmlDocument();
-                xmlDocument.PreserveWhitespace = true;
+                XmlDocument xmlDocument = new XmlDocument
+                {
+                    PreserveWhitespace = true
+                };
                 using (Stream s = SignaturePart.GetSeekableStream())
                 {
                     using (XmlTextReader xmlReader = new XmlTextReader(s))
@@ -752,8 +740,10 @@ namespace MS.Internal.IO.Packaging
 
             try
             {
-                _signedXml = new CustomSignedXml();
-                _signedXml.SigningKey = key;
+                _signedXml = new CustomSignedXml
+                {
+                    SigningKey = key
+                };
                 _signedXml.Signature.Id = signatureId;
 
                 if (BaseCompatibilityPreferences.MatchPackageSignatureMethodToPackagePartDigestMethod)
@@ -786,9 +776,11 @@ namespace MS.Internal.IO.Packaging
                 }
 
                 // add reference from SignedInfo to Package object tag
-                Reference objectReference = new Reference(XTable.Get(XTable.ID.OpcLinkAttrValue));
-                objectReference.Type = XTable.Get(XTable.ID.W3CSignatureNamespaceRoot) + "Object";
-                objectReference.DigestMethod = _hashAlgorithmName;
+                Reference objectReference = new Reference(XTable.Get(XTable.ID.OpcLinkAttrValue))
+                {
+                    Type = XTable.Get(XTable.ID.W3CSignatureNamespaceRoot) + "Object",
+                    DigestMethod = _hashAlgorithmName
+                };
                 _signedXml.AddReference(objectReference);
 
                 // add any custom object tags
@@ -913,7 +905,7 @@ namespace MS.Internal.IO.Packaging
             {
                 // Validate the Reference tags in the SignedInfo as per the 
                 // restrictions imposed by the OPC spec
-                ValidateReferences(objectReferences, false /*allowPackageSpecificReference*/);
+                ValidateReferences(objectReferences, allowPackageSpecificReferences: false);
 
                 foreach (Reference reference in objectReferences)
                 {
@@ -1071,8 +1063,10 @@ namespace MS.Internal.IO.Packaging
         {
             // KeyInfo section
             KeyInfo keyInfo = new KeyInfo();
-            KeyInfoName keyInfoName = new KeyInfoName();
-            keyInfoName.Value = signer.Subject;
+            KeyInfoName keyInfoName = new KeyInfoName
+            {
+                Value = signer.Subject
+            };
             keyInfo.AddClause(keyInfoName);               // human readable Principal name
 
             // Include the public key information (if we are familiar with the algorithm type)
@@ -1083,7 +1077,7 @@ namespace MS.Internal.IO.Packaging
                 if (key is DSA)
                     keyInfo.AddClause(new DSAKeyValue((DSA)key));    // DSA
                 else
-                    throw new ArgumentException(SR.CertificateKeyTypeNotSupported, "signer");
+                    throw new ArgumentException(SR.CertificateKeyTypeNotSupported, nameof(signer));
             }
 
             // the actual X509 cert
@@ -1102,9 +1096,11 @@ namespace MS.Internal.IO.Packaging
             xDoc.DocumentElement.AppendChild(XmlSignatureManifest.GenerateManifest(_manager, xDoc, hashAlgorithm, parts, relationshipSelectors));
             xDoc.DocumentElement.AppendChild(XmlSignatureProperties.AssembleSignatureProperties(xDoc, DateTime.Now, _manager.TimeFormat, signatureId));
 
-            DataObject dataObject = new DataObject();
-            dataObject.Data = xDoc.DocumentElement.ChildNodes;
-            dataObject.Id = XTable.Get(XTable.ID.OpcAttrValue);
+            DataObject dataObject = new DataObject
+            {
+                Data = xDoc.DocumentElement.ChildNodes,
+                Id = XTable.Get(XTable.ID.OpcAttrValue)
+            };
 
             return dataObject;
         }
@@ -1183,7 +1179,7 @@ namespace MS.Internal.IO.Packaging
                             throw new ArgumentException(SR.PackageSpecificReferenceTagMustBeUnique);
 
                         //If there are more than one package specific tags
-                        if (packageReferenceFound == true)
+                        if (packageReferenceFound)
                             throw new XmlException(SR.MoreThanOnePackageSpecificReference);
                         else
                             packageReferenceFound = true;

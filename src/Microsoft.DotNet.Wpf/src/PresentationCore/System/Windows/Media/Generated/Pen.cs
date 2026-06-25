@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -12,37 +11,20 @@
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Collections;
-using MS.Internal.PresentationCore;
 using MS.Utility;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.ComponentModel.Design.Serialization;
 using System.Text;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Effects;
-using System.Windows.Media.Media3D;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using System.Windows.Media.Imaging;
 using System.Windows.Markup;
 using System.Windows.Media.Converters;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
-// These types are aliased to match the unamanaged names used in interop
-using BOOL = System.UInt32;
-using WORD = System.UInt16;
-using Float = System.Single;
 
 namespace System.Windows.Media
 {
-    sealed partial class Pen : Animatable, DUCE.IResource
+    public sealed partial class Pen : Animatable, DUCE.IResource
     {
         //------------------------------------------------------
         //
@@ -83,6 +65,10 @@ namespace System.Windows.Media
 
         private static void BrushPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -169,6 +155,10 @@ namespace System.Windows.Media
         }
         private static void DashStylePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -222,7 +212,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Brush) GetValue(BrushProperty);
+                return (Brush)GetValue(BrushProperty);
             }
             set
             {
@@ -237,7 +227,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(ThicknessProperty);
+                return (double)GetValue(ThicknessProperty);
             }
             set
             {
@@ -252,7 +242,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (PenLineCap) GetValue(StartLineCapProperty);
+                return (PenLineCap)GetValue(StartLineCapProperty);
             }
             set
             {
@@ -267,7 +257,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (PenLineCap) GetValue(EndLineCapProperty);
+                return (PenLineCap)GetValue(EndLineCapProperty);
             }
             set
             {
@@ -282,7 +272,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (PenLineCap) GetValue(DashCapProperty);
+                return (PenLineCap)GetValue(DashCapProperty);
             }
             set
             {
@@ -297,7 +287,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (PenLineJoin) GetValue(LineJoinProperty);
+                return (PenLineJoin)GetValue(LineJoinProperty);
             }
             set
             {
@@ -312,7 +302,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(MiterLimitProperty);
+                return (double)GetValue(MiterLimitProperty);
             }
             set
             {
@@ -327,7 +317,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (DashStyle) GetValue(DashStyleProperty);
+                return (DashStyle)GetValue(DashStyleProperty);
             }
             set
             {
@@ -446,7 +436,8 @@ namespace System.Windows.Media
                     if (vDashStyle != null) ((DUCE.IResource)vDashStyle).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
-}
+
+                }
             }
         }
         DUCE.ResourceHandle DUCE.IResource.GetHandle(DUCE.Channel channel)
@@ -567,8 +558,7 @@ namespace System.Windows.Media
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app.  
-
+            // of your app.
             Debug.Assert(s_DashStyle == null || s_DashStyle.IsFrozen,
                 "Detected context bound default value Pen.s_DashStyle (See OS Bug #947272).");
 
@@ -648,6 +638,8 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
+
+
 
         #endregion Constructors
     }

@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 //
@@ -8,8 +7,6 @@
 //
 
 
-using System;
-using System.Diagnostics;
 using System.Windows.Documents;
 
 namespace MS.Internal.PtsTable
@@ -158,7 +155,6 @@ namespace MS.Internal.PtsTable
         /// <returns>Array of cells. May be empty</returns>
         internal void GetSpanCells(out TableCell[] cells, out bool isLastRowOfAnySpan)
         {
-            cells = s_noCells;
             isLastRowOfAnySpan = false;
 
             //  iterate the tail of entries (if any) 
@@ -206,10 +202,13 @@ namespace MS.Internal.PtsTable
                 
                 _size = j + 1;
             }
-
-            #if DEBUG
+            else
+            {
+                cells = Array.Empty<TableCell>();
+            }
+#if DEBUG
             _index = -1;
-            #endif // DEBUG
+#endif
         }
 
         #endregion Internal Methods 
@@ -267,8 +266,6 @@ namespace MS.Internal.PtsTable
         private int _size;                              //  current size of the list
         private int _index;                             //  index used for iteration (GetFirst / GetNext)
         private const int c_defaultCapacity = 8;        //  default capacity
-        private static TableCell[] s_noCells = Array.Empty<TableCell>();  //  empty array RowSpanVector returns to rows that do not 
-                                                        //  have row spanned cells
         #endregion Private Fields 
 
         //------------------------------------------------------

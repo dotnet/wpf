@@ -1,12 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-
-namespace System.Windows 
+namespace System.Windows
 {
-    using System;
-
     /// <summary>
     ///     This class declares that an attached property is browsable only 
     ///     for dependency objects that derive from the given type.  If more 
@@ -81,8 +77,8 @@ namespace System.Windows
         /// </summary>
         public override bool Equals(object obj) 
         {
-            AttachedPropertyBrowsableForTypeAttribute other = obj as AttachedPropertyBrowsableForTypeAttribute;
-            if (other == null) return false;
+            if (obj is not AttachedPropertyBrowsableForTypeAttribute other)
+                return false;
             return _targetType == other._targetType;
         }
 

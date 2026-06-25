@@ -1,23 +1,14 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: wrapper around default converter to dynamcially pick
 //      and change value converters depending on changing source and target types
 //
 
-using System;
 using System.Globalization;
-using System.Collections;
-using System.ComponentModel;
-
-using System.Reflection;
 using System.Windows;
 using System.Windows.Data;
-
-using MS.Internal;          // Invariant.Assert
-using System.Diagnostics;
 
 namespace MS.Internal.Data
 {

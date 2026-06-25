@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //----------------------------------------------------------------------------------------
 // 
@@ -13,14 +12,10 @@
 using System;
 using System.IO;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
 using Microsoft.Build.Tasks.Windows;
-using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
-using MS.Utility;
 
 namespace MS.Internal.Tasks
 {
@@ -178,7 +173,7 @@ namespace MS.Internal.Tasks
         //
         internal bool SaveCacheInformation(MarkupCompilePass1 mcPass1)
         {
-            Debug.Assert(String.IsNullOrEmpty(_localCacheFile) != true, "_localCacheFile must not be empty.");
+            Debug.Assert(!String.IsNullOrEmpty(_localCacheFile), "_localCacheFile must not be empty.");
             Debug.Assert(mcPass1 != null, "A valid instance of MarkupCompilePass1 must be passed to method SaveCacheInformation.");
 
             bool bSuccess = false;
@@ -240,7 +235,7 @@ namespace MS.Internal.Tasks
         //
         internal bool LoadCacheFile()
         {
-            Debug.Assert(String.IsNullOrEmpty(_localCacheFile) != true, "_localCacheFile must not be empty.");
+            Debug.Assert(!String.IsNullOrEmpty(_localCacheFile), "_localCacheFile must not be empty.");
 
             bool loadSuccess = false;
 
@@ -266,7 +261,7 @@ namespace MS.Internal.Tasks
 
                 ArrayList alMarkupPages = new ArrayList();
 
-                while (srCache.EndOfStream != true)
+                while (!srCache.EndOfStream)
                 {
                     lineText = srCache.ReadLine();
                     LocalReferenceFile lrf = LocalReferenceFile.Deserialize(lineText);

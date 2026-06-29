@@ -465,5 +465,25 @@ namespace MS.Internal
         }
 
         #endregion
+
+        #region DisableUiaProviderDisconnect
+
+        /// <summary>
+        /// When false (the default), a background sweep disconnects ElementProxy instances whose weak
+        /// automation peer has been collected, releasing the UIA wrapper that keeps the dead proxy alive.
+        /// Set to true to restore the legacy behavior.
+        /// </summary>
+        internal const string DisableUiaProviderDisconnectSwitchName = "Switch.System.Windows.Automation.Peers.DisableUiaProviderDisconnect";
+        private static int _disableUiaProviderDisconnect;
+        public static bool DisableUiaProviderDisconnect
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(DisableUiaProviderDisconnectSwitchName, ref _disableUiaProviderDisconnect);
+            }
+        }
+
+        #endregion
     }
 }

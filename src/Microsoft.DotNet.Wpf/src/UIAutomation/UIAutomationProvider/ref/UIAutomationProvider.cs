@@ -10,6 +10,7 @@ namespace System.Windows.Automation.Provider
         public const int ItemsInvalidateLimit = 5;
         public const int RootObjectId = -25;
         public static bool ClientsAreListening { get { throw null; } }
+        public static void DisconnectProvider(System.Windows.Automation.Provider.IRawElementProviderSimple provider) { }
         public static System.Windows.Automation.Provider.IRawElementProviderSimple HostProviderFromHandle(System.IntPtr hwnd) { throw null; }
         public static void RaiseAutomationEvent(System.Windows.Automation.AutomationEvent eventId, System.Windows.Automation.Provider.IRawElementProviderSimple provider, System.Windows.Automation.AutomationEventArgs e) { }
         public static void RaiseAutomationPropertyChangedEvent(System.Windows.Automation.Provider.IRawElementProviderSimple element, System.Windows.Automation.AutomationPropertyChangedEventArgs e) { }

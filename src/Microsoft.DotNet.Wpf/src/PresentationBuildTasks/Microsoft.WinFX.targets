@@ -516,8 +516,7 @@
         Condition: _WpfTempProjectIncludesPackageReferences == true
   -->
   <Target Name="FilterTemporaryAssemblyAnalyzers"
-          AfterTargets="RemoveDuplicateAnalyzers"
-          BeforeTargets="CoreCompile"
+          BeforeTargets="RemoveDuplicateAnalyzers;CoreCompile"
           Condition="'$(_WpfTempProjectIncludesPackageReferences)' == 'true'">
     <ItemGroup>
         <Analyzer Remove="@(Analyzer)" Condition="'%(Analyzer.WpfTempProjectAnalyzers)' != 'true'" />

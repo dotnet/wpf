@@ -1076,7 +1076,8 @@ namespace MS.Internal.TextFormatting
                         if (lsrun.Type == Plsrun.Text && cp + lsrun.Length > cpLimit)
                         {
                             lsrun.Truncate(cpLimit - cp);
-                            span.length = lsrun.Length;
+                            span = new(span.element, lsrun.Length);
+                            _plsrunVector.SetAt(i, span);
                         }
 
                         _lscchUpTo = lscp + lsrun.Length;

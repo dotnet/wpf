@@ -51,7 +51,7 @@ namespace MS.Internal
         /// <summary>
         /// Add a new span to vector
         /// </summary>
-        private void Add(Span span)
+        private void Add(in Span span)
         {
             _spans.Add(span);
         }
@@ -87,6 +87,13 @@ namespace MS.Internal
         }
 
         #region Public operation
+        /// <summary>
+        //// Place item into the store at index
+        /// </summary>
+        public void SetAt(int index, in Span span)
+        {
+            _spans.SetAt(index, span);
+        }
 
         /// <summary>
         /// Finds the span that contains the specified character position.
@@ -164,7 +171,7 @@ namespace MS.Internal
             // Return true if the span is in range.
             return spanIndex != spanCount;
         }
-        
+
 
         /// <summary>
         /// Set an element as a value to a character range
@@ -226,19 +233,23 @@ namespace MS.Internal
                     Add(new Span(_defaultObject, first - fc));
                 }
 
-                if (   Count > 0 
-                    && equals(_spans[Count-1].element, element))
+                bool addElement = true;
+                if (Count > 0)
                 {
-                    // New Element matches end Element, just extend end Element
-                    _spans[Count - 1].length += length;
-
-                    // Make sure fs and fc still agree
-                    if (fs == Count)
+                    var span = _spans[Count - 1];
+                    if (equals(span.element, element))
                     {
-                        fc += length;
+                        // New Element matches end Element, just extend end Element
+                        _spans[Count - 1] = new(span.element, span.length + length);
+                        addElement = false;
+                        // Make sure fs and fc still agree
+                        if (fs == Count)
+                        {
+                            fc += length;
+                        }
                     }
                 }
-                else
+                if (addElement)
                 {
                     Add(new Span(element, length));
                 }
@@ -314,7 +325,8 @@ namespace MS.Internal
                             if (!Resize(fs + 2))
                                 throw new OutOfMemoryException();
                         }
-                        _spans[fs].length = first - fc;
+                        var oldFsSpan = _spans[fs];
+                        _spans[fs] = new Span(oldFsSpan.element, first - fc);
                         _spans[fs + 1] = new Span(element, length);
                     }
                     else
@@ -370,7 +382,8 @@ namespace MS.Internal
 
                     if (fc < first)
                     {
-                        _spans[fs].length = first - fc;
+                        var oldFsSpan = _spans[fs];
+                        _spans[fs] = new Span(oldFsSpan.element, first - fc);
                         fs++;
                         fc = first;
                     }

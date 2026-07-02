@@ -58,7 +58,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
 
     }
 
-    __declspec(noinline) IList<Span^>^ TextItemizer::Itemize(CultureInfo^ numberCulture, __in_ecount(textLength) CharAttributeType* pCharAttribute, UINT32 textLength)
+    __declspec(noinline) IList<Span>^ TextItemizer::Itemize(CultureInfo^ numberCulture, __in_ecount(textLength) CharAttributeType* pCharAttribute, UINT32 textLength)
     {
         DWriteTextAnalysisNode<DWRITE_SCRIPT_ANALYSIS>*     pScriptAnalysisListPrevious     = _pScriptAnalysisListHead;
         DWriteTextAnalysisNode<DWRITE_SCRIPT_ANALYSIS>*     pScriptAnalysisListCurrent      = _pScriptAnalysisListHead;
@@ -79,7 +79,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
                                       &pNumberSubstitutionListCurrent, numberSubstitutionRangeIndex,
                                       isDigitIndex, isDigitRangeIndex);
 
-        List<Span^>^ spanVector = gcnew List<Span^>();
+        List<Span>^ spanVector = gcnew List<Span>();
         while (
             rangeEnd != textLength 
             && (pScriptAnalysisListCurrent != NULL
@@ -193,10 +193,10 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
                     isLatin
                     );
 
-            spanVector->Add(gcnew Span(itemProps, (int)(rangeEnd - rangeStart)));
+            spanVector->Add(Span(itemProps, (int)(rangeEnd - rangeStart)));
         }
 
-        return spanVector;
+            return spanVector;
     }  
 
     void TextItemizer::SetIsDigit(

@@ -88,7 +88,7 @@ namespace MS.Internal
 
         #region Public operation
         /// <summary>
-        //// Place item into the store at index
+        /// Place item into the store at index
         /// </summary>
         public void SetAt(int index, in Span span)
         {

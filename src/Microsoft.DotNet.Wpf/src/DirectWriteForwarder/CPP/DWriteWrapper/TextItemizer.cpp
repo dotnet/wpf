@@ -196,7 +196,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             spanVector->Add(Span(itemProps, (int)(rangeEnd - rangeStart)));
         }
 
-            return spanVector;
+        return spanVector;
     }  
 
     void TextItemizer::SetIsDigit(

@@ -299,12 +299,9 @@ namespace MS.Internal.Automation
                             peer.AddToParentProxyWeakRefCache();
 
                             // Root the peer for the in-flight traversal: it is only weakly held by its proxy and
-                            // could be collected between being returned to UIA and its first callback. Skip when
-                            // peers are strongly referenced - the proxy already roots them.
-                            if (!CoreAppContextSwitches.UseStrongReferenceForItemAutomationPeers)
-                            {
-                                PeerKeepAlive.KeepAlive(peer);
-                            }
+                            // could be collected between being returned to UIA and its first callback. KeepAlive
+                            // self-guards on the switch / registry-key / data-item eligibility.
+                            PeerKeepAlive.KeepAlive(peer);
                         }
                     }
                 }
@@ -325,11 +322,8 @@ namespace MS.Internal.Automation
 
                     // A data-item peer can be collected mid-walk when its row virtualizes out, surfacing ENA.
                     // Park a short-lived strong root (see PeerKeepAlive) that outlives the walk but is
-                    // released once the peer stops being touched.
-                    if (peer != null && !CoreAppContextSwitches.UseStrongReferenceForItemAutomationPeers && peer.IsDataItemAutomationPeer())
-                    {
-                        PeerKeepAlive.KeepAlive(peer);
-                    }
+                    // released once the peer stops being touched. KeepAlive self-guards on eligibility.
+                    PeerKeepAlive.KeepAlive(peer);
 
                     return peer;
                 }
@@ -559,15 +553,32 @@ namespace MS.Internal.Automation
             private static readonly object _timerLock = new object();
             private static volatile DispatcherTimer _timer;
 
+            // Renew the keep-alive window for a weakly-held data-item peer. The full eligibility guard lives
+            // here (not at the call sites) so the two callers cannot drift apart: the opt-out switch, the
+            // legacy AutomationWeakReferenceDisallow registry key (surfaced as AutomationInteropReferenceType),
+            // and data-item-ness. A null peer or non-weak reference type is a no-op.
             internal static void KeepAlive(AutomationPeer peer)
             {
+                if (peer == null ||
+                    CoreAppContextSwitches.UseStrongReferenceForItemAutomationPeers ||
+                    AutomationInteropReferenceType != ReferenceType.Weak ||
+                    !peer.IsDataItemAutomationPeer())
+                {
+                    return;
+                }
+
                 Dispatcher dispatcher = peer.Dispatcher;
                 if (dispatcher == null)
                 {
                     return;
                 }
 
-                _tracked[peer] = _generation;
+                // Skip the striped-lock write when this peer is already stamped for the current generation:
+                // repeat touches within a window are the common case and need no update.
+                if (!_tracked.TryGetValue(peer, out int g) || g != _generation)
+                {
+                    _tracked[peer] = _generation;
+                }
 
                 if (_timer == null)
                 {
@@ -626,7 +637,9 @@ namespace MS.Internal.Automation
         private volatile bool _disconnecting;
         private volatile int[] _cachedRuntimeId;
 
-        // Safe because a collected peer already throws ENA, so disconnect can't disturb a live walk.
+        // True once the weakly-held peer has been collected. Must NOT touch Peer: doing so would hand out a
+        // transient strong reference and defeat the very collection the sweep is waiting for. Safe because a
+        // collected peer already throws ENA, so disconnect can't disturb a live walk.
         private bool IsPeerCollected
         {
             get { return _peer is WeakReference weak && weak.Target == null; }

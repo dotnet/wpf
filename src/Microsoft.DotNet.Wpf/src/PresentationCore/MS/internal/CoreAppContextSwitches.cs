@@ -454,6 +454,21 @@ namespace MS.Internal
         }
 
         #endregion
+
+        #region DisableXpsPackageBoundaryRestriction
+
+        internal const string DisableXpsPackageBoundaryRestrictionSwitchName = "Switch.System.Windows.DisableXpsPackageBoundaryRestriction";
+        private static int _disableXpsPackageBoundaryRestriction;
+        public static bool DisableXpsPackageBoundaryRestriction
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(DisableXpsPackageBoundaryRestrictionSwitchName, ref _disableXpsPackageBoundaryRestriction);
+            }
+        }
+
+        #endregion
     }
 #pragma warning restore 436
 }

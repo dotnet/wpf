@@ -510,6 +510,18 @@ namespace System.Windows.Media
                 throw new ArgumentException(SR.UriNotAbsolute, "profileUri");
             }
 
+            // Security: When loading XPS content, block color profile URIs that
+            // escape the current package to prevent SSRF. Standard system profiles
+            // (isStandardProfileUriNotFromUser == true) are always local file
+            // paths and are exempt from this check. Uses both ambient context
+            // and captured origin for defense-in-depth.
+            _xpsPackageOrigin = XpsLoadingContext.ActivePackageUri;
+            if (!isStandardProfileUriNotFromUser
+                && !XpsLoadingContext.IsUriAllowedAgainstPackage(_xpsPackageOrigin, profileUri))
+            {
+                throw new FileFormatException(SR.Resource_XpsPackageBoundaryViolation);
+            }
+
             _profileUri = new SecurityCriticalData<Uri>(profileUri);
             _isProfileUriNotFromUser = new SecurityCriticalDataForSet<bool>(isStandardProfileUriNotFromUser);
 
@@ -808,6 +820,9 @@ namespace System.Windows.Media
         private SecurityCriticalData<Uri> _profileUri;
         
         private SecurityCriticalDataForSet<bool> _isProfileUriNotFromUser;
+
+        // Captured at construction time for deferred loading scenarios.
+        private Uri _xpsPackageOrigin;
 
         private AbbreviatedPROFILEHEADER _profileHeader;
 

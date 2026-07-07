@@ -84,6 +84,7 @@ namespace MS.Internal.FontCache
             _skipDemand = skipDemand;
             _isComposite = isComposite;
             _isInternalCompositeFont = isInternalCompositeFont;
+            _xpsPackageOrigin = XpsLoadingContext.ActivePackageUri;
             Invariant.Assert(_isInternalCompositeFont || _fontUri.IsAbsoluteUri);
             Debug.Assert(_isInternalCompositeFont || String.IsNullOrEmpty(_fontUri.Fragment));
         }
@@ -192,6 +193,14 @@ namespace MS.Internal.FontCache
                 }
                 else
                 {
+                    // Security: When loading XPS content, block font URIs that escape
+                    // the current package to prevent SSRF. Uses stored origin to
+                    // handle deferred loading after XPS parse context has ended.
+                    if (!_fontUri.IsFile && !XpsLoadingContext.IsUriAllowedAgainstPackage(_xpsPackageOrigin, _fontUri))
+                    {
+                        throw new FileFormatException(SR.Resource_XpsPackageBoundaryViolation);
+                    }
+
                     WebResponse response = WpfWebRequestHelper.CreateRequestAndGetResponse(_fontUri);
                     fontStream = response.GetResponseStream();
                     if (String.Equals(response.ContentType, ObfuscatedContentType, StringComparison.Ordinal))
@@ -266,6 +275,14 @@ namespace MS.Internal.FontCache
             }
             else
             {
+                // Security: When loading XPS content, block font URIs that escape
+                // the current package to prevent SSRF. Uses stored origin to
+                // handle deferred loading after XPS parse context has ended.
+                if (!XpsLoadingContext.IsUriAllowedAgainstPackage(_xpsPackageOrigin, _fontUri))
+                {
+                    throw new FileFormatException(SR.Resource_XpsPackageBoundaryViolation);
+                }
+
                 WebRequest request = PackWebRequestFactory.CreateWebRequest(_fontUri);
                 WebResponse response = request.GetResponse();
 
@@ -434,6 +451,11 @@ namespace MS.Internal.FontCache
         private Uri     _fontUri;
 
         private bool    _skipDemand;
+
+        // Captured at construction time so deferred font loads (e.g. during
+        // rendering/printing) can still enforce same-package containment
+        // after the ambient XpsLoadingContext has been restored.
+        private Uri _xpsPackageOrigin;
 
         private static SizeLimitedCache<Uri, byte[]> _resourceCache = new SizeLimitedCache<Uri, byte[]>(MaximumCacheItems);
 

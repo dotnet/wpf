@@ -29,6 +29,7 @@ using MS.Utility;
 using MS.Internal;
 using MS.Internal.IO.Packaging;
 using MS.Internal.PresentationCore;
+using MS.Internal.AppModel;
 using MS.Internal.Text.TextInterface;
 
 namespace MS.Internal.FontCache
@@ -284,6 +285,24 @@ namespace MS.Internal.FontCache
                 }
 
                 WebRequest request = PackWebRequestFactory.CreateWebRequest(_fontUri);
+
+                // Apply the same default-credentials zone policy that
+                // WpfWebRequestHelper.CreateRequest enforces. This code path
+                // uses PackWebRequestFactory (needed for pack:// URIs) and
+                // therefore bypasses the central WpfWebRequestHelper chokepoint.
+                // Without this gate, a font URI referencing an Internet-zone
+                // host could cause default credentials to be sent
+                // unintentionally.
+                if (request is HttpWebRequest httpFontRequest
+                    && !CoreAppContextSwitches.DoNotApplyZoneCheckForDefaultCredentials)
+                {
+                    if (DefaultCredentialsZonePolicy.ShouldSendDefaultCredentials(_fontUri))
+                    {
+                        httpFontRequest.UseDefaultCredentials = true;
+                    }
+                    // else: Internet/Untrusted zone — no default credentials attached.
+                }
+
                 WebResponse response = request.GetResponse();
 
                 fontStream = response.GetResponseStream();

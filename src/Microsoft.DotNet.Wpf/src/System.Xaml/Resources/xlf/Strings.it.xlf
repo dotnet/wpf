@@ -637,6 +637,11 @@
         <target state="translated">Impossibile risolvere il valore StaticExtension '{0}' in un'enumerazione, un campo statico o una proprietà statica.</target>
         <note />
       </trans-unit>
+      <trans-unit id="MarkupExtensionDepthExceeded">
+        <source>Markup extension nesting depth exceeded the maximum allowed ({0}). Deeply nested markup extensions are not supported.</source>
+        <target state="new">Markup extension nesting depth exceeded the maximum allowed ({0}). Deeply nested markup extensions are not supported.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="MarkupExtensionNoContext">
         <source>Markup extension '{0}' requires '{1}' be implemented in the IServiceProvider for ProvideValue.</source>
         <target state="translated">L'estensione di markup '{0}' richiede l'implementazione di '{1}' nel IServiceProvider per ProvideValue.</target>

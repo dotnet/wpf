@@ -27,4 +27,30 @@ public:
         }
         return s_disabled;
     }
+
+    /// <summary>
+    /// Switch: Switch.System.Windows.DisableDevModeValidation
+    ///   Default (false): The DEVMODE constructor validates dmSize/dmDriverExtra
+    ///                    against the spooler-allocated buffer length, preventing
+    ///                    a heap over-read from a hostile remote print server
+    ///                    (CWE-125, WPF-V2-006).
+    ///   Set to true:     Validation is skipped, restoring previous behavior
+    ///                    where untrusted length fields are trusted directly.
+    /// </summary>
+    static bool IsDevModeValidationDisabled()
+    {
+        static bool s_initialized = false;
+        static bool s_disabled = false;
+
+        if (!s_initialized)
+        {
+            bool switchValue = false;
+            System::AppContext::TryGetSwitch(
+                "Switch.System.Windows.DisableDevModeValidation",
+                switchValue);
+            s_disabled = switchValue;
+            s_initialized = true;
+        }
+        return s_disabled;
+    }
 };

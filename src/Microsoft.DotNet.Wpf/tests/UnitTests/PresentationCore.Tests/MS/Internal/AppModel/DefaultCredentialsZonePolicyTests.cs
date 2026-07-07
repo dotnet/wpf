@@ -4,10 +4,10 @@
 using System.Collections.Concurrent;
 using System.Net;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
 using MS.Internal;
 using MS.Internal.AppModel;
-using MS.Win32;
 
 namespace PresentationCore.Tests.MS.Internal.AppModel;
 
@@ -74,11 +74,11 @@ public sealed class DefaultCredentialsZonePolicyTests : IDisposable
     }
 
     [Theory]
-    [InlineData(NativeMethods.URLZONE_LOCAL_MACHINE, true)]
-    [InlineData(NativeMethods.URLZONE_INTRANET, true)]
-    [InlineData(NativeMethods.URLZONE_TRUSTED, true)]
-    [InlineData(NativeMethods.URLZONE_INTERNET, false)]
-    [InlineData(NativeMethods.URLZONE_UNTRUSTED, false)]
+    [InlineData(0 /*URLZONE_LOCAL_MACHINE*/, true)]
+    [InlineData(1 /*URLZONE_INTRANET*/, true)]
+    [InlineData(2 /*URLZONE_TRUSTED*/, true)]
+    [InlineData(3 /*URLZONE_INTERNET*/, false)]
+    [InlineData(4 /*URLZONE_UNTRUSTED*/, false)]
     public void ShouldSendDefaultCredentials_ZoneMatrix(int zone, bool expected)
     {
         // Use a non-IP host so the IP fast path doesn't short-circuit; pre-poison the cache
@@ -138,8 +138,8 @@ public sealed class DefaultCredentialsZonePolicyTests : IDisposable
     /// is the contract.
     /// </summary>
     [Theory]
-    [InlineData(NativeMethods.URLZONE_INTRANET, true)]
-    [InlineData(NativeMethods.URLZONE_INTERNET, false)]
+    [InlineData(1 /*URLZONE_INTRANET*/, true)]
+    [InlineData(3 /*URLZONE_INTERNET*/, false)]
     public void CreateRequest_HonorsPolicyForUseDefaultCredentials(int zone, bool expected)
     {
         const string Host = "policy-tests-integration.example.test";
@@ -156,8 +156,22 @@ public sealed class DefaultCredentialsZonePolicyTests : IDisposable
     /// <summary>
     /// Minimal IInternetSecurityManager double - only MapUrlToZone is exercised by
     /// DefaultCredentialsZonePolicy. Other members throw so accidental calls fail loudly.
+    /// Local COM interface definition avoids depending on internal NativeMethods/UnsafeNativeMethods types.
     /// </summary>
-    private sealed class FakeSecurityManager : UnsafeNativeMethods.IInternetSecurityManager
+    [ComImport, ComVisible(false), Guid("79eac9ee-baf9-11ce-8c82-00aa004ba90b"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    private interface IInternetSecurityManager
+    {
+        void SetSecuritySite([MarshalAs(UnmanagedType.Interface)] object pSite);
+        unsafe void GetSecuritySite(void** ppSite);
+        void MapUrlToZone([In, MarshalAs(UnmanagedType.BStr)] string pwszUrl, [Out] out int pdwZone, [In] int dwFlags);
+        unsafe void GetSecurityId(string pwszUrl, byte* pbSecurityId, int* pcbSecurityId, int dwReserved);
+        unsafe void ProcessUrlAction(string pwszUrl, int dwAction, byte* pPolicy, int cbPolicy, byte* pContext, int cbContext, int dwFlags, int dwReserved);
+        unsafe void QueryCustomPolicy(string pwszUrl, void* guidKey, byte** ppPolicy, int* pcbPolicy, byte* pContext, int cbContext, int dwReserved);
+        unsafe void SetZoneMapping(int dwZone, string lpszPattern, int dwFlags);
+        unsafe void GetZoneMappings(int dwZone, void** ppenumString, int dwFlags);
+    }
+
+    private sealed class FakeSecurityManager : IInternetSecurityManager
     {
         private readonly int _zone;
         private readonly bool _throwIfCalled;
@@ -176,7 +190,7 @@ public sealed class DefaultCredentialsZonePolicyTests : IDisposable
             pdwZone = _zone;
         }
 
-        public void SetSecuritySite(NativeMethods.IInternetSecurityMgrSite pSite) => throw new NotImplementedException();
+        public void SetSecuritySite(object pSite) => throw new NotImplementedException();
         public unsafe void GetSecuritySite(void** ppSite) => throw new NotImplementedException();
         public unsafe void GetSecurityId(string pwszUrl, byte* pbSecurityId, int* pcbSecurityId, int dwReserved) => throw new NotImplementedException();
         public unsafe void ProcessUrlAction(string pwszUrl, int dwAction, byte* pPolicy, int cbPolicy, byte* pContext, int cbContext, int dwFlags, int dwReserved) => throw new NotImplementedException();

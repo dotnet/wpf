@@ -133,6 +133,7 @@
     <Compile Include="MS\Internal\WpfWebRequestHelper.cs" />
     <Compile Include="MS\Internal\AppModel\CookieHandler.cs" />
     <Compile Include="MS\Internal\AppModel\CustomCredentialPolicy.cs" />
+    <Compile Include="MS\Internal\AppModel\DefaultCredentialsZonePolicy.cs" />
     <Compile Include="MS\Internal\AppModel\SiteOfOriginContainer.cs" />
     <Compile Include="MS\Internal\AppModel\SiteOfOriginPart.cs" />
     <Compile Include="MS\Internal\Automation\AutomationPatternInfo.cs" />

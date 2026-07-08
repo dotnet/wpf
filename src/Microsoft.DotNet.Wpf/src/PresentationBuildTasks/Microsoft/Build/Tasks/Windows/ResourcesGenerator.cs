@@ -290,7 +290,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                 strFileName = inputFile.ItemSpec;
 
-                if (!File.Exists(TaskHelper.CreateFullFilePath(strFileName, SourceDir)))
+                if (!File.Exists(TaskHelper.CreateFullFilePath(strFileName, SourceDir))) // CodeQL [SM00414] Trusted build-time input: ItemSpec is developer-authored MSBuild markup, not attacker-controlled
                 {
                     bValid = false;
                     Log.LogErrorWithCodeFromResources(nameof(SR.FileNotFound), strFileName);

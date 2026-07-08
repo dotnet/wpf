@@ -243,7 +243,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                                 using (Stream uidStream = new FileStream(tempFile, FileMode.Create))
                                 {
-                                    using (Stream source = File.OpenRead(inputFile.ItemSpec))
+                                    using (Stream source = File.OpenRead(inputFile.ItemSpec)) // CodeQL [SM00414] Trusted build-time input: ItemSpec is developer-authored MSBuild markup, not attacker-controlled
                                     {
                                         UidWriter writer = new UidWriter(collector, source, uidStream);
                                         writer.UpdateUidWrite();
@@ -297,7 +297,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                                 using (Stream uidStream = new FileStream(tempFile, FileMode.Create))
                                 {
-                                    using (Stream source = File.OpenRead(inputFile.ItemSpec))
+                                    using (Stream source = File.OpenRead(inputFile.ItemSpec)) // CodeQL [SM00414] Trusted build-time input: ItemSpec is developer-authored MSBuild markup, not attacker-controlled
                                     {
                                         UidWriter writer = new UidWriter(collector, source, uidStream);
                                         writer.RemoveUidWrite();
@@ -371,9 +371,9 @@ namespace Microsoft.Build.Tasks.Windows
 
         private void RemoveFile(string fileName)
         {
-            if (File.Exists(fileName))
+            if (File.Exists(fileName)) // CodeQL [SM00414] Trusted build-time input: path derived from developer-authored MSBuild ItemSpec, not attacker-controlled
             {
-                File.Delete(fileName);
+                File.Delete(fileName); // CodeQL [SM00414] Trusted build-time input: path derived from developer-authored MSBuild ItemSpec, not attacker-controlled
             }
         }
 

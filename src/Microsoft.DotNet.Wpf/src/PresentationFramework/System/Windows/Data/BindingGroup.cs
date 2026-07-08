@@ -1135,7 +1135,11 @@ namespace System.Windows.Data
         // return a snapshot of the binding expressions - see https://github.com/dotnet/wpf/issues/1690
         private BindingExpressionBase[] CopyBindingExpressions()
         {
-            BindingExpressionBase[] copy = new BindingExpressionBase[_bindingExpressions.Count];
+            int count = _bindingExpressions.Count;
+            if (count == 0)
+                return Array.Empty<BindingExpressionBase>();
+
+            BindingExpressionBase[] copy = new BindingExpressionBase[count];
             _bindingExpressions.CopyTo(copy, 0);
             return copy;
         }

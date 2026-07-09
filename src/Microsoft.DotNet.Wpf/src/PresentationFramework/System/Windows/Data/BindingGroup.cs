@@ -382,10 +382,14 @@ namespace System.Windows.Data
             }
 
             // update targets
-            BindingExpressionBase[] bindingExpressions = CopyBindingExpressions();
-            for (int i=bindingExpressions.Length - 1; i>=0; --i)
+            for (int i=_bindingExpressions.Count-1; i>=0; --i)
             {
-                BindingExpressionBase bindingExpression = bindingExpressions[i];
+                // a re-entrant callout can shrink the collection - see
+                // https://github.com/dotnet/wpf/issues/1690
+                if (i >= _bindingExpressions.Count)
+                    continue;
+
+                BindingExpressionBase bindingExpression = _bindingExpressions[i];
                 if (bindingExpression.BindingGroup != this)
                     continue;
 
@@ -1132,22 +1136,18 @@ namespace System.Windows.Data
             }
         }
 
-        // return a snapshot of the binding expressions - see https://github.com/dotnet/wpf/issues/1690
-        private BindingExpressionBase[] CopyBindingExpressions()
-        {
-            BindingExpressionBase[] copy = new BindingExpressionBase[_bindingExpressions.Count];
-            _bindingExpressions.CopyTo(copy, 0);
-            return copy;
-        }
-
         // apply conversions to each binding in the group
         private bool ObtainConvertedProposedValues()
         {
             bool result = true;
-            BindingExpressionBase[] bindingExpressions = CopyBindingExpressions();
-            for (int i=bindingExpressions.Length-1; i>=0; --i)
+            for (int i=_bindingExpressions.Count-1; i>=0; --i)
             {
-                BindingExpressionBase bindingExpression = bindingExpressions[i];
+                // a re-entrant callout can shrink the collection - see
+                // https://github.com/dotnet/wpf/issues/1690
+                if (i >= _bindingExpressions.Count)
+                    continue;
+
+                BindingExpressionBase bindingExpression = _bindingExpressions[i];
                 if (bindingExpression.BindingGroup != this)
                     continue;
 
@@ -1162,10 +1162,14 @@ namespace System.Windows.Data
         {
             bool result = true;
 
-            BindingExpressionBase[] bindingExpressions = CopyBindingExpressions();
-            for (int i=bindingExpressions.Length-1; i>=0; --i)
+            for (int i=_bindingExpressions.Count-1; i>=0; --i)
             {
-                BindingExpressionBase bindingExpression = bindingExpressions[i];
+                // a re-entrant callout can shrink the collection - see
+                // https://github.com/dotnet/wpf/issues/1690
+                if (i >= _bindingExpressions.Count)
+                    continue;
+
+                BindingExpressionBase bindingExpression = _bindingExpressions[i];
                 if (bindingExpression.BindingGroup != this)
                     continue;
 
@@ -1195,19 +1199,19 @@ namespace System.Windows.Data
             ClearValidationErrors(_validationStep);
 
             // check rules attached to the bindings
-            BindingExpressionBase[] bindingExpressions = CopyBindingExpressions();
-            for (int i=bindingExpressions.Length-1; i>=0; --i)
+            for (int i=_bindingExpressions.Count-1; i>=0; --i)
             {
-                BindingExpressionBase bindingExpression = bindingExpressions[i];
-                if (bindingExpression.BindingGroup != this)
-                {
+                // a re-entrant callout can shrink the collection - see
+                // https://github.com/dotnet/wpf/issues/1690
+                if (i >= _bindingExpressions.Count)
                     continue;
-                }
+
+                BindingExpressionBase bindingExpression = _bindingExpressions[i];
+                if (bindingExpression.BindingGroup != this)
+                    continue;
 
                 if (!bindingExpression.CheckValidationRules(this, _validationStep))
-                {
                     result = false;
-                }
             }
 
             // include the bindings for proposed values, for the last two steps

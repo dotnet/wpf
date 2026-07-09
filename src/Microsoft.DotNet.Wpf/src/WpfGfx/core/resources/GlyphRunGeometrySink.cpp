@@ -484,7 +484,7 @@ CGlyphRunGeometrySink::BeginFigure(
     if (SUCCEEDED(m_hr))
     {
         // Reject if adding this figure would exceed safe geometry size.
-        if (m_currentOffset > static_cast<size_t>(INT_MAX) - sizeof(MilPathFigure))
+        if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled() && m_currentOffset > static_cast<size_t>(INT_MAX) - sizeof(MilPathFigure))
         {
             MIL_THRX(m_hr, WGXERR_BADNUMBER);
             return;
@@ -657,7 +657,7 @@ CGlyphRunGeometrySink::AddGenericPoly(
 
         // Determine segment size and reject if it would exceed safe geometry size.
         size_t segmentSize = (segmentType == MilSegmentType::Line) ? sizeof(MilSegmentLine) : sizeof(MilSegmentBezier);
-        if (m_currentOffset > static_cast<size_t>(INT_MAX) - segmentSize)
+        if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled() && m_currentOffset > static_cast<size_t>(INT_MAX) - segmentSize)
         {
             MIL_THRX(m_hr, WGXERR_BADNUMBER);
             return;

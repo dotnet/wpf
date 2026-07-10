@@ -92,7 +92,7 @@
   <ItemGroup>
     <AdditionalPackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
   </ItemGroup>
-  <!-- ijwhost.dll is required for mixed-mode C++/CLI assemblies -->
+  <!-- ijwhost.dll packaging is handled centrally in eng/WpfArcadeSdk/tools/Packaging.targets -->
   <Target Name="AddWindowsBaseDefine" AfterTargets="ResolveProjectReferences">
     <Error Text="Unexpected result from _WindowsBaseReference '@(_WindowsBaseReference->Count())'" Condition="'@(_WindowsBaseReference->Count())' != '1'" />
     <PropertyGroup>

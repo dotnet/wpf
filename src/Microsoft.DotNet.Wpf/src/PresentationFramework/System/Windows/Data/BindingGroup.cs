@@ -382,9 +382,18 @@ namespace System.Windows.Data
             }
 
             // update targets
-            for (int i=_bindingExpressions.Count - 1; i>=0; --i)
+            for (int i=_bindingExpressions.Count-1; i>=0; --i)
             {
-                _bindingExpressions[i].UpdateTarget();
+                // a re-entrant callout can shrink the collection - see
+                // https://github.com/dotnet/wpf/issues/1690
+                if (i >= _bindingExpressions.Count)
+                    continue;
+
+                BindingExpressionBase bindingExpression = _bindingExpressions[i];
+                if (bindingExpression.BindingGroup != this)
+                    continue;
+
+                bindingExpression.UpdateTarget();
             }
 
             // also update dependent targets.  These are one-way bindings that
@@ -1133,7 +1142,16 @@ namespace System.Windows.Data
             bool result = true;
             for (int i=_bindingExpressions.Count-1; i>=0; --i)
             {
-                result = _bindingExpressions[i].ObtainConvertedProposedValue(this) && result;
+                // a re-entrant callout can shrink the collection - see
+                // https://github.com/dotnet/wpf/issues/1690
+                if (i >= _bindingExpressions.Count)
+                    continue;
+
+                BindingExpressionBase bindingExpression = _bindingExpressions[i];
+                if (bindingExpression.BindingGroup != this)
+                    continue;
+
+                result = bindingExpression.ObtainConvertedProposedValue(this) && result;
             }
 
             return result;
@@ -1146,7 +1164,16 @@ namespace System.Windows.Data
 
             for (int i=_bindingExpressions.Count-1; i>=0; --i)
             {
-                result = _bindingExpressions[i].UpdateSource(this) && result;
+                // a re-entrant callout can shrink the collection - see
+                // https://github.com/dotnet/wpf/issues/1690
+                if (i >= _bindingExpressions.Count)
+                    continue;
+
+                BindingExpressionBase bindingExpression = _bindingExpressions[i];
+                if (bindingExpression.BindingGroup != this)
+                    continue;
+
+                result = bindingExpression.UpdateSource(this) && result;
             }
 
             if (_proposedValueBindingExpressions != null)
@@ -1174,10 +1201,17 @@ namespace System.Windows.Data
             // check rules attached to the bindings
             for (int i=_bindingExpressions.Count-1; i>=0; --i)
             {
-                if (!_bindingExpressions[i].CheckValidationRules(this, _validationStep))
-                {
+                // a re-entrant callout can shrink the collection - see
+                // https://github.com/dotnet/wpf/issues/1690
+                if (i >= _bindingExpressions.Count)
+                    continue;
+
+                BindingExpressionBase bindingExpression = _bindingExpressions[i];
+                if (bindingExpression.BindingGroup != this)
+                    continue;
+
+                if (!bindingExpression.CheckValidationRules(this, _validationStep))
                     result = false;
-                }
             }
 
             // include the bindings for proposed values, for the last two steps

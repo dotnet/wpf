@@ -1428,6 +1428,7 @@
     <NetCoreReference Include="Microsoft.Win32.Registry" />
     <NetCoreReference Include="System" />
     <NetCoreReference Include="System.Collections" />
+    <NetCoreReference Include="System.Collections.Concurrent" />
     <NetCoreReference Include="System.Collections.NonGeneric" />
     <NetCoreReference Include="System.Collections.Specialized" />
     <NetCoreReference Include="System.ComponentModel" />

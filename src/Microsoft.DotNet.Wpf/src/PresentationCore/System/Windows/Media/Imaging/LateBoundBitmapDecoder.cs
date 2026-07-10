@@ -29,7 +29,6 @@ using MS.Internal.PresentationCore;                        // SecurityHelper
 using SR=MS.Internal.PresentationCore.SR;
 using System.Net;
 using System.Net.Cache;
-using MS.Internal;
 
 namespace System.Windows.Media.Imaging
 {

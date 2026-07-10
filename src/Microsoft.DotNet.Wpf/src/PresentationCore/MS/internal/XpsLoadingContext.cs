@@ -33,6 +33,8 @@ using System.IO;
 using System.IO.Packaging;
 using System.Threading;
 
+using SR = MS.Internal.PresentationCore.SR;
+
 namespace MS.Internal
 {
     internal static class XpsLoadingContext

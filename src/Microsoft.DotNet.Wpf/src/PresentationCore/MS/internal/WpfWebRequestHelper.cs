@@ -2,6 +2,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+// Security note
+//   Mitigation: see DefaultCredentialsZonePolicy / PackageBoundaryGuard
+//   Kill switches (default off):
+//     Switch.System.Windows.Net.DoNotApplyZoneCheckForDefaultCredentials
+//     Switch.System.Windows.Documents.DisableXpsPackageBoundaryEnforcement
+//   This file is the single chokepoint for all WPF outbound HTTP requests.
+//   Both UseDefaultCredentials = true assignments below are intentionally
+//   gated by DefaultCredentialsZonePolicy - do NOT add new assignments
+//   without security review.
+
 //+-----------------------------------------------------------------------
 //
 //
@@ -104,11 +114,37 @@ static class WpfWebRequestHelper
                 httpRequest.Referer = BindUriHelper.GetReferer(uri);
             }
 
-            CustomCredentialPolicy.EnsureCustomCredentialPolicy();
-
-            // Enable NTLM authentication.
-            // This is safe to do thanks to the CustomCredentialPolicy.
-            httpRequest.UseDefaultCredentials = true;
+            // Enable NTLM/Kerberos/Negotiate authentication only when the target URI
+            // is in a trusted security zone (Local Machine / Intranet / Trusted).
+            //
+            // On .NET Framework, this gate was provided by registering an
+            // ICredentialPolicy with AuthenticationManager.CredentialPolicy, which
+            // the framework's auth client modules consulted on each 401 challenge.
+            // That mechanism (CustomCredentialPolicy) is preserved as the legacy
+            // path and selected when the AppContext switch
+            // "Switch.System.Windows.Net.DoNotApplyZoneCheckForDefaultCredentials"
+            // is true. It is retained as a compatibility escape hatch.
+            //
+            // On .NET 5+ AuthenticationManager.CredentialPolicy is obsolete
+            // (SYSLIB0009) and is a runtime no-op, so the legacy path no longer
+            // suppresses default credentials in practice. The default behavior
+            // therefore performs the zone check inline here via
+            // DefaultCredentialsZonePolicy, restoring the original safety
+            // behavior and preventing default credentials from being sent to
+            // Internet/Untrusted hosts.
+            if (CoreAppContextSwitches.DoNotApplyZoneCheckForDefaultCredentials)
+            {
+                // Legacy behavior: register the original ICredentialPolicy (no-op
+                // on .NET 5+) and unconditionally enable default credentials.
+#pragma warning disable CS0618 // CustomCredentialPolicy is intentionally retained as a kill-switch escape hatch.
+                CustomCredentialPolicy.EnsureCustomCredentialPolicy();
+#pragma warning restore CS0618
+                httpRequest.UseDefaultCredentials = true; // SECURITY-OPTOUT: legacy kill-switch path. Gated by AppContext switch (default off).
+            }
+            else if (DefaultCredentialsZonePolicy.ShouldSendDefaultCredentials(uri))
+            {
+                httpRequest.UseDefaultCredentials = true; // SECURITY-GATED: only reachable after DefaultCredentialsZonePolicy.ShouldSendDefaultCredentials returns true.
+            }
         }
 
         return request;

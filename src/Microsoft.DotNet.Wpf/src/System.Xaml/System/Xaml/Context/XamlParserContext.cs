@@ -19,6 +19,16 @@ namespace MS.Internal.Xaml.Context
 
         public Func<string, string> XmlNamespaceResolver { get; set; }
 
+        /// <summary>
+        /// Tracks the current nesting depth of markup-extension parsing
+        /// (<see cref="MePullParser"/>). Shared across all <see cref="MePullParser"/>
+        /// instances that operate on the same parser context, including the
+        /// nested instances spawned for <c>QuotedMarkupExtension</c> tokens, so
+        /// that the depth limit cannot be bypassed by alternating brace and
+        /// quoted-brace forms. See <see cref="MePullParser.MaxMarkupExtensionDepth"/>.
+        /// </summary>
+        public int MarkupExtensionDepth { get; set; }
+
         public XamlParserContext(XamlSchemaContext schemaContext, Assembly localAssembly)
             :base(schemaContext)
         {

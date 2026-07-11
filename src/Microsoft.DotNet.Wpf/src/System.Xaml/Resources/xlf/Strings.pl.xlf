@@ -637,6 +637,11 @@
         <target state="translated">Obiektu StaticExtension „{0}” nie można rozpoznać jako wyliczenia, pola statycznego ani właściwości statycznej.</target>
         <note />
       </trans-unit>
+      <trans-unit id="MarkupExtensionDepthExceeded">
+        <source>Markup extension nesting depth exceeded the maximum allowed ({0}). Deeply nested markup extensions are not supported.</source>
+        <target state="new">Markup extension nesting depth exceeded the maximum allowed ({0}). Deeply nested markup extensions are not supported.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="MarkupExtensionNoContext">
         <source>Markup extension '{0}' requires '{1}' be implemented in the IServiceProvider for ProvideValue.</source>
         <target state="translated">Rozszerzenie znacznika „{0}” wymaga zaimplementowania interfejsu „{1}” w interfejsie IServiceProvider dla metody ProvideValue.</target>

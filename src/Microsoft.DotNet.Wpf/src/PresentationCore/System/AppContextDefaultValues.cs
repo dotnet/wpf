@@ -28,6 +28,7 @@ namespace System
             LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.AllowExternalProcessToBlockAccessToTemporaryFilesSwitchName, false);
             LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.EnableHardwareAccelerationInRdpSwitchName, false);
             LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.DisableSpecialCharacterLigatureSwitchName, false);
+            LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.DisableCmapAndSbitOverflowProtectionSwitchName, false);
         }
     }
 }

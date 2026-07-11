@@ -416,6 +416,21 @@ namespace MS.Internal
 
         #endregion
 
+        #region DisableCmapAndSbitOverflowProtection
+
+        internal const string DisableCmapAndSbitOverflowProtectionSwitchName = "Switch.MS.Internal.TtfDelta.DisableCmapAndSbitOverflowProtection";
+        private static int _disableCmapAndSbitOverflowProtection;
+        public static bool DisableCmapAndSbitOverflowProtection
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(DisableCmapAndSbitOverflowProtectionSwitchName, ref _disableCmapAndSbitOverflowProtection);
+            }
+        }
+
+        #endregion
+
         #region DisablePenImcBoundsCheckProtection
 
         internal const string DisablePenImcBoundsCheckProtectionSwitchName = "Switch.MS.Internal.PenImc.DisablePenImcBoundsCheckProtection";

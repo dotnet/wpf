@@ -2757,6 +2757,11 @@
         <target state="translated">Aktuální CachePolicy je CacheOnly, ale požadovaný zdroj v paměti cache neexistuje.</target>
         <note />
       </trans-unit>
+      <trans-unit id="Resource_XpsPackageBoundaryViolation">
+        <source>The URI references a resource outside the current XPS package. External URIs (http, https, file, UNC, cross-package) are not permitted when loading XPS content.</source>
+        <target state="new">The URI references a resource outside the current XPS package. External URIs (http, https, file, UNC, cross-package) are not permitted when loading XPS content.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="RoutedEventArgsMustHaveRoutedEvent">
         <source>Every RoutedEventArgs must have a non-null RoutedEvent associated with it.</source>
         <target state="translated">Každý RoutedEventArgs musí mít přiřazenu nenulovou událost RoutedEvent.</target>

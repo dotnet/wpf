@@ -1,0 +1,11 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+<Window x:Class="DragLeaveCoordBug.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="450" Width="600">
+    <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AllowDrop="True" DragLeave="ScrollViewer_DragLeave">
+        <Rectangle Fill="MediumAquamarine" Width="100" Height="999"/>
+    </ScrollViewer>
+</Window>

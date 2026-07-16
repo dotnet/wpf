@@ -29,6 +29,8 @@ namespace System
             LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.EnableHardwareAccelerationInRdpSwitchName, false);
             LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.DisableSpecialCharacterLigatureSwitchName, false);
             LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.DisableCmapAndSbitOverflowProtectionSwitchName, false);
+            LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.DoNotApplyZoneCheckForDefaultCredentialsSwitchName, false);
+            LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.DisableXpsPackageBoundaryRestrictionSwitchName, false);
         }
     }
 }

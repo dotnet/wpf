@@ -2752,6 +2752,11 @@
         <target state="translated">目前的 CachePolicy 是 CacheOnly，但要求的資源不存在於快取中。</target>
         <note />
       </trans-unit>
+      <trans-unit id="Resource_XpsPackageBoundaryViolation">
+        <source>The URI references a resource outside the current XPS package. External URIs (http, https, file, UNC, cross-package) are not permitted when loading XPS content.</source>
+        <target state="new">The URI references a resource outside the current XPS package. External URIs (http, https, file, UNC, cross-package) are not permitted when loading XPS content.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="RoutedEventArgsMustHaveRoutedEvent">
         <source>Every RoutedEventArgs must have a non-null RoutedEvent associated with it.</source>
         <target state="translated">每個 RoutedEventArgs 都必須有關聯的非空值 RoutedEvent。</target>

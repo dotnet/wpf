@@ -368,7 +368,7 @@ namespace System.Windows.Documents
                 {
                     try
                     {
-                        embeddedObject = (DependencyObject)XamlReader.Load(new XmlTextReader(new StringReader(_xml)));
+                        embeddedObject = (DependencyObject)XamlReader.Load(new XmlTextReader(new StringReader(_xml)), useRestrictiveXamlReader: true);
                     }
                     catch (XamlParseException e)
                     {

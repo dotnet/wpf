@@ -131,6 +131,19 @@ namespace System.Windows.Navigation
             INavigatorBase navigator = null;
             bool inSameThread = true;
 
+            // If the navigation originates from a FixedPage element (Path, Canvas, Glyphs, or
+            // FixedPage) carrying FixedPage.NavigateUri, the target content could be attacker-
+            // controlled XAML within an XPS package. Mark this NavigationService as unsafe so that
+            // the XAML loader uses the restrictive reader and blocks dangerous types like
+            // ObjectDataProvider.
+            UIElement sourceElement = e.OriginalSource as UIElement;
+            if (sourceElement != null &&
+                (sourceElement is System.Windows.Shapes.Path || sourceElement is Canvas || sourceElement is Glyphs || sourceElement is FixedPage) &&
+                FixedPage.GetNavigateUri(sourceElement) != null)
+            {
+                IsUnsafe = true;
+            }
+
             if (!String.IsNullOrEmpty(target))
             {
                 // Need spec for this behavior

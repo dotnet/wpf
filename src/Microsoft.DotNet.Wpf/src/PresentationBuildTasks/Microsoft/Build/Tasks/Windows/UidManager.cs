@@ -476,7 +476,7 @@ namespace Microsoft.Build.Tasks.Windows
         {
             UidCollector collector = new UidCollector(fileName  );
 
-            using (Stream xamlStream = File.OpenRead(fileName))
+            using (Stream xamlStream = File.OpenRead(fileName)) // CodeQL [SM00414] Trusted build-time input: ItemSpec is developer-authored MSBuild markup, not attacker-controlled
             {
                 XmlNamespaceManager nsmgr = new XmlNamespaceManager(new NameTable());
                 XmlParserContext context  = new XmlParserContext(

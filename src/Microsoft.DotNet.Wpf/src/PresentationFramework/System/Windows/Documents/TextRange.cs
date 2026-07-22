@@ -471,10 +471,7 @@ namespace System.Windows.Documents
         /// </summary>
         void ITextRange.FireChanged()
         {
-            if (this.Changed != null)
-            {
-                this.Changed(this, EventArgs.Empty);
-            }
+            this.Changed?.Invoke(this, EventArgs.Empty);
         }
 
         //------------------------------------------------------

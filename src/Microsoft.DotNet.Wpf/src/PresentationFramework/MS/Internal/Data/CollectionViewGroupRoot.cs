@@ -47,8 +47,7 @@ namespace MS.Internal.Data
         {
             ArgumentNullException.ThrowIfNull(args);
 
-            if (CollectionChanged != null)
-                CollectionChanged(this, args);
+            CollectionChanged?.Invoke(this, args);
         }
         #endregion INotifyCollectionChanged
 
@@ -73,8 +72,7 @@ namespace MS.Internal.Data
         // a group description has changed somewhere in the tree - notify host
         protected override void OnGroupByChanged()
         {
-            if (GroupDescriptionChanged != null)
-                GroupDescriptionChanged(this, EventArgs.Empty);
+            GroupDescriptionChanged?.Invoke(this, EventArgs.Empty);
         }
 
         #region Internal Events and Properties

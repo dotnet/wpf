@@ -1118,10 +1118,7 @@ namespace MS.Internal.Documents
         /// </summary>
         private void RaiseSignatureStatusChange(SignatureStatusEventArgs args)
         {
-            if (SignatureStatusChange != null)
-            {
-                SignatureStatusChange(this, args);
-            }
+            SignatureStatusChange?.Invoke(this, args);
         }
 
         /// <summary>
@@ -1129,10 +1126,7 @@ namespace MS.Internal.Documents
         /// </summary>
         private void RaiseSignaturesChanged()
         {
-            if (SignaturesChanged != null)
-            {
-                SignaturesChanged(this, EventArgs.Empty);
-            }
+            SignaturesChanged?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>

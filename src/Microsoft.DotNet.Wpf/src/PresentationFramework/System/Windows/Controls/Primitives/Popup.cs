@@ -1022,10 +1022,7 @@ namespace System.Windows.Controls.Primitives
 
         private void FirePopupCouldClose()
         {
-            if (PopupCouldClose != null)
-            {
-                PopupCouldClose(this, EventArgs.Empty);
-            }
+            PopupCouldClose?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>

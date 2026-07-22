@@ -2608,10 +2608,7 @@ namespace System.Windows
             // Fire the event that BindingExpression and
             // ResourceReferenceExpression will be listening to.
             EventHandler handlers = InheritanceContextChangedHandlersField.GetValue(this);
-            if (handlers != null)
-            {
-                handlers(this, args);
-            }
+            handlers?.Invoke(this, args);
 
             CanModifyEffectiveValues = false;
             try

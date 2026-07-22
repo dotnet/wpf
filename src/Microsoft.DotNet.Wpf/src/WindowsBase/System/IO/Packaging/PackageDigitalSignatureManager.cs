@@ -1357,12 +1357,12 @@ namespace System.IO.Packaging
 
         private static readonly ContentType _originPartContentType = new ContentType("application/vnd.openxmlformats-package.digital-signature-origin");
 
-        private static readonly String _guidStorageFormatString = @"N";     // N - simple format without adornments
-        private static readonly String _defaultHashAlgorithm =  "http://www.w3.org/2001/04/xmlenc#sha256";
-        private static readonly String _originRelationshipType = "http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/origin";
-        private static readonly String _originToSignatureRelationshipType = "http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/signature";
-        private static readonly String _defaultSignaturePartNamePrefix = "/package/services/digital-signature/xml-signature/";
-        private static readonly String _defaultSignaturePartNameExtension = ".psdsxs";
+        private const String _guidStorageFormatString = @"N";     // N - simple format without adornments
+        private const String _defaultHashAlgorithm = "http://www.w3.org/2001/04/xmlenc#sha256";
+        private const String _originRelationshipType = "http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/origin";
+        private const String _originToSignatureRelationshipType = "http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/signature";
+        private const String _defaultSignaturePartNamePrefix = "/package/services/digital-signature/xml-signature/";
+        private const String _defaultSignaturePartNameExtension = ".psdsxs";
         #endregion Private Members
     }
 }

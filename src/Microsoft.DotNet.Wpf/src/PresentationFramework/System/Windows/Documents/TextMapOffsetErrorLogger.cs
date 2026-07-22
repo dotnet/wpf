@@ -38,7 +38,7 @@ namespace System.Windows.Documents
         /// </remarks>
         private partial class TextMapOffsetErrorLogger
         {
-            private static readonly string TextMapOffsetError = "TextMapOffsetError";
+            private const string TextMapOffsetError = "TextMapOffsetError";
 
             private DebugInfo _debugInfo;
             public enum CalculationModes : int
@@ -52,7 +52,7 @@ namespace System.Windows.Documents
             /// expected for various indices and offsets is -1. Therefore -2 can act as a handy way to 
             /// represent an "unset" or "uninitialized" value;
             /// </summary>
-            private static readonly int UnsetValue = -2;
+            private const int UnsetValue = -2;
 
             public TextMapOffsetErrorLogger(LogicalDirection direction, TextMap textMap, ArrayList segments, int positionInSegmentList, int leftWordBreak, int rightWordBreak, int contentOffset)
             {

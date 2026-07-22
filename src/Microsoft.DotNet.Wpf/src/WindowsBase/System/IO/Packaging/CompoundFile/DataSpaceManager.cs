@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections;
@@ -34,11 +34,11 @@ namespace System.IO.Packaging
     private const string TransformDefinitions = "TransformInfo";
     private const string TransformPrimaryInfo = "\x0006Primary";
 
-    // The string used in FormatVersion
-    private static readonly string DataSpaceVersionIdentifier = "Microsoft.Container.DataSpaces";
+        // The string used in FormatVersion
+        private const string DataSpaceVersionIdentifier = "Microsoft.Container.DataSpaces";
 
-    // Version Writer - 1.0, Reader - 1.0, Updater - 1.0
-    private static readonly VersionPair DataSpaceCurrentWriterVersion  = new VersionPair(major: 1, minor: 0);
+        // Version Writer - 1.0, Reader - 1.0, Updater - 1.0
+        private static readonly VersionPair DataSpaceCurrentWriterVersion  = new VersionPair(major: 1, minor: 0);
     private static readonly VersionPair DataSpaceCurrentReaderVersion  = new VersionPair(major: 1, minor: 0);
     private static readonly VersionPair DataSpaceCurrentUpdaterVersion = new VersionPair(major: 1, minor: 0);
 

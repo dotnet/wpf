@@ -731,7 +731,7 @@ namespace System.Windows.Xps.Serialization
         private GlyphTypeface           _glyphTypeface;
         private bool                    _streamWritten; 
         private Uri _fontUri;
-        private static readonly int _readBlockSize = 1048576; //1MB
+        private const int _readBlockSize = 1_048_576; //1MB
 
         #endregion Private data
     }

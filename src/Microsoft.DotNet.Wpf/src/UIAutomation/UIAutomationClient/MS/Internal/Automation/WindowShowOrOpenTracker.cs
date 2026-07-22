@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description: Class used to track new UI appearing and make sure any events
@@ -98,7 +98,7 @@ namespace MS.Internal.Automation
 
         #region Private Fields
 
-        private static readonly string _wcpClassName = "HwndWrapper";
+        private const string _wcpClassName = "HwndWrapper";
 
         #endregion Private Fields
     }

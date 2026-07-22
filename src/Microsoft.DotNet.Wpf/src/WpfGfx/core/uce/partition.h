@@ -140,6 +140,7 @@ public:
     virtual ~Partition() {}
 
     virtual HRESULT Compose(
+        bool canRenderWithoutDisplayDevices,
         __out_ecount(1) bool *pfNeedsPresent
         ) = 0;
 

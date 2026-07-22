@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -1126,6 +1126,25 @@ namespace MS.Internal.Shaping
             public static bool operator !=(GlyphLookupRecord value1, GlyphLookupRecord value2)
             {
                 return !value1.Equals(value2);
+            }
+            public static bool operator <(GlyphLookupRecord left, GlyphLookupRecord right)
+            {
+                return left.CompareTo(right) < 0;
+            }
+
+            public static bool operator >(GlyphLookupRecord left, GlyphLookupRecord right)
+            {
+                return left.CompareTo(right) > 0;
+            }
+
+            public static bool operator <=(GlyphLookupRecord left, GlyphLookupRecord right)
+            {
+                return left.CompareTo(right) <= 0;
+            }
+
+            public static bool operator >=(GlyphLookupRecord left, GlyphLookupRecord right)
+            {
+                return left.CompareTo(right) >= 0;
             }
             public override bool Equals(object value)
             {

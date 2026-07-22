@@ -6273,6 +6273,16 @@ Czy chcesz go zastąpić?</target>
         <target state="translated">Konwersja według ValueSerializer nie powiodła się, ponieważ nie dostarczono IValueSerializerContext „{0}”.</target>
         <note />
       </trans-unit>
+	  <trans-unit id="Verify_ApartmentState">
+        <source>This operation requires the thread's apartment state to be '{0}'.</source>
+        <target state="translated">Ta operacja wymaga stanu apartamentu wątku „{0}”.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Verify_FileExists">
+        <source>No file exists at '{0}'.</source>
+        <target state="translated">Żaden plik nie istnieje w „{0}”.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="VirtualizedCellInfoCollection_DoesNotSupportIndexChanges">
         <source>This collection does not support changing values with specific indexes.</source>
         <target state="translated">Ta kolekcja nie obsługuje zmiany wartości z określonymi indeksami.</target>

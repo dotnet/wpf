@@ -5,9 +5,10 @@ using System.Reflection;
 
 namespace WinRT
 {
-
     internal static class TypeExtensions
     {
+        private const string NamespacePrefix = "MS.Internal.WindowsRuntime.";
+
         public static Type FindHelperType(this Type type)
         {
             if (typeof(Exception).IsAssignableFrom(type))
@@ -19,12 +20,14 @@ namespace WinRT
             {
                 return customMapping;
             }
-            var helper = $"ABI.{type.FullName}";
+
+            string helper = $"ABI.{type.FullName}";
             string helperTypeName2 = $"MS.Internal.WindowsRuntime.ABI.{type.FullName}";
-            if (type.FullName.StartsWith("MS.Internal.WindowsRuntime."))
+            if (type.FullName.StartsWith(NamespacePrefix, StringComparison.Ordinal))
             {
                 helper = $"MS.Internal.WindowsRuntime.ABI.{RemoveNamespacePrefix(type.FullName)}";
             }
+
             return Type.GetType(helper) ?? Type.GetType(helperTypeName2);
         }
 
@@ -72,12 +75,7 @@ namespace WinRT
 
         public static string RemoveNamespacePrefix(string ns)
         {
-            const string NamespacePrefix = "MS.Internal.WindowsRuntime.";
-            if (ns.StartsWith(NamespacePrefix))
-            {
-                return ns.Substring(NamespacePrefix.Length);
-            }
-            return ns;
+            return ns.StartsWith(NamespacePrefix, StringComparison.Ordinal) ? ns.Substring(NamespacePrefix.Length) : ns;
         }
     }
 }

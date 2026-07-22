@@ -152,27 +152,24 @@ namespace System.Windows.Media
                 DUCE.ResourceHandle hStartPointAnimations = GetAnimationResourceHandle(StartPointProperty, channel);
                 DUCE.ResourceHandle hEndPointAnimations = GetAnimationResourceHandle(EndPointProperty, channel);
 
+                DUCE.MILCMD_LINEARGRADIENTBRUSH data;
+                data.Type = MILCMD.MilCmdLinearGradientBrush;
+                data.Handle = _duceResource.GetHandle(channel);
+                data.Opacity = Opacity;
+                data.hOpacityAnimations = hOpacityAnimations;
+                data.hTransform = hTransform;
+                data.hRelativeTransform = hRelativeTransform;
+                data.ColorInterpolationMode = ColorInterpolationMode;
+                data.MappingMode = MappingMode;
+                data.SpreadMethod = SpreadMethod;
+
+                data.StartPoint = StartPoint;
+                data.hStartPointAnimations = hStartPointAnimations;
+                data.EndPoint = EndPoint;
+                data.hEndPointAnimations = hEndPointAnimations;
+
                 unsafe
                 {
-                    DUCE.MILCMD_LINEARGRADIENTBRUSH data;
-                    data.Type = MILCMD.MilCmdLinearGradientBrush;
-                    data.Handle = _duceResource.GetHandle(channel);
-                    double tempOpacity = Opacity;
-                    DUCE.CopyBytes((byte*)&data.Opacity, (byte*)&tempOpacity, 8);
-                    data.hOpacityAnimations = hOpacityAnimations;
-                    data.hTransform = hTransform;
-                    data.hRelativeTransform = hRelativeTransform;
-                    data.ColorInterpolationMode = ColorInterpolationMode;
-                    data.MappingMode = MappingMode;
-                    data.SpreadMethod = SpreadMethod;
-
-                    Point tempStartPoint = StartPoint;
-                    DUCE.CopyBytes((byte*)&data.StartPoint, (byte*)&tempStartPoint, 16);
-                    data.hStartPointAnimations = hStartPointAnimations;
-                    Point tempEndPoint = EndPoint;
-                    DUCE.CopyBytes((byte*)&data.EndPoint, (byte*)&tempEndPoint, 16);
-                    data.hEndPointAnimations = hEndPointAnimations;
-
                     // GradientStopCollection:  Need to enforce upper-limit of gradient stop capacity
 
                     int count = (vGradientStops == null) ? 0 : vGradientStops.Count;
@@ -189,8 +186,7 @@ namespace System.Windows.Media
                         DUCE.MIL_GRADIENTSTOP stopCmd;
                         GradientStop gradStop = vGradientStops.Internal_GetItem(i);
 
-                        double temp = gradStop.Offset;
-                        DUCE.CopyBytes((byte*)&stopCmd.Position,(byte*)&temp, sizeof(double));
+                        stopCmd.Position = gradStop.Offset;
                         stopCmd.Color = CompositionResourceManager.ColorToMilColorF(gradStop.Color);
                         
                         channel.AppendCommandData(

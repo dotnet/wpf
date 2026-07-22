@@ -219,11 +219,7 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, plsrun, lsrun);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("FetchRunRedefined", plsrun, lsrun);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
 
@@ -262,7 +258,6 @@ namespace MS.Internal.TextFormatting
                 }
             }
         }
-
 
         internal LsErr FetchPap(
             IntPtr      pols,           // Line Layout context
@@ -344,11 +339,7 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, Plsrun.Undefined, null);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("FetchPap", Plsrun.Undefined, null);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
 
@@ -388,11 +379,7 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, Plsrun.Undefined, null);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("FetchLineProps", Plsrun.Undefined, null);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
 
@@ -434,11 +421,7 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, plsrun, lsrun);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("GetRunTextMetrics", plsrun, lsrun);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
 
@@ -528,11 +511,7 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, plsrun, lsrun);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("GetRunCharWidths", plsrun, lsrun);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
 
@@ -559,14 +538,9 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, plsrun, lsrun);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("GetDurMaxExpandRagged", plsrun, lsrun);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
-
 
         internal LsErr GetAutoNumberInfo(
             IntPtr          pols,               // Line Layout context
@@ -637,11 +611,7 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, plsrun, lsrun);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("GetAutoNumberInfo", plsrun, lsrun);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
 
@@ -701,11 +671,7 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, plsrun, lsrun);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("GetAutoNumberInfo", plsrun, lsrun);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
 
@@ -754,11 +720,7 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, plsrun, lsrun);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("GetRunStrikethroughInfo", plsrun, lsrun);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
 
@@ -814,11 +776,7 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, Plsrun.Undefined, null);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("Hyphenate", Plsrun.Undefined, null);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
 
@@ -851,11 +809,7 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, Plsrun.Undefined, null);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("GetNextHyphenOpp", Plsrun.Undefined, null);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
 
@@ -893,11 +847,7 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, Plsrun.Undefined, null);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("GetPrevHyphenOpp", Plsrun.Undefined, null);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
 
@@ -958,11 +908,7 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, plsrun, lsrun);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("DrawStrikethrough", plsrun, lsrun);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
 
@@ -1011,11 +957,7 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, plsrun, lsrun);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("DrawUnderline", plsrun, lsrun);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
 
@@ -1468,11 +1410,7 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, plsrun, lsrun);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("DrawTextRun", plsrun, lsrun);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
 
@@ -1518,11 +1456,7 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, Plsrun.Undefined, null);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("FInterruptShaping", Plsrun.Undefined, null);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
 
@@ -1653,13 +1587,8 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, (Plsrun)(plsplsruns[0]), lsrunFirst);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("GetGlyphsRedefined", (Plsrun)(plsplsruns[0]), lsrunFirst);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
-            
         }
 
 
@@ -1735,13 +1664,8 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, (Plsrun)(plsplsruns[0]), lsrunFirst);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("GetGlyphPositions", (Plsrun)(plsplsruns[0]), lsrunFirst);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
-            
         }
 
 
@@ -1841,11 +1765,7 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, plsrun, lsrun);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("DrawGlyphs", plsrun, lsrun);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
 
@@ -1891,11 +1811,7 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, plsrun, lsrun);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("GetCharCompressionInfoFullMixed", plsrun, lsrun);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
 
@@ -1941,11 +1857,7 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, plsrun, lsrun);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("GetCharExpansionInfoFullMixed", plsrun, lsrun);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
 
@@ -2045,11 +1957,7 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, plsrun, lsrun);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("GetGlyphCompressionInfoFullMixed", plsrun, lsrun);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
 
@@ -2177,11 +2085,7 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, plsrun, lsrun);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("GetGlyphExpansionInfoFullMixed", plsrun, lsrun);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
 
@@ -2321,11 +2225,7 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, Plsrun.Undefined, null);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("GetObjectHandlerInfo", Plsrun.Undefined, null);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
 
@@ -2393,14 +2293,9 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, plsrun, lsrun);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("InlineFormat", plsrun, lsrun);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
-
 
         private LsBrkCond BreakConditionToLsBrkCond(LineBreakCondition breakCondition)
         {
@@ -2421,7 +2316,6 @@ namespace MS.Internal.TextFormatting
             Debug.Assert(false);
             return LsBrkCond.Please;
         }
-
 
         internal LsErr InlineDraw(
             System.IntPtr   pols,           // Line Layout context
@@ -2557,14 +2451,9 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, plsrun, lsrun);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("InlineDraw", plsrun, lsrun);
-                lserr = LsErr.ClientAbort;
-            }
+
             return lserr;
         }
-
 
         //
         // Line enumeration methods through Line Services LsEnumLine callbacks 
@@ -2686,12 +2575,7 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, plsrun, lsrun);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("EnumText", plsrun, lsrun);
-                lserr = LsErr.ClientAbort;
-            }
-            
+
             return lserr;
         }
 
@@ -2768,11 +2652,6 @@ namespace MS.Internal.TextFormatting
                 SaveException(e, plsrun, lsrun);
                 lserr = LsErr.ClientAbort;
             }
-            catch
-            {
-                SaveNonCLSException("EnumTab", plsrun, lsrun);
-                lserr = LsErr.ClientAbort;
-            }
 
             return lserr;
         }
@@ -2781,16 +2660,10 @@ namespace MS.Internal.TextFormatting
         /// Returns whether a given character is a space character and hence can safely be expanded/compressed
         /// with little visual impact on the text.
         /// </summary>
-        private bool IsSpace(char ch)
+        private static bool IsSpace(char ch)
         {
-            if (   ch == '\u0009' // tab
-                || ch == '\u0020' // Space
-                )
-            {
-                return true;
-            }
-
-            return false;
+            return ch is '\u0009'  // Tab
+                      or '\u0020'; // Space
         }
 
         /// <summary>
@@ -3243,8 +3116,6 @@ namespace MS.Internal.TextFormatting
                     }
                 }
 
-                
-
                 glyphRun = lsrun.Shapeable.ComputeUnshapedGlyphRun(
                     runOrigin,
                     charString,
@@ -3254,8 +3125,6 @@ namespace MS.Internal.TextFormatting
 
             return glyphRun;
         } 
-
-
 
         /////   Delegate holder
         //
@@ -3387,13 +3256,6 @@ namespace MS.Internal.TextFormatting
         private void SaveException(Exception e, Plsrun plsrun, LSRun lsrun)
         {
             e.Data[ExceptionContext.Key] = new ExceptionContext(e.Data[ExceptionContext.Key], e.StackTrace, plsrun, lsrun);
-            _exception = e;
-        }
-
-        private void SaveNonCLSException(string methodName, Plsrun plsrun, LSRun lsrun)
-        {
-            Exception e = new System.Exception(SR.NonCLSException);
-            e.Data[ExceptionContext.Key] = new ExceptionContext(null, methodName, plsrun, lsrun);
             _exception = e;
         }
 

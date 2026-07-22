@@ -277,33 +277,28 @@ CMILFactory::CreateBitmapRenderTarget(
             MIL_THR(E_INVALIDARG);
         }
     }
-    if (SUCCEEDED(hr))
-    {
-        if ((format != MilPixelFormat::PBGRA32bpp) && (format != MilPixelFormat::PRGBA128bppFloat))
-        {
-            MIL_THR(WGXERR_UNSUPPORTEDPIXELFORMAT);
-        }
-    }
 
+    CHybridSurfaceRenderTarget *pRenderTarget = NULL;
     if (SUCCEEDED(hr))
     {
-        if ( !(dwFlags & MilRTInitialization::HardwareOnly) )
-        {
-            MIL_THR(CSwRenderTargetBitmap::Create(
-                width,
-                height,
-                format,
-                dpiX,
-                dpiY,
-                DisplayId::None,
-                ppIRenderTargetBitmap
-                DBG_STEP_RENDERING_COMMA_PARAM(NULL) // pDisplayRTParent
-                ));
-        }
-        else
-        {
-            MIL_THR(WGXERR_NOTIMPLEMENTED);
-        }
+        CDisplaySet const *pDisplaySet = NULL; 
+        GetCurrentDisplaySet(&pDisplaySet);  // pDisplaySet can be NULL so we dont need to get hr
+
+        dwFlags |= MilRTInitialization::SingleThreadedUsage;
+        IntermediateRTUsage rtUsage;
+        rtUsage.flags = IntermediateRTUsage::ForBlending;
+        rtUsage.wrapMode = MilBitmapWrapMode::Extend;
+        MIL_THR(CHybridSurfaceRenderTarget::CreateRenderTargetBitmap(
+            pDisplaySet,
+            dwFlags,
+            width,
+            height,
+            format,
+            dpiX,
+            dpiY,
+            rtUsage,
+            ppIRenderTargetBitmap
+        ));
     }
 
     API_CHECK(hr);

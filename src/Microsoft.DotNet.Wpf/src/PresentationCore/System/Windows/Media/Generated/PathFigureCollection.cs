@@ -58,8 +58,6 @@ namespace System.Windows.Media
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -67,7 +65,6 @@ namespace System.Windows.Media
         //  Public Properties
         //
         //------------------------------------------------------
-
 
         #region IList<T>
 
@@ -135,8 +132,6 @@ namespace System.Windows.Media
 
             _collection.Insert(index, value);
 
-
-
             ++_version;
             WritePostscript();
         }
@@ -166,9 +161,6 @@ namespace System.Windows.Media
 
                 _collection.RemoveAt(index);
 
-
-
-
                 ++_version;
                 WritePostscript();
 
@@ -193,7 +185,6 @@ namespace System.Windows.Media
             WritePostscript();
         }
 
-
         /// <summary>
         ///     Removes the element at the specified index without firing
         ///     the public Changed event.
@@ -210,14 +201,10 @@ namespace System.Windows.Media
 
             _collection.RemoveAt(index);
 
-
-
-
             ++_version;
 
             // No WritePostScript to avoid firing the Changed event.
         }
-
 
         /// <summary>
         ///     Indexer for the collection
@@ -239,17 +226,14 @@ namespace System.Windows.Media
 
                 WritePreamble();
 
-                if (!Object.ReferenceEquals(_collection[ index ], value))
+                if (!Object.ReferenceEquals(_collection[index], value))
                 {
+                    PathFigure oldValue = _collection[index];
 
-                    PathFigure oldValue = _collection[ index ];
                     OnFreezablePropertyChanged(oldValue, value);
 
-                    _collection[ index ] = value;
-
-
+                    _collection[index] = value;
                 }
-
 
                 ++_version;
                 WritePostscript();
@@ -532,12 +516,12 @@ namespace System.Windows.Media
             {
                 throw new System.ArgumentException(SR.Collection_NoNull);
             }
+
             WritePreamble();
             PathFigure newValue = value;
+
             OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
             index = _collection.Add(newValue);
-
-
 
             ++_version;
 
@@ -546,15 +530,12 @@ namespace System.Windows.Media
             return index;
         }
 
-
-
         #endregion Private Helpers
 
         private static PathFigureCollection s_empty;
 
 
         #region Public Properties
-
 
 
         #endregion Public Properties
@@ -591,11 +572,10 @@ namespace System.Windows.Media
             for (int i = 0; i < count; i++)
             {
                 PathFigure newValue = (PathFigure)sourcePathFigureCollection._collection[i].Clone();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
@@ -613,11 +593,10 @@ namespace System.Windows.Media
             for (int i = 0; i < count; i++)
             {
                 PathFigure newValue = (PathFigure)sourcePathFigureCollection._collection[i].CloneCurrentValue();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
@@ -635,11 +614,10 @@ namespace System.Windows.Media
             for (int i = 0; i < count; i++)
             {
                 PathFigure newValue = (PathFigure)sourcePathFigureCollection._collection[i].GetAsFrozen();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
@@ -657,11 +635,10 @@ namespace System.Windows.Media
             for (int i = 0; i < count; i++)
             {
                 PathFigure newValue = (PathFigure)sourcePathFigureCollection._collection[i].GetCurrentValueAsFrozen();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-
             }
-
         }
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.FreezeCore">Freezable.FreezeCore</see>.
@@ -690,13 +667,6 @@ namespace System.Windows.Media
         #region Internal Methods
 
 
-
-
-
-
-
-
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -706,7 +676,6 @@ namespace System.Windows.Media
         //------------------------------------------------------
 
         #region Internal Properties
-
 
         /// <summary>
         /// Creates a string representation of this object based on the current culture.
@@ -811,7 +780,6 @@ namespace System.Windows.Media
         #region Dependency Properties
 
 
-
         #endregion Dependency Properties
 
         //------------------------------------------------------
@@ -822,12 +790,8 @@ namespace System.Windows.Media
 
         #region Internal Fields
 
-
-
-
         internal FrugalStructList<PathFigure> _collection;
         internal uint _version = 0;
-
 
         #endregion Internal Fields
 
@@ -965,7 +929,6 @@ namespace System.Windows.Media
         //
         //------------------------------------------------------
 
-
         /// <summary>
         /// Initializes a new instance that is empty.
         /// </summary>
@@ -1021,10 +984,11 @@ namespace System.Windows.Media
                         {
                             throw new System.ArgumentException(SR.Collection_NoNull);
                         }
+
                         PathFigure newValue = item;
+
                         OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                         _collection.Add(newValue);
-
                     }
 
                     needsItemValidation = false;
@@ -1039,11 +1003,10 @@ namespace System.Windows.Media
                     {
                         throw new System.ArgumentException(SR.Collection_NoNull);
                     }
-                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
 
+                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
                 }
             }
-
 
             WritePostscript();
         }

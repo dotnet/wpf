@@ -51,8 +51,6 @@ namespace System.Windows.Media.Media3D
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -62,10 +60,7 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
 
-
-
         #region Public Properties
-
 
 
         #endregion Public Properties
@@ -86,8 +81,6 @@ namespace System.Windows.Media.Media3D
         {
             return new AmbientLight();
         }
-
-
 
         #endregion ProtectedMethods
 
@@ -149,7 +142,6 @@ namespace System.Windows.Media.Media3D
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_AMBIENTLIGHT))
                 {
                     Transform3D vTransform = Transform;
@@ -157,16 +149,13 @@ namespace System.Windows.Media.Media3D
 
                     AddRefOnChannelAnimations(channel);
 
-
                     UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
                 }
 
                 return _duceResource.GetHandle(channel);
-
         }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
@@ -175,9 +164,7 @@ namespace System.Windows.Media.Media3D
                     if (vTransform != null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
-
                 }
-
         }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
@@ -194,7 +181,6 @@ namespace System.Windows.Media.Media3D
             // Note that we are in a lock here already.
             return _duceResource.GetChannel(index);
         }
-
 
         #endregion Internal Methods
 
@@ -221,8 +207,6 @@ namespace System.Windows.Media.Media3D
             }
         }
 
-
-
         #endregion Internal Properties
 
         //------------------------------------------------------
@@ -232,7 +216,6 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
         #region Dependency Properties
-
 
 
         #endregion Dependency Properties
@@ -245,14 +228,9 @@ namespace System.Windows.Media.Media3D
 
         #region Internal Fields
 
-
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
 
-
-
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -262,8 +240,6 @@ namespace System.Windows.Media.Media3D
         //  Constructors
         //
         //------------------------------------------------------
-
-
 
 
         #endregion Constructors

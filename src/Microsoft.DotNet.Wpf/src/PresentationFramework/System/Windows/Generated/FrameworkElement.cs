@@ -324,7 +324,6 @@ namespace System.Windows
             BroadcastEventHelper.AddOrRemoveHasLoadedChangeHandlerFlag(this, oldParent, newParent);
 
 
-
             ///////////////////
             // OnParentChanged:
             ///////////////////
@@ -351,7 +350,6 @@ namespace System.Windows
 
             DependencyObject oldParent = _parent;
             _parent = newParent;
-
 
 
             // Synchronize ForceInherit properties
@@ -414,7 +412,6 @@ namespace System.Windows
             // invalidation; push that list of inherited properties on the stack
             // for the children to use
             parentTreeState.InheritablePropertiesStack.Push(currentInheritableProperties);
-
 
 
             // Call OnAncestorChanged
@@ -877,7 +874,6 @@ namespace System.Windows
             // invalidate the mentee's tree
             TreeWalkHelper.InvalidateOnTreeChange(
                     this, null,
-
                     foMentor.DO,
                     true /* isAddOperation */
                     );
@@ -911,7 +907,6 @@ namespace System.Windows
             // invalidate the mentee's tree
             TreeWalkHelper.InvalidateOnTreeChange(
                     this, null,
-
                     foMentor.DO,
                     false /* isAddOperation */
                     );
@@ -1010,7 +1005,6 @@ namespace System.Windows
         {
             TreeWalkHelper.InvalidateOnInheritablePropertyChange(
                     this, null,
-
                     e.Info, false /*skipStartNode*/);
         }
 
@@ -1019,7 +1013,6 @@ namespace System.Windows
         {
             TreeWalkHelper.InvalidateOnResourcesChange(
                     this, null,
-
                     ResourcesChangeInfo.CatastrophicDictionaryChangeInfo);
         }
 

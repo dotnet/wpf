@@ -231,12 +231,15 @@
     <Compile Include="MS\Internal\Interop\DWrite\DWRITE_FONT_FACE_TYPE.cs" />
     <Compile Include="MS\Internal\Interop\DWrite\DWRITE_FONT_SIMULATIONS.cs" />
     <Compile Include="MS\Internal\Interop\DWrite\IDWriteFactory.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteFactory2.cs" />
     <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontCollection.cs" />
     <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontCollectionLoader.cs" />
     <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontFace.cs" />
     <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontFile.cs" />
     <Compile Include="MS\Internal\Interop\DWrite\IDWriteFontFileLoader.cs" />
     <Compile Include="MS\Internal\Interop\DWrite\IDWriteTextAnalyzer.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\DWriteColorGlyphStructs.cs" />
+    <Compile Include="MS\Internal\Interop\DWrite\IDWriteColorGlyphRunEnumerator.cs" />
     <Compile Include="MS\Internal\Interop\IUnknown.cs" />
     <Compile Include="MS\Internal\Interop\NativePointerCriticalHandle.cs" />
     <Compile Include="MS\Internal\Interop\TipTsfHelper.cs" />
@@ -276,6 +279,7 @@
     <Compile Include="MS\Internal\Text\TextInterface\DWriteLoader.cs" />
     <Compile Include="MS\Internal\Text\TextInterface\DWriteUtil.cs" />
     <Compile Include="MS\Internal\Text\TextInterface\Factory.cs" />
+    <Compile Include="MS\Internal\Text\TextInterface\ColorGlyphLayer.cs" />
     <Compile Include="MS\Internal\Text\TextInterface\FontCollectionLoader.cs" />
     <Compile Include="MS\Internal\Text\TextInterface\IFontSourceCollection.cs" />
     <Compile Include="MS\Internal\TextFormatting\Bidi.cs" />

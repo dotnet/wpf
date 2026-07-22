@@ -395,7 +395,7 @@
             Box Drawing                      2500-257F
             Block Elements                   2580-259F
             Geometric Shapes                 25A0-25FF
-            Geometric Shapes Extended        1F780-1F7FF
+            Geometric Shapes Extended        1F780-1F7FF (excluding 1F7E0-1F7EB and 1F7F0, which are emoji; see below)
             -->
             <!-- Windows 8.1: Segoe UI Emoji supports emoji characters in these ranges, but we don't want them to
              be used with precedence over other fonts in all cases. Separating ranges for which Emoji coverage
@@ -403,32 +403,96 @@
             <!-- Not ideographs, so after first choice can prioritize ClearType, sans-serif/serif over culture -->
             <!-- CHS -->
             <FontFamilyMap
-                Unicode     = "2000-202E, 2030-20CF, 2150-22FF, 2460-25FF, 1F780-1F7FF"
+                Unicode     = "2000-202E, 2030-20CF, 2150-22FF, 2460-25FF, 1F780-1F7DF, 1F7EC-1F7EF, 1F7F1-1F7FF"
                 Language    = "zh-Hans"
                 Target      = "Microsoft YaHei UI, Microsoft YaHei, Yu Gothic UI, Meiryo UI, Meiryo, Segoe UI, Segoe UI Symbol, SimSun, MS Gothic, MingLiU, Tahoma"
                 Scale       = "1.0" />
             <!-- CHT -->
             <FontFamilyMap
-                Unicode     = "2000-202E, 2030-20CF, 2150-22FF, 2460-25FF, 1F780-1F7FF"
+                Unicode     = "2000-202E, 2030-20CF, 2150-22FF, 2460-25FF, 1F780-1F7DF, 1F7EC-1F7EF, 1F7F1-1F7FF"
                 Language    = "zh-Hant"
                 Target      = "Microsoft JhengHei UI, Microsoft JhengHei, Yu Gothic UI, Meiryo UI, Meiryo, Segoe UI, Segoe UI Symbol, Microsoft YaHei UI, Microsoft YaHei, MingLiU, MS Gothic, Tahoma"
                 Scale       = "1.0" />
             <!-- JA -->
             <FontFamilyMap
-                Unicode     = "2000-202E, 2030-20CF, 2150-22FF, 2460-25FF, 1F780-1F7FF"
+                Unicode     = "2000-202E, 2030-20CF, 2150-22FF, 2460-25FF, 1F780-1F7DF, 1F7EC-1F7EF, 1F7F1-1F7FF"
                 Language    = "ja"
                 Target      = "Yu Gothic UI, Meiryo UI, Meiryo, Segoe UI, Segoe UI Symbol, Microsoft JhengHei UI, Microsoft JhengHei, Microsoft YaHei UI, Microsoft YaHei, Malgun Gothic, MS Gothic, MingLiU, Tahoma"
                 Scale       = "1.0" />
             <!-- KO -->
             <FontFamilyMap
-                Unicode     = "2000-202E, 2030-20CF, 2150-22FF, 2460-25FF, 1F780-1F7FF"
+                Unicode     = "2000-202E, 2030-20CF, 2150-22FF, 2460-25FF, 1F780-1F7DF, 1F7EC-1F7EF, 1F7F1-1F7FF"
                 Language    = "ko"
                 Target      = "Malgun Gothic, Segoe UI, Segoe UI Symbol, Yu Gothic UI, Meiryo UI, Meiryo, Microsoft JhengHei UI, Microsoft JhengHei, Microsoft YaHei UI, Microsoft YaHei, Gulim, MS Gothic, MingLiU, Tahoma"
                 Scale       = "1.0" />
             <!-- Other -->
             <FontFamilyMap
-                Unicode     = "2000-202E, 2030-20CF, 2150-22FF, 2460-25FF, 1F780-1F7FF"
+                Unicode     = "2000-202E, 2030-20CF, 2150-22FF, 2460-25FF, 1F780-1F7DF, 1F7EC-1F7EF, 1F7F1-1F7FF"
                 Target      = "Segoe UI, Segoe UI Symbol, Yu Gothic UI, Meiryo UI, Meiryo, Microsoft JhengHei UI, Microsoft JhengHei, Microsoft YaHei UI, Microsoft YaHei, Malgun Gothic, Tahoma, MS Gothic, MingLiU, MingLiU"
+                Scale       = "1.0" />
+
+            <!-- Unicode 12.0 colored circles (1F7E0-1F7E5) and squares (1F7E6-1F7EB) and Unicode 14.0 heavy equals sign (1F7F0).
+                 Although these sit in the Geometric Shapes Extended block, they are defined as emoji and have COLR glyphs in Segoe UI Emoji. -->
+            <!-- CHS -->
+            <FontFamilyMap
+                Unicode     = "1F7E0-1F7EB, 1F7F0"
+                Language    = "zh-Hans"
+                Target      = "Segoe UI Emoji, Microsoft YaHei UI, Microsoft YaHei, Yu Gothic UI, Meiryo UI, Meiryo, Segoe UI, Segoe UI Symbol, SimSun, MS Gothic, MingLiU"
+                Scale       = "1.0" />
+            <!-- CHT -->
+            <FontFamilyMap
+                Unicode     = "1F7E0-1F7EB, 1F7F0"
+                Language    = "zh-Hant"
+                Target      = "Segoe UI Emoji, Microsoft JhengHei UI, Microsoft JhengHei, Yu Gothic UI, Meiryo UI, Meiryo, Segoe UI, Segoe UI Symbol, Microsoft YaHei UI, Microsoft YaHei, MingLiU, MS Gothic"
+                Scale       = "1.0" />
+            <!-- JA -->
+            <FontFamilyMap
+                Unicode     = "1F7E0-1F7EB, 1F7F0"
+                Language    = "ja"
+                Target      = "Segoe UI Emoji, Yu Gothic UI, Meiryo UI, Meiryo, Segoe UI, Segoe UI Symbol, Microsoft JhengHei UI, Microsoft JhengHei, Microsoft YaHei UI, Microsoft YaHei, Malgun Gothic, MS Gothic, MingLiU"
+                Scale       = "1.0" />
+            <!-- KO -->
+            <FontFamilyMap
+                Unicode     = "1F7E0-1F7EB, 1F7F0"
+                Language    = "ko"
+                Target      = "Segoe UI Emoji, Malgun Gothic, Segoe UI, Segoe UI Symbol, Yu Gothic UI, Meiryo UI, Meiryo, Microsoft JhengHei UI, Microsoft JhengHei, Microsoft YaHei UI, Microsoft YaHei, Gulim, MS Gothic, MingLiU"
+                Scale       = "1.0" />
+            <!-- Other -->
+            <FontFamilyMap
+                Unicode     = "1F7E0-1F7EB, 1F7F0"
+                Target      = "Segoe UI Emoji, Segoe UI, Segoe UI Symbol, Yu Gothic UI, Meiryo UI, Meiryo, Microsoft JhengHei UI, Microsoft JhengHei, Microsoft YaHei UI, Microsoft YaHei, Malgun Gothic, MS Gothic, MingLiU, MingLiU"
+                Scale       = "1.0" />
+
+            <!-- Default-presentation emoji from Misc Symbols and Arrows block (Emoji_Presentation = Yes, no VS-16 needed):
+                 2B50 (star), 2B55 (hollow red circle). -->
+            <!-- CHS -->
+            <FontFamilyMap
+                Unicode     = "2B50, 2B55"
+                Language    = "zh-Hans"
+                Target      = "Segoe UI Emoji, Microsoft YaHei UI, Microsoft YaHei, Yu Gothic UI, Meiryo UI, Meiryo, Segoe UI, Segoe UI Symbol, SimSun, MS Gothic, MingLiU"
+                Scale       = "1.0" />
+            <!-- CHT -->
+            <FontFamilyMap
+                Unicode     = "2B50, 2B55"
+                Language    = "zh-Hant"
+                Target      = "Segoe UI Emoji, Microsoft JhengHei UI, Microsoft JhengHei, Yu Gothic UI, Meiryo UI, Meiryo, Segoe UI, Segoe UI Symbol, Microsoft YaHei UI, Microsoft YaHei, MingLiU, MS Gothic"
+                Scale       = "1.0" />
+            <!-- JA -->
+            <FontFamilyMap
+                Unicode     = "2B50, 2B55"
+                Language    = "ja"
+                Target      = "Segoe UI Emoji, Yu Gothic UI, Meiryo UI, Meiryo, Segoe UI, Segoe UI Symbol, Microsoft JhengHei UI, Microsoft JhengHei, Microsoft YaHei UI, Microsoft YaHei, Malgun Gothic, MS Gothic, MingLiU"
+                Scale       = "1.0" />
+            <!-- KO -->
+            <FontFamilyMap
+                Unicode     = "2B50, 2B55"
+                Language    = "ko"
+                Target      = "Segoe UI Emoji, Malgun Gothic, Segoe UI, Segoe UI Symbol, Yu Gothic UI, Meiryo UI, Meiryo, Microsoft JhengHei UI, Microsoft JhengHei, Microsoft YaHei UI, Microsoft YaHei, Gulim, MS Gothic, MingLiU"
+                Scale       = "1.0" />
+            <!-- Other -->
+            <FontFamilyMap
+                Unicode     = "2B50, 2B55"
+                Target      = "Segoe UI Emoji, Segoe UI, Segoe UI Symbol, Yu Gothic UI, Meiryo UI, Meiryo, Microsoft JhengHei UI, Microsoft JhengHei, Microsoft YaHei UI, Microsoft YaHei, Malgun Gothic, MS Gothic, MingLiU, MingLiU"
                 Scale       = "1.0" />
 
             <!-- Combining Diacritic Marks for Symbols 20D0-20FF -->
@@ -495,13 +559,12 @@
             Supplemental Arrows-B       2900-297F
             Misc Mathematical Symbols-B 2980-29FF
             Supplemental Math Operators 2A00-2AFF
-            Misc Symbols and Arrows     2B00-2BFF
+            Misc Symbols and Arrows     2B00-2BFF (excluding 2B50 and 2B55, which are emoji; see above)
             Supplemental Arrows-C       1F800-1F8FF
             -->
             <!-- Segoe UI Symbol covers all on Win8; Cambria Math covers 2900-2AFF; MS Gothic has little coverage -->
-            <!-- Segoe UI Emoji supports only emoji characters in these ranges; not adding to avoid uneven display -->
             <FontFamilyMap
-                Unicode     = "27C0-2BFF, 1F800-1F8FF"
+                Unicode     = "27C0-2B4F, 2B51-2B54, 2B56-2BFF, 1F800-1F8FF"
                 Target      = "Segoe UI Symbol, Cambria Math, MS Gothic"
                 Scale       = "1.0" />
 
@@ -1681,11 +1744,12 @@
             Ornamental Dingbats                     1F650-1F67F
             Transport And Map Symbols               1F680-1F6FF
             Supplemental Symbols and Pictographs    1F900-1F9FF
+            Symbols and Pictographs Extended-A      1FA70-1FAFF
             -->
             <!-- Windows 8+ -->
-            <!-- Segoe UI Emoji supports only emoji characters or emoji supplements in these ranges -->
+            <!-- Segoe UI Emoji supports emoji characters in these ranges -->
             <FontFamilyMap
-                Unicode     = "1F000-1F6FF, 1F900-1F9FF"
+                Unicode     = "1F000-1F6FF, 1F900-1FAFF"
                 Target      = "Segoe UI Emoji, Segoe UI Symbol"
                 Scale       = "1.0" />
 
@@ -1701,10 +1765,11 @@
 
             <!-- Supplemental Symbols and Pictographs (1F900-1F9FF): see above, by 1F000-1F02F -->
 
-            <!-- Chess Symbols                 1FA00-1FA6F -->
-            <!-- No font -->
+            <!-- Symbols and Pictographs Extended-A (1FA70-1FAFF): see above, by 1F000-1F02F -->
 
-            <!-- (unassigned)                  1FA70-1FFFF -->
+            <!-- Chess Symbols (1FA00-1FA6F): covered by 1F900-1FAFF range above -->
+
+            <!-- (unassigned)                  1FB00-1FFFF -->
 
             <!-- CJK Unified Ideographs ExtB   20000-2A6DF -->
             <!--
@@ -2253,7 +2318,7 @@
             Box Drawing                      2500-257F
             Block Elements                   2580-259F
             Geometric Shapes                 25A0-25FF
-            Geometric Shapes Extended        1F780-1F7FF
+            Geometric Shapes Extended        1F780-1F7FF (excluding 1F7E0-1F7EB and 1F7F0, which are emoji; see below)
             -->
       <!-- Windows 8.1: Segoe UI Emoji supports emoji characters in these ranges, but we don't want them to
              be used with precedence over other fonts in all cases. Separating ranges for which Emoji coverage
@@ -2261,32 +2326,96 @@
       <!-- Not ideographs, so after first choice can prioritize ClearType, sans-serif/serif over culture -->
       <!-- CHS -->
       <FontFamilyMap
-          Unicode     = "2000-202E, 2030-20CF, 2150-22FF, 2460-25FF, 1F780-1F7FF"
+          Unicode     = "2000-202E, 2030-20CF, 2150-22FF, 2460-25FF, 1F780-1F7DF, 1F7EC-1F7EF, 1F7F1-1F7FF"
           Language    = "zh-Hans"
           Target      = "Microsoft YaHei UI, Microsoft YaHei, Yu Gothic UI, Meiryo UI, Meiryo, Segoe UI, Segoe UI Symbol, SimSun, MS Gothic, MingLiU, Tahoma, Lucida Sans Unicode, Arial, Arial Unicode MS"
           Scale       = "1.0" />
       <!-- CHT -->
       <FontFamilyMap
-          Unicode     = "2000-202E, 2030-20CF, 2150-22FF, 2460-25FF, 1F780-1F7FF"
+          Unicode     = "2000-202E, 2030-20CF, 2150-22FF, 2460-25FF, 1F780-1F7DF, 1F7EC-1F7EF, 1F7F1-1F7FF"
           Language    = "zh-Hant"
           Target      = "Microsoft JhengHei UI, Microsoft JhengHei, Yu Gothic UI, Meiryo UI, Meiryo, Segoe UI, Segoe UI Symbol, Microsoft YaHei UI, Microsoft YaHei, MingLiU, MS Gothic, Tahoma, Lucida Sans Unicode, Arial, Arial Unicode MS"
           Scale       = "1.0" />
       <!-- JA -->
       <FontFamilyMap
-          Unicode     = "2000-202E, 2030-20CF, 2150-22FF, 2460-25FF, 1F780-1F7FF"
+          Unicode     = "2000-202E, 2030-20CF, 2150-22FF, 2460-25FF, 1F780-1F7DF, 1F7EC-1F7EF, 1F7F1-1F7FF"
           Language    = "ja"
           Target      = "Yu Gothic UI, Meiryo UI, Meiryo, Segoe UI, Segoe UI Symbol, Microsoft JhengHei UI, Microsoft JhengHei, Microsoft YaHei UI, Microsoft YaHei, Malgun Gothic, MS Gothic, MingLiU, Tahoma, Lucida Sans Unicode, Arial, Arial Unicode MS"
           Scale       = "1.0" />
       <!-- KO -->
       <FontFamilyMap
-          Unicode     = "2000-202E, 2030-20CF, 2150-22FF, 2460-25FF, 1F780-1F7FF"
+          Unicode     = "2000-202E, 2030-20CF, 2150-22FF, 2460-25FF, 1F780-1F7DF, 1F7EC-1F7EF, 1F7F1-1F7FF"
           Language    = "ko"
           Target      = "Malgun Gothic, Segoe UI, Segoe UI Symbol, Yu Gothic UI, Meiryo UI, Meiryo, Microsoft JhengHei UI, Microsoft JhengHei, Microsoft YaHei UI, Microsoft YaHei, Gulim, MS Gothic, MingLiU, Tahoma, Lucida Sans Unicode, Arial, Arial Unicode MS"
           Scale       = "1.0" />
       <!-- Other -->
       <FontFamilyMap
-          Unicode     = "2000-202E, 2030-20CF, 2150-22FF, 2460-25FF, 1F780-1F7FF"
+          Unicode     = "2000-202E, 2030-20CF, 2150-22FF, 2460-25FF, 1F780-1F7DF, 1F7EC-1F7EF, 1F7F1-1F7FF"
           Target      = "Segoe UI, Segoe UI Symbol, Yu Gothic UI, Meiryo UI, Meiryo, Microsoft JhengHei UI, Microsoft JhengHei, Microsoft YaHei UI, Microsoft YaHei, Malgun Gothic, Tahoma, Lucida Sans Unicode, Arial, MS Gothic, MingLiU, Arial Unicode MS, MingLiU"
+          Scale       = "1.0" />
+
+      <!-- Unicode 12.0 colored circles (1F7E0-1F7E5) and squares (1F7E6-1F7EB) and Unicode 14.0 heavy equals sign (1F7F0).
+           Although these sit in the Geometric Shapes Extended block, they are defined as emoji and have COLR glyphs in Segoe UI Emoji. -->
+      <!-- CHS -->
+      <FontFamilyMap
+          Unicode     = "1F7E0-1F7EB, 1F7F0"
+          Language    = "zh-Hans"
+          Target      = "Segoe UI Emoji, Microsoft YaHei UI, Microsoft YaHei, Yu Gothic UI, Meiryo UI, Meiryo, Segoe UI, Segoe UI Symbol, SimSun, MS Gothic, MingLiU, Tahoma, Lucida Sans Unicode, Arial, Arial Unicode MS"
+          Scale       = "1.0" />
+      <!-- CHT -->
+      <FontFamilyMap
+          Unicode     = "1F7E0-1F7EB, 1F7F0"
+          Language    = "zh-Hant"
+          Target      = "Segoe UI Emoji, Microsoft JhengHei UI, Microsoft JhengHei, Yu Gothic UI, Meiryo UI, Meiryo, Segoe UI, Segoe UI Symbol, Microsoft YaHei UI, Microsoft YaHei, MingLiU, MS Gothic, Tahoma, Lucida Sans Unicode, Arial, Arial Unicode MS"
+          Scale       = "1.0" />
+      <!-- JA -->
+      <FontFamilyMap
+          Unicode     = "1F7E0-1F7EB, 1F7F0"
+          Language    = "ja"
+          Target      = "Segoe UI Emoji, Yu Gothic UI, Meiryo UI, Meiryo, Segoe UI, Segoe UI Symbol, Microsoft JhengHei UI, Microsoft JhengHei, Microsoft YaHei UI, Microsoft YaHei, Malgun Gothic, MS Gothic, MingLiU, Tahoma, Lucida Sans Unicode, Arial, Arial Unicode MS"
+          Scale       = "1.0" />
+      <!-- KO -->
+      <FontFamilyMap
+          Unicode     = "1F7E0-1F7EB, 1F7F0"
+          Language    = "ko"
+          Target      = "Segoe UI Emoji, Malgun Gothic, Segoe UI, Segoe UI Symbol, Yu Gothic UI, Meiryo UI, Meiryo, Microsoft JhengHei UI, Microsoft JhengHei, Microsoft YaHei UI, Microsoft YaHei, Gulim, MS Gothic, MingLiU, Tahoma, Lucida Sans Unicode, Arial, Arial Unicode MS"
+          Scale       = "1.0" />
+      <!-- Other -->
+      <FontFamilyMap
+          Unicode     = "1F7E0-1F7EB, 1F7F0"
+          Target      = "Segoe UI Emoji, Segoe UI, Segoe UI Symbol, Yu Gothic UI, Meiryo UI, Meiryo, Microsoft JhengHei UI, Microsoft JhengHei, Microsoft YaHei UI, Microsoft YaHei, Malgun Gothic, Tahoma, Lucida Sans Unicode, Arial, MS Gothic, MingLiU, Arial Unicode MS, MingLiU"
+          Scale       = "1.0" />
+
+      <!-- Default-presentation emoji from Misc Symbols and Arrows block (Emoji_Presentation = Yes, no VS-16 needed):
+           2B50 (star), 2B55 (hollow red circle). -->
+      <!-- CHS -->
+      <FontFamilyMap
+          Unicode     = "2B50, 2B55"
+          Language    = "zh-Hans"
+          Target      = "Segoe UI Emoji, Microsoft YaHei UI, Microsoft YaHei, Yu Gothic UI, Meiryo UI, Meiryo, Segoe UI, Segoe UI Symbol, SimSun, MS Gothic, MingLiU, Tahoma, Lucida Sans Unicode, Arial, Arial Unicode MS"
+          Scale       = "1.0" />
+      <!-- CHT -->
+      <FontFamilyMap
+          Unicode     = "2B50, 2B55"
+          Language    = "zh-Hant"
+          Target      = "Segoe UI Emoji, Microsoft JhengHei UI, Microsoft JhengHei, Yu Gothic UI, Meiryo UI, Meiryo, Segoe UI, Segoe UI Symbol, Microsoft YaHei UI, Microsoft YaHei, MingLiU, MS Gothic, Tahoma, Lucida Sans Unicode, Arial, Arial Unicode MS"
+          Scale       = "1.0" />
+      <!-- JA -->
+      <FontFamilyMap
+          Unicode     = "2B50, 2B55"
+          Language    = "ja"
+          Target      = "Segoe UI Emoji, Yu Gothic UI, Meiryo UI, Meiryo, Segoe UI, Segoe UI Symbol, Microsoft JhengHei UI, Microsoft JhengHei, Microsoft YaHei UI, Microsoft YaHei, Malgun Gothic, MS Gothic, MingLiU, Tahoma, Lucida Sans Unicode, Arial, Arial Unicode MS"
+          Scale       = "1.0" />
+      <!-- KO -->
+      <FontFamilyMap
+          Unicode     = "2B50, 2B55"
+          Language    = "ko"
+          Target      = "Segoe UI Emoji, Malgun Gothic, Segoe UI, Segoe UI Symbol, Yu Gothic UI, Meiryo UI, Meiryo, Microsoft JhengHei UI, Microsoft JhengHei, Microsoft YaHei UI, Microsoft YaHei, Gulim, MS Gothic, MingLiU, Tahoma, Lucida Sans Unicode, Arial, Arial Unicode MS"
+          Scale       = "1.0" />
+      <!-- Other -->
+      <FontFamilyMap
+          Unicode     = "2B50, 2B55"
+          Target      = "Segoe UI Emoji, Segoe UI, Segoe UI Symbol, Yu Gothic UI, Meiryo UI, Meiryo, Microsoft JhengHei UI, Microsoft JhengHei, Microsoft YaHei UI, Microsoft YaHei, Malgun Gothic, Tahoma, Lucida Sans Unicode, Arial, MS Gothic, MingLiU, Arial Unicode MS, MingLiU"
           Scale       = "1.0" />
 
       <!-- Combining Diacritic Marks for Symbols 20D0-20FF -->
@@ -2355,13 +2484,12 @@
             Supplemental Arrows-B       2900-297F
             Misc Mathematical Symbols-B 2980-29FF
             Supplemental Math Operators 2A00-2AFF
-            Misc Symbols and Arrows     2B00-2BFF
+            Misc Symbols and Arrows     2B00-2BFF (excluding 2B50 and 2B55, which are emoji; see above)
             Supplemental Arrows-C       1F800-1F8FF
             -->
       <!-- Segoe UI Symbol covers all on Win8; Cambria Math covers 2900-2AFF; MS Gothic has little coverage -->
-      <!-- Segoe UI Emoji supports only emoji characters in these ranges; not adding to avoid uneven display -->
       <FontFamilyMap
-          Unicode     = "27C0-2BFF, 1F800-1F8FF"
+          Unicode     = "27C0-2B4F, 2B51-2B54, 2B56-2BFF, 1F800-1F8FF"
           Target      = "Segoe UI Symbol, Cambria Math, MS Gothic"
           Scale       = "1.0" />
 
@@ -3395,11 +3523,12 @@
             Ornamental Dingbats            1F650-1F67F
             Transport And Map Symbols      1F680-1F6FF
             Supplemental Symbols and Pictographs 1F900-1F9FF
+            Symbols and Pictographs Extended-A   1FA70-1FAFF
             -->
       <!-- Windows 8+ -->
-      <!-- Segoe UI Emoji supports only emoji characters or emoji supplements in these ranges -->
+      <!-- Segoe UI Emoji supports emoji characters in these ranges -->
       <FontFamilyMap
-          Unicode     = "1F000-1F6FF, 1F900-1F9FF"
+          Unicode     = "1F000-1F6FF, 1F900-1FAFF"
           Target      = "Segoe UI Emoji, Segoe UI Symbol"
           Scale       = "1.0" />
 
@@ -4009,6 +4138,38 @@
           Target      = "Segoe UI Emoji, Segoe UI, Segoe UI Symbol, Yu Gothic UI, Meiryo UI, Meiryo, Microsoft JhengHei UI, Microsoft JhengHei, Microsoft YaHei UI, Microsoft YaHei, Malgun Gothic, Tahoma, Lucida Sans Unicode, Arial, MS Gothic, MingLiU, Arial Unicode MS, MingLiU"
           Scale       = "1.0" />
 
+      <!-- Default-presentation emoji from Misc Symbols and Arrows block (Emoji_Presentation = Yes, no VS-16 needed):
+           2B50 (star), 2B55 (hollow red circle). -->
+      <!-- CHS -->
+      <FontFamilyMap
+          Unicode     = "2B50, 2B55"
+          Language    = "zh-Hans"
+          Target      = "Segoe UI Emoji, Microsoft YaHei UI, Microsoft YaHei, Yu Gothic UI, Meiryo UI, Meiryo, Segoe UI, Segoe UI Symbol, SimSun, MS Gothic, MingLiU, Tahoma, Lucida Sans Unicode, Arial, Arial Unicode MS"
+          Scale       = "1.0" />
+      <!-- CHT -->
+      <FontFamilyMap
+          Unicode     = "2B50, 2B55"
+          Language    = "zh-Hant"
+          Target      = "Segoe UI Emoji, Microsoft JhengHei UI, Microsoft JhengHei, Yu Gothic UI, Meiryo UI, Meiryo, Segoe UI, Segoe UI Symbol, Microsoft YaHei UI, Microsoft YaHei, MingLiU, MS Gothic, Tahoma, Lucida Sans Unicode, Arial, Arial Unicode MS"
+          Scale       = "1.0" />
+      <!-- JA -->
+      <FontFamilyMap
+          Unicode     = "2B50, 2B55"
+          Language    = "ja"
+          Target      = "Segoe UI Emoji, Yu Gothic UI, Meiryo UI, Meiryo, Segoe UI, Segoe UI Symbol, Microsoft JhengHei UI, Microsoft JhengHei, Microsoft YaHei UI, Microsoft YaHei, Malgun Gothic, MS Gothic, MingLiU, Tahoma, Lucida Sans Unicode, Arial, Arial Unicode MS"
+          Scale       = "1.0" />
+      <!-- KO -->
+      <FontFamilyMap
+          Unicode     = "2B50, 2B55"
+          Language    = "ko"
+          Target      = "Segoe UI Emoji, Malgun Gothic, Segoe UI, Segoe UI Symbol, Yu Gothic UI, Meiryo UI, Meiryo, Microsoft JhengHei UI, Microsoft JhengHei, Microsoft YaHei UI, Microsoft YaHei, Gulim, MS Gothic, MingLiU, Tahoma, Lucida Sans Unicode, Arial, Arial Unicode MS"
+          Scale       = "1.0" />
+      <!-- Other -->
+      <FontFamilyMap
+          Unicode     = "2B50, 2B55"
+          Target      = "Segoe UI Emoji, Segoe UI, Segoe UI Symbol, Yu Gothic UI, Meiryo UI, Meiryo, Microsoft JhengHei UI, Microsoft JhengHei, Microsoft YaHei UI, Microsoft YaHei, Malgun Gothic, Tahoma, Lucida Sans Unicode, Arial, MS Gothic, MingLiU, Arial Unicode MS, MingLiU"
+          Scale       = "1.0" />
+
       <!-- Control Pictures           2400-243F -->
       <!-- Segoe UI Symbol for Windows 7+, Lucida Sans Unicode for down-level OS -->
       <FontFamilyMap
@@ -4030,12 +4191,11 @@
             Supplemental Arrows-B       2900-297F
             Misc Mathematical Symbols-B 2980-29FF
             Supplemental Math Operators 2A00-2AFF
-            Misc Symbols and Arrows     2B00-2BFF
+            Misc Symbols and Arrows     2B00-2BFF (excluding 2B50 and 2B55, which are emoji; see above)
             -->
       <!-- Segoe UI Symbol covers all on Win8; Cambria Math covers 2900-2AFF; MS Gothic has little coverage -->
-      <!-- Segoe UI Emoji supports only emoji characters in these ranges; not adding to avoid uneven display -->
       <FontFamilyMap
-          Unicode     = "27C0-2BFF"
+          Unicode     = "27C0-2B4F, 2B51-2B54, 2B56-2BFF"
           Target      = "Segoe UI Symbol, Cambria Math, MS Gothic"
           Scale       = "1.0" />
 
@@ -5027,18 +5187,20 @@
             Emoticons                      1F600-1F64F
             Ornamental Dingbats            1F650-1F67F
             Transport And Map Symbols      1F680-1F6FF
+            Supplemental Symbols and Pictographs 1F900-1F9FF
+            Symbols and Pictographs Extended-A   1FA70-1FAFF
             -->
       <!-- Windows 8+ -->
-      <!-- Segoe UI Emoji supports only emoji characters or emoji supplements in these ranges -->
+      <!-- Segoe UI Emoji supports emoji characters in these ranges -->
       <FontFamilyMap
-          Unicode     = "1F000-1F6FF"
+          Unicode     = "1F000-1F6FF, 1F900-1FAFF"
           Target      = "Segoe UI Emoji, Segoe UI Symbol"
           Scale       = "1.0" />
 
       <!-- Alchemical Symbols            1F700-1F77F -->
       <!-- No font -->
 
-      <!-- (unassigned)                  1F780-1FFFF -->
+      <!-- (unassigned)                  1FB00-1FFFF -->
 
       <!-- CJK Unified Ideographs ExtB 20000-2A6DF -->
       <!--

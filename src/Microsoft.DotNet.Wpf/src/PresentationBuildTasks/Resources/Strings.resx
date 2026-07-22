@@ -219,9 +219,6 @@
   <data name="UnknownBuildError" xml:space="preserve">
     <value>Unknown build error, '{0}' </value>
   </data>
-  <data name="NonClsError" xml:space="preserve">
-    <value>BG1001: Unknown CLS exception.</value>
-  </data>
   <data name="FileNotFound" xml:space="preserve">
     <value>BG1002: File '{0}' cannot be found.</value>
   </data>

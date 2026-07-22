@@ -2402,11 +2402,6 @@
         <target state="translated">Další stránka</target>
         <note />
       </trans-unit>
-      <trans-unit id="NonCLSException">
-        <source>Text formatting engine encountered a non-CLS exception.</source>
-        <target state="translated">Nástroj formátování textu narazil na výjimku, která není CLS.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NonPackAppAbsoluteUriNotAllowed">
         <source>Unsupported Uri syntax. Method expects a relative Uri or a pack://application:,,,/ form of absolute Uri.</source>
         <target state="translated">Nepodporovaná metoda syntaxe identifikátoru URI. Metoda očekává relativní identifikátor URI nebo balík://application:,,,/ jako formu absolutního identifikátoru URI.</target>

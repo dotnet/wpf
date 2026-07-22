@@ -95,33 +95,18 @@ namespace Microsoft.Build.Tasks.Windows
                     CLRSatelliteEmbeddedResource = clrSatelliteEmbeddedResourceList.ToArray();
                 }
             }
-            catch (Exception e)
+            catch (Exception e) when (e is not (NullReferenceException or SEHException))
             {
-                if (e is NullReferenceException || e is SEHException)
+                string errorId = Log.ExtractMessageCode(e.Message, out string message);
+
+                if (string.IsNullOrEmpty(errorId))
                 {
-                    throw;
-                }
-                else
-                {
-                    string message;
-                    string errorId;
-
-                    errorId = Log.ExtractMessageCode(e.Message, out message);
-
-                    if (String.IsNullOrEmpty(errorId))
-                    {
-                        errorId = UnknownErrorID;
-                        message = SR.Format(SR.UnknownBuildError, message);
-                    }
-
-                    Log.LogError(null, errorId, null, null, 0, 0, 0, 0, message, null);
+                    errorId = UnknownErrorID;
+                    message = SR.Format(SR.UnknownBuildError, message);
                 }
 
-                return false;
-            }
-            catch // Non-CLS compliant errors
-            {
-                Log.LogErrorWithCodeFromResources(nameof(SR.NonClsError));
+                Log.LogError(null, errorId, null, null, 0, 0, 0, 0, message, null);
+
                 return false;
             }
 

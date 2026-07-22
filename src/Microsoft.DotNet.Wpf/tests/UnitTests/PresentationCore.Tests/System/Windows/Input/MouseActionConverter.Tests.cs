@@ -23,7 +23,7 @@ public sealed class MouseActionConverterTests
     }
 
     [Theory]
-    [MemberData(nameof(CanConvertTo_Data))]
+    [MemberData(nameof(CanConvertTo_ReturnsExpected_Data))]
     public void CanConvertTo_ReturnsExpected(bool expected, bool passContext, object? value, Type? destinationType)
     {
         MouseActionConverter converter = new();
@@ -32,7 +32,7 @@ public sealed class MouseActionConverterTests
         Assert.Equal(expected, converter.CanConvertTo(passContext ? context : null, destinationType));
     }
 
-    public static IEnumerable<object?[]> CanConvertTo_Data
+    public static IEnumerable<object?[]> CanConvertTo_ReturnsExpected_Data
     {
         get
         {
@@ -46,6 +46,8 @@ public sealed class MouseActionConverterTests
             // Unsupported cases
             yield return new object[] { false, false, MouseAction.None, typeof(string) };
             yield return new object[] { false, false, MouseAction.MiddleDoubleClick, typeof(string) };
+            yield return new object[] { false, true, (int)MouseAction.MiddleDoubleClick, typeof(string) };
+            yield return new object[] { false, true, (short)MouseAction.LeftDoubleClick, typeof(string) };
             yield return new object?[] { false, true, null, typeof(MouseAction) };
             yield return new object?[] { false, true, null, typeof(string) };
             yield return new object?[] { false, false, MouseAction.MiddleDoubleClick, typeof(string) };
@@ -54,16 +56,6 @@ public sealed class MouseActionConverterTests
 
             yield return new object[] { false, true, MouseAction.MiddleDoubleClick + 1, typeof(string) };
         }
-    }
-
-    [Fact]
-    public void CanConvertTo_ThrowsInvalidCastException()
-    {
-        MouseActionConverter converter = new();
-        StandardContextImpl context = new() { Instance = 10 };
-
-        // TODO: CanConvert* methods should not throw but the implementation is faulty
-        Assert.Throws<InvalidCastException>(() => converter.CanConvertTo(context, typeof(string)));
     }
 
     [Theory]
@@ -156,6 +148,9 @@ public sealed class MouseActionConverterTests
     [Theory]
     // Unsupported value
     [InlineData(null, typeof(string))]
+    // Unsupported unboxing casts
+    [InlineData((int)MouseAction.RightClick, typeof(string))]
+    [InlineData((short)MouseAction.LeftDoubleClick, typeof(string))]
     // Unsupported destinationType
     [InlineData(MouseAction.None, typeof(int))]
     [InlineData(MouseAction.LeftClick, typeof(byte))]
@@ -167,20 +162,11 @@ public sealed class MouseActionConverterTests
     }
 
     [Fact]
-    public void ConvertTo_ThrowsInvalidCastException()
-    {
-        MouseActionConverter converter = new();
-
-        // TODO: This should not throw InvalidCastException but NotSupportedException
-        Assert.Throws<InvalidCastException>(() => converter.ConvertTo(null, null, (int)(MouseAction.MiddleDoubleClick), typeof(string)));
-    }
-
-    [Fact]
     public void ConvertTo_ThrowsInvalidEnumArgumentException()
     {
         MouseActionConverter converter = new();
 
-        Assert.Throws<InvalidEnumArgumentException>(() => converter.ConvertTo(null, null, (MouseAction)(MouseAction.MiddleDoubleClick + 1), typeof(string)));
+        Assert.Throws<InvalidEnumArgumentException>(() => converter.ConvertTo(null, null, MouseAction.MiddleDoubleClick + 1, typeof(string)));
     }
 
     public sealed class StandardContextImpl : ITypeDescriptorContext

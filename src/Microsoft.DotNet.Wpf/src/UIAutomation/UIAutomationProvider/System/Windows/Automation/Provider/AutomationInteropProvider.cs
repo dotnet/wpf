@@ -76,6 +76,18 @@ namespace System.Windows.Automation.Provider
         }
 
         /// <summary>
+        /// Releases UIA's references to a provider whose element is gone so it can be reclaimed; afterwards
+        /// requests for it throw ElementNotAvailableException. Not callable while handling a SendMessage.
+        /// </summary>
+        /// <param name="provider">The server-side provider to disconnect.</param>
+        public static void DisconnectProvider(IRawElementProviderSimple provider)
+        {
+            ArgumentNullException.ThrowIfNull(provider);
+
+            UiaCoreProviderApi.UiaDisconnectProvider(provider);
+        }
+
+        /// <summary>
         /// Called by a server to determine if there are any listeners for events.
         /// </summary>
         public static bool ClientsAreListening 

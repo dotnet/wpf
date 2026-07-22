@@ -9,7 +9,6 @@ using System.Windows.Threading;
 using MS.Internal;
 using System.Net;
 using System.Net.Cache;
-using System.Text;
 using MS.Win32;
 using Microsoft.Win32.SafeHandles;
 
@@ -111,16 +110,13 @@ namespace System.Windows.Media.Imaging
             entry.inputUri = uri;
             entry.inputStream = stream;
 
-            string cacheFolder = MS.Win32.WinInet.InternetCacheFolder.LocalPath;
             bool passed = false;
 
-            // Get the file path 
-            StringBuilder tmpFileName = new StringBuilder(NativeMethods.MAX_PATH);
-            MS.Win32.UnsafeNativeMethods.GetTempFileName(cacheFolder, "WPF", 0, tmpFileName);
-              
             try
             {
-                string pathToUse = tmpFileName.ToString();
+                // Use Path.GetTempFileName whose .NET 8+ implementation avoids the
+                // Win32 GetTempFileName 65k file limit by generating random filenames.
+                string pathToUse = Path.GetTempFileName();
                 SafeFileHandle fileHandle = MS.Win32.UnsafeNativeMethods.CreateFile(
                     pathToUse,
                     dwDesiredAccess: NativeMethods.GENERIC_READ | NativeMethods.GENERIC_WRITE,
@@ -135,7 +131,7 @@ namespace System.Windows.Media.Imaging
                 {
                     throw new Win32Exception();
                 }
-                    
+
                 entry.outputStream = new FileStream(fileHandle, FileAccess.ReadWrite);
                 entry.streamPath = pathToUse;
                 passed = true;

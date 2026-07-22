@@ -14,20 +14,6 @@ namespace MS.Win32
 {
     internal partial class UnsafeNativeMethods
     {
-        [DllImport(ExternDll.Kernel32, CharSet = CharSet.Unicode, SetLastError = true, EntryPoint = "GetTempFileName")]
-        internal static extern uint _GetTempFileName(string tmpPath, string prefix, uint uniqueIdOrZero, StringBuilder tmpFileName);
-
-        internal static uint GetTempFileName(string tmpPath, string prefix, uint uniqueIdOrZero, StringBuilder tmpFileName)
-        {
-            uint result = _GetTempFileName(tmpPath, prefix, uniqueIdOrZero, tmpFileName);
-            if (result == 0)
-            {
-                throw new Win32Exception();
-            }
-
-            return result;
-        }
-
         [DllImport(ExternDll.Shell32, CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern int ExtractIconEx(
                                         string szExeFileName,

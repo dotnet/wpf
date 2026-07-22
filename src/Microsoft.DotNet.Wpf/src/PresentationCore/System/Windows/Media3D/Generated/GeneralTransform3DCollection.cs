@@ -25,7 +25,6 @@ namespace System.Windows.Media.Media3D
     /// <summary>
     /// A collection of GeneralTransform3D objects.
     /// </summary>
-
     public sealed partial class GeneralTransform3DCollection : Animatable, IList, IList<GeneralTransform3D>
     {
         //------------------------------------------------------

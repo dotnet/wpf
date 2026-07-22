@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -19,7 +19,7 @@ namespace MS.Internal.Controls
     // It also has types that make sense only for ActiveX hosting classes.
     // In other words, this is a helper class for the ActiveX hosting classes.
     //
-    internal class ActiveXHelper
+    internal static class ActiveXHelper
     {
         //
         // Types:
@@ -55,11 +55,6 @@ namespace MS.Internal.Controls
         private static int logPixelsX = -1;
         private static int logPixelsY = -1;
         private const int HMperInch = 2540;
-
-        // Prevent compiler from generating public CTOR
-        private ActiveXHelper()
-        {
-        }
 
         //
         // Static helper methods:

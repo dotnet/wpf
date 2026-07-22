@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -30,21 +30,9 @@ namespace MS.Internal
 {
     // Creates ITfThreadMgr instances, the root object of the Text Services
     // Framework.
-    internal class TextServicesLoader
+    internal static class TextServicesLoader
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
 
-        #region Constructors
-
-        // Private ctor to prevent anyone from instantiating this static class.
-        private TextServicesLoader() {}
-
-        #endregion Constructors
- 
         //------------------------------------------------------
         //
         //  Public Methods
@@ -68,7 +56,7 @@ namespace MS.Internal
         //  Protected Methods
         //
         //------------------------------------------------------
- 
+
         //------------------------------------------------------
         //
         //  Internal Methods
@@ -82,7 +70,7 @@ namespace MS.Internal
         //------------------------------------------------------
 
         #region Internal Properties
-        
+
         /// <summary>
         /// Loads an instance of the Text Services Framework.
         /// </summary>

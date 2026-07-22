@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -14,7 +14,7 @@ namespace MS.Win32.Pointer
     /// For WM_POINTER <see cref="https://msdn.microsoft.com/en-us/library/windows/desktop/hh454916(v=vs.85).aspx"/>
     /// For InteractionContext <see cref="https://msdn.microsoft.com/en-us/library/windows/desktop/hh448840(v=vs.85).aspx"/>
     /// </summary>
-    internal class UnsafeNativeMethods
+    internal static class UnsafeNativeMethods
     {
         #region Enumerations
 

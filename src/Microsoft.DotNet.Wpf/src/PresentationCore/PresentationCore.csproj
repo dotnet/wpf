@@ -158,6 +158,7 @@
     <Compile Include="MS\Internal\Automation\TextRangeProviderWrapper.cs" />
     <Compile Include="MS\Internal\Automation\ToggleProviderWrapper.cs" />
     <Compile Include="MS\Internal\Automation\TransformProviderWrapper.cs" />
+	<Compile Include="MS\Internal\Automation\TransformProvider2Wrapper.cs" />
     <Compile Include="MS\Internal\Automation\ValueProviderWrapper.cs" />
     <Compile Include="MS\Internal\Automation\VirtualizedItemProviderWrapper.cs" />
     <Compile Include="MS\Internal\Automation\WindowProviderWrapper.cs" />
@@ -706,7 +707,7 @@
     <Compile Include="System\Windows\Media\ColorContextHelper.cs" />
     <Compile Include="System\Windows\Media\ColorConverter.cs" />
     <Compile Include="System\Windows\Media\ColorTransform.cs" />
-    <Compile Include="System\Windows\Media\ColorTransformHelper.cs" />
+	<Compile Include="System\Windows\Media\ColorTransformHelper.cs" />
     <Compile Include="System\Windows\Media\CombinedGeometry.cs" />
     <Compile Include="System\Windows\Media\Composition.cs" />
     <Compile Include="System\Windows\Media\CompositionTarget.cs" />

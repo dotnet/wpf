@@ -2450,12 +2450,13 @@ namespace System.Windows.Automation.Peers
         protected ContentTextAutomationPeer(System.Windows.FrameworkContentElement owner) : base (default(System.Windows.FrameworkContentElement)) { }
         public virtual void RaiseActiveTextPositionChangedEvent(System.Windows.Documents.TextPointer rangeStart, System.Windows.Documents.TextPointer rangeEnd) { }
     }
-    public partial class ContextMenuAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
+    public partial class ContextMenuAutomationPeer : System.Windows.Automation.Peers.ItemsControlAutomationPeer
     {
-        public ContextMenuAutomationPeer(System.Windows.Controls.ContextMenu owner) : base (default(System.Windows.FrameworkElement)) { }
+        public ContextMenuAutomationPeer(System.Windows.Controls.ContextMenu owner) : base (default(System.Windows.Controls.ItemsControl)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         protected override bool IsContentElementCore() { throw null; }
+        protected override System.Windows.Automation.Peers.ItemAutomationPeer CreateItemAutomationPeer(object item) { throw null; }
     }
     public sealed partial class DataGridAutomationPeer : System.Windows.Automation.Peers.ItemsControlAutomationPeer, System.Windows.Automation.Provider.IGridProvider, System.Windows.Automation.Provider.ISelectionProvider, System.Windows.Automation.Provider.ITableProvider
     {
@@ -2982,18 +2983,32 @@ namespace System.Windows.Automation.Peers
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
     }
-    public partial class MenuAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
+    public partial class MenuAutomationPeer : System.Windows.Automation.Peers.ItemsControlAutomationPeer
     {
-        public MenuAutomationPeer(System.Windows.Controls.Menu owner) : base (default(System.Windows.FrameworkElement)) { }
+        public MenuAutomationPeer(System.Windows.Controls.Menu owner) : base (default(System.Windows.Controls.ItemsControl)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         protected override bool IsContentElementCore() { throw null; }
+        override protected System.Windows.Automation.Peers.ItemAutomationPeer CreateItemAutomationPeer(object item) { throw null; }
     }
-    public partial class MenuItemAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer, System.Windows.Automation.Provider.IExpandCollapseProvider, System.Windows.Automation.Provider.IInvokeProvider, System.Windows.Automation.Provider.IToggleProvider
+    public partial class MenuItemDataAutomationPeer : System.Windows.Automation.Peers.ItemAutomationPeer, System.Windows.Automation.Provider.IExpandCollapseProvider, System.Windows.Automation.Provider.IInvokeProvider, System.Windows.Automation.Provider.IToggleProvider
     {
-        public MenuItemAutomationPeer(System.Windows.Controls.MenuItem owner) : base (default(System.Windows.FrameworkElement)) { }
+        public MenuItemDataAutomationPeer(object item, ItemsControlAutomationPeer itemsControlPeer) : base(default(object), default(System.Windows.Automation.Peers.ItemsControlAutomationPeer)) { }
         System.Windows.Automation.ExpandCollapseState System.Windows.Automation.Provider.IExpandCollapseProvider.ExpandCollapseState { get { throw null; } }
         System.Windows.Automation.ToggleState System.Windows.Automation.Provider.IToggleProvider.ToggleState { get { throw null; } }
+        protected override string GetClassNameCore() { throw null; }
+        protected override AutomationControlType GetAutomationControlTypeCore() { throw null; }
+        void System.Windows.Automation.Provider.IExpandCollapseProvider.Expand() { }
+        void System.Windows.Automation.Provider.IExpandCollapseProvider.Collapse() { }
+        void System.Windows.Automation.Provider.IInvokeProvider.Invoke() { throw null; }
+        void System.Windows.Automation.Provider.IToggleProvider.Toggle() { throw null; }
+    }
+    public partial class MenuItemAutomationPeer : System.Windows.Automation.Peers.ItemsControlAutomationPeer, System.Windows.Automation.Provider.IExpandCollapseProvider, System.Windows.Automation.Provider.IInvokeProvider, System.Windows.Automation.Provider.IToggleProvider
+    {
+        public MenuItemAutomationPeer(System.Windows.Controls.MenuItem owner) : base (default(System.Windows.Controls.ItemsControl)) { }
+        System.Windows.Automation.ExpandCollapseState System.Windows.Automation.Provider.IExpandCollapseProvider.ExpandCollapseState { get { throw null; } }
+        System.Windows.Automation.ToggleState System.Windows.Automation.Provider.IToggleProvider.ToggleState { get { throw null; } }
+        override protected System.Windows.Automation.Peers.ItemAutomationPeer CreateItemAutomationPeer(object item) { throw null; }
         protected override string GetAccessKeyCore() { throw null; }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }

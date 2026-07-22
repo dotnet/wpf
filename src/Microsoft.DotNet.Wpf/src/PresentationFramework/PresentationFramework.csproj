@@ -479,6 +479,7 @@
     <Compile Include="System\Windows\Automation\Peers\ListViewAutomationPeer.cs" />
     <Compile Include="System\Windows\Automation\Peers\MediaElementAutomationPeer.cs" />
     <Compile Include="System\Windows\Automation\Peers\MenuAutomationPeer.cs" />
+    <Compile Include="System\Windows\Automation\Peers\MenuItemDataAutomationPeer.cs" />
     <Compile Include="System\Windows\Automation\Peers\MenuItemAutomationPeer.cs" />
     <Compile Include="System\Windows\Automation\Peers\NavigationWindowAutomationPeer.cs" />
     <Compile Include="System\Windows\Automation\Peers\PasswordBoxAutomationPeer.cs" />

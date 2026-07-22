@@ -7,11 +7,16 @@ using System.Windows.Controls;
 namespace System.Windows.Automation.Peers
 {
     ///
-    public class MenuItemAutomationPeer : FrameworkElementAutomationPeer, IExpandCollapseProvider, IInvokeProvider, IToggleProvider
+    public class MenuItemAutomationPeer : ItemsControlAutomationPeer, IExpandCollapseProvider, IInvokeProvider, IToggleProvider
     {
         ///
         public MenuItemAutomationPeer(MenuItem owner): base(owner)
         {
+        }
+
+        override protected ItemAutomationPeer CreateItemAutomationPeer(object item)
+        {
+            return new MenuItemDataAutomationPeer(item, this);
         }
 
         ///
@@ -159,8 +164,6 @@ namespace System.Windows.Automation.Peers
         ///
         protected override List<AutomationPeer> GetChildrenCore()
         {
-            List<AutomationPeer> children = base.GetChildrenCore();
-
             if (ExpandCollapseState.Expanded == ((IExpandCollapseProvider)this).ExpandCollapseState)
             {
                 ItemsControl owner = (ItemsControl)Owner;
@@ -168,7 +171,7 @@ namespace System.Windows.Automation.Peers
 
                 if (items.Count > 0)
                 {
-                    children = new List<AutomationPeer>(items.Count);
+                    List<AutomationPeer> children = new List<AutomationPeer>(items.Count);
                     for (int i = 0; i < items.Count; i++)
                     {
                         UIElement uiElement = owner.ItemContainerGenerator.ContainerFromIndex(i) as UIElement;
@@ -181,10 +184,56 @@ namespace System.Windows.Automation.Peers
                                 children.Add(peer);
                         }
                     }
+
+                    return children;
                 }
             }
 
+            return GetChildrenFromVisualTree();
+        }
+
+        private List<AutomationPeer> GetChildrenFromVisualTree()
+        {
+            List<AutomationPeer> children = null;
+
+            Iterate(Owner, ref children);
             return children;
+        }
+
+        private static void AddPeerToList(AutomationPeer peer, ref List<AutomationPeer> children)
+        {
+            if (children == null)
+                children = new List<AutomationPeer>();
+
+            children.Add(peer);
+        }
+
+        private static void Iterate(DependencyObject parent, ref List<AutomationPeer> children)
+        {
+            if (parent != null)
+            {
+                AutomationPeer peer = null;
+                int count = VisualTreeHelper.GetChildrenCount(parent);
+                for (int i = 0; i < count; i++)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(parent, i);
+
+                    if (child is UIElement uiElement
+                        && (peer = CreatePeerForElement(uiElement)) != null)
+                    {
+                        AddPeerToList(peer, ref children);
+                    }
+                    else if (child is UIElement3D uiElemenet3D
+                        && (peer = UIElement3DAutomationPeer.CreatePeerForElement(uiElemenet3D)) != null)
+                    {
+                        AddPeerToList(peer, ref children);
+                    }
+                    else
+                    {
+                        Iterate(child, ref children);
+                    }
+                }
+            }
         }
 
         ///

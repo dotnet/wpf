@@ -869,7 +869,7 @@ namespace Microsoft.Build.Tasks.Windows
 
         private LocalizationDirectivesToLocFile _localizationDirectives = MS.Internal.LocalizationDirectivesToLocFile.None;
 
-        private string                     _sourceDir;
+        private readonly string _sourceDir;
         private string                     _outputPath;
         private string                     _language;
 

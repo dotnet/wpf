@@ -42,23 +42,21 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         static RibbonControl()
         {
-            Type ownerType = typeof(RibbonControl);
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonControl), new FrameworkPropertyMetadata(typeof(RibbonControl)));
+            FocusableProperty.OverrideMetadata(typeof(RibbonControl), new FrameworkPropertyMetadata(false));
 
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            FocusableProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false));
-
-            IsInQuickAccessToolBarProperty.OverrideMetadata(ownerType,
+            IsInQuickAccessToolBarProperty.OverrideMetadata(typeof(RibbonControl),
                 new FrameworkPropertyMetadata(OnIsInQuickAccessToolBarChanged),
                 RibbonControlService.IsInQuickAccessToolBarPropertyKey);
 
-            IsInControlGroupProperty.OverrideMetadata(ownerType,
+            IsInControlGroupProperty.OverrideMetadata(typeof(RibbonControl),
                 new FrameworkPropertyMetadata(OnIsInControlGroupChanged),
                 RibbonControlService.IsInControlGroupPropertyKey);
 
-            ControlSizeDefinitionProperty.OverrideMetadata(ownerType,
+            ControlSizeDefinitionProperty.OverrideMetadata(typeof(RibbonControl),
                 new FrameworkPropertyMetadata(OnControlSizeDefinitionChanged, CoerceControlSizeDefinition));
             
-             ItemForItemContainerProperty.OverrideMetadata(ownerType,
+             ItemForItemContainerProperty.OverrideMetadata(typeof(RibbonControl),
                 new FrameworkPropertyMetadata(OnItemForItemContainerChanged));
 
 #if RIBBON_IN_FRAMEWORK

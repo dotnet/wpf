@@ -27,17 +27,16 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         static RibbonContextualTabGroupItemsControl()
         {
-            Type ownerType = typeof(RibbonContextualTabGroupItemsControl);
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            ItemTemplateProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, OnNotifyPropertyChanged, CoerceItemTemplate));
-            ItemContainerStyleProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, OnNotifyPropertyChanged, CoerceItemContainerStyle));
-            VisibilityProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(CoerceVisibility)));
-            FocusableProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonContextualTabGroupItemsControl), new FrameworkPropertyMetadata(typeof(RibbonContextualTabGroupItemsControl)));
+            ItemTemplateProperty.OverrideMetadata(typeof(RibbonContextualTabGroupItemsControl), new FrameworkPropertyMetadata(null, OnNotifyPropertyChanged, CoerceItemTemplate));
+            ItemContainerStyleProperty.OverrideMetadata(typeof(RibbonContextualTabGroupItemsControl), new FrameworkPropertyMetadata(null, OnNotifyPropertyChanged, CoerceItemContainerStyle));
+            VisibilityProperty.OverrideMetadata(typeof(RibbonContextualTabGroupItemsControl), new FrameworkPropertyMetadata(null, new CoerceValueCallback(CoerceVisibility)));
+            FocusableProperty.OverrideMetadata(typeof(RibbonContextualTabGroupItemsControl), new FrameworkPropertyMetadata(false));
 
             FrameworkElementFactory factory = new FrameworkElementFactory(typeof(RibbonContextualTabGroupsPanel));
             ItemsPanelTemplate itemsPanel = new ItemsPanelTemplate(factory);
             itemsPanel.Seal();
-            ItemsPanelProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(itemsPanel));
+            ItemsPanelProperty.OverrideMetadata(typeof(RibbonContextualTabGroupItemsControl), new FrameworkPropertyMetadata(itemsPanel));
         }
 
         #endregion

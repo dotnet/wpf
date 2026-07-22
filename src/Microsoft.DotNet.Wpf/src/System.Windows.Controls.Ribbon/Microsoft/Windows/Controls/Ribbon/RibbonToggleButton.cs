@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -39,19 +39,17 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         static RibbonToggleButton()
         {
-            Type ownerType = typeof(RibbonToggleButton);
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonToggleButton), new FrameworkPropertyMetadata(typeof(RibbonToggleButton)));
+            FocusableProperty.OverrideMetadata(typeof(RibbonToggleButton), new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerceFocusable)));
+            ToolTipProperty.OverrideMetadata(typeof(RibbonToggleButton), new FrameworkPropertyMetadata(null, new CoerceValueCallback(RibbonHelper.CoerceRibbonToolTip)));
+            ToolTipService.ShowOnDisabledProperty.OverrideMetadata(typeof(RibbonToggleButton), new FrameworkPropertyMetadata(true));
+            CommandProperty.OverrideMetadata(typeof(RibbonToggleButton), new FrameworkPropertyMetadata(RibbonHelper.OnCommandChanged));
+            ContextMenuProperty.OverrideMetadata(typeof(RibbonToggleButton), new FrameworkPropertyMetadata(RibbonHelper.OnContextMenuChanged, RibbonHelper.OnCoerceContextMenu));
+            ContextMenuService.ShowOnDisabledProperty.OverrideMetadata(typeof(RibbonToggleButton), new FrameworkPropertyMetadata(true));
+            EventManager.RegisterClassHandler(typeof(RibbonToggleButton), KeyTipService.ActivatingKeyTipEvent, new ActivatingKeyTipEventHandler(OnActivatingKeyTipThunk));
+            EventManager.RegisterClassHandler(typeof(RibbonToggleButton), KeyTipService.KeyTipAccessedEvent, new KeyTipAccessedEventHandler(OnKeyTipAccessedThunk));
 
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            FocusableProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerceFocusable)));
-            ToolTipProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(RibbonHelper.CoerceRibbonToolTip)));
-            ToolTipService.ShowOnDisabledProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(true));
-            CommandProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(RibbonHelper.OnCommandChanged));
-            ContextMenuProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(RibbonHelper.OnContextMenuChanged, RibbonHelper.OnCoerceContextMenu));
-            ContextMenuService.ShowOnDisabledProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(true));
-            EventManager.RegisterClassHandler(ownerType, KeyTipService.ActivatingKeyTipEvent, new ActivatingKeyTipEventHandler(OnActivatingKeyTipThunk));
-            EventManager.RegisterClassHandler(ownerType, KeyTipService.KeyTipAccessedEvent, new KeyTipAccessedEventHandler(OnKeyTipAccessedThunk));
-
-            IsCheckedProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsCheckedChanged)));
+            IsCheckedProperty.OverrideMetadata(typeof(RibbonToggleButton), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsCheckedChanged)));
         }
 
         private static void OnIsCheckedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

@@ -382,11 +382,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(ImageBrush);
             ImageSourceProperty =
                   RegisterProperty("ImageSource",
                                    typeof(ImageSource),
-                                   typeofThis,
+                                   typeof(ImageBrush),
                                    null,
                                    new PropertyChangedCallback(ImageSourcePropertyChanged),
                                    null,

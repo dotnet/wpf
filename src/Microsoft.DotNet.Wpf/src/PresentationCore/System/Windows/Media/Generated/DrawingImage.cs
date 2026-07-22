@@ -319,11 +319,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(DrawingImage);
             DrawingProperty =
                   RegisterProperty("Drawing",
                                    typeof(Drawing),
-                                   typeofThis,
+                                   typeof(DrawingImage),
                                    null,
                                    new PropertyChangedCallback(DrawingPropertyChanged),
                                    null,

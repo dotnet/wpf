@@ -321,11 +321,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(VideoDrawing);
             PlayerProperty =
                   RegisterProperty("Player",
                                    typeof(MediaPlayer),
-                                   typeofThis,
+                                   typeof(VideoDrawing),
                                    null,
                                    new PropertyChangedCallback(PlayerPropertyChanged),
                                    null,
@@ -334,7 +333,7 @@ namespace System.Windows.Media
             RectProperty =
                   RegisterProperty("Rect",
                                    typeof(Rect),
-                                   typeofThis,
+                                   typeof(VideoDrawing),
                                    Rect.Empty,
                                    new PropertyChangedCallback(RectPropertyChanged),
                                    null,

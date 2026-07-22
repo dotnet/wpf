@@ -454,11 +454,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(GeometryDrawing);
             BrushProperty =
                   RegisterProperty("Brush",
                                    typeof(Brush),
-                                   typeofThis,
+                                   typeof(GeometryDrawing),
                                    null,
                                    new PropertyChangedCallback(BrushPropertyChanged),
                                    null,
@@ -467,7 +466,7 @@ namespace System.Windows.Media
             PenProperty =
                   RegisterProperty("Pen",
                                    typeof(Pen),
-                                   typeofThis,
+                                   typeof(GeometryDrawing),
                                    null,
                                    new PropertyChangedCallback(PenPropertyChanged),
                                    null,
@@ -476,7 +475,7 @@ namespace System.Windows.Media
             GeometryProperty =
                   RegisterProperty("Geometry",
                                    typeof(Geometry),
-                                   typeofThis,
+                                   typeof(GeometryDrawing),
                                    null,
                                    new PropertyChangedCallback(GeometryPropertyChanged),
                                    null,

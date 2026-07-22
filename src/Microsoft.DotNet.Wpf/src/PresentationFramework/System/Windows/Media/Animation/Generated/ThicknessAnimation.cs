@@ -44,36 +44,34 @@ namespace System.Windows.Media.Animation
         /// </summary>
         static ThicknessAnimation()
         {
-            Type typeofProp = typeof(Thickness?);
-            Type typeofThis = typeof(ThicknessAnimation);
             PropertyChangedCallback propCallback = new PropertyChangedCallback(AnimationFunction_Changed);
             ValidateValueCallback validateCallback = new ValidateValueCallback(ValidateFromToOrByValue);
 
             FromProperty = DependencyProperty.Register(
                 "From",
-                typeofProp,
-                typeofThis,
+                typeof(Thickness?),
+                typeof(ThicknessAnimation),
                 new PropertyMetadata((Thickness?)null, propCallback),
                 validateCallback);
 
             ToProperty = DependencyProperty.Register(
                 "To",
-                typeofProp,
-                typeofThis,
+                typeof(Thickness?),
+                typeof(ThicknessAnimation),
                 new PropertyMetadata((Thickness?)null, propCallback),
                 validateCallback);
 
             ByProperty = DependencyProperty.Register(
                 "By",
-                typeofProp,
-                typeofThis,
+                typeof(Thickness?),
+                typeof(ThicknessAnimation),
                 new PropertyMetadata((Thickness?)null, propCallback),
                 validateCallback);
 
             EasingFunctionProperty = DependencyProperty.Register(
                 "EasingFunction",
                 typeof(IEasingFunction),
-                typeofThis);
+                typeof(ThicknessAnimation));
         }
 
 

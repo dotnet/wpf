@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -601,14 +601,13 @@ namespace System.Windows.Controls
             {
                 get
                 {
-                    Type managerType = typeof(DownloadCompletedEventManager);
-                    DownloadCompletedEventManager manager = (DownloadCompletedEventManager)GetCurrentManager(managerType);
+                    DownloadCompletedEventManager manager = (DownloadCompletedEventManager)GetCurrentManager(typeof(DownloadCompletedEventManager));
 
                     // at first use, create and register a new manager
                     if (manager == null)
                     {
                         manager = new DownloadCompletedEventManager();
-                        SetCurrentManager(managerType, manager);
+                        SetCurrentManager(typeof(DownloadCompletedEventManager), manager);
                     }
 
                     return manager;
@@ -725,14 +724,13 @@ namespace System.Windows.Controls
             {
                 get
                 {
-                    Type managerType = typeof(DownloadFailedEventManager);
-                    DownloadFailedEventManager manager = (DownloadFailedEventManager)GetCurrentManager(managerType);
+                    DownloadFailedEventManager manager = (DownloadFailedEventManager)GetCurrentManager(typeof(DownloadFailedEventManager));
 
                     // at first use, create and register a new manager
                     if (manager == null)
                     {
                         manager = new DownloadFailedEventManager();
-                        SetCurrentManager(managerType, manager);
+                        SetCurrentManager(typeof(DownloadFailedEventManager), manager);
                     }
 
                     return manager;
@@ -849,14 +847,13 @@ namespace System.Windows.Controls
             {
                 get
                 {
-                    Type managerType = typeof(DecodeFailedEventManager);
-                    DecodeFailedEventManager manager = (DecodeFailedEventManager)GetCurrentManager(managerType);
+                    DecodeFailedEventManager manager = (DecodeFailedEventManager)GetCurrentManager(typeof(DecodeFailedEventManager));
 
                     // at first use, create and register a new manager
                     if (manager == null)
                     {
                         manager = new DecodeFailedEventManager();
-                        SetCurrentManager(managerType, manager);
+                        SetCurrentManager(typeof(DecodeFailedEventManager), manager);
                     }
 
                     return manager;

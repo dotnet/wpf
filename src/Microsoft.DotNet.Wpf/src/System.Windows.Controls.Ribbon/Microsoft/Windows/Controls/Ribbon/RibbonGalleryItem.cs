@@ -36,16 +36,15 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         static RibbonGalleryItem()
         {
-            Type ownerType = typeof(RibbonGalleryItem);
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            ContentProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new PropertyChangedCallback(OnContentChanged), new CoerceValueCallback(CoerceContent)));
-            ToolTipProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(RibbonHelper.CoerceRibbonToolTip)));
-            ToolTipService.ShowOnDisabledProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(true));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonGalleryItem), new FrameworkPropertyMetadata(typeof(RibbonGalleryItem)));
+            ContentProperty.OverrideMetadata(typeof(RibbonGalleryItem), new FrameworkPropertyMetadata(null, new PropertyChangedCallback(OnContentChanged), new CoerceValueCallback(CoerceContent)));
+            ToolTipProperty.OverrideMetadata(typeof(RibbonGalleryItem), new FrameworkPropertyMetadata(null, new CoerceValueCallback(RibbonHelper.CoerceRibbonToolTip)));
+            ToolTipService.ShowOnDisabledProperty.OverrideMetadata(typeof(RibbonGalleryItem), new FrameworkPropertyMetadata(true));
 #if RIBBON_IN_FRAMEWORK
             AutomationProperties.IsOffscreenBehaviorProperty.OverrideMetadata(typeof(RibbonGalleryItem), new FrameworkPropertyMetadata(IsOffscreenBehavior.FromClip));
 #endif
-            EventManager.RegisterClassHandler(ownerType, KeyTipService.ActivatingKeyTipEvent, new ActivatingKeyTipEventHandler(OnActivatingKeyTipThunk));
-            EventManager.RegisterClassHandler(ownerType, KeyTipService.KeyTipAccessedEvent, new KeyTipAccessedEventHandler(OnKeyTipAccessedThunk));
+            EventManager.RegisterClassHandler(typeof(RibbonGalleryItem), KeyTipService.ActivatingKeyTipEvent, new ActivatingKeyTipEventHandler(OnActivatingKeyTipThunk));
+            EventManager.RegisterClassHandler(typeof(RibbonGalleryItem), KeyTipService.KeyTipAccessedEvent, new KeyTipAccessedEventHandler(OnKeyTipAccessedThunk));
         }
 
         #endregion Constructors

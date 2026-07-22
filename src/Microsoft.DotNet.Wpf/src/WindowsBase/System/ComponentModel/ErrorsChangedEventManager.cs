@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description: Manager for the ErrorsChanged event in the "weak event listener"
@@ -100,14 +100,13 @@ namespace System.ComponentModel
         {
             get
             {
-                Type managerType = typeof(ErrorsChangedEventManager);
-                ErrorsChangedEventManager manager = (ErrorsChangedEventManager)GetCurrentManager(managerType);
+                ErrorsChangedEventManager manager = (ErrorsChangedEventManager)GetCurrentManager(typeof(ErrorsChangedEventManager));
 
                 // at first use, create and register a new manager
                 if (manager == null)
                 {
                     manager = new ErrorsChangedEventManager();
-                    SetCurrentManager(managerType, manager);
+                    SetCurrentManager(typeof(ErrorsChangedEventManager), manager);
                 }
 
                 return manager;

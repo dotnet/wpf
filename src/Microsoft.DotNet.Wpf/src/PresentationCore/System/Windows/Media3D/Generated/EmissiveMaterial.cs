@@ -347,11 +347,10 @@ namespace System.Windows.Media.Media3D
 
 
             // Initializations
-            Type typeofThis = typeof(EmissiveMaterial);
             ColorProperty =
                   RegisterProperty("Color",
                                    typeof(Color),
-                                   typeofThis,
+                                   typeof(EmissiveMaterial),
                                    Colors.White,
                                    new PropertyChangedCallback(ColorPropertyChanged),
                                    null,
@@ -360,7 +359,7 @@ namespace System.Windows.Media.Media3D
             BrushProperty =
                   RegisterProperty("Brush",
                                    typeof(Brush),
-                                   typeofThis,
+                                   typeof(EmissiveMaterial),
                                    null,
                                    new PropertyChangedCallback(BrushPropertyChanged),
                                    null,

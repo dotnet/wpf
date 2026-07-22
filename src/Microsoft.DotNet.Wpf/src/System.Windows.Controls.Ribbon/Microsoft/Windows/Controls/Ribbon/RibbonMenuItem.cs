@@ -46,30 +46,28 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         static RibbonMenuItem()
         {
-            Type ownerType = typeof(RibbonMenuItem);
-
             ItemsPanelTemplate template = new ItemsPanelTemplate(new FrameworkElementFactory(typeof(RibbonMenuItemsPanel)));
             template.Seal();
-            ItemsPanelProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(template));
+            ItemsPanelProperty.OverrideMetadata(typeof(RibbonMenuItem), new FrameworkPropertyMetadata(template));
 
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            ToolTipProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(RibbonHelper.CoerceRibbonToolTip)));
-            ToolTipService.ShowOnDisabledProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(true));
-            CommandProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(RibbonHelper.OnCommandChanged));
-            ContextMenuProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(RibbonHelper.OnContextMenuChanged, RibbonHelper.OnCoerceContextMenu));
-            ContextMenuService.ShowOnDisabledProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(true));
-            IsSubmenuOpenProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnIsSubmenuOpenChanged)));
-            IsCheckedProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnIsCheckedChanged)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonMenuItem), new FrameworkPropertyMetadata(typeof(RibbonMenuItem)));
+            ToolTipProperty.OverrideMetadata(typeof(RibbonMenuItem), new FrameworkPropertyMetadata(null, new CoerceValueCallback(RibbonHelper.CoerceRibbonToolTip)));
+            ToolTipService.ShowOnDisabledProperty.OverrideMetadata(typeof(RibbonMenuItem), new FrameworkPropertyMetadata(true));
+            CommandProperty.OverrideMetadata(typeof(RibbonMenuItem), new FrameworkPropertyMetadata(RibbonHelper.OnCommandChanged));
+            ContextMenuProperty.OverrideMetadata(typeof(RibbonMenuItem), new FrameworkPropertyMetadata(RibbonHelper.OnContextMenuChanged, RibbonHelper.OnCoerceContextMenu));
+            ContextMenuService.ShowOnDisabledProperty.OverrideMetadata(typeof(RibbonMenuItem), new FrameworkPropertyMetadata(true));
+            IsSubmenuOpenProperty.OverrideMetadata(typeof(RibbonMenuItem), new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnIsSubmenuOpenChanged)));
+            IsCheckedProperty.OverrideMetadata(typeof(RibbonMenuItem), new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnIsCheckedChanged)));
             HasGalleryProperty.OverrideMetadata(typeof(RibbonMenuItem), new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnHasGalleryChanged)), RibbonMenuButton.HasGalleryPropertyKey);
-            HeaderProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new PropertyChangedCallback(OnHeaderChanged), new CoerceValueCallback(CoerceHeader)));
+            HeaderProperty.OverrideMetadata(typeof(RibbonMenuItem), new FrameworkPropertyMetadata(null, new PropertyChangedCallback(OnHeaderChanged), new CoerceValueCallback(CoerceHeader)));
             
-            EventManager.RegisterClassHandler(ownerType, Mouse.PreviewMouseDownOutsideCapturedElementEvent, new MouseButtonEventHandler(OnClickThroughThunk));
-            EventManager.RegisterClassHandler(ownerType, RibbonMenuButton.RibbonIsSelectedChangedEvent, new RoutedPropertyChangedEventHandler<bool>(OnRibbonIsSelectedChanged));
-            EventManager.RegisterClassHandler(ownerType, RibbonControlService.DismissPopupEvent, new RibbonDismissPopupEventHandler(OnDismissPopupThunk));
-            EventManager.RegisterClassHandler(ownerType, KeyTipService.ActivatingKeyTipEvent, new ActivatingKeyTipEventHandler(OnActivatingKeyTipThunk));
-            EventManager.RegisterClassHandler(ownerType, KeyTipService.KeyTipAccessedEvent, new KeyTipAccessedEventHandler(OnKeyTipAccessedThunk));
-            EventManager.RegisterClassHandler(ownerType, FrameworkElement.ContextMenuOpeningEvent, new ContextMenuEventHandler(OnContextMenuOpeningThunk), true);
-            EventManager.RegisterClassHandler(ownerType, FrameworkElement.ContextMenuClosingEvent, new ContextMenuEventHandler(OnContextMenuClosingThunk), true);
+            EventManager.RegisterClassHandler(typeof(RibbonMenuItem), Mouse.PreviewMouseDownOutsideCapturedElementEvent, new MouseButtonEventHandler(OnClickThroughThunk));
+            EventManager.RegisterClassHandler(typeof(RibbonMenuItem), RibbonMenuButton.RibbonIsSelectedChangedEvent, new RoutedPropertyChangedEventHandler<bool>(OnRibbonIsSelectedChanged));
+            EventManager.RegisterClassHandler(typeof(RibbonMenuItem), RibbonControlService.DismissPopupEvent, new RibbonDismissPopupEventHandler(OnDismissPopupThunk));
+            EventManager.RegisterClassHandler(typeof(RibbonMenuItem), KeyTipService.ActivatingKeyTipEvent, new ActivatingKeyTipEventHandler(OnActivatingKeyTipThunk));
+            EventManager.RegisterClassHandler(typeof(RibbonMenuItem), KeyTipService.KeyTipAccessedEvent, new KeyTipAccessedEventHandler(OnKeyTipAccessedThunk));
+            EventManager.RegisterClassHandler(typeof(RibbonMenuItem), FrameworkElement.ContextMenuOpeningEvent, new ContextMenuEventHandler(OnContextMenuOpeningThunk), true);
+            EventManager.RegisterClassHandler(typeof(RibbonMenuItem), FrameworkElement.ContextMenuClosingEvent, new ContextMenuEventHandler(OnContextMenuClosingThunk), true);
         }
 
         #endregion

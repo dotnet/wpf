@@ -45,12 +45,11 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         static RibbonGalleryCategory()
         {
-            Type ownerType = typeof(RibbonGalleryCategory);
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            ItemTemplateProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new PropertyChangedCallback(OnNotifyPropertyChanged), new CoerceValueCallback(CoerceItemTemplate)));
-            ItemContainerStyleProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnNotifyPropertyChanged), new CoerceValueCallback(CoerceItemContainerStyle)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonGalleryCategory), new FrameworkPropertyMetadata(typeof(RibbonGalleryCategory)));
+            ItemTemplateProperty.OverrideMetadata(typeof(RibbonGalleryCategory), new FrameworkPropertyMetadata(null, new PropertyChangedCallback(OnNotifyPropertyChanged), new CoerceValueCallback(CoerceItemTemplate)));
+            ItemContainerStyleProperty.OverrideMetadata(typeof(RibbonGalleryCategory), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnNotifyPropertyChanged), new CoerceValueCallback(CoerceItemContainerStyle)));
             
-            FocusableProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false));
+            FocusableProperty.OverrideMetadata(typeof(RibbonGalleryCategory), new FrameworkPropertyMetadata(false));
 #if RIBBON_IN_FRAMEWORK
             AutomationProperties.IsOffscreenBehaviorProperty.OverrideMetadata(typeof(RibbonGalleryCategory), new FrameworkPropertyMetadata(IsOffscreenBehavior.FromClip));
 #endif

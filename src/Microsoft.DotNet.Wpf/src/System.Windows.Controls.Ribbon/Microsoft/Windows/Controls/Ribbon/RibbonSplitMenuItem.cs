@@ -29,10 +29,9 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         static RibbonSplitMenuItem()
         {
-            Type ownerType = typeof(RibbonSplitMenuItem);
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            BorderThicknessProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new Thickness(), new PropertyChangedCallback(OnBorderThicknessChanged)));
-            IsCheckedProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsCheckedChanged)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonSplitMenuItem), new FrameworkPropertyMetadata(typeof(RibbonSplitMenuItem)));
+            BorderThicknessProperty.OverrideMetadata(typeof(RibbonSplitMenuItem), new FrameworkPropertyMetadata(new Thickness(), new PropertyChangedCallback(OnBorderThicknessChanged)));
+            IsCheckedProperty.OverrideMetadata(typeof(RibbonSplitMenuItem), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsCheckedChanged)));
         }
 
         #endregion

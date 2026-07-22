@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -129,14 +129,13 @@ namespace MS.Internal.Data
         {
             get
             {
-                Type managerType = typeof(XmlNodeChangedEventManager);
-                XmlNodeChangedEventManager manager = (XmlNodeChangedEventManager)GetCurrentManager(managerType);
+                XmlNodeChangedEventManager manager = (XmlNodeChangedEventManager)GetCurrentManager(typeof(XmlNodeChangedEventManager));
 
                 // at first use, create and register a new manager
                 if (manager == null)
                 {
                     manager = new XmlNodeChangedEventManager();
-                    SetCurrentManager(managerType, manager);
+                    SetCurrentManager(typeof(XmlNodeChangedEventManager), manager);
                 }
 
                 return manager;

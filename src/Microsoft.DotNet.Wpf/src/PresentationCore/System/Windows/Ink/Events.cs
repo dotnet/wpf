@@ -34,7 +34,7 @@ namespace System.Windows.Ink
         {
             if ( added == null && removed == null )
             {
-                throw new ArgumentException(SR.Format(SR.CannotBothBeNull, "added", "removed"));
+                throw new ArgumentException(SR.Format(SR.CannotBothBeNull, nameof(added), nameof(removed)));
             }
             _added = ( added == null ) ? null : new StrokeCollection.ReadOnlyStrokeCollection(added);
             _removed = ( removed == null ) ? null : new StrokeCollection.ReadOnlyStrokeCollection(removed);
@@ -100,7 +100,7 @@ namespace System.Windows.Ink
         {
             if ( newValue == null && previousValue == null )
             {
-                throw new ArgumentException(SR.Format(SR.CannotBothBeNull, "newValue", "previousValue"));
+                throw new ArgumentException(SR.Format(SR.CannotBothBeNull, nameof(newValue), nameof(previousValue)));
             }
 
             _propertyGuid = propertyGuid;

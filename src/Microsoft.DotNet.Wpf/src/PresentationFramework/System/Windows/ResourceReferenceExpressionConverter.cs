@@ -113,7 +113,7 @@ namespace System.Windows.Markup
             ResourceReferenceExpression expr = value as ResourceReferenceExpression;
             if (expr == null)
             {
-                throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "ResourceReferenceExpression"));
+                throw new ArgumentException(SR.Format(SR.MustBeOfType, nameof(value), "ResourceReferenceExpression"));
             }
             ArgumentNullException.ThrowIfNull(destinationType);
 

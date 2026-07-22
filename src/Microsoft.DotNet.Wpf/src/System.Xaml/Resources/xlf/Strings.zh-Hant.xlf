@@ -822,11 +822,6 @@
         <target state="translated">找不到使用於 '{0}' 具有 '{1}' 引數的建構函式。</target>
         <note />
       </trans-unit>
-      <trans-unit id="NoDefaultConstructor">
-        <source>No default constructor found for type '{0}'. You can use the Arguments or FactoryMethod directives to construct this type.</source>
-        <target state="translated">找不到型別 '{0}' 的預設建構函式。您可以使用 Arguments 或 FactoryMethod 指示詞來建構此型別。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NoElementUsage">
         <source>'{0}' is not allowed in element usage.</source>
         <target state="translated">項目使用方式中不允許 '{0}'。</target>

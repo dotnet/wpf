@@ -1,21 +1,25 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Threading;
 
-namespace System.Windows.Threading
+namespace System.Windows.Threading;
+
+public sealed partial class Dispatcher
 {
     /// <summary>
-    /// Class for Filtering and Catching Exceptions
+    /// Helper class for Filtering and Catching Exceptions.
     /// </summary>
-    internal class ExceptionWrapper
+    /// <remarks>
+    /// This is mostly legacy interface as newer (e.g. async) methods don't catch/filter the exceptions.
+    /// </remarks>
+    internal static class ExceptionWrapper
     {
-        internal ExceptionWrapper()
-        {
-        }
-
-        // Helper for exception filtering:
-        public object TryCatchWhen(object source, Delegate callback, object args, int numArgs, Delegate catchHandler)
+        /// <summary>
+        /// Calls the delegate and catches exceptions that are filtered by the dispatcher, raising the UnhandledException event if necessary.
+        /// </summary>
+        /// <returns>Result of the delegate method call in case it has succeeded.</returns>
+        internal static object TryCatchWhen(Dispatcher dispatcher, Delegate callback, object args, int numArgs, Delegate catchCallback)
         {
             object result = null;
 
@@ -23,9 +27,10 @@ namespace System.Windows.Threading
             {
                 result = InternalRealCall(callback, args, numArgs);
             }
-            catch (Exception e) when (FilterException(source, e))
+            catch (Exception e) when (FilterException(dispatcher, e))
             {
-                if (!CatchException(source, e, catchHandler))
+                // Determine whether we should catch or throw the exception, executing the catchCallback beforehand
+                if (!CatchException(dispatcher, e, catchCallback))
                 {
                     throw;
                 }
@@ -34,7 +39,7 @@ namespace System.Windows.Threading
             return result;
         }
 
-        private object InternalRealCall(Delegate callback, object args, int numArgs)
+        private static object InternalRealCall(Delegate callback, object args, int numArgs)
         {
             object result = null;
 
@@ -46,14 +51,14 @@ namespace System.Windows.Threading
             // of an arbitrary "params object[]" is passed.
             int numArgsEx = numArgs;
             object singleArg = args;
-            if(numArgs == -1)
+            if (numArgs == -1)
             {
                 object[] argsArr = (object[])args;
                 if (argsArr == null || argsArr.Length == 0)
                 {
                     numArgsEx = 0;
                 }
-                else if(argsArr.Length == 1)
+                else if (argsArr.Length == 1)
                 {
                     numArgsEx = 1;
                     singleArg = argsArr[0];
@@ -62,7 +67,7 @@ namespace System.Windows.Threading
 
             // Special-case delegates that we know about to avoid the
             // expensive DynamicInvoke call.
-            if(numArgsEx == 0)
+            if (numArgsEx == 0)
             {
                 if (callback is Action action)
                 {
@@ -70,7 +75,7 @@ namespace System.Windows.Threading
                 }
                 else
                 {
-                    if (callback is Dispatcher.ShutdownCallback shutdownCallback)
+                    if (callback is ShutdownCallback shutdownCallback)
                     {
                         shutdownCallback();
                     }
@@ -81,7 +86,7 @@ namespace System.Windows.Threading
                     }
                 }
             }
-            else if(numArgsEx == 1)
+            else if (numArgsEx == 1)
             {
                 if (callback is DispatcherOperationCallback dispatcherOperationCallback)
                 {
@@ -121,27 +126,22 @@ namespace System.Windows.Threading
             return result;
         }
 
-        private bool FilterException(object source, Exception e)
+        /// <summary>
+        /// Exception filter returns <see langword="true"/> if exception should be caught.
+        /// </summary>
+        private static bool FilterException(Dispatcher dispatcher, Exception e)
         {
-            // If we have a Catch handler we should catch the exception
-            // unless the Filter handler says we shouldn't.
-            bool shouldCatch = (null != Catch);
-            if(null != Filter)
-            {
-                shouldCatch = Filter(source, e);
-            }
-            return shouldCatch;
+            // This will raise Dispatcher.UnhandledException event if registered.
+            return dispatcher.ExceptionFilter(e);
         }
 
-        // This returns false when caller should rethrow the exception.
-        // true means Exception is "handled" and things just continue on.
-        private bool CatchException(object source, Exception e, Delegate catchHandler)
+        private static bool CatchException(Dispatcher dispatcher, Exception e, Delegate catchHandler)
         {
-            if (catchHandler != null)
+            if (catchHandler is not null)
             {
-                if(catchHandler is DispatcherOperationCallback)
+                if (catchHandler is DispatcherOperationCallback catchCallback)
                 {
-                    ((DispatcherOperationCallback)catchHandler)(null);
+                    catchCallback(null);
                 }
                 else
                 {
@@ -149,29 +149,9 @@ namespace System.Windows.Threading
                 }
             }
 
-            if(null != Catch)
-                return Catch(source, e);
-
-            return false;
+            // This returns false when caller should rethrow the exception.
+            // true means Exception is "handled" and things just continue on.
+            return dispatcher.CatchException(e);
         }
-
-        /// <summary>
-        /// Exception Catch Handler Delegate
-        ///  Returns true if the exception is "handled"
-        ///  Returns false if the caller should rethow the exception.
-        /// </summary>
-        public delegate bool CatchHandler(object source, Exception e);
-
-        /// <summary>
-        /// Exception Catch Handler
-        ///  Returns true if the exception is "handled"
-        ///  Returns false if the caller should rethow the exception.
-        /// </summary>
-        public event CatchHandler Catch;
-
-        public delegate bool FilterHandler(object source, Exception e);
-        public event FilterHandler Filter;
     }
 }
-
-

@@ -12,10 +12,6 @@ using namespace MS::Internal::Text::TextInterface::Interfaces;
 #endif
 using namespace System::Threading;
 
-typedef HRESULT (WINAPI *DWRITECREATEFACTORY)(DWRITE_FACTORY_TYPE factoryType, REFIID iid, IUnknown **factory);
-
-extern void *GetDWriteCreateFactoryFunctionPointer();
-
 namespace MS { namespace Internal { namespace Text { namespace TextInterface
 {
     HRESULT InternalFactory::CreateFontFile(

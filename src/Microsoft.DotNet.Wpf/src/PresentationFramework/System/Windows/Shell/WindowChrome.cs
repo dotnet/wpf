@@ -1,8 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-
-
 using System.Diagnostics.CodeAnalysis;
 using System.Windows.Data;
 using Standard;
@@ -105,7 +103,7 @@ namespace Microsoft.Windows.Shell
             "IsHitTestVisibleInChrome",
             typeof(bool),
             typeof(WindowChrome),
-            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits));
+            new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.Inherits));
 
         [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
@@ -229,7 +227,7 @@ namespace Microsoft.Windows.Shell
             "UseAeroCaptionButtons",
             typeof(bool),
             typeof(WindowChrome),
-            new FrameworkPropertyMetadata(true));
+            new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
 
         public bool UseAeroCaptionButtons
         {

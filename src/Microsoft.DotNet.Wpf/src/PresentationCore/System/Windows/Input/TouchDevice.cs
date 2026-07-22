@@ -5,7 +5,6 @@ using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Windows.Threading;
 using MS.Internal;
-using MS.Internal.KnownBoxes;
 using MS.Utility;
 using System.Windows.Input.Tracing;
 

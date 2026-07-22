@@ -41,7 +41,7 @@ namespace System.Windows.Documents
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Hyperlink), new FrameworkPropertyMetadata(typeof(Hyperlink)));
             _dType = DependencyObjectType.FromSystemTypeInternal(typeof(Hyperlink));
-            FocusableProperty.OverrideMetadata(typeof(Hyperlink), new FrameworkPropertyMetadata(true));
+            FocusableProperty.OverrideMetadata(typeof(Hyperlink), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
             EventManager.RegisterClassHandler(typeof(Hyperlink), Mouse.QueryCursorEvent, new QueryCursorEventHandler(OnQueryCursor));
         }
 
@@ -865,7 +865,7 @@ namespace System.Windows.Documents
                         "IsHyperlinkPressed",
                         typeof(bool),
                         typeof(Hyperlink),
-                        new FrameworkPropertyMetadata(false));
+                        new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
         internal static void OnNavigateUriChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

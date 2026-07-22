@@ -730,12 +730,14 @@ namespace System.Windows
                                           new PropertyMetadata((PresentationSource)null));
 
         // We use a private DP to mark elements that we are watchin.
-        private static readonly DependencyProperty GetsSourceChangedEventProperty = DependencyProperty.RegisterAttached("IsBeingWatched", typeof(bool), typeof(PresentationSource), new PropertyMetadata((bool)false));
+        private static readonly DependencyProperty GetsSourceChangedEventProperty = DependencyProperty.RegisterAttached("IsBeingWatched", typeof(bool),
+            typeof(PresentationSource), new PropertyMetadata(BooleanBoxes.FalseBox));
 
         // We use a private direct-only event to notify elements of when the
         // source changes.  Use the public APIs AddSourceChangedHandler and
         // RemoveSourceChangedHandler to listen to this event.
-        private static readonly RoutedEvent SourceChangedEvent = EventManager.RegisterRoutedEvent("SourceChanged", RoutingStrategy.Direct, typeof(SourceChangedEventHandler), typeof(PresentationSource));
+        private static readonly RoutedEvent SourceChangedEvent = EventManager.RegisterRoutedEvent("SourceChanged", RoutingStrategy.Direct,
+            typeof(SourceChangedEventHandler), typeof(PresentationSource));
 
         // The lock we use to protect our static data.
         private static readonly object _globalLock = new object();

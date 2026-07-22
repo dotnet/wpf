@@ -10,6 +10,7 @@ using System.Windows.Automation.Provider;
 using System.Windows.Controls;
 using System.Windows.Input;         // For event args
 using System.Windows.TrustUI;       // For string resources
+using MS.Internal.KnownBoxes;
 
 namespace MS.Internal.Documents.Application
 {
@@ -32,7 +33,7 @@ namespace MS.Internal.Documents.Application
         {
             // Override this ComboBox property so that any zoom values that are found in the TextBox
             // (either from user input, or databinding) are not looked up in the drop down list.
-            IsTextSearchEnabledProperty.OverrideMetadata(typeof(ZoomComboBox), new FrameworkPropertyMetadata(false));
+            IsTextSearchEnabledProperty.OverrideMetadata(typeof(ZoomComboBox), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
         }
 
         /// <summary>

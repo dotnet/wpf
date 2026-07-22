@@ -1,8 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-
-
 using System.Windows.Input;
 using System.Windows.Media;
 using MS.Internal;
@@ -32,14 +30,14 @@ namespace System.Windows.Controls.Primitives
             Type ownerType = typeof(DataGridColumnHeadersPresenter);
 
             DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            FocusableProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false));
+            FocusableProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
             FrameworkElementFactory factory = new FrameworkElementFactory(typeof(DataGridCellsPanel));
             ItemsPanelProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new ItemsPanelTemplate(factory)));
 
             VirtualizingPanel.IsVirtualizingProperty.OverrideMetadata(
                 ownerType,
-                new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnIsVirtualizingPropertyChanged), new CoerceValueCallback(OnCoerceIsVirtualizingProperty)));
+                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, new PropertyChangedCallback(OnIsVirtualizingPropertyChanged), new CoerceValueCallback(OnCoerceIsVirtualizingProperty)));
 
             VirtualizingPanel.VirtualizationModeProperty.OverrideMetadata(
                 ownerType,

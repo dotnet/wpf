@@ -16,8 +16,6 @@ using System.Collections;
 
 using System.Windows;
 using System.Windows.Navigation;
-using MS.Internal.KnownBoxes;
-
 
 namespace MS.Internal.AppModel
 {

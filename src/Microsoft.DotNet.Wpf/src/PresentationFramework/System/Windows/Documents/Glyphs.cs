@@ -920,8 +920,9 @@ namespace System.Windows.Documents
         /// Sideways property
         /// </summary>
         public static readonly DependencyProperty IsSidewaysProperty =
-            DependencyProperty.Register( "IsSideways", typeof(bool), typeof(Glyphs),
-                new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, new PropertyChangedCallback(GlyphRunPropertyChanged)));
+            DependencyProperty.Register("IsSideways", typeof(bool), typeof(Glyphs),
+                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
+                    new PropertyChangedCallback(GlyphRunPropertyChanged)));
 
         /// <summary>
         /// Specifies whether to rotate characters/glyphs 90 degrees anti-clockwise

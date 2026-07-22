@@ -14,9 +14,6 @@ using System.Windows.Shapes;
 using MS.Internal;
 using MS.Internal.Telemetry.PresentationFramework;
 
-
-using MS.Internal.KnownBoxes;
-
 namespace System.Windows.Controls
 {
     /// <summary>

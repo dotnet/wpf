@@ -43,7 +43,8 @@
     <Compile Include="$(WpfSharedDir)\MS\Internal\Invariant.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\MatrixUtil.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\Registry.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\TokenizerHelper.cs " />
+    <Compile Include="$(WpfSharedDir)\MS\Internal\TokenizerHelper.cs" />
+    <Compile Include="$(WpfSharedDir)\MS\Internal\ValueTokenizerHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\IO\Packaging\CompoundFile\ContainerFlags.cs " />
     <Compile Include="$(WpfSharedDir)\MS\Internal\IO\Packaging\PackagePartExtensions.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\IO\Packaging\PackagingUtilities.cs" />

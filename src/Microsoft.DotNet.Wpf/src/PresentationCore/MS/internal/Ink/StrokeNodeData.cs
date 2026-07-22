@@ -52,7 +52,7 @@ namespace MS.Internal.Ink
         { 
             get 
             {
-                Debug.Assert(DoubleUtil.AreClose(0, s_empty._pressure));
+                Debug.Assert(DoubleUtil.IsZero(s_empty._pressure));
                 return DoubleUtil.AreClose(_pressure, s_empty._pressure); 
             } 
         }

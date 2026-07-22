@@ -47,7 +47,7 @@ namespace System.Windows.Input.StylusWisp
 
                 StylusPointPropertyInfo propertyInfo = stylusPoint.Description.GetPropertyInfo(property);
 
-                if (!DoubleUtil.AreClose(propertyInfo.Resolution, 0d))
+                if (!DoubleUtil.IsZero(propertyInfo.Resolution))
                 {
                     value /= propertyInfo.Resolution;
                 }

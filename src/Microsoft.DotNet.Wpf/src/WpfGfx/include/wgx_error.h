@@ -12,6 +12,16 @@
 #pragma once
 
 /*=========================================================================*\
+    DXGI error codes
+    Defined here to avoid a dependency on dxgi.h, which is not included
+    in WpfGfx. These values are stable ABI constants defined by DirectX.
+\*=========================================================================*/
+
+#ifndef DXGI_ERROR_DEVICE_REMOVED
+#define DXGI_ERROR_DEVICE_REMOVED   ((HRESULT)0x887A0005L)
+#endif
+
+/*=========================================================================*\
     MIL Status Codes
 \*=========================================================================*/
 

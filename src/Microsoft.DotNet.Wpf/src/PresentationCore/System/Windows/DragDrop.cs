@@ -912,7 +912,7 @@ namespace System.Windows
         int UnsafeNativeMethods.IOleDropTarget.OleDragEnter(object data, int dragDropKeyStates, long point, ref int effects)
         {
             DependencyObject target;
-            Point targetPoint;
+            Point clientPoint;
 
             // Get the data object and immediately return if there isn't the data object or no available data.
             _dataObject = GetDataObject(data);
@@ -925,7 +925,7 @@ namespace System.Windows
             }
 
             // Get the current target from the mouse drag point that is based on screen.
-            target = GetCurrentTarget(point, out targetPoint);
+            target = GetCurrentTarget(point, out clientPoint);
 
             // Set the last target element with the current target.
             _lastTarget = target;
@@ -938,7 +938,7 @@ namespace System.Windows
                     dragDropKeyStates,
                     ref effects,
                     target,
-                    targetPoint);
+                    TranslateClientPoint(clientPoint, target));
             }
             else
             {
@@ -955,12 +955,12 @@ namespace System.Windows
         int UnsafeNativeMethods.IOleDropTarget.OleDragOver(int dragDropKeyStates, long point, ref int effects)
         {
             DependencyObject target;
-            Point targetPoint;
+            Point clientPoint;
 
             Invariant.Assert(_dataObject != null);
 
             // Get the current target from the mouse drag point that is based on screen.
-            target = GetCurrentTarget(point, out targetPoint);
+            target = GetCurrentTarget(point, out clientPoint);
 
             // Raise DragOver event to the target to get DragDrop effect status from the target.
             if (target != null)
@@ -980,7 +980,7 @@ namespace System.Windows
                                 dragDropKeyStates,
                                 ref effects,
                                 _lastTarget,
-                                targetPoint);
+                                TranslateClientPoint(clientPoint, _lastTarget));
                         }
 
                         // Raise DragEnter event to the new target.
@@ -989,7 +989,7 @@ namespace System.Windows
                             dragDropKeyStates,
                             ref effects,
                             target,
-                            targetPoint);
+                            TranslateClientPoint(clientPoint, target));
                     }
                     finally
                     {
@@ -1005,7 +1005,7 @@ namespace System.Windows
                         dragDropKeyStates,
                         ref effects,
                         target,
-                        targetPoint);
+                        TranslateClientPoint(clientPoint, target));
                 }
             }
             else
@@ -1020,7 +1020,7 @@ namespace System.Windows
                             dragDropKeyStates,
                             ref effects,
                             _lastTarget,
-                            targetPoint);
+                            TranslateClientPoint(clientPoint, _lastTarget));
                     }
                 }
                 finally
@@ -1074,7 +1074,7 @@ namespace System.Windows
         {
             IDataObject dataObject;
             DependencyObject target;
-            Point targetPoint;
+            Point clientPoint;
 
             // Get the data object and then immediately return fail if there isn't the proper data.
             dataObject = GetDataObject(data);
@@ -1089,7 +1089,7 @@ namespace System.Windows
             _lastTarget = null;
 
             // Get the current target from the screen mouse point.
-            target = GetCurrentTarget(point, out targetPoint);
+            target = GetCurrentTarget(point, out clientPoint);
 
             // Raise Drop event to the target element.
             if (target != null)
@@ -1100,7 +1100,7 @@ namespace System.Windows
                     dragDropKeyStates,
                     ref effects,
                     target,
-                    targetPoint);
+                    TranslateClientPoint(clientPoint, target));
             }
             else
             {
@@ -1282,10 +1282,24 @@ namespace System.Windows
         }
 
         /// <summary>
-        /// Get the current target object and target point from the mouse dragging point
+        /// Translate client point to target point.
+        /// </summary>
+        private Point TranslateClientPoint(Point clientPoint, DependencyObject target)
+        {
+            HwndSource source = HwndSource.FromHwnd(_windowHandle);
+            if (source == null)
+            {
+                return new Point(0, 0);
+            }
+            Point rootPoint = PointUtil.ClientToRoot(clientPoint, source);
+            return InputElement.TranslatePoint(rootPoint, source.RootVisual, target);
+        }
+
+        /// <summary>
+        /// Get the current target object and client point from the mouse dragging point
         /// that is the screen point.
         /// </summary>
-        private DependencyObject GetCurrentTarget(long dragPoint, out Point targetPoint)
+        private DependencyObject GetCurrentTarget(long dragPoint, out Point clientPoint)
         {
             HwndSource source;
             DependencyObject target;
@@ -1297,7 +1311,7 @@ namespace System.Windows
             source = HwndSource.FromHwnd(_windowHandle);
 
             // Get the client point from the screen point.
-            targetPoint = GetClientPointFromScreenPoint(dragPoint, source);
+            clientPoint = GetClientPointFromScreenPoint(dragPoint, source);
 
             if (source != null)
             {
@@ -1355,13 +1369,6 @@ namespace System.Windows
                             }
                         }
                     }
-                }
-
-                if (target != null)
-                {
-                    // Translate the client point to the root point and then translate it to target point.
-                    targetPoint = PointUtil.ClientToRoot(targetPoint, source);
-                    targetPoint = InputElement.TranslatePoint(targetPoint, source.RootVisual, target);
                 }
             }
 

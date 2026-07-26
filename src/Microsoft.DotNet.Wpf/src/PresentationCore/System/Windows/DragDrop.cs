@@ -1320,7 +1320,7 @@ namespace System.Windows
                 // Hit-Testing to get the target object from the current mouse dragging point.
                 // LocalHitTest() will get the hit-tested object from the mouse dragging point after 
                 // conversion the pixel to the measure unit.
-                target = MouseDevice.LocalHitTest(targetPoint, source) as DependencyObject;
+                target = MouseDevice.LocalHitTest(clientPoint, source) as DependencyObject;
 
                 targetUIElement = target as UIElement;
                 if (targetUIElement != null)

@@ -649,11 +649,27 @@ CSnappingFrame::PushFrame(
         // float SnapsY[uCountY];
 
         UINT32 uCount = static_cast<UINT32>(uCountX) + static_cast<UINT32>(uCountY);
+        
+		UINT32 cbTotal;
+		if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+		{
+			// Validate allocation size won't overflow
+			UINT32 cbFloatData;
+			IFC(UIntMult(sizeof(float), uCount, &cbFloatData));
+			IFC(UIntMult(cbFloatData, 2, &cbFloatData));
+			IFC(UIntAdd(static_cast<UINT32>(sizeof(CSnappingFrame)), cbFloatData, &cbTotal));
+		}
+		else
+		{
+			cbTotal = sizeof(CSnappingFrame) + sizeof(float) * uCount * 2;
+		}
+
         void *pMem = WPFAlloc(
             ProcessHeap,
             Mt(CSnappingFrame),
-            sizeof(CSnappingFrame) + sizeof(float) * uCount * 2
+            cbTotal
             );
+        
         IFCOOM(pMem);
 
         {

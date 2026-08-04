@@ -46,7 +46,9 @@ namespace System.Xaml
 #if PBTCOMPILER
         // System.Reflection.MetadataLoadContext instance
         private static MetadataLoadContext _metadataLoadContext = null;
-
+#if !NET11_0_OR_GREATER
+        private static Type s_nullableType = null;
+#endif
         // MetadataLoadContext Assembly cache
         private static Dictionary<string, Assembly> _cachedMetadataLoadContextAssemblies = null;
         private static Dictionary<string, Assembly> _cachedMetadataLoadContextAssembliesByNameNoExtension = null;
@@ -122,7 +124,10 @@ namespace System.Xaml
 #if NET11_0_OR_GREATER
             return type.GetNullableUnderlyingType() is not null;
 #else
-            return type.IsGenericType && (type.GetGenericTypeDefinition() == typeof(Nullable<>));
+            s_nullableType ??= _metadataLoadContext.CoreAssembly?.GetType("System.Nullable`1");
+            Debug.Assert(s_nullableType is not null, "System.Nullable`1 type not found in MetadataLoadContext");
+
+            return type.IsGenericType && s_nullableType.Equals(type.GetGenericTypeDefinition());
 #endif
         }
 

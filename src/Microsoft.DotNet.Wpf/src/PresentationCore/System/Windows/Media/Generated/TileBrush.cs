@@ -413,11 +413,10 @@ namespace System.Windows.Media
                                        new PropertyChangedCallback(CacheInvalidationThresholdMaximumPropertyChanged)));
 
             // Initializations
-            Type typeofThis = typeof(TileBrush);
             ViewportUnitsProperty =
                   RegisterProperty("ViewportUnits",
                                    typeof(BrushMappingMode),
-                                   typeofThis,
+                                   typeof(TileBrush),
                                    BrushMappingMode.RelativeToBoundingBox,
                                    new PropertyChangedCallback(ViewportUnitsPropertyChanged),
                                    new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsBrushMappingModeValid),
@@ -426,7 +425,7 @@ namespace System.Windows.Media
             ViewboxUnitsProperty =
                   RegisterProperty("ViewboxUnits",
                                    typeof(BrushMappingMode),
-                                   typeofThis,
+                                   typeof(TileBrush),
                                    BrushMappingMode.RelativeToBoundingBox,
                                    new PropertyChangedCallback(ViewboxUnitsPropertyChanged),
                                    new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsBrushMappingModeValid),
@@ -435,7 +434,7 @@ namespace System.Windows.Media
             ViewportProperty =
                   RegisterProperty("Viewport",
                                    typeof(Rect),
-                                   typeofThis,
+                                   typeof(TileBrush),
                                    new Rect(0,0,1,1),
                                    new PropertyChangedCallback(ViewportPropertyChanged),
                                    null,
@@ -444,7 +443,7 @@ namespace System.Windows.Media
             ViewboxProperty =
                   RegisterProperty("Viewbox",
                                    typeof(Rect),
-                                   typeofThis,
+                                   typeof(TileBrush),
                                    new Rect(0,0,1,1),
                                    new PropertyChangedCallback(ViewboxPropertyChanged),
                                    null,
@@ -453,7 +452,7 @@ namespace System.Windows.Media
             StretchProperty =
                   RegisterProperty("Stretch",
                                    typeof(Stretch),
-                                   typeofThis,
+                                   typeof(TileBrush),
                                    Stretch.Fill,
                                    new PropertyChangedCallback(StretchPropertyChanged),
                                    new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsStretchValid),
@@ -462,7 +461,7 @@ namespace System.Windows.Media
             TileModeProperty =
                   RegisterProperty("TileMode",
                                    typeof(TileMode),
-                                   typeofThis,
+                                   typeof(TileBrush),
                                    TileMode.None,
                                    new PropertyChangedCallback(TileModePropertyChanged),
                                    new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsTileModeValid),
@@ -471,7 +470,7 @@ namespace System.Windows.Media
             AlignmentXProperty =
                   RegisterProperty("AlignmentX",
                                    typeof(AlignmentX),
-                                   typeofThis,
+                                   typeof(TileBrush),
                                    AlignmentX.Center,
                                    new PropertyChangedCallback(AlignmentXPropertyChanged),
                                    new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsAlignmentXValid),
@@ -480,7 +479,7 @@ namespace System.Windows.Media
             AlignmentYProperty =
                   RegisterProperty("AlignmentY",
                                    typeof(AlignmentY),
-                                   typeofThis,
+                                   typeof(TileBrush),
                                    AlignmentY.Center,
                                    new PropertyChangedCallback(AlignmentYPropertyChanged),
                                    new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsAlignmentYValid),

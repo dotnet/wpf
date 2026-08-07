@@ -279,11 +279,10 @@ namespace System.Windows.Media.Effects
 
 
             // Initializations
-            Type typeofThis = typeof(ShaderEffect);
             PixelShaderProperty =
                   RegisterProperty("PixelShader",
                                    typeof(PixelShader),
-                                   typeofThis,
+                                   typeof(ShaderEffect),
                                    null,
                                    new PropertyChangedCallback(PixelShaderPropertyChanged),
                                    null,

@@ -361,11 +361,10 @@ namespace System.Windows.Media.Imaging
 
 
             // Initializations
-            Type typeofThis = typeof(FormatConvertedBitmap);
             SourceProperty =
                   RegisterProperty("Source",
                                    typeof(BitmapSource),
-                                   typeofThis,
+                                   typeof(FormatConvertedBitmap),
                                    null,
                                    new PropertyChangedCallback(SourcePropertyChanged),
                                    null,
@@ -374,7 +373,7 @@ namespace System.Windows.Media.Imaging
             DestinationFormatProperty =
                   RegisterProperty("DestinationFormat",
                                    typeof(PixelFormat),
-                                   typeofThis,
+                                   typeof(FormatConvertedBitmap),
                                    PixelFormats.Pbgra32,
                                    new PropertyChangedCallback(DestinationFormatPropertyChanged),
                                    null,
@@ -383,7 +382,7 @@ namespace System.Windows.Media.Imaging
             DestinationPaletteProperty =
                   RegisterProperty("DestinationPalette",
                                    typeof(BitmapPalette),
-                                   typeofThis,
+                                   typeof(FormatConvertedBitmap),
                                    null,
                                    new PropertyChangedCallback(DestinationPalettePropertyChanged),
                                    null,
@@ -392,7 +391,7 @@ namespace System.Windows.Media.Imaging
             AlphaThresholdProperty =
                   RegisterProperty("AlphaThreshold",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(FormatConvertedBitmap),
                                    0.0,
                                    new PropertyChangedCallback(AlphaThresholdPropertyChanged),
                                    null,

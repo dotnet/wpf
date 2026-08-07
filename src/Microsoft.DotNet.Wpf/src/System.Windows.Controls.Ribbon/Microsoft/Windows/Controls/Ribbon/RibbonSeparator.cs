@@ -31,11 +31,9 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         static RibbonSeparator()
         {
-            Type ownerType = typeof(RibbonSeparator);
-
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonSeparator), new FrameworkPropertyMetadata(typeof(RibbonSeparator)));
         }
-        
+
         #endregion Constructors
 
         #region Public Properties

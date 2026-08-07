@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -38,17 +38,15 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         static RibbonCheckBox()
         {
-            Type ownerType = typeof(RibbonCheckBox);
-
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            FocusableProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerceFocusable)));
-            ToolTipProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(RibbonHelper.CoerceRibbonToolTip)));
-            ToolTipService.ShowOnDisabledProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(true));
-            CommandProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(RibbonHelper.OnCommandChanged));
-            ContextMenuProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(RibbonHelper.OnContextMenuChanged, RibbonHelper.OnCoerceContextMenu));
-            ContextMenuService.ShowOnDisabledProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(true));
-            EventManager.RegisterClassHandler(ownerType, KeyTipService.ActivatingKeyTipEvent, new ActivatingKeyTipEventHandler(OnActivatingKeyTipThunk));
-            EventManager.RegisterClassHandler(ownerType, KeyTipService.KeyTipAccessedEvent, new KeyTipAccessedEventHandler(OnKeyTipAccessedThunk));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonCheckBox), new FrameworkPropertyMetadata(typeof(RibbonCheckBox)));
+            FocusableProperty.OverrideMetadata(typeof(RibbonCheckBox), new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerceFocusable)));
+            ToolTipProperty.OverrideMetadata(typeof(RibbonCheckBox), new FrameworkPropertyMetadata(null, new CoerceValueCallback(RibbonHelper.CoerceRibbonToolTip)));
+            ToolTipService.ShowOnDisabledProperty.OverrideMetadata(typeof(RibbonCheckBox), new FrameworkPropertyMetadata(true));
+            CommandProperty.OverrideMetadata(typeof(RibbonCheckBox), new FrameworkPropertyMetadata(RibbonHelper.OnCommandChanged));
+            ContextMenuProperty.OverrideMetadata(typeof(RibbonCheckBox), new FrameworkPropertyMetadata(RibbonHelper.OnContextMenuChanged, RibbonHelper.OnCoerceContextMenu));
+            ContextMenuService.ShowOnDisabledProperty.OverrideMetadata(typeof(RibbonCheckBox), new FrameworkPropertyMetadata(true));
+            EventManager.RegisterClassHandler(typeof(RibbonCheckBox), KeyTipService.ActivatingKeyTipEvent, new ActivatingKeyTipEventHandler(OnActivatingKeyTipThunk));
+            EventManager.RegisterClassHandler(typeof(RibbonCheckBox), KeyTipService.KeyTipAccessedEvent, new KeyTipAccessedEventHandler(OnKeyTipAccessedThunk));
         }
 
         #endregion

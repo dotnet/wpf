@@ -65,8 +65,6 @@ namespace System.Windows.Controls
         /// </summary>
         static StickyNoteControl()
         {
-            Type owner = typeof(StickyNoteControl);
-
             // Register event handlers
             // 
             // We want to bring a note to front when the input device is pressed down on it at the first time.
@@ -81,10 +79,10 @@ namespace System.Windows.Controls
             // FUTURE-2005/05/27-WAYNEZEN,
             // Regardsing to Flick, We should remove the listener for PreviewStylusDownEvent if we turn InkCanvas EditingMode to None
             // when StickyNote losts the focus. The line needs to be revisited.
-            EventManager.RegisterClassHandler(owner, Stylus.PreviewStylusDownEvent, new StylusDownEventHandler(_OnPreviewDeviceDown<StylusDownEventArgs>));
-            EventManager.RegisterClassHandler(owner, Mouse.PreviewMouseDownEvent, new MouseButtonEventHandler(_OnPreviewDeviceDown<MouseButtonEventArgs>));
-            EventManager.RegisterClassHandler(owner, Mouse.MouseDownEvent, new MouseButtonEventHandler(_OnDeviceDown<MouseButtonEventArgs>));
-            EventManager.RegisterClassHandler(owner, ContextMenuService.ContextMenuOpeningEvent, new ContextMenuEventHandler(_OnContextMenuOpening));
+            EventManager.RegisterClassHandler(typeof(StickyNoteControl), Stylus.PreviewStylusDownEvent, new StylusDownEventHandler(_OnPreviewDeviceDown<StylusDownEventArgs>));
+            EventManager.RegisterClassHandler(typeof(StickyNoteControl), Mouse.PreviewMouseDownEvent, new MouseButtonEventHandler(_OnPreviewDeviceDown<MouseButtonEventArgs>));
+            EventManager.RegisterClassHandler(typeof(StickyNoteControl), Mouse.MouseDownEvent, new MouseButtonEventHandler(_OnDeviceDown<MouseButtonEventArgs>));
+            EventManager.RegisterClassHandler(typeof(StickyNoteControl), ContextMenuService.ContextMenuOpeningEvent, new ContextMenuEventHandler(_OnContextMenuOpening));
 
             CommandHelpers.RegisterCommandHandler(typeof(StickyNoteControl), StickyNoteControl.DeleteNoteCommand,
                 new ExecutedRoutedEventHandler(_OnCommandExecuted), new CanExecuteRoutedEventHandler(_OnQueryCommandEnabled));
@@ -94,22 +92,22 @@ namespace System.Windows.Controls
             //
             // set the main style CRK to the default theme style key
             //
-            DefaultStyleKeyProperty.OverrideMetadata(owner, new FrameworkPropertyMetadata(
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(StickyNoteControl), new FrameworkPropertyMetadata(
                 new ComponentResourceKey(typeof(PresentationUIStyleResources), "StickyNoteControlStyleKey")));
 
-            KeyboardNavigation.TabNavigationProperty.OverrideMetadata(owner, new FrameworkPropertyMetadata(KeyboardNavigationMode.Local));
-            Control.IsTabStopProperty.OverrideMetadata(owner, new FrameworkPropertyMetadata(false));
+            KeyboardNavigation.TabNavigationProperty.OverrideMetadata(typeof(StickyNoteControl), new FrameworkPropertyMetadata(KeyboardNavigationMode.Local));
+            Control.IsTabStopProperty.OverrideMetadata(typeof(StickyNoteControl), new FrameworkPropertyMetadata(false));
 
             // Override the changed callback of the Foreground Property.
             ForegroundProperty.OverrideMetadata(
-                    owner,
+                    typeof(StickyNoteControl),
                     new FrameworkPropertyMetadata(new PropertyChangedCallback(_UpdateInkDrawingAttributes)));
 
-            FontFamilyProperty.OverrideMetadata(owner, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnFontPropertyChanged)));
-            FontSizeProperty.OverrideMetadata(owner, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnFontPropertyChanged)));
-            FontStretchProperty.OverrideMetadata(owner, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnFontPropertyChanged)));
-            FontStyleProperty.OverrideMetadata(owner, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnFontPropertyChanged)));
-            FontWeightProperty.OverrideMetadata(owner, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnFontPropertyChanged)));
+            FontFamilyProperty.OverrideMetadata(typeof(StickyNoteControl), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnFontPropertyChanged)));
+            FontSizeProperty.OverrideMetadata(typeof(StickyNoteControl), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnFontPropertyChanged)));
+            FontStretchProperty.OverrideMetadata(typeof(StickyNoteControl), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnFontPropertyChanged)));
+            FontStyleProperty.OverrideMetadata(typeof(StickyNoteControl), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnFontPropertyChanged)));
+            FontWeightProperty.OverrideMetadata(typeof(StickyNoteControl), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnFontPropertyChanged)));
         }
 
         /// <summary>

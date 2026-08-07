@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -33,11 +33,9 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         static RibbonToolTip()
         {
-            Type ownerType = typeof(RibbonToolTip);
-
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            IsOpenProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsOpenChanged), new CoerceValueCallback(CoerceIsOpen)));
-            PlacementTargetProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(OnPlacementTargetPropertyChanged));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonToolTip), new FrameworkPropertyMetadata(typeof(RibbonToolTip)));
+            IsOpenProperty.OverrideMetadata(typeof(RibbonToolTip), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsOpenChanged), new CoerceValueCallback(CoerceIsOpen)));
+            PlacementTargetProperty.OverrideMetadata(typeof(RibbonToolTip), new FrameworkPropertyMetadata(OnPlacementTargetPropertyChanged));
         }
 
         /// <summary>

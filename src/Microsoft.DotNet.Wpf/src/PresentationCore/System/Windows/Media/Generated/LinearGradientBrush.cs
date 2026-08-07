@@ -286,11 +286,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(LinearGradientBrush);
             StartPointProperty =
                   RegisterProperty("StartPoint",
                                    typeof(Point),
-                                   typeofThis,
+                                   typeof(LinearGradientBrush),
                                    new Point(0,0),
                                    new PropertyChangedCallback(StartPointPropertyChanged),
                                    null,
@@ -299,7 +298,7 @@ namespace System.Windows.Media
             EndPointProperty =
                   RegisterProperty("EndPoint",
                                    typeof(Point),
-                                   typeofThis,
+                                   typeof(LinearGradientBrush),
                                    new Point(1,1),
                                    new PropertyChangedCallback(EndPointPropertyChanged),
                                    null,

@@ -194,11 +194,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(StreamGeometry);
             FillRuleProperty =
                   RegisterProperty("FillRule",
                                    typeof(FillRule),
-                                   typeofThis,
+                                   typeof(StreamGeometry),
                                    FillRule.EvenOdd,
                                    new PropertyChangedCallback(FillRulePropertyChanged),
                                    new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsFillRuleValid),

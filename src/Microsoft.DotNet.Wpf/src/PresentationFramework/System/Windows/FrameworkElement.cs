@@ -92,8 +92,6 @@ namespace System.Windows
     [UsableDuringInitialization(true)]
     public partial class FrameworkElement : UIElement, IFrameworkInputElement, ISupportInitialize, IHaveResources, IQueryAmbient
     {
-        private static readonly Type _typeofThis = typeof(FrameworkElement);
-
         /// <summary>
         ///     Default FrameworkElement constructor
         /// </summary>
@@ -133,7 +131,7 @@ namespace System.Windows
                 DependencyProperty.Register(
                         "Style",
                         typeof(Style),
-                        _typeofThis,
+                        typeof(FrameworkElement),
                         new FrameworkPropertyMetadata(
                                 (Style) null,   // default value
                                 FrameworkPropertyMetadataOptions.AffectsMeasure,
@@ -171,7 +169,7 @@ namespace System.Windows
         /// OverridesDefaultStyleProperty
         /// </summary>
         public static readonly DependencyProperty OverridesDefaultStyleProperty
-            = DependencyProperty.Register("OverridesDefaultStyle", typeof(bool), _typeofThis,
+            = DependencyProperty.Register("OverridesDefaultStyle", typeof(bool), typeof(FrameworkElement),
                                             new FrameworkPropertyMetadata(
                                                         BooleanBoxes.FalseBox,   // default value
                                                         FrameworkPropertyMetadataOptions.AffectsMeasure,
@@ -222,7 +220,7 @@ namespace System.Windows
         /// DefaultStyleKeyProperty
         /// </summary>
         protected internal static readonly DependencyProperty DefaultStyleKeyProperty
-            = DependencyProperty.Register("DefaultStyleKey", typeof(object), _typeofThis,
+            = DependencyProperty.Register("DefaultStyleKey", typeof(object), typeof(FrameworkElement),
                                             new FrameworkPropertyMetadata(
                                                         null,   // default value
                                                         FrameworkPropertyMetadataOptions.AffectsMeasure,
@@ -2363,37 +2361,37 @@ namespace System.Windows
 
         static FrameworkElement()
         {
-            SnapsToDevicePixelsProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange));
+            SnapsToDevicePixelsProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange));
 
-            EventManager.RegisterClassHandler(_typeofThis, Mouse.QueryCursorEvent, new QueryCursorEventHandler(FrameworkElement.OnQueryCursorOverride), true);
+            EventManager.RegisterClassHandler(typeof(FrameworkElement), Mouse.QueryCursorEvent, new QueryCursorEventHandler(FrameworkElement.OnQueryCursorOverride), true);
 
-            EventManager.RegisterClassHandler(_typeofThis, Keyboard.PreviewGotKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(OnPreviewGotKeyboardFocus));
-            EventManager.RegisterClassHandler(_typeofThis, Keyboard.GotKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(OnGotKeyboardFocus));
-            EventManager.RegisterClassHandler(_typeofThis, Keyboard.LostKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(OnLostKeyboardFocus));
+            EventManager.RegisterClassHandler(typeof(FrameworkElement), Keyboard.PreviewGotKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(OnPreviewGotKeyboardFocus));
+            EventManager.RegisterClassHandler(typeof(FrameworkElement), Keyboard.GotKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(OnGotKeyboardFocus));
+            EventManager.RegisterClassHandler(typeof(FrameworkElement), Keyboard.LostKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(OnLostKeyboardFocus));
 
-            AllowDropProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.Inherits));
+            AllowDropProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.Inherits));
 
-            Stylus.IsPressAndHoldEnabledProperty.AddOwner(_typeofThis, new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, FrameworkPropertyMetadataOptions.Inherits));
-            Stylus.IsFlicksEnabledProperty.AddOwner(_typeofThis, new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, FrameworkPropertyMetadataOptions.Inherits));
-            Stylus.IsTapFeedbackEnabledProperty.AddOwner(_typeofThis, new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, FrameworkPropertyMetadataOptions.Inherits));
-            Stylus.IsTouchFeedbackEnabledProperty.AddOwner(_typeofThis, new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, FrameworkPropertyMetadataOptions.Inherits));
+            Stylus.IsPressAndHoldEnabledProperty.AddOwner(typeof(FrameworkElement), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, FrameworkPropertyMetadataOptions.Inherits));
+            Stylus.IsFlicksEnabledProperty.AddOwner(typeof(FrameworkElement), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, FrameworkPropertyMetadataOptions.Inherits));
+            Stylus.IsTapFeedbackEnabledProperty.AddOwner(typeof(FrameworkElement), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, FrameworkPropertyMetadataOptions.Inherits));
+            Stylus.IsTouchFeedbackEnabledProperty.AddOwner(typeof(FrameworkElement), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, FrameworkPropertyMetadataOptions.Inherits));
 
             PropertyChangedCallback numberSubstitutionChanged = new PropertyChangedCallback(NumberSubstitutionChanged);
-            NumberSubstitution.CultureSourceProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(NumberCultureSource.User, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, numberSubstitutionChanged));
-            NumberSubstitution.CultureOverrideProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, numberSubstitutionChanged));
-            NumberSubstitution.SubstitutionProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(NumberSubstitutionMethod.AsCulture, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, numberSubstitutionChanged));
+            NumberSubstitution.CultureSourceProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(NumberCultureSource.User, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, numberSubstitutionChanged));
+            NumberSubstitution.CultureOverrideProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, numberSubstitutionChanged));
+            NumberSubstitution.SubstitutionProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(NumberSubstitutionMethod.AsCulture, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender, numberSubstitutionChanged));
 
             // Exposing these events in protected virtual methods
-            EventManager.RegisterClassHandler(_typeofThis, ToolTipOpeningEvent, new ToolTipEventHandler(OnToolTipOpeningThunk));
-            EventManager.RegisterClassHandler(_typeofThis, ToolTipClosingEvent, new ToolTipEventHandler(OnToolTipClosingThunk));
-            EventManager.RegisterClassHandler(_typeofThis, ContextMenuOpeningEvent, new ContextMenuEventHandler(OnContextMenuOpeningThunk));
-            EventManager.RegisterClassHandler(_typeofThis, ContextMenuClosingEvent, new ContextMenuEventHandler(OnContextMenuClosingThunk));
+            EventManager.RegisterClassHandler(typeof(FrameworkElement), ToolTipOpeningEvent, new ToolTipEventHandler(OnToolTipOpeningThunk));
+            EventManager.RegisterClassHandler(typeof(FrameworkElement), ToolTipClosingEvent, new ToolTipEventHandler(OnToolTipClosingThunk));
+            EventManager.RegisterClassHandler(typeof(FrameworkElement), ContextMenuOpeningEvent, new ContextMenuEventHandler(OnContextMenuOpeningThunk));
+            EventManager.RegisterClassHandler(typeof(FrameworkElement), ContextMenuClosingEvent, new ContextMenuEventHandler(OnContextMenuClosingThunk));
 
             // Coerce Callback for font properties for responding to system themes
-            TextElement.FontFamilyProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(SystemFonts.MessageFontFamily, FrameworkPropertyMetadataOptions.Inherits, null, new CoerceValueCallback(CoerceFontFamily)));
-            TextElement.FontSizeProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(SystemFonts.ThemeMessageFontSize, FrameworkPropertyMetadataOptions.Inherits, null, new CoerceValueCallback(CoerceFontSize)));
-            TextElement.FontStyleProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(SystemFonts.MessageFontStyle, FrameworkPropertyMetadataOptions.Inherits, null, new CoerceValueCallback(CoerceFontStyle)));
-            TextElement.FontWeightProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(SystemFonts.MessageFontWeight, FrameworkPropertyMetadataOptions.Inherits, null, new CoerceValueCallback(CoerceFontWeight)));
+            TextElement.FontFamilyProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(SystemFonts.MessageFontFamily, FrameworkPropertyMetadataOptions.Inherits, null, new CoerceValueCallback(CoerceFontFamily)));
+            TextElement.FontSizeProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(SystemFonts.ThemeMessageFontSize, FrameworkPropertyMetadataOptions.Inherits, null, new CoerceValueCallback(CoerceFontSize)));
+            TextElement.FontStyleProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(SystemFonts.MessageFontStyle, FrameworkPropertyMetadataOptions.Inherits, null, new CoerceValueCallback(CoerceFontStyle)));
+            TextElement.FontWeightProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(SystemFonts.MessageFontWeight, FrameworkPropertyMetadataOptions.Inherits, null, new CoerceValueCallback(CoerceFontWeight)));
 
             TextOptions.TextRenderingModeProperty.OverrideMetadata(
                 typeof(FrameworkElement),
@@ -2681,7 +2679,7 @@ namespace System.Windows
                     DependencyProperty.Register(
                                 "DataContext",
                                 typeof(object),
-                                _typeofThis,
+                                typeof(FrameworkElement),
                                 new FrameworkPropertyMetadata(null,
                                         FrameworkPropertyMetadataOptions.Inherits,
                                         new PropertyChangedCallback(OnDataContextChanged)));
@@ -2768,7 +2766,7 @@ namespace System.Windows
                     DependencyProperty.Register(
                                 "BindingGroup",
                                 typeof(BindingGroup),
-                                _typeofThis,
+                                typeof(FrameworkElement),
                                 new FrameworkPropertyMetadata(null,
                                         FrameworkPropertyMetadataOptions.Inherits));
 
@@ -3167,7 +3165,7 @@ namespace System.Windows
                     DependencyProperty.RegisterAttached(
                                 "Language",
                                 typeof(XmlLanguage),
-                                _typeofThis,
+                                typeof(FrameworkElement),
                                 new FrameworkPropertyMetadata(
                                         XmlLanguage.GetLanguage("en-US"),
                                         FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure));
@@ -3191,7 +3189,7 @@ namespace System.Windows
                     DependencyProperty.Register(
                                 "Name",
                                 typeof(string),
-                                _typeofThis,
+                                typeof(FrameworkElement),
                                 new FrameworkPropertyMetadata(
                                     string.Empty,                           // defaultValue
                                     FrameworkPropertyMetadataOptions.None,  // flags
@@ -3219,7 +3217,7 @@ namespace System.Windows
                     DependencyProperty.Register(
                                 "Tag",
                                 typeof(object),
-                                _typeofThis,
+                                typeof(FrameworkElement),
                                 new FrameworkPropertyMetadata((object) null));
 
         /// <summary>
@@ -3239,7 +3237,7 @@ namespace System.Windows
         ///     this is originally registered on InputMethod class
         /// </summary>
         public static readonly DependencyProperty InputScopeProperty =
-                    InputMethod.InputScopeProperty.AddOwner(_typeofThis,
+                    InputMethod.InputScopeProperty.AddOwner(typeof(FrameworkElement),
                                 new FrameworkPropertyMetadata((InputScope)null, // default value
                                             FrameworkPropertyMetadataOptions.Inherits));
 
@@ -3257,7 +3255,7 @@ namespace System.Windows
         /// <summary>
         /// RequestBringIntoView Event
         /// </summary>
-        public static readonly RoutedEvent RequestBringIntoViewEvent = EventManager.RegisterRoutedEvent("RequestBringIntoView", RoutingStrategy.Bubble, typeof(RequestBringIntoViewEventHandler), _typeofThis);
+        public static readonly RoutedEvent RequestBringIntoViewEvent = EventManager.RegisterRoutedEvent("RequestBringIntoView", RoutingStrategy.Bubble, typeof(RequestBringIntoViewEventHandler), typeof(FrameworkElement));
 
         /// <summary>
         /// Handler registration for RequestBringIntoView event.
@@ -3296,7 +3294,7 @@ namespace System.Windows
         /// <summary>
         /// SizeChanged event
         /// </summary>
-        public static readonly RoutedEvent SizeChangedEvent = EventManager.RegisterRoutedEvent("SizeChanged", RoutingStrategy.Direct, typeof(SizeChangedEventHandler), _typeofThis);
+        public static readonly RoutedEvent SizeChangedEvent = EventManager.RegisterRoutedEvent("SizeChanged", RoutingStrategy.Direct, typeof(SizeChangedEventHandler), typeof(FrameworkElement));
 
         /// <summary>
         /// SizeChanged event. It is fired when ActualWidth or ActualHeight (or both) changed.
@@ -3322,7 +3320,7 @@ namespace System.Windows
                 DependencyProperty.RegisterReadOnly(
                         "ActualWidth",
                         typeof(double),
-                        _typeofThis,
+                        typeof(FrameworkElement),
                         _actualWidthMetadata);
 
         private static object GetActualWidth(DependencyObject d, out BaseValueSourceInternal source)
@@ -3367,7 +3365,7 @@ namespace System.Windows
                 DependencyProperty.RegisterReadOnly(
                         "ActualHeight",
                         typeof(double),
-                        _typeofThis,
+                        typeof(FrameworkElement),
                         _actualHeightMetadata);
 
         private static object GetActualHeight(DependencyObject d, out BaseValueSourceInternal source)
@@ -3409,7 +3407,7 @@ namespace System.Windows
         public static readonly DependencyProperty LayoutTransformProperty = DependencyProperty.Register(
                     "LayoutTransform",
                     typeof(Transform),
-                    _typeofThis,
+                    typeof(FrameworkElement),
                     new FrameworkPropertyMetadata(
                             Transform.Identity,
                             FrameworkPropertyMetadataOptions.AffectsMeasure,
@@ -3467,7 +3465,7 @@ namespace System.Windows
                     DependencyProperty.Register(
                                 "Width",
                                 typeof(double),
-                                _typeofThis,
+                                typeof(FrameworkElement),
                                 new FrameworkPropertyMetadata(
                                         Double.NaN,
                                         FrameworkPropertyMetadataOptions.AffectsMeasure,
@@ -3493,7 +3491,7 @@ namespace System.Windows
                     DependencyProperty.Register(
                                 "MinWidth",
                                 typeof(double),
-                                _typeofThis,
+                                typeof(FrameworkElement),
                                 new FrameworkPropertyMetadata(
                                         0d,
                                         FrameworkPropertyMetadataOptions.AffectsMeasure,
@@ -3519,7 +3517,7 @@ namespace System.Windows
                     DependencyProperty.Register(
                                 "MaxWidth",
                                 typeof(double),
-                                _typeofThis,
+                                typeof(FrameworkElement),
                                 new FrameworkPropertyMetadata(
                                         Double.PositiveInfinity,
                                         FrameworkPropertyMetadataOptions.AffectsMeasure,
@@ -3546,7 +3544,7 @@ namespace System.Windows
                     DependencyProperty.Register(
                                 "Height",
                                 typeof(double),
-                                _typeofThis,
+                                typeof(FrameworkElement),
                                 new FrameworkPropertyMetadata(
                                     Double.NaN,
                                     FrameworkPropertyMetadataOptions.AffectsMeasure,
@@ -3572,7 +3570,7 @@ namespace System.Windows
                     DependencyProperty.Register(
                                 "MinHeight",
                                 typeof(double),
-                                _typeofThis,
+                                typeof(FrameworkElement),
                                 new FrameworkPropertyMetadata(
                                         0d,
                                         FrameworkPropertyMetadataOptions.AffectsMeasure,
@@ -3598,7 +3596,7 @@ namespace System.Windows
                     DependencyProperty.Register(
                                 "MaxHeight",
                                 typeof(double),
-                                _typeofThis,
+                                typeof(FrameworkElement),
                                 new FrameworkPropertyMetadata(
                                         Double.PositiveInfinity,
                                         FrameworkPropertyMetadataOptions.AffectsMeasure,
@@ -3624,7 +3622,7 @@ namespace System.Windows
                     DependencyProperty.RegisterAttached(
                                 "FlowDirection",
                                 typeof(FlowDirection),
-                                _typeofThis,
+                                typeof(FrameworkElement),
                                 new FrameworkPropertyMetadata(
                                             System.Windows.FlowDirection.LeftToRight, // default value
                                             FrameworkPropertyMetadataOptions.Inherits
@@ -3708,7 +3706,7 @@ namespace System.Windows
         /// </summary>
         [CommonDependencyProperty]
         public static readonly DependencyProperty MarginProperty
-            = DependencyProperty.Register("Margin", typeof(Thickness), _typeofThis,
+            = DependencyProperty.Register("Margin", typeof(Thickness), typeof(FrameworkElement),
                                           new FrameworkPropertyMetadata(
                                                 new Thickness(),
                                                 FrameworkPropertyMetadataOptions.AffectsMeasure),
@@ -3742,7 +3740,7 @@ namespace System.Windows
                     DependencyProperty.Register(
                                 "HorizontalAlignment",
                                 typeof(HorizontalAlignment),
-                                _typeofThis,
+                                typeof(FrameworkElement),
                                 new FrameworkPropertyMetadata(
                                             HorizontalAlignment.Stretch,
                                             FrameworkPropertyMetadataOptions.AffectsArrange),
@@ -3774,7 +3772,7 @@ namespace System.Windows
                     DependencyProperty.Register(
                                 "VerticalAlignment",
                                 typeof(VerticalAlignment),
-                                _typeofThis,
+                                typeof(FrameworkElement),
                                 new FrameworkPropertyMetadata(
                                             VerticalAlignment.Stretch,
                                             FrameworkPropertyMetadataOptions.AffectsArrange),
@@ -3825,7 +3823,7 @@ namespace System.Windows
                     DependencyProperty.Register(
                                 "FocusVisualStyle",
                                 typeof(Style),
-                                _typeofThis,
+                                typeof(FrameworkElement),
                                 new FrameworkPropertyMetadata(DefaultFocusVisualStyle));
 
 
@@ -3845,7 +3843,7 @@ namespace System.Windows
                     DependencyProperty.Register(
                                 "Cursor",
                                 typeof(Cursor),
-                                _typeofThis,
+                                typeof(FrameworkElement),
                                 new FrameworkPropertyMetadata(
                                             (object) null, // default value
                                             0,
@@ -3879,7 +3877,7 @@ namespace System.Windows
                     DependencyProperty.Register(
                                 "ForceCursor",
                                 typeof(bool),
-                                _typeofThis,
+                                typeof(FrameworkElement),
                                 new FrameworkPropertyMetadata(
                                             BooleanBoxes.FalseBox, // default value
                                             0,
@@ -5624,7 +5622,7 @@ namespace System.Windows
                     DependencyProperty.RegisterReadOnly(
                                 "LoadedPending",
                                 typeof(object[]),
-                                _typeofThis,
+                                typeof(FrameworkElement),
                                 new PropertyMetadata(null)); // default value
 
         /// <summary>
@@ -5641,7 +5639,7 @@ namespace System.Windows
                     DependencyProperty.RegisterReadOnly(
                                 "UnloadedPending",
                                 typeof(object[]),
-                                _typeofThis,
+                                typeof(FrameworkElement),
                                 new PropertyMetadata(null)); // default value
 
         /// <summary>
@@ -5696,7 +5694,7 @@ namespace System.Windows
         /// <summary>
         ///     Loaded RoutedEvent
         /// </summary>
-        public static readonly RoutedEvent LoadedEvent = EventManager.RegisterRoutedEvent("Loaded", RoutingStrategy.Direct, typeof(RoutedEventHandler), _typeofThis);
+        public static readonly RoutedEvent LoadedEvent = EventManager.RegisterRoutedEvent("Loaded", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(FrameworkElement));
 
         /// <summary>
         ///     This event is fired when the element is laid out, rendered and ready for interaction
@@ -5762,7 +5760,7 @@ namespace System.Windows
         /// <summary>
         ///     Unloaded private key
         /// </summary>
-        public static readonly RoutedEvent UnloadedEvent = EventManager.RegisterRoutedEvent("Unloaded", RoutingStrategy.Direct, typeof(RoutedEventHandler), _typeofThis);
+        public static readonly RoutedEvent UnloadedEvent = EventManager.RegisterRoutedEvent("Unloaded", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(FrameworkElement));
 
         /// <summary>
         ///     This clr event is fired when this element is detached form a loaded tree
@@ -5861,8 +5859,7 @@ namespace System.Windows
         /// <summary>
         ///     The DependencyProperty for the ToolTip property
         /// </summary>
-        public static readonly DependencyProperty ToolTipProperty =
-            ToolTipService.ToolTipProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty ToolTipProperty = ToolTipService.ToolTipProperty.AddOwner(typeof(FrameworkElement));
 
         /// <summary>
         ///     The ToolTip for the element.
@@ -5892,7 +5889,7 @@ namespace System.Windows
         /// </summary>
         public static readonly DependencyProperty ContextMenuProperty =
             ContextMenuService.ContextMenuProperty.AddOwner(
-                        _typeofThis,
+                        typeof(FrameworkElement),
                         new FrameworkPropertyMetadata((ContextMenu) null));
 
         /// <summary>
@@ -5914,7 +5911,7 @@ namespace System.Windows
         /// <summary>
         ///     The RoutedEvent for the ToolTipOpening event.
         /// </summary>
-        public static readonly RoutedEvent ToolTipOpeningEvent = ToolTipService.ToolTipOpeningEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent ToolTipOpeningEvent = ToolTipService.ToolTipOpeningEvent.AddOwner(typeof(FrameworkElement));
 
         /// <summary>
         ///     An event that fires just before a ToolTip should be opened.
@@ -5952,7 +5949,7 @@ namespace System.Windows
         /// <summary>
         ///     The RoutedEvent for the ToolTipClosing event.
         /// </summary>
-        public static readonly RoutedEvent ToolTipClosingEvent = ToolTipService.ToolTipClosingEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent ToolTipClosingEvent = ToolTipService.ToolTipClosingEvent.AddOwner(typeof(FrameworkElement));
 
         /// <summary>
         ///     An event that fires just before a ToolTip should be closed.
@@ -5984,7 +5981,7 @@ namespace System.Windows
         /// <summary>
         ///     RoutedEvent for the ContextMenuOpening event.
         /// </summary>
-        public static readonly RoutedEvent ContextMenuOpeningEvent = ContextMenuService.ContextMenuOpeningEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent ContextMenuOpeningEvent = ContextMenuService.ContextMenuOpeningEvent.AddOwner(typeof(FrameworkElement));
 
         /// <summary>
         ///     An event that fires just before a ContextMenu should be opened.
@@ -6015,7 +6012,7 @@ namespace System.Windows
         /// <summary>
         ///     RoutedEvent for the ContextMenuClosing event.
         /// </summary>
-        public static readonly RoutedEvent ContextMenuClosingEvent = ContextMenuService.ContextMenuClosingEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent ContextMenuClosingEvent = ContextMenuService.ContextMenuClosingEvent.AddOwner(typeof(FrameworkElement));
 
         /// <summary>
         ///     An event that fires just as a ContextMenu closes.

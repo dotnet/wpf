@@ -373,11 +373,11 @@ namespace System.Windows.Media
             return null;
         }
 
-        private static void StaticInitialize(Type typeofThis)
-        {             
-            OpacityProperty.OverrideMetadata(typeofThis, new IndependentlyAnimatedPropertyMetadata(1.0, propertyChangedCallback: null, CoerceOpacity));
-            TransformProperty.OverrideMetadata(typeofThis, new UIPropertyMetadata(null, propertyChangedCallback: null, CoerceTransform));
-            RelativeTransformProperty.OverrideMetadata(typeofThis, new UIPropertyMetadata(null, propertyChangedCallback: null, CoerceRelativeTransform));
+        private static void StaticInitialize()
+        {
+            OpacityProperty.OverrideMetadata(typeof(BitmapCacheBrush), new IndependentlyAnimatedPropertyMetadata(1.0, propertyChangedCallback: null, CoerceOpacity));
+            TransformProperty.OverrideMetadata(typeof(BitmapCacheBrush), new UIPropertyMetadata(null, propertyChangedCallback: null, CoerceTransform));
+            RelativeTransformProperty.OverrideMetadata(typeof(BitmapCacheBrush), new UIPropertyMetadata(null, propertyChangedCallback: null, CoerceRelativeTransform));
         }
 
         private ContainerVisual _dummyVisual;

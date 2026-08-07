@@ -901,14 +901,13 @@ namespace System.Windows.Input
             {
                 get
                 {
-                    Type managerType = typeof(RequerySuggestedEventManager);
-                    RequerySuggestedEventManager manager = (RequerySuggestedEventManager)GetCurrentManager(managerType);
+                    RequerySuggestedEventManager manager = (RequerySuggestedEventManager)GetCurrentManager(typeof(CanExecuteChangedEventManager));
 
                     // at first use, create and register a new manager
                     if (manager == null)
                     {
                         manager = new RequerySuggestedEventManager();
-                        SetCurrentManager(managerType, manager);
+                        SetCurrentManager(typeof(CanExecuteChangedEventManager), manager);
                     }
 
                     return manager;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -19,7 +19,6 @@ namespace System.Windows.Markup
     {
         private const string AllowedTypesForRestrictiveXamlContexts = @"SOFTWARE\Microsoft\.NETFramework\Windows Presentation Foundation\XPSAllowedTypes";
         private static readonly HashSet<string> AllXamlNamespaces = new HashSet<string>(XamlLanguage.XamlNamespaces);
-        private static readonly Type DependencyObjectType = typeof(System.Windows.DependencyObject);
         private static readonly HashSet<string> SafeTypesFromRegistry = ReadAllowedTypesForRestrictedXamlContexts();
 
         private static HashSet<string> ReadAllowedTypesForRestrictedXamlContexts()
@@ -193,7 +192,7 @@ namespace System.Windows.Markup
             // - any DependencyObject-derived type which exists in the System.Windows.* namespace.
 
             bool isValidNamespace = type.Namespace != null && (type.Namespace.Equals("System.Windows", StringComparison.Ordinal) || type.Namespace.StartsWith("System.Windows.", StringComparison.Ordinal));
-            bool isValidSubClass = type.IsSubclassOf(DependencyObjectType);
+            bool isValidSubClass = type.IsSubclassOf(typeof(DependencyObject));
             bool isValidPrimitive = type.IsPrimitive;
 
             if (isValidPrimitive || (isValidNamespace && isValidSubClass))

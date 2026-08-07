@@ -383,11 +383,10 @@ namespace System.Windows.Media.Media3D
 
 
             // Initializations
-            Type typeofThis = typeof(SpotLight);
             DirectionProperty =
                   RegisterProperty("Direction",
                                    typeof(Vector3D),
-                                   typeofThis,
+                                   typeof(SpotLight),
                                    new Vector3D(0,0,-1),
                                    new PropertyChangedCallback(DirectionPropertyChanged),
                                    null,
@@ -396,7 +395,7 @@ namespace System.Windows.Media.Media3D
             OuterConeAngleProperty =
                   RegisterProperty("OuterConeAngle",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(SpotLight),
                                    90.0,
                                    new PropertyChangedCallback(OuterConeAnglePropertyChanged),
                                    null,
@@ -405,7 +404,7 @@ namespace System.Windows.Media.Media3D
             InnerConeAngleProperty =
                   RegisterProperty("InnerConeAngle",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(SpotLight),
                                    180.0,
                                    new PropertyChangedCallback(InnerConeAnglePropertyChanged),
                                    null,

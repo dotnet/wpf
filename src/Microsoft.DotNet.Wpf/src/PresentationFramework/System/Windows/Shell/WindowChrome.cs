@@ -346,11 +346,7 @@ namespace Microsoft.Windows.Shell
 
         private void _OnPropertyChangedThatRequiresRepaint()
         {
-            var handler = PropertyChangedThatRequiresRepaint;
-            if (handler != null)
-            {
-                handler(this, EventArgs.Empty);
-            }
+            PropertyChangedThatRequiresRepaint?.Invoke(this, EventArgs.Empty);
         }
 
         internal event EventHandler PropertyChangedThatRequiresRepaint;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections;
@@ -19,10 +19,7 @@ namespace System.Windows.Navigation
 
         internal void OnCollectionChanged()
         {
-            if (CollectionChanged != null)
-            {
-                CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-            }
+            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
 
         internal JournalEntryFilter Filter
@@ -164,10 +161,7 @@ namespace System.Windows.Navigation
 
         internal void PropogateCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (CollectionChanged != null)
-            {
-                CollectionChanged(this, e);
-            }
+            CollectionChanged?.Invoke(this, e);
         }
 
         private const uint  DefaultMaxMenuEntries = 9; // the maximum number of items in the dropdown menus

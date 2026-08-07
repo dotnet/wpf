@@ -169,10 +169,7 @@ namespace System.Windows.Documents
 
                 case GetPageStatus.Finished:
                     _isCompleted = true;
-                    if (_callback != null)
-                    {
-                        _callback(this);
-                    }
+                    _callback?.Invoke(this);
                     break;
             }
             return null;

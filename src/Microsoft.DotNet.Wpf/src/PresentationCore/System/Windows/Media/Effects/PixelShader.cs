@@ -154,10 +154,7 @@ namespace System.Windows.Media.Effects
             // ShaderEffects using this PixelShader need to check that they are using only
             // registers that are valid in ps_2_0.
             //
-            if (_shaderBytecodeChanged != null)
-            {
-                _shaderBytecodeChanged(this, null);
-            }
+            _shaderBytecodeChanged?.Invoke(this, null);
         }
 
 

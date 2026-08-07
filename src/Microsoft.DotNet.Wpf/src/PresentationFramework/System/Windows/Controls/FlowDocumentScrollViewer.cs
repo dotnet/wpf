@@ -19,7 +19,6 @@ using MS.Internal.Annotations.Anchoring;
 using MS.Internal.Commands;             // CommandHelpers
 using MS.Internal.Controls;             // EmptyEnumerator
 using MS.Internal.Documents;            // FindToolBar
-using MS.Internal.KnownBoxes;           // BooleanBoxes
 using MS.Internal.AppModel;             // IJournalState
 
 namespace System.Windows.Controls

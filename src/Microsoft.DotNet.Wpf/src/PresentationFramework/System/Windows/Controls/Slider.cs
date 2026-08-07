@@ -1,7 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Automation.Peers;
@@ -12,10 +11,6 @@ using System.Windows.Media;
 using MS.Internal;
 using MS.Internal.Commands;
 using MS.Internal.Telemetry.PresentationFramework;
-
-
-// For typeconverter
-
 
 namespace System.Windows.Controls
 {
@@ -269,7 +264,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static readonly DependencyProperty IsDirectionReversedProperty
             = DependencyProperty.Register("IsDirectionReversed", typeof(bool), typeof(Slider),
-                                          new FrameworkPropertyMetadata(false));
+                                          new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Get/Set IsDirectionReversed property
@@ -426,7 +421,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static readonly DependencyProperty IsSnapToTickEnabledProperty
             = DependencyProperty.Register("IsSnapToTickEnabled", typeof(bool), typeof(Slider),
-            new FrameworkPropertyMetadata(false));
+            new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         ///     When 'true', Slider will automatically move the Thumb (and/or change current value) to the closest TickMark.
@@ -549,7 +544,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static readonly DependencyProperty IsSelectionRangeEnabledProperty
             = DependencyProperty.Register("IsSelectionRangeEnabled", typeof(bool), typeof(Slider),
-            new FrameworkPropertyMetadata(false));
+            new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         ///     Enable or disable selection support on Slider
@@ -713,7 +708,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static readonly DependencyProperty IsMoveToPointEnabledProperty
             = DependencyProperty.Register("IsMoveToPointEnabled", typeof(bool), typeof(Slider),
-            new FrameworkPropertyMetadata(false));
+            new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         ///     Enable or disable Move-To-Point support on Slider.

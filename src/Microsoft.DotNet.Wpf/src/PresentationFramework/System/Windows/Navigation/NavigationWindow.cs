@@ -17,7 +17,6 @@ using System.Collections;
 using System.ComponentModel;
 
 using MS.Internal.AppModel;
-using MS.Internal.KnownBoxes;
 using MS.Internal.Utility;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;

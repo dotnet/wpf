@@ -452,7 +452,7 @@ namespace System.Windows
         /// <param name="value">New local value</param>
         internal void SetValue(DependencyProperty dp, bool value)
         {
-            SetValue(dp, MS.Internal.KnownBoxes.BooleanBoxes.Box(value));
+            SetValue(dp, BooleanBoxes.Box(value));
         }
 
         /// <summary>
@@ -463,7 +463,7 @@ namespace System.Windows
         /// <param name="value">New local value</param>
         internal void SetCurrentValue(DependencyProperty dp, bool value)
         {
-            SetCurrentValue(dp, MS.Internal.KnownBoxes.BooleanBoxes.Box(value));
+            SetCurrentValue(dp, BooleanBoxes.Box(value));
         }
 
         /// <summary>
@@ -550,7 +550,7 @@ namespace System.Windows
         /// <param name="value">New local value</param>
         internal void SetValue(DependencyPropertyKey dp, bool value)
         {
-            SetValue(dp, MS.Internal.KnownBoxes.BooleanBoxes.Box(value));
+            SetValue(dp, BooleanBoxes.Box(value));
         }
 
         /// <summary>

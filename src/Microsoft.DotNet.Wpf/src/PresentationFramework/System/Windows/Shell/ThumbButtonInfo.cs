@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -36,7 +36,7 @@ namespace System.Windows.Shell
             "DismissWhenClicked",
             typeof(bool),
             typeof(ThumbButtonInfo),
-            new PropertyMetadata(false));
+            new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Gets or sets the DismissWhenClicked property.  This dependency property
@@ -69,7 +69,7 @@ namespace System.Windows.Shell
             "IsBackgroundVisible",
             typeof(bool),
             typeof(ThumbButtonInfo),
-            new PropertyMetadata(true));
+            new PropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
         /// Gets or sets the IsBackgroundVisible property.  This dependency property
@@ -149,7 +149,7 @@ namespace System.Windows.Shell
             "IsInteractive",
             typeof(bool),
             typeof(ThumbButtonInfo),
-            new PropertyMetadata(true));
+            new PropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
         /// Gets or sets the IsInteractive property.

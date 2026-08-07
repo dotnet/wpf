@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -35,7 +35,7 @@ namespace System.Windows.Controls.Primitives
             "HasSelectedDays",
             typeof(bool),
             typeof(CalendarButton),
-            new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnVisualStatePropertyChanged)));
+            new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, new PropertyChangedCallback(OnVisualStatePropertyChanged)));
 
         /// <summary>
         /// Dependency property field for HasSelectedDays property
@@ -59,7 +59,7 @@ namespace System.Windows.Controls.Primitives
             "IsInactive",
             typeof(bool),
             typeof(CalendarButton),
-            new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnVisualStatePropertyChanged)));
+            new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, new PropertyChangedCallback(OnVisualStatePropertyChanged)));
 
         /// <summary>
         /// Dependency property field for IsInactive property

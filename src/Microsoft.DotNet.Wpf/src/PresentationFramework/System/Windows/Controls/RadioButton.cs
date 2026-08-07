@@ -26,7 +26,7 @@ namespace System.Windows.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(RadioButton), new FrameworkPropertyMetadata(typeof(RadioButton)));
             _dType = DependencyObjectType.FromSystemTypeInternal(typeof(RadioButton));
 
-            KeyboardNavigation.AcceptsReturnProperty.OverrideMetadata(typeof(RadioButton), new FrameworkPropertyMetadata(MS.Internal.KnownBoxes.BooleanBoxes.FalseBox));
+            KeyboardNavigation.AcceptsReturnProperty.OverrideMetadata(typeof(RadioButton), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
             ControlsTraceLogger.AddControl(TelemetryControls.RadioButton);
         }
@@ -179,7 +179,7 @@ namespace System.Windows.Controls
 
         private void UncheckRadioButton()
         {
-            SetCurrentValueInternal(IsCheckedProperty, MS.Internal.KnownBoxes.BooleanBoxes.FalseBox);
+            SetCurrentValueInternal(IsCheckedProperty, BooleanBoxes.FalseBox);
         }
 
         #endregion
@@ -243,7 +243,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected internal override void OnToggle()
         {
-            SetCurrentValueInternal(IsCheckedProperty, MS.Internal.KnownBoxes.BooleanBoxes.TrueBox);
+            SetCurrentValueInternal(IsCheckedProperty, BooleanBoxes.TrueBox);
         }
 
         /// <summary>

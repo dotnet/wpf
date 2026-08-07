@@ -76,12 +76,12 @@ namespace System.Windows.Input
         /// <summary>
         /// The event parameters for WISP pen input
         /// </summary>
-        private const string WispPenSystemEventParametersKey = WispRootKey + @"Software\Microsoft\Wisp\Pen\SysEventParameters";
+        private const string WispPenSystemEventParametersKey = WispRootKey + @"Pen\SysEventParameters";
 
         /// <summary>
         /// The WISP touch paramaters
         /// </summary>
-        private const string WispTouchConfigKey = WispRootKey + @"Software\Microsoft\Wisp\Touch";
+        private const string WispTouchConfigKey = WispRootKey + @"Touch";
 
         /// <summary>
         /// The max distance a double tap can vary

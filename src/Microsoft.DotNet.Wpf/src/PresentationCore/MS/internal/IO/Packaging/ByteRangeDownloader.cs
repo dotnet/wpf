@@ -556,14 +556,6 @@ namespace MS.Internal.IO.Packaging
 
                     throw;
                 }
-                catch   // catch (and re-throw) all kinds of exceptions so we can inform the other thread
-                {
-                    // inform other thread of error condition
-                    _erroredOut= true;
-                    _erroredOutException = null;
-
-                    throw;
-                }
                 finally
                 {
                     webResponse?.Close();

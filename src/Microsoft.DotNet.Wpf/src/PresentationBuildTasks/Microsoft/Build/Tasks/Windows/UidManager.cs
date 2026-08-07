@@ -90,33 +90,18 @@ namespace Microsoft.Build.Tasks.Windows
             {
                 allFilesOk = ManageUids();
             }
-            catch (Exception e)
+            catch (Exception e) when (e is not (NullReferenceException or SEHException))
             {
-                if (e is NullReferenceException || e is SEHException)
+                string errorId = Log.ExtractMessageCode(e.Message, out string message);
+
+                if (string.IsNullOrEmpty(errorId))
                 {
-                    throw;
+                    errorId = UnknownErrorID;
+                    message = SR.Format(SR.UnknownBuildError, message);
                 }
-                else
-                {
-                    string message;
-                    string errorId;
 
-                    errorId = Log.ExtractMessageCode(e.Message, out message);
+                Log.LogError(null, errorId, null, null, 0, 0, 0, 0, message, null);
 
-                    if (String.IsNullOrEmpty(errorId))
-                    {
-                        errorId = UnknownErrorID;
-                        message = SR.Format(SR.UnknownBuildError, message);
-                    }
-
-                    Log.LogError(null, errorId, null, null, 0, 0, 0, 0, message, null);
-
-                    allFilesOk = false;
-                }
-            }
-            catch // Non-CLS compliant errors
-            {
-                Log.LogErrorWithCodeFromResources(nameof(SR.NonClsError));
                 allFilesOk = false;
             }
 
@@ -388,27 +373,13 @@ namespace Microsoft.Build.Tasks.Windows
 
                 return true;
             }
-            catch (Exception e)
-            {
-                if (e is NullReferenceException || e is SEHException)
-                {
-                    throw;
-                }
-                else
-                {
-                    Log.LogErrorWithCodeFromResources(nameof(SR.IntermediateDirectoryError), _backupPath);
-                    return false;
-                }
-            }
-            catch   // Non-cls compliant errors
+            catch (Exception e) when (e is not (NullReferenceException or SEHException))
             {
                 Log.LogErrorWithCodeFromResources(nameof(SR.IntermediateDirectoryError), _backupPath);
+
                 return false;
             }
         }
-
-
-
 
         /// <summary>
         /// Verify the Uids in the file
@@ -985,16 +956,7 @@ namespace Microsoft.Build.Tasks.Windows
                 WriteTillEof();
                 return true;
             }
-            catch (Exception e)
-            {
-                if (e is NullReferenceException || e is SEHException)
-                {
-                    throw;
-                }
-
-                return false;
-            }
-            catch
+            catch (Exception e) when (e is not (NullReferenceException or SEHException))
             {
                 return false;
             }
@@ -1024,16 +986,7 @@ namespace Microsoft.Build.Tasks.Windows
                 WriteTillEof();
                 return true;
             }
-            catch (Exception e)
-            {
-                if (e is NullReferenceException || e is SEHException)
-                {
-                    throw;
-                }
-
-                return false;
-            }
-            catch
+            catch (Exception e) when (e is not (NullReferenceException or SEHException))
             {
                 return false;
             }

@@ -109,15 +109,9 @@ namespace System.Windows.Media.Media3D
         /// bool - true if the object is an instance of Size3D and if it's equal to "this".
         /// </returns>
         /// <param name='o'>The object to compare to "this"</param>
-        public override bool Equals(object o)
+        public override readonly bool Equals(object o)
         {
-            if ((null == o) || !(o is Size3D))
-            {
-                return false;
-            }
-
-            Size3D value = (Size3D)o;
-            return Size3D.Equals(this,value);
+            return o is Size3D other && Size3D.Equals(this, other);
         }
 
         /// <summary>
@@ -131,7 +125,7 @@ namespace System.Windows.Media.Media3D
         /// bool - true if "value" is equal to "this".
         /// </returns>
         /// <param name='value'>The Size3D to compare to "this"</param>
-        public bool Equals(Size3D value)
+        public readonly bool Equals(Size3D value)
         {
             return Size3D.Equals(this, value);
         }
@@ -141,7 +135,7 @@ namespace System.Windows.Media.Media3D
         /// <returns>
         /// int - the HashCode for this Size3D
         /// </returns>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             if (IsEmpty)
             {

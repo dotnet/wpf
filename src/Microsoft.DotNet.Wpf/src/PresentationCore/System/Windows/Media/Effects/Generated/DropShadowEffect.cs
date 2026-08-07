@@ -46,8 +46,6 @@ namespace System.Windows.Media.Effects
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -60,13 +58,11 @@ namespace System.Windows.Media.Effects
         {
             DropShadowEffect target = ((DropShadowEffect) d);
 
-
             target.PropertyChanged(ShadowDepthProperty);
         }
         private static void ColorPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DropShadowEffect target = ((DropShadowEffect) d);
-
 
             target.PropertyChanged(ColorProperty);
         }
@@ -74,13 +70,11 @@ namespace System.Windows.Media.Effects
         {
             DropShadowEffect target = ((DropShadowEffect) d);
 
-
             target.PropertyChanged(DirectionProperty);
         }
         private static void OpacityPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DropShadowEffect target = ((DropShadowEffect) d);
-
 
             target.PropertyChanged(OpacityProperty);
         }
@@ -88,17 +82,14 @@ namespace System.Windows.Media.Effects
         {
             DropShadowEffect target = ((DropShadowEffect) d);
 
-
             target.PropertyChanged(BlurRadiusProperty);
         }
         private static void RenderingBiasPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DropShadowEffect target = ((DropShadowEffect) d);
 
-
             target.PropertyChanged(RenderingBiasProperty);
         }
-
 
         #region Public Properties
 
@@ -211,8 +202,6 @@ namespace System.Windows.Media.Effects
             return new DropShadowEffect();
         }
 
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -281,33 +270,25 @@ namespace System.Windows.Media.Effects
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_DROPSHADOWEFFECT))
                 {
 
-
                     AddRefOnChannelAnimations(channel);
-
 
                     UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
                 }
 
                 return _duceResource.GetHandle(channel);
-
         }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
 
-
                     ReleaseOnChannelAnimations(channel);
-
                 }
-
         }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
@@ -325,7 +306,6 @@ namespace System.Windows.Media.Effects
             return _duceResource.GetChannel(index);
         }
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -335,9 +315,6 @@ namespace System.Windows.Media.Effects
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -385,10 +362,7 @@ namespace System.Windows.Media.Effects
 
         #region Internal Fields
 
-
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
-
         internal const double c_ShadowDepth = 5.0;
         internal static Color s_Color = Colors.Black;
         internal const double c_Direction = 315.0;
@@ -397,7 +371,6 @@ namespace System.Windows.Media.Effects
         internal const RenderingBias c_RenderingBias = RenderingBias.Performance;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -473,7 +446,6 @@ namespace System.Windows.Media.Effects
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

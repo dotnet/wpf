@@ -236,13 +236,14 @@ namespace MS.Internal.MilCodeGen.Generators
 
         private static string WriteToString(McgResource resource)
         {
-            if (resource.SkipToString) return String.Empty;
+            if (resource.SkipToString)
+				return null;
 
             StringCodeSink cs = new StringCodeSink();
 
             if (resource.Extends == null)
             {
-                string readPreamble = String.Empty;
+                string readPreamble = null;
 
                 if (resource.IsFreezable)
                 {
@@ -468,7 +469,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 }
             }
 
-            return cs.ToString();
+            return cs.IsEmpty ? null : cs.ToString();
         }
 
         /// <summary>
@@ -583,7 +584,7 @@ namespace MS.Internal.MilCodeGen.Generators
             WriteGetHashCode(resource, cs);
             WriteParse(resource, cs);
 
-            return cs.ToString();
+            return cs.IsEmpty ? null : cs.ToString();
         }
 
         private void WriteValueMethods(McgResource resource, StringCodeSink cs)

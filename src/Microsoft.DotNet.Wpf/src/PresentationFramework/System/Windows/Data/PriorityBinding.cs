@@ -113,7 +113,7 @@ public class PriorityBinding : BindingBase, IAddChild
     {
         PriorityBinding clone = (PriorityBinding)baseClone;
 
-        for (int i=0; i<=_bindingCollection.Count; ++i)
+        for (int i=0; i<_bindingCollection.Count; ++i)
         {
             clone._bindingCollection.Add(_bindingCollection[i].Clone(mode));
         }

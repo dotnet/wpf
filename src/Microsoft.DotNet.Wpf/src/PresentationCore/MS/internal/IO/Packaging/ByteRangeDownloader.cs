@@ -692,14 +692,14 @@ namespace MS.Internal.IO.Packaging
             // The byteRanges should never be less; perf optimization
             if (byteRanges.Length < 2 || (byteRanges.Length % 2) != 0)
             {
-                throw new ArgumentException(SR.Format(SR.InvalidByteRanges, "byteRanges"));
+                throw new ArgumentException(SR.Format(SR.InvalidByteRanges, nameof(byteRanges)));
             }
 
             for (int i = 0; i < byteRanges.Length; i++)
             {
                 if (byteRanges[i] < 0 || byteRanges[i+1] <= 0)
                 {
-                    throw new ArgumentException(SR.Format(SR.InvalidByteRanges, "byteRanges"));
+                    throw new ArgumentException(SR.Format(SR.InvalidByteRanges, nameof(byteRanges)));
                 }
                 i++;
             }
@@ -717,14 +717,14 @@ namespace MS.Internal.IO.Packaging
         {
             if (byteRanges.GetLength(0) <= 0 || byteRanges.GetLength(1) != 2)
             {
-                throw new ArgumentException(SR.Format(SR.InvalidByteRanges, "byteRanges"));
+                throw new ArgumentException(SR.Format(SR.InvalidByteRanges, nameof(byteRanges)));
             }
 
             for (int i = 0; i < byteRanges.GetLength(0); ++i)
             {
                 if (byteRanges[i,Offset_Index] < 0 || byteRanges[i,Length_Index] <= 0)
                 {
-                    throw new ArgumentException(SR.Format(SR.InvalidByteRanges, "byteRanges"));
+                    throw new ArgumentException(SR.Format(SR.InvalidByteRanges, nameof(byteRanges)));
                 }
             }
         }

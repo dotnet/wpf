@@ -78,7 +78,7 @@ namespace System.Windows
             {
                 if (!DragDrop.IsValidDragAction(value))
                 {
-                    throw new ArgumentException(SR.Format(SR.DragDrop_DragActionInvalid, "value"));
+                    throw new ArgumentException(SR.Format(SR.DragDrop_DragActionInvalid, nameof(value)));
                 }
 
                 _action = value; 

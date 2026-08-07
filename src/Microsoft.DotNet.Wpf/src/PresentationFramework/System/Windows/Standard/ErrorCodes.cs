@@ -412,7 +412,7 @@ namespace Standard
                 // the process of implementing an IErrorInfo and then use that.  There's no stock
                 // implementations of IErrorInfo available and I don't think it's worth the maintenance
                 // overhead of doing it, nor would it have significant value over this approach.
-                Exception e = MS.Internal.PresentationFramework.SecurityHelper.GetExceptionForHR((int)_value);
+                Exception e = Marshal.GetExceptionForHR((int)_value, errorInfo: -1);
                 Assert.IsNotNull(e);
                 // ArgumentNullException doesn't have the right constructor parameters,
                 // (nor does Win32Exception...)

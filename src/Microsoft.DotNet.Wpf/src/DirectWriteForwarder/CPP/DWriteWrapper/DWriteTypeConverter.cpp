@@ -6,16 +6,6 @@
 
 namespace MS { namespace Internal { namespace Text { namespace TextInterface
 {
-    DWRITE_FACTORY_TYPE DWriteTypeConverter::Convert(FactoryType factoryType)
-    {
-        switch(factoryType)
-        {
-            case FactoryType::Shared   : return DWRITE_FACTORY_TYPE_SHARED;
-            case FactoryType::Isolated : return DWRITE_FACTORY_TYPE_ISOLATED;
-            default                    : throw gcnew System::InvalidOperationException();
-        }
-    }
-
     FontWeight DWriteTypeConverter::Convert(DWRITE_FONT_WEIGHT fontWeight)
     {
         // The commented cases are here only for completeness so that the code captures all the possible enum values.
@@ -370,31 +360,6 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             case DWRITE_INFORMATIONAL_STRING_FULL_NAME                 : // return InformationalStringID::FullName;
             
             default                                                    : throw gcnew System::InvalidOperationException();
-        }
-    }
-
-    DWRITE_MEASURING_MODE DWriteTypeConverter::Convert(TextFormattingMode measuringMode)
-    {
-        switch(measuringMode)
-        {
-            case TextFormattingMode::Ideal   : return DWRITE_MEASURING_MODE_NATURAL;
-            case TextFormattingMode::Display : return DWRITE_MEASURING_MODE_GDI_CLASSIC;    
-            // We do not support Natural Metrics mode in WPF
-            default                                      : throw gcnew System::InvalidOperationException();
-        }
-    }
-
-    TextFormattingMode DWriteTypeConverter::Convert(DWRITE_MEASURING_MODE dwriteMeasuringMode)
-    {
-        switch(dwriteMeasuringMode)
-        {
-            case DWRITE_MEASURING_MODE_NATURAL             : return TextFormattingMode::Ideal;
-            case DWRITE_MEASURING_MODE_GDI_CLASSIC         : return TextFormattingMode::Display;
-            // We do not support Natural Metrics mode in WPF
-            // However, the build system complained about not having an explicit case 
-            // for DWRITE_TEXT_MEASURING_METHOD_USE_DISPLAY_NATURAL_METRICS
-            case DWRITE_MEASURING_MODE_GDI_NATURAL         : throw gcnew System::InvalidOperationException();
-            default                                        : throw gcnew System::InvalidOperationException();
         }
     }
 

@@ -4511,16 +4511,9 @@ namespace System.Windows
                     App.WindowsInternal.Remove(this);
 
                     // Check to see if app should shut down--this behavior really belongs in Application
-                    if (!_appShuttingDown)
+                    if (!_appShuttingDown && ShouldCloseApplication())
                     {
-                        // If this is the last window that's closing and shutdownmode is onlastwindowclose, or
-                        // if this is the main window closing and shutdownmode is onmainwindowclose, shutdown
-                        // the app
-                        if (((App.Windows.Count == 0) && (App.ShutdownMode == ShutdownMode.OnLastWindowClose))
-                         || ((App.MainWindow == this) && (App.ShutdownMode == ShutdownMode.OnMainWindowClose)))
-                        {
-                            App.CriticalShutdown(0);
-                        }
+                        App.CriticalShutdown(0);
                     }
 
                     TryClearingMainWindow();
@@ -4530,7 +4523,33 @@ namespace System.Windows
                     App.NonAppWindowsInternal.Remove(this);
                 }
             }
-}
+        }
+
+        private bool ShouldCloseApplication()
+        {
+            if (App.ShutdownMode is ShutdownMode.OnLastWindowClose)
+            {
+                // 1) If this is the last window and shutdown mode is OnLastWindowClose, then we can close the app
+                // 2) We should also close the app if all of the remaining windows are windows that were created,
+                // -- but never shown (excludes inits via EnsureHandle via WindowInteropHelper, such windows are considered shown). 
+                lock (App.WindowsInternal.SyncRoot)
+                {
+                    for (int i = App.WindowsInternal.Count - 1; i >= 0; i--)
+                    {
+                        if (!App.WindowsInternal[i].IsSourceWindowNull)
+                        {
+                            return false;
+                        }
+                    }
+                }
+
+                return true;
+            }
+
+            // If this is the main window and shutdown mode is OnMainWindowClose, then we can close the app
+            return App.ShutdownMode is ShutdownMode.OnMainWindowClose && App.MainWindow == this;
+        }
+
         private bool  WmDestroy()
         {
             // For WS_CHILD window, WM_SIZE, WM_MOVE (and maybe others) are called

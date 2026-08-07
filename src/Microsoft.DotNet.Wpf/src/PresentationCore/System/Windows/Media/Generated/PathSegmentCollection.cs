@@ -27,7 +27,6 @@ namespace System.Windows.Media
     /// <summary>
     /// A collection of PathSegment objects.
     /// </summary>
-
     public sealed partial class PathSegmentCollection : Animatable, IList, IList<PathSegment>
     {
         //------------------------------------------------------

@@ -210,25 +210,20 @@ namespace System.Windows.Markup
         /// <param name="offset">zero base starting offset</param>
         /// <param name="count">number of bytes to read</param>
         /// <returns></returns>
-        internal int Read(byte[] buffer, int offset, int count)
+        internal int Read(Span<byte> buffer, int offset, int count)
         {
             ArgumentOutOfRangeException.ThrowIfGreaterThan(count, ReadLength - ReadPosition);
-            int bufferOffset;
-            int bufferIndex;
 
-            byte[] readBuffer = GetBufferFromFilePosition(
-                ReadPosition,true /*reader*/,
-                out bufferOffset, out bufferIndex);
+            byte[] readBuffer = GetBufferFromFilePosition(ReadPosition, reader: true, out int bufferOffset, out _);
 
-
-            Debug.Assert(bufferOffset < BufferSize,"Calculated bufferOffset is greater than buffer");
+            Debug.Assert(bufferOffset < BufferSize, "Calculated bufferOffset is greater than buffer");
 
             // see how many bytes we can read from this buffer.
-            int availableBytesInBuffer =  BufferSize - bufferOffset;
+            int availableBytesInBuffer = BufferSize - bufferOffset;
             int leftOverBytes = 0;
             int bufferReadCount = 0;
 
-            // check if ther is enough room in the write buffer to meet the
+            // check if there is enough room in the write buffer to meet the
             // request or if there will be leftOverBytes.
             if (count > availableBytesInBuffer)
             {
@@ -256,7 +251,7 @@ namespace System.Windows.Markup
 
             if (leftOverBytes > 0)
             {
-                Read(buffer,offset,(int) leftOverBytes);
+                Read(buffer, offset, leftOverBytes);
             }
 
             return count;
@@ -270,11 +265,12 @@ namespace System.Windows.Markup
         /// <returns></returns>
         internal int ReadByte()
         {
-            byte[] buffer = new byte[1];
+            byte buffer = byte.MinValue;
 
             // uses Read to validate if reading past the end of the file.
-            Read(buffer,0,1);
-            return (int) buffer[0];
+            Read(new Span<byte>(ref buffer), 0, 1);
+
+            return buffer;
         }
 
         /// <summary>
@@ -822,7 +818,7 @@ namespace System.Windows.Markup
         /// </summary>
         public override int Read(byte[] buffer, int offset, int count)
         {
-            return StreamManager.Read(buffer,offset,count);
+            return StreamManager.Read(buffer, offset, count);
         }
 
         /// <summary>

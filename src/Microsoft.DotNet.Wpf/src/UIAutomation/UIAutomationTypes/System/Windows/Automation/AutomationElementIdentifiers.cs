@@ -177,6 +177,8 @@ namespace System.Windows.Automation
         public static readonly AutomationProperty IsTogglePatternAvailableProperty = AutomationProperty.Register(AutomationIdentifierConstants.Properties.IsTogglePatternAvailable, "AutomationElementIdentifiers.IsTogglePatternAvailableProperty");
         /// <summary>Property that indicates whether the TransformPattern is available for this AutomationElement</summary>
         public static readonly AutomationProperty IsTransformPatternAvailableProperty = AutomationProperty.Register(AutomationIdentifierConstants.Properties.IsTransformPatternAvailable, "AutomationElementIdentifiers.IsTransformPatternAvailableProperty");
+        /// <summary>Property that indicates whether the TransformPattern is available for this AutomationElement</summary>
+        public static readonly AutomationProperty IsTransformPattern2AvailableProperty = AutomationProperty.Register(AutomationIdentifierConstants.Properties.IsTransformPattern2Available, "AutomationElementIdentifiers.IsTransformPattern2AvailableProperty");
         /// <summary>Property that indicates whether the ValuePattern is available for this AutomationElement</summary>
         public static readonly AutomationProperty IsValuePatternAvailableProperty = AutomationProperty.Register(AutomationIdentifierConstants.Properties.IsValuePatternAvailable, "AutomationElementIdentifiers.IsValuePatternAvailableProperty");
         /// <summary>Property that indicates whether the WindowPattern is available for this AutomationElement</summary>

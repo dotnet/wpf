@@ -123,10 +123,7 @@ namespace MS.Internal.FontCache
                 fileName = resourceFullName.Substring(indexOfLastSlash + 1);
             }
 
-            string extension = Path.GetExtension(fileName);
-
-            bool isComposite;
-            if (!Util.IsSupportedFontExtension(extension, out isComposite))
+            if (!Util.IsSupportedFontExtension(Path.GetExtension(fileName.AsSpan()), out _))
                 return;
 
             // We add entries for a font file to two collections:

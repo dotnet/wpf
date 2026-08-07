@@ -125,7 +125,13 @@ namespace System.Windows.Shell
         /// </remarks>
         public static void AddToRecentCategory(string itemPath)
         {
-            Verify.FileExists(itemPath, "itemPath");
+            ArgumentException.ThrowIfNullOrEmpty(itemPath, nameof(itemPath));
+
+            if (!File.Exists(itemPath))
+            {
+                throw new ArgumentException(SR.Format(SR.Verify_FileExists, itemPath), nameof(itemPath));
+            }
+
             itemPath = Path.GetFullPath(itemPath);
             NativeMethods2.SHAddToRecentDocs(itemPath);
         }
@@ -138,7 +144,8 @@ namespace System.Windows.Shell
         /// </remarks>
         public static void AddToRecentCategory(JumpPath jumpPath)
         {
-            Verify.IsNotNull(jumpPath, "jumpPath");
+            ArgumentNullException.ThrowIfNull(jumpPath, nameof(jumpPath));
+
             AddToRecentCategory(jumpPath.Path);
         }
 
@@ -150,7 +157,7 @@ namespace System.Windows.Shell
         /// </remarks>
         public static void AddToRecentCategory(JumpTask jumpTask)
         {
-            Verify.IsNotNull(jumpTask, "jumpTask");
+            ArgumentNullException.ThrowIfNull(jumpTask, nameof(jumpTask));
 
             // SHAddToRecentDocs only allows IShellLinks in Windows 7 and later.
             // Silently fail this if that's not the case.
@@ -212,7 +219,7 @@ namespace System.Windows.Shell
         /// </summary>
         public static void SetJumpList(Application application, JumpList value)
         {
-            Verify.IsNotNull(application, "application");
+            ArgumentNullException.ThrowIfNull(application, nameof(application));
 
             lock (s_lock)
             {
@@ -238,7 +245,7 @@ namespace System.Windows.Shell
         /// </summary>
         public static JumpList GetJumpList(Application application)
         {
-            Verify.IsNotNull(application, "application");
+            ArgumentNullException.ThrowIfNull(application, nameof(application));
 
             JumpList value;
             s_applicationMap.TryGetValue(application, out value);
@@ -443,7 +450,11 @@ namespace System.Windows.Shell
         private void ApplyList()
         {
             Debug.Assert(_initializing == false);
-            Verify.IsApartmentState(ApartmentState.STA);
+
+            if (Thread.CurrentThread.GetApartmentState() is not ApartmentState.STA)
+            {
+                throw new InvalidOperationException(SR.Format(SR.Verify_ApartmentState, ApartmentState.STA));
+            }
 
             // We don't want to force applications to conditionally check this before constructing a JumpList,
             // but if we're not on 7 then this isn't going to work.  Fail fast.

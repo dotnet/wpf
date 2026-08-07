@@ -96,8 +96,6 @@
     <ManagedCxxSuppressions>$(ManagedCxxSuppressions);4945</ManagedCxxSuppressions>
     <!-- Type marked as obsolete. -->
     <ManagedCxxSuppressions>$(ManagedCxxSuppressions);4947</ManagedCxxSuppressions>
-    <!-- Type marked as #pragma deprecated. -->
-    <ManagedCxxSuppressions>$(ManagedCxxSuppressions);4995</ManagedCxxSuppressions>
   </PropertyGroup>
 
   <PropertyGroup>

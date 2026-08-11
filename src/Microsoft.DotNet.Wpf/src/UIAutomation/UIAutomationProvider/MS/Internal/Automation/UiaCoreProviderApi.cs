@@ -39,6 +39,11 @@ namespace MS.Internal.Automation
             CheckError(RawUiaHostProviderFromHwnd(hwnd, out provider));
             return provider;
         }
+
+        internal static void UiaDisconnectProvider(IRawElementProviderSimple provider)
+        {
+            CheckError(RawUiaDisconnectProvider(provider));
+        }
         #endregion Provider methods
 
         //
@@ -118,6 +123,9 @@ namespace MS.Internal.Automation
 
         [DllImport(DllImport.UIAutomationCore, EntryPoint = "UiaHostProviderFromHwnd", CharSet = CharSet.Unicode)]
         private static extern int RawUiaHostProviderFromHwnd(IntPtr hwnd, [MarshalAs(UnmanagedType.Interface)] out IRawElementProviderSimple provider);
+
+        [DllImport(DllImport.UIAutomationCore, EntryPoint = "UiaDisconnectProvider", CharSet = CharSet.Unicode)]
+        private static extern int RawUiaDisconnectProvider(IRawElementProviderSimple provider);
 
         // Event APIs...
 

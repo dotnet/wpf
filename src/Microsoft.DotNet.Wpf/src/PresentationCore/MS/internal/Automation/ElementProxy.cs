@@ -8,6 +8,8 @@
 //
 //
 
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
@@ -38,10 +40,20 @@ namespace MS.Internal.Automation
         // private ctor - the Wrap() pseudo-ctor is used instead.
         private ElementProxy(AutomationPeer peer)
         {
-            if ((AutomationInteropReferenceType == ReferenceType.Weak) && 
-                (peer is UIElementAutomationPeer || peer is ContentElementAutomationPeer || peer is UIElement3DAutomationPeer))
+            // Weakly reference peers whose lifetime is owned elsewhere so UIA references don't pin
+            // recycled/virtualized peers - and the controls they root - in memory. Data-item peers
+            // are gated by an opt-out switch.
+            if ((AutomationInteropReferenceType == ReferenceType.Weak) &&
+                (peer is UIElementAutomationPeer || peer is ContentElementAutomationPeer || peer is UIElement3DAutomationPeer ||
+                 (peer.IsDataItemAutomationPeer() && !CoreAppContextSwitches.UseStrongReferenceForItemAutomationPeers)))
             {
                 _peer = new WeakReference(peer);
+
+                // Let the sweep release this proxy's CCW once its peer is collected.
+                if (!CoreAppContextSwitches.DisableUiaProviderDisconnect)
+                {
+                    ProxyDisconnector.Register(this, peer.Dispatcher);
+                }
             }
             else
             {
@@ -150,9 +162,19 @@ namespace MS.Internal.Automation
             AutomationPeer peer = Peer;
             if (peer == null)
             {
+                // Serve the cached id during disconnect so the call can identify this provider.
+                if (_disconnecting && _cachedRuntimeId != null)
+                {
+                    return _cachedRuntimeId;
+                }
                 throw new ElementNotAvailableException();
             }
-            return (int []) ElementUtil.Invoke( peer, state => ((ElementProxy)state).InContextGetRuntimeId(), this);
+            int[] runtimeId = (int []) ElementUtil.Invoke( peer, state => ((ElementProxy)state).InContextGetRuntimeId(), this);
+            if (_peer is WeakReference)
+            {
+                _cachedRuntimeId = runtimeId;
+            }
+            return runtimeId;
         }
 
         public Rect BoundingRectangle
@@ -275,6 +297,11 @@ namespace MS.Internal.Automation
                         if(peer.IsDataItemAutomationPeer())
                         {
                             peer.AddToParentProxyWeakRefCache();
+
+                            // Root the peer for the in-flight traversal: it is only weakly held by its proxy and
+                            // could be collected between being returned to UIA and its first callback. KeepAlive
+                            // self-guards on the switch / registry-key / data-item eligibility.
+                            PeerKeepAlive.KeepAlive(peer);
                         }
                     }
                 }
@@ -292,6 +319,12 @@ namespace MS.Internal.Automation
                 if (_peer is WeakReference)
                 {
                     AutomationPeer peer = (AutomationPeer)((WeakReference)_peer).Target;
+
+                    // A data-item peer can be collected mid-walk when its row virtualizes out, surfacing ENA.
+                    // Park a short-lived strong root (see PeerKeepAlive) that outlives the walk but is
+                    // released once the peer stops being touched. KeepAlive self-guards on eligibility.
+                    PeerKeepAlive.KeepAlive(peer);
+
                     return peer;
                 }
                 else
@@ -499,6 +532,260 @@ namespace MS.Internal.Automation
 
             return StaticWrap(root, peer);
         }
+
+        #region data-item peer keep-alive
+
+        // Bounds the lifetime of weakly-referenced data-item peers so an in-flight UIA traversal cannot
+        // observe one collected mid-walk, without reintroducing the unbounded leak. Touched peers are
+        // strong-rooted and rotated out by a Background DispatcherTimer once untouched for a window.
+        private static class PeerKeepAlive
+        {
+            // A peer stays rooted until untouched for one full window and at most two (9-18 s). 9 s is ~2x
+            // the measured worst-case ~4.4 s gap between an element's surface and readback touches under
+            // forced-Gen2 GC, so it survives blocking GC while still releasing idle peers within seconds.
+            private static readonly TimeSpan Window = TimeSpan.FromSeconds(9);
+
+            // Lock-free on the hot path: KeepAlive runs at the top of nearly every UIA interface call and only
+            // stamps the peer with the current generation (a striped concurrent write). OnTick advances the
+            // generation and drops peers untouched for two windows. Only the rare timer start/stop takes a lock.
+            private static readonly ConcurrentDictionary<AutomationPeer, int> _tracked = new ConcurrentDictionary<AutomationPeer, int>();
+            private static volatile int _generation;
+            private static readonly object _timerLock = new object();
+            private static volatile DispatcherTimer _timer;
+
+            // Renew the keep-alive window for a weakly-held data-item peer. The full eligibility guard lives
+            // here (not at the call sites) so the two callers cannot drift apart: the opt-out switch, the
+            // legacy AutomationWeakReferenceDisallow registry key (surfaced as AutomationInteropReferenceType),
+            // and data-item-ness. A null peer or non-weak reference type is a no-op.
+            internal static void KeepAlive(AutomationPeer peer)
+            {
+                if (peer == null ||
+                    CoreAppContextSwitches.UseStrongReferenceForItemAutomationPeers ||
+                    AutomationInteropReferenceType != ReferenceType.Weak ||
+                    !peer.IsDataItemAutomationPeer())
+                {
+                    return;
+                }
+
+                Dispatcher dispatcher = peer.Dispatcher;
+                if (dispatcher == null)
+                {
+                    return;
+                }
+
+                // Skip the striped-lock write when this peer is already stamped for the current generation:
+                // repeat touches within a window are the common case and need no update.
+                if (!_tracked.TryGetValue(peer, out int g) || g != _generation)
+                {
+                    _tracked[peer] = _generation;
+                }
+
+                if (_timer == null)
+                {
+                    lock (_timerLock)
+                    {
+                        // The constructor associates the timer with the supplied dispatcher and starts it, so this
+                        // is safe to call from the UIA worker thread that drives the proxy.
+                        _timer ??= new DispatcherTimer(Window, DispatcherPriority.Background, OnTick, dispatcher);
+                    }
+                }
+            }
+
+            private static void OnTick(object sender, EventArgs e)
+            {
+                // Runs only on the timer's dispatcher thread, so it is the sole writer of _generation.
+                int cutoff = ++_generation - 1;
+                foreach (KeyValuePair<AutomationPeer, int> entry in _tracked)
+                {
+                    // Value-matched removal: a concurrent KeepAlive re-stamp changes the value, so a peer
+                    // touched again mid-tick is not evicted while UIA is still using it.
+                    if (entry.Value < cutoff)
+                    {
+                        _tracked.TryRemove(entry);
+                    }
+                }
+
+                if (_tracked.IsEmpty)
+                {
+                    lock (_timerLock)
+                    {
+                        // Re-check under the lock so a peer added between the test and the stop keeps ticking.
+                        if (_tracked.IsEmpty && _timer != null)
+                        {
+                            _timer.Stop();
+                            _timer = null;
+
+                            // A KeepAlive can add a peer and still see the not-yet-cleared timer; recreate it so
+                            // that peer is not left rooted with no tick to release it.
+                            if (!_tracked.IsEmpty)
+                            {
+                                _timer = new DispatcherTimer(Window, DispatcherPriority.Background, OnTick, Dispatcher.CurrentDispatcher);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        #endregion data-item peer keep-alive
+
+        #region dead-peer proxy disconnect
+
+        // volatile: _cachedRuntimeId is written on the UIA worker thread but read on the dispatcher
+        // thread during the re-entrant GetRuntimeId that UiaDisconnectProvider issues, so the read needs
+        // an acquire barrier to avoid observing a stale null.
+        private volatile bool _disconnecting;
+        private volatile int[] _cachedRuntimeId;
+
+        // True once the weakly-held peer has been collected. Must NOT touch Peer: doing so would hand out a
+        // transient strong reference and defeat the very collection the sweep is waiting for. Safe because a
+        // collected peer already throws ENA, so disconnect can't disturb a live walk.
+        private bool IsPeerCollected
+        {
+            get { return _peer is WeakReference weak && weak.Target == null; }
+        }
+
+        private bool Disconnect()
+        {
+            _disconnecting = true;
+            try
+            {
+                AutomationInteropProvider.DisconnectProvider(this);
+                return true;
+            }
+            catch (Exception)
+            {
+                // Disconnect failed (e.g. transient input-sync re-entrancy); caller re-queues for retry.
+                return false;
+            }
+            finally
+            {
+                _disconnecting = false;
+            }
+        }
+
+        // Background sweep that disconnects weakly-held ElementProxy instances whose peer has been collected.
+        private static class ProxyDisconnector
+        {
+            private static readonly TimeSpan Window = TimeSpan.FromSeconds(2);
+
+            // Cap per-tick work so a large backlog drains over several ticks instead of one COM burst.
+            private const int MaxDisconnectsPerTick = 5000;
+
+            // Give up re-queuing a proxy after this many failed disconnects. Real transient failures clear
+            // in 1-2 ticks, so this never trips for them; it caps the pathological case (a disconnect that
+            // throws every time, e.g. runtime id never cached) so the timer can still self-stop.
+            private const int MaxDisconnectAttempts = 8;
+
+            private static readonly object _lock = new object();
+            private static readonly List<WeakReference<ElementProxy>> _registry = new List<WeakReference<ElementProxy>>();
+
+            // Attempt counts kept only for the rare re-queued failures, not as a field on every proxy.
+            private static readonly Dictionary<ElementProxy, int> _failedAttempts = new Dictionary<ElementProxy, int>();
+            private static DispatcherTimer _timer;
+
+            internal static void Register(ElementProxy proxy, Dispatcher dispatcher)
+            {
+                if (dispatcher == null)
+                {
+                    return;
+                }
+
+                lock (_lock)
+                {
+                    _registry.Add(new WeakReference<ElementProxy>(proxy));
+                    _timer ??= new DispatcherTimer(Window, DispatcherPriority.Background, OnTick, dispatcher);
+                }
+            }
+
+            private static void OnTick(object sender, EventArgs e)
+            {
+                // Pick targets under the lock; disconnect outside it so Register never blocks.
+                List<ElementProxy> toDisconnect = null;
+
+                lock (_lock)
+                {
+                    int write = 0;
+                    int disconnectCount = 0;
+
+                    for (int read = 0; read < _registry.Count; read++)
+                    {
+                        WeakReference<ElementProxy> slot = _registry[read];
+                        if (!slot.TryGetTarget(out ElementProxy proxy))
+                        {
+                            continue;
+                        }
+
+                        if (proxy.IsPeerCollected && disconnectCount < MaxDisconnectsPerTick)
+                        {
+                            (toDisconnect ??= new List<ElementProxy>()).Add(proxy);
+                            disconnectCount++;
+                            continue;
+                        }
+
+                        _registry[write++] = slot;
+                    }
+
+                    _registry.RemoveRange(write, _registry.Count - write);
+
+                    if (_registry.Count == 0 && toDisconnect == null)
+                    {
+                        _timer.Stop();
+                        _timer = null;
+                    }
+                }
+
+                if (toDisconnect != null)
+                {
+                    List<ElementProxy> succeeded = null;
+                    List<ElementProxy> failed = null;
+                    foreach (ElementProxy proxy in toDisconnect)
+                    {
+                        if (proxy.Disconnect())
+                        {
+                            (succeeded ??= new List<ElementProxy>()).Add(proxy);
+                        }
+                        else
+                        {
+                            (failed ??= new List<ElementProxy>()).Add(proxy);
+                        }
+                    }
+
+                    lock (_lock)
+                    {
+                        if (succeeded != null && _failedAttempts.Count != 0)
+                        {
+                            foreach (ElementProxy proxy in succeeded)
+                            {
+                                _failedAttempts.Remove(proxy);
+                            }
+                        }
+
+                        if (failed != null)
+                        {
+                            // Re-queue a failed disconnect (its CCW is a GC root that would otherwise leak the
+                            // proxy) until the attempt cap, then give up - leaking only the lightweight shell so
+                            // the timer can still self-stop. The timer is alive because this tick had targets.
+                            foreach (ElementProxy proxy in failed)
+                            {
+                                int attempts = _failedAttempts.TryGetValue(proxy, out int n) ? n + 1 : 1;
+                                if (attempts < MaxDisconnectAttempts)
+                                {
+                                    _failedAttempts[proxy] = attempts;
+                                    _registry.Add(new WeakReference<ElementProxy>(proxy));
+                                }
+                                else
+                                {
+                                    _failedAttempts.Remove(proxy);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        #endregion dead-peer proxy disconnect
 
         #region disable switch for ElementProxy weak reference fix
 

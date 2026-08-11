@@ -139,11 +139,12 @@ namespace System.Windows.Documents
             else
             {
                 Dispatcher dispatcher = this.Dispatcher;
+                Uri baseUri = ((IUriContext)this).BaseUri;
                 Uri uriToLoad = _ResolveUri();
 
                 if (uriToLoad != null || _child != null)
                 {
-                    _asyncOp = new PageContentAsyncResult(new AsyncCallback(_RequestPageCallback), null, dispatcher, uriToLoad, uriToLoad, _child);
+                    _asyncOp = new PageContentAsyncResult(new AsyncCallback(_RequestPageCallback), null, dispatcher, baseUri, uriToLoad, _child);
                     _asyncOp.DispatcherOperation = dispatcher.BeginInvoke(DispatcherPriority.Normal, new DispatcherOperationCallback(_asyncOp.Dispatch), null);
                 }
             }
@@ -392,6 +393,11 @@ namespace System.Windows.Documents
 
             if (uriToLoad != null)
             {
+                // Package-boundary guard. Reject any uriToLoad that is not
+                // an absolute pack:// reference inside the same package as
+                // the parent (this PageContent's BaseUri). This enforces
+                // XPS specification containment requirements.
+                XpsLoadingContext.EnforcePackageRelativeUri(((IUriContext)this).BaseUri, uriToLoad);
                 pageStream = WpfWebRequestHelper.CreateRequestAndGetResponseStream(uriToLoad);
                 if (pageStream == null)
                 {
@@ -605,6 +611,11 @@ namespace System.Windows.Documents
     
         internal static void _LoadPageImpl(Uri baseUri, Uri uriToLoad, out FixedPage fixedPage, out Stream pageStream)
         {
+            // Package-boundary guard. Reject any uriToLoad that is not
+            // an absolute pack:// reference inside the same package as
+            // the parent (this PageContent's BaseUri). This enforces
+            // XPS specification containment requirements.
+            XpsLoadingContext.EnforcePackageRelativeUri(baseUri, uriToLoad);
             ContentType mimeType;
             pageStream = WpfWebRequestHelper.CreateRequestAndGetResponseStream(uriToLoad, out mimeType);
             object o = null;
@@ -689,4 +700,3 @@ namespace System.Windows.Documents
     /// <param name="e">Event Arguments</param>
     public delegate void GetPageRootCompletedEventHandler(object sender, GetPageRootCompletedEventArgs e);
 }
-

@@ -114,6 +114,7 @@
     <Compile Include="MS\Internal\DpiUtil\DpiUtil+DpiAwarenessScope.cs" />
     <Compile Include="MS\Internal\DpiUtil\DpiUtil+HwndDpiInfo.cs" />
     <Compile Include="MS\Internal\DpiUtil\DpiUtil+ProcessDpiAwarenessHelper.cs" />
+    <Compile Include="MS\Internal\XpsLoadingContext.cs" />
     <Compile Include="MS\Internal\DpiUtil\DpiUtil+SystemDpiHelper.cs" />
     <Compile Include="MS\Internal\DpiUtil\DpiUtil+WindowDpiScaleHelper.cs" />
     <Compile Include="MS\Internal\IListConverters.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="MS\Internal\WpfWebRequestHelper.cs" />
     <Compile Include="MS\Internal\AppModel\CookieHandler.cs" />
     <Compile Include="MS\Internal\AppModel\CustomCredentialPolicy.cs" />
+    <Compile Include="MS\Internal\AppModel\DefaultCredentialsZonePolicy.cs" />
     <Compile Include="MS\Internal\AppModel\SiteOfOriginContainer.cs" />
     <Compile Include="MS\Internal\AppModel\SiteOfOriginPart.cs" />
     <Compile Include="MS\Internal\Automation\AutomationPatternInfo.cs" />
@@ -1366,6 +1368,7 @@
     <NetCoreReference Include="Microsoft.Win32.Registry" />
     <NetCoreReference Include="System" />
     <NetCoreReference Include="System.Collections" />
+    <NetCoreReference Include="System.Collections.Concurrent" />
     <NetCoreReference Include="System.Collections.NonGeneric" />
     <NetCoreReference Include="System.Collections.Specialized" />
     <NetCoreReference Include="System.ComponentModel" />
@@ -1384,6 +1387,7 @@
     <NetCoreReference Include="System.IO.FileSystem" />
     <NetCoreReference Include="System.Memory" />
     <NetCoreReference Include="System.Net.Primitives" />
+    <NetCoreReference Include="System.Net.NameResolution" />
     <NetCoreReference Include="System.Net.Requests" />
     <NetCoreReference Include="System.Net.WebHeaderCollection" />
     <NetCoreReference Include="System.ObjectModel" />

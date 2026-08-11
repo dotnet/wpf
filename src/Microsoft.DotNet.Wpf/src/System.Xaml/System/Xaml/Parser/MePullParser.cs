@@ -7,15 +7,31 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Xaml;
 using MS.Internal.Xaml.Context;
+using System.Xaml.MS.Impl;
 
 namespace MS.Internal.Xaml.Parser
 {
     internal class MePullParser
     {
-        XamlParserContext _context;
-        string _originalText;
-        MeScanner _tokenizer;
-        string _brokenRule;
+        // SECURITY: Bound on the depth of recursive markup-extension nesting that
+        // MePullParser is willing to parse before throwing. Without this guard the
+        // four mutually recursive iterator methods (P_MarkupExtension -> P_Arguments
+        // -> P_PositionalArgs -> P_Value -> P_MarkupExtension) push four stack
+        // frames per nesting level, so a deeply nested attacker-supplied XAML
+        // attribute value such as "{Binding {Binding {Binding ...}}}" exhausts the
+        // thread stack and crashes the process with an uncatchable
+        // StackOverflowException (CWE-674 / CWE-770).
+        //
+        // The cap is intentionally generous: real-world XAML virtually never
+        // nests markup extensions more than a handful of levels, so 128 should
+        // not break any legitimate document while still keeping stack usage to
+        // well under 100 KB even on small thread stacks.
+        internal const int MaxMarkupExtensionDepth = 128;
+
+        private XamlParserContext _context;
+        private string _originalText;
+        private MeScanner _tokenizer;
+        private string _brokenRule;
 
         [DebuggerDisplay("{found}")]
         private class Found
@@ -85,61 +101,78 @@ namespace MS.Internal.Xaml.Parser
         //
         private IEnumerable<XamlNode> P_MarkupExtension(Found f)
         {
-            // MarkupExtension ::= @'{' TYPENAME Arguments? '}'
-            if (Expect(MeTokenType.Open, "MarkupExtension ::= @'{' Expr '}'"))
+            if (!XamlAppContextSwitches.DisableMarkupExtensionDepthGuard &&
+                _context.MarkupExtensionDepth >= MaxMarkupExtensionDepth)
             {
-                NextToken();
+                throw new XamlParseException(
+                    _tokenizer,
+                    SR.Format(SR.MarkupExtensionDepthExceeded, MaxMarkupExtensionDepth));
+            }
 
-                // MarkupExtension ::= '{' @TYPENAME Arguments? '}'
-                if (_tokenizer.Token == MeTokenType.TypeName)
+            _context.MarkupExtensionDepth++;
+            try
+            {
+                // MarkupExtension ::= @'{' TYPENAME Arguments? '}'
+                if (Expect(MeTokenType.Open, "MarkupExtension ::= @'{' Expr '}'"))
                 {
-                    XamlType xamlType = _tokenizer.TokenType;
-
-                    yield return Logic_StartElement(xamlType, _tokenizer.Namespace);
-
                     NextToken();
 
-                    // MarkupExtension ::= '{' TYPENAME @(Arguments)? '}'
-                    Found f2 = new Found();
-                    switch (_tokenizer.Token)
+                    // MarkupExtension ::= '{' @TYPENAME Arguments? '}'
+                    if (_tokenizer.Token == MeTokenType.TypeName)
                     {
-                    // MarkupExtension ::= '{' TYPENAME (Arguments)? @'}'
-                    case MeTokenType.Close:  // legal, Arguments is optional
-                        yield return Logic_EndObject();
+                        XamlType xamlType = _tokenizer.TokenType;
+
+                        yield return Logic_StartElement(xamlType, _tokenizer.Namespace);
+
                         NextToken();
-                        f.found = true;
-                        break;
 
-                    case MeTokenType.String:
-                    case MeTokenType.QuotedMarkupExtension:
-                    case MeTokenType.PropertyName:
-                    case MeTokenType.Open:
-                        // MarkupExtension ::= '{' TYPENAME (@Arguments)? '}'
-                        foreach (XamlNode node in P_Arguments(f2))
+                        // MarkupExtension ::= '{' TYPENAME @(Arguments)? '}'
+                        Found f2 = new Found();
+                        switch (_tokenizer.Token)
                         {
-                            yield return node;
-                        }
-                        break;
-
-                    default:
-                        SetBrokenRuleString("MarkupExtension ::= '{' TYPENAME @(Arguments)? '}'");
-                        break;
-                    }
-
-                    if (f2.found)
-                    {
-                        if (Expect(MeTokenType.Close, "MarkupExtension ::= '{' TYPENAME (Arguments)? @'}'"))
-                        {
+                        // MarkupExtension ::= '{' TYPENAME (Arguments)? @'}'
+                        case MeTokenType.Close:  // legal, Arguments is optional
                             yield return Logic_EndObject();
-                            f.found = true;
                             NextToken();
+                            f.found = true;
+                            break;
+
+                        case MeTokenType.String:
+                        case MeTokenType.QuotedMarkupExtension:
+                        case MeTokenType.PropertyName:
+                        case MeTokenType.Open:
+                            // MarkupExtension ::= '{' TYPENAME (@Arguments)? '}'
+                            foreach (XamlNode node in P_Arguments(f2))
+                            {
+                                yield return node;
+                            }
+
+                            break;
+
+                        default:
+                            SetBrokenRuleString("MarkupExtension ::= '{' TYPENAME @(Arguments)? '}'");
+                            break;
+                        }
+
+                        if (f2.found)
+                        {
+                            if (Expect(MeTokenType.Close, "MarkupExtension ::= '{' TYPENAME (Arguments)? @'}'"))
+                            {
+                                yield return Logic_EndObject();
+                                f.found = true;
+                                NextToken();
+                            }
                         }
                     }
+                    else
+                    {
+                        SetBrokenRuleString("MarkupExtension ::= '{' @TYPENAME (Arguments)? '}'");
+                    }
                 }
-                else
-                {
-                    SetBrokenRuleString("MarkupExtension ::= '{' @TYPENAME (Arguments)? '}'");
-                }
+            }
+            finally
+            {
+                _context.MarkupExtensionDepth--;
             }
         }
 

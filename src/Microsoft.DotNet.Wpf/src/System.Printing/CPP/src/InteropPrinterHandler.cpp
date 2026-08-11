@@ -3158,6 +3158,7 @@ TryCreate(
         {
             ZeroMemory((void*)tempHandle, byteCount);
             result = gcnew SafeMemoryHandle(tempHandle, true);
+            result->_byteCount = byteCount;
 
             return true;
         }
@@ -3201,7 +3202,7 @@ Wrap(
 SafeMemoryHandle::
 SafeMemoryHandle(
     IntPtr   Win32Pointer
-    ) : SafeHandle(IntPtr::Zero, true)
+    ) : SafeHandle(IntPtr::Zero, true), _byteCount(0)
 {
     SetHandle(Win32Pointer);
 }
@@ -3210,7 +3211,7 @@ SafeMemoryHandle::
 SafeMemoryHandle(
     IntPtr   Win32Pointer,
     Boolean  ownsHandle
-    ) : SafeHandle(IntPtr::Zero, ownsHandle)
+    ) : SafeHandle(IntPtr::Zero, ownsHandle), _byteCount(0)
 {
     SetHandle(Win32Pointer);
 }
@@ -3230,7 +3231,7 @@ get(
     void
     )
 {
-    return handle.Size;
+    return _byteCount;
 }
 
 SafeMemoryHandle^

@@ -58,12 +58,13 @@ using MS::Internal::TtfDelta::Mem_Alloc;
 using MS::Internal::TtfDelta::Mem_ReAlloc;
 using MS::Internal::TtfDelta::CreateDeltaTTF;
 using MS::Internal::TtfDelta::g_fDWFBoundsCheckEnabled;
+using MS::Internal::TtfDelta::g_fCmapAndSbitOverflowProtectionEnabled;
 
 namespace MS { namespace Internal {
 
 array<System::Byte> ^ TrueTypeSubsetter::ComputeSubset(void * fontData, int fileSize, System::Uri ^ sourceUri, int directoryOffset, array<System::UInt16> ^ glyphArray)
 {
-    // Initialize the bounds check switch from AppContext (once).
+    // Initialize the bounds check switches from AppContext (once).
     static bool s_switchInitialized = false;
     if (!s_switchInitialized)
     {
@@ -73,6 +74,12 @@ array<System::Byte> ^ TrueTypeSubsetter::ComputeSubset(void * fontData, int file
             "Switch.MS.Internal.TtfDelta.DisableDirectWriteForwarderBoundsCheckProtection",
             switchValue);
         MS::Internal::TtfDelta::g_fDWFBoundsCheckEnabled = switchValue ? 0 : 1;
+
+        switchValue = false;
+        System::AppContext::TryGetSwitch(
+            "Switch.MS.Internal.TtfDelta.DisableCmapAndSbitOverflowProtection",
+            switchValue);
+        MS::Internal::TtfDelta::g_fCmapAndSbitOverflowProtectionEnabled = switchValue ? 0 : 1;
     }
 
     uint8 * puchDestBuffer = NULL;

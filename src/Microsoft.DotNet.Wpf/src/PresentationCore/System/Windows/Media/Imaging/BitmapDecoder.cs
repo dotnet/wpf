@@ -264,6 +264,18 @@ namespace System.Windows.Media.Imaging
                                System.Windows.Navigation.BaseUriHelper.GetResolvedUri(baseUri, uri) :
                                uri;
 
+                // Security: When loading XPS content, block URIs that escape the
+                // current package to prevent SSRF (outbound HTTP/NTLM requests via
+                // attacker-controlled ImageSource attributes in XPS FixedPages).
+                // This check runs before the cache lookup so that a previously-
+                // cached external URI cannot bypass containment.
+                if (finalUri != null
+                    && finalUri.IsAbsoluteUri
+                    && !XpsLoadingContext.IsUriAllowedInCurrentContext(finalUri))
+                {
+                    throw new FileFormatException(SR.Resource_XpsPackageBoundaryViolation);
+                }
+
                 if (insertInDecoderCache)
                 {
                     if ((createOptions & BitmapCreateOptions.IgnoreImageCache) != 0)
@@ -1664,6 +1676,10 @@ namespace System.Windows.Media.Imaging
         /// Base Uri, only stored internally. Not used for serialization
         internal Uri _baseUri;
 
+        /// XPS package origin URI, captured at creation time for deferred
+        /// loading scenarios where the ambient XpsLoadingContext is no longer active.
+        internal Uri _xpsPackageOrigin;
+
         /// Uri Stream -- this is the stream that was created from the passed in Uri
         internal Stream _uriStream;
 
@@ -1698,4 +1714,3 @@ namespace System.Windows.Media.Imaging
 
     #endregion // BitmapDecoder
 }
-

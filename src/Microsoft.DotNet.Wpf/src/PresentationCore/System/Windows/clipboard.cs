@@ -487,7 +487,7 @@ public static class Clipboard
             return false;
         }
 
-        return dataObject.TryGetData(format, out data);
+        return dataObject.TryGetData(format, autoConvert: false, out data);
     }
 
     /// <inheritdoc cref="DataObject.SetDataAsJson{T}(string, T)"/>

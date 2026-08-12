@@ -263,6 +263,9 @@ namespace System.Windows.Documents
             Uri uriToLoad = _ResolveUri();
             if (uriToLoad != null)
             {
+                // Package-boundary guard. Reject any URI that escapes the XPS package.
+                XpsLoadingContext.EnforcePackageRelativeUri(((IUriContext)this).BaseUri, uriToLoad);
+
                 ContentType mimeType = null;
                 Stream docStream = null;
 
@@ -309,4 +312,3 @@ namespace System.Windows.Documents
         #endregion Private Fields
     }
 }
-

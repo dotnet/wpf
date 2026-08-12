@@ -412,6 +412,11 @@ PRIVATE int16 FixSbitSubTables(CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, /
                 {
                     if (i < usGlyphListCount && puchKeepGlyphList[i])
                         ++IndexSubTable5.ulNumGlyphs;
+                    if (CMAP_SAFE_CHECKS_ENABLED())
+                    {
+                        if (i == *pusNewLastGlyphIndex)
+                            break; /* prevent uint16 wraparound on increment */
+                    }
                 }
                 if (IndexSubTable5.ulNumGlyphs == 0)
                     return NO_ERROR; /* don't copy */
@@ -494,6 +499,11 @@ PRIVATE int16 FixSbitSubTables(CONST_TTFACC_FILEBUFFERINFO * pInputBufferInfo, /
                         ulNewGlyphOffset += ulGlyphLength;
                     }
                     ulOldGlyphOffset += ulGlyphLength;
+                    if (CMAP_SAFE_CHECKS_ENABLED())
+                    {
+                        if (i == usOldLastGlyphIndex)
+                            break; /* prevent uint16 wraparound on increment */
+                    }
                 }
                 if (ulNewGlyphOffset == 0)
                 {
@@ -855,6 +865,7 @@ uint32 ulTableSize;
 uint32 ulAdjustGlyphOffset;   /* amount to subtract to get the relative offset */
 uint16 usIndex;
 uint32 ulWriteEnd;
+int fCompletedRange = 0;    /* set when loop processes all entries through *pusLastIndex */
 
         ulLocalCurrentOffset = ulCurrAdditionalOffset - ulInitialOffset; /* offset within memory buffer */
 
@@ -880,6 +891,12 @@ uint32 ulWriteEnd;
         ulAdjustGlyphOffset = * ((uint32 *) (puchIndexSubTable + *pulSourceOffset));   /* first offset is what we adjust from */
         ulNewGlyphOffset = (* ((uint32 *) (puchIndexSubTable + *pulSourceOffset))) - ulAdjustGlyphOffset;     /* first one of array */
         *pulSourceOffset += sizeof(uint32);
+
+        if (CMAP_SAFE_CHECKS_ENABLED())
+        {
+            if (usFirstIndex > *pusLastIndex)
+                return 0; /* invalid range */
+        }
 
         for( usIndex = usFirstIndex; usIndex <= (* pusLastIndex); ++usIndex )
         {
@@ -910,14 +927,23 @@ uint32 ulWriteEnd;
             memcpy(puchIndexSubTable + ulLocalCurrentOffset+ulTableSize, &usNewGlyphOffset, 
                         sizeof(usNewGlyphOffset));      /* copy over the table entry */
             ulTableSize +=sizeof(usNewGlyphOffset); /* update the size of the table */
+
+            if (CMAP_SAFE_CHECKS_ENABLED())
+            {
+                if (usIndex == *pusLastIndex)
+                {
+                    fCompletedRange = 1;
+                    break; /* prevent uint16 wraparound on ++usIndex */
+                }
+            }
         }
-        if (usIndex > (* pusLastIndex)) /* we need to grab one more */
+        if ((CMAP_SAFE_CHECKS_ENABLED() && fCompletedRange) || usIndex > (* pusLastIndex)) /* we need to grab one more */
             usNewGlyphOffset = (uint16) ulNewGlyphOffset;  /* short version of the new glyph offset */
         else if (usIndex - usFirstIndex < 4) /* our break even point for staying within the buffer */
             return 0; /* ("EBLC: Internal. Cannot convert this Format1 table to format 3. Glyph Data too large.");  */
         *pulNewImageDataOffset += usNewGlyphOffset; 
 
-        if (usIndex > (* pusLastIndex)) /* we need to copy one more */
+        if ((CMAP_SAFE_CHECKS_ENABLED() && fCompletedRange) || usIndex > (* pusLastIndex)) /* we need to copy one more */
         /* Do the last table entry, which is just for Glyph size calculation purposes */
         {
             /* Bounds check for final entry */
@@ -933,7 +959,10 @@ uint32 ulWriteEnd;
         /* do we need to pad? */
         if (ulTableSize & 0x03)  /* if we aren't on a long word boundary */
             ulTableSize +=sizeof(usNewGlyphOffset);
-        *pusLastIndex = usIndex - 1; /* the one we were working on last */
+        if (CMAP_SAFE_CHECKS_ENABLED() && fCompletedRange)
+            ; /* already correct — processed through last index via safe-check break */
+        else
+            *pusLastIndex = usIndex - 1; /* the one we were working on last */
         return(ulTableSize);
 }
 

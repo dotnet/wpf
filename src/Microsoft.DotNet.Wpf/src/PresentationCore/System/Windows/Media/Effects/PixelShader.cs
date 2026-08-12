@@ -90,6 +90,13 @@ namespace System.Windows.Media.Effects
                         throw new ArgumentException(SR.Effect_SourceUriMustBeFileOrPack);
                     }
 
+                    // Security: When loading XPS content, block shader URIs that
+                    // escape the current package to prevent SSRF.
+                    if (!XpsLoadingContext.IsUriAllowedInCurrentContext(newUri))
+                    {
+                        throw new FileFormatException(SR.Resource_XpsPackageBoundaryViolation);
+                    }
+
                     stream = WpfWebRequestHelper.CreateRequestAndGetResponseStream(newUri);
                 }
 
@@ -279,4 +286,3 @@ namespace System.Windows.Media.Effects
         internal event EventHandler _shaderBytecodeChanged;
     }
 }
-

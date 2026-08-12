@@ -83,8 +83,8 @@ public static class Clipboard
     private static T? GetTypedDataIfAvailable<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] T>(string format)
     {
         IDataObject? data = GetDataObject();
-
         bool autoConvert = IsDataFormatAutoConvert(format);
+
         if (data is ITypedDataObject typed)
         {
             return typed.TryGetData(format, autoConvert, out T? value) ? value : default;

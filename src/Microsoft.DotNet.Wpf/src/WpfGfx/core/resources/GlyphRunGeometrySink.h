@@ -120,19 +120,19 @@ private:
     // Stores the geometry data we are creating.
     CMilPathGeometryDuce_Data m_pathGeometryData;
 
-    int m_currentOffset;
+    size_t m_currentOffset;
 
     MilPathGeometry *m_pGeometry;
     int m_cFigures;
 
     MilPathFigure *m_pCurrentFigure;
-    int m_currentFigureOffset;
-    int m_offsetToLastSegment;
-    int m_lastFigureSize;
+    size_t m_currentFigureOffset;
+    size_t m_offsetToLastSegment;
+    size_t m_lastFigureSize;
 
     MilSegment *m_pCurrentSegment;
-    int m_currentSegmentOffset;
-    int m_lastSegmentSize;
+    size_t m_currentSegmentOffset;
+    size_t m_lastSegmentSize;
     bool m_isSegSmoothJoin;
     bool m_isSegGap;
 

@@ -470,7 +470,23 @@ namespace MS.Internal.IO.Packaging
 
             request.Proxy = _proxy;
 
-            request.Credentials = _credentials;
+            // Security: Only attach credentials after zone-policy check when using
+            // default (NTLM/Negotiate) credentials. Explicit credentials provided
+            // by the caller are passed through unchanged.
+            if (_credentials != null
+                && object.ReferenceEquals(_credentials, System.Net.CredentialCache.DefaultCredentials))
+            {
+                if (MS.Internal.AppModel.DefaultCredentialsZonePolicy.ShouldSendDefaultCredentials(_requestedUri))
+                {
+                    request.Credentials = _credentials;
+                }
+                // else: skip — do not send default credentials to untrusted zones
+            }
+            else
+            {
+                request.Credentials = _credentials;
+            }
+
             request.CachePolicy = _cachePolicy;
 
             // Add byte ranges (to header)

@@ -1110,4 +1110,7 @@
   <data name="XmlnsCompatCycle" space_="preserve">
     <value>There is a cycle of XmlnsCompatibleWithAttribute definitions in assembly '{0}', such that namespace '{1}' overrides itself. Change the definitions to eliminate this cycle.</value>
   </data>
+  <data name="MarkupExtensionDepthExceeded" space_="preserve">
+    <value>Markup extension nesting depth exceeded the maximum allowed ({0}). Deeply nested markup extensions are not supported.</value>
+  </data>
 </root>

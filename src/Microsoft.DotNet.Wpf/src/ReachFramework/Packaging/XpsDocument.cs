@@ -629,12 +629,28 @@ namespace System.Windows.Xps.Packaging
 
             parserContext.BaseUri = PackUriHelper.Create(Uri, CurrentXpsManager.StartingPart.Uri);
 
-            object fixedObject = XamlReader.Load(CurrentXpsManager.StartingPart.GetStream(), parserContext, useRestrictiveXamlReader: true);
-            if (!(fixedObject is FixedDocumentSequence) )
+            Uri packageUri = PackUriHelper.GetPackageUri(parserContext.BaseUri);
+
+            Uri previousPackageUri = XpsLoadingContext.ActivePackageUri;
+            
+            // Establish XPS package context so that ambient-check sinks
+            // (BitmapImage, BitmapDecoder, ColorContext, FontSource, PixelShader)
+            // see the correct package origin during .fdseq parsing.
+            XpsLoadingContext.ActivePackageUri = packageUri;
+            try
             {
-                 throw new XpsPackagingException(SR.ReachPackaging_NotAFixedDocumentSequence);
+                object fixedObject = XamlReader.Load(CurrentXpsManager.StartingPart.GetStream(), parserContext, useRestrictiveXamlReader: true);
+                if (!(fixedObject is FixedDocumentSequence))
+                {
+                     throw new XpsPackagingException(SR.ReachPackaging_NotAFixedDocumentSequence);
+                }
+
+                return fixedObject as FixedDocumentSequence;
             }
-            return fixedObject as FixedDocumentSequence;
+            finally
+            {
+                XpsLoadingContext.ActivePackageUri = previousPackageUri;
+            }
         }
 
         /// <summary>

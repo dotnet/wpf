@@ -491,6 +491,20 @@ void CPSTrans::Initialize(  const DWORD *pCode,
                 }
                 pToken += DclLength;
             }
+            else if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled()
+                && (Inst & D3DSI_OPCODE_MASK) == D3DSIO_NOP)
+                {
+                    // NOP takes no parameter tokens. If the next token has the
+                    // high bit set, it would be wrongly consumed as a parameter
+                    // by the generic else branch, but the second pass's dedicated
+                    // D3DSIO_NOP handler would treat it as a separate instruction,
+                    // causing an instruction count mismatch and OOB write.
+                    if (*pToken & (1L << 31))
+                    {
+                        DPFERR("CPSTrans::Initialize - Invalid token after NOP instruction!");
+                        EXIT_WITH_STATUS(E_FAIL);
+                    }
+            }
             else
             {
                 while (*pToken & (1L<<31)) pToken++; // parameter tokens

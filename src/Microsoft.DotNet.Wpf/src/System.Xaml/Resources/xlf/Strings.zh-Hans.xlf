@@ -637,6 +637,11 @@
         <target state="translated">无法将“{0}”StaticExtension 值解析为枚举、静态字段或静态属性。</target>
         <note />
       </trans-unit>
+      <trans-unit id="MarkupExtensionDepthExceeded">
+        <source>Markup extension nesting depth exceeded the maximum allowed ({0}). Deeply nested markup extensions are not supported.</source>
+        <target state="new">Markup extension nesting depth exceeded the maximum allowed ({0}). Deeply nested markup extensions are not supported.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="MarkupExtensionNoContext">
         <source>Markup extension '{0}' requires '{1}' be implemented in the IServiceProvider for ProvideValue.</source>
         <target state="translated">标记扩展“{0}”要求在 ProvideValue 的 IServiceProvider 中实现“{1}”。</target>

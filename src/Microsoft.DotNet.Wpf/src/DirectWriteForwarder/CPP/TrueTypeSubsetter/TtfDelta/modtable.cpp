@@ -540,6 +540,16 @@ int16 errCode;
     if ((errCode = ReadGeneric( pOutputBufferInfo, (uint8 *)&KernFormat0, SIZEOF_KERN_FORMAT_0, KERN_FORMAT_0_CONTROL, ulSourceOffset, &usBytesRead )) != NO_ERROR)
         return errCode;
     usKernFormat0Size = usBytesRead;
+
+    if (CMAP_SAFE_CHECKS_ENABLED())
+    {
+        uint32 ulPairsSize;
+        if (ULongMult32((uint32)KernFormat0.nPairs, (uint32)GetGenericSize(KERN_PAIR_CONTROL), &ulPairsSize) != S_OK)
+            return ERR_GENERIC;
+        if ((uint32)usKernFormat0Size + ulPairsSize > (uint32)KernSubHeader.length)
+            return ERR_GENERIC;
+    }
+
     ulSourceOffset += usKernFormat0Size;
     ulTargetOffset = ulSourceOffset;
 
@@ -627,6 +637,14 @@ int16 errCode = NO_ERROR;
     if ((errCode = ReadGeneric( pOutputBufferInfo, (uint8 *) &KernHeader, SIZEOF_KERN_HEADER, KERN_HEADER_CONTROL, ulOffset, &usBytesRead )) != NO_ERROR)
         return errCode;
 
+    if (CMAP_SAFE_CHECKS_ENABLED())
+    {
+        uint32 ulKernLength = TTTableLength( pOutputBufferInfo, KERN_TAG );
+        /* At minimum, header + nTables * min_subtable_size must fit */
+        if ((uint32)KernHeader.nTables * SIZEOF_KERN_SUB_HEADER > ulKernLength)
+            return ERR_GENERIC;
+    }
+
     /* read each subtable.  If it is a format 0 subtable, remove
     kern pairs involving deleted glyphs.  Otherwise, copy
     the table down to its new location */
@@ -706,6 +724,23 @@ uint32 ulOutSizeDeviceRecord;
     ulHdmxOffset = GetHdmx(pOutputBufferInfo, &Hdmx);
     if ( !ulHdmxOffset )
         return ERR_GENERIC;
+
+    /* Validate numDeviceRecords against actual hdmx table length to prevent
+       heap buffer overflow when a malicious font inflates numRecords beyond
+       what the table actually holds (CVE bypass for hdmx path). */
+    if (TTF_SAFE_CHECKS_ENABLED())
+    {
+        uint32 ulHdmxTableLength = TTTableLength(pOutputBufferInfo, HDMX_TAG);
+        uint32 ulRequiredLength;
+        if (ULongMult32((uint32)Hdmx.numDeviceRecords,
+            (uint32)Hdmx.sizeDeviceRecord,
+            &ulRequiredLength) != S_OK)
+            return ERR_GENERIC;
+        if (UIntAdd32(ulRequiredLength, SIZEOF_HDMX, &ulRequiredLength) != S_OK)
+            return ERR_GENERIC;
+        if (ulRequiredLength > ulHdmxTableLength)
+            return ERR_GENERIC;
+    }
 
     ulOffset = ulHdmxOffset + GetGenericSize( HDMX_CONTROL );
 
@@ -846,7 +881,18 @@ uint16 usBytesWritten;
    if ( ulLtshOffset == 0 )
       return ERR_GENERIC;
 
-   if (usDttfGlyphIndexCount)
+  if (CMAP_SAFE_CHECKS_ENABLED())
+  {
+      uint32 ulLtshLength = TTTableLength( pOutputBufferInfo, LTSH_TAG );
+      uint32 ulRequiredOffset;
+      if (UIntAdd32((uint32)Ltsh.numGlyphs, GetGenericSize( LTSH_CONTROL ), &ulRequiredOffset) != S_OK ||
+          ulRequiredOffset > ulLtshLength)
+      {
+          Ltsh.numGlyphs = (uint16)(ulLtshLength > GetGenericSize( LTSH_CONTROL ) ? ulLtshLength - GetGenericSize( LTSH_CONTROL ) : 0);
+      }
+  }
+
+  if (usDttfGlyphIndexCount)
    {
        ulOutOffset = ulLtshOffset + GetGenericSize( LTSH_CONTROL );
        ulInOffset = ulLtshOffset + GetGenericSize( LTSH_CONTROL );
@@ -1064,6 +1110,21 @@ TTFACC_FILEBUFFERINFO * pUnCONSTInputBufferInfo;
     {
         MarkTableForDeletion(pOutputBufferInfo, VDMX_TAG);
         return NO_ERROR;
+    }
+
+    if (TTF_SAFE_CHECKS_ENABLED())
+    {
+        uint32 ulRecordsLength;
+        uint32 ulRequiredLength;
+        /* Validate that numRatios ratio records + offset entries fit within the VDMX table */
+        if (ULongMult32((uint32)Vdmx.numRatios,
+                        (uint32)(GetGenericSize(VDMXRATIO_CONTROL) + sizeof(uint16)),
+                        &ulRecordsLength) != S_OK)
+            return ERR_INVALID_VDMX;
+        if (UIntAdd32(ulRecordsLength, (uint32)usBytesRead, &ulRequiredLength) != S_OK)
+            return ERR_INVALID_VDMX;
+        if (ulRequiredLength > ulSrcLength)
+            return ERR_INVALID_VDMX;
     }
 
 

@@ -856,6 +856,25 @@ namespace System.Windows.Media
                 Uri appBase = SecurityHelper.GetBaseDirectory(AppDomain.CurrentDomain);
                 // this extracts the URI to open
                 Uri uriToOpen = ResolveUri(source, appBase);
+
+                // Default-credentials zone policy gate for the native media
+                // pipeline. Unlike the managed WpfWebRequestHelper path, the
+                // native media layer fetches the URI with system credentials
+                // by default and we cannot selectively suppress credentials
+                // from the managed side. To ensure default credentials are not
+                // sent to Internet/Untrusted-zone hosts, block those HTTP(S)
+                // URIs from reaching the native pipeline. Local/Intranet/Trusted
+                // media continues to work. The AppContext switch restores the
+                // legacy (allow-all) behavior as a compatibility escape hatch.
+                if (!CoreAppContextSwitches.DoNotApplyZoneCheckForDefaultCredentials
+                    && (uriToOpen.Scheme == Uri.UriSchemeHttp || uriToOpen.Scheme == Uri.UriSchemeHttps)
+                    && !MS.Internal.AppModel.DefaultCredentialsZonePolicy.ShouldSendDefaultCredentials(uriToOpen))
+                {
+                    _mediaEventsHelper.RaiseMediaFailed(
+                        new InvalidOperationException(SR.Format(SR.Media_PackURIsAreNotSupported, null)));
+                    return;
+                }
+
                 toOpen  = DemandPermissions(uriToOpen);
             }
             else

@@ -174,6 +174,10 @@ namespace System.Windows
 
 
                 Uri uri = BindUriHelper.GetResolvedUri(_baseUri, sourceUri);
+                
+                // Package-boundary guard. When inside an XPS package, reject
+                // any Source URI that escapes the package boundary.
+                XpsLoadingContext.EnforcePackageRelativeUri(_baseUri, uri);
 
                 WebRequest request = WpfWebRequestHelper.CreateRequest(uri);
                 WpfWebRequestHelper.ConfigCachePolicy(request, false);
@@ -2671,4 +2675,3 @@ namespace System.Windows
         #endregion Data
     }
 }
-

@@ -228,6 +228,11 @@ HEAD Head;
             usOffset = (uint16) (aulLoca[ i ] / 2L);
             if ((errCode = WriteWord( pOutputBufferInfo,  usOffset, ulOutLocaOffset + i*sizeof(uint16) )) != NO_ERROR)
                 break;
+            if (CMAP_SAFE_CHECKS_ENABLED())
+            {
+                if (i == usGlyphCount)
+                    break; /* prevent uint16 wraparound on ++i */
+            }
         }
         ulOutLoca = (uint32) (usGlyphCount+1) * sizeof(uint16);
     }

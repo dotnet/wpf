@@ -403,3 +403,4 @@ InvalidEvent=Event argument is invalid.
 ; MarkupExtensionBracketCharacters
 InvalidClosingBracketCharacers=Encountered a closing BracketCharacter '{0}' without a corresponding opening BracketCharacter.
 MalformedBracketCharacters=BracketCharacter '{0}' does not have a corresponding opening/closing BracketCharacter.
+MarkupExtensionDepthExceeded=Markup extension nesting depth exceeded the maximum allowed ({0}). Deeply nested markup extensions are not supported.

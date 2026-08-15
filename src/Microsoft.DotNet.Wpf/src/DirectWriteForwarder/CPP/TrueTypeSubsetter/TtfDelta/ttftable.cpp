@@ -139,6 +139,19 @@ uint32 ulFoundOffset;
     ulOffset = ulCmapOffset + usBytesRead;
     nCmapTables = CmapHeader.numTables;
 
+    if (CMAP_SAFE_CHECKS_ENABLED())
+    {
+        uint32 ulCmapLength = TTTableLength(pOutputBufferInfo, CMAP_TAG);
+        uint32 ulDirSize;
+        uint32 ulTotalOffset;
+        if (ULongMult32((uint32)nCmapTables, (uint32)SIZEOF_CMAP_TABLELOC, &ulDirSize) != S_OK)
+            return 0L;
+        if (UIntAdd32((uint32)usBytesRead, ulDirSize, &ulTotalOffset) != S_OK)
+            return 0L;
+        if (ulTotalOffset > ulCmapLength)
+            return 0L;
+    }
+
     if (usDesiredPlatform == TTFSUB_MS_PLATFORMID && usDesiredEncodingID == TTFSUB_DONT_CARE)
     {
         for (i = 0; i < nCmapTables; ++i, ulOffset += usBytesRead)
@@ -1065,14 +1078,36 @@ int16 errCode = NO_ERROR;
 
 /* zip through cmap entries,counting the char code entries */
 
-    usCharCodeCount = 0;
-    for ( i = 0; i < usSegCount; i++ )
+    if (CMAP_SAFE_CHECKS_ENABLED())
     {
-        if (pFormat4Segments[ i ].endCount == INVALID_CHAR_CODE)
-            continue;
-        if (pFormat4Segments[ i ].endCount < pFormat4Segments[ i ].startCount)
-            continue;
-        usCharCodeCount += (pFormat4Segments[ i ].endCount - pFormat4Segments[ i ].startCount + 1);
+        /* Use uint32 accumulator to detect overflow past uint16 range */
+        uint32 ulCharCodeCountAccum = 0;
+        for (i = 0; i < usSegCount; i++)
+        {
+            if (pFormat4Segments[i].endCount == INVALID_CHAR_CODE)
+                continue;
+            if (pFormat4Segments[i].endCount < pFormat4Segments[i].startCount)
+                continue;
+            ulCharCodeCountAccum += (uint32)(pFormat4Segments[i].endCount - pFormat4Segments[i].startCount + 1);
+        }
+        if (ulCharCodeCountAccum > 0xFFFF)
+        {
+            FreeCmapFormat4(pFormat4Segments, pFormat4GlyphIdArray);
+            return ERR_GENERIC;
+        }
+        usCharCodeCount = (uint16)ulCharCodeCountAccum;
+    }
+    else
+    {
+        usCharCodeCount = 0;
+        for ( i = 0; i < usSegCount; i++ )
+        {
+            if (pFormat4Segments[ i ].endCount == INVALID_CHAR_CODE)
+                continue;
+            if (pFormat4Segments[ i ].endCount < pFormat4Segments[ i ].startCount)
+                continue;
+            usCharCodeCount += (pFormat4Segments[ i ].endCount - pFormat4Segments[ i ].startCount + 1);
+        }
     }
 
     if (TTF_SAFE_CHECKS_ENABLED())
@@ -1107,9 +1142,15 @@ int16 errCode = NO_ERROR;
 #pragma warning (suppress : 22019) /* reviewed - safe to suppress this warning */
         for (usCharCodeValue = pFormat4Segments[ i ].startCount; usCharCodeValue <= pFormat4Segments[ i ].endCount; ++usCharCodeValue)
         {
+           if (CMAP_SAFE_CHECKS_ENABLED())
+           {
+               if (usCharCodeIndex >= usCharCodeCount)
+                   break; /* prevent OOB write into ppCharGlyphMapList */
+           }
+
            /* grab this from GetGlyphIndex to speed things up */
             if ( pFormat4Segments[ i ].idRangeOffset == 0 )
-                usGlyphIndex = usCharCodeValue + pFormat4Segments[ i ].idDelta;
+               usGlyphIndex = usCharCodeValue + pFormat4Segments[ i ].idDelta;
             else
             {
                 sIDIdx = (uint16) i - (uint16) usSegCount; 
@@ -1135,6 +1176,12 @@ int16 errCode = NO_ERROR;
                     (*ppCharGlyphMapList)[usCharCodeIndex].usCharCode = usCharCodeValue; /* assign the Character code */
                     (*ppCharGlyphMapList)[usCharCodeIndex++].usGlyphIndex = usGlyphIndex; /* assign the GlyphIndex */
                 }
+
+            if (CMAP_SAFE_CHECKS_ENABLED())
+            {
+                if (usCharCodeValue == pFormat4Segments[i].endCount)
+                    break; /* prevent uint16 wraparound on ++usCharCodeValue */
+            }
         }
     }
     *pusnCharGlyphMapListCount = usCharCodeIndex;
@@ -1183,13 +1230,43 @@ int16 errCode = NO_ERROR;
     ulnGroups = CmapFormat12.nGroups;
 
 /* zip through cmap entries,counting the char code entries */
-
     ulCharCodeCount = 0;
-    for ( i = 0; i < ulnGroups; i++ )
     {
-        if (pFormat12Groups[ i ].endCharCode < pFormat12Groups[ i ].startCharCode)
-            continue;
-        ulCharCodeCount += (pFormat12Groups[ i ].endCharCode - pFormat12Groups[ i ].startCharCode + 1);
+        ULONGLONG ullCharCodeCount64 = 0;
+        for ( i = 0; i < ulnGroups; i++ )
+        {
+            if (pFormat12Groups[ i ].endCharCode < pFormat12Groups[ i ].startCharCode)
+                continue;
+            if (CMAP_SAFE_CHECKS_ENABLED())
+            {
+                /* Reject ranges wider than Unicode max (U+10FFFF). Such ranges indicate
+                   a malformed font and would cause the expansion loop below to run for
+                   billions of iterations, writing OOB. */
+                if (pFormat12Groups[i].endCharCode - pFormat12Groups[i].startCharCode > 0x10FFFF)
+                {
+                    FreeCmapFormat12Groups(pFormat12Groups);
+                    return ERR_GENERIC;
+                }
+            }
+            ullCharCodeCount64 += (ULONGLONG)(pFormat12Groups[ i ].endCharCode - pFormat12Groups[ i ].startCharCode + 1);
+        }
+
+        if (CMAP_SAFE_CHECKS_ENABLED())
+        {
+            /* A valid font can have at most 0x110000 code points (Unicode ceiling).
+               Reject if the 64-bit sum exceeds that, which also catches uint32 wraparound. */
+            if (ullCharCodeCount64 == 0 && ulnGroups > 0)
+            {
+                FreeCmapFormat12Groups(pFormat12Groups);
+                return ERR_GENERIC;
+            }
+            if (ullCharCodeCount64 > 0x110000)
+            {
+                FreeCmapFormat12Groups(pFormat12Groups);
+                return ERR_GENERIC;
+            }
+        }
+        ulCharCodeCount = (uint32)ullCharCodeCount64;
     }
 
     if (TTF_SAFE_CHECKS_ENABLED())
@@ -1228,6 +1305,12 @@ int16 errCode = NO_ERROR;
                     ((*ppCharGlyphMapList)[ulCharCodeIndex]).ulCharCode = ulCharCodeValue; /* assign the Character code */
                     ((*ppCharGlyphMapList)[ulCharCodeIndex]).ulGlyphIndex = ulGlyphIndex; /* assign the GlyphIndex */
                     ulCharCodeIndex++;
+            }
+
+            if (CMAP_SAFE_CHECKS_ENABLED())
+            {
+                if (ulCharCodeValue == pFormat12Groups[i].endCharCode)
+                    break; /* prevent uint32 wraparound on ++ulCharCodeValue */
             }
         }
     }
@@ -1336,7 +1419,19 @@ uint16         usEndIndex;
 
             /* insert glyph indices into the GlyphId array */
             for ( j = NewFormat4Segments[ i ].startCount ; j <= NewFormat4Segments[ i ].endCount ; j++ )
+            {
+                if (CMAP_SAFE_CHECKS_ENABLED())
+                {
+                    if (usFormat4GlyphIdArrayIndex >= usnCharGlyphMapListCount)
+                        break; /* prevent OOB write */
+                }
                 NewFormat4GlyphIdArray[ (*psnFormat4GlyphIdArray)++ ] = pCharGlyphMapList[ usFormat4GlyphIdArrayIndex++ ].usGlyphIndex;
+                if (CMAP_SAFE_CHECKS_ENABLED())
+                {
+                    if (j == NewFormat4Segments[i].endCount)
+                        break; /* prevent uint16 wraparound on increment */
+                }
+            }
         }
     }
 

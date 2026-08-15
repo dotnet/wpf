@@ -342,6 +342,11 @@ uint32 ulOutGlyphOffset;  /* to point to a glyph value to write */
             }
             ulInGlyphOffset += sizeof(GlyphIndex);
             ulOutGlyphOffset += sizeof(GlyphIndex);
+            if (CMAP_SAFE_CHECKS_ENABLED())
+            {
+                if (i == usNewLastCode)
+                    break; /* prevent uint16 wraparound on increment */
+            }
         }
     }
     CmapFormat6.length = (uint16) (ulOutGlyphOffset - ulOffset);

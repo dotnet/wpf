@@ -52,7 +52,15 @@ namespace System.Windows.Documents
             object obj = null;
             List<Type> safeTypes = new List<Type> { typeof(System.Windows.ResourceDictionary) };
 
-            if (!DocumentMode)
+            bool isXpsContext = DocumentMode;
+            if (!isXpsContext
+                && !CoreAppContextSwitches.DisableXpsPackageBoundaryRestriction
+                && pc?.BaseUri != null)
+            {
+                isXpsContext = XpsLoadingContext.IsXpsPackageContext(pc.BaseUri);
+            }
+
+            if (!isXpsContext)
             {                       // Loose XAML, just check against schema, don't check content type
                 if (rootElement==null)
                 {
@@ -69,84 +77,111 @@ namespace System.Windows.Documents
                 Uri packageUri = PackUriHelper.GetPackageUri(uri);
                 Uri partUri = PackUriHelper.GetPartUri(uri);
 
-                Package package = PreloadedPackages.GetPackage(packageUri);
+                Uri previousPackageUri = XpsLoadingContext.ActivePackageUri;
+                
+                // Publish the active XPS package URI so that PresentationCore
+                // sinks (BitmapDecoder, ColorContext) can enforce same-package
+                // containment without depending on PresentationFramework.
+                // Nesting-safe: save and restore any previously-active value.
+                XpsLoadingContext.ActivePackageUri = packageUri;
 
-                Uri parentPackageUri = null;
-
-                if (parentUri != null)
+                try
                 {
-                    parentPackageUri = PackUriHelper.GetPackageUri(parentUri);
-                    if (!parentPackageUri.Equals(packageUri))
+                    Package package = PreloadedPackages.GetPackage(packageUri);
+
+                    Uri parentPackageUri = null;
+
+                    if (parentUri != null)
                     {
-                        throw new FileFormatException(SR.XpsValidatingLoaderUriNotInSamePackage);
-                    }
-                }
-
-                schema.ValidateRelationships(package, packageUri, partUri, mimeType);
-
-                if (schema.AllowsMultipleReferencesToSameUri(mimeType))
-                {
-                    _uniqueUriRef = null;
-                }
-                else
-                {
-                    _uniqueUriRef = new Hashtable(11);
-                }
-
-                Hashtable validResources = (_validResources.Count > 0 ? _validResources.Peek() : null);
-                if (schema.HasRequiredResources(mimeType))
-                {
-                    validResources = new Hashtable(11);
-
-                    PackagePart part = package.GetPart(partUri);
-                    PackageRelationshipCollection requiredResources = part.GetRelationshipsByType(_requiredResourceRel);
-
-                    foreach (PackageRelationship relationShip in requiredResources)
-                    {
-                        Uri targetUri = PackUriHelper.ResolvePartUri(partUri, relationShip.TargetUri);
-                        Uri absTargetUri = PackUriHelper.Create(packageUri, targetUri);
-
-                        PackagePart targetPart = package.GetPart(targetUri);
-
-                        if (schema.IsValidRequiredResourceMimeType(targetPart.ValidatedContentType()))
+                        parentPackageUri = PackUriHelper.GetPackageUri(parentUri);
+                        if (!parentPackageUri.Equals(packageUri))
                         {
-                            if (!validResources.ContainsKey(absTargetUri))
-                            {
-                                validResources.Add(absTargetUri, true);
-                            }
-                        }
-                        else
-                        {
-                            if (!validResources.ContainsKey(absTargetUri))
-                            {
-                                validResources.Add(absTargetUri, false);
-                            }
+                            throw new FileFormatException(SR.XpsValidatingLoaderUriNotInSamePackage);
                         }
                     }
-                }
 
-                XpsSchemaValidator xpsSchemaValidator = new XpsSchemaValidator(this, schema, mimeType,
-                                                                                stream, packageUri, partUri);
-                _validResources.Push(validResources);
-                if (rootElement != null)
-                {
-                    xpsSchemaValidator.XmlReader.MoveToContent();
-
-                    if (!rootElement.Equals(xpsSchemaValidator.XmlReader.Name))
+                    if (package == null)
                     {
-                        throw new FileFormatException(SR.XpsValidatingLoaderUnsupportedMimeType);
+                        if (rootElement == null)
+                        {
+                            XmlReader reader = XmlReader.Create(stream, null, pc);
+                            obj = XamlReader.Load(reader, pc, XamlParseMode.Synchronous, true, safeTypes);
+                            stream.Close();
+                        }
+
+                        return obj;
                     }
 
-                    while (xpsSchemaValidator.XmlReader.Read())
-                        ;
-                }
-                else
-                {
-                    obj = XamlReader.Load(xpsSchemaValidator.XmlReader,
+                    schema.ValidateRelationships(package, packageUri, partUri, mimeType);
+
+                    if (schema.AllowsMultipleReferencesToSameUri(mimeType))
+                    {
+                        _uniqueUriRef = null;
+                    }
+                    else
+                    {
+                        _uniqueUriRef = new Hashtable(11);
+                    }
+
+                    Hashtable validResources = (_validResources.Count > 0 ? _validResources.Peek() : null);
+                    if (schema.HasRequiredResources(mimeType))
+                    {
+                        validResources = new Hashtable(11);
+
+                        PackagePart part = package.GetPart(partUri);
+                        PackageRelationshipCollection requiredResources = part.GetRelationshipsByType(_requiredResourceRel);
+
+                        foreach (PackageRelationship relationShip in requiredResources)
+                        {
+                            Uri targetUri = PackUriHelper.ResolvePartUri(partUri, relationShip.TargetUri);
+                            Uri absTargetUri = PackUriHelper.Create(packageUri, targetUri);
+
+                            PackagePart targetPart = package.GetPart(targetUri);
+
+                            if (schema.IsValidRequiredResourceMimeType(targetPart.ValidatedContentType()))
+                            {
+                                if (!validResources.ContainsKey(absTargetUri))
+                                {
+                                    validResources.Add(absTargetUri, true);
+                                }
+                            }
+                            else
+                            {
+                                if (!validResources.ContainsKey(absTargetUri))
+                                {
+                                    validResources.Add(absTargetUri, false);
+                                }
+                            }
+                        }
+                    }
+
+                    XpsSchemaValidator xpsSchemaValidator = new XpsSchemaValidator(this, schema, mimeType,
+                                                                                    stream, packageUri, partUri);
+                    _validResources.Push(validResources);
+                    if (rootElement != null)
+                    {
+                        xpsSchemaValidator.XmlReader.MoveToContent();
+
+                        if (!rootElement.Equals(xpsSchemaValidator.XmlReader.Name))
+                        {
+                            throw new FileFormatException(SR.XpsValidatingLoaderUnsupportedMimeType);
+                        }
+
+                        while (xpsSchemaValidator.XmlReader.Read())
+                            ;
+                    }
+                    else
+                    {
+                        obj = XamlReader.Load(xpsSchemaValidator.XmlReader,
                                     pc,
                                     XamlParseMode.Synchronous, true, safeTypes);
+                    }
+                    _validResources.Pop();
                 }
-                _validResources.Pop();
+                finally
+                {
+                    XpsLoadingContext.ActivePackageUri = previousPackageUri;
+                }
             }
 
             return obj;

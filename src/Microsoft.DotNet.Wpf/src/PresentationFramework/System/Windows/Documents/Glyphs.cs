@@ -306,6 +306,12 @@ namespace System.Windows.Documents
                     uri = BindUriHelper.GetResolvedUri(BaseUriHelper.GetBaseUri(this), uri);
                 }
 
+                // Package-boundary guard. When this Glyphs element is loaded
+                // inside an XPS package context, reject any FontUri that
+                // escapes the package. This ensures that font resources
+                // referenced within XPS documents remain contained within the
+                // same package, consistent with the XPS specification.
+                MS.Internal.XpsLoadingContext.EnforcePackageRelativeUri(BaseUriHelper.GetBaseUri(this), uri);
                 glyphRunProperties.glyphTypeface = new GlyphTypeface(uri, StyleSimulations);
 
                 glyphRunProperties.unicodeString = UnicodeString;
@@ -1096,4 +1102,3 @@ namespace System.Windows.Documents
         #endregion Private Fields
     };
 }
-

@@ -410,8 +410,13 @@ RegisterAttributeMaps(
     getAttributeMap->Add("Status",                    gcnew GetValue(&GetStatus));
     getAttributeMap->Add("AveragePagesPerMinute",     gcnew GetValue(&GetAveragePPM));
     getAttributeMap->Add("NumberOfJobs",              gcnew GetValue(&GetJobs));
-    getAttributeMap->Add("UserDevMode",               gcnew GetValue(&GetDeviceMode));
-    getAttributeMap->Add("DefaultDevMode",            gcnew GetValue(&GetDeviceMode));
+    //
+    // SECURITY: "UserDevMode" and "DefaultDevMode" are intentionally NOT registered
+    // via the GetValue delegate path. They require a buffer-bound check that the
+    // delegate signature (which only carries PRINTER_INFO_2W*) cannot supply, so
+    // they are handled inline in GetValueFromName below where the owning
+    // SafeMemoryHandle is in scope. See WPF-V2-006 (CWE-125).
+    //
 }
 
 PrinterInfoTwoGetter::
@@ -514,17 +519,6 @@ GetLocation(
     )
 {
     return gcnew String(unmanagedPrinterInfo->pLocation);
-}
-
-Object^
-PrinterInfoTwoGetter::
-GetDeviceMode(
-    PRINTER_INFO_2W* unmanagedPrinterInfo
-    )
-{
-    DeviceMode^ devmode = gcnew DeviceMode(unmanagedPrinterInfo->pDevMode);
-
-    return devmode->Data;
 }
 
 Object^
@@ -673,14 +667,30 @@ GetValueFromName(
         throw gcnew ArgumentOutOfRangeException("index");
     }
 
-    GetValue^ getValueDelegate = (GetValue^)getAttributeMap[name];
-
     Boolean mustRelease = false;
     SafeHandle^ handle = Win32SafeHandle;
     handle->DangerousAddRef(mustRelease);
     try 
     {        
         PRINTER_INFO_2W* win32PrinterInfoTwoArray = reinterpret_cast<PRINTER_INFO_2W*>(handle->DangerousGetHandle().ToPointer());
+
+        //
+        // SECURITY: DEVMODE attributes are handled here (rather than via the
+        // GetValue delegate map) because the safe DeviceMode constructor needs
+        // an upper bound on the readable bytes at pDevMode. The bound is
+        // derived from the spooler-allocated PRINTER_INFO_2W buffer, which the
+        // delegate signature does not carry. See WPF-V2-006 (CWE-125).
+        //
+        if (String::Equals(name, "UserDevMode", StringComparison::Ordinal) ||
+            String::Equals(name, "DefaultDevMode", StringComparison::Ordinal))
+        {
+            void* pDevMode = (&win32PrinterInfoTwoArray[index])->pDevMode;
+            Int32 maxBytes = DeviceMode::ComputeBytesAvailable(Win32SafeHandle, pDevMode);
+            DeviceMode^ devmode = gcnew DeviceMode(pDevMode, maxBytes);
+            return devmode->Data;
+        }
+
+        GetValue^ getValueDelegate = (GetValue^)getAttributeMap[name];
         
         return getValueDelegate->Invoke(&win32PrinterInfoTwoArray[index]);
     }
@@ -2232,8 +2242,15 @@ GetValueFromName(
     try 
     {        
         PRINTER_INFO_8W* win32PrinterInfoEightArray = reinterpret_cast<PRINTER_INFO_8W*>(handle->DangerousGetHandle().ToPointer());
-        
-        DeviceMode^ devmode = gcnew DeviceMode((&(win32PrinterInfoEightArray[index]))->pDevMode);             
+
+        //
+        // SECURITY: bound the DEVMODE copy by the spooler-allocated buffer to
+        // prevent an out-of-bounds heap read driven by attacker-controlled
+        // dmSize/dmDriverExtra in the pDevMode blob. See WPF-V2-006 (CWE-125).
+        //
+        void* pDevMode = (&(win32PrinterInfoEightArray[index]))->pDevMode;
+        Int32 maxBytes = DeviceMode::ComputeBytesAvailable(Win32SafeHandle, pDevMode);
+        DeviceMode^ devmode = gcnew DeviceMode(pDevMode, maxBytes);
 
         return devmode->Data;
     }
@@ -2352,8 +2369,13 @@ GetValueFromName(
     try 
     {        
         PRINTER_INFO_9W* win32PrinterInfoNineArray = reinterpret_cast<PRINTER_INFO_9W*>(handle->DangerousGetHandle().ToPointer());
-        
-        DeviceMode^ devmode = gcnew DeviceMode((&(win32PrinterInfoNineArray[index]))->pDevMode);              
+
+        //
+        // SECURITY: see PrinterInfoEight::GetValueFromName above. WPF-V2-006.
+        //
+        void* pDevMode = (&(win32PrinterInfoNineArray[index]))->pDevMode;
+        Int32 maxBytes = DeviceMode::ComputeBytesAvailable(Win32SafeHandle, pDevMode);
+        DeviceMode^ devmode = gcnew DeviceMode(pDevMode, maxBytes);
 
         return devmode->Data;
     }

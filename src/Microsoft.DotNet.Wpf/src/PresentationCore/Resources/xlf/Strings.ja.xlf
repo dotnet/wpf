@@ -2757,6 +2757,11 @@
         <target state="translated">現在の CachePolicy は CacheOnly ですが、要求されたリソースがキャッシュ内に存在しません。</target>
         <note />
       </trans-unit>
+      <trans-unit id="Resource_XpsPackageBoundaryViolation">
+        <source>The URI references a resource outside the current XPS package. External URIs (http, https, file, UNC, cross-package) are not permitted when loading XPS content.</source>
+        <target state="new">The URI references a resource outside the current XPS package. External URIs (http, https, file, UNC, cross-package) are not permitted when loading XPS content.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="RoutedEventArgsMustHaveRoutedEvent">
         <source>Every RoutedEventArgs must have a non-null RoutedEvent associated with it.</source>
         <target state="translated">すべての RoutedEventArgs に、それぞれに関連付けられた NULL 以外の RoutedEvent が必要です。</target>

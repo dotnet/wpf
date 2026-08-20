@@ -477,7 +477,9 @@ namespace System.Windows.Baml2006
                             return bamlAssembly.Assembly;
                         }
                     }
-                    catch
+                    catch (System.Exception ex) when (ex is System.IO.FileNotFoundException ||
+                                                     ex is System.IO.FileLoadException ||
+                                                     ex is System.BadImageFormatException)
                     {
                         // Fallback to legacy resolution logic.
                     }

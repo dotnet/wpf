@@ -300,7 +300,12 @@ RegisterAttributeMaps(
     getAttributeMap->Add("PrintProcessor",             gcnew GetValue(&GetPrintProcessor));
     getAttributeMap->Add("PrintProcessorDatatype",     gcnew GetValue(&GetDatatype)); 
     getAttributeMap->Add("PrintProcessorParameters",   gcnew GetValue(&GetPrintProcessorParameters)); 
-    getAttributeMap->Add("DevMode",                    gcnew GetValue(&GetDevMode)); 
+    //
+    // SECURITY: "DevMode" is intentionally NOT registered via the GetValue delegate
+    // path. It requires a buffer-bound check that the delegate signature (which only
+    // carries JOB_INFO_2W*) cannot supply, so it is handled inline in GetValueFromName
+    // below where the owning SafeMemoryHandle is in scope. See WPF-V2-006 (CWE-125).
+    //
     getAttributeMap->Add("Status",                     gcnew GetValue(&GetStatus)); 
     getAttributeMap->Add("StatusDescription",          gcnew GetValue(&GetStatusString)); 
     getAttributeMap->Add("JobPriority",                gcnew GetValue(&GetPriority)); 
@@ -337,14 +342,26 @@ GetValueFromName(
         throw gcnew ArgumentOutOfRangeException("index");
     }
 
-    GetValue^ getValueDelegate = (GetValue^)getAttributeMap[name];
-
     Boolean mustRelease = false;
     SafeHandle^ handle = Win32SafeHandle;
     handle->DangerousAddRef(mustRelease);
     try 
     {
         JOB_INFO_2W* win32JobInfoOneArray = reinterpret_cast<JOB_INFO_2W*>(handle->DangerousGetHandle().ToPointer());
+
+        //
+        // SECURITY: see WPF-V2-006 (CWE-125). The DEVMODE blob may be supplied by a
+        // hostile print server; bound the copy by the spooler-allocated buffer.
+        //
+        if (String::Equals(name, "DevMode", StringComparison::Ordinal))
+        {
+            void* pDevMode = (&win32JobInfoOneArray[index])->pDevMode;
+            Int32 maxBytes = DeviceMode::ComputeBytesAvailable(Win32SafeHandle, pDevMode);
+            DeviceMode^ devmode = gcnew DeviceMode(pDevMode, maxBytes);
+            return devmode->Data;
+        }
+
+        GetValue^ getValueDelegate = (GetValue^)getAttributeMap[name];
         
         return getValueDelegate->Invoke(&win32JobInfoOneArray[index]);
     }
@@ -472,9 +489,13 @@ GetDevMode(
     JOB_INFO_2W* unmanagedJobInfo
     )
 {
-    DeviceMode^ devmode = gcnew DeviceMode(unmanagedJobInfo->pDevMode);
-
-    return devmode->Data;
+    //
+    // SECURITY: This method is no longer reached through the GetValue delegate map
+    // (WPF-V2-006). GetValueFromName handles "DevMode" inline with bounds checking.
+    // Return nullptr to fail closed if invoked directly.
+    //
+    UNREFERENCED_PARAMETER(unmanagedJobInfo);
+    return nullptr;
 }
 
 Object^
@@ -612,4 +633,3 @@ GetTimeSubmitted(
     return date;
     
 }
-

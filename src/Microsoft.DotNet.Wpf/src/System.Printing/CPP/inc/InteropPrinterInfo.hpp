@@ -239,12 +239,6 @@ namespace DirectInteropForPrintQueue
 
         static
         Object^
-        GetDeviceMode(
-            PRINTER_INFO_2W*    unmanagedPrinterInfo
-            );
-        
-        static
-        Object^
         GetSeparatorFile(
             PRINTER_INFO_2W*    unmanagedPrinterInfo
             );

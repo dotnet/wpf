@@ -72,6 +72,21 @@ namespace System.Windows.Media.Imaging
             Stream stream
             )
         {
+            if (uri != null && uri.IsAbsoluteUri)
+            {
+                Uri xpsOrigin = decoder != null ? decoder._xpsPackageOrigin : XpsLoadingContext.ActivePackageUri;
+                
+                // Security: When loading XPS content, block image URIs that escape
+                // the current package to prevent SSRF. Check before any side effects
+                // (thread start, temp file creation, URI table insertion).
+                // Uses the decoder's stored origin to handle deferred loading on
+                // the dedicated download thread where AsyncLocal doesn't flow.
+                if (!XpsLoadingContext.IsUriAllowedAgainstPackage(xpsOrigin, uri))
+                {
+                    throw new FileFormatException(SR.Resource_XpsPackageBoundaryViolation);
+                }
+            }
+
             lock (_syncLock)
             {
                 if (!_thread.IsAlive)
@@ -449,4 +464,3 @@ namespace System.Windows.Media.Imaging
 
     #endregion
 }
-

@@ -36,7 +36,6 @@ jobs:
   - ${{ if and(eq(parameters.runAsPublic, 'false'), ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
     - name: _BuildConfig
       value: ${{ parameters.configuration }}
-    - group: Publish-Build-Assets
     - name: runCodesignValidationInjection
       value: false
 

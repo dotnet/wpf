@@ -10,7 +10,7 @@ namespace System.Windows.Documents
     ///  Enumerator class for implementation of IContentHost on TextBlock and FlowDocumentPage.
     ///  Used to iterate through descendants of the content host
     /// </summary>
-    internal class HostedElements : IEnumerator<IInputElement>
+    internal sealed class HostedElements : IEnumerator<IInputElement>
     {
         //-------------------------------------------------------------------
         //

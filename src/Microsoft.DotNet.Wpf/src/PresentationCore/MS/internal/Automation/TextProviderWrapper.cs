@@ -1,157 +1,84 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-// Description: Text pattern provider wrapper for WCP
+#nullable enable
 
-using System.Windows.Threading;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
 
-namespace MS.Internal.Automation
+namespace MS.Internal.Automation;
+
+/// <summary>
+/// Wrapper class for the <see cref="ITextProvider"/> interface, calls through to the managed <see cref="AutomationPeer"/>
+/// that implements it. The calls are made on the peer's context to ensure that the correct synchronization context is used.
+/// </summary>
+internal sealed class TextProviderWrapper : MarshalByRefObject, ITextProvider
 {
-    // see comment on InvokeProviderWrapper class for explanation of purpose and organization of these wrapper classes.
-    internal class TextProviderWrapper : MarshalByRefObject, ITextProvider
+    private readonly AutomationPeer _peer;
+    private readonly ITextProvider _iface;
+
+    private TextProviderWrapper(AutomationPeer peer, ITextProvider iface)
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
- 
-        #region Constructors
+        Debug.Assert(peer is not null);
+        Debug.Assert(iface is not null);
 
-        private TextProviderWrapper( AutomationPeer peer, ITextProvider iface )
+        _peer = peer;
+        _iface = iface;
+    }
+
+    public ITextRangeProvider[] GetSelection()
+    {
+        return ElementUtil.Invoke(_peer, static (state, peer) => TextRangeProviderWrapper.WrapArgument(state.GetSelection(), peer), _iface, _peer);
+    }
+
+    public ITextRangeProvider[] GetVisibleRanges()
+    {
+        return ElementUtil.Invoke(_peer, static (state, peer) => TextRangeProviderWrapper.WrapArgument(state.GetVisibleRanges(), peer), _iface, _peer);
+    }
+
+    public ITextRangeProvider RangeFromChild(IRawElementProviderSimple childElement)
+    {
+        if (childElement is not ElementProxy)
+            throw new ArgumentException(SR.Format(SR.TextProvider_InvalidChild, nameof(childElement)));
+
+        // The actual invocation method that gets called on the peer's context.
+        static ITextRangeProvider RangeFromChild(TextProviderWrapper state, IRawElementProviderSimple childElement)
         {
-            _peer = peer;
-            _iface = iface;
+            return TextRangeProviderWrapper.WrapArgument(state._iface.RangeFromChild(childElement), state._peer);
         }
 
-        #endregion Constructors
+        return ElementUtil.Invoke(_peer, RangeFromChild, this, childElement);
+    }
 
-
-        //------------------------------------------------------
-        //
-        //  Interface ITextProvider
-        //
-        //------------------------------------------------------
- 
-        #region Interface ITextProvider
-
-        public ITextRangeProvider [] GetSelection()
+    public ITextRangeProvider RangeFromPoint(Point screenLocation)
+    {
+        // The actual invocation method that gets called on the peer's context.
+        static ITextRangeProvider RangeFromPoint(TextProviderWrapper state, Point screenLocation)
         {
-            return (ITextRangeProvider [])ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetSelection), null);
+            return TextRangeProviderWrapper.WrapArgument(state._iface.RangeFromPoint(screenLocation), state._peer);
         }
 
-        public ITextRangeProvider [] GetVisibleRanges()
-        {
-            return (ITextRangeProvider[])ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetVisibleRanges), null);
-        }
+        return ElementUtil.Invoke(_peer, RangeFromPoint, this, screenLocation);
+    }
 
-        public ITextRangeProvider RangeFromChild(IRawElementProviderSimple childElement)
-        {
-            if (!(childElement is ElementProxy))
-            {
-                throw new ArgumentException(SR.Format(SR.TextProvider_InvalidChild, "childElement"));
-            }
+    public ITextRangeProvider DocumentRange
+    {
+        get => ElementUtil.Invoke(_peer, static (state, peer) => TextRangeProviderWrapper.WrapArgument(state.DocumentRange, peer), _iface, _peer);
+    }
 
-            return (ITextRangeProvider)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(RangeFromChild), childElement);
-        }
+    public SupportedTextSelection SupportedTextSelection
+    {
+        get => ElementUtil.Invoke(_peer, static (state) => state.SupportedTextSelection, _iface);
+    }
 
-        public ITextRangeProvider RangeFromPoint(Point screenLocation)
-        {
-            return (ITextRangeProvider)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(RangeFromPoint), screenLocation);
-        }
-
-        public ITextRangeProvider DocumentRange 
-        {
-            get
-            {
-                return (ITextRangeProvider)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetDocumentRange), null);
-            }
-        }
-
-        public SupportedTextSelection SupportedTextSelection
-        {
-            get
-            {
-                return (SupportedTextSelection)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetSupportedTextSelection), null);
-            }
-        }
-
-        #endregion Interface ITextProvider
-
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
- 
-        #region Internal Methods
-
-        internal static object Wrap( AutomationPeer peer, object iface )
-        {
-            return new TextProviderWrapper( peer, (ITextProvider) iface );
-        }
-
-        #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
- 
-        #region Private Methods
-
-        private object GetSelection(object unused)
-        {
-            return TextRangeProviderWrapper.WrapArgument( _iface.GetSelection(), _peer );
-        }
-
-        private object GetVisibleRanges(object unused)
-        {
-            return TextRangeProviderWrapper.WrapArgument( _iface.GetVisibleRanges(), _peer );
-        }
-
-        private object RangeFromChild(object arg)
-        {
-            IRawElementProviderSimple childElement = (IRawElementProviderSimple)arg;
-            return TextRangeProviderWrapper.WrapArgument( _iface.RangeFromChild(childElement), _peer );
-        }
-
-        private object RangeFromPoint(object arg)
-        {
-            Point screenLocation = (Point)arg;
-            return TextRangeProviderWrapper.WrapArgument( _iface.RangeFromPoint(screenLocation), _peer );
-        }
-
-        private object GetDocumentRange(object unused)
-        {
-            return TextRangeProviderWrapper.WrapArgument( _iface.DocumentRange, _peer );
-        }
-
-        private object GetSupportedTextSelection(object unused)
-        {
-            return _iface.SupportedTextSelection;
-        }
-
-        #endregion Private Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
- 
-        #region Private Fields
-
-        private AutomationPeer _peer;
-        private ITextProvider _iface;
-
-        #endregion Private Fields
+    /// <summary>
+    /// Creates a wrapper for the given <see cref="AutomationPeer"/> and <see cref="ITextProvider"/> interface.
+    /// </summary>
+    internal static object Wrap(AutomationPeer peer, object iface)
+    {
+        return new TextProviderWrapper(peer, (ITextProvider)iface);
     }
 }
 

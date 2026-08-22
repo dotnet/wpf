@@ -57,6 +57,7 @@ namespace Microsoft.Internal
         internal const string SystemPrinting = $"System.Printing, PublicKey={WCP_PUBLIC_KEY_STRING}";
         internal const string SystemXaml = $"System.Xaml, PublicKey={DEVDIV_PUBLIC_KEY_STRING}";
         internal const string WindowsFormsIntegration = $"WindowsFormsIntegration, PublicKey={WCP_PUBLIC_KEY_STRING}";
+        internal const string WindowsBaseTests = $"WindowsBase.Tests, PublicKey={WCP_PUBLIC_KEY_STRING}";
 
         // Make internal visible to the 3.5 dll, System.Windows.Presentation.dll.
         // we hard code the key here because the 3.5 dll is built in the devdiv depot using the CLR key.

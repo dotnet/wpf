@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -10,10 +10,9 @@
 
 using System.Windows;
 using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace MS.Internal.Automation
 {
@@ -25,7 +24,7 @@ namespace MS.Internal.Automation
     //
     // Currently exposes just BoundingRectangle, ClassName, IsEnabled
     // and IsKeyboardFocused properties.
-    internal class ElementProxy: IRawElementProviderFragmentRoot, IRawElementProviderAdviseEvents
+    internal class ElementProxy : IRawElementProviderFragmentRoot, IRawElementProviderAdviseEvents
     {
         //------------------------------------------------------
         //
@@ -72,149 +71,105 @@ namespace MS.Internal.Automation
 
         // IRawElementProviderSimple methods...
 
-        public object GetPatternProvider ( int pattern )
+        public object GetPatternProvider(int pattern)
         {
-            AutomationPeer peer = Peer;
-            if (peer == null)
-            {
-                throw new ElementNotAvailableException();
-            }
-            return ElementUtil.Invoke(peer, new DispatcherOperationCallback( InContextGetPatternProvider ), pattern);
+            AutomationPeer peer = Peer ?? throw new ElementNotAvailableException();
+
+            return ElementUtil.Invoke(peer, static (state, pattern) => state.InContextGetPatternProvider(pattern), this, pattern);
         }
 
         public object GetPropertyValue(int property)
         {
-            AutomationPeer peer = Peer;
-            if (peer == null)
-            {
-                throw new ElementNotAvailableException();
-            }
-            return ElementUtil.Invoke(peer, new DispatcherOperationCallback(InContextGetPropertyValue), property);
+            AutomationPeer peer = Peer ?? throw new ElementNotAvailableException();
+
+            return ElementUtil.Invoke(peer, static (state, property) => state.InContextGetPropertyValue(property), this, property);
         }
 
         public ProviderOptions ProviderOptions
         {
-            get 
+            get
             {
                 AutomationPeer peer = Peer;
-                if (peer == null)
-                {
-                    return ProviderOptions.ServerSideProvider;
-                }
-                return (ProviderOptions)ElementUtil.Invoke(peer, state => ((ElementProxy)state).InContextGetProviderOptions(), this); 
+
+                return peer is null ? ProviderOptions.ServerSideProvider : ElementUtil.Invoke(peer, static (state) => state.InContextGetProviderOptions(), this);
             }
-        }  
+        }
 
         public IRawElementProviderSimple HostRawElementProvider
         {
             get
             {
-                IRawElementProviderSimple host  = null;
-                HostedWindowWrapper hwndWrapper = null;
                 AutomationPeer peer = Peer;
-                if (peer == null)
+
+                if (peer is null)
                 {
                     return null;
                 }
-                hwndWrapper = (HostedWindowWrapper)ElementUtil.Invoke(
-                    peer, 
-                    new DispatcherOperationCallback(InContextGetHostRawElementProvider), 
-                    null);
 
-                if(hwndWrapper != null)
-                    host = GetHostHelper(hwndWrapper);
-                
-                return host;
+                HostedWindowWrapper hwndWrapper = ElementUtil.Invoke(peer, static (state) => state.InContextGetHostRawElementProvider(), this);
+
+                return hwndWrapper is not null ? AutomationInteropProvider.HostProviderFromHandle(hwndWrapper.Handle) : null;
             }
         }
 
-        private IRawElementProviderSimple GetHostHelper(HostedWindowWrapper hwndWrapper)
-        {
-            return AutomationInteropProvider.HostProviderFromHandle(hwndWrapper.Handle);
-        }
-
-        // IRawElementProviderFragment methods...
-
-        public IRawElementProviderFragment Navigate( NavigateDirection direction )
+        public IRawElementProviderFragment Navigate(NavigateDirection direction)
         {
             AutomationPeer peer = Peer;
-            if (peer == null)
-            {
-                return null;
-            }
-            return (IRawElementProviderFragment)ElementUtil.Invoke(peer, new DispatcherOperationCallback(InContextNavigate), direction);
+
+            return peer is not null ? ElementUtil.Invoke(peer, static (state, direction) => state.InContextNavigate(direction), this, direction) : null;
         }
 
-        public int [ ] GetRuntimeId()
+        public int[] GetRuntimeId()
         {
-            AutomationPeer peer = Peer;
-            if (peer == null)
-            {
-                throw new ElementNotAvailableException();
-            }
-            return (int []) ElementUtil.Invoke( peer, state => ((ElementProxy)state).InContextGetRuntimeId(), this);
+            AutomationPeer peer = Peer ?? throw new ElementNotAvailableException();
+
+            return ElementUtil.Invoke(peer, static (state) => state.InContextGetRuntimeId(), this);
         }
 
         public Rect BoundingRectangle
         {
-            get 
+            get
             {
-                AutomationPeer peer = Peer;
-                if (peer == null)
-                {
-                    throw new ElementNotAvailableException();
-                }
-                return (Rect)ElementUtil.Invoke(peer, state => ((ElementProxy)state).InContextBoundingRectangle(), this); 
+                AutomationPeer peer = Peer ?? throw new ElementNotAvailableException();
+
+                return ElementUtil.Invoke(peer, static (state) => state.InContextBoundingRectangle(), this);
             }
         }
-        
-        public IRawElementProviderSimple [] GetEmbeddedFragmentRoots()
+
+        public IRawElementProviderSimple[] GetEmbeddedFragmentRoots()
         {
             return null;
         }
-        
+
         public void SetFocus()
         {
-            AutomationPeer peer = Peer;
-            if (peer == null)
-            {
-                throw new ElementNotAvailableException();
-            }
-            ElementUtil.Invoke(peer, state => ((ElementProxy)state).InContextSetFocus(), this);
+            AutomationPeer peer = Peer ?? throw new ElementNotAvailableException();
+
+            ElementUtil.Invoke(peer, state => state.InContextSetFocus(), this);
         }
 
         public IRawElementProviderFragmentRoot FragmentRoot
         {
-            get 
+            get
             {
                 AutomationPeer peer = Peer;
-                if (peer == null)
-                {
-                    return null;
-                }
-                return (IRawElementProviderFragmentRoot) ElementUtil.Invoke( peer, state => ((ElementProxy)state).InContextFragmentRoot(), this); 
+
+                return peer is not null ? ElementUtil.Invoke(peer, static (state) => state.InContextFragmentRoot(), this) : null;
             }
         }
 
-        // IRawElementProviderFragmentRoot methods..
-        public IRawElementProviderFragment ElementProviderFromPoint( double x, double y )
+        public IRawElementProviderFragment ElementProviderFromPoint(double x, double y)
         {
             AutomationPeer peer = Peer;
-            if (peer == null)
-            {
-                return null;
-            }
-            return (IRawElementProviderFragment) ElementUtil.Invoke( peer, new DispatcherOperationCallback( InContextElementProviderFromPoint ), new Point( x, y ) );
+
+            return peer is not null ? ElementUtil.Invoke(peer, static (state, point) => state.InContextElementProviderFromPoint(point), this, new Point(x, y)) : null;
         }
 
         public IRawElementProviderFragment GetFocus()
         {
             AutomationPeer peer = Peer;
-            if (peer == null)
-            {
-                return null;
-            }
-            return (IRawElementProviderFragment) ElementUtil.Invoke( peer, state => ((ElementProxy)state).InContextGetFocus(), this);
+
+            return peer is not null ? ElementUtil.Invoke(peer, static (state) => state.InContextGetFocus(), this) : null;
         }
 
         // Event support: EventMap is a static class and access is synchronized, so no need to access it in UI thread context.
@@ -289,9 +244,9 @@ namespace MS.Internal.Automation
         {
             get
             {
-                if (_peer is WeakReference)
+                if (_peer is WeakReference weakRef)
                 {
-                    AutomationPeer peer = (AutomationPeer)((WeakReference)_peer).Target;
+                    AutomationPeer peer = (AutomationPeer)weakRef.Target;
                     return peer;
                 }
                 else
@@ -315,9 +270,9 @@ namespace MS.Internal.Automation
         // The signature of most of the folling methods is "object func( object arg )",
         // since that's what the Conmtext.Invoke delegate requires.
         // Return the element at specified coords.
-        private object InContextElementProviderFromPoint( object arg )
+        private IRawElementProviderFragment InContextElementProviderFromPoint(Point arg)
         {
-            Point point = (Point)arg;
+            Point point = arg;
             AutomationPeer peer = Peer;
             if (peer == null)
             {
@@ -328,7 +283,7 @@ namespace MS.Internal.Automation
         }
 
         // Return proxy representing currently focused element (if any)
-        private object InContextGetFocus()
+        private IRawElementProviderFragment InContextGetFocus()
         {
             // Note: - what if a custom element - eg anchor in a text box - has focus?
             // won't have a UIElement there, can we even find the host?
@@ -344,20 +299,16 @@ namespace MS.Internal.Automation
         }
 
         //  redirect to AutomationPeer
-        private object InContextGetPatternProvider(object arg)
+        private object InContextGetPatternProvider(int arg)
         {
-            AutomationPeer peer = Peer;
-            if (peer == null)
-            {
-                throw new ElementNotAvailableException();
-            }
-            return peer.GetWrappedPattern((int)arg);
+            AutomationPeer peer = Peer ?? throw new ElementNotAvailableException();
+
+            return peer.GetWrappedPattern(arg);
         }
 
         // Return proxy representing element in specified direction (parent/next/firstchild/etc.)
-        private object InContextNavigate( object arg )
+        private IRawElementProviderFragment InContextNavigate(NavigateDirection navigateDirection)
         {
-            NavigateDirection direction = (NavigateDirection) arg;
             AutomationPeer dest;
             AutomationPeer peer = Peer;
             if (peer == null)
@@ -365,7 +316,7 @@ namespace MS.Internal.Automation
                 return null;
             }
 
-            switch( direction )
+            switch (navigateDirection)
             {
                 case NavigateDirection.Parent:
                     dest = peer.GetParent(); 
@@ -411,7 +362,7 @@ namespace MS.Internal.Automation
 
     
         // Return value for specified property; or null if not supported
-        private object InContextGetProviderOptions()
+        private ProviderOptions InContextGetProviderOptions()
         {
             ProviderOptions options = ProviderOptions.ServerSideProvider;
             AutomationPeer peer = Peer;
@@ -426,63 +377,47 @@ namespace MS.Internal.Automation
         }
 
         // Return value for specified property; or null if not supported
-        private object InContextGetPropertyValue ( object arg )
+        private object InContextGetPropertyValue(int property)
         {
-            AutomationPeer peer = Peer;
-            if (peer == null)
-            {
-                throw new ElementNotAvailableException();
-            }
-            return peer.GetPropertyValue((int)arg);
+            AutomationPeer peer = Peer ?? throw new ElementNotAvailableException();
+
+            return peer.GetPropertyValue(property);
         }
 
         /// Returns whether this is the Root of the WCP tree or not
-        private object InContextGetHostRawElementProvider( object unused )
+        private HostedWindowWrapper InContextGetHostRawElementProvider()
         {
             AutomationPeer peer = Peer;
-            if (peer == null)
-            {
-                return null;
-            }
-            return peer.GetHostRawElementProvider();
+ 
+            return peer?.GetHostRawElementProvider();
         }
 
         // Return unique ID for this element...
-        private object InContextGetRuntimeId()
+        private int[] InContextGetRuntimeId()
         {
-            AutomationPeer peer = Peer;
-            if (peer == null)
-            {
-                throw new ElementNotAvailableException();
-            }
+            AutomationPeer peer = Peer ?? throw new ElementNotAvailableException();
+
             return peer.GetRuntimeId();
         }
 
         // Return bounding rectangle (screen coords) for this element...
-        private object InContextBoundingRectangle()
+        private Rect InContextBoundingRectangle()
         {
-            AutomationPeer peer = Peer;
-            if (peer == null)
-            {
-                throw new ElementNotAvailableException();
-            }
+            AutomationPeer peer = Peer ?? throw new ElementNotAvailableException();
+
             return peer.GetBoundingRectangle();
         }
 
         // Set focus to this element...
-        private object InContextSetFocus()
+        private void InContextSetFocus()
         {
-            AutomationPeer peer = Peer;
-            if (peer == null)
-            {
-                throw new ElementNotAvailableException();
-            }
+            AutomationPeer peer = Peer ?? throw new ElementNotAvailableException();
+
             peer.SetFocus();
-            return null;
         }
 
         // Return proxy representing the root of this WCP tree...
-        private object InContextFragmentRoot()
+        private IRawElementProviderFragmentRoot InContextFragmentRoot()
         {
             AutomationPeer peer = Peer;
             AutomationPeer root = peer;

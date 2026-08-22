@@ -510,8 +510,8 @@ namespace System.Windows.Interop
         internal void ProcessKeyAction(ref MSG msg, ref bool handled)
         {
             // Remember the last message
-            MSG previousMSG = ComponentDispatcher.UnsecureCurrentKeyboardMessage;
-            ComponentDispatcher.UnsecureCurrentKeyboardMessage = msg;
+            MSG previousMSG = ComponentDispatcher.CurrentKeyboardMessage;
+            ComponentDispatcher.CurrentKeyboardMessage = msg;
 
             try
             {
@@ -534,7 +534,7 @@ namespace System.Windows.Interop
             finally
             {
                 // Restore the last message
-                ComponentDispatcher.UnsecureCurrentKeyboardMessage = previousMSG;
+                ComponentDispatcher.CurrentKeyboardMessage = previousMSG;
             }
         }
 

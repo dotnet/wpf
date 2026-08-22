@@ -262,7 +262,7 @@ namespace Microsoft.Build.Tasks.Windows
                 AddNewItems(xmlProjectDoc, CompileTypeName, GeneratedCodeFiles);
 
                 // Add Analyzers to Analyzer item list.
-                AddNewItems(xmlProjectDoc, AnalyzerTypeName, Analyzers);
+                AddNewItems(xmlProjectDoc, AnalyzerTypeName, Analyzers, true);
 
                 // Replace implicit SDK imports with explicit SDK imports
                 ReplaceImplicitImports(xmlProjectDoc);
@@ -275,6 +275,7 @@ namespace Microsoft.Build.Tasks.Windows
                     ( nameof(BaseIntermediateOutputPath), BaseIntermediateOutputPath ),
                     ( nameof(MSBuildProjectExtensionsPath), MSBuildProjectExtensionsPath ),
                     ( "_TargetAssemblyProjectName", Path.GetFileNameWithoutExtension(CurrentProject) ),
+                    ( "_WpfTempProjectIncludesPackageReferences", "true" ),
                     ( nameof(RootNamespace), RootNamespace ),
                 };
 
@@ -694,7 +695,7 @@ namespace Microsoft.Build.Tasks.Windows
         //
         // Add a list of files into an Item in the project file, the ItemName is specified by sItemName.
         //
-        private void AddNewItems(XmlDocument xmlProjectDoc, string sItemName, ITaskItem[] pItemList)
+        private void AddNewItems(XmlDocument xmlProjectDoc, string sItemName, ITaskItem[] pItemList, bool tagWpfTempProjectAnalyzers = false)
         {
             if (xmlProjectDoc == null || String.IsNullOrEmpty(sItemName) || pItemList == null)
             {
@@ -742,6 +743,13 @@ namespace Microsoft.Build.Tasks.Windows
                     embedItem = xmlProjectDoc.CreateElement(ALIASES, root.NamespaceURI);
                     embedItem.InnerText = aliases;
                     nodeItem.AppendChild(embedItem);
+                }
+
+                if (tagWpfTempProjectAnalyzers)
+                {
+                    XmlElement metadataItem = xmlProjectDoc.CreateElement(WPFTEMPPROJECTANALYZERS, root.NamespaceURI);
+                    metadataItem.InnerText = "true";
+                    nodeItem.AppendChild(metadataItem);
                 }
 
                 // Add current item node into the children list of ItemGroup
@@ -935,6 +943,8 @@ namespace Microsoft.Build.Tasks.Windows
         private const string INCLUDE_ATTR_NAME = "Include";
 
         private const string WPFTMP = "wpftmp";
+
+        private const string WPFTEMPPROJECTANALYZERS = "WpfTempProjectAnalyzers";
 
         private static readonly char[] s_semicolonChar = [';'];
 

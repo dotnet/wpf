@@ -65,6 +65,7 @@ namespace System.Windows.Automation
         public static readonly System.Windows.Automation.AutomationProperty IsTextPatternAvailableProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsTogglePatternAvailableProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsTransformPatternAvailableProperty;
+        public static readonly System.Windows.Automation.AutomationProperty IsTransformPattern2AvailableProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsValuePatternAvailableProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsVirtualizedItemPatternAvailableProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsWindowPatternAvailableProperty;
@@ -470,6 +471,22 @@ namespace System.Windows.Automation
         public static readonly System.Windows.Automation.AutomationProperty CanMoveProperty;
         public static readonly System.Windows.Automation.AutomationProperty CanResizeProperty;
         public static readonly System.Windows.Automation.AutomationProperty CanRotateProperty;
+        public static readonly System.Windows.Automation.AutomationPattern Pattern;
+    }
+    public enum ZoomUnit
+    {
+        NoAmount = 0,
+        LargeDecrement = 1,
+        SmallDecrement = 2,
+        LargeIncrement = 3,
+        SmallIncrement = 4
+    };
+    public static partial class TransformPattern2Identifiers
+    {
+        public static readonly System.Windows.Automation.AutomationProperty CanZoomProperty;
+        public static readonly System.Windows.Automation.AutomationProperty ZoomLevelProperty;
+        public static readonly System.Windows.Automation.AutomationProperty ZoomMinimumProperty;
+        public static readonly System.Windows.Automation.AutomationProperty ZoomMaximumProperty;
         public static readonly System.Windows.Automation.AutomationPattern Pattern;
     }
     [System.FlagsAttribute]

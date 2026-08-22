@@ -1,27 +1,19 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-//
-// 
-//
-// Description: Contains the LengthConverter: TypeConverter for the Length class.
-//
-//
-
-using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Runtime.CompilerServices;
+using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
 using MS.Internal;
 
 namespace System.Windows
 {
-
     /// <summary>
     /// LengthConverter - Converter class for converting instances of other types to and from double representing length.
     /// </summary> 
-    public class LengthConverter: TypeConverter
+    public class LengthConverter : TypeConverter
     {
         //-------------------------------------------------------------------
         //
@@ -56,7 +48,7 @@ namespace System.Windows
                 case TypeCode.UInt32:
                 case TypeCode.UInt64:
                     return true;
-                default: 
+                default:
                     return false;
             }
         }
@@ -69,18 +61,10 @@ namespace System.Windows
         /// </returns>
         /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
         /// <param name="destinationType"> The Type being queried for support. </param>
-        public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType) 
+        public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType)
         {
             // We can convert to an InstanceDescriptor or to a string.
-            if (destinationType == typeof(InstanceDescriptor) ||
-                destinationType == typeof(string)) 
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return destinationType == typeof(InstanceDescriptor) || destinationType == typeof(string);
         }
 
         /// <summary>
@@ -99,17 +83,16 @@ namespace System.Windows
         /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
         /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
         /// <param name="source"> The object to convert to a double. </param>
-        public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, 
-                                           CultureInfo cultureInfo, 
-                                           object source)
+        public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object source)
         {
-            if (source != null)
-            {
-                if (source is string) { return FromString((string)source, cultureInfo); }
-                else                  { return (double)(Convert.ToDouble(source, cultureInfo)); }
-            }
+            if (source is null)
+                throw GetConvertFromException(source);
 
-            throw GetConvertFromException(source);
+            if (source is string sourceString)
+                return FromString(sourceString, cultureInfo);
+
+            // Conversion from a numeric type
+            return Convert.ToDouble(source, cultureInfo);
         }
 
         /// <summary>
@@ -129,31 +112,24 @@ namespace System.Windows
         /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
         /// <param name="value"> The double to convert. </param>
         /// <param name="destinationType">The type to which to convert the double. </param>
-        public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, 
-                                         CultureInfo cultureInfo,
-                                         object value,
-                                         Type destinationType)
+        public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object value, Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (    value != null
-                &&  value is double )
+            if (value is not double doubleValue)
+                throw GetConvertToException(value, destinationType);
+
+            if (destinationType == typeof(string))
+                return ToString(doubleValue, cultureInfo);
+
+            if (destinationType == typeof(InstanceDescriptor))
             {
-                double l = (double)value;
-                if (destinationType == typeof(string)) 
-                { 
-                    if(double.IsNaN(l)) 
-                        return "Auto";
-                    else 
-                        return Convert.ToString(l, cultureInfo); 
-                }
-                else if (destinationType == typeof(InstanceDescriptor))
-                {
-                    ConstructorInfo ci = typeof(double).GetConstructor(new Type[] { typeof(double) });
-                    return new InstanceDescriptor(ci, new object[] { l });
-                }
+                ConstructorInfo ci = typeof(double).GetConstructor(new Type[] { typeof(double) });
+                return new InstanceDescriptor(ci, new object[] { doubleValue });
             }
-            throw GetConvertToException(value, destinationType);
+
+            // This will just throw an exception but it is a pattern
+            return base.ConvertTo(typeDescriptorContext, cultureInfo, value, destinationType);
         }
         #endregion
 
@@ -164,6 +140,21 @@ namespace System.Windows
         //-------------------------------------------------------------------
 
         #region Internal Methods
+
+        /// <summary>
+        /// Formats a single <paramref name="value"/> to length representation.
+        /// For <see cref="double.NaN"/> values, "Auto" is returned instead.
+        /// </summary>
+        /// <param name="value">The value to format as string.</param>
+        /// <param name="handler">The handler specifying culture used for conversion.</param>
+        /// <returns>Formatted length representation of the <paramref name="value"/>.</returns>
+        internal static string ToString(double value, CultureInfo cultureInfo)
+        {
+            if (double.IsNaN(value))
+                return "Auto";
+
+            return Convert.ToString(value, cultureInfo);
+        }
 
         /// <summary> Format <see cref="double"/> into <see cref="string"/> using specified <see cref="CultureInfo"/>
         /// in <paramref name="handler"/>. <br /> <br />
@@ -184,22 +175,21 @@ namespace System.Windows
         //   [value] is a double
         //   [unit] is a string specifying the unit, like 'in' or 'px', or nothing (means pixels)
         // NOTE - This code is called from FontSizeConverter, so changes will affect both.
-        internal static double FromString(string s, CultureInfo cultureInfo)
+        internal static double FromString(ReadOnlySpan<char> value, CultureInfo cultureInfo)
         {
-            ReadOnlySpan<char> valueSpan = s.AsSpan().Trim();
+            ReadOnlySpan<char> valueSpan = value.Trim();
             double unitFactor = 1.0;
 
-            //Auto is represented and Double.NaN
-            //properties that do not want Auto and NaN to be in their ligit values,
-            //should disallow NaN in validation callbacks (same goes for negative values)
-            if (valueSpan.Equals("auto", StringComparison.OrdinalIgnoreCase))
-                return Double.NaN;
+            // Auto is represented as Double.NaN
+            // Properties that do not want Auto and NaN to be in their ligit values,
+            // should disallow NaN in validation callbacks (same goes for negative values)
+            if (valueSpan.Equals("Auto", StringComparison.OrdinalIgnoreCase))
+                return double.NaN;
 
-            PixelUnit pixelUnit;
-            if (PixelUnit.TryParsePixel(valueSpan, out pixelUnit)
-                || PixelUnit.TryParsePixelPerInch(valueSpan, out pixelUnit)
-                || PixelUnit.TryParsePixelPerCentimeter(valueSpan, out pixelUnit)
-                || PixelUnit.TryParsePixelPerPoint(valueSpan, out pixelUnit))
+            if (PixelUnit.TryParsePixel(valueSpan, out PixelUnit pixelUnit) ||
+                PixelUnit.TryParsePixelPerInch(valueSpan, out pixelUnit) ||
+                PixelUnit.TryParsePixelPerCentimeter(valueSpan, out pixelUnit) ||
+                PixelUnit.TryParsePixelPerPoint(valueSpan, out pixelUnit))
             {
                 valueSpan = valueSpan.Slice(0, valueSpan.Length - pixelUnit.Name.Length);
                 unitFactor = pixelUnit.Factor;
@@ -215,7 +205,7 @@ namespace System.Windows
         {
             // FormatException errors thrown by double.Parse are pretty uninformative.
             // Throw a more meaningful error in this case that tells that we were attempting
-            // to create a Length instance from a string.  This addresses windows bug 968884
+            // to create a Length instance from a string. This addresses windows bug 968884
             try
             {
                 return double.Parse(span, cultureInfo);
@@ -225,7 +215,6 @@ namespace System.Windows
                 throw new FormatException(SR.Format(SR.LengthFormatError, span.ToString()));
             }
         }
-
 
         #endregion
 

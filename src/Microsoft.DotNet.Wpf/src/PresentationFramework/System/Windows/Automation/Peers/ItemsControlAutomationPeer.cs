@@ -162,6 +162,12 @@ namespace System.Windows.Automation.Peers
                         dataItem = item;
                     }
 
+                    if (dataItem == null)
+                    {
+                        // skip null items
+                        continue;
+                    }
+
                     // try to reuse old peer if it exists either in Current AT or in WeakRefStorage of Peers being sent to Client
                     ItemAutomationPeer peer = oldChildren[dataItem];
                     peer = ReusePeerForItem(peer, dataItem);

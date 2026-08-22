@@ -311,10 +311,7 @@ namespace System.Windows.Forms.Integration
             catch (Exception ex)
             {
                 PropertyMappingExceptionEventArgs args = new PropertyMappingExceptionEventArgs(ex, propertyName, value);
-                if (_propertyMappingError != null)
-                {
-                    _propertyMappingError(SourceObject, args);
-                }
+                _propertyMappingError?.Invoke(SourceObject, args);
                 if (args.ThrowException)
                 {
                     throw new InvalidOperationException(SR.WFI_PropertyMapError, ex);

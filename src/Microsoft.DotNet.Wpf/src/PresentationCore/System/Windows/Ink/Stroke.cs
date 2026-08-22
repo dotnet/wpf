@@ -586,10 +586,7 @@ namespace System.Windows.Ink
                 throw new ArgumentNullException(nameof(e), SR.EventArgIsNull);
             }
 
-            if (DrawingAttributesChanged != null)
-            {
-                DrawingAttributesChanged(this, e);
-            }
+            DrawingAttributesChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -617,8 +614,7 @@ namespace System.Windows.Ink
                 throw new ArgumentNullException(nameof(e), SR.EventArgIsNull);
             }
 
-            if (StylusPointsReplaced != null)
-                StylusPointsReplaced(this, e);
+            StylusPointsReplaced?.Invoke(this, e);
         }
 
         /// <summary>
@@ -632,8 +628,7 @@ namespace System.Windows.Ink
                 throw new ArgumentNullException(nameof(e), SR.EventArgIsNull);
             }
 
-            if (StylusPointsChanged != null)
-                StylusPointsChanged(this, e);
+            StylusPointsChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -649,10 +644,7 @@ namespace System.Windows.Ink
                 throw new ArgumentNullException(nameof(e), SR.EventArgIsNull);
             }
 
-            if (PropertyDataChanged != null)
-            {
-                PropertyDataChanged(this, e);
-            }
+            PropertyDataChanged?.Invoke(this, e);
         }
 
 
@@ -667,10 +659,7 @@ namespace System.Windows.Ink
                 throw new ArgumentNullException(nameof(e), SR.EventArgIsNull);
             }
 
-            if (Invalidated != null)
-            {
-                Invalidated(this, e);
-            }
+            Invalidated?.Invoke(this, e);
         }
 
         /// <summary>
@@ -681,10 +670,7 @@ namespace System.Windows.Ink
         /// instance, but every other INotifyPropertyChanged implementation follows this pattern.</remarks>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if (_propertyChanged != null)
-            {
-                _propertyChanged(this, e);
-            }
+            _propertyChanged?.Invoke(this, e);
         }
 
 

@@ -77,10 +77,7 @@ namespace MS.Internal.Documents.Application
                 _infoBarButton.Visibility = value;
                 // When the Visibility is set, notify the DocumentViewer to check the visibility
                 // of the entire InfoBar
-                if (InfoBarVisibilityChanged != null)
-                {
-                    InfoBarVisibilityChanged(this, new EventArgs());
-                }
+                InfoBarVisibilityChanged?.Invoke(this, new EventArgs());
             }
         }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -1788,10 +1788,8 @@ namespace System.Windows
 
         internal void AddInflatedListener(ResourceReferenceExpression listener)
         {
-            if (_inflatedList == null)
-            {
-                _inflatedList = new WeakReferenceList(this);
-            }
+            _inflatedList ??= new WeakReferenceList<ResourceReferenceExpression>(this);
+
             _inflatedList.Add(listener);
         }
 
@@ -1834,7 +1832,7 @@ namespace System.Windows
         private ResourceDictionary _dictionary;
         protected object _key;
         protected object _value;
-        private WeakReferenceList _inflatedList;
+        private WeakReferenceList<ResourceReferenceExpression> _inflatedList;
 
         #endregion Data
     }

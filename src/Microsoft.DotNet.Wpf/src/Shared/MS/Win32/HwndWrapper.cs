@@ -220,13 +220,13 @@ namespace MS.Win32
 
         public void AddHook(HwndWrapperHook hook)
         {
-            _hooks ??= [];
+            _hooks ??= new WeakReferenceList<HwndWrapperHook>(syncRoot: null);
             _hooks.Insert(0, hook);
         }
 
         internal void AddHookLast(HwndWrapperHook hook)
         {
-            _hooks ??= [];
+            _hooks ??= new WeakReferenceList<HwndWrapperHook>(syncRoot: null);
             _hooks.Add(hook);
         }
 
@@ -357,7 +357,7 @@ namespace MS.Win32
 
         private IntPtr _handle;
         private UInt16 _classAtom;
-        private WeakReferenceList _hooks;
+        private WeakReferenceList<HwndWrapperHook> _hooks;
         private int _ownerThreadID;
         
         private HwndWrapperHook _wndProc;

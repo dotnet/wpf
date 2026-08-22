@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -304,7 +304,11 @@ namespace MS.Internal.FontFace
                 {
                     // continue to advance for combining mark with base char (can be precomposed by shaping engine)
                     // except if it is a different script (#6801)
-                    if (Classification.GetScript(baseChar) == Classification.GetScript(originalChar))
+                    // However, script-agnostic combining marks (variation selectors, combining enclosing marks)
+                    // should stay with their base character regardless of script, to allow emoji sequences
+                    // like "1️⃣" (digit + VS16 + combining enclosing keycap) to stay together.
+                    if (Classification.IsScriptAgnosticCombining(originalChar)
+                        || Classification.IsSameScript(baseChar, originalChar))
                     {
                         continue;
                     }
@@ -336,6 +340,13 @@ namespace MS.Internal.FontFace
                 // UnicodeScalar won't return a sizeofChar that exceeds the string length.
                 Debug.Assert(advance + sizeofChar <= unicodeString.Length);
 
+                // Track whether the previous character was a joiner. DWriteCore's font fallback
+                // algorithm extends the unmapped run to include the character immediately following
+                // a joiner (is_joiner(previous_char) in try_map_font). This keeps ZWJ emoji
+                // sequences like "👨‍👩‍👧" together in the unmapped run so they are sent to
+                // fallback as a unit.
+                bool prevWasJoiner = false;
+
                 for (nextValid = advance + sizeofChar; nextValid < unicodeString.Length; nextValid += sizeofChar)
                 {
                     // Get the character.
@@ -347,6 +358,12 @@ namespace MS.Internal.FontFace
                     // Apply digit substitution, if any.
                     int ch = digitMap[originalChar];
 
+                    if (Classification.IsJoiner(originalChar))
+                    {
+                        prevWasJoiner = true;
+                        continue;
+                    }
+
                     //
                     // Combining mark should always be shaped by the same font as the base char.
                     // If the physical font is invalid for the base char, it should also be invalid for the
@@ -357,12 +374,25 @@ namespace MS.Internal.FontFace
                     //   as the base char such that they will eventually be resolved to the same physical font.
                     //   That means FamilyMap for the combining mark is not used when it follows a base char.
                     //
-                    // The same goes for joiner. Note that "hasBaseChar" here indicates if there is an invalid base
-                    // char in front.
-                    if (Classification.IsJoiner(ch)
-                       || (baseChar != NOBASE && Classification.IsCombining(ch) && Classification.GetScript(ch) == Classification.GetScript(baseChar))
+                    // Script-agnostic combining marks (variation selectors, combining enclosing marks) should
+                    // also stay with the base character regardless of script differences.
+                    //
+                    // If the previous character was a joiner, pull this character into the unmapped run
+                    // regardless of whether it is a combining mark (mirrors DWriteCore is_joiner(previous_char)).
+                    if (prevWasJoiner
+                       || (baseChar != NOBASE && Classification.IsCombining(ch)
+                           && (Classification.IsScriptAgnosticCombining(ch) || Classification.IsSameScript(baseChar, ch)))
                        )
-                       continue;
+                    {
+                        // Update baseChar for any strong char pulled into the unmapped run by a joiner so
+                        // that combining marks that follow it are associated with the correct base.
+                        if (prevWasJoiner && !Classification.IsCombining(ch))
+                            baseChar = ch;
+                        prevWasJoiner = false;
+                        continue;
+                    }
+
+                    prevWasJoiner = false;
 
                     // If we have a glyph it's valid.
                     if (font.HasCharacter(checked((uint)ch)))

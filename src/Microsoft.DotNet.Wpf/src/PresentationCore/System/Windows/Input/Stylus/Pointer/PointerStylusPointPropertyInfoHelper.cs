@@ -64,6 +64,18 @@ namespace System.Windows.Input.StylusPointer
             {
                 StylusPointProperty stylusProp = new StylusPointProperty(propGuid, StylusPointPropertyIds.IsKnownButton(propGuid));
 
+                int logicalMin = prop.logicalMin;
+                int logicalMax = prop.logicalMax;
+
+                // Some touch digitizers report HID descriptors with invalid min/max values
+                // (e.g. Logical Minimum 0, Logical Maximum -1 from unsigned 0xFF interpreted
+                // as signed). Swap them so the StylusPointPropertyInfo constructor does not
+                // throw an ArgumentException. See dotnet/wpf#7069, #8435, and #8826.
+                if (logicalMax < logicalMin)
+                {
+                    (logicalMin, logicalMax) = (logicalMax, logicalMin);
+                }
+
                 // Set Units
                 StylusPointPropertyUnit? unit = StylusPointPropertyUnitHelper.FromPointerUnit(prop.unit);
 
@@ -88,14 +100,14 @@ namespace System.Windows.Input.StylusPointer
                         // Calculated resolution is a scaling factor from logical units into the physical space
                         // at the given exponentiation.
                         resolution =
-                            (prop.logicalMax - prop.logicalMin) / ((prop.physicalMax - prop.physicalMin) * exponent);
+                            (logicalMax - logicalMin) / ((prop.physicalMax - prop.physicalMin) * exponent);
                     }
                 }
 
                 result = new StylusPointPropertyInfo(
                       stylusProp,
-                      prop.logicalMin,
-                      prop.logicalMax,
+                      logicalMin,
+                      logicalMax,
                       unit.Value,
                       resolution);
             }

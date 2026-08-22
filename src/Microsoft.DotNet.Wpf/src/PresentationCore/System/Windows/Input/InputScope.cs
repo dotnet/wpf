@@ -168,7 +168,7 @@ namespace System.Windows.Input
             { 
                 if (!IsValidInputScopeNameValue(value))
                 {
-                    throw new ArgumentException(SR.Format(SR.InputScope_InvalidInputScopeName, "value"));
+                    throw new ArgumentException(SR.Format(SR.InputScope_InvalidInputScopeName, nameof(value)));
                 }
                 _nameValue = value; 
             }

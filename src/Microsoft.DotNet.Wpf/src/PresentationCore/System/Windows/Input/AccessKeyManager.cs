@@ -122,7 +122,7 @@ namespace System.Windows.Input
 
             if (key != firstCharacter)
             {
-                throw new ArgumentException(SR.Format(SR.AccessKeyManager_NotAUnicodeCharacter, "key"));
+                throw new ArgumentException(SR.Format(SR.AccessKeyManager_NotAUnicodeCharacter, nameof(key)));
             }
 
             return firstCharacter.ToUpperInvariant();

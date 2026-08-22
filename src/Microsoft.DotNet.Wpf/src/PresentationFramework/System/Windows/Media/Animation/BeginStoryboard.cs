@@ -102,7 +102,7 @@ public sealed class BeginStoryboard : TriggerAction
             if(value != null && !System.Windows.Markup.NameValidationHelper.IsValidIdentifierName(value))
             {
                 // Duplicate the error string thrown from DependencyObject.SetValueValidateParams
-                throw new ArgumentException(SR.Format(SR.InvalidPropertyValue, value, "Name"));
+                throw new ArgumentException(SR.Format(SR.InvalidPropertyValue, value, nameof(Name)));
             }
             
             // Null is OK - it's to remove whatever name was previously set.

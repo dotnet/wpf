@@ -490,7 +490,7 @@ namespace System.Windows
             //  can't be checked until Style is sealed.
             if (_targetType == null)
             {
-                throw new InvalidOperationException(SR.Format(SR.NullPropertyIllegal, "TargetType"));
+                throw new InvalidOperationException(SR.Format(SR.NullPropertyIllegal, nameof(TargetType)));
             }
 
             if (_basedOn != null)

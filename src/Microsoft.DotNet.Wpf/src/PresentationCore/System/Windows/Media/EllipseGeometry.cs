@@ -27,7 +27,7 @@ namespace System.Windows.Media
         {
             if (rect.IsEmpty) 
             {
-                throw new System.ArgumentException(SR.Format(SR.Rect_Empty, "rect"));
+                throw new System.ArgumentException(SR.Format(SR.Rect_Empty, nameof(rect)));
             }
 
             RadiusX = (rect.Right - rect.X) * (1.0 / 2.0);

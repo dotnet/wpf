@@ -12,8 +12,6 @@ using System.Windows.Media.Imaging;         // RenderTargetBitmap
 using System.Windows.Threading;             // Dispatcher
 using MS.Internal;                          // Invariant
 using MS.Internal.Documents;                // DocumentPageHost, DocumentPageTextView
-using MS.Internal.KnownBoxes;               // BooleanBoxes
-
 
 namespace System.Windows.Controls.Primitives
 {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using MS.Internal.KnownBoxes;
 
 namespace Microsoft.Windows.Themes
 {
@@ -21,7 +22,7 @@ namespace Microsoft.Windows.Themes
         static DataGridHeaderBorder()
         {
             // We always set this to true on these borders, so just default it to true here.
-            SnapsToDevicePixelsProperty.OverrideMetadata(typeof(DataGridHeaderBorder), new FrameworkPropertyMetadata(true));
+            SnapsToDevicePixelsProperty.OverrideMetadata(typeof(DataGridHeaderBorder), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
         }
 
         #region Header Appearance Properties
@@ -39,7 +40,8 @@ namespace Microsoft.Windows.Themes
         ///     DependencyProperty for IsHovered.
         /// </summary>
         public static readonly DependencyProperty IsHoveredProperty =
-            DependencyProperty.Register("IsHovered", typeof(bool), typeof(DataGridHeaderBorder), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender));
+            DependencyProperty.Register("IsHovered", typeof(bool), typeof(DataGridHeaderBorder),
+                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
         ///     Whether the pressed look should be applied.
@@ -54,7 +56,8 @@ namespace Microsoft.Windows.Themes
         ///     DependencyProperty for IsPressed.
         /// </summary>
         public static readonly DependencyProperty IsPressedProperty =
-            DependencyProperty.Register("IsPressed", typeof(bool), typeof(DataGridHeaderBorder), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsArrange));
+            DependencyProperty.Register("IsPressed", typeof(bool), typeof(DataGridHeaderBorder),
+                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsArrange));
 
         /// <summary>
         ///     When false, will not apply the hover look even when IsHovered is true.
@@ -69,7 +72,8 @@ namespace Microsoft.Windows.Themes
         ///     DependencyProperty for IsClickable.
         /// </summary>
         public static readonly DependencyProperty IsClickableProperty =
-            DependencyProperty.Register("IsClickable", typeof(bool), typeof(DataGridHeaderBorder), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsArrange));
+            DependencyProperty.Register("IsClickable", typeof(bool), typeof(DataGridHeaderBorder),
+                new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsArrange));
 
         /// <summary>
         ///     Whether to appear sorted.
@@ -99,7 +103,8 @@ namespace Microsoft.Windows.Themes
         ///     DependencyProperty for IsSelected.
         /// </summary>
         public static readonly DependencyProperty IsSelectedProperty =
-            DependencyProperty.Register("IsSelected", typeof(bool), typeof(DataGridHeaderBorder), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender));
+            DependencyProperty.Register("IsSelected", typeof(bool), typeof(DataGridHeaderBorder),
+                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.AffectsRender));
 
         /// <summary>
         ///     Vertical = column header

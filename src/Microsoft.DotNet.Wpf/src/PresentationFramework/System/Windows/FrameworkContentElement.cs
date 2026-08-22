@@ -14,7 +14,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Markup;
 
 using MS.Internal;
-using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;
 using MS.Utility;
 

@@ -5,6 +5,8 @@ global using System;
 global using System.Collections.Generic;
 global using System.Diagnostics;
 
+global using MS.Internal.KnownBoxes;
+
 global using DataFormatsCore = System.Private.Windows.Ole.DataFormatsCore<
     System.Windows.DataFormat>;
 #pragma warning disable IDE0005 // Using directive is unnecessary.

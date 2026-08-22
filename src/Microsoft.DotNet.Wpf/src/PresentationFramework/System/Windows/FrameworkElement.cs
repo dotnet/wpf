@@ -18,7 +18,6 @@ using System.Windows.Markup;
 using System.Windows.Controls;
 
 using MS.Internal;
-using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;    // SafeSecurityHelper
 using MS.Utility;
 

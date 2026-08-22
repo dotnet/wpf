@@ -7,7 +7,7 @@
     <DefineConstants Condition="'$(WeakEventTelemetry)'=='true'">$(DefineConstants);WeakEventTelemetry</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnablePInvokeAnalyzer>false</EnablePInvokeAnalyzer>
-    <NoWarn>$(NoWarn);0618;1058,3003</NoWarn>
+    <NoWarn>$(NoWarn);0618;3003</NoWarn>
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <Platforms>AnyCPU</Platforms>
     <GenerateDependencyFile>false</GenerateDependencyFile>

@@ -1546,76 +1546,6 @@ namespace Standard
         }
     }
 
-    internal sealed class SafeConnectionPointCookie : SafeHandleZeroOrMinusOneIsInvalid
-    {
-        private IConnectionPoint _cp;
-        // handle holds the cookie value.
-
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "IConnectionPoint")]
-        public SafeConnectionPointCookie(IConnectionPointContainer target, object sink, Guid eventId)
-            : base(true)
-        {
-            Verify.IsNotNull(target, "target");
-            Verify.IsNotNull(sink, "sink");
-            Verify.IsNotDefault(eventId, "eventId");
-
-            handle = IntPtr.Zero;
-
-            IConnectionPoint cp = null;
-            try
-            {
-                int dwCookie;
-                target.FindConnectionPoint(ref eventId, out cp);
-                cp.Advise(sink, out dwCookie);
-                if (dwCookie == 0)
-                {
-                    throw new InvalidOperationException("IConnectionPoint::Advise returned an invalid cookie.");
-                }
-                handle = new IntPtr(dwCookie);
-                _cp = cp;
-                cp = null;
-            }
-            finally
-            {
-                Utility.SafeRelease(ref cp);
-            }
-        }
-
-        public void Disconnect()
-        {
-            ReleaseHandle();
-        }
-
-        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-
-        protected override bool ReleaseHandle()
-        {
-            try
-            {
-                if (!this.IsInvalid)
-                {
-                    int dwCookie = handle.ToInt32();
-                    handle = IntPtr.Zero;
-
-                    Assert.IsNotNull(_cp);
-                    try
-                    {
-                        _cp.Unadvise(dwCookie);
-                    }
-                    finally
-                    {
-                        Utility.SafeRelease(ref _cp);
-                    }
-                }
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-    }
-
     #endregion
 
     #region Native Types
@@ -2912,21 +2842,6 @@ namespace Standard
                 HRESULT.ThrowLastError();
             }
             return (WM)iRet;
-        }
-
-        [DllImport("user32.dll", EntryPoint = "SetActiveWindow", SetLastError = true)]
-        private static extern IntPtr _SetActiveWindow(IntPtr hWnd);
-
-        public static IntPtr SetActiveWindow(IntPtr hwnd)
-        {
-            Verify.IsNotDefault(hwnd, "hwnd");
-            IntPtr ret = _SetActiveWindow(hwnd);
-            if (ret == IntPtr.Zero)
-            {
-                HRESULT.ThrowLastError();
-            }
-
-            return ret;
         }
 
         // This is aliased as a macro in 32bit Windows.

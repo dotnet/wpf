@@ -25,7 +25,6 @@ namespace System.Windows.Media.Media3D
     /// <summary>
     /// A collection of Model3D objects.
     /// </summary>
-
     public sealed partial class Model3DCollection : Animatable, IList, IList<Model3D>
     {
         //------------------------------------------------------

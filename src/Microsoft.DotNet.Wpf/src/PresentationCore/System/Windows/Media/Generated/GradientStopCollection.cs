@@ -27,7 +27,6 @@ namespace System.Windows.Media
     /// <summary>
     /// A collection of GradientStop objects.
     /// </summary>
-
     public sealed partial class GradientStopCollection : Animatable, IFormattable, IList, IList<GradientStop>
     {
         //------------------------------------------------------

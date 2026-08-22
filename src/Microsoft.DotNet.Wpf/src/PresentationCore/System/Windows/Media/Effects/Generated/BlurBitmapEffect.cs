@@ -46,8 +46,6 @@ namespace System.Windows.Media.Effects
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -60,10 +58,8 @@ namespace System.Windows.Media.Effects
         {
             BlurBitmapEffect target = ((BlurBitmapEffect) d);
 
-
             target.PropertyChanged(RadiusProperty);
         }
-
 
         #region Public Properties
 
@@ -116,8 +112,6 @@ namespace System.Windows.Media.Effects
             return new BlurBitmapEffect();
         }
 
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -129,13 +123,6 @@ namespace System.Windows.Media.Effects
         #region Internal Methods
 
 
-
-
-
-
-
-
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -145,9 +132,6 @@ namespace System.Windows.Media.Effects
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -179,15 +163,10 @@ namespace System.Windows.Media.Effects
 
         #region Internal Fields
 
-
-
-
-
         internal const double c_Radius = 5.0;
         internal const KernelType c_KernelType = KernelType.Gaussian;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -227,7 +206,6 @@ namespace System.Windows.Media.Effects
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

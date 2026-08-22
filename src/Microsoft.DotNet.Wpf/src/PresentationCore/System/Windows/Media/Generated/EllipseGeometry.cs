@@ -53,8 +53,6 @@ namespace System.Windows.Media
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -67,13 +65,11 @@ namespace System.Windows.Media
         {
             EllipseGeometry target = ((EllipseGeometry) d);
 
-
             target.PropertyChanged(RadiusXProperty);
         }
         private static void RadiusYPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             EllipseGeometry target = ((EllipseGeometry) d);
-
 
             target.PropertyChanged(RadiusYProperty);
         }
@@ -81,10 +77,8 @@ namespace System.Windows.Media
         {
             EllipseGeometry target = ((EllipseGeometry) d);
 
-
             target.PropertyChanged(CenterProperty);
         }
-
 
         #region Public Properties
 
@@ -151,8 +145,6 @@ namespace System.Windows.Media
         {
             return new EllipseGeometry();
         }
-
-
 
         #endregion ProtectedMethods
 
@@ -226,7 +218,6 @@ namespace System.Windows.Media
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_ELLIPSEGEOMETRY))
                 {
                     Transform vTransform = Transform;
@@ -234,16 +225,13 @@ namespace System.Windows.Media
 
                     AddRefOnChannelAnimations(channel);
 
-
                     UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
                 }
 
                 return _duceResource.GetHandle(channel);
-
         }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
@@ -252,9 +240,7 @@ namespace System.Windows.Media
                     if (vTransform != null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
-
                 }
-
         }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
@@ -271,7 +257,6 @@ namespace System.Windows.Media
             // Note that we are in a lock here already.
             return _duceResource.GetChannel(index);
         }
-
 
         #endregion Internal Methods
 
@@ -299,8 +284,6 @@ namespace System.Windows.Media
                 return 3;
             }
         }
-
-
 
         #endregion Internal Properties
 
@@ -335,16 +318,12 @@ namespace System.Windows.Media
 
         #region Internal Fields
 
-
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
-
         internal const double c_RadiusX = 0.0;
         internal const double c_RadiusY = 0.0;
         internal static Point s_Center = new Point();
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -393,7 +372,6 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ true,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

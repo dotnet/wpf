@@ -367,7 +367,6 @@ namespace System.Windows
             }
 
 
-
             // Synchronize ReverseInheritProperty Flags
             //
             // NOTE: do this AFTER synchronizing force-inherited flags, since
@@ -387,7 +386,6 @@ namespace System.Windows
                 // Clear the HasStyleChanged flag
                 HasStyleChanged = false;
                 HasStyleInvalidated = false;
-
             }
 
             // If this is a tree add operation update the ShouldLookupImplicitStyles
@@ -395,8 +393,8 @@ namespace System.Windows
             if (parentTreeState.IsAddOperation)
             {
                 FrameworkObject fo =
-
                     new FrameworkObject(null, this);
+
                 fo.SetShouldLookupImplicitStyles();
             }
 
@@ -442,7 +440,6 @@ namespace System.Windows
         internal FrugalObjectList<DependencyProperty> InvalidateTreeDependentProperties(TreeChangeInfo parentTreeState, bool isSelfInheritanceParent, bool wasSelfInheritanceParent)
         {
             AncestorChangeInProgress = true;
-
 
             try
             {
@@ -513,7 +510,6 @@ namespace System.Windows
             finally
             {
                 AncestorChangeInProgress = false;
-
             }
         }
 
@@ -548,7 +544,6 @@ namespace System.Windows
                     {
                         return true;
                     }
-
                     if (HasFefLoadedChangeHandler)
                     {
                         return true;
@@ -678,7 +673,6 @@ namespace System.Windows
             {
                 DependencyObject parent = Parent;
 
-
                 // Check if this Loaded cancels against a previously queued Unloaded event
                 // Note that if the Loaded and the Unloaded do not change the position of
                 // the node within the loagical tree they are considered to cancel each other out.
@@ -706,7 +700,6 @@ namespace System.Windows
             if (UnloadedPending == null)
             {
                 DependencyObject parent = Parent;
-
 
                 // Check if this Unloaded cancels against a previously queued Loaded event
                 // Note that if the Loaded and the Unloaded do not change the position of
@@ -846,7 +839,6 @@ namespace System.Windows
 
             // invalidate the mentee's tree
             TreeWalkHelper.InvalidateOnTreeChange(
-
                     null, this,
                     foMentor.DO,
                     true /* isAddOperation */
@@ -880,7 +872,6 @@ namespace System.Windows
 
             // invalidate the mentee's tree
             TreeWalkHelper.InvalidateOnTreeChange(
-
                     null, this,
                     foMentor.DO,
                     false /* isAddOperation */
@@ -979,7 +970,6 @@ namespace System.Windows
         private void OnMentorInheritedPropertyChanged(object sender, InheritedPropertyChangedEventArgs e)
         {
             TreeWalkHelper.InvalidateOnInheritablePropertyChange(
-
                     null, this,
                     e.Info, false /*skipStartNode*/);
         }
@@ -988,7 +978,6 @@ namespace System.Windows
         private void OnMentorResourcesChanged(object sender, EventArgs e)
         {
             TreeWalkHelper.InvalidateOnResourcesChange(
-
                     null, this,
                     ResourcesChangeInfo.CatastrophicDictionaryChangeInfo);
         }
@@ -1085,7 +1074,6 @@ namespace System.Windows
         }
 
 
-
         // Indicates if the StyleProperty has been invalidated during a tree walk
         internal bool HasStyleInvalidated
         {
@@ -1168,7 +1156,6 @@ namespace System.Windows
         }
 
 
-
         /// <summary>
         ///     ResourceReferenceExpressions on non-[FE/FCE] add listeners to this
         ///     event so they can get notified when there is a ResourcesChange
@@ -1186,7 +1173,6 @@ namespace System.Windows
             }
             remove { EventHandlersStoreRemove(FrameworkElement.ResourcesChangedKey, value); }
         }
-
 
 
         /// <summary>

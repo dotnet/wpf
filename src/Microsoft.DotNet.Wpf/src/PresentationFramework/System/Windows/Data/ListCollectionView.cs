@@ -1657,6 +1657,8 @@ namespace System.Windows.Data
 
             ValidateCollectionChangedEventArgs(args);
 
+            bool isRangeAction = IsCollectionChangedRangeAction(args);
+
             // adding or replacing an item can change CanAddNew, by providing a
             // non-null representative
             if (!_isItemConstructorValid)
@@ -1677,7 +1679,8 @@ namespace System.Windows.Data
             // apply the change to the shadow copy
             if (AllowsCrossThreadChanges)
             {
-                if (args.Action != NotifyCollectionChangedAction.Reset)
+                // ignore when we have a range action, as we'll just reset the collection
+                if (args.Action != NotifyCollectionChangedAction.Reset && !isRangeAction)
                 {
                     if (args.Action != NotifyCollectionChangedAction.Remove && args.NewStartingIndex < 0
                         || args.Action != NotifyCollectionChangedAction.Add && args.OldStartingIndex < 0)
@@ -1693,7 +1696,8 @@ namespace System.Windows.Data
             }
 
             // If the Action is Reset then we do a Refresh.
-            if (args.Action == NotifyCollectionChangedAction.Reset)
+            // Also treat range actions as Reset, for now.
+            if (args.Action == NotifyCollectionChangedAction.Reset || isRangeAction)
             {
                 // implicitly cancel EditItem transactions
                 if (IsEditingItem)
@@ -2497,23 +2501,23 @@ namespace System.Windows.Data
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    if (e.NewItems.Count != 1)
-                        throw new NotSupportedException(SR.RangeActionsNotSupported);
+                    if (e.NewItems.Count < 1)
+                        throw new NotSupportedException(SR.UnexpectedCollectionChangeAction);
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    if (e.OldItems.Count != 1)
-                        throw new NotSupportedException(SR.RangeActionsNotSupported);
+                    if (e.OldItems.Count < 1)
+                        throw new NotSupportedException(SR.UnexpectedCollectionChangeAction);
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
-                    if (e.NewItems.Count != 1 || e.OldItems.Count != 1)
-                        throw new NotSupportedException(SR.RangeActionsNotSupported);
+                    if (e.NewItems.Count < 1 || e.OldItems.Count < 1)
+                        throw new NotSupportedException(SR.UnexpectedCollectionChangeAction);
                     break;
 
                 case NotifyCollectionChangedAction.Move:
-                    if (e.NewItems.Count != 1)
-                        throw new NotSupportedException(SR.RangeActionsNotSupported);
+                    if (e.NewItems.Count < 1)
+                        throw new NotSupportedException(SR.UnexpectedCollectionChangeAction);
                     if (e.NewStartingIndex < 0)
                         throw new InvalidOperationException(SR.CannotMoveToUnknownPosition);
                     break;
@@ -2524,6 +2528,15 @@ namespace System.Windows.Data
                 default:
                     throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, e.Action));
             }
+        }
+
+        private bool IsCollectionChangedRangeAction(NotifyCollectionChangedEventArgs e)
+        {
+            return
+                (e.Action == NotifyCollectionChangedAction.Add && e.NewItems.Count > 1) ||
+                (e.Action == NotifyCollectionChangedAction.Remove && e.OldItems.Count > 1) ||
+                (e.Action == NotifyCollectionChangedAction.Replace && (e.OldItems.Count > 1 || e.NewItems.Count > 1)) ||
+                (e.Action == NotifyCollectionChangedAction.Move && (e.OldItems.Count > 1 || e.NewItems.Count > 1));
         }
 
 

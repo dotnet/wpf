@@ -39,21 +39,42 @@ namespace System.Windows.Media
         /// <param name="guidelinesX">Array of X coordinates that defines a set of vertical guidelines.</param>
         /// <param name="guidelinesY">Array of Y coordinates that defines a set of horizontal guidelines.</param>
         /// <param name="isDynamic">Usage flag: when true then rendering machine will detect animation state and apply subpixel animation behavior.</param>
-        internal GuidelineSet(double[] guidelinesX, double[] guidelinesY, bool isDynamic)
+        internal GuidelineSet(ReadOnlySpan<double> guidelinesX, ReadOnlySpan<double> guidelinesY)
         {
-            if (guidelinesX != null)
+            if (!guidelinesX.IsEmpty)
             {
-                // Dynamic guideline is defined by a pair of numbers: (coordinate, shift),
-                // so the legnth of array should be even.
+                GuidelinesX = new DoubleCollection(guidelinesX);
+            }
+
+            if (!guidelinesY.IsEmpty)
+            {
+                GuidelinesY = new DoubleCollection(guidelinesY);
+            }
+        }
+
+        /// <summary>
+        /// Constructs a new GuidelineSet object.
+        /// This constructor is internal for now, till we'll find a solution
+        /// for multi-path dynamic guideline implementation. If/when it'll happen,
+        /// it should become "public" so that the next constructor (without "isDynamic'
+        /// argument) may go away.
+        /// </summary>
+        /// <param name="guidelinesX">Array of X coordinates that defines a set of vertical guidelines.</param>
+        /// <param name="guidelinesY">Array of Y coordinates that defines a set of horizontal guidelines.</param>
+        /// <param name="isDynamic">Usage flag: when true then rendering machine will detect animation state and apply subpixel animation behavior.</param>
+        internal GuidelineSet(ReadOnlySpan<double> guidelinesX, ReadOnlySpan<double> guidelinesY, bool isDynamic)
+        {
+            if (!guidelinesX.IsEmpty)
+            {
+                // Dynamic guideline is defined by a pair of numbers: (coordinate, shift), so the length of array should be even.
                 Debug.Assert(!isDynamic || guidelinesX.Length % 2 == 0);
 
                 GuidelinesX = new DoubleCollection(guidelinesX);
             }
 
-            if (guidelinesY != null)
+            if (!guidelinesY.IsEmpty)
             {
-                // Dynamic guideline is defined by a pair of numbers: (coordinate, shift),
-                // so the legnth of array should be even.
+                // Dynamic guideline is defined by a pair of numbers: (coordinate, shift), so the length of array should be even.
                 Debug.Assert(!isDynamic || guidelinesY.Length % 2 == 0);
 
                 GuidelinesY = new DoubleCollection(guidelinesY);
@@ -69,14 +90,14 @@ namespace System.Windows.Media
         /// <param name="guidelinesY">Array of Y coordinates that defines a set of horizontal guidelines.</param>
         public GuidelineSet(double[] guidelinesX, double[] guidelinesY)
         {
-            if (guidelinesX != null)
+            if (guidelinesX is not null)
             {
-                GuidelinesX = new DoubleCollection(guidelinesX);
+                GuidelinesX = new DoubleCollection(guidelinesX.AsSpan());
             }
 
-            if (guidelinesY != null)
+            if (guidelinesY is not null)
             {
-                GuidelinesY = new DoubleCollection(guidelinesY);
+                GuidelinesY = new DoubleCollection(guidelinesY.AsSpan());
             }
         }
 

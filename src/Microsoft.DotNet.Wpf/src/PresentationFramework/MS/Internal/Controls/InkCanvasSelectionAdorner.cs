@@ -29,12 +29,11 @@ namespace MS.Internal.Controls
                 "InkCanvasSelectionAdorner only should be used by InkCanvas internally");
 
             // Initialize the internal data.
-            _adornerBorderPen = new Pen(Brushes.Black, 1.0);
-            DoubleCollection dashes = new DoubleCollection();
-            dashes.Add(4.5);
-            dashes.Add(4.5);
-            _adornerBorderPen.DashStyle = new DashStyle(dashes, 2.25);
-            _adornerBorderPen.DashCap = PenLineCap.Flat;
+            _adornerBorderPen = new Pen(Brushes.Black, 1.0)
+            {
+                DashStyle = new DashStyle(new DoubleCollection(4.5, 4.5), 2.25),
+                DashCap = PenLineCap.Flat
+            };
             _adornerBorderPen.Freeze();
 
             _adornerPenBrush = new Pen(new SolidColorBrush(Color.FromRgb(132, 146, 222)), 1);

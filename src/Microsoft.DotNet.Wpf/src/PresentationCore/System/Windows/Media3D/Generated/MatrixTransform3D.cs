@@ -268,11 +268,10 @@ namespace System.Windows.Media.Media3D
 
 
             // Initializations
-            Type typeofThis = typeof(MatrixTransform3D);
             MatrixProperty =
                   RegisterProperty("Matrix",
                                    typeof(Matrix3D),
-                                   typeofThis,
+                                   typeof(MatrixTransform3D),
                                    Matrix3D.Identity,
                                    new PropertyChangedCallback(MatrixPropertyChanged),
                                    null,

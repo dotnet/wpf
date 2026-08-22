@@ -29,20 +29,18 @@ namespace System.Windows.Controls.Primitives
 
         static DataGridColumnHeadersPresenter()
         {
-            Type ownerType = typeof(DataGridColumnHeadersPresenter);
-
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            FocusableProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(DataGridColumnHeadersPresenter), new FrameworkPropertyMetadata(typeof(DataGridColumnHeadersPresenter)));
+            FocusableProperty.OverrideMetadata(typeof(DataGridColumnHeadersPresenter), new FrameworkPropertyMetadata(false));
 
             FrameworkElementFactory factory = new FrameworkElementFactory(typeof(DataGridCellsPanel));
-            ItemsPanelProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new ItemsPanelTemplate(factory)));
+            ItemsPanelProperty.OverrideMetadata(typeof(DataGridColumnHeadersPresenter), new FrameworkPropertyMetadata(new ItemsPanelTemplate(factory)));
 
             VirtualizingPanel.IsVirtualizingProperty.OverrideMetadata(
-                ownerType,
+                typeof(DataGridColumnHeadersPresenter),
                 new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnIsVirtualizingPropertyChanged), new CoerceValueCallback(OnCoerceIsVirtualizingProperty)));
 
             VirtualizingPanel.VirtualizationModeProperty.OverrideMetadata(
-                ownerType,
+                typeof(DataGridColumnHeadersPresenter),
                 new FrameworkPropertyMetadata(VirtualizationMode.Recycling));
         }
 

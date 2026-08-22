@@ -362,11 +362,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(RectangleGeometry);
             RadiusXProperty =
                   RegisterProperty("RadiusX",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(RectangleGeometry),
                                    0.0,
                                    new PropertyChangedCallback(RadiusXPropertyChanged),
                                    null,
@@ -375,7 +374,7 @@ namespace System.Windows.Media
             RadiusYProperty =
                   RegisterProperty("RadiusY",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(RectangleGeometry),
                                    0.0,
                                    new PropertyChangedCallback(RadiusYPropertyChanged),
                                    null,
@@ -384,7 +383,7 @@ namespace System.Windows.Media
             RectProperty =
                   RegisterProperty("Rect",
                                    typeof(Rect),
-                                   typeofThis,
+                                   typeof(RectangleGeometry),
                                    Rect.Empty,
                                    new PropertyChangedCallback(RectPropertyChanged),
                                    null,

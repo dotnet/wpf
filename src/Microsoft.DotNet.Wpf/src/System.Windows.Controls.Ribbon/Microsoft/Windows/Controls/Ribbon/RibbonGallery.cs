@@ -55,26 +55,25 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         static RibbonGallery()
         {
-            Type ownerType = typeof(RibbonGallery);
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            ItemContainerStyleProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerceItemContainerStyle)));
-            ItemTemplateProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerceItemTemplate)));
-            EventManager.RegisterClassHandler(ownerType, MouseMoveEvent, new MouseEventHandler(OnMouseMove), true);
-            ToolTipProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(RibbonHelper.CoerceRibbonToolTip)));
-            ToolTipService.ShowOnDisabledProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(true));
-            ContextMenuProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(RibbonHelper.OnContextMenuChanged, RibbonHelper.OnCoerceContextMenu));
-            ContextMenuService.ShowOnDisabledProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(true));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonGallery), new FrameworkPropertyMetadata(typeof(RibbonGallery)));
+            ItemContainerStyleProperty.OverrideMetadata(typeof(RibbonGallery), new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerceItemContainerStyle)));
+            ItemTemplateProperty.OverrideMetadata(typeof(RibbonGallery), new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerceItemTemplate)));
+            EventManager.RegisterClassHandler(typeof(RibbonGallery), MouseMoveEvent, new MouseEventHandler(OnMouseMove), true);
+            ToolTipProperty.OverrideMetadata(typeof(RibbonGallery), new FrameworkPropertyMetadata(null, new CoerceValueCallback(RibbonHelper.CoerceRibbonToolTip)));
+            ToolTipService.ShowOnDisabledProperty.OverrideMetadata(typeof(RibbonGallery), new FrameworkPropertyMetadata(true));
+            ContextMenuProperty.OverrideMetadata(typeof(RibbonGallery), new FrameworkPropertyMetadata(RibbonHelper.OnContextMenuChanged, RibbonHelper.OnCoerceContextMenu));
+            ContextMenuService.ShowOnDisabledProperty.OverrideMetadata(typeof(RibbonGallery), new FrameworkPropertyMetadata(true));
 #if IN_RIBBON_GALLERY
-            ScrollViewer.VerticalScrollBarVisibilityProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(CoerceVerticalScrollBarVisibility)));
+            ScrollViewer.VerticalScrollBarVisibilityProperty.OverrideMetadata(typeof(RibbonGallery), new FrameworkPropertyMetadata(null, new CoerceValueCallback(CoerceVerticalScrollBarVisibility)));
 #else
-            ScrollViewer.VerticalScrollBarVisibilityProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null));
+            ScrollViewer.VerticalScrollBarVisibilityProperty.OverrideMetadata(typeof(RibbonGallery), new FrameworkPropertyMetadata(null));
 #endif
-            EventManager.RegisterClassHandler(ownerType, RibbonControlService.DismissPopupEvent, new RibbonDismissPopupEventHandler(OnDismissPopupThunk));
+            EventManager.RegisterClassHandler(typeof(RibbonGallery), RibbonControlService.DismissPopupEvent, new RibbonDismissPopupEventHandler(OnDismissPopupThunk));
 
-            FilterCommand = new RoutedCommand("Filter", ownerType);
-            CommandManager.RegisterClassCommandBinding(ownerType, new CommandBinding(FilterCommand, FilterExecuted, FilterCanExecute));
-            EventManager.RegisterClassHandler(ownerType, LoadedEvent, new RoutedEventHandler(OnLoaded));
-            EventManager.RegisterClassHandler(ownerType, UnloadedEvent, new RoutedEventHandler(OnUnloaded));
+            FilterCommand = new RoutedCommand("Filter", typeof(RibbonGallery));
+            CommandManager.RegisterClassCommandBinding(typeof(RibbonGallery), new CommandBinding(FilterCommand, FilterExecuted, FilterCanExecute));
+            EventManager.RegisterClassHandler(typeof(RibbonGallery), LoadedEvent, new RoutedEventHandler(OnLoaded));
+            EventManager.RegisterClassHandler(typeof(RibbonGallery), UnloadedEvent, new RoutedEventHandler(OnUnloaded));
         }
 
         /// <summary>

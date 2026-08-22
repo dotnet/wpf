@@ -268,11 +268,10 @@ namespace System.Windows.Media.Effects
 
 
             // Initializations
-            Type typeofThis = typeof(OuterGlowBitmapEffect);
             GlowColorProperty =
                   RegisterProperty("GlowColor",
                                    typeof(Color),
-                                   typeofThis,
+                                   typeof(OuterGlowBitmapEffect),
                                    Colors.Gold,
                                    new PropertyChangedCallback(GlowColorPropertyChanged),
                                    null,
@@ -281,7 +280,7 @@ namespace System.Windows.Media.Effects
             GlowSizeProperty =
                   RegisterProperty("GlowSize",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(OuterGlowBitmapEffect),
                                    5.0,
                                    new PropertyChangedCallback(GlowSizePropertyChanged),
                                    null,
@@ -290,7 +289,7 @@ namespace System.Windows.Media.Effects
             NoiseProperty =
                   RegisterProperty("Noise",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(OuterGlowBitmapEffect),
                                    0.0,
                                    new PropertyChangedCallback(NoisePropertyChanged),
                                    null,
@@ -299,7 +298,7 @@ namespace System.Windows.Media.Effects
             OpacityProperty =
                   RegisterProperty("Opacity",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(OuterGlowBitmapEffect),
                                    1.0,
                                    new PropertyChangedCallback(OpacityPropertyChanged),
                                    null,

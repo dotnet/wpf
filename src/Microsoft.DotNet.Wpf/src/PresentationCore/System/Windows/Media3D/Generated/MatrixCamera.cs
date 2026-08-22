@@ -302,11 +302,10 @@ namespace System.Windows.Media.Media3D
 
 
             // Initializations
-            Type typeofThis = typeof(MatrixCamera);
             ViewMatrixProperty =
                   RegisterProperty("ViewMatrix",
                                    typeof(Matrix3D),
-                                   typeofThis,
+                                   typeof(MatrixCamera),
                                    Matrix3D.Identity,
                                    new PropertyChangedCallback(ViewMatrixPropertyChanged),
                                    null,
@@ -315,7 +314,7 @@ namespace System.Windows.Media.Media3D
             ProjectionMatrixProperty =
                   RegisterProperty("ProjectionMatrix",
                                    typeof(Matrix3D),
-                                   typeofThis,
+                                   typeof(MatrixCamera),
                                    Matrix3D.Identity,
                                    new PropertyChangedCallback(ProjectionMatrixPropertyChanged),
                                    null,

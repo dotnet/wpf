@@ -2247,7 +2247,7 @@ namespace System.Windows
                     args.RoutedEvent,
                     sender,
                     args,
-                    args.Handled );
+                    BooleanBoxes.Box(args.Handled));
             }
 
             try
@@ -2275,7 +2275,7 @@ namespace System.Windows
                         args.RoutedEvent,
                         sender,
                         args,
-                        args.Handled );
+                        BooleanBoxes.Box(args.Handled));
                 }
             }
 
@@ -2299,7 +2299,7 @@ namespace System.Windows
                     args.RoutedEvent,
                     sender,
                     args,
-                    args.Handled );
+                    BooleanBoxes.Box(args.Handled));
             }
 
             try
@@ -2325,7 +2325,7 @@ namespace System.Windows
                         args.RoutedEvent,
                         sender,
                         args,
-                        args.Handled );
+                        BooleanBoxes.Box(args.Handled));
                 }
             }
 

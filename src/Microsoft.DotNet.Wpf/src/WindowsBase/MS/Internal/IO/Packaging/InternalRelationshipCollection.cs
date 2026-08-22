@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description:
@@ -62,11 +62,11 @@ namespace MS.Internal.IO.Packaging
         //------------------------------------------------------
 
 
-        private static readonly string RelationshipTagName      = "Relationship";
-        private static readonly string TargetAttributeName      = "Target";
-        private static readonly string TypeAttributeName        = "Type";
-        private static readonly string IdAttributeName          = "Id";
-        private static readonly string TargetModeAttributeName  = "TargetMode";
+        private const string RelationshipTagName = "Relationship";
+        private const string TargetAttributeName = "Target";
+        private const string TypeAttributeName = "Type";
+        private const string IdAttributeName = "Id";
+        private const string TargetModeAttributeName = "TargetMode";
     }
 }
 

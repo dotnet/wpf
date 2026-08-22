@@ -321,7 +321,7 @@ namespace MS.Internal.AppModel
 
         private static readonly Dictionary<string, ResourceManagerWrapper> s_registeredResourceManagers = new(StringComparer.Ordinal);
         private static readonly Dictionary<string, ResourceManagerWrapper>.AlternateLookup<ReadOnlySpan<char>> s_registeredResourceManagersLookup = s_registeredResourceManagers.GetAlternateLookup<ReadOnlySpan<char>>();
-        private static readonly FileShare s_fileShare = FileShare.Read;
+        private const FileShare s_fileShare = FileShare.Read;
 
         private static ResourceManagerWrapper s_applicationResourceManagerWrapper = null;
         private static bool s_assemblyLoadHandlerAttached = false;

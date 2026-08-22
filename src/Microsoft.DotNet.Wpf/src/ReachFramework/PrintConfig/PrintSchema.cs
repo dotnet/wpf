@@ -1864,10 +1864,8 @@ namespace MS.Internal.Printing.Configuration
     /// <summary>
     /// Internal class to hold standard namespaces used by Print Schema
     /// </summary>
-    internal class PrintSchemaNamespaces
+    internal static class PrintSchemaNamespaces
     {
-        private PrintSchemaNamespaces() {}
-
         public const string Framework = "http://schemas.microsoft.com/windows/2003/08/printing/printschemaframework";
         public const string StandardKeywordSet = "http://schemas.microsoft.com/windows/2003/08/printing/printschemakeywords";
         public const string xsi = "http://www.w3.org/2001/XMLSchema-instance";
@@ -1883,10 +1881,8 @@ namespace MS.Internal.Printing.Configuration
     /// <summary>
     /// Internal class to hold prefixes for Print Schema standard namespaces
     /// </summary>
-    internal class PrintSchemaPrefixes
+    internal static class PrintSchemaPrefixes
     {
-        private PrintSchemaPrefixes() {}
-
         public const string Framework =             "psf";
         public const string StandardKeywordSet =    "psk";
         public const string xsi =                   "xsi";
@@ -1897,10 +1893,8 @@ namespace MS.Internal.Printing.Configuration
     /// <summary>
     /// Internal class to hold const strings for standard xsi types
     /// </summary>
-    internal class PrintSchemaXsiTypes
+    internal static class PrintSchemaXsiTypes
     {
-        private PrintSchemaXsiTypes() {}
-
         public const string Integer = "integer";
         public const string String =  "string";
         public const string QName =   "QName";
@@ -1909,10 +1903,8 @@ namespace MS.Internal.Printing.Configuration
     /// <summary>
     /// Internal class to hold public Print Schema constant keywords
     /// </summary>
-    internal class PrintSchemaTags
+    internal static class PrintSchemaTags
     {
-        private PrintSchemaTags() {}
-
         internal struct MapEntry
         {
             public string SchemaName;
@@ -1924,10 +1916,8 @@ namespace MS.Internal.Printing.Configuration
             }
         }
 
-        internal class Framework
+        internal static class Framework
         {
-            private Framework() {}
-
             internal const decimal SchemaVersion = 1;
 
             internal const string PrintTicketRoot =   "PrintTicket";
@@ -1969,34 +1959,26 @@ namespace MS.Internal.Printing.Configuration
                 "</" + PrintSchemaPrefixes.Framework + ":" + PrintSchemaTags.Framework.PrintTicketRoot + ">";
         }
 
-        internal class Keywords
+        internal static class Keywords
         {
-            private Keywords() {}
-
-            internal class CollateKeys
+            internal static class CollateKeys
             {
-                private CollateKeys() { }
-
                 internal const string DocumentCollate = "DocumentCollate";
 
                 internal static string[] CollationNames = Enum.GetNames(typeof(Collation));
                 internal static int[] CollationEnums = (int[])(Array)Enum.GetValues<Collation>();
             }
 
-            internal class DuplexKeys
+            internal static class DuplexKeys
             {
-                private DuplexKeys() { }
-
                 internal const string JobDuplex = "JobDuplexAllDocumentsContiguously";
 
                 internal static string[] DuplexNames = Enum.GetNames(typeof(Duplexing));
                 internal static int[] DuplexEnums = (int[])(Array)Enum.GetValues<Duplexing>();
             }
 
-            internal class NUpKeys
+            internal static class NUpKeys
             {
-                private NUpKeys() {}
-
                 internal const string JobNUp = "JobNUpAllDocumentsContiguously";
                 internal const string PagesPerSheet = "PagesPerSheet";
                 internal const string PresentationDirection = "PresentationDirection";
@@ -2005,30 +1987,24 @@ namespace MS.Internal.Printing.Configuration
                 internal static int[] DirectionEnums = (int[])(Array)Enum.GetValues<PagesPerSheetDirection>();
             }
 
-            internal class StapleKeys
+            internal static class StapleKeys
             {
-                private StapleKeys() {}
-
                 internal const string JobStaple = "JobStapleAllDocuments";
 
                 internal static string[] StaplingNames = Enum.GetNames(typeof(Stapling));
                 internal static int[] StaplingEnums = (int[])(Array)Enum.GetValues<Stapling>();
             }
 
-            internal class PageDeviceFontSubstitutionKeys
+            internal static class PageDeviceFontSubstitutionKeys
             {
-                private PageDeviceFontSubstitutionKeys() {}
-
                 internal const string Self = "PageDeviceFontSubstitution";
 
                 internal static string[] SubstitutionNames = Enum.GetNames(typeof(DeviceFontSubstitution));
                 internal static int[] SubstitutionEnums = (int[])(Array)Enum.GetValues<DeviceFontSubstitution>();
             }
 
-            internal class PageMediaSizeKeys
+            internal static class PageMediaSizeKeys
             {
-                private PageMediaSizeKeys() { }
-
                 internal const string Self =                  "PageMediaSize";
                 internal const string MediaSizeWidth        = "MediaSizeWidth";
                 internal const string MediaSizeHeight       = "MediaSizeHeight";
@@ -2044,10 +2020,8 @@ namespace MS.Internal.Printing.Configuration
                 internal static int[] MediaSizeEnums = (int[])(Array)Enum.GetValues<PageMediaSizeName>();
             }
 
-            internal class PageImageableSizeKeys
+            internal static class PageImageableSizeKeys
             {
-                private PageImageableSizeKeys() { }
-
                 internal const string Self                   = "PageImageableSize";
                 internal const string ImageableSizeWidth     = "ImageableSizeWidth";
                 internal const string ImageableSizeHeight    = "ImageableSizeHeight";
@@ -2060,40 +2034,32 @@ namespace MS.Internal.Printing.Configuration
                 internal const string ExtentHeight       =     "ExtentHeight";
             }
 
-            internal class PageMediaTypeKeys
+            internal static class PageMediaTypeKeys
             {
-                private PageMediaTypeKeys() {}
-
                 internal const string Self =         "PageMediaType";
 
                 internal static string[] MediaTypeNames = Enum.GetNames(typeof(PageMediaType));
                 internal static int[] MediaTypeEnums = (int[])(Array)Enum.GetValues<PageMediaType>();
             }
 
-            internal class PageOrientationKeys
+            internal static class PageOrientationKeys
             {
-                private PageOrientationKeys() {}
-
                 internal const string Self = "PageOrientation";
 
                 internal static string[] OrientationNames = Enum.GetNames(typeof(PageOrientation));
                 internal static int[] OrientationEnums = (int[])(Array)Enum.GetValues<PageOrientation>();
             }
 
-            internal class PageOutputColorKeys
+            internal static class PageOutputColorKeys
             {
-                private PageOutputColorKeys() {}
-
                 internal const string Self =   "PageOutputColor";
 
                 internal static string[] ColorNames = Enum.GetNames(typeof(OutputColor));
                 internal static int[] ColorEnums = (int[])(Array)Enum.GetValues<OutputColor>();
             }
 
-            internal class PageResolutionKeys
+            internal static class PageResolutionKeys
             {
-                private PageResolutionKeys() {}
-
                 internal const string Self =                  "PageResolution";
                 internal const string ResolutionX =           "ResolutionX";
                 internal const string ResolutionY =           "ResolutionY";
@@ -2103,10 +2069,8 @@ namespace MS.Internal.Printing.Configuration
                 internal static int[] QualityEnums = (int[])(Array)Enum.GetValues<PageQualitativeResolution>();
             }
 
-            internal class PageScalingKeys
+            internal static class PageScalingKeys
             {
-                private PageScalingKeys() { }
-
                 internal const string Self =               "PageScaling";
                 internal const string CustomScaleWidth   = "ScaleWidth";
                 internal const string CustomScaleHeight  = "ScaleHeight";
@@ -2116,60 +2080,48 @@ namespace MS.Internal.Printing.Configuration
                 internal static int[] ScalingEnums = (int[])(Array)Enum.GetValues<PageScaling>();
             }
 
-            internal class PageTrueTypeFontModeKeys
+            internal static class PageTrueTypeFontModeKeys
             {
-                private PageTrueTypeFontModeKeys() { }
-
                 internal const string Self = "PageTrueTypeFontMode";
 
                 internal static string[] ModeNames = Enum.GetNames(typeof(TrueTypeFontMode));
                 internal static int[] ModeEnums = (int[])(Array)Enum.GetValues<TrueTypeFontMode>();
             }
 
-            internal class JobPageOrderKeys
+            internal static class JobPageOrderKeys
             {
-                private JobPageOrderKeys() { }
-
                 internal const string Self = "JobPageOrder";
 
                 internal static string[] PageOrderNames = Enum.GetNames(typeof(PageOrder));
                 internal static int[] PageOrderEnums = (int[])(Array)Enum.GetValues<PageOrder>();
             }
 
-            internal class PagePhotoPrintingIntentKeys
+            internal static class PagePhotoPrintingIntentKeys
             {
-                private PagePhotoPrintingIntentKeys() { }
-
                 internal const string Self = "PagePhotoPrintingIntent";
 
                 internal static string[] PhotoIntentNames = Enum.GetNames(typeof(PhotoPrintingIntent));
                 internal static int[] PhotoIntentEnums = (int[])(Array)Enum.GetValues<PhotoPrintingIntent>();
             }
 
-            internal class PageBorderlessKeys
+            internal static class PageBorderlessKeys
             {
-                private PageBorderlessKeys() { }
-
                 internal const string Self = "PageBorderless";
 
                 internal static string[] BorderlessNames = Enum.GetNames(typeof(PageBorderless));
                 internal static int[] BorderlessEnums = (int[])(Array)Enum.GetValues<PageBorderless>();
             }
 
-            internal class PageOutputQualityKeys
+            internal static class PageOutputQualityKeys
             {
-                private PageOutputQualityKeys() { }
-
                 internal const string Self = "PageOutputQuality";
 
                 internal static string[] OutputQualityNames = Enum.GetNames(typeof(OutputQuality));
                 internal static int[] OutputQualityEnums = (int[])(Array)Enum.GetValues<OutputQuality>();
             }
 
-            internal class InputBinKeys
+            internal static class InputBinKeys
             {
-                private InputBinKeys() { }
-
                 internal const string JobInputBin = "JobInputBin";
                 internal const string DocumentInputBin = "DocumentInputBin";
                 internal const string PageInputBin = "PageInputBin";
@@ -2178,19 +2130,15 @@ namespace MS.Internal.Printing.Configuration
                 internal static int[] InputBinEnums = (int[])(Array)Enum.GetValues<InputBin>();
             }
 
-            internal class ParameterProps
+            internal static class ParameterProps
             {
-                private ParameterProps() {}
-
                 internal const string DefaultValue = "DefaultValue";
                 internal const string MinValue =     "MinValue";
                 internal const string MaxValue =     "MaxValue";
             }
 
-            internal class ParameterDefs
+            internal static class ParameterDefs
             {
-                private ParameterDefs() {}
-
                 internal const string JobCopyCount = "JobCopiesAllDocuments";
 
                 // for non-PS custom media size.
@@ -2245,9 +2193,8 @@ namespace MS.Internal.Printing.Configuration
         }
     }
 
-    internal class UnitConverter
+    internal static class UnitConverter
     {
-        private UnitConverter() {}
 
         /// <summary>
         /// Converts internal micron length value to DIP length value (in 1/96 inch unit).

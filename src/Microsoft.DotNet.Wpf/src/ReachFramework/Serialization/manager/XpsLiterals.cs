@@ -16,14 +16,8 @@ using MS.Internal;
 
 namespace System.Windows.Xps.Packaging
 {
-    internal class XpsNamedProperties
+    internal static class XpsNamedProperties
     {
-        private
-        XpsNamedProperties(
-            )
-        {
-        }
-
         public
         static
         String
@@ -56,7 +50,7 @@ namespace System.Windows.Xps.Packaging
         String  _clrProperty         = "Property";
     };
 
-    internal class XpsS0Markup
+    internal static class XpsS0Markup
     {
         public
         static
@@ -1233,14 +1227,8 @@ namespace System.Windows.Xps.Packaging
         string  _versionExtensiblityNamespace           ="http://schemas.openxmlformats.org/markup-compatibility/2006";
     };
 
-    internal class XmlTags
+    internal static class XmlTags
     {
-        private
-        XmlTags(
-            )
-        {
-        }
-
         public
         static
         String

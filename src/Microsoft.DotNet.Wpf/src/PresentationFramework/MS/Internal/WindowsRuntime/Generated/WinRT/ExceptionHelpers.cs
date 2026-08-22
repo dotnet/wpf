@@ -372,7 +372,7 @@ namespace WinRT
         }
     }
 
-    internal class ErrorStrings
+    internal static class ErrorStrings
     {
         internal static string Format(string format, params object[] args) => String.Format(format, args);
 

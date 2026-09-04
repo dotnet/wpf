@@ -147,9 +147,8 @@ namespace System.Windows.Documents
         /// <summary>
         ///    Get ranges that the property is changed.
         /// </summary>
-        // 파생 클래스도 쓸 수 있도록 protected 로 승격.
-        // TextServicesDisplayAttributePropertyRanges 가 OnEndEdit 을 오버라이드하면서
-        // 이 범위 한정을 놓치고 문서 전체를 열거하는 문제가 있어 필요하다.
+        // Promoted from private to protected so TextServicesDisplayAttributePropertyRanges
+        // can reuse it to scope its enumeration to the ranges an edit actually changed.
         protected UnsafeNativeMethods.IEnumTfRanges GetPropertyUpdate(
                                 UnsafeNativeMethods.ITfEditRecord editRecord)
         {

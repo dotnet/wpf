@@ -77,9 +77,6 @@ namespace System.Windows.Documents
         {
             Guid displayAttributeGuid;
             UnsafeNativeMethods.ITfProperty displayAttributeProperty;
-            UnsafeNativeMethods.IEnumTfRanges updatedRangeEnumerator;
-            UnsafeNativeMethods.ITfRange[] updatedRanges;
-            int fetched;
 
             //
             // Remove any existing display attribute highlights.
@@ -109,34 +106,35 @@ namespace System.Windows.Documents
             context.GetProperty(ref displayAttributeGuid, out displayAttributeProperty);
 
             //
-            // Only look at the ranges this edit actually changed.
+            // Enumerate the display attribute property only where display attributes
+            // can currently be, instead of over the whole document.
             //
-            // Passing null as the target range of EnumRanges enumerates the display
-            // attribute property over the WHOLE document. The property accumulates a
-            // range per previously composed run, so the enumeration - and the COM
-            // round trip it costs per range - grows with the length of the document,
-            // on every single keystroke.
+            // Passing null as the target range of EnumRanges enumerates the property
+            // across the entire document. The property keeps a range for every run the
+            // input method has composed, so on a long document this is a COM round trip
+            // per historical range, on every keystroke. Measured with the Windows 11
+            // Korean TSF IME on a 1,200 character document, a single OnEndEdit
+            // enumerated 1,077 ranges of which exactly one carried an attribute, and
+            // blocked the UI thread for roughly three seconds.
             //
-            // Measured with a modern Korean TSF IME on a 1,200 character document:
-            // 1,077 ranges returned, of which exactly one carried an attribute, for
-            // roughly 3 seconds of blocked UI thread on one keystroke. Restricting
-            // the enumeration to the updated ranges removes the stalls entirely.
+            // Display attributes are decorations the input method places on text it is
+            // composing, so they can only be (a) inside an active composition or
+            // (b) on a range this edit just changed (which also covers ranges an ending
+            // composition just cleared). Enumerating the smallest span that covers both
+            // finds every range the whole-document scan would find - for any IME,
+            // including ones whose composition holds several attribute ranges at once,
+            // such as Japanese clause conversion, and edits that touch only some of
+            // them - while keeping the cost proportional to the composition rather than
+            // to the document.
             //
-            // This mirrors what the base class TextServicesPropertyRanges.OnEndEdit
-            // already does; this override had lost that scoping.
-            //
-            updatedRangeEnumerator = GetPropertyUpdate(editRecord);
-            if (updatedRangeEnumerator != null)
+            if (TryGetAttributeScanWindow(context, ecReadOnly, editRecord, out int scanStart, out int scanEnd))
             {
-                updatedRanges = new UnsafeNativeMethods.ITfRange[1];
+                context.GetStart(ecReadOnly, out UnsafeNativeMethods.ITfRange scanRange);
+                ((UnsafeNativeMethods.ITfRangeACP)scanRange).SetExtent(scanStart, scanEnd - scanStart);
 
-                while (updatedRangeEnumerator.Next(1, updatedRanges, out fetched) == NativeMethods.S_OK)
-                {
-                    AddAttributeRanges(ecReadOnly, displayAttributeProperty, updatedRanges[0]);
-                    Marshal.ReleaseComObject(updatedRanges[0]);
-                }
+                AddAttributeRanges(ecReadOnly, displayAttributeProperty, scanRange);
 
-                Marshal.ReleaseComObject(updatedRangeEnumerator);
+                Marshal.ReleaseComObject(scanRange);
             }
 
 #if UNUSED_IME_HIGHLIGHT_LAYER
@@ -156,6 +154,79 @@ namespace System.Windows.Documents
             }
 
             Marshal.ReleaseComObject(displayAttributeProperty);
+        }
+
+        /// <summary>
+        ///     Computes the smallest ACP span covering every active composition and
+        ///     every range whose display attribute this edit changed. Returns false
+        ///     when there is nothing to scan.
+        /// </summary>
+        private bool TryGetAttributeScanWindow(
+            UnsafeNativeMethods.ITfContext context,
+            int ecReadOnly,
+            UnsafeNativeMethods.ITfEditRecord editRecord,
+            out int scanStart,
+            out int scanEnd)
+        {
+            scanStart = int.MaxValue;
+            scanEnd = int.MinValue;
+            int fetched;
+
+            // (a) Active compositions.
+            if (context is UnsafeNativeMethods.ITfContextComposition contextComposition)
+            {
+                contextComposition.EnumCompositions(out UnsafeNativeMethods.IEnumITfCompositionView compositionEnumerator);
+                if (compositionEnumerator != null)
+                {
+                    UnsafeNativeMethods.ITfCompositionView[] views = new UnsafeNativeMethods.ITfCompositionView[1];
+                    while (compositionEnumerator.Next(1, views, out fetched) == NativeMethods.S_OK && fetched == 1)
+                    {
+                        views[0].GetRange(out UnsafeNativeMethods.ITfRange compositionRange);
+                        if (compositionRange != null)
+                        {
+                            ExtendScanWindow(compositionRange, ref scanStart, ref scanEnd);
+                            Marshal.ReleaseComObject(compositionRange);
+                        }
+                        Marshal.ReleaseComObject(views[0]);
+                    }
+                    Marshal.ReleaseComObject(compositionEnumerator);
+                }
+            }
+
+            // (b) Ranges whose display attribute changed in this edit.
+            UnsafeNativeMethods.IEnumTfRanges updatedRanges = GetPropertyUpdate(editRecord);
+            if (updatedRanges != null)
+            {
+                UnsafeNativeMethods.ITfRange[] updated = new UnsafeNativeMethods.ITfRange[1];
+                while (updatedRanges.Next(1, updated, out fetched) == NativeMethods.S_OK && fetched == 1)
+                {
+                    ExtendScanWindow(updated[0], ref scanStart, ref scanEnd);
+                    Marshal.ReleaseComObject(updated[0]);
+                }
+                Marshal.ReleaseComObject(updatedRanges);
+            }
+
+            return scanStart <= scanEnd;
+        }
+
+        private static void ExtendScanWindow(UnsafeNativeMethods.ITfRange range, ref int scanStart, ref int scanEnd)
+        {
+            ((UnsafeNativeMethods.ITfRangeACP)range).GetExtent(out int start, out int count);
+
+            // Cicero can report a negative length; ConvertToTextPosition guards the same way.
+            if (count < 0)
+            {
+                return;
+            }
+
+            if (start < scanStart)
+            {
+                scanStart = start;
+            }
+            if (start + count > scanEnd)
+            {
+                scanEnd = start + count;
+            }
         }
 
         /// <summary>

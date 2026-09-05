@@ -2502,26 +2502,6 @@
         <target state="translated">Wątek wywołujący nie może uzyskać dostępu do tego obiektu, ponieważ należy on do innego wątku.</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_ApartmentState">
-        <source>This operation requires the thread's apartment state to be '{0}'.</source>
-        <target state="translated">Ta operacja wymaga stanu apartamentu wątku „{0}”.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Verify_AreNotEqual">
-        <source>The argument can not be equal to '{0}'.</source>
-        <target state="translated">Argument nie może być równy „{0}”.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Verify_FileExists">
-        <source>No file exists at '{0}'.</source>
-        <target state="translated">Żaden plik nie istnieje w „{0}”.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Verify_NeitherNullNorEmpty">
-        <source>The argument can neither be null nor empty.</source>
-        <target state="translated">Argument nie może być zerowy ani pusty.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="VersionNumberComponentNegative">
         <source>Major and minor version number components cannot be negative.</source>
         <target state="translated">Główne i pomocnicze składniki numeru wersji nie mogą być ujemne.</target>

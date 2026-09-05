@@ -1,14 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace MS.Win32
 {
-    internal class ExternDll
+    internal static class ExternDll
     {
-        // To appease the FxCop
-        private ExternDll()
-        { }
-
         internal const string Gdiplus = "gdiplus.dll";
         internal const string User32 = "user32.dll";
         internal const string Shfolder = "shfolder.dll";

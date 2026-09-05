@@ -32,4 +32,7 @@ CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XmlnsCompatibleWit
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XmlnsDefinitionAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XmlnsPrefixAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Media.DisableDpiAwarenessAttribute' does not implement interface 'System.Runtime.InteropServices._Attribute' in the implementation but it does in the contract.
-Total Issues: 33
+CannotMakeTypeAbstract : Type 'System.Windows.Threading.DispatcherOperation' is abstract in the implementation but is not abstract in the contract.
+MembersMustExist : Member 'protected System.Object System.Windows.Threading.DispatcherOperation.InvokeDelegateCore()' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'protected System.Object System.Windows.Threading.DispatcherOperation<TResult>.InvokeDelegateCore()' does not exist in the implementation but it does exist in the contract.
+Total Issues: 36

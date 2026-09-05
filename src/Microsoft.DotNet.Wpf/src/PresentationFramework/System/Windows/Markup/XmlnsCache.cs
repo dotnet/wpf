@@ -14,9 +14,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Reflection;
 using MS.Utility;
-#if PBTCOMPILER
-using MS.Internal.PresentationBuildTasks;
-#else
+#if !PBTCOMPILER
 using MS.Internal.PresentationFramework;
 using MS.Internal.Utility;  // AssemblyCacheEnum
 #endif

@@ -2506,9 +2506,8 @@ namespace Standard
         [DllImport("dwmapi.dll", EntryPoint = "DwmExtendFrameIntoClientArea", PreserveSig = true, SetLastError = true)]
         private static extern HRESULT _DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);
 
-        [DllImport("dwmapi.dll", EntryPoint = "DwmIsCompositionEnabled", PreserveSig = false)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool _DwmIsCompositionEnabled();
+        [DllImport("dwmapi.dll", EntryPoint = "DwmIsCompositionEnabled", PreserveSig = true)]
+        private static extern HRESULT _DwmIsCompositionEnabled([Out, MarshalAs(UnmanagedType.Bool)] out bool pfEnabled);
 
         [DllImport("dwmapi.dll", EntryPoint = "DwmGetColorizationColor", PreserveSig = true)]
         private static extern HRESULT _DwmGetColorizationColor(out uint pcrColorization, [Out, MarshalAs(UnmanagedType.Bool)] out bool pfOpaqueBlend);
@@ -2564,7 +2563,12 @@ namespace Standard
             {
                 return false;
             }
-            return _DwmIsCompositionEnabled();
+
+            // Use PreserveSig = true with explicit out parameter to avoid
+            // marshalling issues on Mono/wine-mono, which does not support
+            // PreserveSig = false for DllImports. See dotnet/wpf#4166.
+            HRESULT hr = _DwmIsCompositionEnabled(out bool enabled);
+            return hr == HRESULT.S_OK && enabled;
         }
 
         [DllImport("dwmapi.dll")]

@@ -3119,27 +3119,24 @@ namespace System.Windows.Controls
                 ExtendedData extData = ExtData;
                 int requiredLength = Math.Max(DefinitionsU.Length, DefinitionsV.Length) * 2;
 
-                if (    extData.TempDefinitions == null
-                    ||  extData.TempDefinitions.Length < requiredLength   )
+                if (extData.TempDefinitions == null || extData.TempDefinitions.Length < requiredLength)
                 {
-                    WeakReference tempDefinitionsWeakRef = (WeakReference)Thread.GetData(s_tempDefinitionsDataSlot);
-                    if (tempDefinitionsWeakRef == null)
+                    if (s_tempDefinitionsWeakRef is null)
                     {
                         extData.TempDefinitions = new DefinitionBase[requiredLength];
-                        Thread.SetData(s_tempDefinitionsDataSlot, new WeakReference(extData.TempDefinitions));
+                        s_tempDefinitionsWeakRef = new WeakReference<DefinitionBase[]>(extData.TempDefinitions);
                     }
                     else
                     {
-                        extData.TempDefinitions = (DefinitionBase[])tempDefinitionsWeakRef.Target;
-                        if (    extData.TempDefinitions == null
-                            ||  extData.TempDefinitions.Length < requiredLength   )
+                        if (!s_tempDefinitionsWeakRef.TryGetTarget(out extData.TempDefinitions) || extData.TempDefinitions.Length < requiredLength)
                         {
                             extData.TempDefinitions = new DefinitionBase[requiredLength];
-                            tempDefinitionsWeakRef.Target = extData.TempDefinitions;
+                            s_tempDefinitionsWeakRef.SetTarget(extData.TempDefinitions);
                         }
                     }
                 }
-                return (extData.TempDefinitions);
+
+                return extData.TempDefinitions;
             }
         }
 
@@ -3328,10 +3325,17 @@ namespace System.Windows.Controls
         //------------------------------------------------------
 
         #region Static Fields
+
         private const double c_epsilon = 1e-5;                  //  used in fp calculations
         private const double c_starClip = 1e298;                //  used as maximum for clipping star values during normalization
         private const int c_layoutLoopMaxCount = 5;             // 5 is an arbitrary constant chosen to end the measure loop
-        private static readonly LocalDataStoreSlot s_tempDefinitionsDataSlot = Thread.AllocateDataSlot();
+
+        /// <summary>
+        /// Holds a thread-specific instance of <see cref="WeakReference{DefinitionBase[]}"/>.
+        /// </summary>
+        [ThreadStatic]
+        private static WeakReference<DefinitionBase[]> s_tempDefinitionsWeakRef;
+
         private static readonly Comparison<DefinitionBase> s_spanPreferredDistributionOrderComparer = SpanPreferredDistributionOrderComparer;
         private static readonly Comparison<DefinitionBase> s_spanMaxDistributionOrderComparer = SpanMaxDistributionOrderComparer;
         private static readonly Comparison<DefinitionBase> s_starDistributionOrderComparer = StarDistributionOrderComparer;

@@ -170,7 +170,7 @@ namespace System.Windows.Controls
                         typeof(bool),
                         typeof(MediaElement),
                         new FrameworkPropertyMetadata(
-                            false,
+                            BooleanBoxes.FalseBox,
                             FrameworkPropertyMetadataOptions.None,
                             new PropertyChangedCallback(ScrubbingEnabledPropertyChanged)));
 

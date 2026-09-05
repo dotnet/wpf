@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Data;
 using System.Windows.Markup;
 using MS.Internal;
-using MS.Internal.KnownBoxes;
 using System.Windows.Documents;
 
 using MS.Utility;

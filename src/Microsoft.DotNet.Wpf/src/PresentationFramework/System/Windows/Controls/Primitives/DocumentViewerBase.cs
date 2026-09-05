@@ -11,7 +11,6 @@ using System.Windows.Input;             // UICommand
 using System.Windows.Media;             // Visual
 using System.Windows.Markup;            // IAddChild, XamlSerializerUtil, ContentPropertyAttribute
 using MS.Internal;                      // Invariant, DoubleUtil
-using MS.Internal.KnownBoxes;           // BooleanBoxes
 using MS.Internal.Annotations.Anchoring;// DataIdProcessor, FixedPageProcessor, ...
 using MS.Internal.Documents;            // MultiPageTextView
 using MS.Internal.Controls;             // EmptyEnumerator
@@ -49,7 +48,7 @@ namespace System.Windows.Controls.Primitives
             EventManager.RegisterClassHandler(typeof(DocumentViewerBase), RequestBringIntoViewEvent, new RequestBringIntoViewEventHandler(HandleRequestBringIntoView));
 
             // Default value for AutoWordSelection is false.  We want true.
-            TextBoxBase.AutoWordSelectionProperty.OverrideMetadata(typeof(DocumentViewerBase), new FrameworkPropertyMetadata(true));
+            TextBoxBase.AutoWordSelectionProperty.OverrideMetadata(typeof(DocumentViewerBase), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
         }
 
         /// <summary>

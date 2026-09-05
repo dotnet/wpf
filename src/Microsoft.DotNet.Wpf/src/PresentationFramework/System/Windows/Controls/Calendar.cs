@@ -474,7 +474,7 @@ namespace System.Windows.Controls
             "IsTodayHighlighted",
             typeof(bool),
             typeof(Calendar),
-            new FrameworkPropertyMetadata(true, OnIsTodayHighlightedChanged));
+            new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, OnIsTodayHighlightedChanged));
 
         /// <summary>
         /// IsTodayHighlightedProperty property changed handler.

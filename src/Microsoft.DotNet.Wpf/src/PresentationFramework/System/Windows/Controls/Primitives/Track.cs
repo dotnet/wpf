@@ -6,12 +6,10 @@
 //
 
 using MS.Internal;
-using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Input;
-
 
 namespace System.Windows.Controls.Primitives
 {

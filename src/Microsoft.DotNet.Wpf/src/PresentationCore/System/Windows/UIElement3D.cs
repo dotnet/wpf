@@ -1,12 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-//
-//
-
 using MS.Internal;
 using MS.Internal.Interop;
-using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationCore;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;

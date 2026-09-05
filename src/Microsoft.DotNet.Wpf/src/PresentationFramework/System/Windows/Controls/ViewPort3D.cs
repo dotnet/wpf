@@ -8,7 +8,6 @@
 //
 
 using MS.Internal;
-using MS.Internal.KnownBoxes;
 using System.ComponentModel;
 using System.Windows.Automation.Peers;
 using System.Windows.Media;

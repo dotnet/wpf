@@ -2,10 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using System.Windows.Controls;
-
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
+using MS.Internal.KnownBoxes;
 
 namespace Microsoft.Windows.Themes
 {
@@ -21,7 +21,7 @@ namespace Microsoft.Windows.Themes
 
         static ScrollChrome()
         {
-            IsEnabledProperty.OverrideMetadata(typeof(ScrollChrome), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender));
+            IsEnabledProperty.OverrideMetadata(typeof(ScrollChrome), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, FrameworkPropertyMetadataOptions.AffectsRender));
         }
 
         /// <summary>

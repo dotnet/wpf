@@ -82,7 +82,7 @@ namespace System.Windows.Media.Animation
                     "DoesRotateWithTangent",
                     typeof(bool),
                     typeof(MatrixAnimationUsingPath),
-                    new PropertyMetadata(false));
+                    new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// If this is set to true, the object will rotate along with the
@@ -123,7 +123,7 @@ namespace System.Windows.Media.Animation
                     "IsAngleCumulative",
                     typeof(bool),
                     typeof(MatrixAnimationUsingPath),
-                    new PropertyMetadata(false));
+                    new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// If this property is set to true, the rotation angle of the animated matrix
@@ -156,7 +156,7 @@ namespace System.Windows.Media.Animation
                     "IsOffsetCumulative",
                     typeof(bool),
                     typeof(MatrixAnimationUsingPath),
-                    new PropertyMetadata(false));
+                    new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// If this property is set to true, the offset of the animated matrix

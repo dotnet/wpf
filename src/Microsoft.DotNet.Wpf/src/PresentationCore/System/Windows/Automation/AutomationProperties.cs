@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace System.Windows.Automation
@@ -246,7 +246,7 @@ namespace System.Windows.Automation
                                 "IsColumnHeader",
                                 typeof(bool),
                                 typeof(AutomationProperties),
-                                new UIPropertyMetadata(MS.Internal.KnownBoxes.BooleanBoxes.FalseBox));
+                                new UIPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Helper for setting IsColumnHeader property on a DependencyObject. 
@@ -278,7 +278,7 @@ namespace System.Windows.Automation
                                 "IsRowHeader",
                                 typeof(bool),
                                 typeof(AutomationProperties),
-                                new UIPropertyMetadata(MS.Internal.KnownBoxes.BooleanBoxes.FalseBox));
+                                new UIPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Helper for setting IsRowHeader property on a DependencyObject. 
@@ -310,7 +310,7 @@ namespace System.Windows.Automation
                                 "IsRequiredForForm",
                                 typeof(bool),
                                 typeof(AutomationProperties),
-                                new UIPropertyMetadata(MS.Internal.KnownBoxes.BooleanBoxes.FalseBox));
+                                new UIPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Helper for setting IsRequiredForForm property on a DependencyObject. 
@@ -536,7 +536,7 @@ namespace System.Windows.Automation
                 "IsDialog",
                 typeof(bool),
                 typeof(AutomationProperties),
-                new UIPropertyMetadata(false));
+                new UIPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Helper for setting IsDialog property on a DependencyObject. 

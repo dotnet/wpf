@@ -100,15 +100,15 @@ namespace System.Windows
 
             if (double.IsNaN(value))
             {
-                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoNaN, "value"));
+                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoNaN, nameof(value)));
             }
             if (double.IsInfinity(value))
             {
-                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoInfinity, "value"));
+                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoInfinity, nameof(value)));
             }
             if (value < 0.0)
             {
-                throw new ArgumentOutOfRangeException(SR.Format(SR.InvalidCtorParameterNoNegative, "value"));
+                throw new ArgumentOutOfRangeException(SR.Format(SR.InvalidCtorParameterNoNegative, nameof(value)));
             }
             if (    type != FigureUnitType.Auto
                 &&  type != FigureUnitType.Pixel
@@ -116,7 +116,7 @@ namespace System.Windows
                 &&  type != FigureUnitType.Content
                 &&  type != FigureUnitType.Page   )
             {
-                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterUnknownFigureUnitType, "type"));
+                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterUnknownFigureUnitType, nameof(type)));
             }
             if (type is FigureUnitType.Content or FigureUnitType.Page)
             {

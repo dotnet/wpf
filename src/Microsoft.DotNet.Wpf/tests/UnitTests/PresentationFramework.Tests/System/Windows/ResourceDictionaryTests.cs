@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Linq;
+using System.Reflection;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -158,5 +159,20 @@ public class ResourceDictionaryTests
 
         // The default foreground color of textBlock (as in aero2)
         textBlock.Foreground.Should().BeSameAs(Brushes.Black);
+    }
+
+    [WpfFact]
+    public void AddOwner_ClearsInheritedIsThemeDictionaryFlag()
+    {
+        // Simulate a ResourceDictionary whose ctor inherited
+        // IsThemeDictionary from SystemResources.IsSystemResourcesParsing.
+        PropertyInfo isThemeDictionary = typeof(ResourceDictionary).GetProperty(
+            "IsThemeDictionary", BindingFlags.Instance | BindingFlags.NonPublic)!;
+        var rd = new ResourceDictionary();
+        isThemeDictionary.SetValue(rd, true);
+
+        _ = new Button { Resources = rd };
+
+        isThemeDictionary.GetValue(rd).Should().Be(false);
     }
 }

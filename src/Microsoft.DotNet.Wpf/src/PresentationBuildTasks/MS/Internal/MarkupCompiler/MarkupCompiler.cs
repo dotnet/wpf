@@ -3414,10 +3414,12 @@ namespace MS.Internal
             }
 
             private bool _isAllowedNameScope = true;
-            private Type _elementType = null;
-            private string [] _typeArgsList = null;
-            private string _localElementFullName = string.Empty;
-            protected CodeTypeReference _ctrElemTypeRef = null;
+
+            private readonly Type _elementType;
+            private readonly string[] _typeArgsList;
+            private readonly string _localElementFullName;
+
+            protected CodeTypeReference _ctrElemTypeRef;
         }
 
         private class CodeContextRoot : CodeContext
@@ -3490,8 +3492,9 @@ namespace MS.Internal
                 set { _subClass = value; }
             }
 
-            private CodeTypeDeclaration _codeClass;
-            private CodeNamespace _codeNS;
+            private readonly CodeTypeDeclaration _codeClass;
+            private readonly CodeNamespace _codeNS;
+
             private CodeMemberMethod _initializeComponentFn = null;
             private CodeMemberMethod _hookupFn = null;
             private CodeMemberMethod _styleConnectorFn = null;

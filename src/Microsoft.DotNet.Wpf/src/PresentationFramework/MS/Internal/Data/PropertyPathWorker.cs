@@ -1411,10 +1411,7 @@ namespace MS.Internal.Data
                 {
                     if (CriticalExceptions.IsCriticalApplicationException(ex))
                         throw;
-                    return false;
-                }
-                catch
-                {
+
                     return false;
                 }
             }
@@ -1526,10 +1523,6 @@ namespace MS.Internal.Data
                         throw;
                     BindingOperations.LogException(ex);
                     _host?.ReportGetValueError(k, item, ex);
-                }
-                catch // non CLS compliant exception
-                {
-                    _host?.ReportGetValueError(k, item, new InvalidOperationException(SR.Format(SR.NonCLSException, "GetValue")));
                 }
 
                 // catch the pseudo-exception as well

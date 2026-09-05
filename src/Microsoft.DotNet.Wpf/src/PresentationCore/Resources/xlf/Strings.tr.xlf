@@ -2402,11 +2402,6 @@
         <target state="translated">Sonraki Sayfa</target>
         <note />
       </trans-unit>
-      <trans-unit id="NonCLSException">
-        <source>Text formatting engine encountered a non-CLS exception.</source>
-        <target state="translated">Metin biçimlendirme altyapısı CLS dışı bir özel durumla karşılaştı.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NonPackAppAbsoluteUriNotAllowed">
         <source>Unsupported Uri syntax. Method expects a relative Uri or a pack://application:,,,/ form of absolute Uri.</source>
         <target state="translated">Desteklenmeyen Uri sözdizimi. Metot göreli bir Uri veya pack://application:,,,/ biçiminde mutlak Uri bekliyor.</target>

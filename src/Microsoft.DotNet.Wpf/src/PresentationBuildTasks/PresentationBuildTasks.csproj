@@ -13,13 +13,7 @@
       -->
     <AssemblyVersion />
 
-    <!--
-            Suppressed Compiler Warnings:
-
-                CS1058: A previous catch clause already catches all exceptions. All exceptions
-                thrown will be wrapped in a System.Runtime.CompilerServices.RuntimeWrappedException
-    -->
-    <NoWarn>$(NoWarn);1058</NoWarn>
+    <NoWarn>$(NoWarn)</NoWarn>
 
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <AssemblyName>PresentationBuildTasks</AssemblyName>

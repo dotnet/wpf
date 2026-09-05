@@ -82,7 +82,6 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <CLCompile Include="$(WpfSharedDir)\cpp\dwriteloader.cpp" />
-    <CLCompile Include="$(WpfSharedDir)\cpp\Utils.cxx" />
     <CLCompile Include="main.cpp" />
     <CLCompile Include="OtherAssemblyAttrs.cpp" />
   </ItemGroup>

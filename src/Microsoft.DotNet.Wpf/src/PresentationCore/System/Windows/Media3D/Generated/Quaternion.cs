@@ -22,7 +22,6 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Media3D
 {
-
     [Serializable]
     [TypeConverter(typeof(QuaternionConverter))]
     [ValueSerializer(typeof(QuaternionValueSerializer))] // Used by MarkupWriter

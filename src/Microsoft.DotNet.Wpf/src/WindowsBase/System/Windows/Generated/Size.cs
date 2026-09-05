@@ -16,7 +16,6 @@ using System.Windows.Converters;
 
 namespace System.Windows
 {
-
     [Serializable]
     [TypeConverter(typeof(SizeConverter))]
     [ValueSerializer(typeof(SizeValueSerializer))] // Used by MarkupWriter

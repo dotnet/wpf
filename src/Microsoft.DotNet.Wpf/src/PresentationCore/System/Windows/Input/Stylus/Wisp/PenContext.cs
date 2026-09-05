@@ -115,6 +115,14 @@ namespace System.Windows.Input
                 float res;
                 _pimcContext.GetPacketPropertyInfo(i, out guid, out min, out max, out units, out res); // Calls Unmanaged code - SecurityCritical with SUC.
 
+                // Some touch digitizers report HID descriptors with min greater than max.
+                // Swap them so the StylusPointPropertyInfo constructor does not throw an
+                // ArgumentException. See dotnet/wpf#7069, #8435, and #8826.
+                if (max < min)
+                {
+                    (min, max) = (max, min);
+                }
+
                 if (pressureIndex == -1 && guid == StylusPointPropertyIds.NormalPressure)
                 {
                     pressureIndex = i;

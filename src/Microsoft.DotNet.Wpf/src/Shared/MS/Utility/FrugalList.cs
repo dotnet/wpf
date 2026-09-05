@@ -2221,6 +2221,17 @@ namespace MS.Utility
             throw new ArgumentOutOfRangeException(nameof(index));
         }
 
+        public void SetAt(int index, T value)
+        {
+            if ((_listStore is not null) && ((index < _listStore.Count) && (index >= 0)))
+            {
+                _listStore.SetAt(index, value);
+                return;
+            }
+
+            throw new ArgumentOutOfRangeException(nameof(index));
+        }
+
         public bool Remove(T value)
         {
             if ((_listStore is not null) && (_listStore.Count > 0))

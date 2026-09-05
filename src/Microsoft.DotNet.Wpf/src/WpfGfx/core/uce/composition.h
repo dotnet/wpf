@@ -143,6 +143,7 @@ public:
     // Runs any necessary updates to the composition - all the resources
     // participating in the composition, the thread, or device management.
     override HRESULT Compose(
+        bool canRenderWithoutDisplayDevices,
         __out_ecount(1) bool *pfPresentNeeded
         );
 
@@ -285,6 +286,7 @@ protected:
     // Performs the compositor duties by processing any pending batches,
     // updating the video subsystem, rendering and ticking animations.
     HRESULT ProcessComposition(
+        bool canRenderWithoutDisplayDevices,
         __out_ecount(1) bool *pfPresentNeeded
         );
 

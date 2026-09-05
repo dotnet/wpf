@@ -597,6 +597,7 @@ CComposition::EndProcessVideo()
 //-----------------------------------------------------------------------------
 
 HRESULT CComposition::ProcessComposition(
+    bool canRenderWithoutDisplayDevices,
     __out_ecount(1) bool *pfPresentNeeded
     )
 {
@@ -643,7 +644,7 @@ HRESULT CComposition::ProcessComposition(
         // 
         auto& compatSettings = g_pPartitionManager->GetCompatSettings();
         
-        doRenderPass = compatSettings.ShouldRenderEvenWhenNoDisplayDevicesAreAvailable();
+        doRenderPass = canRenderWithoutDisplayDevices || compatSettings.ShouldRenderEvenWhenNoDisplayDevicesAreAvailable();
         //
         // Make sure that we invalidate all of the render targets and caches,
         // and notify any listeners that display set is not valid
@@ -773,6 +774,7 @@ Cleanup:
 //------------------------------------------------------------------------------
 HRESULT 
 CComposition::Compose(
+    bool canRenderWithoutDisplayDevices,
     __out_ecount(1) bool *pfPresentNeeded
     )
 {
@@ -802,7 +804,7 @@ CComposition::Compose(
         // If not zombie, perform the render and optional present passes...
         //
 
-        IFC(ProcessComposition(&fPresentNeeded));
+        IFC(ProcessComposition(canRenderWithoutDisplayDevices, &fPresentNeeded));
     }
     else
     {

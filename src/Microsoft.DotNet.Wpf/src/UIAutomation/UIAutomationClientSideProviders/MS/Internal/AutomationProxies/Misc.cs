@@ -864,12 +864,14 @@ namespace MS.Internal.AutomationProxies
         {
             while (hwnd != IntPtr.Zero)
             {
-                if (GetClassName(hwnd).CompareTo("Progman") == 0)
+                if (GetClassName(hwnd).Equals("Progman", StringComparison.Ordinal))
                 {
                     return true;
                 }
+
                 hwnd = NativeMethodsSetLastError.GetAncestor(hwnd, NativeMethods.GA_PARENT);
             }
+
             return false;
         }
 

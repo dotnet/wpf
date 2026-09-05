@@ -1357,10 +1357,7 @@ namespace System.Printing
         /// <param name="name">The name of the property that changed.</param>
         private void NotifyPropertyChanged(string name)
         {
-            if (null != PropertyChanged)
-            {
-                PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(name));
-            }
+            PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(name));
 
             _isSettingChanged = true;
         }

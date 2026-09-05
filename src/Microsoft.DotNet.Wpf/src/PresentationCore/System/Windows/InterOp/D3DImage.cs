@@ -643,11 +643,8 @@ namespace System.Windows.Interop
                     img._pUserSurfaceUnsafe = IntPtr.Zero;
                 }
             }
-        
-            if (img._isFrontBufferAvailableChangedHandlers != null)
-            {
-                img._isFrontBufferAvailableChangedHandlers(img, e);
-            }
+
+            img._isFrontBufferAvailableChangedHandlers?.Invoke(img, e);
         }
 
         /// <Summary>

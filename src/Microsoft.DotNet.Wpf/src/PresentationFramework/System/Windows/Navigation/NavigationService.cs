@@ -1149,10 +1149,7 @@ namespace System.Windows.Navigation
                 // To force full refresh, the Content object is detached from the tree and reattached.
                 // (Just invalidating layout would not cause ContentRendered to be raised.)
                 _bp = null;
-                if (BPReady != null)
-                {
-                    BPReady(this, new BPReadyEventArgs(null, null));
-                }
+                BPReady?.Invoke(this, new BPReadyEventArgs(null, null));
             }
             else
             {
@@ -1195,10 +1192,7 @@ namespace System.Windows.Navigation
             }
 
             _bp = bp;
-            if (BPReady != null)
-            {
-                BPReady(this, new BPReadyEventArgs(_bp, bpu));
-            }
+            BPReady?.Invoke(this, new BPReadyEventArgs(_bp, bpu));
 
             // This will fire Navigated event and LoadCompleted event if all sub-loads are done
             HandleNavigated(navState, !objectRefresh/*navigatedToNewContent*/);
@@ -2037,10 +2031,7 @@ namespace System.Windows.Navigation
                                                             INavigatorHost,
                                                             IsNavigationInitiator);
 
-            if (_navigating != null)
-            {
-                _navigating(INavigatorHost, e);
-            }
+            _navigating?.Invoke(INavigatorHost, e);
             if (!e.Cancel && this.Application != null && this.Application.CheckAccess())
             {
                 this.Application.FireNavigating(e, _bp == null);
@@ -2184,10 +2175,7 @@ namespace System.Windows.Navigation
                 // How will be know the navigationInitiator here to create NavigationEventArgs with?
                 NavigationEventArgs e = new NavigationEventArgs(CurrentSource, Content, extraData, _webResponse, INavigatorHost, IsNavigationInitiator);
 
-                if (_navigated != null)
-                {
-                    _navigated(INavigatorHost, e);
-                }
+                _navigated?.Invoke(INavigatorHost, e);
 
                 // Fire it on the Application
                 if (this.Application != null && this.Application.CheckAccess())
@@ -2329,10 +2317,7 @@ namespace System.Windows.Navigation
             // the same as StopLoading().
             try
             {
-                if (_navigationProgress != null)
-                {
-                    _navigationProgress(INavigatorHost, e);
-                }
+                _navigationProgress?.Invoke(INavigatorHost, e);
 
                 if (this.Application != null && this.Application.CheckAccess())
                 {
@@ -2374,14 +2359,11 @@ namespace System.Windows.Navigation
             // the same as StopLoading().
             try
             {
-                if (_loadCompleted != null)
-                {
-                    // If the Navigator is Frame or NavigationWindow, the
-                    // relative event handlers would be called here.
-                    // Since Frame and NavigationWIndow just transferred their
-                    // event handlers to their own NavigationService.
-                    _loadCompleted(INavigatorHost, e);
-                }
+                // If the Navigator is Frame or NavigationWindow, the
+                // relative event handlers would be called here.
+                // Since Frame and NavigationWIndow just transferred their
+                // event handlers to their own NavigationService.
+                _loadCompleted?.Invoke(INavigatorHost, e);
 
                 if (this.Application != null && this.Application.CheckAccess())
                 {
@@ -2428,10 +2410,7 @@ namespace System.Windows.Navigation
             // the same as StopLoading().
             try
             {
-                if (_fragmentNavigation != null)
-                {
-                    _fragmentNavigation(this, e);
-                }
+                _fragmentNavigation?.Invoke(this, e);
 
                 if (Application != null && Application.CheckAccess())
                 {
@@ -2526,10 +2505,7 @@ namespace System.Windows.Navigation
             object extraData = navState is NavigateInfo ? null : navState;
             NavigationEventArgs e = new NavigationEventArgs(Source, Content, extraData, null, INavigatorHost, IsNavigationInitiator);
 
-            if (_stopped != null)
-            {
-                _stopped(INavigatorHost, e);
-            }
+            _stopped?.Invoke(INavigatorHost, e);
             if (this.Application != null && this.Application.CheckAccess())
             {
                 this.Application.FireNavigationStopped(e);
@@ -2675,10 +2651,7 @@ namespace System.Windows.Navigation
             // the same as StopLoading().
             try
             {
-                if (NavigationFailed != null)
-                {
-                    NavigationFailed(INavigatorHost, e);
-                }
+                NavigationFailed?.Invoke(INavigatorHost, e);
 
                 if (!e.Handled)
                 {

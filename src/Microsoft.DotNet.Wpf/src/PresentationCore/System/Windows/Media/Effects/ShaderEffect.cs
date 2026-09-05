@@ -236,14 +236,7 @@ namespace System.Windows.Media.Effects
                 WritePreamble();
                 object val = this.GetValue(dp);
                 var metadata = dp.GetMetadata(this);
-                if (metadata != null)
-                {
-                    var callback = metadata.PropertyChangedCallback;
-                    if (callback != null)
-                    {
-                        callback(this, new DependencyPropertyChangedEventArgs(dp, val, val));
-                    }
-                }
+                metadata?.PropertyChangedCallback?.Invoke(this, new DependencyPropertyChangedEventArgs(dp, val, val));
                 WritePostscript();
             }
         }

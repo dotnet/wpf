@@ -51,8 +51,6 @@ namespace System.Windows.Media.Media3D
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -65,13 +63,11 @@ namespace System.Windows.Media.Media3D
         {
             PointLightBase target = ((PointLightBase) d);
 
-
             target.PropertyChanged(PositionProperty);
         }
         private static void RangePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             PointLightBase target = ((PointLightBase) d);
-
 
             target.PropertyChanged(RangeProperty);
         }
@@ -79,13 +75,11 @@ namespace System.Windows.Media.Media3D
         {
             PointLightBase target = ((PointLightBase) d);
 
-
             target.PropertyChanged(ConstantAttenuationProperty);
         }
         private static void LinearAttenuationPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             PointLightBase target = ((PointLightBase) d);
-
 
             target.PropertyChanged(LinearAttenuationProperty);
         }
@@ -93,10 +87,8 @@ namespace System.Windows.Media.Media3D
         {
             PointLightBase target = ((PointLightBase) d);
 
-
             target.PropertyChanged(QuadraticAttenuationProperty);
         }
-
 
         #region Public Properties
 
@@ -186,9 +178,6 @@ namespace System.Windows.Media.Media3D
         #region Protected Methods
 
 
-
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -200,13 +189,6 @@ namespace System.Windows.Media.Media3D
         #region Internal Methods
 
 
-
-
-
-
-
-
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -216,9 +198,6 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -262,10 +241,6 @@ namespace System.Windows.Media.Media3D
 
         #region Internal Fields
 
-
-
-
-
         internal static Point3D s_Position = new Point3D();
         internal const double c_Range = Double.PositiveInfinity;
         internal const double c_ConstantAttenuation = 1.0;
@@ -273,7 +248,6 @@ namespace System.Windows.Media.Media3D
         internal const double c_QuadraticAttenuation = 0.0;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -340,7 +314,6 @@ namespace System.Windows.Media.Media3D
                                    /* isIndependentlyAnimated  = */ true,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

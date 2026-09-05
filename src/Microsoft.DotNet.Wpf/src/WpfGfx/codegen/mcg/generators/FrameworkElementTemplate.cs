@@ -471,6 +471,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                             FrameworkObject fo =
                                                 [[conditional(instance.ClassName == "FrameworkElement")]]new FrameworkObject(this, null);[[/conditional]]
                                                 [[conditional(instance.ClassName == "FrameworkContentElement")]]new FrameworkObject(null, this);[[/conditional]]
+
                                             fo.SetShouldLookupImplicitStyles();
                                         }
 

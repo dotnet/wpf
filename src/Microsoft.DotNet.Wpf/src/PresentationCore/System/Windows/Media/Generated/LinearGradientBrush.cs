@@ -53,8 +53,6 @@ namespace System.Windows.Media
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -67,17 +65,14 @@ namespace System.Windows.Media
         {
             LinearGradientBrush target = ((LinearGradientBrush) d);
 
-
             target.PropertyChanged(StartPointProperty);
         }
         private static void EndPointPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             LinearGradientBrush target = ((LinearGradientBrush) d);
 
-
             target.PropertyChanged(EndPointProperty);
         }
-
 
         #region Public Properties
 
@@ -130,8 +125,6 @@ namespace System.Windows.Media
             return new LinearGradientBrush();
         }
 
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -149,7 +142,6 @@ namespace System.Windows.Media
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_LINEARGRADIENTBRUSH))
                 {
                     Transform vTransform = Transform;
@@ -159,16 +151,13 @@ namespace System.Windows.Media
 
                     AddRefOnChannelAnimations(channel);
 
-
                     UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
                 }
 
                 return _duceResource.GetHandle(channel);
-
         }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
@@ -179,9 +168,7 @@ namespace System.Windows.Media
                     if (vRelativeTransform != null) ((DUCE.IResource)vRelativeTransform).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
-
                 }
-
         }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
@@ -198,7 +185,6 @@ namespace System.Windows.Media
             // Note that we are in a lock here already.
             return _duceResource.GetChannel(index);
         }
-
 
         #endregion Internal Methods
 
@@ -226,8 +212,6 @@ namespace System.Windows.Media
                 return 3;
             }
         }
-
-
 
         #endregion Internal Properties
 
@@ -258,15 +242,11 @@ namespace System.Windows.Media
 
         #region Internal Fields
 
-
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
-
         internal static Point s_StartPoint = new Point(0,0);
         internal static Point s_EndPoint = new Point(1,1);
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -306,7 +286,6 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ true,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

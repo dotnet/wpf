@@ -53,8 +53,6 @@ namespace System.Windows.Media
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -67,13 +65,11 @@ namespace System.Windows.Media
         {
             GradientBrush target = ((GradientBrush) d);
 
-
             target.PropertyChanged(ColorInterpolationModeProperty);
         }
         private static void MappingModePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             GradientBrush target = ((GradientBrush) d);
-
 
             target.PropertyChanged(MappingModeProperty);
         }
@@ -81,21 +77,15 @@ namespace System.Windows.Media
         {
             GradientBrush target = ((GradientBrush) d);
 
-
             target.PropertyChanged(SpreadMethodProperty);
         }
         private static void GradientStopsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             GradientBrush target = ((GradientBrush) d);
-
 
             target.PropertyChanged(GradientStopsProperty);
         }
-
 
         #region Public Properties
 
@@ -170,9 +160,6 @@ namespace System.Windows.Media
         #region Protected Methods
 
 
-
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -182,13 +169,6 @@ namespace System.Windows.Media
         //------------------------------------------------------
 
         #region Internal Methods
-
-
-
-
-
-
-
 
 
         #endregion Internal Methods
@@ -215,8 +195,6 @@ namespace System.Windows.Media
                 return 1;
             }
         }
-
-
 
         #endregion Internal Properties
 
@@ -255,17 +233,12 @@ namespace System.Windows.Media
 
         #region Internal Fields
 
-
-
-
-
         internal const ColorInterpolationMode c_ColorInterpolationMode = ColorInterpolationMode.SRgbLinearInterpolation;
         internal const BrushMappingMode c_MappingMode = BrushMappingMode.RelativeToBoundingBox;
         internal const GradientSpreadMethod c_SpreadMethod = GradientSpreadMethod.Pad;
         internal static GradientStopCollection s_GradientStops = GradientStopCollection.Empty;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -325,7 +298,6 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

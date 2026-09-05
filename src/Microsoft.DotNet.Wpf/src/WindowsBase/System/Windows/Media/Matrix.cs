@@ -480,7 +480,7 @@ namespace System.Windows.Media
         /// </summary>
         public double M11
         {
-            get
+            readonly get
             {
                 if (_type == MatrixTypes.TRANSFORM_IS_IDENTITY)
                 {
@@ -516,7 +516,7 @@ namespace System.Windows.Media
         /// </summary>
         public double M12
         {
-            get
+            readonly get
             {
                 if (_type == MatrixTypes.TRANSFORM_IS_IDENTITY)
                 {
@@ -549,7 +549,7 @@ namespace System.Windows.Media
         /// </summary>
         public double M21
         {
-            get
+            readonly get
             {
                 if (_type == MatrixTypes.TRANSFORM_IS_IDENTITY)
                 {
@@ -582,7 +582,7 @@ namespace System.Windows.Media
         /// </summary>
         public double M22
         {
-            get
+            readonly get
             {
                 if (_type == MatrixTypes.TRANSFORM_IS_IDENTITY)
                 {
@@ -618,7 +618,7 @@ namespace System.Windows.Media
         /// </summary>
         public double OffsetX
         {
-            get
+            readonly get
             {
                 if (_type == MatrixTypes.TRANSFORM_IS_IDENTITY)
                 {
@@ -654,7 +654,7 @@ namespace System.Windows.Media
         /// </summary>
         public double OffsetY
         {
-            get
+            readonly get
             {
                 if (_type == MatrixTypes.TRANSFORM_IS_IDENTITY)
                 {
@@ -961,7 +961,7 @@ namespace System.Windows.Media
         /// true if the the matrix is identity.  If it returns false
         /// the matrix may still be identity.
         /// </summary>
-        private bool IsDistinguishedIdentity
+        private readonly bool IsDistinguishedIdentity
         {
             get
             {

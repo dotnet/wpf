@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Windows.Input.StylusWisp;
@@ -488,7 +488,7 @@ namespace System.Windows.Input
                 ptTablet *= stylusDevice.TabletDevice.TabletDeviceImpl.TabletToScreen;
                 ptTablet.X = (int)Math.Round(ptTablet.X); // Make sure we snap to whole window pixels.
                 ptTablet.Y = (int)Math.Round(ptTablet.Y);
-                ptTablet = _stylusLogic.MeasureUnitsFromDeviceUnits(stylusDevice.CriticalActiveSource, ptTablet); // change to measured units now.
+                ptTablet = _stylusLogic.MeasureUnitsFromDeviceUnits(inputReport.InputSource ?? stylusDevice.CriticalActiveSource, ptTablet); // change to measured units now.
 
                 pic = HittestPlugInCollection(ptTablet); // Use cached rectangles for UIElements.
             }

@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Windows.Data;
 using System.Windows.Input;
 using MS.Internal;
+using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Controls
 {
@@ -1271,19 +1272,8 @@ namespace System.Windows.Controls
         {
             DataGridColumn column = (DataGridColumn)d;
             DataGrid dataGrid = column.DataGridOwner;
-            if (dataGrid != null)
-            {
-                if (column.DisplayIndex < dataGrid.FrozenColumnCount)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
 
-            return baseValue;
+            return dataGrid is null ? baseValue : BooleanBoxes.Box(column.DisplayIndex < dataGrid.FrozenColumnCount);
         }
 
         #endregion

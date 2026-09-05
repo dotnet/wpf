@@ -37,10 +37,8 @@ namespace Microsoft.Windows.Controls.Ribbon
         
         static RibbonTwoLineText()
         {
-            Type ownerType = typeof(RibbonTwoLineText);
-
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            FocusableProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonTwoLineText), new FrameworkPropertyMetadata(typeof(RibbonTwoLineText)));
+            FocusableProperty.OverrideMetadata(typeof(RibbonTwoLineText), new FrameworkPropertyMetadata(false));
         }
 
         #endregion

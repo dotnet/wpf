@@ -417,11 +417,10 @@ namespace System.Windows.Media.Effects
 
 
             // Initializations
-            Type typeofThis = typeof(DropShadowEffect);
             ShadowDepthProperty =
                   RegisterProperty("ShadowDepth",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(DropShadowEffect),
                                    5.0,
                                    new PropertyChangedCallback(ShadowDepthPropertyChanged),
                                    null,
@@ -430,7 +429,7 @@ namespace System.Windows.Media.Effects
             ColorProperty =
                   RegisterProperty("Color",
                                    typeof(Color),
-                                   typeofThis,
+                                   typeof(DropShadowEffect),
                                    Colors.Black,
                                    new PropertyChangedCallback(ColorPropertyChanged),
                                    null,
@@ -439,7 +438,7 @@ namespace System.Windows.Media.Effects
             DirectionProperty =
                   RegisterProperty("Direction",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(DropShadowEffect),
                                    315.0,
                                    new PropertyChangedCallback(DirectionPropertyChanged),
                                    null,
@@ -448,7 +447,7 @@ namespace System.Windows.Media.Effects
             OpacityProperty =
                   RegisterProperty("Opacity",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(DropShadowEffect),
                                    1.0,
                                    new PropertyChangedCallback(OpacityPropertyChanged),
                                    null,
@@ -457,7 +456,7 @@ namespace System.Windows.Media.Effects
             BlurRadiusProperty =
                   RegisterProperty("BlurRadius",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(DropShadowEffect),
                                    5.0,
                                    new PropertyChangedCallback(BlurRadiusPropertyChanged),
                                    null,
@@ -466,7 +465,7 @@ namespace System.Windows.Media.Effects
             RenderingBiasProperty =
                   RegisterProperty("RenderingBias",
                                    typeof(RenderingBias),
-                                   typeofThis,
+                                   typeof(DropShadowEffect),
                                    RenderingBias.Performance,
                                    new PropertyChangedCallback(RenderingBiasPropertyChanged),
                                    new ValidateValueCallback(System.Windows.Media.Effects.ValidateEnums.IsRenderingBiasValid),

@@ -229,11 +229,10 @@ namespace System.Windows.Media.Effects
 
 
             // Initializations
-            Type typeofThis = typeof(BitmapEffectInput);
             InputProperty =
                   RegisterProperty("Input",
                                    typeof(BitmapSource),
-                                   typeofThis,
+                                   typeof(BitmapEffectInput),
                                    BitmapEffectInput.ContextInputSource,
                                    null,
                                    null,
@@ -242,7 +241,7 @@ namespace System.Windows.Media.Effects
             AreaToApplyEffectUnitsProperty =
                   RegisterProperty("AreaToApplyEffectUnits",
                                    typeof(BrushMappingMode),
-                                   typeofThis,
+                                   typeof(BitmapEffectInput),
                                    BrushMappingMode.RelativeToBoundingBox,
                                    null,
                                    new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsBrushMappingModeValid),
@@ -251,7 +250,7 @@ namespace System.Windows.Media.Effects
             AreaToApplyEffectProperty =
                   RegisterProperty("AreaToApplyEffect",
                                    typeof(Rect),
-                                   typeofThis,
+                                   typeof(BitmapEffectInput),
                                    Rect.Empty,
                                    new PropertyChangedCallback(AreaToApplyEffectPropertyChanged),
                                    null,

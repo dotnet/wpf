@@ -340,11 +340,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(ImageDrawing);
             ImageSourceProperty =
                   RegisterProperty("ImageSource",
                                    typeof(ImageSource),
-                                   typeofThis,
+                                   typeof(ImageDrawing),
                                    null,
                                    new PropertyChangedCallback(ImageSourcePropertyChanged),
                                    null,
@@ -353,7 +352,7 @@ namespace System.Windows.Media
             RectProperty =
                   RegisterProperty("Rect",
                                    typeof(Rect),
-                                   typeofThis,
+                                   typeof(ImageDrawing),
                                    Rect.Empty,
                                    new PropertyChangedCallback(RectPropertyChanged),
                                    null,

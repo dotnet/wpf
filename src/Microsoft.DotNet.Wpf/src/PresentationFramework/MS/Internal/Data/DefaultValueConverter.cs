@@ -205,7 +205,7 @@ namespace MS.Internal.Data
                     if (culture != null && (mi = targetType.GetMethod("Parse",
                                             BindingFlags.Public | BindingFlags.Static,
                                             null,
-                                            new Type[] { StringType, typeof(System.Globalization.NumberStyles), typeof(System.IFormatProvider) },
+                                            new Type[] { typeof(string), typeof(System.Globalization.NumberStyles), typeof(System.IFormatProvider) },
                                             null))
                                 != null)
                     {
@@ -214,7 +214,7 @@ namespace MS.Internal.Data
                     else if (culture != null && (mi = targetType.GetMethod("Parse",
                                             BindingFlags.Public | BindingFlags.Static,
                                             null,
-                                            new Type[] { StringType, typeof(System.IFormatProvider) },
+                                            new Type[] { typeof(string), typeof(System.IFormatProvider) },
                                             null))
                                 != null)
                     {
@@ -223,7 +223,7 @@ namespace MS.Internal.Data
                     else if ((mi = targetType.GetMethod("Parse",
                                             BindingFlags.Public | BindingFlags.Static,
                                             null,
-                                            new Type[] { StringType },
+                                            new Type[] { typeof(string) },
                                             null))
                                 != null)
                     {
@@ -364,7 +364,6 @@ namespace MS.Internal.Data
         private bool _shouldConvertFrom;
         private bool _shouldConvertTo;
         private DataBindEngine _engine;
-        private static Type StringType = typeof(String);
     }
 
     #endregion DefaultValueConverter

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -123,14 +123,13 @@ namespace System.Windows.Data
         {
             get
             {
-                Type managerType = typeof(DataChangedEventManager);
-                DataChangedEventManager manager = (DataChangedEventManager)GetCurrentManager(managerType);
+                DataChangedEventManager manager = (DataChangedEventManager)GetCurrentManager(typeof(DataChangedEventManager));
 
                 // at first use, create and register a new manager
                 if (manager == null)
                 {
                     manager = new DataChangedEventManager();
-                    SetCurrentManager(managerType, manager);
+                    SetCurrentManager(typeof(DataChangedEventManager), manager);
                 }
 
                 return manager;

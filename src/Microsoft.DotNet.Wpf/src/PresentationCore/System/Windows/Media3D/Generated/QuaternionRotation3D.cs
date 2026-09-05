@@ -278,11 +278,10 @@ namespace System.Windows.Media.Media3D
 
 
             // Initializations
-            Type typeofThis = typeof(QuaternionRotation3D);
             QuaternionProperty =
                   RegisterProperty("Quaternion",
                                    typeof(Quaternion),
-                                   typeofThis,
+                                   typeof(QuaternionRotation3D),
                                    Quaternion.Identity,
                                    new PropertyChangedCallback(QuaternionPropertyChanged),
                                    null,

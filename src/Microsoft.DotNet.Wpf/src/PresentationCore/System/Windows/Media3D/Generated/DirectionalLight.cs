@@ -287,11 +287,10 @@ namespace System.Windows.Media.Media3D
 
 
             // Initializations
-            Type typeofThis = typeof(DirectionalLight);
             DirectionProperty =
                   RegisterProperty("Direction",
                                    typeof(Vector3D),
-                                   typeofThis,
+                                   typeof(DirectionalLight),
                                    new Vector3D(0,0,-1),
                                    new PropertyChangedCallback(DirectionPropertyChanged),
                                    null,

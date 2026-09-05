@@ -326,11 +326,10 @@ namespace System.Windows.Media.Imaging
 
 
             // Initializations
-            Type typeofThis = typeof(TransformedBitmap);
             SourceProperty =
                   RegisterProperty("Source",
                                    typeof(BitmapSource),
-                                   typeofThis,
+                                   typeof(TransformedBitmap),
                                    null,
                                    new PropertyChangedCallback(SourcePropertyChanged),
                                    null,
@@ -339,7 +338,7 @@ namespace System.Windows.Media.Imaging
             TransformProperty =
                   RegisterProperty("Transform",
                                    typeof(Transform),
-                                   typeofThis,
+                                   typeof(TransformedBitmap),
                                    Transform.Identity,
                                    new PropertyChangedCallback(TransformPropertyChanged),
                                    null,

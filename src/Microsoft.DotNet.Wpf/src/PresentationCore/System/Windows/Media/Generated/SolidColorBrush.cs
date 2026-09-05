@@ -319,11 +319,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(SolidColorBrush);
             ColorProperty =
                   RegisterProperty("Color",
                                    typeof(Color),
-                                   typeofThis,
+                                   typeof(SolidColorBrush),
                                    Colors.Transparent,
                                    new PropertyChangedCallback(ColorPropertyChanged),
                                    null,

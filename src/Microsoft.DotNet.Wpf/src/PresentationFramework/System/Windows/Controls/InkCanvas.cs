@@ -43,8 +43,6 @@ namespace System.Windows.Controls
         /// </summary>
         static InkCanvas()
         {
-            Type ownerType = typeof(InkCanvas);
-
             //
             // We should add the following listener as the class handler which will be guarantied to receive the
             // notification before the handler on the instances. So we won't be trapped in the bad state due to the
@@ -52,46 +50,46 @@ namespace System.Windows.Controls
             // Listen to stylus events which will be redirected to the current StylusEditingBehavior
 
             //Down
-            EventManager.RegisterClassHandler(ownerType, Stylus.StylusDownEvent,
+            EventManager.RegisterClassHandler(typeof(InkCanvas), Stylus.StylusDownEvent,
                 new StylusDownEventHandler(_OnDeviceDown<StylusDownEventArgs>));
-            EventManager.RegisterClassHandler(ownerType, Mouse.MouseDownEvent,
+            EventManager.RegisterClassHandler(typeof(InkCanvas), Mouse.MouseDownEvent,
                 new MouseButtonEventHandler(_OnDeviceDown<MouseButtonEventArgs>));
 
             //Up
-            EventManager.RegisterClassHandler(ownerType, Stylus.StylusUpEvent,
+            EventManager.RegisterClassHandler(typeof(InkCanvas), Stylus.StylusUpEvent,
                 new StylusEventHandler(_OnDeviceUp<StylusEventArgs>));
-            EventManager.RegisterClassHandler(ownerType, Mouse.MouseUpEvent,
+            EventManager.RegisterClassHandler(typeof(InkCanvas), Mouse.MouseUpEvent,
                 new MouseButtonEventHandler(_OnDeviceUp<MouseButtonEventArgs>));
 
 
 
-            EventManager.RegisterClassHandler(ownerType, Mouse.QueryCursorEvent,
+            EventManager.RegisterClassHandler(typeof(InkCanvas), Mouse.QueryCursorEvent,
                 new QueryCursorEventHandler(_OnQueryCursor), true);
 
             // Set up the commanding handlers
             _RegisterClipboardHandlers();
-            CommandHelpers.RegisterCommandHandler(ownerType, ApplicationCommands.Delete,
+            CommandHelpers.RegisterCommandHandler(typeof(InkCanvas), ApplicationCommands.Delete,
                 new ExecutedRoutedEventHandler(_OnCommandExecuted), new CanExecuteRoutedEventHandler(_OnQueryCommandEnabled));
 
-            CommandHelpers.RegisterCommandHandler(ownerType, ApplicationCommands.SelectAll,
+            CommandHelpers.RegisterCommandHandler(typeof(InkCanvas), ApplicationCommands.SelectAll,
                 Key.A, ModifierKeys.Control, new ExecutedRoutedEventHandler(_OnCommandExecuted), new CanExecuteRoutedEventHandler(_OnQueryCommandEnabled));
 
-            CommandHelpers.RegisterCommandHandler(ownerType, InkCanvas.DeselectCommand,
+            CommandHelpers.RegisterCommandHandler(typeof(InkCanvas), InkCanvas.DeselectCommand,
                 new ExecutedRoutedEventHandler(_OnCommandExecuted), new CanExecuteRoutedEventHandler(_OnQueryCommandEnabled),
                 KeyGesture.CreateFromResourceStrings(InkCanvasDeselectKey, nameof(SR.InkCanvasDeselectKeyDisplayString)));
 
             //
             //set our clipping
             //
-            ClipToBoundsProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
+            ClipToBoundsProperty.OverrideMetadata(typeof(InkCanvas), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
 
             //
             //enable input focus
             //
-            FocusableProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
+            FocusableProperty.OverrideMetadata(typeof(InkCanvas), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
 
             // The default InkCanvas style
-            Style defaultStyle = new Style(ownerType);
+            Style defaultStyle = new Style(typeof(InkCanvas));
             // The background - Window Color
             defaultStyle.Setters.Add(new Setter(InkCanvas.BackgroundProperty,
                             new DynamicResourceExtension(SystemColors.WindowBrushKey)));
@@ -133,10 +131,10 @@ namespace System.Windows.Controls
             // Seal the default style
             defaultStyle.Seal();
 
-            StyleProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(defaultStyle));
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(typeof(InkCanvas)));
+            StyleProperty.OverrideMetadata(typeof(InkCanvas), new FrameworkPropertyMetadata(defaultStyle));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(InkCanvas), new FrameworkPropertyMetadata(typeof(InkCanvas)));
 
-            FocusVisualStyleProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata((object)null /* default value */));
+            FocusVisualStyleProperty.OverrideMetadata(typeof(InkCanvas), new FrameworkPropertyMetadata(defaultValue: null));
         }
 
         /// <summary>
@@ -2464,12 +2462,10 @@ namespace System.Windows.Controls
         /// </summary>
         private static void _RegisterClipboardHandlers()
         {
-            Type ownerType = typeof(InkCanvas);
-
-            CommandHelpers.RegisterCommandHandler(ownerType, ApplicationCommands.Cut,
+            CommandHelpers.RegisterCommandHandler(typeof(InkCanvas), ApplicationCommands.Cut,
                 new ExecutedRoutedEventHandler(_OnCommandExecuted), new CanExecuteRoutedEventHandler(_OnQueryCommandEnabled),
                 KeyGesture.CreateFromResourceStrings(KeyShiftDelete, nameof(SR.KeyShiftDeleteDisplayString)));
-            CommandHelpers.RegisterCommandHandler(ownerType, ApplicationCommands.Copy,
+            CommandHelpers.RegisterCommandHandler(typeof(InkCanvas), ApplicationCommands.Copy,
                 new ExecutedRoutedEventHandler(_OnCommandExecuted), new CanExecuteRoutedEventHandler(_OnQueryCommandEnabled),
                 KeyGesture.CreateFromResourceStrings(KeyCtrlInsert, nameof(SR.KeyCtrlInsertDisplayString)));
 
@@ -2478,7 +2474,7 @@ namespace System.Windows.Controls
             CanExecuteRoutedEventHandler pasteQueryEnabledEventHandler = new CanExecuteRoutedEventHandler(_OnQueryCommandEnabled);
             InputGesture pasteInputGesture = KeyGesture.CreateFromResourceStrings(KeyShiftInsert, SR.KeyShiftInsertDisplayString);
 
-            CommandHelpers.RegisterCommandHandler(ownerType, ApplicationCommands.Paste,
+            CommandHelpers.RegisterCommandHandler(typeof(InkCanvas), ApplicationCommands.Paste,
                 pasteExecuteEventHandler, pasteQueryEnabledEventHandler, pasteInputGesture);
         }
 

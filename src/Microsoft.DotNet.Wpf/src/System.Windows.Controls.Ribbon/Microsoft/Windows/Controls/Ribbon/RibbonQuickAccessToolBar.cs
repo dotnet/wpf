@@ -97,25 +97,24 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         static RibbonQuickAccessToolBar()
         {
-            Type ownerType = typeof(RibbonQuickAccessToolBar);
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            FocusableProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonQuickAccessToolBar), new FrameworkPropertyMetadata(typeof(RibbonQuickAccessToolBar)));
+            FocusableProperty.OverrideMetadata(typeof(RibbonQuickAccessToolBar), new FrameworkPropertyMetadata(false));
 
             // If the DirectionalNaviation is default (Continue) then
             // in classic theme the first tab header is closer to first qat control than the
             // second qat control. Meaning a right arrow key from first qat control takes focus
             // to first tab header which is not expected. Hence setting the direction navigation
             // to Local so that a local search in qat is made before making a ribbon wide search.
-            KeyboardNavigation.DirectionalNavigationProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(KeyboardNavigationMode.Local));
+            KeyboardNavigation.DirectionalNavigationProperty.OverrideMetadata(typeof(RibbonQuickAccessToolBar), new FrameworkPropertyMetadata(KeyboardNavigationMode.Local));
 
-            EventManager.RegisterClassHandler(ownerType, Mouse.PreviewMouseDownOutsideCapturedElementEvent, new MouseButtonEventHandler(OnClickThroughThunk));
-            EventManager.RegisterClassHandler(ownerType, Mouse.LostMouseCaptureEvent, new MouseEventHandler(OnLostMouseCaptureThunk), true /* handledEventsToo */);
-            EventManager.RegisterClassHandler(ownerType, RibbonControlService.DismissPopupEvent, new RibbonDismissPopupEventHandler(OnDismissPopupThunk));
-            EventManager.RegisterClassHandler(ownerType, Mouse.MouseDownEvent, new MouseButtonEventHandler(OnMouseDownThunk), true);
-            EventManager.RegisterClassHandler(ownerType, FrameworkElement.ContextMenuOpeningEvent, new ContextMenuEventHandler(OnContextMenuOpeningThunk), true);
-            EventManager.RegisterClassHandler(ownerType, FrameworkElement.ContextMenuClosingEvent, new ContextMenuEventHandler(OnContextMenuClosingThunk), true);
-            EventManager.RegisterClassHandler(ownerType, KeyTipService.ActivatingKeyTipEvent, new ActivatingKeyTipEventHandler(OnActivatingKeyTipThunk));
-            EventManager.RegisterClassHandler(ownerType, KeyTipService.PreviewKeyTipAccessedEvent, new KeyTipAccessedEventHandler(OnPreviewKeyTipAccessedThunk));
+            EventManager.RegisterClassHandler(typeof(RibbonQuickAccessToolBar), Mouse.PreviewMouseDownOutsideCapturedElementEvent, new MouseButtonEventHandler(OnClickThroughThunk));
+            EventManager.RegisterClassHandler(typeof(RibbonQuickAccessToolBar), Mouse.LostMouseCaptureEvent, new MouseEventHandler(OnLostMouseCaptureThunk), handledEventsToo: true);
+            EventManager.RegisterClassHandler(typeof(RibbonQuickAccessToolBar), RibbonControlService.DismissPopupEvent, new RibbonDismissPopupEventHandler(OnDismissPopupThunk));
+            EventManager.RegisterClassHandler(typeof(RibbonQuickAccessToolBar), Mouse.MouseDownEvent, new MouseButtonEventHandler(OnMouseDownThunk), true);
+            EventManager.RegisterClassHandler(typeof(RibbonQuickAccessToolBar), FrameworkElement.ContextMenuOpeningEvent, new ContextMenuEventHandler(OnContextMenuOpeningThunk), true);
+            EventManager.RegisterClassHandler(typeof(RibbonQuickAccessToolBar), FrameworkElement.ContextMenuClosingEvent, new ContextMenuEventHandler(OnContextMenuClosingThunk), true);
+            EventManager.RegisterClassHandler(typeof(RibbonQuickAccessToolBar), KeyTipService.ActivatingKeyTipEvent, new ActivatingKeyTipEventHandler(OnActivatingKeyTipThunk));
+            EventManager.RegisterClassHandler(typeof(RibbonQuickAccessToolBar), KeyTipService.PreviewKeyTipAccessedEvent, new KeyTipAccessedEventHandler(OnPreviewKeyTipAccessedThunk));
         }
 
         #endregion

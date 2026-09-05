@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -101,7 +101,6 @@ namespace System.Windows
         // get the event manager for the current thread
         private static WeakEventManager<TEventSource, TEventArgs> CurrentManager(string eventName)
         {
-            Type managerType = typeof(WeakEventManager<TEventSource, TEventArgs>);
             WeakEventManager<TEventSource, TEventArgs> manager = (WeakEventManager<TEventSource, TEventArgs>)GetCurrentManager(typeof(TEventSource), eventName);
 
             // at first use, create and register a new manager

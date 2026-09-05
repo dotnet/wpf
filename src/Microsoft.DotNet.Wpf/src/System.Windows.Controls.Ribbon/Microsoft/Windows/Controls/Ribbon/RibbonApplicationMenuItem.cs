@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -32,10 +32,8 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         static RibbonApplicationMenuItem()
         {
-            Type ownerType = typeof(RibbonApplicationMenuItem);
-
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            IsSubmenuOpenProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(CoerceIsSubmenuOpen)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonApplicationMenuItem), new FrameworkPropertyMetadata(typeof(RibbonApplicationMenuItem)));
+            IsSubmenuOpenProperty.OverrideMetadata(typeof(RibbonApplicationMenuItem), new FrameworkPropertyMetadata(null, new CoerceValueCallback(CoerceIsSubmenuOpen)));
         }
 
         #endregion

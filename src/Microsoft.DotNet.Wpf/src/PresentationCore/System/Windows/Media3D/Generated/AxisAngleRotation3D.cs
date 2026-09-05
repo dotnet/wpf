@@ -299,11 +299,10 @@ namespace System.Windows.Media.Media3D
 
 
             // Initializations
-            Type typeofThis = typeof(AxisAngleRotation3D);
             AxisProperty =
                   RegisterProperty("Axis",
                                    typeof(Vector3D),
-                                   typeofThis,
+                                   typeof(AxisAngleRotation3D),
                                    new Vector3D(0,1,0),
                                    new PropertyChangedCallback(AxisPropertyChanged),
                                    null,
@@ -312,7 +311,7 @@ namespace System.Windows.Media.Media3D
             AngleProperty =
                   RegisterProperty("Angle",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(AxisAngleRotation3D),
                                    (double)0.0,
                                    new PropertyChangedCallback(AnglePropertyChanged),
                                    null,

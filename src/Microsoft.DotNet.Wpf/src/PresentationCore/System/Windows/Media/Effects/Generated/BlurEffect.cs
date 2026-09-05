@@ -313,11 +313,10 @@ namespace System.Windows.Media.Effects
 
 
             // Initializations
-            Type typeofThis = typeof(BlurEffect);
             RadiusProperty =
                   RegisterProperty("Radius",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(BlurEffect),
                                    5.0,
                                    new PropertyChangedCallback(RadiusPropertyChanged),
                                    null,
@@ -326,7 +325,7 @@ namespace System.Windows.Media.Effects
             KernelTypeProperty =
                   RegisterProperty("KernelType",
                                    typeof(KernelType),
-                                   typeofThis,
+                                   typeof(BlurEffect),
                                    KernelType.Gaussian,
                                    new PropertyChangedCallback(KernelTypePropertyChanged),
                                    new ValidateValueCallback(System.Windows.Media.Effects.ValidateEnums.IsKernelTypeValid),
@@ -335,7 +334,7 @@ namespace System.Windows.Media.Effects
             RenderingBiasProperty =
                   RegisterProperty("RenderingBias",
                                    typeof(RenderingBias),
-                                   typeofThis,
+                                   typeof(BlurEffect),
                                    RenderingBias.Performance,
                                    new PropertyChangedCallback(RenderingBiasPropertyChanged),
                                    new ValidateValueCallback(System.Windows.Media.Effects.ValidateEnums.IsRenderingBiasValid),

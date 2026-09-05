@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Diagnostics.Tracing;
@@ -59,12 +59,12 @@ namespace MS.Internal.Telemetry
         /// <summary>
         /// Presentation Core provider name
         /// </summary>
-        private static readonly string ProviderName = "Microsoft.DOTNET.WPF.PresentationCore";
+        private const string ProviderName = "Microsoft.DOTNET.WPF.PresentationCore";
 #elif PRESENTATIONFRAMEWORK
         /// <summary>
         /// Presentation Framework provider name
         /// </summary>
-        private static readonly string ProviderName = "Microsoft.DOTNET.WPF.PresentationFramework";
+        private const string ProviderName = "Microsoft.DOTNET.WPF.PresentationFramework";
 #endif
     }
 }

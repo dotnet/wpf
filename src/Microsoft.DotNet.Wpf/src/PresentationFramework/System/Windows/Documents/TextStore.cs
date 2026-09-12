@@ -1611,14 +1611,20 @@ namespace System.Windows.Documents
         {
             _netCharCount = this.TextContainer.IMECharCount;
 
+            // RegisterTextStore can synchronously trigger TSF callbacks (for example ITfTextEditSink.OnEndEdit).
+            // This is observable with WeChat Input Method, which is a third-party TSF text service
+            // (a TIP/IME engine, not merely a keyboard layout).  Those callbacks dereference
+            // _textservicesproperty, so initialize it before registering with TSF.
+            _textservicesproperty = new TextServicesProperty(this);
+
+            // WeChat's TIP can issue attach/focus-time edits while registration is still in progress.
+            // Hook text change notifications before registration so those edits update _netCharCount.
+            this.TextContainer.Change += new TextContainerChangeEventHandler(OnTextContainerChange);
+
             // keep _textservicesHost because we may not be in Dispatcher when GC Finalizer calls OnDetach().
             _textservicesHost = TextServicesHost.Current;
 
             _textservicesHost.RegisterTextStore(this);
-
-            this.TextContainer.Change += new TextContainerChangeEventHandler(OnTextContainerChange);
-
-            _textservicesproperty = new TextServicesProperty(this);
 
             if (IMECompositionTracer.IsEnabled)
             {

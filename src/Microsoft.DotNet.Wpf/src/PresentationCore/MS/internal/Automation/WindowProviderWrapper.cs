@@ -1,210 +1,82 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-//
-// 
-//
-// Description: Window pattern provider wrapper for WCP
-//
-//
+#nullable enable
 
-using System.Windows.Threading;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
 
-namespace MS.Internal.Automation
+namespace MS.Internal.Automation;
+
+/// <summary>
+/// Wrapper class for the <see cref="IWindowProvider"/> interface, calls through to the managed <see cref="AutomationPeer"/>
+/// that implements it. The calls are made on the peer's context to ensure that the correct synchronization context is used.
+/// </summary>
+internal sealed class WindowProviderWrapper : MarshalByRefObject, IWindowProvider
 {
-    // Automation/WCP Wrapper class: Implements that UIAutomation I...Provider
-    // interface, and calls through to a WCP AutomationPeer which implements the corresponding
-    // I...Provider inteface. Marshalls the call from the RPC thread onto the
-    // target AutomationPeer's context.
-    //
-    // Class has two major parts to it:
-    // * Implementation of the I...Provider, which uses Dispatcher.Invoke
-    //   to call a private method (lives in second half of the class) via a delegate,
-    //   if necessary, packages any params into an object param. Return type of Invoke
-    //   must be cast from object to appropriate type.
-    // * private methods - one for each interface entry point - which get called back
-    //   on the right context. These call through to the peer that's actually
-    //   implenting the I...Provider version of the interface. 
-    internal class WindowProviderWrapper: MarshalByRefObject, IWindowProvider
+    private readonly AutomationPeer _peer;
+    private readonly IWindowProvider _iface;
+
+    private WindowProviderWrapper(AutomationPeer peer, IWindowProvider iface)
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
- 
-        #region Constructors
+        Debug.Assert(peer is not null);
+        Debug.Assert(iface is not null);
 
-        private WindowProviderWrapper( AutomationPeer peer, IWindowProvider iface)
-        {
-            _peer = peer;
-            _iface = iface;
-        }
+        _peer = peer;
+        _iface = iface;
+    }
 
-        #endregion Constructors
+    public void SetVisualState(WindowVisualState state)
+    {
+        ElementUtil.Invoke(_peer, static (state, visualState) => state.SetVisualState(visualState), _iface, state);
+    }
 
+    public void Close()
+    {
+        ElementUtil.Invoke(_peer, static (state) => state.Close(), _iface);
+    }
 
-        //------------------------------------------------------
-        //
-        //  Interface IWindowProvider
-        //
-        //------------------------------------------------------
- 
-        #region Interface IWindowProvider
+    public bool WaitForInputIdle(int milliseconds)
+    {
+        return ElementUtil.Invoke(_peer, static (state, milliseconds) => state.WaitForInputIdle(milliseconds), _iface, milliseconds);
+    }
 
-        public void SetVisualState( WindowVisualState state )
-        {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( SetVisualState ), state );
-        }
+    public bool Maximizable
+    {
+        get => ElementUtil.Invoke(_peer, static (state) => state.Maximizable, _iface);
+    }
 
-        public void Close()
-        {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( Close ), null );
-        }
+    public bool Minimizable
+    {
+        get => ElementUtil.Invoke(_peer, static (state) => state.Minimizable, _iface);
+    }
 
-        public bool WaitForInputIdle( int milliseconds )
-        {
-            return (bool)ElementUtil.Invoke( _peer, new DispatcherOperationCallback( WaitForInputIdle ), milliseconds );
-        }
+    public bool IsModal
+    {
+        get => ElementUtil.Invoke(_peer, static (state) => state.IsModal, _iface);
+    }
 
-        public bool Maximizable 
-        {
-            get
-            {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetMaximizable ), null );
-            }
-        }
-        
-        public bool Minimizable
-        {
-            get
-            {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetMinimizable ), null );
-            }
-        }
-        
-        public bool IsModal
-        {
-            get
-            {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetIsModal ), null );
-            }
-        }
-        
-        public WindowVisualState VisualState
-        {
-            get
-            {
-                return (WindowVisualState) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetVisualState ), null );
-            }
-        }
-        
-        public WindowInteractionState InteractionState
-        {
-            get
-            {
-                return (WindowInteractionState) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetInteractionState ), null );
-            }
-        }
-        
-        public bool IsTopmost
-        {
-            get
-            {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetIsTopmost ), null );
-            }
-        }
+    public WindowVisualState VisualState
+    {
+        get => ElementUtil.Invoke(_peer, static (state) => state.VisualState, _iface);
+    }
 
-        #endregion Interface IWindowProvider
+    public WindowInteractionState InteractionState
+    {
+        get => ElementUtil.Invoke(_peer, static (state) => state.InteractionState, _iface);
+    }
 
+    public bool IsTopmost
+    {
+        get => ElementUtil.Invoke(_peer, static (state) => state.IsTopmost, _iface);
+    }
 
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
- 
-        #region Internal Methods
-
-        internal static object Wrap( AutomationPeer peer, object iface)
-        {
-            return new WindowProviderWrapper( peer, (IWindowProvider) iface );
-        }
-
-        #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
- 
-        #region Private Methods
-
-        private object SetVisualState( object arg )
-        {
-            _iface.SetVisualState( (WindowVisualState) arg );
-            return null;
-        }
-
-        private object WaitForInputIdle( object arg )
-        {
-            return _iface.WaitForInputIdle( (int) arg );
-        }
-
-        private object Close( object unused )
-        {
-            _iface.Close();
-            return null;
-        }
-
-        private object GetMaximizable( object unused )
-        {
-            return _iface.Maximizable;
-        }
-        
-        private object GetMinimizable( object unused )
-        {
-            return _iface.Minimizable;
-        }
-        
-        private object GetIsModal( object unused )
-        {
-            return _iface.IsModal;
-        }
-        
-        private object GetVisualState( object unused )
-        {
-            return _iface.VisualState;
-        }
-        
-        private object GetInteractionState( object unused )
-        {
-            return _iface.InteractionState;
-        }
-        
-        private object GetIsTopmost( object unused )
-        {
-            return _iface.IsTopmost;
-        }
-
-        #endregion Private Methods
-
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
- 
-        #region Private Fields
-
-        private AutomationPeer _peer;
-        private IWindowProvider _iface;
-
-        #endregion Private Fields
+    /// <summary>
+    /// Creates a wrapper for the given <see cref="AutomationPeer"/> and <see cref="IWindowProvider"/> interface.
+    /// </summary>
+    internal static object Wrap(AutomationPeer peer, object iface)
+    {
+        return new WindowProviderWrapper(peer, (IWindowProvider)iface);
     }
 }

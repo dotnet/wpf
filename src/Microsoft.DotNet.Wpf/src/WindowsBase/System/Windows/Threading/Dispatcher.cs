@@ -11,13 +11,14 @@ using System.Threading;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Globalization;
 
 namespace System.Windows.Threading
 {
     /// <summary>
     ///     Provides UI services for a thread.
     /// </summary>
-    public sealed class Dispatcher
+    public sealed partial class Dispatcher
     {
         static Dispatcher()
         {
@@ -25,9 +26,6 @@ namespace System.Windows.Threading
             _globalLock = new object();
             _dispatchers = new List<WeakReference>();
             _possibleDispatcher = new WeakReference(null);
-            _exceptionWrapper = new ExceptionWrapper();
-            _exceptionWrapper.Catch += new ExceptionWrapper.CatchHandler(CatchExceptionStatic);
-            _exceptionWrapper.Filter += new ExceptionWrapper.FilterHandler(ExceptionFilterStatic);
         }
 
         /// <summary>
@@ -189,7 +187,7 @@ namespace System.Windows.Threading
         /// <returns>
         ///     True if the calling thread has access to this object.
         /// </returns>
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool CheckAccess()
         {
             return Thread == Thread.CurrentThread;
@@ -204,7 +202,7 @@ namespace System.Windows.Threading
         ///     This method is public so that derived classes can probe to
         ///     see if the calling thread has access to itself.
         /// </remarks>
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public void VerifyAccess()
         {
             if(!CheckAccess())
@@ -298,7 +296,7 @@ namespace System.Windows.Threading
         {
             ArgumentNullException.ThrowIfNull(frame);
 
-            Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+            Dispatcher dispatcher = CurrentDispatcher;
             if(dispatcher._hasShutdownFinished) // Dispatcher thread - no lock needed for read
             {
                 throw new InvalidOperationException(SR.DispatcherHasShutdown);
@@ -323,7 +321,7 @@ namespace System.Windows.Threading
         public static void ExitAllFrames()
         {
 
-            Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+            Dispatcher dispatcher = CurrentDispatcher;
             if(dispatcher._frameDepth > 0)
             {
                 dispatcher._exitAllFrames = true;
@@ -580,22 +578,8 @@ namespace System.Windows.Threading
 
                 try
                 {
-                    DispatcherSynchronizationContext newSynchronizationContext;
-                    if(BaseCompatibilityPreferences.GetReuseDispatcherSynchronizationContextInstance())
-                    {
-                        newSynchronizationContext = _defaultDispatcherSynchronizationContext;
-                    }
-                    else
-                    {
-                        if(BaseCompatibilityPreferences.GetFlowDispatcherSynchronizationContextPriority())
-                        {
-                            newSynchronizationContext = new DispatcherSynchronizationContext(this, priority);
-                        }
-                        else
-                        {
-                            newSynchronizationContext = new DispatcherSynchronizationContext(this, DispatcherPriority.Normal);
-                        }
-                    }
+                    DispatcherSynchronizationContext newSynchronizationContext = DispatcherUtils.GetOrCreateContext(this, priority);
+
                     SynchronizationContext.SetSynchronizationContext(newSynchronizationContext);
 
                     callback();
@@ -608,7 +592,7 @@ namespace System.Windows.Threading
             }
 
             // Slow-Path: go through the queue.
-            DispatcherOperation operation = new DispatcherOperation(this, priority, callback);
+            DispatcherOperation operation = new DispatcherOperationAction(this, priority, callback);
             InvokeImpl(operation, cancellationToken, timeout);
         }
 
@@ -677,6 +661,288 @@ namespace System.Windows.Threading
         }
 
         /// <summary>
+        ///     Executes the specified <paramref name="callback"/> synchronously on the
+        ///     thread that the Dispatcher was created on.
+        /// </summary>
+        /// <param name="callback">
+        ///     An <see cref="Action{T}"/> delegate to invoke through the dispatcher.
+        /// </param>
+        /// <param name="priority">
+        ///     The priority that determines in what order the specified
+        ///     callback is invoked relative to the other pending operations
+        ///     in the Dispatcher.
+        /// </param>
+        /// <param name="timeout">
+        ///     The minimum amount of time to wait for the operation to start.
+        ///     Once the operation has started, it will complete before this method
+        ///     returns.
+        /// </param>
+        internal void Invoke<TArg>(Action<TArg> callback, DispatcherPriority priority, CancellationToken cancellationToken, TimeSpan timeout, TArg arg)
+        {
+            Debug.Assert(callback is not null, "Callback cannot be null");
+            Debug.Assert(timeout.TotalMilliseconds >= 0 || timeout == TimeSpan.FromMilliseconds(-1));
+
+            // Fast-Path: if on the same thread, and invoking at Send priority, and the cancellation
+            // token is not already canceled, then just call the callback directly.
+            if (!cancellationToken.IsCancellationRequested && priority is DispatcherPriority.Send && CheckAccess())
+            {
+                SynchronizationContext oldSynchronizationContext = SynchronizationContext.Current;
+
+                try
+                {
+                    DispatcherSynchronizationContext newSynchronizationContext = DispatcherUtils.GetOrCreateContext(this, priority);
+
+                    SynchronizationContext.SetSynchronizationContext(newSynchronizationContext);
+
+                    callback(arg);
+                    return;
+                }
+                finally
+                {
+                    SynchronizationContext.SetSynchronizationContext(oldSynchronizationContext);
+                }
+            }
+
+            // Slow-Path: go through the queue.
+            DispatcherOperation operation = new DispatcherOperationAction<TArg>(this, priority, callback, arg);
+            InvokeImpl(operation, cancellationToken, timeout);
+        }
+
+        /// <summary>
+        ///     Executes the specified <paramref name="callback"/> synchronously on the
+        ///     thread that the Dispatcher was created on.
+        /// </summary>
+        /// <param name="callback">
+        ///     A <see cref="Func{T1, T2, TResult}"/> delegate to invoke through the dispatcher.
+        /// </param>
+        /// <param name="priority">
+        ///     The priority that determines in what order the specified
+        ///     callback is invoked relative to the other pending operations
+        ///     in the Dispatcher.
+        /// </param>
+        /// <param name="timeout">
+        ///     The minimum amount of time to wait for the operation to start.
+        ///     Once the operation has started, it will complete before this method
+        ///     returns.
+        /// </param>
+        /// <returns>
+        ///     The return value from the delegate being invoked.
+        /// </returns>
+        internal TResult Invoke<TArg1, TArg2, TResult>(Func<TArg1, TArg2, TResult> callback, DispatcherPriority priority, TimeSpan timeout, TArg1 arg1, TArg2 arg2)
+        {
+            Debug.Assert(callback is not null, "Callback cannot be null");
+            Debug.Assert(timeout.TotalMilliseconds >= 0 || timeout == TimeSpan.FromMilliseconds(-1));
+
+            // Fast-Path: if on the same thread, and invoking at Send priority, then just call the callback directly.
+            if (priority is DispatcherPriority.Send && CheckAccess())
+            {
+                SynchronizationContext oldSynchronizationContext = SynchronizationContext.Current;
+
+                try
+                {
+                    DispatcherSynchronizationContext newSynchronizationContext = DispatcherUtils.GetOrCreateContext(this, priority);
+
+                    SynchronizationContext.SetSynchronizationContext(newSynchronizationContext);
+
+                    return callback(arg1, arg2);
+                }
+                finally
+                {
+                    SynchronizationContext.SetSynchronizationContext(oldSynchronizationContext);
+                }
+            }
+
+            // Slow-Path: go through the queue.
+            DispatcherOperation<TArg1, TArg2, TResult> operation = new(this, priority, callback, arg1, arg2);
+            return InvokeImpl(operation, CancellationToken.None, timeout);
+        }
+
+        /// <summary>
+        ///     Executes the specified <paramref name="callback"/> synchronously on the
+        ///     thread that the Dispatcher was created on.
+        /// </summary>
+        /// <param name="callback">
+        ///     A <see cref="Func{T1, T2, T3, TResult}"/> delegate to invoke through the dispatcher.
+        /// </param>
+        /// <param name="priority">
+        ///     The priority that determines in what order the specified
+        ///     callback is invoked relative to the other pending operations
+        ///     in the Dispatcher.
+        /// </param>
+        /// <param name="timeout">
+        ///     The minimum amount of time to wait for the operation to start.
+        ///     Once the operation has started, it will complete before this method
+        ///     returns.
+        /// </param>
+        /// <returns>
+        ///     The return value from the delegate being invoked.
+        /// </returns>
+        internal TResult Invoke<TArg1, TArg2, TArg3, TResult>(Func<TArg1, TArg2, TArg3, TResult> callback, DispatcherPriority priority, TimeSpan timeout, TArg1 arg1, TArg2 arg2, TArg3 arg3)
+        {
+            Debug.Assert(callback is not null, "Callback cannot be null");
+            Debug.Assert(timeout.TotalMilliseconds >= 0 || timeout == TimeSpan.FromMilliseconds(-1));
+
+            // Fast-Path: if on the same thread, and invoking at Send priority, then just call the callback directly.
+            if (priority is DispatcherPriority.Send && CheckAccess())
+            {
+                SynchronizationContext oldSynchronizationContext = SynchronizationContext.Current;
+
+                try
+                {
+                    DispatcherSynchronizationContext newSynchronizationContext = DispatcherUtils.GetOrCreateContext(this, priority);
+
+                    SynchronizationContext.SetSynchronizationContext(newSynchronizationContext);
+
+                    return callback(arg1, arg2, arg3);
+                }
+                finally
+                {
+                    SynchronizationContext.SetSynchronizationContext(oldSynchronizationContext);
+                }
+            }
+
+            // Slow-Path: go through the queue.
+            DispatcherOperation<TArg1, TArg2, TArg3, TResult> operation = new(this, priority, callback, arg1, arg2, arg3);
+            return InvokeImpl(operation, CancellationToken.None, timeout);
+        }
+
+        /// <summary>
+        ///     Executes the specified <paramref name="callback"/> synchronously on the
+        ///     thread that the Dispatcher was created on.
+        /// </summary>
+        /// <param name="callback">
+        ///     A <see cref="Func{T, TResult}"/> delegate to invoke through the dispatcher.
+        /// </param>
+        /// <param name="priority">
+        ///     The priority that determines in what order the specified
+        ///     callback is invoked relative to the other pending operations
+        ///     in the Dispatcher.
+        /// </param>
+        /// <param name="timeout">
+        ///     The minimum amount of time to wait for the operation to start.
+        ///     Once the operation has started, it will complete before this method
+        ///     returns.
+        /// </param>
+        /// <returns>
+        ///     The return value from the delegate being invoked.
+        /// </returns>
+        internal TResult Invoke<TArg, TResult>(Func<TArg, TResult> callback, DispatcherPriority priority, TimeSpan timeout, TArg arg)
+        {
+            Debug.Assert(callback is not null, "Callback cannot be null");
+            Debug.Assert(timeout.TotalMilliseconds >= 0 || timeout == TimeSpan.FromMilliseconds(-1));
+
+            // Fast-Path: if on the same thread, and invoking at Send priority, then just call the callback directly.
+            if (priority is DispatcherPriority.Send && CheckAccess())
+            {
+                SynchronizationContext oldSynchronizationContext = SynchronizationContext.Current;
+
+                try
+                {
+                    DispatcherSynchronizationContext newSynchronizationContext = DispatcherUtils.GetOrCreateContext(this, priority);
+
+                    SynchronizationContext.SetSynchronizationContext(newSynchronizationContext);
+
+                    return callback(arg);
+                }
+                finally
+                {
+                    SynchronizationContext.SetSynchronizationContext(oldSynchronizationContext);
+                }
+            }
+
+            // Slow-Path: go through the queue.
+            DispatcherOperation<TArg, TResult> operation = new(this, priority, callback, arg);
+            return InvokeImpl(operation, CancellationToken.None, timeout);
+        }
+
+        private TResult InvokeImpl<TResult>(DispatcherOperation<TResult> operation, CancellationToken cancellationToken, TimeSpan timeout)
+        {
+            TResult result = default;
+
+            Debug.Assert(timeout.TotalMilliseconds >= 0 || timeout == TimeSpan.FromMilliseconds(-1));
+            Debug.Assert(operation.Priority != DispatcherPriority.Send || !CheckAccess()); // should be handled by caller
+
+            if (!cancellationToken.IsCancellationRequested)
+            {
+                // This operation must be queued since it was invoked either to
+                // another thread, or at a priority other than Send.
+                InvokeAsyncImpl(operation, cancellationToken);
+
+                CancellationToken ctTimeout = CancellationToken.None;
+                CancellationTokenRegistration ctTimeoutRegistration = new CancellationTokenRegistration();
+                CancellationTokenSource ctsTimeout = null;
+
+                if (timeout.TotalMilliseconds >= 0)
+                {
+                    // Create a CancellationTokenSource that will abort the
+                    // operation after the timeout.  Note that this does not
+                    // cancel the operation, just abort it if it is still pending.
+                    ctsTimeout = new CancellationTokenSource(timeout);
+                    ctTimeout = ctsTimeout.Token;
+                    ctTimeoutRegistration = ctTimeout.Register(s => ((DispatcherOperation)s).Abort(), operation);
+                }
+
+
+                // We have already registered with the cancellation tokens
+                // (both provided by the user, and one for the timeout) to
+                // abort the operation when they are canceled.  If the
+                // operation has already started when the timeout expires,
+                // we still wait for it to complete.  This is different
+                // than simply waiting on the operation with a timeout
+                // because we are the ones queueing the dispatcher
+                // operation, not the caller.  We can't leave the operation
+                // in a state that it might execute if we return that it did not
+                // invoke.
+                try
+                {
+                    operation.Wait();
+
+                    Debug.Assert(operation.Status == DispatcherOperationStatus.Completed ||
+                                 operation.Status == DispatcherOperationStatus.Aborted);
+
+                    // Old async semantics return from Wait without
+                    // throwing an exception if the operation was aborted.
+                    // There is no need to test the timout condition, since
+                    // the old async semantics would just return the result,
+                    // which would be null.
+
+                    // This should not block because either the operation
+                    // is using the old async sematics, or the operation
+                    // completed successfully.
+                    result = operation.Result;
+                }
+                catch (OperationCanceledException)
+                {
+                    Debug.Assert(operation.Status == DispatcherOperationStatus.Aborted);
+
+                    // New async semantics will throw an exception if the
+                    // operation was aborted.  Here we convert that
+                    // exception into a timeout exception if the timeout
+                    // has expired (admittedly a weak relationship
+                    // assuming causality).
+                    if (ctTimeout.IsCancellationRequested)
+                    {
+                        // The operation was canceled because of the
+                        // timeout, throw a TimeoutException instead.
+                        throw new TimeoutException();
+                    }
+                    else
+                    {
+                        // The operation was canceled from some other reason.
+                        throw;
+                    }
+                }
+                finally
+                {
+                    ctTimeoutRegistration.Dispose();
+                    ctsTimeout?.Dispose();
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         ///     Executes the specified Func<TResult> synchronously on the
         ///     thread that the Dispatcher was created on.
         /// </summary>
@@ -722,22 +988,8 @@ namespace System.Windows.Threading
 
                 try
                 {
-                    DispatcherSynchronizationContext newSynchronizationContext;
-                    if(BaseCompatibilityPreferences.GetReuseDispatcherSynchronizationContextInstance())
-                    {
-                        newSynchronizationContext = _defaultDispatcherSynchronizationContext;
-                    }
-                    else
-                    {
-                        if(BaseCompatibilityPreferences.GetFlowDispatcherSynchronizationContextPriority())
-                        {
-                            newSynchronizationContext = new DispatcherSynchronizationContext(this, priority);
-                        }
-                        else
-                        {
-                            newSynchronizationContext = new DispatcherSynchronizationContext(this, DispatcherPriority.Normal);
-                        }
-                    }
+                    DispatcherSynchronizationContext newSynchronizationContext = DispatcherUtils.GetOrCreateContext(this, priority);
+
                     SynchronizationContext.SetSynchronizationContext(newSynchronizationContext);
 
                     return callback();
@@ -750,7 +1002,7 @@ namespace System.Windows.Threading
 
             // Slow-Path: go through the queue.
             DispatcherOperation<TResult> operation = new DispatcherOperation<TResult>(this, priority, callback);
-            return (TResult) InvokeImpl(operation, cancellationToken, timeout);
+            return InvokeImpl(operation, cancellationToken, timeout);
         }
 
         /// <summary>
@@ -820,7 +1072,7 @@ namespace System.Windows.Threading
             ArgumentNullException.ThrowIfNull(callback);
             ValidatePriority(priority, "priority");
 
-            DispatcherOperation operation = new DispatcherOperation(this, priority, callback);
+            DispatcherOperation operation = new DispatcherOperationAction(this, priority, callback);
             InvokeAsyncImpl(operation, cancellationToken);
 
             return operation;
@@ -901,7 +1153,7 @@ namespace System.Windows.Threading
             ValidatePriority(priority, "priority");
             ArgumentNullException.ThrowIfNull(method);
 
-            DispatcherOperation operation = new DispatcherOperation(this, method, priority, args, numArgs);
+            DispatcherOperation operation = new DispatcherOperationLegacy(this, method, priority, args, numArgs);
             InvokeAsyncImpl(operation, CancellationToken.None);
 
             return operation;
@@ -1278,22 +1530,8 @@ namespace System.Windows.Threading
 
                 try
                 {
-                    DispatcherSynchronizationContext newSynchronizationContext;
-                    if(BaseCompatibilityPreferences.GetReuseDispatcherSynchronizationContextInstance())
-                    {
-                        newSynchronizationContext = _defaultDispatcherSynchronizationContext;
-                    }
-                    else
-                    {
-                        if(BaseCompatibilityPreferences.GetFlowDispatcherSynchronizationContextPriority())
-                        {
-                            newSynchronizationContext = new DispatcherSynchronizationContext(this, priority);
-                        }
-                        else
-                        {
-                            newSynchronizationContext = new DispatcherSynchronizationContext(this, DispatcherPriority.Normal);
-                        }
-                    }
+                    DispatcherSynchronizationContext newSynchronizationContext = DispatcherUtils.GetOrCreateContext(this, priority);
+
                     SynchronizationContext.SetSynchronizationContext(newSynchronizationContext);
 
                     return WrappedInvoke(method, args, numArgs, null);
@@ -1305,7 +1543,7 @@ namespace System.Windows.Threading
             }
 
             // Slow-Path: go through the queue.
-            DispatcherOperation operation = new DispatcherOperation(this, method, priority, args, numArgs);
+            DispatcherOperation operation = new DispatcherOperationLegacy(this, method, priority, args, numArgs);
             return InvokeImpl(operation, CancellationToken.None, timeout);
         }
 
@@ -1333,7 +1571,7 @@ namespace System.Windows.Threading
                     // cancel the operation, just abort it if it is still pending.
                     ctsTimeout = new CancellationTokenSource(timeout);
                     ctTimeout = ctsTimeout.Token;
-                    ctTimeoutRegistration = ctTimeout.Register(s => ((DispatcherOperation)s).Abort(), operation);
+                    ctTimeoutRegistration = ctTimeout.Register(static s => ((DispatcherOperation)s).Abort(), operation);
                 }
 
 
@@ -1420,103 +1658,6 @@ namespace System.Windows.Threading
             return dpd;
         }
 
-/*
-        /// <summary>
-        ///     Reports the range of priorities that are considered
-        ///     as foreground priorities.
-        /// </summary>
-        /// <remarks>
-        ///     A foreground priority is processed before input.
-        /// </remarks>
-        public static PriorityRange ForegroundPriorityRange
-        {
-            get
-            {
-                return _foregroundPriorityRange;
-            }
-        }
-
-        /// <summary>
-        ///     Reports the range of priorities that are considered
-        ///     as background priorities.
-        /// </summary>
-        /// <remarks>
-        ///     A background priority is processed after input.
-        /// </remarks>
-        public static PriorityRange BackgroundPriorityRange
-        {
-            get
-            {
-                return _backgroundPriorityRange;
-            }
-        }
-
-        /// <summary>
-        ///     Reports the range of priorities that are considered
-        ///     as idle priorities.
-        /// </summary>
-        /// <remarks>
-        ///     An idle priority is processed periodically after background
-        ///     priorities have been processed.
-        /// </remarks>
-        public static PriorityRange IdlePriorityRange
-        {
-            get
-            {
-                return _idlePriorityRange;
-            }
-        }
-
-        /// <summary>
-        ///     Represents a convenient foreground priority.
-        /// </summary>
-        /// <remarks>
-        ///     A foreground priority is processed before input.  In general
-        ///     you should define your own foreground priority to allow for
-        ///     more fine-grained ordering of queued items.
-        /// </remarks>
-        public static Priority ForegroundPriority
-        {
-            get
-            {
-                return _foregroundPriority;
-            }
-        }
-
-        /// <summary>
-        ///     Represents a convenient background priority.
-        /// </summary>
-        /// <remarks>
-        ///     A background priority is processed after input.  In general you
-        ///     should define your own background priority to allow for more
-        ///     fine-grained ordering of queued items.
-        /// </remarks>
-        public static Priority BackgroundPriority
-        {
-            get
-            {
-                return _backgroundPriority;
-            }
-        }
-
-        /// <summary>
-        ///     Represents a convenient idle priority.
-        /// </summary>
-        /// <remarks>
-        ///     An idle priority is processed periodically after background
-        ///     priorities have been processed.  In general you should define
-        ///     your own idle priority to allow for more fine-grained ordering
-        ///     of queued items.
-        /// </remarks>
-        public static Priority IdlePriority
-        {
-            get
-            {
-                return _idlePriority;
-            }
-        }
-*/
-
         /// <summary>
         ///     Validates that a priority is suitable for use by the dispatcher.
         /// </summary>
@@ -1528,20 +1669,22 @@ namespace System.Windows.Threading
         ///     that is raised if the priority is not suitable for use by
         ///     the dispatcher.
         /// </param>
-        public static void ValidatePriority(DispatcherPriority priority, string parameterName) // NOTE: should be Priority
+        public static void ValidatePriority(DispatcherPriority priority, string parameterName)
         {
-            // First make sure the Priority is valid.
-            // Priority.ValidatePriority(priority, paramName);
-
-            // Second, make sure the priority is in a range recognized by
-            // the dispatcher.
-            if(!_foregroundPriorityRange.Contains(priority) &&
-               !_backgroundPriorityRange.Contains(priority) &&
-               !_idlePriorityRange.Contains(priority) &&
-               DispatcherPriority.Inactive != priority)  // NOTE: should be Priority.Min
+            // Make sure the priority is in a range recognized by the dispatcher.
+            if (!_foregroundPriorityRange.Contains(priority) &&
+                !_backgroundPriorityRange.Contains(priority) &&
+                !_idlePriorityRange.Contains(priority) &&
+                priority is not DispatcherPriority.Inactive)
             {
-                // If we move to a Priority class, this exception will have to change too.
-                throw new System.ComponentModel.InvalidEnumArgumentException(parameterName, (int)priority, typeof(DispatcherPriority));
+                ThrowInvalidEnumArgumentException(parameterName, (int)priority);
+            }
+
+            [DoesNotReturn]
+            [MethodImpl(MethodImplOptions.NoInlining)]
+            static void ThrowInvalidEnumArgumentException(string argumentName, int value)
+            {
+                throw new InvalidEnumArgumentException(argumentName, value, typeof(DispatcherPriority));
             }
         }
 
@@ -1557,7 +1700,7 @@ namespace System.Windows.Threading
         /// <returns>
         ///     True if the calling thread has access to this object.
         /// </returns>
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Advanced)]
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
         public DispatcherHooks Hooks
         {
             get
@@ -2459,7 +2602,7 @@ namespace System.Windows.Threading
             if (_reservedPtsCache is Tuple<Object, List<String>> tuple)
             {
                 List<String> list = tuple.Item2;
-                list.Add(String.Format(System.Globalization.CultureInfo.InvariantCulture,
+                list.Add(String.Format(CultureInfo.InvariantCulture,
                     "{0:O} {1} failed", DateTime.Now, methodName));
 
                 // keep the list from growing too large
@@ -2673,13 +2816,6 @@ namespace System.Windows.Threading
             }
         }
 
-        // Exception filter returns true if exception should be caught.
-        private static bool ExceptionFilterStatic(object source, Exception e)
-        {
-            Dispatcher d = (Dispatcher)source;
-            return d.ExceptionFilter(e);
-        }
-
         private bool ExceptionFilter(Exception e)
         {
             // see whether this dispatcher has already seen the exception.
@@ -2730,14 +2866,6 @@ namespace System.Windows.Threading
             return requestCatch;
         }
 
-        // This returns false when caller should rethrow the exception.
-        // true means Exception is "handled" and things just continue on.
-        private static bool CatchExceptionStatic(object source, Exception e)
-        {
-            Dispatcher dispatcher = (Dispatcher)source;
-            return dispatcher.CatchException(e);
-        }
-
         // The exception filter called for catching an unhandled exception.
         private bool CatchException(Exception e)
         {
@@ -2770,12 +2898,20 @@ namespace System.Windows.Threading
             get { return (UnhandledException != null); }
         }
 
-        internal object WrappedInvoke(Delegate callback, object args, int numArgs, Delegate catchHandler)
+        /// <summary>
+        /// Calls the delegate and catches exceptions that are filtered by the dispatcher, raising the UnhandledException event if necessary.
+        /// </summary>
+        /// <returns>Result of the delegate method call in case it has succeeded.</returns>
+        internal object WrappedInvoke(Delegate callback, object args, int numArgs, Delegate catchCallback)
         {
-            return _exceptionWrapper.TryCatchWhen(this, callback, args, numArgs, catchHandler);
+            return ExceptionWrapper.TryCatchWhen(this, callback, args, numArgs, catchCallback);
         }
 
-        private object[] CombineParameters(object arg, object[] args)
+        /// <summary>
+        /// Combines the first argument with the rest of the arguments into an array.
+        /// </summary>
+        /// <remarks>NOTE: This is a legacy invoke arguments handling.</remarks>
+        private static object[] CombineParameters(object arg, object[] args)
         {
             object[] parameters = new object[1 + (args == null ? 1 : args.Length)];
             parameters[0] = arg;
@@ -2827,7 +2963,6 @@ namespace System.Windows.Threading
         private int _postedProcessingType;
         private static WindowMessage _msgProcessQueue;
 
-        private static ExceptionWrapper _exceptionWrapper;
         private static readonly object ExceptionDataKey = new object();
 
         // Preallocated arguments for exception handling.
@@ -2849,7 +2984,7 @@ namespace System.Windows.Threading
 
         internal DispatcherSynchronizationContext _defaultDispatcherSynchronizationContext;
 
-        internal object _instanceLock = new object(); // Also used by DispatcherOperation
+        internal Lock _instanceLock = new Lock(); // Also used by DispatcherOperation
         private PriorityQueue<DispatcherOperation> _queue;
         private List<DispatcherTimer> _timers = new List<DispatcherTimer>();
         private long _timersVersion;

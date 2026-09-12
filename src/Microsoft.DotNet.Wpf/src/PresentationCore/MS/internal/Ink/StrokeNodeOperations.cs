@@ -72,7 +72,7 @@ namespace MS.Internal.Ink
             System.Diagnostics.Debug.Assert((boundingBox.X <= 0) && (boundingBox.Y <= 0));
 
             double pressureFactor = node.PressureFactor;
-            if (!DoubleUtil.AreClose(pressureFactor,1d))
+            if (!DoubleUtil.IsOne(pressureFactor))
             {
                 boundingBox = new Rect(
                     _shapeBounds.X * pressureFactor,
@@ -89,7 +89,7 @@ namespace MS.Internal.Ink
         internal void GetNodeContourPoints(in StrokeNodeData node, List<Point> pointBuffer)
         {
             double pressureFactor = node.PressureFactor;
-            if (DoubleUtil.AreClose(pressureFactor, 1d))
+            if (DoubleUtil.IsOne(pressureFactor))
             {
                 for (int i = 0; i < _vertices.Length; i++)
                 {
@@ -951,7 +951,7 @@ namespace MS.Internal.Ink
                     // Adjust the arc for the node' pressure factor.
                     Vector hitCenter = hitSegment.Begin + hitSegment.Radius - position;
                     Vector hitRadius = hitSegment.Radius;
-                    if (!DoubleUtil.AreClose(pressureFactor, 1d))
+                    if (!DoubleUtil.IsOne(pressureFactor))
                     {
                         System.Diagnostics.Debug.Assert(!DoubleUtil.IsZero(pressureFactor));
                         hitCenter /= pressureFactor;
@@ -976,7 +976,7 @@ namespace MS.Internal.Ink
                     // Adjust the segment for the node's pressure factor
                     Vector hitBegin = hitSegment.Begin - position;
                     Vector hitEnd = hitBegin + hitSegment.Vector;
-                    if (!DoubleUtil.AreClose(pressureFactor, 1d))
+                    if (!DoubleUtil.IsOne(pressureFactor))
                     {
                         System.Diagnostics.Debug.Assert(!DoubleUtil.IsZero(pressureFactor));
                         hitBegin /= pressureFactor;

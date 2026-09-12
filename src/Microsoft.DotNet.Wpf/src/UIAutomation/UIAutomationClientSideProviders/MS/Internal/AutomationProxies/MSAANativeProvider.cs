@@ -486,6 +486,10 @@ namespace MS.Internal.AutomationProxies
 
         object IRawElementProviderSimple.GetPatternProvider(int patternId)
         {
+            object provider = _acc.GetPatternProvider(patternId);
+            if (provider != null)
+                return provider;
+
             AutomationPattern pattern = AutomationPattern.LookupById(patternId);
             //Debug.WriteLine.WriteLine(string.Format(CultureInfo.CurrentCulture, "{0} IRawElementProviderSimple.GetPatternProvider {1}", this, pattern));
 
@@ -495,6 +499,10 @@ namespace MS.Internal.AutomationProxies
 
         object IRawElementProviderSimple.GetPropertyValue(int propertyId)
         {
+            object value = _acc.GetPropertyValue(propertyId);
+            if (value != null)
+                return value;
+
             AutomationProperty idProp = AutomationProperty.LookupById(propertyId);
             //Debug.WriteLine.WriteLine(string.Format(CultureInfo.CurrentCulture, "{0} IRawElementProviderSimple.GetPropertyValue {1}", this, idProp));
 
@@ -669,7 +677,13 @@ namespace MS.Internal.AutomationProxies
             {
                 //Debug.WriteLine.WriteLine(string.Format(CultureInfo.CurrentCulture, "{0} ISelectionItemProvider.SelectionContainer", this));
 
-                return IsRoot ? null : Parent;
+                MsaaNativeProvider parent = IsRoot ? null : Parent;
+                while (parent != null && !parent.IsPatternSupported(SelectionPattern.Pattern))
+                {
+                    parent = parent.IsRoot ? null : parent.Parent;
+                }
+
+                return parent;
             }
         }
         #endregion ISelectionItemProvider
@@ -880,6 +894,10 @@ namespace MS.Internal.AutomationProxies
         // overridable implementation of IRawElementProviderSimple.GetPropertyValue
         protected virtual object GetPropertyValue(AutomationProperty idProp)
         {
+            object patternValue = GetPatternPropertyValue(this, idProp);
+            if (patternValue != null)
+                return patternValue;
+
             // The following UIA properties need support: AcceleratorKeyProperty, AccessKeyProperty, AutomationIdProperty, 
             // HasKeyboardFocusProperty, IsContentElementProperty, IsControlElementProperty, IsKeyboardFocusableProperty, 
             // IsPasswordProperty, IsReadOnlyProperty, NativeObjectModelAccessProperty, SiblingIdProperty, TabIndexProperty?, 
@@ -907,6 +925,7 @@ namespace MS.Internal.AutomationProxies
                 else
                     return null;
             }
+
             else if (idProp == AutomationElement.IsEnabledProperty)
             {
                 return _acc.IsEnabled;
@@ -950,6 +969,24 @@ namespace MS.Internal.AutomationProxies
             {
                 return _acc.IsOffScreen;
             }
+            return null;
+        }
+
+        internal static object GetPatternPropertyValue(IRawElementProviderSimple provider, AutomationProperty property)
+        {
+            if (property == ExpandCollapsePattern.ExpandCollapseStateProperty)
+            {
+                IExpandCollapseProvider expandCollapse =
+                    provider.GetPatternProvider(ExpandCollapsePattern.Pattern.Id) as IExpandCollapseProvider;
+                return expandCollapse?.ExpandCollapseState;
+            }
+
+            if (property == TogglePattern.ToggleStateProperty)
+            {
+                IToggleProvider toggle = provider.GetPatternProvider(TogglePattern.Pattern.Id) as IToggleProvider;
+                return toggle?.ToggleState;
+            }
+
             return null;
         }
 
@@ -1309,7 +1346,9 @@ namespace MS.Internal.AutomationProxies
             new CtrlTypePatterns(ControlType.RadioButton, SelectionItemPattern.Pattern),
             // ControlType.Slider: it is impossible to tell which of RangeValue or Selection patterns to support so we're not supporting either.
             // ControlType.Spinner: it is impossible to tell which of RangeValue or Selection patterns to support so we're not supporting either.
-            new CtrlTypePatterns(ControlType.SplitButton, InvokePattern.Pattern)
+            new CtrlTypePatterns(ControlType.SplitButton, InvokePattern.Pattern),
+            new CtrlTypePatterns(ControlType.Tree, SelectionPattern.Pattern),
+            new CtrlTypePatterns(ControlType.TreeItem, SelectionItemPattern.Pattern)
         };
 
         private Accessible _acc; // the IAccessible we are representing. use Accessible to access.

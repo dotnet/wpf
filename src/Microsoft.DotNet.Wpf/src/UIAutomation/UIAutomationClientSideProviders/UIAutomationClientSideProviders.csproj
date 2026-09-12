@@ -15,6 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(WpfSharedDir)RefAssemblyAttrs.cs" />
+    <Compile Include="LibraryAssemblyInfo.cs" />
     <Compile Include="$(WpfSharedDir)MS\Win32\NativeMethodsSetLastError.cs" />
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
       <Link>Common\System\SR.cs</Link>

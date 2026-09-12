@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -733,7 +733,26 @@ namespace MS.Internal.FontCache
 
             public int Count
             {
-                get { return CMap.Count; }
+                get
+                {
+                    if (_cmap == null)
+                    {
+                        // When _cmap is not created yet, we can get the count directly from the font. We don't use the CMap property, because that would create the cmap and initialize it slowly.
+                        MS.Internal.Text.TextInterface.FontFace fontFace = _font.GetFontFace();
+                        try
+                        {
+                            return fontFace.GlyphCount;
+                        }
+                        finally
+                        {
+                            fontFace.Release();
+                        }
+                    }
+                    else
+                    {
+                        return _cmap.Count;
+                    }
+                }
             }
 
             public bool IsReadOnly

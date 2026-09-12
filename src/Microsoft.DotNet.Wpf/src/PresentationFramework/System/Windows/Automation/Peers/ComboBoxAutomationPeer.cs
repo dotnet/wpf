@@ -37,27 +37,20 @@ namespace System.Windows.Automation.Peers
         ///
         public override object GetPattern(PatternInterface pattern)
         {
-            object iface = null;
             ComboBox owner = (ComboBox)Owner;
 
-            if (pattern == PatternInterface.Value)
+            if ((pattern is PatternInterface.Value && owner.IsEditable) || pattern is PatternInterface.ExpandCollapse)
             {
-                if (owner.IsEditable) iface = this;
-            }
-            else if(pattern == PatternInterface.ExpandCollapse)
-            {
-                iface = this;
-            }
-            else if (pattern == PatternInterface.Scroll && !owner.IsDropDownOpen)
-            {
-                iface = this;
-            }
-            else
-            {
-                iface = base.GetPattern(pattern);
+                return this;
             }
 
-            return iface;
+            if (pattern is PatternInterface.Scroll && !owner.IsDropDownOpen)
+            {
+                return null;
+            }
+
+            // PatternInterface.Scroll is handled by ItemsControlAutomationPeer when Expanded/DropDown is open
+            return base.GetPattern(pattern);
         }
 
         ///

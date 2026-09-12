@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -315,7 +315,20 @@ namespace System.Windows.Interop
         /// <param name="originOffsetY">The Y offset in logical coordiantes</param>
         private void GetOriginOffsetsLogical(out int originOffsetX, out int originOffsetY)
         {
-            Point originScreenCoord = _source.RootVisual.PointToScreen(new Point(0, 0));
+            Point originScreenCoord = new Point();
+
+            HwndSource hwndSource = PresentationSource.FromVisual(_source.RootVisual) as HwndSource;
+            if (hwndSource != null)
+            {
+                HandleRef handleRef = new HandleRef(hwndSource, hwndSource.Handle);
+
+                MS.Win32.NativeMethods.POINT point = new MS.Win32.NativeMethods.POINT();
+                MS.Win32.UnsafeNativeMethods.ClientToScreen(handleRef, ref point);
+
+                var displayRect = _currentTabletDevice.DeviceInfo.DisplayRect;
+
+                originScreenCoord = new Point(point.x - displayRect.left, point.y - displayRect.top);
+            }
 
             // Use the inverse of our logical tablet to screen matrix to generate tablet coords
             MatrixTransform screenToTablet = new MatrixTransform(_currentTabletDevice.TabletToScreen);

@@ -8,7 +8,7 @@
 #include "Common.h"
 namespace MS { namespace Internal
 {
-    private ref struct Span sealed
+    private value struct Span
     {
         /// <summary>
         /// Constructor
@@ -20,12 +20,12 @@ namespace MS { namespace Internal
         /// <summary>
         /// Span element
         /// </summary>
-        Object^  element;
+        initonly Object^  element;
 
         /// <summary>
         /// Span length
         /// </summary>
-        int      length;
+        initonly int      length;
     };
 }}//MS::Internal
 #endif //_ITEM_SPAN_H

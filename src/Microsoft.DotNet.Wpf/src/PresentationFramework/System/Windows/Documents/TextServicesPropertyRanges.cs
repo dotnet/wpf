@@ -147,8 +147,10 @@ namespace System.Windows.Documents
         /// <summary>
         ///    Get ranges that the property is changed.
         /// </summary>
-        private UnsafeNativeMethods.IEnumTfRanges GetPropertyUpdate(
-                                UnsafeNativeMethods.ITfEditRecord editRecord) 
+        // Promoted from private to protected so TextServicesDisplayAttributePropertyRanges
+        // can reuse it to scope its enumeration to the ranges an edit actually changed.
+        protected UnsafeNativeMethods.IEnumTfRanges GetPropertyUpdate(
+                                UnsafeNativeMethods.ITfEditRecord editRecord)
         {
             UnsafeNativeMethods.IEnumTfRanges ranges;
 

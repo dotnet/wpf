@@ -162,9 +162,9 @@ namespace MS.Internal.IO.Packaging
         // certificate part constants
         private static readonly ContentType _certificatePartContentType =
             new ContentType("application/vnd.openxmlformats-package.digital-signature-certificate");
-        private static readonly string _certificatePartNamePrefix = "/package/services/digital-signature/certificate/";
-        private static readonly string _certificatePartNameExtension = ".cer";
-        private static readonly string _certificatePartRelationshipType = "http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/certificate";
+        private const string _certificatePartNamePrefix = "/package/services/digital-signature/certificate/";
+        private const string _certificatePartNameExtension = ".cer";
+        private const string _certificatePartRelationshipType = "http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/certificate";
         private static long             _maximumCertificateStreamLength = 0x40000;   // 4MB
         #endregion Private Members
     }

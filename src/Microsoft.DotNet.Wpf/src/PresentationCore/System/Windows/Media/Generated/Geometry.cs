@@ -24,7 +24,6 @@ using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
-
     [TypeConverter(typeof(GeometryConverter))]
     [ValueSerializer(typeof(GeometryValueSerializer))] // Used by MarkupWriter
     public abstract partial class Geometry : Animatable, IFormattable, DUCE.IResource
@@ -56,8 +55,6 @@ namespace System.Windows.Media
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -75,7 +72,6 @@ namespace System.Windows.Media
             target.TransformPropertyChangedHook(e);
 
 
-
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -89,8 +85,6 @@ namespace System.Windows.Media
             {
                 return;
             }
-
-
 
             Transform oldV = (Transform) e.OldValue;
             Transform newV = (Transform) e.NewValue;
@@ -116,7 +110,6 @@ namespace System.Windows.Media
 
             target.PropertyChanged(TransformProperty);
         }
-
 
         #region Public Properties
 
@@ -146,9 +139,6 @@ namespace System.Windows.Media
         #region Protected Methods
 
 
-
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -158,7 +148,6 @@ namespace System.Windows.Media
         //------------------------------------------------------
 
         #region Internal Methods
-
 
         internal abstract DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel);
 
@@ -223,7 +212,6 @@ namespace System.Windows.Media
             return GetChannelCore(index);
         }
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -233,7 +221,6 @@ namespace System.Windows.Media
         //------------------------------------------------------
 
         #region Internal Properties
-
 
         /// <summary>
         /// Creates a string representation of this object based on the current culture.
@@ -328,14 +315,9 @@ namespace System.Windows.Media
 
         #region Internal Fields
 
-
-
-
-
         internal static Transform s_Transform = Transform.Identity;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -368,7 +350,6 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

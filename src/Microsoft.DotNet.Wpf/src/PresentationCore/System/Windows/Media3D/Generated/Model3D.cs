@@ -51,8 +51,6 @@ namespace System.Windows.Media.Media3D
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -63,9 +61,6 @@ namespace System.Windows.Media.Media3D
 
         private static void TransformPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
-
-
 
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
@@ -83,7 +78,6 @@ namespace System.Windows.Media.Media3D
 
 
             Model3D target = ((Model3D) d);
-
 
             Transform3D oldV = (Transform3D) e.OldValue;
             Transform3D newV = (Transform3D) e.NewValue;
@@ -109,7 +103,6 @@ namespace System.Windows.Media.Media3D
 
             target.PropertyChanged(TransformProperty);
         }
-
 
         #region Public Properties
 
@@ -139,9 +132,6 @@ namespace System.Windows.Media.Media3D
         #region Protected Methods
 
 
-
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -151,7 +141,6 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
         #region Internal Methods
-
 
         internal abstract DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel);
 
@@ -216,7 +205,6 @@ namespace System.Windows.Media.Media3D
             return GetChannelCore(index);
         }
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -226,7 +214,6 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
         #region Internal Properties
-
 
         /// <summary>
         /// Creates a string representation of this object based on the current culture.
@@ -285,7 +272,6 @@ namespace System.Windows.Media.Media3D
             return base.ToString();
         }
 
-
         #endregion Internal Properties
 
         //------------------------------------------------------
@@ -311,14 +297,9 @@ namespace System.Windows.Media.Media3D
 
         #region Internal Fields
 
-
-
-
-
         internal static Transform3D s_Transform = Transform3D.Identity;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -351,7 +332,6 @@ namespace System.Windows.Media.Media3D
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

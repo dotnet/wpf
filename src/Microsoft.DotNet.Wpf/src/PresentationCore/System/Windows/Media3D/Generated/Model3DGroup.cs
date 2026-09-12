@@ -51,8 +51,6 @@ namespace System.Windows.Media.Media3D
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -63,9 +61,6 @@ namespace System.Windows.Media.Media3D
 
         private static void ChildrenPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
-
-
 
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
@@ -83,7 +78,6 @@ namespace System.Windows.Media.Media3D
 
 
             Model3DGroup target = ((Model3DGroup) d);
-
 
             // If this is both non-null and mutable, we need to unhook the Changed event.
             Model3DCollection oldCollection = null;
@@ -153,7 +147,6 @@ namespace System.Windows.Media.Media3D
             target.PropertyChanged(ChildrenProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>
@@ -189,8 +182,6 @@ namespace System.Windows.Media.Media3D
         {
             return new Model3DGroup();
         }
-
-
 
         #endregion ProtectedMethods
 
@@ -246,7 +237,6 @@ namespace System.Windows.Media.Media3D
                         (int)(data.ChildrenSize)
                         );
 
-
                     // Copy this collection's elements (or their handles) to reserved data
                     for (int i = 0; i < ChildrenCount; i++)
                     {
@@ -263,7 +253,6 @@ namespace System.Windows.Media.Media3D
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_MODEL3DGROUP))
                 {
                     Transform3D vTransform = Transform;
@@ -279,18 +268,16 @@ namespace System.Windows.Media.Media3D
                             ((DUCE.IResource) vChildren.Internal_GetItem(i)).AddRefOnChannel(channel);
                         }
                     }
-                    AddRefOnChannelAnimations(channel);
 
+                    AddRefOnChannelAnimations(channel);
 
                     UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
                 }
 
                 return _duceResource.GetHandle(channel);
-
         }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
@@ -308,10 +295,9 @@ namespace System.Windows.Media.Media3D
                             ((DUCE.IResource) vChildren.Internal_GetItem(i)).ReleaseOnChannel(channel);
                         }
                     }
+
                     ReleaseOnChannelAnimations(channel);
-
                 }
-
         }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
@@ -404,8 +390,6 @@ namespace System.Windows.Media.Media3D
             }
         }
 
-
-
         #endregion Internal Properties
 
         //------------------------------------------------------
@@ -431,14 +415,10 @@ namespace System.Windows.Media.Media3D
 
         #region Internal Fields
 
-
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
-
         internal static Model3DCollection s_Children = Model3DCollection.Empty;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -471,7 +451,6 @@ namespace System.Windows.Media.Media3D
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

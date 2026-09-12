@@ -91,7 +91,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
                 csFile.WriteBlock(
                     [[inline]]
-
                             /// <summary>
                             /// This class is used as part of a [[instance.TypeName]]KeyFrameCollection in
                             /// conjunction with a KeyFrame[[instance.TypeName]]Animation to animate a
@@ -154,7 +153,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                 /// <returns>The new Freezable.</returns>
                                 protected override Freezable CreateInstanceCore()
                                 {
-                                    return new  Spline[[instance.TypeName]]KeyFrame();
+                                    return new Spline[[instance.TypeName]]KeyFrame();
                                 }
 
                                 #endregion
@@ -216,7 +215,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                
                                 #endregion
                             }
-
                     [[/inline]]
                     );
                 

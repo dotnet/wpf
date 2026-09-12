@@ -58,8 +58,6 @@ namespace System.Windows.Media
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -67,7 +65,6 @@ namespace System.Windows.Media
         //  Public Properties
         //
         //------------------------------------------------------
-
 
         #region IList<T>
 
@@ -117,11 +114,8 @@ namespace System.Windows.Media
         /// </summary>
         public void Insert(int index, double value)
         {
-
-
             WritePreamble();
             _collection.Insert(index, value);
-
 
             ++_version;
             WritePostscript();
@@ -164,7 +158,6 @@ namespace System.Windows.Media
             WritePostscript();
         }
 
-
         /// <summary>
         ///     Removes the element at the specified index without firing
         ///     the public Changed event.
@@ -176,12 +169,10 @@ namespace System.Windows.Media
             WritePreamble();
             _collection.RemoveAt(index);
 
-
             ++_version;
 
             // No WritePostScript to avoid firing the Changed event.
         }
-
 
         /// <summary>
         ///     Indexer for the collection
@@ -196,11 +187,8 @@ namespace System.Windows.Media
             }
             set
             {
-
-
                 WritePreamble();
-                _collection[ index ] = value;
-
+                _collection[index] = value;
 
                 ++_version;
                 WritePostscript();
@@ -441,7 +429,6 @@ namespace System.Windows.Media
         }
 
 
-
         #endregion
 
         #region Private Helpers
@@ -476,10 +463,8 @@ namespace System.Windows.Media
         {
             int index = -1;
 
-
             WritePreamble();
             index = _collection.Add(value);
-
 
             ++_version;
 
@@ -488,15 +473,12 @@ namespace System.Windows.Media
             return index;
         }
 
-
-
         #endregion Private Helpers
 
         private static DoubleCollection s_empty;
 
 
         #region Public Properties
-
 
 
         #endregion Public Properties
@@ -534,7 +516,6 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceDoubleCollection._collection[i]);
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
@@ -553,7 +534,6 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceDoubleCollection._collection[i]);
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
@@ -572,7 +552,6 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceDoubleCollection._collection[i]);
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
@@ -591,9 +570,7 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceDoubleCollection._collection[i]);
             }
-
         }
-
 
         #endregion ProtectedMethods
 
@@ -606,13 +583,6 @@ namespace System.Windows.Media
         #region Internal Methods
 
 
-
-
-
-
-
-
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -622,7 +592,6 @@ namespace System.Windows.Media
         //------------------------------------------------------
 
         #region Internal Properties
-
 
         /// <summary>
         /// Creates a string representation of this object based on the current culture.
@@ -739,7 +708,6 @@ namespace System.Windows.Media
         #region Dependency Properties
 
 
-
         #endregion Dependency Properties
 
         //------------------------------------------------------
@@ -750,12 +718,8 @@ namespace System.Windows.Media
 
         #region Internal Fields
 
-
-
-
         internal FrugalStructList<double> _collection;
         internal uint _version = 0;
-
 
         #endregion Internal Fields
 
@@ -893,7 +857,6 @@ namespace System.Windows.Media
         //
         //------------------------------------------------------
 
-
         /// <summary>
         /// Initializes a new instance that is empty.
         /// </summary>
@@ -945,14 +908,12 @@ namespace System.Windows.Media
 
                     foreach (double item in collection)
                     {
-
                         _collection.Add(item);
                     }
 
 
                 }
             }
-
 
 
 

@@ -117,7 +117,6 @@ namespace System.Windows.Media.Animation
         #region Methods
 
 
-
         /// <summary>
         /// Calculates the value this animation believes should be the current value for the property.
         /// </summary>

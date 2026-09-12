@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -200,18 +200,22 @@ namespace MS.Internal.MilCodeGen.Runtime
                     InternalWrite(spaces);
                 }
 
-                InternalWrite(output.Substring(startIndex, endIndex - startIndex));
+				string currentLine = output.Substring(startIndex, endIndex - startIndex);
+				if (currentLine.Trim() != "<scratch-line>")
+				{
+                    InternalWrite(currentLine.Replace("<scratch-line>", string.Empty));
 
-                if (endIndex != output.Length)
-                {
-                    InternalWrite("\n");
-                    _doIndent = true;
-                }
-                else
-                {
-                    _doIndent = false;
-                }
-
+					if (endIndex != output.Length)
+					{
+						InternalWrite("\n");
+						_doIndent = true;
+					}
+					else
+					{
+						_doIndent = false;
+					}
+				}
+				
                 startIndex = endIndex + 1;
             }
         }

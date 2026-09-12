@@ -6268,6 +6268,16 @@ Sostituirlo?</target>
         <target state="translated">'{0}' non è un valore valido per questa proprietà. I valori validi sono compresi nell'intervallo da Int32.MinValue a Int32.MaxValue.</target>
         <note />
       </trans-unit>
+	  <trans-unit id="Verify_ApartmentState">
+        <source>This operation requires the thread's apartment state to be '{0}'.</source>
+        <target state="translated">Questa operazione richiede che lo stato dell'apartment del thread sia '{0}'.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Verify_FileExists">
+        <source>No file exists at '{0}'.</source>
+        <target state="translated">Non esiste alcun file in '{0}'.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="ValueSerializerContextUnavailable">
         <source>Conversion by a ValueSerializer failed because the IValueSerializerContext was not provided '{0}'.</source>
         <target state="translated">Conversione tramite un ValueSerializer non riuscita. IValueSerializerContext non specificato '{0}'.</target>

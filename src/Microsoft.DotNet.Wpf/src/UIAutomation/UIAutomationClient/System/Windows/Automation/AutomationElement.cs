@@ -237,6 +237,8 @@ namespace System.Windows.Automation
         public static readonly AutomationProperty IsTogglePatternAvailableProperty = AutomationElementIdentifiers.IsTogglePatternAvailableProperty;
         /// <summary>Property that indicates whether the TransformPattern is available for this AutomationElement</summary>
         public static readonly AutomationProperty IsTransformPatternAvailableProperty = AutomationElementIdentifiers.IsTransformPatternAvailableProperty;
+        /// <summary>Property that indicates whether the TransformPattern2 is available for this AutomationElement</summary>
+        public static readonly AutomationProperty IsTransformPattern2AvailableProperty = AutomationElementIdentifiers.IsTransformPattern2AvailableProperty;
         /// <summary>Property that indicates whether the ValuePattern is available for this AutomationElement</summary>
         public static readonly AutomationProperty IsValuePatternAvailableProperty = AutomationElementIdentifiers.IsValuePatternAvailableProperty;
         /// <summary>Property that indicates whether the WindowPattern is available for this AutomationElement</summary>

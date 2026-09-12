@@ -86,6 +86,7 @@
     <Compile Include="System\Windows\Automation\TextPattern.cs" />
     <Compile Include="System\Windows\Automation\TogglePattern.cs" />
     <Compile Include="System\Windows\Automation\TransformPattern.cs" />
+    <Compile Include="System\Windows\Automation\TransformPattern2.cs" />
     <Compile Include="System\Windows\Automation\TreeWalker.cs" />
     <Compile Include="System\Windows\Automation\ValuePattern.cs" />
     <Compile Include="System\Windows\Automation\VirtualizedItemPattern.cs" />

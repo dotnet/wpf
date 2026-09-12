@@ -6,7 +6,7 @@ using System.Windows.Controls;
 namespace System.Windows.Automation.Peers
 {
     /// 
-    public class MenuAutomationPeer : FrameworkElementAutomationPeer
+    public class MenuAutomationPeer : ItemsControlAutomationPeer
     {
         ///
         public MenuAutomationPeer(Menu owner): base(owner)
@@ -30,6 +30,11 @@ namespace System.Windows.Automation.Peers
         protected override bool IsContentElementCore()
         {
             return false;
+        }
+
+        protected override ItemAutomationPeer CreateItemAutomationPeer(object item)
+        {
+            return new MenuItemDataAutomationPeer(item, this);
         }
     }
 }

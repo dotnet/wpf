@@ -85,23 +85,17 @@ namespace System.Windows.Interop
         {
             add
             {
-
-                if(_hooks == null)
-                {
-                    _hooks = new ArrayList(8);
-                }
+                _hooks ??= new List<HwndSourceHook>(8);
 
                 _hooks.Add(value);
             }
-
             remove
             {
-
-                if(_hooks != null)
+                if (_hooks is not null)
                 {
                     _hooks.Remove(value);
 
-                    if(_hooks.Count == 0)
+                    if (_hooks.Count == 0)
                     {
                         _hooks = null;
                     }
@@ -1101,22 +1095,19 @@ namespace System.Windows.Interop
 
         private IntPtr SubclassWndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            IntPtr result = IntPtr.Zero ;
+            // Call the virtual first
+            IntPtr result = WndProc(hwnd, msg, wParam, lParam, ref handled);
 
-            // Call the virtual first.
-            result = WndProc(hwnd, msg, wParam, lParam, ref handled);
+            if (_hooks is null || handled)
+                return result;
 
-            // Call the handlers for the MessageHook event.
-            if(!handled && _hooks != null)
+            // Call the handlers for the MessageHook event
+            for (int i = 0, nCount = _hooks.Count; i < nCount; i++)
             {
-                for(int i = 0, nCount = _hooks.Count; i < nCount; i++)
-                {
-                    result = ((HwndSourceHook)_hooks[i])(hwnd, msg, wParam, lParam, ref handled);
-                    if(handled)
-                    {
-                        break;
-                    }
-                }
+                result = _hooks[i].Invoke(hwnd, msg, wParam, lParam, ref handled);
+
+                if (handled)
+                    break;
             }
 
             return result;
@@ -1132,7 +1123,7 @@ namespace System.Windows.Interop
 
         private HandleRef _hwnd;
 
-        private ArrayList _hooks;
+        private List<HwndSourceHook> _hooks;
         private Size _desiredSize;
 
         /// <summary>

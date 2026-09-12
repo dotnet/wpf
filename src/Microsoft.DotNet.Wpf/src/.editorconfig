@@ -17,9 +17,6 @@ csharp_style_pattern_matching_over_as_with_null_check = true:suggestion
 # CA1036: Override methods on comparable types
 dotnet_diagnostic.CA1036.severity = suggestion
 
-# CA1052: Static holder types should be Static or NotInheritable
-dotnet_diagnostic.CA1052.severity = suggestion
-
 # NOTE: If existing public API, CA1066 should be suppressed individually
 # in the GlobalSuppressions file.
 

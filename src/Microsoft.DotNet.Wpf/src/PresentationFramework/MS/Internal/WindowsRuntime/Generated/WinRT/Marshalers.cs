@@ -603,7 +603,7 @@ namespace WinRT
         }
     }
 
-    internal class MarshalInterfaceHelper<T>
+    internal static class MarshalInterfaceHelper<T>
     {
         internal struct MarshalerArray
         {
@@ -974,7 +974,7 @@ namespace WinRT
         public static unsafe void DisposeAbiArray(object box) => MarshalInterfaceHelper<object>.DisposeAbiArray(box);
     }
 
-    internal class Marshaler<T>
+    internal static class Marshaler<T>
     {
         static Marshaler()
         {

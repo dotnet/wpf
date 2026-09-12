@@ -384,9 +384,16 @@ namespace MS.Internal.Data
         {
             ValidateCollectionChangedEventArgs(args);
 
+            bool isRangeAction = IsCollectionChangedRangeAction(args);
+
             bool moveCurrencyOffDeletedElement = false;
 
-            switch (args.Action)
+            // If we have a range operation, treat it as a refresh for now
+            NotifyCollectionChangedAction effectiveAction = isRangeAction
+                ? NotifyCollectionChangedAction.Reset
+                : args.Action;
+
+            switch (effectiveAction)
             {
                 case NotifyCollectionChangedAction.Add:
                 case NotifyCollectionChangedAction.Remove:
@@ -608,7 +615,7 @@ namespace MS.Internal.Data
 
                 case NotifyCollectionChangedAction.Reset:
                     {
-                        _traceLog?.Add("ProcessCollectionChanged  action = {0}", args.Action);
+                        _traceLog?.Add("ProcessCollectionChanged  action = {0}", effectiveAction);
 
                         if (_collection.Count != 0)
                         {
@@ -1430,23 +1437,23 @@ namespace MS.Internal.Data
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    if (e.NewItems.Count != 1)
-                        throw new NotSupportedException(SR.RangeActionsNotSupported);
+                    if (e.NewItems.Count < 1)
+                        throw new NotSupportedException(SR.UnexpectedCollectionChangeAction);
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    if (e.OldItems.Count != 1)
-                        throw new NotSupportedException(SR.RangeActionsNotSupported);
+                    if (e.OldItems.Count < 1)
+                        throw new NotSupportedException(SR.UnexpectedCollectionChangeAction);
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
-                    if (e.NewItems.Count != 1 || e.OldItems.Count != 1)
-                        throw new NotSupportedException(SR.RangeActionsNotSupported);
+                    if (e.NewItems.Count < 1 || e.OldItems.Count < 1)
+                        throw new NotSupportedException(SR.UnexpectedCollectionChangeAction);
                     break;
 
                 case NotifyCollectionChangedAction.Move:
-                    if (e.NewItems.Count != 1)
-                        throw new NotSupportedException(SR.RangeActionsNotSupported);
+                    if (e.NewItems.Count < 1)
+                        throw new NotSupportedException(SR.UnexpectedCollectionChangeAction);
                     if (e.NewStartingIndex < 0)
                         throw new InvalidOperationException(SR.CannotMoveToUnknownPosition);
                     break;
@@ -1457,6 +1464,15 @@ namespace MS.Internal.Data
                 default:
                     throw new NotSupportedException(SR.Format(SR.UnexpectedCollectionChangeAction, e.Action));
             }
+        }
+
+        private bool IsCollectionChangedRangeAction(NotifyCollectionChangedEventArgs e)
+        {
+            return
+                (e.Action == NotifyCollectionChangedAction.Add && e.NewItems.Count > 1) ||
+                (e.Action == NotifyCollectionChangedAction.Remove && e.OldItems.Count > 1) ||
+                (e.Action == NotifyCollectionChangedAction.Replace && (e.OldItems.Count > 1 || e.NewItems.Count > 1)) ||
+                (e.Action == NotifyCollectionChangedAction.Move && (e.OldItems.Count > 1 || e.NewItems.Count > 1));
         }
 
         /// <summary>

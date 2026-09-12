@@ -2355,7 +2355,23 @@ namespace System.Windows.Controls
             // and mergeable with its predecessor.
             if (lineIndex > 0) // we can skip this if line wrap is disabled.
             {
+                int origEndOffset = _lineMetrics[lineIndex - 1].EndOffset;
+
                 FormatFirstIncrementalLine(lineIndex - 1, constraintWidth, lineProperties, line, out lineOffset, out endOfParagraph);
+
+                // If the predecessor's metrics changed and it is part of a soft-wrapped
+                // paragraph (has soft-wrap predecessors), the entire paragraph's earlier
+                // lines may be stale.  Fall back to a full reformat to avoid leaving
+                // inconsistent metrics that crash on later hit-test/render (issue #11481).
+                if (!endOfParagraph && lineOffset != origEndOffset
+                    && lineIndex >= 2
+                    && _lineMetrics[lineIndex - 2].Length == _lineMetrics[lineIndex - 2].ContentLength)
+                {
+                    _lineMetrics.Clear();
+                    _viewportLineVisuals = null;
+                    desiredSize = FullMeasureTick(constraintWidth, lineProperties);
+                    return;
+                }
             }
             else
             {

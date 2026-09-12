@@ -527,12 +527,12 @@ namespace System.Windows.Documents
         /// Clean all the dynamically-updated data from the Adorner
         /// </summary>
         /// <param name="adornerInfo">AdornerInfo to scrub</param>
-        internal void InvalidateAdorner(AdornerInfo adornerInfo)
+        internal static void InvalidateAdorner(AdornerInfo adornerInfo)
         {
             Debug.Assert(adornerInfo != null, "Adorner should not be null");
             adornerInfo.Adorner.InvalidateMeasure();
             adornerInfo.Adorner.InvalidateVisual();
-            adornerInfo.RenderSize = new Size(Double.NaN, Double.NaN);
+            adornerInfo.RenderSize = new Size(double.NaN, double.NaN);
             adornerInfo.Transform = null;
         }
 
@@ -741,13 +741,23 @@ namespace System.Windows.Documents
                     transform.AffineTransform.Value != adornerInfo.Transform.AffineTransform.Value ||
                     clipChanged)
                 {
-                    InvalidateAdorner(adornerInfo);
+                    adornerInfo.Adorner.InvalidateMeasure();
+                    adornerInfo.Adorner.InvalidateVisual();
+
                     adornerInfo.RenderSize = size;
                     adornerInfo.Transform = transform;
+
                     if (adornerInfo.Adorner.IsClipEnabled)
                     {
                         adornerInfo.Clip = clip;
                     }
+
+                    dirty = true;
+                }
+                else if (adornerInfo.Adorner.ArrangeDirty)
+                {
+                    adornerInfo.Adorner.InvalidateMeasure();
+
                     dirty = true;
                 }
             }

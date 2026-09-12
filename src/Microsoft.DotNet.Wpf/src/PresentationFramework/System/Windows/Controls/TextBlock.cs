@@ -326,23 +326,17 @@ namespace System.Windows.Controls
         /// </summary>
         public TextBlock() : base()
         {
-            Initialize();
+
         }
 
         /// <summary>
         /// Initializes a new inslace of TextBlock class and adds a first Inline to its Inline collection.
         /// </summary>
-        public TextBlock(Inline inline)
-            : base()
+        public TextBlock(Inline inline) : base()
         {
-            Initialize();
             ArgumentNullException.ThrowIfNull(inline);
 
-            this.Inlines.Add(inline);
-        }
-
-        private void Initialize()
-        {
+            Inlines.Add(inline);
         }
 
         #endregion Constructors
@@ -1185,7 +1179,7 @@ namespace System.Windows.Controls
             // a) content is dirty (properties or content)
             // b) there are inline objects (they may be dynamically sized)
             int lineCount = LineCount;
-            if ((lineCount > 0) && IsMeasureValid && InlineObjects == null)
+            if ((lineCount > 0) && IsMeasureValid && InlineObjects is null)
             {
                 // Assuming that all of above conditions are true, Measure can be
                 // skipped in following situations:
@@ -1270,7 +1264,7 @@ namespace System.Windows.Controls
                         // paragraph ellipsis at this time. Since TextBlock is auto-sized we do not know the RenderSize until we finish Measure
                         line.Format(dcp, contentSize.Width, GetLineProperties(dcp == 0, lineProperties), textLineBreakIn, _textBlockCache._textRunCache, /*Show paragraph ellipsis*/ false);
 
-                        double lineHeight = CalcLineAdvance(line.Height, lineProperties);
+                        double lineHeight = CalcLineAdvance(lineProperties, line.Height);
 
     #if DEBUG
                         LineMetrics metrics = new LineMetrics(contentSize.Width, line.Length, line.Width, lineHeight, line.BaselineOffset, line.HasInlineObjects(), textLineBreakIn);
@@ -1378,9 +1372,9 @@ namespace System.Windows.Controls
             // Remove all existing visuals. If there are inline objects, they will be added below.
             _complexContent?.VisualChildren.Clear();
 
-            ArrayList inlineObjects = InlineObjects;
+            List<InlineObject> inlineObjects = InlineObjects;
             int lineCount = LineCount;
-            if (inlineObjects != null && lineCount > 0)
+            if (inlineObjects is not null && lineCount > 0)
             {
                 bool exceptionThrown = true;
 
@@ -1404,7 +1398,7 @@ namespace System.Windows.Controls
 
                     for (int i = 0; i < lineCount; i++)
                     {
-Debug.Assert(lineCount == LineCount);
+                        Debug.Assert(lineCount == LineCount);
                         LineMetrics lineMetrics = GetLine(i);
 
                         if (lineMetrics.HasInlineObjects)
@@ -1643,7 +1637,8 @@ Debug.Assert(lineCount == LineCount);
         protected virtual IInputElement InputHitTestCore(Point point)
         {
             // If layout data is not updated return 'this'.
-            if (!IsLayoutDataValid) { return this; }
+            if (!IsLayoutDataValid)
+                return this;
 
             // Line props may be invalid, even if Measure/Arrange is valid - rendering only props are changing.
             LineProperties lineProperties = GetLineProperties();
@@ -1653,23 +1648,23 @@ Debug.Assert(lineCount == LineCount);
             // a) use cached line information to find which line has been hit,
             // b) re-create the line that has been hit,
             // c) hit-test the line.
-            IInputElement ie = null;
             double wrappingWidth = CalcWrappingWidth(RenderSize.Width);
             Vector contentOffset = CalcContentOffset(RenderSize, wrappingWidth);
             point -= contentOffset; // // Take into account content offset.
 
-            if (point.X < 0 || point.Y < 0) return this;
+            if (point.X < 0 || point.Y < 0)
+                return this;
 
-            ie = null;
+            IInputElement ie = null;
             int dcp = 0;
             double lineOffset = 0;
 
-            TextRunCache textRunCache = new TextRunCache();
+            TextRunCache textRunCache = new();
 
             int lineCount = LineCount;
             for (int i = 0; i < lineCount; i++)
             {
-Debug.Assert(lineCount == LineCount);
+                Debug.Assert(lineCount == LineCount);
                 LineMetrics lineMetrics = GetLine(i);
 
                 if (lineOffset + lineMetrics.Height > point.Y)
@@ -1728,7 +1723,7 @@ Debug.Assert(lineCount == LineCount);
             if (!IsLayoutDataValid)
             {
                 // return empty collection
-                return new ReadOnlyCollection<Rect>(new List<Rect>(0));
+                return ReadOnlyCollection<Rect>.Empty;
             }
 
             // Line props may be invalid, even if Measure/Arrange is valid - rendering only props are changing.
@@ -1738,20 +1733,20 @@ Debug.Assert(lineCount == LineCount);
             if (_complexContent == null || !(_complexContent.TextContainer is TextContainer))
             {
                 // return empty collection
-                return new ReadOnlyCollection<Rect>(new List<Rect>(0));
+                return ReadOnlyCollection<Rect>.Empty;
             }
 
             // First find the element start and end position
-            TextPointer start = FindElementPosition((IInputElement)child);
+            TextPointer start = FindElementPosition(child);
             if (start == null)
             {
-                return new ReadOnlyCollection<Rect>(new List<Rect>(0));
+                return ReadOnlyCollection<Rect>.Empty;
             }
 
             TextPointer end = null;
-            if (child is TextElement)
+            if (child is TextElement element)
             {
-                end = new TextPointer(((TextElement)child).ElementEnd);
+                end = new TextPointer(element.ElementEnd);
             }
             else if (child is FrameworkContentElement)
             {
@@ -1761,7 +1756,7 @@ Debug.Assert(lineCount == LineCount);
 
             if (end == null)
             {
-                return new ReadOnlyCollection<Rect>(new List<Rect>(0));
+                return ReadOnlyCollection<Rect>.Empty;
             }
 
             int startOffset = _complexContent.TextContainer.Start.GetOffsetToPosition(start);
@@ -1816,8 +1811,8 @@ Debug.Assert(lineCount == LineCount);
 
                         double xOffset = contentOffset.X;
                         double yOffset = contentOffset.Y + lineHeightOffset;
-                        List<Rect> lineBounds = line.GetRangeBounds(boundStart, boundEnd - boundStart, xOffset, yOffset);
-                        Debug.Assert(lineBounds.Count > 0);
+                        ReadOnlySpan<Rect> lineBounds = line.GetRangeBounds(boundStart, boundEnd - boundStart, xOffset, yOffset);
+                        Debug.Assert(lineBounds.Length > 0);
                         rectangles.AddRange(lineBounds);
                     }
                 }
@@ -1840,7 +1835,7 @@ Debug.Assert(lineCount == LineCount);
         {
             get
             {
-                if(CheckFlags(Flags.ContentChangeInProgress))
+                if (CheckFlags(Flags.ContentChangeInProgress))
                 {
                     // IEnumerator.Current is documented to throw this exception
                     throw new InvalidOperationException(SR.TextContainerChangingReentrancyInvalid);
@@ -1849,17 +1844,14 @@ Debug.Assert(lineCount == LineCount);
                 if (_complexContent == null || !(_complexContent.TextContainer is TextContainer))
                 {
                     // Return empty collection
-                    return new HostedElements(new ReadOnlyCollection<TextSegment>(new List<TextSegment>(0)));
+                    return new HostedElements(ReadOnlyCollection<TextSegment>.Empty);
                 }
 
                 // Create a TextSegment from TextContainer, use it to return enumerator
-                System.Collections.Generic.List<TextSegment> textSegmentsList = new System.Collections.Generic.List<TextSegment>(1);
-                TextSegment textSegment = new TextSegment(_complexContent.TextContainer.Start, _complexContent.TextContainer.End);
-                textSegmentsList.Insert(0, textSegment);
-                ReadOnlyCollection<TextSegment> textSegments = new ReadOnlyCollection<TextSegment>(textSegmentsList);
+                TextSegment[] textSegment = new TextSegment[1] { new TextSegment(_complexContent.TextContainer.Start, _complexContent.TextContainer.End) };
 
                 // Return enumerator created from textSegments
-                return new HostedElements(textSegments);
+                return new HostedElements(new ReadOnlyCollection<TextSegment>(textSegment));
             }
         }
 
@@ -1959,20 +1951,20 @@ Debug.Assert(lineCount == LineCount);
                 desiredSize = inlineObject.Element.DesiredSize;
 
                 // Store inline object in the cache.
-                ArrayList inlineObjects = InlineObjects;
+                List<InlineObject> inlineObjects = InlineObjects;
                 bool alreadyCached = false;
-                if (inlineObjects == null)
+                if (inlineObjects is null)
                 {
-                    InlineObjects = inlineObjects = new ArrayList(1);
+                    InlineObjects = inlineObjects = new List<InlineObject>(1);
                 }
                 else
                 {
                     // Find out if inline object is already cached.
                     for (int index = 0; index < inlineObjects.Count; index++)
                     {
-                        if (((InlineObject)inlineObjects[index]).Dcp == inlineObject.Dcp)
+                        if (inlineObjects[index].Dcp == inlineObject.Dcp)
                         {
-                            Debug.Assert(((InlineObject)inlineObjects[index]).Element == inlineObject.Element, "InlineObject cache is out of sync.");
+                            Debug.Assert(inlineObjects[index].Element == inlineObject.Element, "InlineObject cache is out of sync.");
                             alreadyCached = true;
                             break;
                         }
@@ -2303,7 +2295,7 @@ Debug.Assert(lineCount == LineCount);
                         if (Invariant.Strict)
                         {
                             // Check consistency of line formatting
-                            MS.Internal.Invariant.Assert(GetLine(i).Length == line.Length, "Line length is out of sync");
+                            Invariant.Assert(GetLine(i).Length == line.Length, "Line length is out of sync");
                         }
 
                         int dcpStart = Math.Max(dcpLineStart, dcpPositionStart);
@@ -2311,28 +2303,24 @@ Debug.Assert(lineCount == LineCount);
 
                         if (dcpStart != dcpEnd)
                         {
-                            IList<Rect> aryTextBounds = line.GetRangeBounds(dcpStart, dcpEnd - dcpStart, contentOffset.X, contentOffset.Y + lineOffset);
-
-                            if (aryTextBounds.Count > 0)
+                            ReadOnlySpan<Rect> aryTextBounds = line.GetRangeBounds(dcpStart, dcpEnd - dcpStart, contentOffset.X, contentOffset.Y + lineOffset);                            
+                            if (!aryTextBounds.IsEmpty)
                             {
-                                int j = 0;
-                                int c = aryTextBounds.Count;
-
-                                do
+                                // Process the bounds minus the last one
+                                for (int j = 0; j < aryTextBounds.Length - 1; j++)
                                 {
-                                    Rect rect = aryTextBounds[j];
+                                    CaretElement.AddGeometry(ref geometry, new RectangleGeometry(aryTextBounds[j]));
+                                }
 
-                                    if (j == (c - 1)
-                                       && dcpPositionEnd >= dcpLineEnd
-                                       && TextPointerBase.IsNextToAnyBreak(endOfLineTextPointer, LogicalDirection.Backward))
-                                    {
-                                        double endOfParaGlyphWidth = FontSize * CaretElement.c_endOfParaMagicMultiplier;
-                                        rect.Width += endOfParaGlyphWidth;
-                                    }
+                                // Process the last bounds entry
+                                Rect lastRect = aryTextBounds[aryTextBounds.Length - 1];
+                                if (dcpPositionEnd >= dcpLineEnd && TextPointerBase.IsNextToAnyBreak(endOfLineTextPointer, LogicalDirection.Backward))
+                                {
+                                    double endOfParaGlyphWidth = FontSize * CaretElement.c_endOfParaMagicMultiplier;
+                                    lastRect.Width += endOfParaGlyphWidth;
+                                }
 
-                                    RectangleGeometry rectGeometry = new RectangleGeometry(rect);
-                                    CaretElement.AddGeometry(ref geometry, rectGeometry);
-                                } while (++j < c);
+                                CaretElement.AddGeometry(ref geometry, new RectangleGeometry(lastRect));
                             }
                         }
                     }
@@ -2759,10 +2747,10 @@ Debug.Assert(lineCount == LineCount);
         //-------------------------------------------------------------------
         // InlineObjects
         //-------------------------------------------------------------------
-        private ArrayList InlineObjects
+        private List<InlineObject> InlineObjects
         {
-            get { return _complexContent?.InlineObjects; }
-            set { _complexContent?.InlineObjects = value; }
+            get => _complexContent?.InlineObjects;
+            set => _complexContent?.InlineObjects = value;
         }
 
         //-------------------------------------------------------------------
@@ -2898,19 +2886,6 @@ Debug.Assert(lineCount == LineCount);
                     // during load, before the first measure.
                     SetFlags(true, Flags.PendingTextContainerEventInit);
                 }
-            }
-        }
-
-        // ------------------------------------------------------------------
-        // Make sure that complex content is cleared.
-        // ------------------------------------------------------------------
-        private void ClearComplexContent()
-        {
-            if (_complexContent != null)
-            {
-                _complexContent.Detach(this);
-                _complexContent = null;
-                Invariant.Assert(_contentCache == null, "Content cache should be null when complex content exists.");
             }
         }
 
@@ -3077,7 +3052,7 @@ Debug.Assert(lineCount == LineCount);
         //
         // Returns: Line advance distance..
         //-------------------------------------------------------------------
-        private double CalcLineAdvance(double lineHeight, LineProperties lineProperties)
+        private static double CalcLineAdvance(LineProperties lineProperties, double lineHeight)
         {
             return lineProperties.CalcLineAdvance(lineHeight);
         }
@@ -3400,29 +3375,28 @@ Debug.Assert(lineCount == LineCount);
             LineProperties lineProperties = GetLineProperties();
 
             double wrappingWidth = CalcWrappingWidth(RenderSize.Width);
-            Vector contentOffset = CalcContentOffset(RenderSize, wrappingWidth);
 
             // Create / format all lines.
             // Since we are disposing line object, it can be reused to format following lines.
             Line line = CreateLine(lineProperties);
-            TextRunCache textRunCache = new TextRunCache();
+            TextRunCache textRunCache = new();
 
             int dcp = 0;
             double lineOffset = 0;
             int lineCount = LineCount;
             for (int i = 0; i < lineCount; i++)
             {
-Debug.Assert(lineCount == LineCount);
+                Debug.Assert(lineCount == LineCount);
                 LineMetrics lineMetrics = GetLine(i);
 
                 using (line)
                 {
                     bool ellipsis = ParagraphEllipsisShownOnLine(i, lineOffset);
                     Format(line, lineMetrics.Length, dcp, wrappingWidth, GetLineProperties(dcp == 0, lineProperties), lineMetrics.TextLineBreak, textRunCache, ellipsis);
-                    double lineHeight = CalcLineAdvance(line.Height, lineProperties);
+                    double lineHeight = CalcLineAdvance(lineProperties, line.Height);
 
                     // Check consistency of line formatting
-                    MS.Internal.Invariant.Assert(lineMetrics.Length == line.Length, "Line length is out of sync");
+                    Invariant.Assert(lineMetrics.Length == line.Length, "Line length is out of sync");
                     Debug.Assert(DoubleUtil.AreClose(lineHeight, lineMetrics.Height), "Line height is out of sync.");
 
                     // Calculated line width might be different from measure width in following cases:
@@ -3452,10 +3426,7 @@ Debug.Assert(lineCount == LineCount);
         // ------------------------------------------------------------------
         private static void OnRequestBringIntoView(object sender, RequestBringIntoViewEventArgs args)
         {
-            TextBlock textBlock = sender as TextBlock;
-            ContentElement child = args.TargetObject as ContentElement;
-
-            if (textBlock != null && child != null)
+            if (sender is TextBlock textBlock && args.TargetObject is ContentElement child)
             {
                 if (TextBlock.ContainsContentElement(textBlock, child))
                 {
@@ -3554,55 +3525,20 @@ Debug.Assert(lineCount == LineCount);
         // ------------------------------------------------------------------
         private void VerifyReentrancy()
         {
-            if(CheckFlags(Flags.MeasureInProgress))
+            if (CheckFlags(Flags.MeasureInProgress))
             {
                 throw new InvalidOperationException(SR.MeasureReentrancyInvalid);
             }
 
-            if(CheckFlags(Flags.ArrangeInProgress))
+            if (CheckFlags(Flags.ArrangeInProgress))
             {
                 throw new InvalidOperationException(SR.ArrangeReentrancyInvalid);
             }
 
-            if(CheckFlags(Flags.ContentChangeInProgress))
+            if (CheckFlags(Flags.ContentChangeInProgress))
             {
                 throw new InvalidOperationException(SR.TextContainerChangingReentrancyInvalid);
             }
-        }
-
-        /// <summary>
-        /// Returns index of the line that starts at the given dcp. Returns -1 if
-        /// no line or the line metrics collection starts at the given dcp
-        /// </summary>
-        /// <param name="dcpLine">
-        /// Start dcp of required line
-        /// </param>
-        private int GetLineIndexFromDcp(int dcpLine)
-        {
-            Invariant.Assert(dcpLine >= 0);
-            int lineIndex = 0;
-            int lineStartOffset = 0;
-
-            int lineCount = LineCount;
-            while (lineIndex < lineCount)
-            {
-Debug.Assert(lineCount == LineCount);
-                if (lineStartOffset == dcpLine)
-                {
-                    // Found line that starts at given dcp
-                    return lineIndex;
-                }
-                else
-                {
-                    lineStartOffset += GetLine(lineIndex).Length;
-                    ++lineIndex;
-                }
-            }
-
-            // No line found starting at this position. Return -1.
-            // We should never hit this code
-            Invariant.Assert(false, "Dcp passed is not at start of any line in TextBlock");
-            return -1;
         }
 
         // ------------------------------------------------------------------
@@ -3889,7 +3825,7 @@ Debug.Assert(lineCount == LineCount);
         //-------------------------------------------------------------------
         // Represents complex content.
         //-------------------------------------------------------------------
-        private class ComplexContent
+        private sealed class ComplexContent
         {
             //---------------------------------------------------------------
             // Ctor
@@ -3957,7 +3893,7 @@ Debug.Assert(lineCount == LineCount);
             //---------------------------------------------------------------
             // Collection of inline objects hosted by the TextBlock control.
             //---------------------------------------------------------------
-            internal ArrayList InlineObjects;
+            internal List<InlineObject> InlineObjects;
         }
 
         //-------------------------------------------------------------------

@@ -93,13 +93,13 @@ namespace Microsoft.Win32
                 // Signal that this thread is going to go modal.
                 try
                 {
-                    ComponentDispatcher.CriticalPushModal();
+                    ComponentDispatcher.PushModal();
 
                     return RunDialog(hwndOwner);
                 }
                 finally
                 {
-                    ComponentDispatcher.CriticalPopModal();
+                    ComponentDispatcher.PopModal();
                 }
             }
             finally
@@ -146,13 +146,13 @@ namespace Microsoft.Win32
             // Signal that this thread is going to go modal.
             try
             {
-                ComponentDispatcher.CriticalPushModal();
+                ComponentDispatcher.PushModal();
 
                 return RunDialog(hwndOwner);
             }
             finally
             {
-                ComponentDispatcher.CriticalPopModal();
+                ComponentDispatcher.PopModal();
             }
         }
 

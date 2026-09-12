@@ -320,6 +320,14 @@ CMilVisual::RemoveChild(
 
     if (!m_rgpChildren.Remove(pChild))
     {
+        // We've seen a handful of Watson dumps where incoming child is already detached
+        // from parent and about to be deleted by the next MilCmdChannelDeleteResource
+        // command. There are no known repros. For now we'll pretend we processed it.
+        if (pChild->GetParent() == NULL)
+        {
+            return S_OK;
+        }
+
         IFC(E_INVALIDARG);
     }
 

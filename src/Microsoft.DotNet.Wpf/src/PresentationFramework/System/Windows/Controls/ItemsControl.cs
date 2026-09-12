@@ -3940,7 +3940,7 @@ namespace System.Windows.Controls
 
         void IContainItemStorage.ClearValue(DependencyProperty dp)
         {
-            Helper.ClearItemValueStorage(this, new int[] {dp.GlobalIndex});
+            Helper.ClearItemValueStorage(this, [dp.GlobalIndex]);
         }
 
         void IContainItemStorage.Clear()

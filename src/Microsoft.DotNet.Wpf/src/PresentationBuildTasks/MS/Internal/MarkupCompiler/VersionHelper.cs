@@ -36,7 +36,7 @@ namespace MS.Internal
         /// If parsing succeeded, the parsed version. Otherwise a version instance with all parts set to zero.
         /// If <paramref name="s"/> contains * the version build and/or revision numbers are set to <see cref="ushort.MaxValue"/>.
         /// </param>
-        /// <param name="hasWildcard">If parsing succeeds, indicates if a wilcard character was found in the version.</param>
+        /// <param name="hasWildcard">If parsing succeeds, indicates if a wildcard character was found in the version.</param>
         /// <returns>True when parsing succeeds completely (i.e. every character in the string was consumed), false otherwise.</returns>
         internal static bool TryParseAssemblyVersion(string s, bool allowWildcard, out Version version, out bool hasWildcard)
         {
@@ -79,7 +79,7 @@ namespace MS.Internal
                 return false;
             }
 
-            ushort[] values = new ushort[4];
+            Span<ushort> values = stackalloc ushort[4];
             int lastExplicitValue = hasWildcard ? elements.Length - 1 : elements.Length;
             bool parseError = false;
             for (int i = 0; i < lastExplicitValue; i++)

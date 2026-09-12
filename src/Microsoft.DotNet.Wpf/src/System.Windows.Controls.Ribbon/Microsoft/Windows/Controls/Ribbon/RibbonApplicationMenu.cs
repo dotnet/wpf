@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -74,16 +74,14 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         static RibbonApplicationMenu()
         {
-            Type ownerType = typeof(RibbonApplicationMenu);
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonApplicationMenu), new FrameworkPropertyMetadata(typeof(RibbonApplicationMenu)));
 
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
+            RibbonControlService.IsInControlGroupPropertyKey.OverrideMetadata(typeof(RibbonApplicationMenu), new FrameworkPropertyMetadata(false, null, new CoerceValueCallback(CoerceToFalse)));
+            RibbonControlService.IsInQuickAccessToolBarPropertyKey.OverrideMetadata(typeof(RibbonApplicationMenu), new FrameworkPropertyMetadata(false, null, new CoerceValueCallback(CoerceToFalse)));
+            RibbonControlService.CanAddToQuickAccessToolBarDirectlyProperty.OverrideMetadata(typeof(RibbonApplicationMenu), new FrameworkPropertyMetadata(false, null, new CoerceValueCallback(CoerceToFalse)));
 
-            RibbonControlService.IsInControlGroupPropertyKey.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false, null, new CoerceValueCallback(CoerceToFalse)));
-            RibbonControlService.IsInQuickAccessToolBarPropertyKey.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false, null, new CoerceValueCallback(CoerceToFalse)));
-            RibbonControlService.CanAddToQuickAccessToolBarDirectlyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false, null, new CoerceValueCallback(CoerceToFalse)));
-
-            RibbonMenuButton.CanUserResizeVerticallyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false, null, new CoerceValueCallback(CoerceToFalse)));
-            RibbonMenuButton.CanUserResizeHorizontallyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false, null, new CoerceValueCallback(CoerceToFalse)));
+            RibbonMenuButton.CanUserResizeVerticallyProperty.OverrideMetadata(typeof(RibbonApplicationMenu), new FrameworkPropertyMetadata(false, null, new CoerceValueCallback(CoerceToFalse)));
+            RibbonMenuButton.CanUserResizeHorizontallyProperty.OverrideMetadata(typeof(RibbonApplicationMenu), new FrameworkPropertyMetadata(false, null, new CoerceValueCallback(CoerceToFalse)));
         }
 
         #endregion

@@ -54,30 +54,28 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         static RibbonGroup()
         {
-            Type ownerType = typeof(RibbonGroup);
-
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            ItemsPanelProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new ItemsPanelTemplate(new FrameworkElementFactory(typeof(RibbonGroupItemsPanel)))));
-            ToolTipService.ShowOnDisabledProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(true));
-            HeaderProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new PropertyChangedCallback(OnHeaderChanged)));
-            RibbonControlService.IsInQuickAccessToolBarPropertyKey.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsInQuickAccessToolBarChanged)));
-            ToolTipProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(CoerceToolTip)));
-            ContextMenuProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(RibbonHelper.OnContextMenuChanged, RibbonHelper.OnCoerceContextMenu));
-            ContextMenuService.ShowOnDisabledProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(true));
-            FocusableProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false));
-            ForegroundProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnForegroundChanged)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonGroup), new FrameworkPropertyMetadata(typeof(RibbonGroup)));
+            ItemsPanelProperty.OverrideMetadata(typeof(RibbonGroup), new FrameworkPropertyMetadata(new ItemsPanelTemplate(new FrameworkElementFactory(typeof(RibbonGroupItemsPanel)))));
+            ToolTipService.ShowOnDisabledProperty.OverrideMetadata(typeof(RibbonGroup), new FrameworkPropertyMetadata(true));
+            HeaderProperty.OverrideMetadata(typeof(RibbonGroup), new FrameworkPropertyMetadata(null, new PropertyChangedCallback(OnHeaderChanged)));
+            RibbonControlService.IsInQuickAccessToolBarPropertyKey.OverrideMetadata(typeof(RibbonGroup), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsInQuickAccessToolBarChanged)));
+            ToolTipProperty.OverrideMetadata(typeof(RibbonGroup), new FrameworkPropertyMetadata(null, new CoerceValueCallback(CoerceToolTip)));
+            ContextMenuProperty.OverrideMetadata(typeof(RibbonGroup), new FrameworkPropertyMetadata(RibbonHelper.OnContextMenuChanged, RibbonHelper.OnCoerceContextMenu));
+            ContextMenuService.ShowOnDisabledProperty.OverrideMetadata(typeof(RibbonGroup), new FrameworkPropertyMetadata(true));
+            FocusableProperty.OverrideMetadata(typeof(RibbonGroup), new FrameworkPropertyMetadata(false));
+            ForegroundProperty.OverrideMetadata(typeof(RibbonGroup), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnForegroundChanged)));
 #if RIBBON_IN_FRAMEWORK
-            AutomationProperties.IsOffscreenBehaviorProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(IsOffscreenBehavior.FromClip));
+            AutomationProperties.IsOffscreenBehaviorProperty.OverrideMetadata(typeof(RibbonGroup), new FrameworkPropertyMetadata(IsOffscreenBehavior.FromClip));
 #endif
 
-            EventManager.RegisterClassHandler(ownerType, Mouse.PreviewMouseDownOutsideCapturedElementEvent, new MouseButtonEventHandler(OnClickThroughThunk));
-            EventManager.RegisterClassHandler(ownerType, Mouse.LostMouseCaptureEvent, new MouseEventHandler(OnLostMouseCaptureThunk), true /* handledEventsToo */);
-            EventManager.RegisterClassHandler(ownerType, RibbonControlService.DismissPopupEvent, new RibbonDismissPopupEventHandler(OnDismissPopupThunk));
-            EventManager.RegisterClassHandler(ownerType, Mouse.MouseDownEvent, new MouseButtonEventHandler(OnMouseDownThunk), true);
-            EventManager.RegisterClassHandler(ownerType, FrameworkElement.ContextMenuOpeningEvent, new ContextMenuEventHandler(OnContextMenuOpeningThunk), true);
-            EventManager.RegisterClassHandler(ownerType, FrameworkElement.ContextMenuClosingEvent, new ContextMenuEventHandler(OnContextMenuClosingThunk), true);
-            EventManager.RegisterClassHandler(ownerType, KeyTipService.ActivatingKeyTipEvent, new ActivatingKeyTipEventHandler(OnActivatingKeyTipThunk));
-            EventManager.RegisterClassHandler(ownerType, KeyTipService.KeyTipAccessedEvent, new KeyTipAccessedEventHandler(OnKeyTipAccessedThunk));
+            EventManager.RegisterClassHandler(typeof(RibbonGroup), Mouse.PreviewMouseDownOutsideCapturedElementEvent, new MouseButtonEventHandler(OnClickThroughThunk));
+            EventManager.RegisterClassHandler(typeof(RibbonGroup), Mouse.LostMouseCaptureEvent, new MouseEventHandler(OnLostMouseCaptureThunk), handledEventsToo: true);
+            EventManager.RegisterClassHandler(typeof(RibbonGroup), RibbonControlService.DismissPopupEvent, new RibbonDismissPopupEventHandler(OnDismissPopupThunk));
+            EventManager.RegisterClassHandler(typeof(RibbonGroup), Mouse.MouseDownEvent, new MouseButtonEventHandler(OnMouseDownThunk), true);
+            EventManager.RegisterClassHandler(typeof(RibbonGroup), FrameworkElement.ContextMenuOpeningEvent, new ContextMenuEventHandler(OnContextMenuOpeningThunk), true);
+            EventManager.RegisterClassHandler(typeof(RibbonGroup), FrameworkElement.ContextMenuClosingEvent, new ContextMenuEventHandler(OnContextMenuClosingThunk), true);
+            EventManager.RegisterClassHandler(typeof(RibbonGroup), KeyTipService.ActivatingKeyTipEvent, new ActivatingKeyTipEventHandler(OnActivatingKeyTipThunk));
+            EventManager.RegisterClassHandler(typeof(RibbonGroup), KeyTipService.KeyTipAccessedEvent, new KeyTipAccessedEventHandler(OnKeyTipAccessedThunk));
         }
 
         /// <summary>

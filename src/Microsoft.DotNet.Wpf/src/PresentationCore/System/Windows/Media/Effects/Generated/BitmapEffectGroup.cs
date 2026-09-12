@@ -196,11 +196,10 @@ namespace System.Windows.Media.Effects
 
 
             // Initializations
-            Type typeofThis = typeof(BitmapEffectGroup);
             ChildrenProperty =
                   RegisterProperty("Children",
                                    typeof(BitmapEffectCollection),
-                                   typeofThis,
+                                   typeof(BitmapEffectGroup),
                                    new FreezableDefaultValueFactory(BitmapEffectCollection.Empty),
                                    null,
                                    null,

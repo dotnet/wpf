@@ -1212,7 +1212,7 @@ namespace MS.Internal.Data
                         if (MatchIndexerParameters(null, aryInfo, args, false))
                         {
                             info = SystemCoreHelper.GetIndexerAccessor(args.Length);
-                            sourceType = typeof(Object);
+                            sourceType = typeof(object);
                         }
                     }
 

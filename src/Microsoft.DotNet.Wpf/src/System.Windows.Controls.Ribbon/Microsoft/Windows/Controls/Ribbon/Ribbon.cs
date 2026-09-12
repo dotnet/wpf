@@ -89,34 +89,33 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         static Ribbon()
         {
-            Type ownerType = typeof(Ribbon);
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            ItemsPanelProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new ItemsPanelTemplate(new FrameworkElementFactory(typeof(RibbonTabsPanel)))));
-			FocusManager.IsFocusScopeProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(true));
-            BorderBrushProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnBorderBrushChanged)));
-            EventManager.RegisterClassHandler(ownerType, Mouse.PreviewMouseDownOutsideCapturedElementEvent, new MouseButtonEventHandler(OnClickThroughThunk));
-            EventManager.RegisterClassHandler(ownerType, Mouse.LostMouseCaptureEvent, new MouseEventHandler(OnLostMouseCaptureThunk));
-            EventManager.RegisterClassHandler(ownerType, RibbonControlService.DismissPopupEvent, new RibbonDismissPopupEventHandler(OnDismissPopupThunk));
-            EventManager.RegisterClassHandler(ownerType, RibbonQuickAccessToolBar.CloneEvent, new RibbonQuickAccessToolBarCloneEventHandler(OnCloneThunk));
-            ContextMenuProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(RibbonHelper.OnContextMenuChanged, RibbonHelper.OnCoerceContextMenu));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(Ribbon), new FrameworkPropertyMetadata(typeof(Ribbon)));
+            ItemsPanelProperty.OverrideMetadata(typeof(Ribbon), new FrameworkPropertyMetadata(new ItemsPanelTemplate(new FrameworkElementFactory(typeof(RibbonTabsPanel)))));
+			FocusManager.IsFocusScopeProperty.OverrideMetadata(typeof(Ribbon), new FrameworkPropertyMetadata(true));
+            BorderBrushProperty.OverrideMetadata(typeof(Ribbon), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnBorderBrushChanged)));
+            EventManager.RegisterClassHandler(typeof(Ribbon), Mouse.PreviewMouseDownOutsideCapturedElementEvent, new MouseButtonEventHandler(OnClickThroughThunk));
+            EventManager.RegisterClassHandler(typeof(Ribbon), Mouse.LostMouseCaptureEvent, new MouseEventHandler(OnLostMouseCaptureThunk));
+            EventManager.RegisterClassHandler(typeof(Ribbon), RibbonControlService.DismissPopupEvent, new RibbonDismissPopupEventHandler(OnDismissPopupThunk));
+            EventManager.RegisterClassHandler(typeof(Ribbon), RibbonQuickAccessToolBar.CloneEvent, new RibbonQuickAccessToolBarCloneEventHandler(OnCloneThunk));
+            ContextMenuProperty.OverrideMetadata(typeof(Ribbon), new FrameworkPropertyMetadata(RibbonHelper.OnContextMenuChanged, RibbonHelper.OnCoerceContextMenu));
 
-            CommandManager.RegisterClassCommandBinding(ownerType,
+            CommandManager.RegisterClassCommandBinding(typeof(Ribbon),
                 new CommandBinding(RibbonCommands.AddToQuickAccessToolBarCommand, AddToQATExecuted, AddToQATCanExecute));
-            CommandManager.RegisterClassCommandBinding(ownerType,
+            CommandManager.RegisterClassCommandBinding(typeof(Ribbon),
                 new CommandBinding(RibbonCommands.MaximizeRibbonCommand, MaximizeRibbonExecuted, MaximizeRibbonCanExecute));
-            CommandManager.RegisterClassCommandBinding(ownerType,
+            CommandManager.RegisterClassCommandBinding(typeof(Ribbon),
                 new CommandBinding(RibbonCommands.MinimizeRibbonCommand, MinimizeRibbonExecuted, MinimizeRibbonCanExecute));
-            CommandManager.RegisterClassCommandBinding(ownerType,
+            CommandManager.RegisterClassCommandBinding(typeof(Ribbon),
                 new CommandBinding(RibbonCommands.RemoveFromQuickAccessToolBarCommand, RemoveFromQATExecuted, RemoveFromQATCanExecute));
-            CommandManager.RegisterClassCommandBinding(ownerType,
+            CommandManager.RegisterClassCommandBinding(typeof(Ribbon),
                 new CommandBinding(RibbonCommands.ShowQuickAccessToolBarAboveRibbonCommand, ShowQATAboveExecuted, ShowQATAboveCanExecute));
-            CommandManager.RegisterClassCommandBinding(ownerType,
+            CommandManager.RegisterClassCommandBinding(typeof(Ribbon),
                 new CommandBinding(RibbonCommands.ShowQuickAccessToolBarBelowRibbonCommand, ShowQATBelowExecuted, ShowQATBelowCanExecute));
 
-            KeyboardNavigation.DirectionalNavigationProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(KeyboardNavigationMode.Contained));
-            KeyboardNavigation.TabNavigationProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(KeyboardNavigationMode.Cycle));
-            EventManager.RegisterClassHandler(ownerType, FrameworkElement.ContextMenuOpeningEvent, new ContextMenuEventHandler(OnContextMenuOpeningThunk), true);
-            EventManager.RegisterClassHandler(ownerType, FrameworkElement.ContextMenuClosingEvent, new ContextMenuEventHandler(OnContextMenuClosingThunk), true);
+            KeyboardNavigation.DirectionalNavigationProperty.OverrideMetadata(typeof(Ribbon), new FrameworkPropertyMetadata(KeyboardNavigationMode.Contained));
+            KeyboardNavigation.TabNavigationProperty.OverrideMetadata(typeof(Ribbon), new FrameworkPropertyMetadata(KeyboardNavigationMode.Cycle));
+            EventManager.RegisterClassHandler(typeof(Ribbon), FrameworkElement.ContextMenuOpeningEvent, new ContextMenuEventHandler(OnContextMenuOpeningThunk), true);
+            EventManager.RegisterClassHandler(typeof(Ribbon), FrameworkElement.ContextMenuClosingEvent, new ContextMenuEventHandler(OnContextMenuClosingThunk), true);
         }
 
         /// <summary>

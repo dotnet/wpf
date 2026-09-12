@@ -361,11 +361,10 @@ namespace System.Windows.Media.Imaging
 
 
             // Initializations
-            Type typeofThis = typeof(ColorConvertedBitmap);
             SourceProperty =
                   RegisterProperty("Source",
                                    typeof(BitmapSource),
-                                   typeofThis,
+                                   typeof(ColorConvertedBitmap),
                                    null,
                                    new PropertyChangedCallback(SourcePropertyChanged),
                                    null,
@@ -374,7 +373,7 @@ namespace System.Windows.Media.Imaging
             SourceColorContextProperty =
                   RegisterProperty("SourceColorContext",
                                    typeof(ColorContext),
-                                   typeofThis,
+                                   typeof(ColorConvertedBitmap),
                                    null,
                                    new PropertyChangedCallback(SourceColorContextPropertyChanged),
                                    null,
@@ -383,7 +382,7 @@ namespace System.Windows.Media.Imaging
             DestinationColorContextProperty =
                   RegisterProperty("DestinationColorContext",
                                    typeof(ColorContext),
-                                   typeofThis,
+                                   typeof(ColorConvertedBitmap),
                                    null,
                                    new PropertyChangedCallback(DestinationColorContextPropertyChanged),
                                    null,
@@ -392,7 +391,7 @@ namespace System.Windows.Media.Imaging
             DestinationFormatProperty =
                   RegisterProperty("DestinationFormat",
                                    typeof(PixelFormat),
-                                   typeofThis,
+                                   typeof(ColorConvertedBitmap),
                                    PixelFormats.Pbgra32,
                                    new PropertyChangedCallback(DestinationFormatPropertyChanged),
                                    null,

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -444,11 +444,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(Brush);
             OpacityProperty =
                   RegisterProperty("Opacity",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(Brush),
                                    1.0,
                                    new PropertyChangedCallback(OpacityPropertyChanged),
                                    null,
@@ -457,7 +456,7 @@ namespace System.Windows.Media
             TransformProperty =
                   RegisterProperty("Transform",
                                    typeof(Transform),
-                                   typeofThis,
+                                   typeof(Brush),
                                    Transform.Identity,
                                    new PropertyChangedCallback(TransformPropertyChanged),
                                    null,
@@ -466,7 +465,7 @@ namespace System.Windows.Media
             RelativeTransformProperty =
                   RegisterProperty("RelativeTransform",
                                    typeof(Transform),
-                                   typeofThis,
+                                   typeof(Brush),
                                    Transform.Identity,
                                    new PropertyChangedCallback(RelativeTransformPropertyChanged),
                                    null,

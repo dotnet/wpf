@@ -201,11 +201,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(LineSegment);
             PointProperty =
                   RegisterProperty("Point",
                                    typeof(Point),
-                                   typeofThis,
+                                   typeof(LineSegment),
                                    new Point(),
                                    null,
                                    null,

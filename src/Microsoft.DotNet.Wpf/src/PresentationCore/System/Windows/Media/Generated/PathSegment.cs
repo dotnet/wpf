@@ -201,11 +201,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(PathSegment);
             IsStrokedProperty =
                   RegisterProperty("IsStroked",
                                    typeof(bool),
-                                   typeofThis,
+                                   typeof(PathSegment),
                                    true,
                                    null,
                                    null,
@@ -214,7 +213,7 @@ namespace System.Windows.Media
             IsSmoothJoinProperty =
                   RegisterProperty("IsSmoothJoin",
                                    typeof(bool),
-                                   typeofThis,
+                                   typeof(PathSegment),
                                    false,
                                    null,
                                    null,

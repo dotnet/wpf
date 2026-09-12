@@ -44,36 +44,34 @@ namespace System.Windows.Media.Animation
         /// </summary>
         static SizeAnimation()
         {
-            Type typeofProp = typeof(Size?);
-            Type typeofThis = typeof(SizeAnimation);
             PropertyChangedCallback propCallback = new PropertyChangedCallback(AnimationFunction_Changed);
             ValidateValueCallback validateCallback = new ValidateValueCallback(ValidateFromToOrByValue);
 
             FromProperty = DependencyProperty.Register(
                 "From",
-                typeofProp,
-                typeofThis,
+                typeof(Size?),
+                typeof(SizeAnimation),
                 new PropertyMetadata((Size?)null, propCallback),
                 validateCallback);
 
             ToProperty = DependencyProperty.Register(
                 "To",
-                typeofProp,
-                typeofThis,
+                typeof(Size?),
+                typeof(SizeAnimation),
                 new PropertyMetadata((Size?)null, propCallback),
                 validateCallback);
 
             ByProperty = DependencyProperty.Register(
                 "By",
-                typeofProp,
-                typeofThis,
+                typeof(Size?),
+                typeof(SizeAnimation),
                 new PropertyMetadata((Size?)null, propCallback),
                 validateCallback);
 
             EasingFunctionProperty = DependencyProperty.Register(
                 "EasingFunction",
                 typeof(IEasingFunction),
-                typeofThis);
+                typeof(SizeAnimation));
         }
 
 

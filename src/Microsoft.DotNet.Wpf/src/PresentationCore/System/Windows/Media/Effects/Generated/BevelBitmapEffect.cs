@@ -288,11 +288,10 @@ namespace System.Windows.Media.Effects
 
 
             // Initializations
-            Type typeofThis = typeof(BevelBitmapEffect);
             BevelWidthProperty =
                   RegisterProperty("BevelWidth",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(BevelBitmapEffect),
                                    5.0,
                                    new PropertyChangedCallback(BevelWidthPropertyChanged),
                                    null,
@@ -301,7 +300,7 @@ namespace System.Windows.Media.Effects
             ReliefProperty =
                   RegisterProperty("Relief",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(BevelBitmapEffect),
                                    0.3,
                                    new PropertyChangedCallback(ReliefPropertyChanged),
                                    null,
@@ -310,7 +309,7 @@ namespace System.Windows.Media.Effects
             LightAngleProperty =
                   RegisterProperty("LightAngle",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(BevelBitmapEffect),
                                    135.0,
                                    new PropertyChangedCallback(LightAnglePropertyChanged),
                                    null,
@@ -319,7 +318,7 @@ namespace System.Windows.Media.Effects
             SmoothnessProperty =
                   RegisterProperty("Smoothness",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(BevelBitmapEffect),
                                    0.2,
                                    new PropertyChangedCallback(SmoothnessPropertyChanged),
                                    null,
@@ -328,7 +327,7 @@ namespace System.Windows.Media.Effects
             EdgeProfileProperty =
                   RegisterProperty("EdgeProfile",
                                    typeof(EdgeProfile),
-                                   typeofThis,
+                                   typeof(BevelBitmapEffect),
                                    EdgeProfile.Linear,
                                    null,
                                    new ValidateValueCallback(System.Windows.Media.Effects.ValidateEnums.IsEdgeProfileValid),

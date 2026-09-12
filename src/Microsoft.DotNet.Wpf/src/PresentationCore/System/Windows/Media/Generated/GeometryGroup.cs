@@ -490,11 +490,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(GeometryGroup);
             FillRuleProperty =
                   RegisterProperty("FillRule",
                                    typeof(FillRule),
-                                   typeofThis,
+                                   typeof(GeometryGroup),
                                    FillRule.EvenOdd,
                                    new PropertyChangedCallback(FillRulePropertyChanged),
                                    new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsFillRuleValid),
@@ -503,7 +502,7 @@ namespace System.Windows.Media
             ChildrenProperty =
                   RegisterProperty("Children",
                                    typeof(GeometryCollection),
-                                   typeofThis,
+                                   typeof(GeometryGroup),
                                    new FreezableDefaultValueFactory(GeometryCollection.Empty),
                                    new PropertyChangedCallback(ChildrenPropertyChanged),
                                    null,

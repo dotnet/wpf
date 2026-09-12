@@ -338,11 +338,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(RadialGradientBrush);
             CenterProperty =
                   RegisterProperty("Center",
                                    typeof(Point),
-                                   typeofThis,
+                                   typeof(RadialGradientBrush),
                                    new Point(0.5,0.5),
                                    new PropertyChangedCallback(CenterPropertyChanged),
                                    null,
@@ -351,7 +350,7 @@ namespace System.Windows.Media
             RadiusXProperty =
                   RegisterProperty("RadiusX",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(RadialGradientBrush),
                                    0.5,
                                    new PropertyChangedCallback(RadiusXPropertyChanged),
                                    null,
@@ -360,7 +359,7 @@ namespace System.Windows.Media
             RadiusYProperty =
                   RegisterProperty("RadiusY",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(RadialGradientBrush),
                                    0.5,
                                    new PropertyChangedCallback(RadiusYPropertyChanged),
                                    null,
@@ -369,7 +368,7 @@ namespace System.Windows.Media
             GradientOriginProperty =
                   RegisterProperty("GradientOrigin",
                                    typeof(Point),
-                                   typeofThis,
+                                   typeof(RadialGradientBrush),
                                    new Point(0.5,0.5),
                                    new PropertyChangedCallback(GradientOriginPropertyChanged),
                                    null,

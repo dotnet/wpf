@@ -416,11 +416,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(VisualBrush);
             VisualProperty =
                   RegisterProperty("Visual",
                                    typeof(Visual),
-                                   typeofThis,
+                                   typeof(VisualBrush),
                                    null,
                                    new PropertyChangedCallback(VisualPropertyChanged),
                                    null,
@@ -429,7 +428,7 @@ namespace System.Windows.Media
             AutoLayoutContentProperty =
                   RegisterProperty("AutoLayoutContent",
                                    typeof(bool),
-                                   typeofThis,
+                                   typeof(VisualBrush),
                                    true,
                                    new PropertyChangedCallback(AutoLayoutContentPropertyChanged),
                                    null,

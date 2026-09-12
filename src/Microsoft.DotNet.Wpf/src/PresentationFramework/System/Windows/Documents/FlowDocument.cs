@@ -62,8 +62,6 @@ namespace System.Windows.Documents
     [ContentProperty("Blocks")]
     public class FlowDocument : FrameworkContentElement, IDocumentPaginatorSource, IServiceProvider, IAddChild
     {
-        private static readonly Type _typeofThis = typeof(FlowDocument);
-
         //-------------------------------------------------------------------
         //
         //  Constructors
@@ -83,11 +81,11 @@ namespace System.Windows.Documents
             DependencyProperty[] typographyProperties = Typography.TypographyPropertiesList;
             for (int i = 0; i < typographyProperties.Length; i++)
             {
-                typographyProperties[i].OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(typographyChanged));
+                typographyProperties[i].OverrideMetadata(typeof(FlowDocument), new FrameworkPropertyMetadata(typographyChanged));
             }
 
-            DefaultStyleKeyProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(_typeofThis));
-            FocusableProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(true));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(FlowDocument), new FrameworkPropertyMetadata(typeof(FlowDocument)));
+            FocusableProperty.OverrideMetadata(typeof(FlowDocument), new FrameworkPropertyMetadata(true));
 
             ControlsTraceLogger.AddControl(TelemetryControls.FlowDocument);
         }
@@ -195,8 +193,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="FontFamily" /> property.
         /// </summary>
-        public static readonly DependencyProperty FontFamilyProperty =
-                TextElement.FontFamilyProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty FontFamilyProperty = TextElement.FontFamilyProperty.AddOwner(typeof(FlowDocument));
 
         /// <summary>
         /// The FontFamily property specifies the font family.
@@ -214,8 +211,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="FontStyle" /> property.
         /// </summary>
-        public static readonly DependencyProperty FontStyleProperty =
-                TextElement.FontStyleProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty FontStyleProperty = TextElement.FontStyleProperty.AddOwner(typeof(FlowDocument));
 
         /// <summary>
         /// The FontStyle property requests normal, italic, and oblique faces within a font family.
@@ -229,8 +225,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="FontWeight" /> property.
         /// </summary>
-        public static readonly DependencyProperty FontWeightProperty =
-                TextElement.FontWeightProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty FontWeightProperty = TextElement.FontWeightProperty.AddOwner(typeof(FlowDocument));
 
         /// <summary>
         /// The FontWeight property specifies the weight of the font.
@@ -244,8 +239,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="FontStretch" /> property.
         /// </summary>
-        public static readonly DependencyProperty FontStretchProperty =
-                TextElement.FontStretchProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty FontStretchProperty = TextElement.FontStretchProperty.AddOwner(typeof(FlowDocument));
 
         /// <summary>
         /// The FontStretch property selects a normal, condensed, or extended face from a font family.
@@ -259,9 +253,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="FontSize" /> property.
         /// </summary>
-        public static readonly DependencyProperty FontSizeProperty =
-                TextElement.FontSizeProperty.AddOwner(
-                        _typeofThis);
+        public static readonly DependencyProperty FontSizeProperty = TextElement.FontSizeProperty.AddOwner(typeof(FlowDocument));
 
         /// <summary>
         /// The FontSize property specifies the size of the font.
@@ -277,9 +269,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="Foreground" /> property.
         /// </summary>
-        public static readonly DependencyProperty ForegroundProperty =
-                TextElement.ForegroundProperty.AddOwner(
-                        _typeofThis);
+        public static readonly DependencyProperty ForegroundProperty = TextElement.ForegroundProperty.AddOwner(typeof(FlowDocument));
 
         /// <summary>
         /// The Foreground property specifies the foreground brush of an element's text content.
@@ -295,7 +285,7 @@ namespace System.Windows.Documents
         /// </summary>
         public static readonly DependencyProperty BackgroundProperty =
                 TextElement.BackgroundProperty.AddOwner(
-                        _typeofThis,
+                        typeof(FlowDocument),
                         new FrameworkPropertyMetadata(
                                 null,
                                 FrameworkPropertyMetadataOptions.AffectsRender));
@@ -314,7 +304,7 @@ namespace System.Windows.Documents
         /// </summary>
         public static readonly DependencyProperty TextEffectsProperty =
                 TextElement.TextEffectsProperty.AddOwner(
-                        _typeofThis,
+                        typeof(FlowDocument),
                         new FrameworkPropertyMetadata(
                                 new FreezableDefaultValueFactory(TextEffectCollection.Empty),
                                 FrameworkPropertyMetadataOptions.AffectsRender));
@@ -331,8 +321,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="TextAlignment" /> property.
         /// </summary>
-        public static readonly DependencyProperty TextAlignmentProperty =
-                Block.TextAlignmentProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty TextAlignmentProperty = Block.TextAlignmentProperty.AddOwner(typeof(FlowDocument));
 
         /// <summary>
         /// The TextAlignment property specifies the alignmnet of the element.
@@ -346,8 +335,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="FlowDirection" /> property.
         /// </summary>
-        public static readonly DependencyProperty FlowDirectionProperty =
-                Block.FlowDirectionProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty FlowDirectionProperty = Block.FlowDirectionProperty.AddOwner(typeof(FlowDocument));
 
         /// <summary>
         /// The FlowDirection property specifies the flow direction of the element.
@@ -361,8 +349,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="LineHeight" /> property.
         /// </summary>
-        public static readonly DependencyProperty LineHeightProperty =
-                Block.LineHeightProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty LineHeightProperty = Block.LineHeightProperty.AddOwner(typeof(FlowDocument));
 
         /// <summary>
         /// The LineHeight property specifies the height of each generated line box.
@@ -377,8 +364,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="LineStackingStrategy" /> property.
         /// </summary>
-        public static readonly DependencyProperty LineStackingStrategyProperty =
-                Block.LineStackingStrategyProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty LineStackingStrategyProperty = Block.LineStackingStrategyProperty.AddOwner(typeof(FlowDocument));
 
         /// <summary>
         /// The LineStackingStrategy property specifies how lines are placed
@@ -396,7 +382,7 @@ namespace System.Windows.Documents
                 DependencyProperty.Register(
                         "ColumnWidth",
                         typeof(double),
-                        _typeofThis,
+                        typeof(FlowDocument),
                         new FrameworkPropertyMetadata(
                                 double.NaN,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure));
@@ -421,7 +407,7 @@ namespace System.Windows.Documents
                 DependencyProperty.Register(
                         "ColumnGap",
                         typeof(double),
-                        _typeofThis,
+                        typeof(FlowDocument),
                         new FrameworkPropertyMetadata(
                                 double.NaN,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure),
@@ -446,7 +432,7 @@ namespace System.Windows.Documents
                 DependencyProperty.Register(
                         "IsColumnWidthFlexible",
                         typeof(bool),
-                        _typeofThis,
+                        typeof(FlowDocument),
                         new FrameworkPropertyMetadata(
                                 true,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure));
@@ -469,7 +455,7 @@ namespace System.Windows.Documents
                 DependencyProperty.Register(
                         "ColumnRuleWidth",
                         typeof(double),
-                        _typeofThis,
+                        typeof(FlowDocument),
                         new FrameworkPropertyMetadata(
                                 0.0,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure),
@@ -494,7 +480,7 @@ namespace System.Windows.Documents
                 DependencyProperty.Register(
                         "ColumnRuleBrush",
                         typeof(Brush),
-                        _typeofThis,
+                        typeof(FlowDocument),
                         new FrameworkPropertyMetadata(
                                 null,
                                 FrameworkPropertyMetadataOptions.AffectsRender));
@@ -515,7 +501,7 @@ namespace System.Windows.Documents
                 DependencyProperty.Register(
                         "IsOptimalParagraphEnabled",
                         typeof(bool),
-                        _typeofThis,
+                        typeof(FlowDocument),
                         new FrameworkPropertyMetadata(
                                 false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure));
@@ -536,7 +522,7 @@ namespace System.Windows.Documents
                 DependencyProperty.Register(
                         "PageWidth",
                         typeof(double),
-                        _typeofThis,
+                        typeof(FlowDocument),
                         new FrameworkPropertyMetadata(
                                 double.NaN,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure,
@@ -562,7 +548,7 @@ namespace System.Windows.Documents
                 DependencyProperty.Register(
                         "MinPageWidth",
                         typeof(double),
-                        _typeofThis,
+                        typeof(FlowDocument),
                         new FrameworkPropertyMetadata(
                                 0.0,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure,
@@ -587,7 +573,7 @@ namespace System.Windows.Documents
                 DependencyProperty.Register(
                         "MaxPageWidth",
                         typeof(double),
-                        _typeofThis,
+                        typeof(FlowDocument),
                         new FrameworkPropertyMetadata(
                                 double.PositiveInfinity,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure,
@@ -613,7 +599,7 @@ namespace System.Windows.Documents
                 DependencyProperty.Register(
                         "PageHeight",
                         typeof(double),
-                        _typeofThis,
+                        typeof(FlowDocument),
                         new FrameworkPropertyMetadata(
                                 double.NaN,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure,
@@ -639,7 +625,7 @@ namespace System.Windows.Documents
                 DependencyProperty.Register(
                         "MinPageHeight",
                         typeof(double),
-                        _typeofThis,
+                        typeof(FlowDocument),
                         new FrameworkPropertyMetadata(
                                 0.0,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure,
@@ -664,7 +650,7 @@ namespace System.Windows.Documents
                 DependencyProperty.Register(
                         "MaxPageHeight",
                         typeof(double),
-                        _typeofThis,
+                        typeof(FlowDocument),
                         new FrameworkPropertyMetadata(
                                 double.PositiveInfinity,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure,
@@ -690,9 +676,9 @@ namespace System.Windows.Documents
                 DependencyProperty.Register(
                         "PagePadding",
                         typeof(Thickness),
-                        _typeofThis,
+                        typeof(FlowDocument),
                         new FrameworkPropertyMetadata(
-                                new Thickness(Double.NaN),
+                                new Thickness(double.NaN),
                                 FrameworkPropertyMetadataOptions.AffectsMeasure,
                                 new PropertyChangedCallback(OnPageMetricsChanged)),
                         new ValidateValueCallback(IsValidPagePadding));
@@ -726,8 +712,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for hyphenation property.
         /// </summary>
-        public static readonly DependencyProperty IsHyphenationEnabledProperty =
-                Block.IsHyphenationEnabledProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty IsHyphenationEnabledProperty = Block.IsHyphenationEnabledProperty.AddOwner(typeof(FlowDocument));
 
         /// <summary>
         /// CLR property for hyphenation
@@ -1621,9 +1606,9 @@ namespace System.Windows.Documents
         {
             ArgumentNullException.ThrowIfNull(value);
 
-            if (!TextSchema.IsValidChildOfContainer(/*parentType:*/_typeofThis, /*childType:*/value.GetType()))
+            if (!TextSchema.IsValidChildOfContainer(parentType: typeof(FlowDocument), childType: value.GetType()))
             {
-                throw new ArgumentException(SR.Format(SR.TextSchema_ChildTypeIsInvalid, _typeofThis.Name, value.GetType().Name));
+                throw new ArgumentException(SR.Format(SR.TextSchema_ChildTypeIsInvalid, nameof(FlowDocument), value.GetType().Name));
             }
 
             // Checking that the element inserted does not have a parent

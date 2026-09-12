@@ -293,11 +293,10 @@ namespace System.Windows.Media.Media3D
 
 
             // Initializations
-            Type typeofThis = typeof(PointLightBase);
             PositionProperty =
                   RegisterProperty("Position",
                                    typeof(Point3D),
-                                   typeofThis,
+                                   typeof(PointLightBase),
                                    new Point3D(),
                                    new PropertyChangedCallback(PositionPropertyChanged),
                                    null,
@@ -306,7 +305,7 @@ namespace System.Windows.Media.Media3D
             RangeProperty =
                   RegisterProperty("Range",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(PointLightBase),
                                    Double.PositiveInfinity,
                                    new PropertyChangedCallback(RangePropertyChanged),
                                    null,
@@ -315,7 +314,7 @@ namespace System.Windows.Media.Media3D
             ConstantAttenuationProperty =
                   RegisterProperty("ConstantAttenuation",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(PointLightBase),
                                    1.0,
                                    new PropertyChangedCallback(ConstantAttenuationPropertyChanged),
                                    null,
@@ -324,7 +323,7 @@ namespace System.Windows.Media.Media3D
             LinearAttenuationProperty =
                   RegisterProperty("LinearAttenuation",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(PointLightBase),
                                    0.0,
                                    new PropertyChangedCallback(LinearAttenuationPropertyChanged),
                                    null,
@@ -333,7 +332,7 @@ namespace System.Windows.Media.Media3D
             QuadraticAttenuationProperty =
                   RegisterProperty("QuadraticAttenuation",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(PointLightBase),
                                    0.0,
                                    new PropertyChangedCallback(QuadraticAttenuationPropertyChanged),
                                    null,

@@ -64,8 +64,6 @@ namespace MS.Internal.MilCodeGen.Generators
                             {
                                 public partial class [[e.Name]] [[(e.ImplementsIAnimatable ? ": IAnimatable" : "")]]
                                 {
-                                    static private readonly Type _typeofThis = typeof([[e.Name]]);
-
                                     [[(e.ImplementsIAnimatable ? IAnimatableHelper.WriteImplementation() : "")]]
 
                                     [[WriteCommands(e)]]
@@ -627,7 +625,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     cs.WriteBlock(
                         [[inline]]
                             [[property.Name]]PropertyKey.OverrideMetadata(
-                                                _typeofThis,
+                                                typeof([[element.Name]]),
                                                 [[WritePropertyMetadata(property)]]);
                         [[/inline]]);
                 }
@@ -791,7 +789,7 @@ namespace MS.Internal.MilCodeGen.Generators
                             /// <summary>
                             ///     Declaration of the routed event reporting [[evt.Comment]]
                             /// </summary>
-                            public static readonly RoutedEvent [[evt.AliasedRoutedEventName]] = EventManager.RegisterRoutedEvent("[[evt.ClrEventName]]", RoutingStrategy.Direct, typeof([[evt.HandlerType]]), _typeofThis);
+                            public static readonly RoutedEvent [[evt.AliasedRoutedEventName]] = EventManager.RegisterRoutedEvent("[[evt.ClrEventName]]", RoutingStrategy.Direct, typeof([[evt.HandlerType]]), typeof([[element.Name]]));
                         [[/inline]]);
                 }
                 else
@@ -802,7 +800,7 @@ namespace MS.Internal.MilCodeGen.Generators
                             /// <summary>
                             ///     Alias to the [[evt.RoutedEventName]].
                             /// </summary>
-                            public static readonly RoutedEvent [[evt.AliasedRoutedEventName]] = [[evt.RoutedEventName]].AddOwner(_typeofThis);
+                            public static readonly RoutedEvent [[evt.AliasedRoutedEventName]] = [[evt.RoutedEventName]].AddOwner(typeof([[element.Name]]));
                         [[/inline]]);
                 }
 
@@ -885,7 +883,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                         DependencyProperty.RegisterReadOnly(
                                                     "[[property.PropertyName]]",
                                                     typeof([[property.Type]]),
-                                                    _typeofThis,
+                                                    typeof([[element.Name]]),
                                                     [[WritePropertyMetadata(property)]]);
                         [[/inline]]);
                 }
@@ -910,7 +908,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 {
                     cs.WriteBlock(
                         [[inline]]
-                            public static readonly DependencyProperty [[property.PropertyName]]Property = [[property.Name]]Property.AddOwner(_typeofThis);
+                            public static readonly DependencyProperty [[property.PropertyName]]Property = [[property.Name]]Property.AddOwner(typeof([[element.Name]]));
                         [[/inline]]);
                 }
 

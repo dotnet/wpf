@@ -447,11 +447,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(CombinedGeometry);
             GeometryCombineModeProperty =
                   RegisterProperty("GeometryCombineMode",
                                    typeof(GeometryCombineMode),
-                                   typeofThis,
+                                   typeof(CombinedGeometry),
                                    GeometryCombineMode.Union,
                                    new PropertyChangedCallback(GeometryCombineModePropertyChanged),
                                    new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsGeometryCombineModeValid),
@@ -460,7 +459,7 @@ namespace System.Windows.Media
             Geometry1Property =
                   RegisterProperty("Geometry1",
                                    typeof(Geometry),
-                                   typeofThis,
+                                   typeof(CombinedGeometry),
                                    Geometry.Empty,
                                    new PropertyChangedCallback(Geometry1PropertyChanged),
                                    null,
@@ -469,7 +468,7 @@ namespace System.Windows.Media
             Geometry2Property =
                   RegisterProperty("Geometry2",
                                    typeof(Geometry),
-                                   typeofThis,
+                                   typeof(CombinedGeometry),
                                    Geometry.Empty,
                                    new PropertyChangedCallback(Geometry2PropertyChanged),
                                    null,

@@ -316,11 +316,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(LineGeometry);
             StartPointProperty =
                   RegisterProperty("StartPoint",
                                    typeof(Point),
-                                   typeofThis,
+                                   typeof(LineGeometry),
                                    new Point(),
                                    new PropertyChangedCallback(StartPointPropertyChanged),
                                    null,
@@ -329,7 +328,7 @@ namespace System.Windows.Media
             EndPointProperty =
                   RegisterProperty("EndPoint",
                                    typeof(Point),
-                                   typeofThis,
+                                   typeof(LineGeometry),
                                    new Point(),
                                    new PropertyChangedCallback(EndPointPropertyChanged),
                                    null,

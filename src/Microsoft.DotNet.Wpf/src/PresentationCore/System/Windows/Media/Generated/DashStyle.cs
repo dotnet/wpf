@@ -338,11 +338,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(DashStyle);
             OffsetProperty =
                   RegisterProperty("Offset",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(DashStyle),
                                    0.0,
                                    new PropertyChangedCallback(OffsetPropertyChanged),
                                    null,
@@ -351,7 +350,7 @@ namespace System.Windows.Media
             DashesProperty =
                   RegisterProperty("Dashes",
                                    typeof(DoubleCollection),
-                                   typeofThis,
+                                   typeof(DashStyle),
                                    new FreezableDefaultValueFactory(DoubleCollection.Empty),
                                    new PropertyChangedCallback(DashesPropertyChanged),
                                    null,

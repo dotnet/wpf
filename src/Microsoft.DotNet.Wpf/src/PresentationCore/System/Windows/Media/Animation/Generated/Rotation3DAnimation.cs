@@ -44,36 +44,34 @@ namespace System.Windows.Media.Animation
         /// </summary>
         static Rotation3DAnimation()
         {
-            Type typeofProp = typeof(Rotation3D);
-            Type typeofThis = typeof(Rotation3DAnimation);
             PropertyChangedCallback propCallback = new PropertyChangedCallback(AnimationFunction_Changed);
             ValidateValueCallback validateCallback = new ValidateValueCallback(ValidateFromToOrByValue);
 
             FromProperty = DependencyProperty.Register(
                 "From",
-                typeofProp,
-                typeofThis,
+                typeof(Rotation3D),
+                typeof(Rotation3DAnimation),
                 new PropertyMetadata((Rotation3D)null, propCallback),
                 validateCallback);
 
             ToProperty = DependencyProperty.Register(
                 "To",
-                typeofProp,
-                typeofThis,
+                typeof(Rotation3D),
+                typeof(Rotation3DAnimation),
                 new PropertyMetadata((Rotation3D)null, propCallback),
                 validateCallback);
 
             ByProperty = DependencyProperty.Register(
                 "By",
-                typeofProp,
-                typeofThis,
+                typeof(Rotation3D),
+                typeof(Rotation3DAnimation),
                 new PropertyMetadata((Rotation3D)null, propCallback),
                 validateCallback);
 
             EasingFunctionProperty = DependencyProperty.Register(
                 "EasingFunction",
                 typeof(IEasingFunction),
-                typeofThis);
+                typeof(Rotation3DAnimation));
         }
 
 

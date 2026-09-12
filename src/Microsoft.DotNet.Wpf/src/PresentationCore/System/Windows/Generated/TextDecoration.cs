@@ -263,11 +263,10 @@ namespace System.Windows
 
 
             // Initializations
-            Type typeofThis = typeof(TextDecoration);
             PenProperty =
                   RegisterProperty("Pen",
                                    typeof(Pen),
-                                   typeofThis,
+                                   typeof(TextDecoration),
                                    null,
                                    null,
                                    null,
@@ -276,7 +275,7 @@ namespace System.Windows
             PenOffsetProperty =
                   RegisterProperty("PenOffset",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(TextDecoration),
                                    0.0,
                                    null,
                                    null,
@@ -285,7 +284,7 @@ namespace System.Windows
             PenOffsetUnitProperty =
                   RegisterProperty("PenOffsetUnit",
                                    typeof(TextDecorationUnit),
-                                   typeofThis,
+                                   typeof(TextDecoration),
                                    TextDecorationUnit.FontRecommended,
                                    null,
                                    new ValidateValueCallback(System.Windows.ValidateEnums.IsTextDecorationUnitValid),
@@ -294,7 +293,7 @@ namespace System.Windows
             PenThicknessUnitProperty =
                   RegisterProperty("PenThicknessUnit",
                                    typeof(TextDecorationUnit),
-                                   typeofThis,
+                                   typeof(TextDecoration),
                                    TextDecorationUnit.FontRecommended,
                                    null,
                                    new ValidateValueCallback(System.Windows.ValidateEnums.IsTextDecorationUnitValid),
@@ -303,7 +302,7 @@ namespace System.Windows
             LocationProperty =
                   RegisterProperty("Location",
                                    typeof(TextDecorationLocation),
-                                   typeofThis,
+                                   typeof(TextDecoration),
                                    TextDecorationLocation.Underline,
                                    null,
                                    new ValidateValueCallback(System.Windows.ValidateEnums.IsTextDecorationLocationValid),

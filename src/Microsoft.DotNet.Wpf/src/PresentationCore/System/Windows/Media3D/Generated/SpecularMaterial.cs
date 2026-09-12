@@ -375,11 +375,10 @@ namespace System.Windows.Media.Media3D
 
 
             // Initializations
-            Type typeofThis = typeof(SpecularMaterial);
             ColorProperty =
                   RegisterProperty("Color",
                                    typeof(Color),
-                                   typeofThis,
+                                   typeof(SpecularMaterial),
                                    Colors.White,
                                    new PropertyChangedCallback(ColorPropertyChanged),
                                    null,
@@ -388,7 +387,7 @@ namespace System.Windows.Media.Media3D
             BrushProperty =
                   RegisterProperty("Brush",
                                    typeof(Brush),
-                                   typeofThis,
+                                   typeof(SpecularMaterial),
                                    null,
                                    new PropertyChangedCallback(BrushPropertyChanged),
                                    null,
@@ -397,7 +396,7 @@ namespace System.Windows.Media.Media3D
             SpecularPowerProperty =
                   RegisterProperty("SpecularPower",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(SpecularMaterial),
                                    40.0,
                                    new PropertyChangedCallback(SpecularPowerPropertyChanged),
                                    null,

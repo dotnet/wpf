@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -30,18 +30,17 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         static RibbonControlGroup()
         {
-            Type ownerType = typeof(RibbonControlGroup);
-
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            FocusableProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonControlGroup), new FrameworkPropertyMetadata(typeof(RibbonControlGroup)));
+            FocusableProperty.OverrideMetadata(typeof(RibbonControlGroup), new FrameworkPropertyMetadata(false));
 
             FrameworkElementFactory fef = new FrameworkElementFactory(typeof(StackPanel));
             fef.SetValue(StackPanel.OrientationProperty, Orientation.Horizontal);
             ItemsPanelTemplate template = new ItemsPanelTemplate(fef);
             template.Seal();
-            ItemsPanelProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(template));
+            ItemsPanelProperty.OverrideMetadata(typeof(RibbonControlGroup), new FrameworkPropertyMetadata(template));
 
-            RibbonControlService.DefaultControlSizeDefinitionProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(CoerceDefaultControlSizeDefinition)));
+            RibbonControlService.DefaultControlSizeDefinitionProperty.OverrideMetadata(typeof(RibbonControlGroup),
+                new FrameworkPropertyMetadata(null, new CoerceValueCallback(CoerceDefaultControlSizeDefinition)));
         }
 
         #endregion Constructors

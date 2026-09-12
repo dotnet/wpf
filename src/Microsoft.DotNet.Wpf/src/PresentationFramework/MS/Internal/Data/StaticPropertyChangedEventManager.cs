@@ -121,14 +121,13 @@ namespace MS.Internal.Data
         {
             get
             {
-                Type managerType = typeof(StaticPropertyChangedEventManager);
-                StaticPropertyChangedEventManager manager = (StaticPropertyChangedEventManager)GetCurrentManager(managerType);
+                StaticPropertyChangedEventManager manager = (StaticPropertyChangedEventManager)GetCurrentManager(typeof(StaticPropertyChangedEventManager));
 
                 // at first use, create and register a new manager
                 if (manager == null)
                 {
                     manager = new StaticPropertyChangedEventManager();
-                    SetCurrentManager(managerType, manager);
+                    SetCurrentManager(typeof(StaticPropertyChangedEventManager), manager);
                 }
 
                 return manager;

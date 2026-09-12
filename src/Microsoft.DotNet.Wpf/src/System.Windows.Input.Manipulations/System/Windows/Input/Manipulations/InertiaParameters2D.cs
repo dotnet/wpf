@@ -33,10 +33,7 @@ namespace System.Windows.Input.Manipulations
             if (!isEqual())
             {
                 setNewValue();
-                if (Changed != null)
-                {
-                    Changed(this, paramName);
-                }
+                Changed?.Invoke(this, paramName);
             }
         }
 

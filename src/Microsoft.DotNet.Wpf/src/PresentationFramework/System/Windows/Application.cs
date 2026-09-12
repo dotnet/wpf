@@ -1240,12 +1240,7 @@ namespace System.Windows
         protected virtual void OnStartup(StartupEventArgs e)
         {
             VerifyAccess();
-
-            StartupEventHandler handler = (StartupEventHandler)Events[EVENT_STARTUP];
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            ((StartupEventHandler)Events[EVENT_STARTUP])?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1263,12 +1258,7 @@ namespace System.Windows
         protected virtual void OnExit(ExitEventArgs e)
         {
             VerifyAccess();
-
-            ExitEventHandler handler = (ExitEventHandler)Events[EVENT_EXIT];
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            ((ExitEventHandler)Events[EVENT_EXIT])?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1287,10 +1277,7 @@ namespace System.Windows
         protected virtual void OnActivated(EventArgs e)
         {
             VerifyAccess();
-            if (Activated != null)
-            {
-                Activated(this, e);
-            }
+            Activated?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1310,10 +1297,7 @@ namespace System.Windows
         protected virtual void OnDeactivated(EventArgs e)
         {
             VerifyAccess();
-            if (Deactivated != null)
-            {
-                Deactivated(this, e);
-            }
+            Deactivated?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1334,12 +1318,7 @@ namespace System.Windows
         protected virtual void OnSessionEnding(SessionEndingCancelEventArgs e)
         {
             VerifyAccess();
-
-            SessionEndingCancelEventHandler handler = (SessionEndingCancelEventHandler)Events[EVENT_SESSIONENDING];
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            ((SessionEndingCancelEventHandler)Events[EVENT_SESSIONENDING])?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1355,10 +1334,7 @@ namespace System.Windows
         protected virtual void OnNavigating(NavigatingCancelEventArgs e)
         {
             VerifyAccess();
-            if (Navigating != null)
-            {
-                Navigating(this, e);
-            }
+            Navigating?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1376,10 +1352,7 @@ namespace System.Windows
         protected virtual void OnNavigated(NavigationEventArgs e)
         {
             VerifyAccess();
-            if (Navigated != null)
-            {
-                Navigated(this, e);
-            }
+            Navigated?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1396,10 +1369,7 @@ namespace System.Windows
         protected virtual void OnNavigationProgress(NavigationProgressEventArgs e)
         {
             VerifyAccess();
-            if (NavigationProgress != null)
-            {
-                NavigationProgress(this, e);
-            }
+            NavigationProgress?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1416,10 +1386,7 @@ namespace System.Windows
         protected virtual void OnNavigationFailed(NavigationFailedEventArgs e)
         {
             VerifyAccess();
-            if (NavigationFailed != null)
-            {
-                NavigationFailed(this, e);
-            }
+            NavigationFailed?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1437,10 +1404,7 @@ namespace System.Windows
         protected virtual void OnLoadCompleted(NavigationEventArgs e)
         {
             VerifyAccess();
-            if (LoadCompleted != null)
-            {
-                LoadCompleted(this, e);
-            }
+            LoadCompleted?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1458,10 +1422,7 @@ namespace System.Windows
         protected virtual void OnNavigationStopped(NavigationEventArgs e)
         {
             VerifyAccess();
-            if (NavigationStopped != null)
-            {
-                NavigationStopped(this, e);
-            }
+            NavigationStopped?.Invoke(this, e);
         }
 
 
@@ -1480,10 +1441,7 @@ namespace System.Windows
         protected virtual void OnFragmentNavigation(FragmentNavigationEventArgs e)
         {
             VerifyAccess();
-            if (FragmentNavigation != null)
-            {
-                FragmentNavigation(this, e);
-            }
+            FragmentNavigation?.Invoke(this, e);
         }
         #endregion Protected Methods
 

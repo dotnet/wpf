@@ -790,10 +790,7 @@ namespace System.Windows.Xps.Serialization
         {
             XpsSerializationProgressChangedEventArgs e = operationState as XpsSerializationProgressChangedEventArgs;
 
-            if(XpsSerializationProgressChanged != null)
-            {
-                XpsSerializationProgressChanged(this,e);
-            }
+            XpsSerializationProgressChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -948,10 +945,7 @@ namespace System.Windows.Xps.Serialization
         {
             XpsSerializationCompletedEventArgs e = operationState as XpsSerializationCompletedEventArgs;
 
-            if (XpsSerializationCompleted != null)
-            {
-                XpsSerializationCompleted(this, e);
-            }
+            XpsSerializationCompleted?.Invoke(this, e);
             return null;
         }
 

@@ -143,10 +143,7 @@ namespace MS.Internal.Documents
         {
             base.OnPrintCompleted();
 
-            if (_printCompleted != null)
-            {
-                _printCompleted(this, EventArgs.Empty);
-            }
+            _printCompleted?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -173,14 +170,8 @@ namespace MS.Internal.Documents
             // Hence need to raise changed events when Document property is changing.
             if (e.Property == DocumentProperty)
             {
-                if (_pageNumberChanged != null)
-                {
-                    _pageNumberChanged(this, EventArgs.Empty);
-                }
-                if (_pageCountChanged != null)
-                {
-                    _pageCountChanged(this, EventArgs.Empty);
-                }
+                _pageNumberChanged?.Invoke(this, EventArgs.Empty);
+                _pageCountChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -466,10 +457,7 @@ namespace MS.Internal.Documents
         {
             base.OnPrintCompleted();
 
-            if (_printCompleted != null)
-            {
-                _printCompleted(this, EventArgs.Empty);
-            }
+            _printCompleted?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -562,18 +550,12 @@ namespace MS.Internal.Documents
             // Hence need to raise changed events when those DPs are changing.
             if (_raisePageCountChanged)
             {
-                if (_pageCountChanged != null)
-                {
-                    _pageCountChanged(this, EventArgs.Empty);
-                }
+                _pageCountChanged?.Invoke(this, EventArgs.Empty);
                 _raisePageCountChanged = false;
             }
             if (_raisePageNumberChanged)
             {
-                if (_pageNumberChanged != null)
-                {
-                    _pageNumberChanged(this, EventArgs.Empty);
-                }
+                _pageNumberChanged?.Invoke(this, EventArgs.Empty);
                 _raisePageNumberChanged = false;
             }
             return null;

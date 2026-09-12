@@ -105,15 +105,9 @@ namespace System.Windows
         /// bool - true if the object is an instance of Rect and if it's equal to "this".
         /// </returns>
         /// <param name='o'>The object to compare to "this"</param>
-        public override bool Equals(object o)
+        public override readonly bool Equals(object o)
         {
-            if ((null == o) || !(o is Rect))
-            {
-                return false;
-            }
-
-            Rect value = (Rect)o;
-            return Rect.Equals(this,value);
+            return o is Rect other && Rect.Equals(this, other);
         }
 
         /// <summary>
@@ -127,7 +121,7 @@ namespace System.Windows
         /// bool - true if "value" is equal to "this".
         /// </returns>
         /// <param name='value'>The Rect to compare to "this"</param>
-        public bool Equals(Rect value)
+        public readonly bool Equals(Rect value)
         {
             return Rect.Equals(this, value);
         }
@@ -137,7 +131,7 @@ namespace System.Windows
         /// <returns>
         /// int - the HashCode for this Rect
         /// </returns>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             if (IsEmpty)
             {

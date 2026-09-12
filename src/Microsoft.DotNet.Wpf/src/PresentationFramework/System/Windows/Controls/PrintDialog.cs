@@ -158,7 +158,7 @@ namespace System.Windows.Controls
             {
                 if (_minPage <= 0)
                 {
-                    throw new System.ArgumentException(SR.Format(SR.PrintDialogZeroNotAllowed, "MinPage"));
+                    throw new System.ArgumentException(SR.Format(SR.PrintDialogZeroNotAllowed, nameof(MinPage)));
                 }
 
                 _minPage = value;
@@ -178,7 +178,7 @@ namespace System.Windows.Controls
             {
                 if (_maxPage <= 0)
                 {
-                    throw new System.ArgumentException(SR.Format(SR.PrintDialogZeroNotAllowed, "MaxPage"));
+                    throw new System.ArgumentException(SR.Format(SR.PrintDialogZeroNotAllowed, nameof(MaxPage)));
                 }
 
                 _maxPage = value;

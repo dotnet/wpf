@@ -1748,7 +1748,7 @@ namespace MS.Internal.Automation
             ArgumentNullException.ThrowIfNull(text);
             if (text.Length == 0)
             {
-                throw new ArgumentException(SR.Format(SR.TextRangeProvider_EmptyStringParameter, "text"));
+                throw new ArgumentException(SR.Format(SR.TextRangeProvider_EmptyStringParameter, nameof(text)));
             }
 
             Normalize();
@@ -1851,7 +1851,7 @@ namespace MS.Internal.Automation
         {
             if (maxLength < 0 && maxLength != -1)
             {
-                throw new ArgumentException(SR.Format(SR.TextRangeProvider_InvalidParameterValue, maxLength, "maxLength"));
+                throw new ArgumentException(SR.Format(SR.TextRangeProvider_InvalidParameterValue, maxLength, nameof(maxLength)));
             }
 
             Normalize();

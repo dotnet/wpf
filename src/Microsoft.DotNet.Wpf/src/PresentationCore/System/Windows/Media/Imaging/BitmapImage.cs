@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.IO;
@@ -71,7 +71,7 @@ namespace System.Windows.Media.Imaging
 
             if (UriSource == null && StreamSource == null)
             {
-                throw new InvalidOperationException(SR.Format(SR.Image_NeitherArgument, "UriSource", "StreamSource"));
+                throw new InvalidOperationException(SR.Format(SR.Image_NeitherArgument, nameof(UriSource), nameof(StreamSource)));
             }
 
             // Capture the XPS package origin during the parse window so that

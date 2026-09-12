@@ -22,7 +22,7 @@ To build the WPF repo and contribute features and fixes for .NET 8.0, [Visual St
 
 ## Getting started
 
-* [.NET 6.0 SDK](https://dotnet.microsoft.com/download/dotnet/6.0), [.NET 7.0 SDK](https://dotnet.microsoft.com/download/dotnet/7.0), [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0), [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
+* [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0), [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0), [.NET 10.0 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 * [.NET Preview SDKs](https://github.com/dotnet/dotnet/blob/main/docs/builds-table.md)
 * [Getting started instructions](Documentation/getting-started.md)
 * [Contributing guide](Documentation/contributing.md)

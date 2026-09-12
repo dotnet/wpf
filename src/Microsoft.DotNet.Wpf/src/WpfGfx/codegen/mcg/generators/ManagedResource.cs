@@ -158,13 +158,35 @@ namespace MS.Internal.MilCodeGen.Generators
                                 );
                     }
 
-                    csFile.WriteBlock(
+                    csFile.Write(
                         [[inline]]
 
                             namespace [[resource.ManagedNamespace]]
                             {
-                                [[Helpers.CollectionHelper.WriteCollectionSummary(resource)]]
-                                [[attributes]]
+                        [[/inline]]
+                    );
+
+                    string collectionSummary = Helpers.CollectionHelper.WriteCollectionSummary(resource);
+                    if (!string.IsNullOrEmpty(collectionSummary))
+                    {
+                        csFile.Write(
+                            [[inline]]
+                                    [[collectionSummary]]
+                            [[/inline]]
+                            );
+                    }
+
+                    if (!string.IsNullOrEmpty(attributes))
+                    {
+                        csFile.Write(
+                            [[inline]]
+                                    [[attributes]]
+                            [[/inline]]
+                            );
+                    }
+
+                    csFile.WriteBlock(
+                        [[inline]]
                                 [[WriteClassDeclaration(resource.Name, !resource.IsValueType, modifiers, extends)]]
                                 {
                                     [[Helpers.ManagedStyle.WriteSection("Public Methods")]]

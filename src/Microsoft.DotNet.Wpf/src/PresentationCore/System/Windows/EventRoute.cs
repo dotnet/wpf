@@ -3,7 +3,6 @@
 
 using MS.Utility;
 using MS.Internal;
-using MS.Internal.KnownBoxes;
 
 namespace System.Windows
 {

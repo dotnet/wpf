@@ -86,7 +86,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                         [[inline]]
                             [[Helpers.ManagedStyle.WriteFileHeader(fileName)]]
 
-                            using MS.Internal.KnownBoxes;
                             using System.Collections;
                             using System.ComponentModel;
                             using System.Windows.Markup;

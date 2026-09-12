@@ -19,9 +19,7 @@ using System.Windows.Markup;
 using MS.Internal;
 using MS.Internal.AppModel;
 using MS.Internal.Utility;
-using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
-
 
 namespace System.Windows.Navigation
 {

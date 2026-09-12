@@ -1,13 +1,12 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Windows.Controls;
-using System.Diagnostics;
-
-using System.Windows;
-using System.Windows.Media;
-
 using System;
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using MS.Internal.KnownBoxes;
 
 namespace Microsoft.Windows.Themes
 {
@@ -123,7 +122,7 @@ namespace Microsoft.Windows.Themes
 
         static ClassicBorderDecorator()
         {
-            SnapsToDevicePixelsProperty.OverrideMetadata(typeof(ClassicBorderDecorator), new FrameworkPropertyMetadata(true));
+            SnapsToDevicePixelsProperty.OverrideMetadata(typeof(ClassicBorderDecorator), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
         }
         /// <summary>
         /// Instantiates a new instance of a ClassicBorderDecorator

@@ -8,11 +8,10 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-using System.ComponentModel;
-using System.Globalization;
+using System.Windows;
 using System.Windows.Markup;
-using System.Windows.Converters;
+
+using ConverterHelper = System.Windows.Markup.TypeConverterHelper;
 
 namespace System.Windows.Converters
 {
@@ -36,12 +35,7 @@ namespace System.Windows.Converters
         public override bool CanConvertToString(object value, IValueSerializerContext context)
         {
             // Validate the input type
-            if (!(value is Size))
-            {
-                return false;
-            }
-
-            return true;
+            return value is Size;
         }
 
         /// <summary>
@@ -49,14 +43,7 @@ namespace System.Windows.Converters
         /// </summary>
         public override object ConvertFromString(string value, IValueSerializerContext context)
         {
-            if (value != null)
-            {
-                return Size.Parse(value );
-            }
-            else
-            {
-                return base.ConvertFromString( value, context );
-            }
+            return value is not null ? Size.Parse(value) : base.ConvertFromString(value, context);
         }
 
         /// <summary>
@@ -64,13 +51,13 @@ namespace System.Windows.Converters
         /// </summary>
         public override string ConvertToString(object value, IValueSerializerContext context)
         {
-            if (value is Size instance)
+            if (value is not Size size)
             {
-
-                return instance.ConvertToString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
+                // Let base throw an exception.
+                return base.ConvertToString(value, context);
             }
 
-            return base.ConvertToString(value, context);
+            return size.ConvertToString(null, ConverterHelper.InvariantEnglishUS);
         }
     }
 }

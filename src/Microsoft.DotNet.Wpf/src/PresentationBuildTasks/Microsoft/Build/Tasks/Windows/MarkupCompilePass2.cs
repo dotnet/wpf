@@ -146,12 +146,6 @@ namespace Microsoft.Build.Tasks.Windows
                 _nErrors++;
 
             }
-            catch // Non-CLS compliant errors
-            {
-                Log.LogErrorWithCodeFromResources(nameof(SR.NonClsError));
-
-                _nErrors++;
-            }
 
             if (_nErrors > 0)
             {

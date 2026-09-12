@@ -2402,11 +2402,6 @@
         <target state="translated">Página siguiente</target>
         <note />
       </trans-unit>
-      <trans-unit id="NonCLSException">
-        <source>Text formatting engine encountered a non-CLS exception.</source>
-        <target state="translated">El motor de formato de texto encontró una excepción no CLS.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NonPackAppAbsoluteUriNotAllowed">
         <source>Unsupported Uri syntax. Method expects a relative Uri or a pack://application:,,,/ form of absolute Uri.</source>
         <target state="translated">Sintaxis de Uri no admitida. El método espera un Uri relativo o un formato pack://aplicación:,,,/ de un Uri absoluto.</target>

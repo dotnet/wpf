@@ -788,16 +788,10 @@ namespace System.Windows
                     // we treat null as an "error", and keep trying for something
                     // better.  (See bug 861966)
                 }
-                // catch all exceptions.  We simply want to move on to the next
-                // candidate indexer.
+                // Catch all exceptions. We simply want to move on to the next candidate indexer.
                 catch (Exception ex)
                 {
                     if (CriticalExceptions.IsCriticalApplicationException(ex) || throwOnError)
-                        throw;
-                }
-                catch
-                {
-                    if (throwOnError)
                         throw;
                 }
             }

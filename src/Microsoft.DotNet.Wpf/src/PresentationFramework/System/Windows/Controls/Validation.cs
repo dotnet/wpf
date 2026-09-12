@@ -388,7 +388,10 @@ namespace System.Windows.Controls
             object[] args = (object[])arg;
             DependencyObject targetElement = (DependencyObject)args[0];
             DependencyObject adornerSite = (DependencyObject)args[1];
-            bool show = (bool)args[2];
+            // bool show = (bool)args[2];  //stale scheduled value
+            //trying for issue #8969:always use the current error state..
+            //no race condition where the adorner is shown for an error that was already cleared
+            bool show=GetHasError(targetElement);
 
             // Check if the element is visible, if not try to show the adorner again once it gets visible.
             // This is needed because controls hosted in Expander or TabControl don't have a parent/AdornerLayer till the Expander is expanded or the TabItem is selected.

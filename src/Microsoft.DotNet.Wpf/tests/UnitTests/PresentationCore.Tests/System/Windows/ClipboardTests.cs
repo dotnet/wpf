@@ -225,6 +225,27 @@ public class ClipboardTests
         result2.Should().Be(testData2);
     }
 
+    [WpfTheory]
+    [InlineData(TextDataFormat.Text, TextDataFormat.UnicodeText)]
+    [InlineData(TextDataFormat.UnicodeText, TextDataFormat.Text)]
+    public void GetText_AutoConvertibleFormat_DoesNotAutoConvert(
+        TextDataFormat sourceFormat,
+        TextDataFormat requestedFormat)
+    {
+        const string text = "Hello, World!";
+        string sourceDataFormat = DataFormats.ConvertToDataFormats(sourceFormat);
+        string requestedDataFormat = DataFormats.ConvertToDataFormats(requestedFormat);
+        DataObject dataObject = new();
+        dataObject.SetData(sourceDataFormat, text, autoConvert: true);
+
+        dataObject.GetData(requestedDataFormat, autoConvert: true).Should().Be(text);
+        dataObject.GetData(requestedDataFormat, autoConvert: false).Should().BeNull();
+
+        Clipboard.SetDataObject(dataObject);
+
+        Clipboard.GetText(requestedFormat).Should().BeEmpty();
+    }
+
     [WpfFact]
     public void SetData_Text_Format_AllUpper()
     {

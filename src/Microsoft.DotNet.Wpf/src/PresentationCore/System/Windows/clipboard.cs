@@ -83,14 +83,16 @@ public static class Clipboard
     private static T? GetTypedDataIfAvailable<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] T>(string format)
     {
         IDataObject? data = GetDataObject();
+        bool autoConvert = IsDataFormatAutoConvert(format);
+
         if (data is ITypedDataObject typed)
         {
-            return typed.TryGetData(format, autoConvert: true, out T? value) ? value : default;
+            return typed.TryGetData(format, autoConvert, out T? value) ? value : default;
         }
 
         if (data is IDataObject dataObject)
         {
-            return dataObject.GetData(format, autoConvert: true) is T value ? value : default;
+            return dataObject.GetData(format, autoConvert) is T value ? value : default;
         }
 
         return default;
@@ -485,7 +487,7 @@ public static class Clipboard
             return false;
         }
 
-        return dataObject.TryGetData(format, out data);
+        return dataObject.TryGetData(format, autoConvert: false, out data);
     }
 
     /// <inheritdoc cref="DataObject.SetDataAsJson{T}(string, T)"/>

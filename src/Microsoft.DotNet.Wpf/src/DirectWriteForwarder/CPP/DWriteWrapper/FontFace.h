@@ -218,6 +218,14 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             bool ReadFontEmbeddingRights([System::Runtime::InteropServices::Out] unsigned short% fsType);
 
             /// <summary>
+            /// Returns true if the font face contains a COLR (Color) OpenType table,
+            /// indicating it has color glyph layer definitions. Only checks for table
+            /// presence, not validity -- a corrupt COLR table would return true here
+            /// but fail during TranslateColorGlyphRun.
+            /// </summary>
+            bool HasColorGlyphs();
+
+            /// <summary>
             /// dtor.
             /// </summary>
             ~FontFace();

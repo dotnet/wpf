@@ -546,7 +546,9 @@ int16 errCode;
         uint32 ulPairsSize;
         if (ULongMult32((uint32)KernFormat0.nPairs, (uint32)GetGenericSize(KERN_PAIR_CONTROL), &ulPairsSize) != S_OK)
             return ERR_GENERIC;
-        if ((uint32)usKernFormat0Size + ulPairsSize > (uint32)KernSubHeader.length)
+        /* The uint16 kern subtable 'length' can't describe subtables >64KB, so validate against
+            the uint32 kern table-directory length that CopyTableOver already verified. */
+        if ((uint32)usKernFormat0Size + ulPairsSize > TTTableLength(pOutputBufferInfo, KERN_TAG))
             return ERR_GENERIC;
     }
 

@@ -9,6 +9,7 @@
 
 using Microsoft.Win32;
 using System.Collections.Generic;
+using System.IO.Packaging;
 using System.Xaml;
 using System.Xml;
 
@@ -22,6 +23,8 @@ namespace System.Windows.Markup
         private const string AllowedTypesForRestrictiveXamlContexts = @"SOFTWARE\Microsoft\.NETFramework\Windows Presentation Foundation\XPSAllowedTypes";
         private static readonly HashSet<string> AllXamlNamespaces = new HashSet<string>(XamlLanguage.XamlNamespaces);
         private static readonly Type DependencyObjectType = typeof(System.Windows.DependencyObject);
+        private static readonly Type UriType = typeof(Uri);
+        private static readonly Type ImageSourceType = typeof(System.Windows.Media.ImageSource);
         private static readonly HashSet<string> SafeTypesFromRegistry = ReadAllowedTypesForRestrictedXamlContexts();
 
         private static HashSet<string> ReadAllowedTypesForRestrictedXamlContexts()
@@ -103,10 +106,27 @@ namespace System.Windows.Markup
             {
                 if (skippingDepth <= 0)
                 {
-                    if ((NodeType == System.Xaml.XamlNodeType.StartObject && !IsAllowedType(Type.UnderlyingType)) ||
-                        (NodeType == System.Xaml.XamlNodeType.StartMember && Member is XamlDirective directive && !IsAllowedDirective(directive)))
+                    if (NodeType == System.Xaml.XamlNodeType.StartMember && !(Member is XamlDirective))
                     {
-                        skippingDepth = 1;
+                        _currentMember = Member;
+                    }
+                    else if (NodeType == System.Xaml.XamlNodeType.EndMember || NodeType == System.Xaml.XamlNodeType.EndObject)
+                    {
+                        _currentMember = null;
+                    }
+
+                    if ((NodeType == System.Xaml.XamlNodeType.StartObject && !IsAllowedType(Type.UnderlyingType)) ||
+                        (NodeType == System.Xaml.XamlNodeType.StartMember && Member is XamlDirective directive && !IsAllowedDirective(directive)) ||
+                        (!MS.Internal.FrameworkAppContextSwitches.OptOutOfRestrictiveXamlUriBlock && NodeType == System.Xaml.XamlNodeType.Value && IsBlockedUriValue()))
+                    {
+                        if (NodeType == System.Xaml.XamlNodeType.Value)
+                        {
+                            _currentMember = null;
+                        }
+                        else
+                        {
+                            skippingDepth = 1;
+                        }
                     }
                     else
                     {
@@ -132,6 +152,80 @@ namespace System.Windows.Markup
             }
 
             return result;
+        }
+
+        private bool IsBlockedUriValue()
+        {
+            if (_currentMember == null)
+            {
+                return false;
+            }
+
+            // NavigateUri (on Hyperlink / FixedPage) requires a user click to navigate
+            // and is already guarded by NavigationService.IsUnsafe + RestrictiveXamlContext.
+            // Only auto-fetching properties (Image.Source, MediaElement.Source) need blocking.
+            if (string.Equals(_currentMember.Name, "NavigateUri", StringComparison.Ordinal))
+            {
+                return false;
+            }
+            Type memberType = _currentMember.Type?.UnderlyingType;
+            if (memberType == null)
+            {
+                return false;
+            }
+
+            bool isUriFetch = memberType == UriType || UriType.IsAssignableFrom(memberType)
+                || memberType == ImageSourceType || ImageSourceType.IsAssignableFrom(memberType);
+            if (!isUriFetch)
+            {
+                return false;
+            }
+
+            string value = Value as string;
+            if (value == null)
+            {
+                return false;
+            }
+
+            if (value.StartsWith("\\\\", StringComparison.Ordinal))
+            {
+                return true;
+            }
+
+            if (Uri.TryCreate(value, UriKind.Absolute, out Uri uri))
+            {
+                // Non-pack absolute URIs (http, https, file, ftp, ...) always auto-fetch
+                // from an external origin and are blocked.
+                if (!string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+
+                // pack:// URIs are only safe when they refer to the application's own
+                // packaged resources (pack://application:,,, or pack://siteoforigin:,,,).
+                // A pack URI whose authority encodes a foreign package origin
+                // (e.g. pack://http:,,123.45.67.89,attack.zip/malicious.png) must NOT be
+                // treated as safe just because the outer scheme is "pack".
+                string authority = uri.Authority ?? string.Empty;
+                if (authority.StartsWith("application:", StringComparison.OrdinalIgnoreCase)
+                    || authority.StartsWith("siteoforigin:", StringComparison.OrdinalIgnoreCase))
+                {
+                    return false;
+                }
+
+                // Foreign-package pack URI: only allow it when we are inside an active XPS
+                // load AND it resolves to a part of the very same package being loaded.
+                // Everything else (cross-package refs, remote-authority pack URIs) is blocked.
+                if (MS.Internal.XpsLoadingContext.IsActive
+                    && MS.Internal.XpsLoadingContext.IsUriAllowedInCurrentContext(uri))
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -200,6 +294,11 @@ namespace System.Windows.Markup
 
             if (isValidPrimitive || (isValidNamespace && isValidSubClass))
             {
+                if (!MS.Internal.FrameworkAppContextSwitches.OptOutOfNavigationTypeRestrictiveXamlBlock && IsNavigationOrBrowserType(type))
+                {
+                    return false;
+                }
+
                 // Add it to the explicit allow list to make future lookups on this instance faster.
                 _safeTypesSet.Add(type);
                 return true;
@@ -207,6 +306,19 @@ namespace System.Windows.Markup
 
             // Otherwise, it didn't exist on any of our allow lists.
             return false;
+        }
+
+        private static bool IsNavigationOrBrowserType(Type type)
+        {
+            if (type == null)
+            {
+                return false;
+            }
+            return typeof(System.Windows.Controls.WebBrowser).IsAssignableFrom(type)
+                || typeof(System.Windows.Controls.Frame).IsAssignableFrom(type)
+                || typeof(System.Windows.Navigation.NavigationWindow).IsAssignableFrom(type)
+                || typeof(System.Windows.Controls.SoundPlayerAction).IsAssignableFrom(type)
+                || typeof(System.Windows.Controls.MediaElement).IsAssignableFrom(type);
         }
 
         /// <summary>
@@ -230,5 +342,7 @@ namespace System.Windows.Markup
             typeof(System.Windows.Documents.DocumentStructures.TableStructure),
             typeof(System.Windows.Documents.LinkTarget)          
             };  
+
+        private XamlMember _currentMember;
     }
 }

@@ -7,6 +7,7 @@
 #pragma once
 //using namespace System;
 using namespace System::IO;
+
 namespace MS { namespace Internal {
 
 typedef System::UInt16  ushort;

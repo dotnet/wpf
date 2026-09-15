@@ -2841,13 +2841,13 @@ To automatically copy the files, set the environment variable
                     </Trigger>
                     <MultiDataTrigger>
                         <MultiDataTrigger.Conditions>
-                            <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ribbon:RibbonWindow}, Path=IsActive}" Value="False"/>
 
                             <Condition Binding="{Binding Path=(SystemParameters.IsGlassEnabled)}" Value="False"/>
 
 
 
                             <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsHostedInRibbonWindow}" Value="True" />
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ribbon:RibbonWindow}, Path=IsActive}" Value="False"/>
                         </MultiDataTrigger.Conditions>
                         <Setter TargetName="PART_TitleHost" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.InactiveCaptionTextBrushKey}}" />
                     </MultiDataTrigger>
@@ -2900,6 +2900,7 @@ To automatically copy the files, set the environment variable
 
 
 
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsHostedInRibbonWindow}" Value="True" />
                             <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ribbon:RibbonWindow}, Path=WindowState}" Value="Maximized"/>
                         </MultiDataTrigger.Conditions>
                         <Setter TargetName="QatTopHost" Property="Margin" Value="0"/>

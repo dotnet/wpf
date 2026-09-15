@@ -3,6 +3,8 @@
 
 using System.IO.Packaging;
 using MS.Internal;
+using PackUriHelper = global::System.IO.Packaging.PackUriHelper;
+using Record = global::Xunit.Record;
 
 namespace PresentationCore.Tests.MS.Internal;
 

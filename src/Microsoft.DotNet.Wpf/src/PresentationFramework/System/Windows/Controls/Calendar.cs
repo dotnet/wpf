@@ -782,31 +782,17 @@ namespace System.Windows.Controls
 
         protected virtual void OnDisplayDateChanged(CalendarDateChangedEventArgs e)
         {
-            EventHandler<CalendarDateChangedEventArgs> handler = this.DisplayDateChanged;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            this.DisplayDateChanged?.Invoke(this, e);
         }
 
         protected virtual void OnDisplayModeChanged(CalendarModeChangedEventArgs e)
         {
-            EventHandler<CalendarModeChangedEventArgs> handler = this.DisplayModeChanged;
-
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            this.DisplayModeChanged?.Invoke(this, e);
         }
 
         protected virtual void OnSelectionModeChanged(EventArgs e)
         {
-            EventHandler<EventArgs> handler = this.SelectionModeChanged;
-
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            this.SelectionModeChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -867,20 +853,12 @@ namespace System.Windows.Controls
 
         internal void OnDayButtonMouseUp(MouseButtonEventArgs e)
         {
-            MouseButtonEventHandler handler = this.DayButtonMouseUp;
-            if (null != handler)
-            {
-                handler(this, e);
-            }
+            this.DayButtonMouseUp?.Invoke(this, e);
         }
 
         internal void OnDayOrMonthPreviewKeyDown(RoutedEventArgs e)
         {
-            RoutedEventHandler handler = this.DayOrMonthPreviewKeyDown;
-            if (null != handler)
-            {
-                handler(this, e);
-            }
+            this.DayOrMonthPreviewKeyDown?.Invoke(this, e);
         }
 
         // If the day is a trailing day, Update the DisplayDate

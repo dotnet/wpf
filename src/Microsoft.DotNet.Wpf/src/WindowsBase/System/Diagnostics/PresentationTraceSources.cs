@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // This class provides a public interface to access TraceSources for
@@ -94,10 +94,7 @@ namespace System.Diagnostics
             System.Diagnostics.Trace.Refresh();
 
             // Initialize any traces classes if needed
-            if (TraceRefresh != null)
-            {
-                TraceRefresh();
-            }
+            TraceRefresh?.Invoke();
         }
 
         internal static event TraceRefreshEventHandler TraceRefresh;

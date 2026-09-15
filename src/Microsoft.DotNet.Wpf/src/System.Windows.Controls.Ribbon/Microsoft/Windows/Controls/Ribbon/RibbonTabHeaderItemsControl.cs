@@ -28,12 +28,11 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         static RibbonTabHeaderItemsControl()
         {
-            Type ownerType = typeof(RibbonTabHeaderItemsControl);
-            ItemsPanelProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new ItemsPanelTemplate(new FrameworkElementFactory(typeof(RibbonTabHeadersPanel)))));
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(typeof(RibbonTabHeaderItemsControl)));
-            FocusableProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false));
-            KeyboardNavigation.TabNavigationProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(KeyboardNavigationMode.Once));
-            KeyboardNavigation.ControlTabNavigationProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(KeyboardNavigationMode.Once));
+            ItemsPanelProperty.OverrideMetadata(typeof(RibbonTabHeaderItemsControl), new FrameworkPropertyMetadata(new ItemsPanelTemplate(new FrameworkElementFactory(typeof(RibbonTabHeadersPanel)))));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonTabHeaderItemsControl), new FrameworkPropertyMetadata(typeof(RibbonTabHeaderItemsControl)));
+            FocusableProperty.OverrideMetadata(typeof(RibbonTabHeaderItemsControl), new FrameworkPropertyMetadata(false));
+            KeyboardNavigation.TabNavigationProperty.OverrideMetadata(typeof(RibbonTabHeaderItemsControl), new FrameworkPropertyMetadata(KeyboardNavigationMode.Once));
+            KeyboardNavigation.ControlTabNavigationProperty.OverrideMetadata(typeof(RibbonTabHeaderItemsControl), new FrameworkPropertyMetadata(KeyboardNavigationMode.Once));
         }
 
         #endregion

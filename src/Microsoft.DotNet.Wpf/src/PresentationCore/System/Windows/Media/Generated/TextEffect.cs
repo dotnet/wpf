@@ -289,11 +289,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(TextEffect);
             TransformProperty =
                   RegisterProperty("Transform",
                                    typeof(Transform),
-                                   typeofThis,
+                                   typeof(TextEffect),
                                    null,
                                    null,
                                    null,
@@ -302,7 +301,7 @@ namespace System.Windows.Media
             ClipProperty =
                   RegisterProperty("Clip",
                                    typeof(Geometry),
-                                   typeofThis,
+                                   typeof(TextEffect),
                                    null,
                                    null,
                                    null,
@@ -311,7 +310,7 @@ namespace System.Windows.Media
             ForegroundProperty =
                   RegisterProperty("Foreground",
                                    typeof(Brush),
-                                   typeofThis,
+                                   typeof(TextEffect),
                                    null,
                                    null,
                                    null,
@@ -320,7 +319,7 @@ namespace System.Windows.Media
             PositionStartProperty =
                   RegisterProperty("PositionStart",
                                    typeof(int),
-                                   typeofThis,
+                                   typeof(TextEffect),
                                    0,
                                    null,
                                    new ValidateValueCallback(ValidatePositionStartValue),
@@ -329,7 +328,7 @@ namespace System.Windows.Media
             PositionCountProperty =
                   RegisterProperty("PositionCount",
                                    typeof(int),
-                                   typeofThis,
+                                   typeof(TextEffect),
                                    0,
                                    null,
                                    new ValidateValueCallback(ValidatePositionCountValue),

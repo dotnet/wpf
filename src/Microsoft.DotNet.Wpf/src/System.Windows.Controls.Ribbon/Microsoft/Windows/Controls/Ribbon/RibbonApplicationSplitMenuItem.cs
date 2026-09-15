@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -30,10 +30,8 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         static RibbonApplicationSplitMenuItem()
         {
-            Type ownerType = typeof(RibbonApplicationSplitMenuItem);
-
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            IsSubmenuOpenProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(CoerceIsSubmenuOpen)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonApplicationSplitMenuItem), new FrameworkPropertyMetadata(typeof(RibbonApplicationSplitMenuItem)));
+            IsSubmenuOpenProperty.OverrideMetadata(typeof(RibbonApplicationSplitMenuItem), new FrameworkPropertyMetadata(null, new CoerceValueCallback(CoerceIsSubmenuOpen)));
         }
 
         #endregion

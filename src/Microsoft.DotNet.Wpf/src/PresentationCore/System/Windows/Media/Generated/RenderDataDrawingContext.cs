@@ -737,6 +737,20 @@ namespace System.Windows.Media
                 return;
             }
 
+            // Color glyph support: if the glyph run uses a COLR font, decompose it into
+            // colored geometry layers and render as a Drawing instead of a monochrome glyph
+            // bitmap. WPF's MIL glyph pipeline (CDrawingContext::DrawGlyphRun -> SW/HW
+            // glyph painters) produces single-channel alpha maps with no per-layer color
+            // support, so color glyphs must be handled here at the managed level.
+            // TryBuildColorGlyphDrawing returns null for non-color fonts, so the normal
+            // monochrome path below is taken in that case.
+            Drawing colorDrawing = glyphRun.TryBuildColorGlyphDrawing(foregroundBrush);
+            if (colorDrawing != null)
+            {
+                DrawDrawing(colorDrawing);
+                return;
+            }
+
 
         #if DEBUG
             MediaTrace.DrawingContextOp.Trace("DrawGlyphRun(const)");

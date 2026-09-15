@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
@@ -8,9 +8,16 @@ namespace MS.Internal
     ///<summary>
     /// The CompilationUnit class
     ///</summary> 
-    internal class CompilationUnit 
+    internal class CompilationUnit
     {
-#region Constructors
+        private readonly string _defaultNamespace;
+        private readonly string _assemblyName;
+        private readonly string _language;
+        private readonly FileUnit[] _fileList;
+
+        private FileUnit _applicationFile = FileUnit.Empty;
+        private string _sourcePath = string.Empty;
+        private bool _pass2;
 
         ///<summary>constructor</summary> 
         public CompilationUnit(string assemblyName, string language, string defaultNamespace, FileUnit[] fileList)
@@ -20,8 +27,6 @@ namespace MS.Internal
             _fileList = fileList;
             _defaultNamespace = defaultNamespace;
         }
-
-#endregion Constructors
 
 #region Properties
 
@@ -71,17 +76,6 @@ namespace MS.Internal
 
 #endregion Properties
 
-#region Private Data
-
-        private bool                    _pass2 = false;
-        private string                  _assemblyName = string.Empty;
-        private string                  _language = string.Empty;
-        private string                  _sourcePath = string.Empty;
-        private string                  _defaultNamespace = string.Empty;
-        private FileUnit                _applicationFile = FileUnit.Empty;
-        private FileUnit[]              _fileList = null;
-
-#endregion Private Data
     }
 
 #region ErrorEvent
@@ -149,10 +143,10 @@ namespace MS.Internal
 
 #region Private Data
 
-        private int _lineNum;
-        private int _linePos;
-        private Exception _e;
-        private string _fileName;
+        private readonly int _lineNum;
+        private readonly int _linePos;
+        private readonly Exception _e;
+        private readonly string _fileName;
 
 #endregion Private Data
 
@@ -199,7 +193,7 @@ namespace MS.Internal
 
 #region Private Data
 
-        private SourceFileInfo _sourceFileInfo;
+        private readonly SourceFileInfo _sourceFileInfo;
 
 #endregion Private Data
 

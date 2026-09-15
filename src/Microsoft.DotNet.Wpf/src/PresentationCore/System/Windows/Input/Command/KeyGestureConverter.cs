@@ -1,186 +1,166 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-//
-//
-//
-// Description: KeyGestureConverter - Converts a KeyGesture string
-//              to the *Type* that the string represents
-//
 using System.ComponentModel;    // for TypeConverter
 using System.Globalization;     // for CultureInfo
 
 namespace System.Windows.Input
 {
     /// <summary>
-    /// KeyGesture - Converter class for converting between a string and the Type of a KeyGesture
+    /// Converter class for converting between a <see cref="string"/> and <see cref="KeyGesture"/>.
     /// </summary>
     public class KeyGestureConverter : TypeConverter
     {
-        private const char MODIFIERS_DELIMITER = '+' ;
-        internal const char DISPLAYSTRING_SEPARATOR = ',' ;
+        /// <summary>
+        /// To aid with conversion from <see cref="Key"/> to <see cref="string"/>. 
+        /// </summary>
+        private static readonly KeyConverter s_keyConverter = new();
 
-        ///<summary>
-        ///CanConvertFrom()
-        ///</summary>
-        ///<param name="context">ITypeDescriptorContext</param>
-        ///<param name="sourceType">type to convert from</param>
-        ///<returns>true if the given type can be converted, false otherwise</returns>
+        /// <summary>
+        /// Returns whether or not this class can convert from a given <paramref name="sourceType"/>.
+        /// </summary>
+        /// <param name="context">The <see cref="ITypeDescriptorContext"/> for this call.</param>
+        /// <param name="sourceType">The <see cref="Type"/> being queried for support.</param>
+        /// <returns>
+        /// <see langword="true"/> if the given <paramref name="sourceType"/> can be converted, <see langword="false"/> otherwise.
+        /// </returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
             // We can only handle string.
-            if (sourceType == typeof(string))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return sourceType == typeof(string);
         }
 
-
-        ///<summary>
-        ///TypeConverter method override.
-        ///</summary>
-        ///<param name="context">ITypeDescriptorContext</param>
-        ///<param name="destinationType">Type to convert to</param>
-        ///<returns>true if conversion	is possible</returns>
+        /// <summary>
+        /// Returns whether or not this class can convert to a given <paramref name="destinationType"/>.
+        /// </summary>
+        /// <param name="context">The <see cref="ITypeDescriptorContext"/> for this call.</param>
+        /// <param name="destinationType">The <see cref="Type"/> being queried for support.</param>
+        /// <returns>
+        /// <see langword="true"/> if this class can convert to <paramref name="destinationType"/>, <see langword="false"/> otherwise.
+        /// </returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             // We can convert to an InstanceDescriptor or to a string.
-            if (destinationType == typeof(string))
-            {
-                // When invoked by the serialization engine we can convert to string only for known type
-                if (context != null && context.Instance != null)
-                {
-                    KeyGesture keyGesture = context.Instance as KeyGesture;
-                    if (keyGesture != null)
-                    {
-                        return (ModifierKeysConverter.IsDefinedModifierKeys(keyGesture.Modifiers)
-                                && IsDefinedKey(keyGesture.Key));
-                    }
-                }
-            }
-            return false;
+            if (destinationType != typeof(string))
+                return false;
+
+            // When invoked by the serialization engine we can convert to string only for known type
+            if (context?.Instance is not KeyGesture keyGesture)
+                return false;
+
+            return ModifierKeysConverter.IsDefinedModifierKeys(keyGesture.Modifiers) && IsDefinedKey(keyGesture.Key);
         }
 
         /// <summary>
-        /// ConvertFrom()
+        /// Converts <paramref name="source"/> of <see cref="string"/> type to its <see cref="KeyGesture"/> represensation.
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="culture"></param>
-        /// <param name="source"></param>
-        /// <returns></returns>
+        /// <param name="context">This parameter is ignored during the call.</param>
+        /// <param name="culture">This parameter is ignored during the call.</param>
+        /// <param name="source">The object to convert to a <see cref="KeyGesture"/>.</param>
+        /// <returns>
+        /// A new instance of <see cref="KeyGesture"/> class representing the data contained in <paramref name="source"/>.
+        /// </returns>
+        /// <exception cref="NotSupportedException">Thrown in case the <paramref name="source"/> was not a <see cref="string"/>.</exception>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
         {
-            if (source != null && source is string)
+            if (source is not string sourceString)
+                throw GetConvertFromException(source);
+
+            ReadOnlySpan<char> trimmedSource = sourceString.AsSpan().Trim();
+            if (trimmedSource.IsEmpty)
+                return new KeyGesture(Key.None);
+
+            ReadOnlySpan<char> keyToken;
+            ReadOnlySpan<char> modifiersToken;
+            string displayString;
+
+            // Break apart display string
+            int index = trimmedSource.IndexOf(',');
+            if (index >= 0)
             {
-                string fullName = ((string)source).Trim();
-                if (fullName.Length == 0)
-                    return new KeyGesture(Key.None);
-
-                string keyToken;
-                string modifiersToken;
-                string displayString;
-
-                // break apart display string
-                int index = fullName.IndexOf(DISPLAYSTRING_SEPARATOR);
-                if (index >= 0)
-                {
-                    displayString = fullName.Substring(index + 1).Trim();
-                    fullName      = fullName.Substring(0, index).Trim();
-                }
-                else
-                {
-                    displayString = String.Empty;
-                }
-
-                // break apart key and modifiers
-                index = fullName.LastIndexOf(MODIFIERS_DELIMITER);
-                if (index >= 0)
-                {   // modifiers exists
-                    modifiersToken = fullName.Substring(0, index);
-                    keyToken       = fullName.Substring(index + 1);
-                }
-                else
-                {
-                    modifiersToken = String.Empty;
-                    keyToken       = fullName;
-                }
-
-                ModifierKeys modifiers = ModifierKeys.None;
-                object resultkey = keyConverter.ConvertFrom(context, culture, keyToken);
-                if (resultkey != null)
-                {
-                    object temp = modifierKeysConverter.ConvertFrom(context, culture, modifiersToken);
-                    if (temp != null)
-                    {
-                        modifiers = (ModifierKeys)temp;
-                    }
-                    return new KeyGesture((Key)resultkey, modifiers, displayString);
-                }
+                displayString = trimmedSource.Slice(index + 1).Trim().ToString();
+                trimmedSource = trimmedSource.Slice(0, index).Trim();
             }
-            throw GetConvertFromException(source);
+            else
+            {
+                displayString = string.Empty;
+            }
+
+            // Break apart key and modifiers
+            index = trimmedSource.LastIndexOf('+');
+            if (index >= 0)
+            {
+                modifiersToken = trimmedSource.Slice(0, index);
+                keyToken = trimmedSource.Slice(index + 1).Trim();
+            }
+            else
+            {
+                modifiersToken = ReadOnlySpan<char>.Empty;
+                keyToken = trimmedSource;
+            }
+
+            return new KeyGesture(KeyConverter.GetKeyFromString(keyToken), ModifierKeysConverter.ConvertFromImpl(modifiersToken), displayString);
         }
 
         /// <summary>
-        /// ConvertTo()
+        /// Attempt to convert a <see cref="KeyGesture"/> class to the <paramref name="destinationType"/>.
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="culture"></param>
-        /// <param name="value"></param>
-        /// <param name="destinationType"></param>
-        /// <returns></returns>
+        /// <param name="context">This parameter is ignored during the call.</param>
+        /// <param name="culture">This parameter is ignored during the call.</param>
+        /// <param name="value">The object to convert to a <paramref name="destinationType"/>.</param>
+        /// <param name="destinationType">The <see cref="Type"/> to convert <paramref name="value"/> to.</param>
+        /// <returns>
+        /// The <paramref name="value"/> formatted to its <see cref="string"/> representation.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown in case <paramref name="destinationType"/> was <see langword="null"/>.</exception>
+        /// <exception cref="NotSupportedException">
+        /// Thrown in case the <paramref name="destinationType"/> was not a <see cref="string"/>
+        /// or <paramref name="value"/> was not a <see cref="KeyGesture"/>.
+        /// </exception>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (destinationType == typeof(string))
-            {
-                if (value != null)
-                {
-                    KeyGesture keyGesture = value as KeyGesture;
-                    if (keyGesture != null)
-                    {
-                        if (keyGesture.Key == Key.None)
-                            return String.Empty;
+            if (destinationType != typeof(string))
+                throw GetConvertToException(value, destinationType);
 
-                        string strBinding = "" ;
-                        string strKey = (string)keyConverter.ConvertTo(context, culture, keyGesture.Key, destinationType) as string;
-                        if (strKey != String.Empty)
-                        {
-                            strBinding += modifierKeysConverter.ConvertTo(context, culture, keyGesture.Modifiers, destinationType) as string;
-                            if (strBinding != String.Empty)
-                            {
-                                strBinding += MODIFIERS_DELIMITER;
-                            }
-                            strBinding += strKey;
+            // Following checks are here to match the previous behavior
+            if (value is null)
+                return string.Empty;
 
-                            if (!String.IsNullOrEmpty(keyGesture.DisplayString))
-                            {
-                                strBinding += DISPLAYSTRING_SEPARATOR + keyGesture.DisplayString;
-                            }
-                        }
-                        return strBinding;
-                    }
-                }
-                else
-                {
-                    return String.Empty;
-                }
-            }
-            throw GetConvertToException(value,destinationType);
+            if (value is not KeyGesture keyGesture)
+                throw GetConvertToException(value, destinationType);
+
+            // If the key is None, nothing else matters
+            if (keyGesture.Key is Key.None)
+                return string.Empty;
+
+            // You will only get string.Empty from KeyConverter for Key.None and we've checked that above
+            string strKey = (string)s_keyConverter.ConvertTo(context, culture, keyGesture.Key, destinationType);
+
+            // No modifiers, just binding (possibly with with display string) -> "F5,Refresh"
+            if (keyGesture.Modifiers is ModifierKeys.None)
+                return string.IsNullOrEmpty(keyGesture.DisplayString) ? strKey : $"{strKey},{keyGesture.DisplayString}";
+
+            ReadOnlySpan<char> modifierSpan = ModifierKeysConverter.ConvertMultipleModifiers(keyGesture.Modifiers, stackalloc char[22]);
+
+            // Append display string if there's any, like "Ctrl+A,Description"
+            if (!string.IsNullOrEmpty(keyGesture.DisplayString))
+                return string.Create(CultureInfo.InvariantCulture, stackalloc char[168], $"{modifierSpan}+{strKey},{keyGesture.DisplayString}");
+
+            // We just put together modifiers and key, like "Ctrl+A"
+            return string.Create(CultureInfo.InvariantCulture, stackalloc char[50], $"{modifierSpan}+{strKey}");
         }
 
-        // Check for Valid enum, as any int can be casted to the enum.
+        /// <summary>
+        /// Helper function similar to <see cref="Enum.IsDefined{Key}(Key)"/>, just lighter and faster.
+        /// </summary>
+        /// <param name="key">The value to test against.</param>
+        /// <returns><see langword="true"/> if <paramref name="key"/> falls in enumeration range, <see langword="false"/> otherwise.</returns>
         internal static bool IsDefinedKey(Key key)
         {
-            return (key >= Key.None && key <= Key.OemClear);
+            return key >= Key.None && key <= Key.OemClear;
         }
-
-        private static KeyConverter keyConverter = new KeyConverter();
-        private static ModifierKeysConverter modifierKeysConverter = new ModifierKeysConverter();
     }
 }
 

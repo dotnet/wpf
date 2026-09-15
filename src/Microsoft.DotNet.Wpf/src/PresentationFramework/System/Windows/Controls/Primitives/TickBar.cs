@@ -429,11 +429,11 @@ namespace System.Windows.Controls.Primitives
             Pen pen = new Pen(Fill, 1.0d);
 
             bool snapsToDevicePixels = SnapsToDevicePixels;
-            DoubleCollection xLines = snapsToDevicePixels ? new DoubleCollection() : null;
-            DoubleCollection yLines = snapsToDevicePixels ? new DoubleCollection() : null;
+            DoubleCollection xLines = snapsToDevicePixels ? new DoubleCollection(4) : null;
+            DoubleCollection yLines = snapsToDevicePixels ? new DoubleCollection(6) : null;
 
             // Is it Vertical?
-            if ((Placement == TickBarPlacement.Left) || (Placement == TickBarPlacement.Right))
+            if (Placement is TickBarPlacement.Left or TickBarPlacement.Right)
             {
                 // Reduce tick interval if it is more than would be visible on the screen
                 double interval = TickFrequency;

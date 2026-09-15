@@ -176,7 +176,10 @@ ThunkStartDocPrinter(
         InternalPrintSystemException::ThrowIfNotCOMSuccess(hr);
     }
 
+#pragma warning ( push )
+#pragma warning ( disable:4995 )
     xpsPrintJob = (IXpsPrintJob *)tempJob;
+#pragma warning ( pop )
     spoolerStream = gcnew XpsPrintJobStream((IXpsPrintJobStream *)tempDocStream, tempCompletedEvent, false, true);
 
     if(printTicket != nullptr)
@@ -188,7 +191,10 @@ ThunkStartDocPrinter(
     }
 
     // Get the job ID, which may or may not be available.
+#pragma warning ( push )
+#pragma warning ( disable:4995 )
     XPS_JOB_STATUS status = {0};
+#pragma warning ( pop )
     hr = xpsPrintJob->GetJobStatus(&status);
     InternalPrintSystemException::ThrowIfNotCOMSuccess(hr);
 
@@ -316,7 +322,10 @@ get(
 {
     if(xpsPrintJob != NULL && jobIdentifier != 0)
     {
+#pragma warning ( push )
+#pragma warning ( disable:4995 )
         XPS_JOB_STATUS status = {0};
+#pragma warning ( pop )
         ::HRESULT hr = xpsPrintJob->GetJobStatus(&status);
 
         InternalPrintSystemException::ThrowIfNotCOMSuccess(hr);
@@ -347,5 +356,4 @@ ThunkReportJobProgress(
 {
     return 0;
 }
-
 

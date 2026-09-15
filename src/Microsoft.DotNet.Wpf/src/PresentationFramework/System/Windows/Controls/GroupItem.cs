@@ -25,7 +25,7 @@ namespace System.Windows.Controls
             _dType = DependencyObjectType.FromSystemTypeInternal(typeof(GroupItem));
 
             // GroupItems should not be focusable by default
-            FocusableProperty.OverrideMetadata(typeof(GroupItem), new FrameworkPropertyMetadata(false));
+            FocusableProperty.OverrideMetadata(typeof(GroupItem), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
             AutomationProperties.IsOffscreenBehaviorProperty.OverrideMetadata(typeof(GroupItem), new FrameworkPropertyMetadata(IsOffscreenBehavior.FromClip));
         }
 

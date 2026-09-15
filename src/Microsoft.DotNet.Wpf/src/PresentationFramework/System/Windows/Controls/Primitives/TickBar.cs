@@ -1,15 +1,10 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-
 using System.ComponentModel;
 using MS.Internal;
 using System.Windows.Data;
 using System.Windows.Media;
-using MS.Internal.KnownBoxes;
-
-
-// For typeconverter
 
 namespace System.Windows.Controls.Primitives
 {
@@ -56,7 +51,7 @@ namespace System.Windows.Controls.Primitives
 
         static TickBar()
         {
-            SnapsToDevicePixelsProperty.OverrideMetadata(typeof(TickBar), new FrameworkPropertyMetadata(true));
+            SnapsToDevicePixelsProperty.OverrideMetadata(typeof(TickBar), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
         }
 
         /// <summary>

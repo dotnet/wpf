@@ -19,7 +19,6 @@ using System.Windows.Threading;
 using MS.Internal;                          // Invariant, DoubleUtil
 using MS.Internal.Commands;                 // CommandHelpers
 using MS.Internal.Documents;                // FindToolBar
-using MS.Internal.KnownBoxes;               // BooleanBoxes
 using MS.Internal.AppModel;                 // IJournalState
 
 namespace System.Windows.Controls
@@ -299,7 +298,7 @@ namespace System.Windows.Controls
                         "CanIncreaseZoom",
                         typeof(bool),
                         typeof(FlowDocumentPageViewer),
-                        new FrameworkPropertyMetadata(true));
+                        new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
         /// <see cref="CanIncreaseZoom"/>
@@ -314,7 +313,7 @@ namespace System.Windows.Controls
                         "CanDecreaseZoom",
                         typeof(bool),
                         typeof(FlowDocumentPageViewer),
-                        new FrameworkPropertyMetadata(true));
+                        new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
         /// <see cref="CanDecreaseZoom"/>

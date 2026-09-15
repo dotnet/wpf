@@ -2502,26 +2502,6 @@
         <target state="translated">调用线程无法访问此对象，因为另一个线程拥有该对象。</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_ApartmentState">
-        <source>This operation requires the thread's apartment state to be '{0}'.</source>
-        <target state="translated">此操作要求线程的单元状态为“{0}”。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Verify_AreNotEqual">
-        <source>The argument can not be equal to '{0}'.</source>
-        <target state="translated">参数不能等于“{0}”。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Verify_FileExists">
-        <source>No file exists at '{0}'.</source>
-        <target state="translated">“{0}”处没有文件。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="Verify_NeitherNullNorEmpty">
-        <source>The argument can neither be null nor empty.</source>
-        <target state="translated">参数不能为 null 或为空。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="VersionNumberComponentNegative">
         <source>Major and minor version number components cannot be negative.</source>
         <target state="translated">主要和次要版本号组件不能为负。</target>

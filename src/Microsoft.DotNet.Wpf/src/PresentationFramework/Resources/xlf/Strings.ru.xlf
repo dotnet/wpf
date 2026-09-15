@@ -3418,16 +3418,6 @@ Do you want to replace it?</source>
         <target state="translated">Невозможно задать UpdateSourceTrigger для внутренней привязки Binding элемента MultiBinding. Для UpdateSourceTrigger допускается только значение по умолчанию Immediate.</target>
         <note />
       </trans-unit>
-      <trans-unit id="NonCLSException">
-        <source>Unknown exception during '{0}'.</source>
-        <target state="translated">Неизвестное исключение во время "{0}".</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="NonClsActivationException">
-        <source>Nonstandard exception occurred while activating the application.</source>
-        <target state="translated">При активации приложения возникло нестандартное исключение.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NonPackAppAbsoluteUriNotAllowed">
         <source>Unsupported URI syntax. Method expects a relative URI or a pack://application:,,,/ form of absolute URI.</source>
         <target state="translated">Неподдерживаемый синтаксис URI. Метод ожидает относительный URI или абсолютный URI в формате pack://application:,,,/ .</target>
@@ -3506,16 +3496,6 @@ Do you want to replace it?</source>
       <trans-unit id="ObjectDataProviderHasNoSource">
         <source>ObjectDataProvider needs either an ObjectType or ObjectInstance.</source>
         <target state="translated">Для ObjectDataProvider необходим ObjectType или ObjectInstance.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ObjectDataProviderNonCLSException">
-        <source>Unknown exception while creating type '{0}' for ObjectDataProvider.</source>
-        <target state="translated">Неизвестное исключение при создании типа "{0}" для ObjectDataProvider.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ObjectDataProviderNonCLSExceptionInvoke">
-        <source>Unknown exception while invoking method '{0}' on type '{1}' for ObjectDataProvider.</source>
-        <target state="translated">Неизвестное исключение при вызове метода "{0}" для типа "{1}" для ObjectDataProvider.</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectDataProviderParameterCollectionIsNotInUse">

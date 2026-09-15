@@ -3418,16 +3418,6 @@ Do you want to replace it?</source>
         <target state="translated">MultiBinding의 내부 Binding에 UpdateSourceTrigger를 설정할 수 없습니다. 직접 관련된 기본 UpdateSourceTrigger만 사용할 수 있습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="NonCLSException">
-        <source>Unknown exception during '{0}'.</source>
-        <target state="translated">'{0}' 동안 알 수 없는 예외가 발생했습니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="NonClsActivationException">
-        <source>Nonstandard exception occurred while activating the application.</source>
-        <target state="translated">애플리케이션을 활성화하는 동안 비표준 예외가 발생했습니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NonPackAppAbsoluteUriNotAllowed">
         <source>Unsupported URI syntax. Method expects a relative URI or a pack://application:,,,/ form of absolute URI.</source>
         <target state="translated">지원되지 않는 URI 구문입니다. 메서드에 상대 URI 또는 pack://application:,,,/ 형식의 절대 URI가 필요합니다.</target>
@@ -3506,16 +3496,6 @@ Do you want to replace it?</source>
       <trans-unit id="ObjectDataProviderHasNoSource">
         <source>ObjectDataProvider needs either an ObjectType or ObjectInstance.</source>
         <target state="translated">ObjectDataProvider에 ObjectType 또는 ObjectInstance가 있어야 합니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ObjectDataProviderNonCLSException">
-        <source>Unknown exception while creating type '{0}' for ObjectDataProvider.</source>
-        <target state="translated">ObjectDataProvider에 대한 '{0}' 형식을 만드는 동안 알 수 없는 예외가 발생했습니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ObjectDataProviderNonCLSExceptionInvoke">
-        <source>Unknown exception while invoking method '{0}' on type '{1}' for ObjectDataProvider.</source>
-        <target state="translated">ObjectDataProvider에 대한 '{1}' 형식에 '{0}' 메서드를 호출하는 동안 알 수 없는 예외가 발생했습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectDataProviderParameterCollectionIsNotInUse">

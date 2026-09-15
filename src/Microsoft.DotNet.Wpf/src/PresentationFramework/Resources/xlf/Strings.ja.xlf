@@ -3418,16 +3418,6 @@ Do you want to replace it?</source>
         <target state="translated">MultiBinding の内部 Binding で UpdateSourceTrigger を設定できません。既定の Immediate UpdateSourceTrigger のみが有効です。</target>
         <note />
       </trans-unit>
-      <trans-unit id="NonCLSException">
-        <source>Unknown exception during '{0}'.</source>
-        <target state="translated">'{0}' 中の不明な例外です。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="NonClsActivationException">
-        <source>Nonstandard exception occurred while activating the application.</source>
-        <target state="translated">アプリケーションのアクティブ化中に、標準でない例外が発生しました。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NonPackAppAbsoluteUriNotAllowed">
         <source>Unsupported URI syntax. Method expects a relative URI or a pack://application:,,,/ form of absolute URI.</source>
         <target state="translated">サポートされていない URI 構文です。メソッドでは、相対 URI または絶対 URI の pack://application:,,,/ 形式が必要です。</target>
@@ -3506,16 +3496,6 @@ Do you want to replace it?</source>
       <trans-unit id="ObjectDataProviderHasNoSource">
         <source>ObjectDataProvider needs either an ObjectType or ObjectInstance.</source>
         <target state="translated">ObjectDataProvider には、ObjectType または ObjectInstance が必要です。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ObjectDataProviderNonCLSException">
-        <source>Unknown exception while creating type '{0}' for ObjectDataProvider.</source>
-        <target state="translated">ObjectDataProvider で型 '{0}' を作成中に、不明な例外が発生しました。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ObjectDataProviderNonCLSExceptionInvoke">
-        <source>Unknown exception while invoking method '{0}' on type '{1}' for ObjectDataProvider.</source>
-        <target state="translated">ObjectDataProvider で型 '{1}' のメソッド '{0}' を起動中に、不明な例外が発生しました。</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectDataProviderParameterCollectionIsNotInUse">

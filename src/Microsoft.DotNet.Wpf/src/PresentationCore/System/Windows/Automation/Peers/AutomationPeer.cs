@@ -56,6 +56,8 @@ namespace System.Windows.Automation.Peers
         VirtualizedItem,
         ///
         SynchronizedInput,
+        ///
+        Transform2
     }
 
     ///
@@ -2379,6 +2381,7 @@ namespace System.Windows.Automation.Peers
             s_patternInfo[TableItemPatternIdentifiers.Pattern.Id]       = new PatternInfo(TableItemPatternIdentifiers.Pattern.Id,       new WrapObject(TableItemProviderWrapper.Wrap),          PatternInterface.TableItem);
             s_patternInfo[TogglePatternIdentifiers.Pattern.Id]          = new PatternInfo(TogglePatternIdentifiers.Pattern.Id,          new WrapObject(ToggleProviderWrapper.Wrap),             PatternInterface.Toggle);
             s_patternInfo[TransformPatternIdentifiers.Pattern.Id]       = new PatternInfo(TransformPatternIdentifiers.Pattern.Id,       new WrapObject(TransformProviderWrapper.Wrap),          PatternInterface.Transform);
+            s_patternInfo[TransformPattern2Identifiers.Pattern.Id]       = new PatternInfo(TransformPattern2Identifiers.Pattern.Id,       new WrapObject(TransformProvider2Wrapper.Wrap),          PatternInterface.Transform2);
             s_patternInfo[TextPatternIdentifiers.Pattern.Id]            = new PatternInfo(TextPatternIdentifiers.Pattern.Id,            new WrapObject(TextProviderWrapper.Wrap),               PatternInterface.Text);
 
             // To avoid the worst situation on legacy systems which may not have new unmanaged core. with this change with old unmanaged core

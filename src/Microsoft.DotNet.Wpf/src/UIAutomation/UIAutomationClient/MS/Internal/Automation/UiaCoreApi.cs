@@ -809,6 +809,16 @@ namespace MS.Internal.Automation
             CheckError(RawTransformPattern_Rotate(hobj, degrees));
         }
 
+        internal static void TransformPattern2_Zoom(SafePatternHandle hobj, double zoomValue)
+        {
+            CheckError(RawTransformPattern2_Zoom(hobj, zoomValue));
+        }
+
+        internal static void TransformPattern2_ZoomByUnit(SafePatternHandle hobj, ZoomUnit zoomUnit)
+        {
+            CheckError(RawTransformPattern2_ZoomByUnit(hobj, zoomUnit));
+        }
+
         internal static void ValuePattern_SetValue(SafePatternHandle hobj, string pVal)
         {
             CheckError(RawValuePattern_SetValue(hobj, pVal));
@@ -1336,6 +1346,12 @@ namespace MS.Internal.Automation
 
         [DllImport(DllImport.UIAutomationCore, EntryPoint = "TransformPattern_Rotate", CharSet = CharSet.Unicode)]
         private static extern int RawTransformPattern_Rotate(SafePatternHandle hobj, double degrees);
+
+        [DllImport(DllImport.UIAutomationCore, EntryPoint = "TransformPattern2_Zoom", CharSet = CharSet.Unicode)]
+        private static extern int RawTransformPattern2_Zoom(SafePatternHandle hobj, double degrees); // TODO: Needs to use Microsoft UI Automation Component Object Model (COM) interfaces instead.
+
+        [DllImport(DllImport.UIAutomationCore, EntryPoint = "TransformPattern2_ZoomByUnit", CharSet = CharSet.Unicode)]
+        private static extern int RawTransformPattern2_ZoomByUnit(SafePatternHandle hobj, ZoomUnit unit); // TODO: Needs to use Microsoft UI Automation Component Object Model (COM) interfaces instead.
 
         [DllImport(DllImport.UIAutomationCore, EntryPoint = "ValuePattern_SetValue", CharSet = CharSet.Unicode)]
         private static extern int RawValuePattern_SetValue(SafePatternHandle hobj, [MarshalAs(UnmanagedType.LPWStr)] string pVal);

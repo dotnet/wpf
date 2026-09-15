@@ -27,7 +27,6 @@ namespace System.Windows.Media
     /// <summary>
     /// A collection of TextEffect objects.
     /// </summary>
-
     public sealed partial class TextEffectCollection : Animatable, IList, IList<TextEffect>
     {
         //------------------------------------------------------

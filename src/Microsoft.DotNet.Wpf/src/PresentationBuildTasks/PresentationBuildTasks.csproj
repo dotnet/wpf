@@ -79,9 +79,6 @@
     <Compile Include="$(WpfSharedDir)\MS\Internal\ReflectionUtils.cs">
       <Link>Shared\MS\Internal\ReflectionUtils.cs</Link>
     </Compile>
-    <Compile Include="$(WpfSharedDir)\MS\Internal\SecurityHelper.cs">
-      <Link>Shared\MS\Internal\SecurityHelper.cs</Link>
-    </Compile>
     <Compile Include="$(WpfSharedDir)\MS\Internal\TokenizerHelper.cs">
       <Link>Shared\MS\Internal\TokenizerHelper.cs</Link>
     </Compile>

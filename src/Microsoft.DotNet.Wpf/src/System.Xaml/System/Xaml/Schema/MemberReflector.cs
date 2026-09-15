@@ -6,6 +6,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Reflection;
+using System.Threading;
 using System.Windows.Markup;
 
 namespace System.Xaml.Schema
@@ -80,7 +81,7 @@ namespace System.Xaml.Schema
             {
                 if (s_UnknownReflector is null)
                 {
-                    s_UnknownReflector = new MemberReflector
+                    MemberReflector unknownReflector = new MemberReflector
                     {
                         _designerSerializationVisibility = DesignerSerializationVisibility.Visible,
                         _memberBits = (int)BoolMemberBits.Default |
@@ -88,15 +89,17 @@ namespace System.Xaml.Schema
                     };
 
                     // Explicitly set all the nullable references so that IsSet is true
-                    s_UnknownReflector._deferringLoader.Value = null;
-                    s_UnknownReflector._getter.Value = null;
-                    s_UnknownReflector._setter.Value = null;
-                    s_UnknownReflector._typeConverter.Value = null;
-                    s_UnknownReflector._valueSerializer.Value = null;
+                    unknownReflector._deferringLoader.Value = null;
+                    unknownReflector._getter.Value = null;
+                    unknownReflector._setter.Value = null;
+                    unknownReflector._typeConverter.Value = null;
+                    unknownReflector._valueSerializer.Value = null;
 
-                    s_UnknownReflector.DependsOn = ReadOnlyCollection<XamlMember>.Empty;
-                    s_UnknownReflector.Invoker = XamlMemberInvoker.UnknownInvoker;
-                    s_UnknownReflector.Type = XamlLanguage.Object;
+                    unknownReflector.DependsOn = ReadOnlyCollection<XamlMember>.Empty;
+                    unknownReflector.Invoker = XamlMemberInvoker.UnknownInvoker;
+                    unknownReflector.Type = XamlLanguage.Object;
+
+                    Interlocked.CompareExchange(ref s_UnknownReflector, unknownReflector, null);
                 }
 
                 return s_UnknownReflector;

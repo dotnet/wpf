@@ -1,189 +1,136 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-//
-// Description: CommitManager provides global services for committing dirty bindings.
-//
-
-using System.Windows;
-using System.Windows.Data;
 using System.Windows.Media;
+using System.Windows.Data;
+using System.Windows;
 
-namespace MS.Internal.Data
+namespace MS.Internal.Data;
+
+/// <summary>
+/// <see cref="CommitManager"/> provides global services for committing dirty bindings.
+/// </summary>
+internal sealed class CommitManager
 {
-    internal class CommitManager
+    private readonly HashSet<BindingGroup> _bindingGroups = new();
+    private readonly HashSet<BindingExpressionBase> _bindings = new();
+
+    private static readonly List<BindingGroup> s_emptyBindingGroupList = new();
+    private static readonly List<BindingExpressionBase> s_emptyBindingList = new();
+
+    internal bool IsEmpty
     {
-        #region Internal Methods
+        get => _bindings.Count == 0 && _bindingGroups.Count == 0;
+    }
 
-        internal bool IsEmpty
+    internal void AddBindingGroup(BindingGroup bindingGroup)
+    {
+        _bindingGroups.Add(bindingGroup);
+    }
+
+    internal void RemoveBindingGroup(BindingGroup bindingGroup)
+    {
+        _bindingGroups.Remove(bindingGroup);
+    }
+
+    internal void AddBinding(BindingExpressionBase binding)
+    {
+        _bindings.Add(binding);
+    }
+
+    internal void RemoveBinding(BindingExpressionBase binding)
+    {
+        _bindings.Remove(binding);
+    }
+
+    internal List<BindingGroup> GetBindingGroupsInScope(DependencyObject element)
+    {
+        // iterate over a copy of the full list - callouts can change the original list
+        BindingGroup[] fullList = new BindingGroup[_bindingGroups.Count];
+        _bindingGroups.CopyTo(fullList);
+
+        List<BindingGroup> list = s_emptyBindingGroupList;
+
+        foreach (BindingGroup bindingGroup in fullList)
         {
-            get { return _bindings.Count == 0 && _bindingGroups.Count == 0; }
-        }
-
-        internal void AddBindingGroup(BindingGroup bindingGroup)
-        {
-            _bindingGroups.Add(bindingGroup);
-        }
-
-        internal void RemoveBindingGroup(BindingGroup bindingGroup)
-        {
-            _bindingGroups.Remove(bindingGroup);
-        }
-
-        internal void AddBinding(BindingExpressionBase binding)
-        {
-            _bindings.Add(binding);
-        }
-
-        internal void RemoveBinding(BindingExpressionBase binding)
-        {
-            _bindings.Remove(binding);
-        }
-
-        internal List<BindingGroup> GetBindingGroupsInScope(DependencyObject element)
-        {
-            // iterate over a copy of the full list - callouts can
-            // change the original list
-            List<BindingGroup> fullList = _bindingGroups.ToList();
-            List<BindingGroup> list = EmptyBindingGroupList;
-
-            foreach (BindingGroup bindingGroup in fullList)
+            DependencyObject owner = bindingGroup.Owner;
+            if (owner is not null && IsInScope(element, owner))
             {
-                DependencyObject owner = bindingGroup.Owner;
-                if (owner != null && IsInScope(element, owner))
+                if (list == s_emptyBindingGroupList)
                 {
-                    if (list == EmptyBindingGroupList)
-                    {
-                        list = new List<BindingGroup>();
-                    }
-
-                    list.Add(bindingGroup);
+                    list = new List<BindingGroup>();
                 }
-            }
 
-            return list;
+                list.Add(bindingGroup);
+            }
         }
 
-        internal List<BindingExpressionBase> GetBindingsInScope(DependencyObject element)
+        return list;
+    }
+
+    internal List<BindingExpressionBase> GetBindingsInScope(DependencyObject element)
+    {
+        // iterate over a copy of the full list - calling TargetElement can change the original list
+        BindingExpressionBase[] fullList = new BindingExpressionBase[_bindings.Count];
+        _bindings.CopyTo(fullList);
+
+        List<BindingExpressionBase> list = s_emptyBindingList;
+
+        foreach (BindingExpressionBase binding in fullList)
         {
-            // iterate over a copy of the full list - calling TargetElement can
-            // change the original list
-            List<BindingExpressionBase> fullList = _bindings.ToList();
-            List<BindingExpressionBase> list = EmptyBindingList;
-
-            foreach (BindingExpressionBase binding in fullList)
+            DependencyObject owner = binding.TargetElement;
+            if (owner is not null && binding.IsEligibleForCommit && IsInScope(element, owner))
             {
-                DependencyObject owner = binding.TargetElement;
-                if (owner != null &&
-                    binding.IsEligibleForCommit &&
-                    IsInScope(element, owner))
+                if (list == s_emptyBindingList)
                 {
-                    if (list == EmptyBindingList)
-                    {
-                        list = new List<BindingExpressionBase>();
-                    }
-
-                    list.Add(binding);
+                    list = new List<BindingExpressionBase>();
                 }
-            }
 
-            return list;
+                list.Add(binding);
+            }
         }
 
-        // remove stale entries
-        internal bool Purge()
+        return list;
+    }
+
+    // remove stale entries
+    internal bool Purge()
+    {
+        int count = _bindings.Count;
+        if (count > 0)
         {
-            bool foundDirt = false;
+            BindingExpressionBase[] list = new BindingExpressionBase[_bindings.Count];
+            _bindings.CopyTo(list);
 
-            int count = _bindings.Count;
-            if (count > 0)
+            foreach (BindingExpressionBase binding in list)
             {
-                List<BindingExpressionBase> list = _bindings.ToList();
-                foreach (BindingExpressionBase binding in list)
-                {
-                    // fetching TargetElement may detach the binding, removing it from _bindings
-                    DependencyObject owner = binding.TargetElement;
-                }
+                // fetching TargetElement may detach the binding, removing it from _bindings
+                _ = binding.TargetElement;
             }
-            foundDirt = foundDirt || (_bindings.Count < count);
-
-            count = _bindingGroups.Count;
-            if (count > 0)
-            {
-                List<BindingGroup> list = _bindingGroups.ToList();
-                foreach (BindingGroup bindingGroup in list)
-                {
-                    // fetching Owner may detach the binding group, removing it from _bindingGroups
-                    DependencyObject owner = bindingGroup.Owner;
-                }
-            }
-            foundDirt = foundDirt || (_bindingGroups.Count < count);
-
-            return foundDirt;
         }
 
-        #endregion Internal Methods
+        bool foundDirt = _bindings.Count < count;
 
-        #region Private Methods
-
-        // return true if element is a descendant of ancestor
-        private bool IsInScope(DependencyObject ancestor, DependencyObject element)
+        count = _bindingGroups.Count;
+        if (count > 0)
         {
-            bool result = (ancestor == null) || VisualTreeHelper.IsAncestorOf(ancestor, element);
-            return result;
-        }
+            BindingGroup[] list = new BindingGroup[_bindingGroups.Count];
+            _bindingGroups.CopyTo(list);
 
-        #endregion Private Methods
-
-        #region Private Data
-
-        private Set<BindingGroup> _bindingGroups = new Set<BindingGroup>();
-        private Set<BindingExpressionBase> _bindings = new Set<BindingExpressionBase>();
-        
-        private static readonly List<BindingGroup> EmptyBindingGroupList = new List<BindingGroup>();
-        private static readonly List<BindingExpressionBase> EmptyBindingList = new List<BindingExpressionBase>();
-
-        #endregion Private Data
-
-        #region Private types
-
-        private class Set<T> : Dictionary<T, object>, IEnumerable<T>
-        {
-            public Set()
-                : base()
+            foreach (BindingGroup bindingGroup in list)
             {
-            }
-
-            public Set(IDictionary<T, object> other)
-                : base(other)
-            {
-            }
-
-            public Set(IEqualityComparer<T> comparer)
-                : base(comparer)
-            {
-            }
-
-            public void Add(T item)
-            {
-                if (!ContainsKey(item))
-                {
-                    Add(item, null);
-                }
-            }
-
-            IEnumerator<T> IEnumerable<T>.GetEnumerator()
-            {
-                return Keys.GetEnumerator();
-            }
-
-            public List<T> ToList()
-            {
-                return new List<T>(Keys);
+                // fetching Owner may detach the binding group, removing it from _bindingGroups
+                _ = bindingGroup.Owner;
             }
         }
 
-        #endregion Private types
+        return foundDirt || (_bindingGroups.Count < count);
+    }
+
+    // return true if element is a descendant of ancestor
+    private static bool IsInScope(DependencyObject ancestor, DependencyObject element)
+    {
+        return ancestor is null || VisualTreeHelper.IsAncestorOf(ancestor, element);
     }
 }
 

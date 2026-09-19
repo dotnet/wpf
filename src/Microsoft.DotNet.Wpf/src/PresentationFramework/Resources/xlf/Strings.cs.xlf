@@ -3418,16 +3418,6 @@ Chcete ho nahradit?</target>
         <target state="translated">Nelze nastavit UpdateSourceTrigger ve vnitřním Binding funkce MultiBinding. Platný je pouze výchozí Immediate UpdateSourceTrigger.</target>
         <note />
       </trans-unit>
-      <trans-unit id="NonCLSException">
-        <source>Unknown exception during '{0}'.</source>
-        <target state="translated">Neznámá výjimka během {0}.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="NonClsActivationException">
-        <source>Nonstandard exception occurred while activating the application.</source>
-        <target state="translated">Při aktivaci aplikace se vyskytla nestandardní výjimka.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NonPackAppAbsoluteUriNotAllowed">
         <source>Unsupported URI syntax. Method expects a relative URI or a pack://application:,,,/ form of absolute URI.</source>
         <target state="translated">Nepodporovaná metoda syntaxe identifikátoru URI. Metoda očekává relativní identifikátor URI nebo balík://application:,,,/ jako formu absolutního identifikátoru URI.</target>
@@ -3506,16 +3496,6 @@ Chcete ho nahradit?</target>
       <trans-unit id="ObjectDataProviderHasNoSource">
         <source>ObjectDataProvider needs either an ObjectType or ObjectInstance.</source>
         <target state="translated">ObjectDataProvider potřebuje buď ObjectType, nebo ObjectInstance.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ObjectDataProviderNonCLSException">
-        <source>Unknown exception while creating type '{0}' for ObjectDataProvider.</source>
-        <target state="translated">Neznámá výjimka pro vytváření typu {0} pro ObjectDataProvider.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ObjectDataProviderNonCLSExceptionInvoke">
-        <source>Unknown exception while invoking method '{0}' on type '{1}' for ObjectDataProvider.</source>
-        <target state="translated">Neznámá výjimka pro vyvolávání metody {0} u typu {1} pro ObjectDataProvider.</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectDataProviderParameterCollectionIsNotInUse">

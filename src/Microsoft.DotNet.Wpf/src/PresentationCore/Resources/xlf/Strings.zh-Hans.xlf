@@ -2402,11 +2402,6 @@
         <target state="translated">下一页</target>
         <note />
       </trans-unit>
-      <trans-unit id="NonCLSException">
-        <source>Text formatting engine encountered a non-CLS exception.</source>
-        <target state="translated">文本格式化引擎遇到非 CLS 异常。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NonPackAppAbsoluteUriNotAllowed">
         <source>Unsupported Uri syntax. Method expects a relative Uri or a pack://application:,,,/ form of absolute Uri.</source>
         <target state="translated">不支持的 URI 语法。方法需要相对 URI 或“pack://application:,,,/”格式的绝对 URI。</target>

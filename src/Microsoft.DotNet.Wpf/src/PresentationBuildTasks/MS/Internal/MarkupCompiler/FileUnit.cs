@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
@@ -43,9 +43,9 @@ namespace MS.Internal
             return _path;
         }
 
-        private string _path;
-        private string _linkAlias;
-        private string _logicalName;
+        private readonly string _path;
+        private readonly string _linkAlias;
+        private readonly string _logicalName;
         
         private static FileUnit _empty = new FileUnit(String.Empty, String.Empty, String.Empty);
     }

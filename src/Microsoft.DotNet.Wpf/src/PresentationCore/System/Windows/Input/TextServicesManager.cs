@@ -231,11 +231,16 @@ namespace System.Windows.Input
                     break;
                 default:
                     wParam = KeyInterop.VirtualKeyFromKey(keyArgs.RealKey);
-                    scancode = 0; 
+                    scancode = keyArgs.ScanCode;
                     break;
             }
 
-            lParam = (int)(((uint)scancode << 16) | 1);
+            lParam = (int)((((uint)scancode & 0xFF) << 16) | 1);
+
+            if (keyArgs.IsExtendedKey)
+            {
+                lParam |= 1 << 24;
+            }
 
             if (keyArgs.RoutedEvent == Keyboard.PreviewKeyDownEvent/*keyArgs.IsDown*/)
             {

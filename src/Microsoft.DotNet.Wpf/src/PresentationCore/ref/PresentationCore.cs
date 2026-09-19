@@ -2471,6 +2471,7 @@ namespace System.Windows.Automation.Peers
         ItemContainer = 18,
         VirtualizedItem = 19,
         SynchronizedInput = 20,
+        Transform2 = 21
     }
     public partial class UIElement3DAutomationPeer : System.Windows.Automation.Peers.AutomationPeer
     {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -119,11 +119,7 @@ namespace System.Windows.Markup.Localizer
         /// </summary>
         protected virtual void OnErrorNotify(BamlLocalizerErrorNotifyEventArgs e)
         {
-            BamlLocalizerErrorNotifyEventHandler handler = ErrorNotify;
-            if (handler != null) 
-            {
-                handler(this, e);
-            }
+            ErrorNotify?.Invoke(this, e);
         }        
 
         //----------------------------------

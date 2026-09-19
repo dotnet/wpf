@@ -70,10 +70,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal void OnTitleChanged(EventArgs e)
         {
-            if (TitleChanged != null)
-            {
-                TitleChanged(this, e);
-            }
+            TitleChanged?.Invoke(this, e);
         }
 
         #endregion

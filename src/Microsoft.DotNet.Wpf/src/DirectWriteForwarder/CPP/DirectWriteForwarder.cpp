@@ -18,7 +18,6 @@
 #include "DWriteWrapper\LocalizedStrings.cpp"
 #include "DWriteWrapper\NativePointerWrapper.cpp"
 
-#include "DWriteWrapper\FontFileEnumerator.cpp"
 #include "DWriteWrapper\FontFileLoader.cpp"
 #include "DWriteWrapper\FontFileStream.cpp"
 

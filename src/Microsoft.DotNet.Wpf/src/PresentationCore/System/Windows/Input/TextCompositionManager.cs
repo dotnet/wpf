@@ -311,12 +311,12 @@ namespace System.Windows.Input
 
             if (composition._InputManager == null)
             {
-                throw new ArgumentException(SR.Format(SR.TextCompositionManager_NoInputManager, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_NoInputManager, nameof(composition)));
             }
 
             if (composition.Stage != TextCompositionStage.None)
             {
-                throw new ArgumentException(SR.Format(SR.TextCompositionManager_TextCompositionHasStarted, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_TextCompositionHasStarted, nameof(composition)));
             }
 
             composition.Stage = TextCompositionStage.Started;
@@ -334,17 +334,17 @@ namespace System.Windows.Input
 
             if (composition._InputManager == null)
             {
-                throw new ArgumentException(SR.Format(SR.TextCompositionManager_NoInputManager, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_NoInputManager, nameof(composition)));
             }
 
             if (composition.Stage == TextCompositionStage.None)
             {
-                throw new ArgumentException(SR.Format(SR.TextCompositionManager_TextCompositionNotStarted, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_TextCompositionNotStarted, nameof(composition)));
             }
 
             if (composition.Stage == TextCompositionStage.Done)
             {
-                throw new ArgumentException(SR.Format(SR.TextCompositionManager_TextCompositionHasDone, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_TextCompositionHasDone, nameof(composition)));
             }
 
             TextCompositionEventArgs textargs = new TextCompositionEventArgs(composition._InputDevice, composition)
@@ -361,17 +361,17 @@ namespace System.Windows.Input
 
             if (composition._InputManager == null)
             {
-                throw new ArgumentException(SR.Format(SR.TextCompositionManager_NoInputManager, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_NoInputManager, nameof(composition)));
             }
 
             if (composition.Stage == TextCompositionStage.None)
             {
-                throw new ArgumentException(SR.Format(SR.TextCompositionManager_TextCompositionNotStarted, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_TextCompositionNotStarted, nameof(composition)));
             }
 
             if (composition.Stage == TextCompositionStage.Done)
             {
-                throw new ArgumentException(SR.Format(SR.TextCompositionManager_TextCompositionHasDone, "composition"));
+                throw new ArgumentException(SR.Format(SR.TextCompositionManager_TextCompositionHasDone, nameof(composition)));
             }
 
             composition.Stage = TextCompositionStage.Done;

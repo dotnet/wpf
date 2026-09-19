@@ -24,7 +24,7 @@ namespace System.Windows.Documents
 {
     namespace MsSpellCheckLib
     {
-        internal class RCW
+        internal static class RCW
         {
             #region WORDLIST_TYPE
 

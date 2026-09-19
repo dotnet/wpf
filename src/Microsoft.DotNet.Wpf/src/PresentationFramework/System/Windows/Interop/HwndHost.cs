@@ -128,16 +128,7 @@ namespace System.Windows.Interop
         /// <param name="e"></param>
         protected override void OnKeyUp(KeyEventArgs e)
         {
-            MSG msg;
-            if (_fTrusted)
-            {
-                msg = ComponentDispatcher.UnsecureCurrentKeyboardMessage;
-            }
-            else
-            {
-                msg = ComponentDispatcher.CurrentKeyboardMessage;
-            }
-
+            MSG msg = ComponentDispatcher.CurrentKeyboardMessage;
             ModifierKeys modifiers = HwndKeyboardInputProvider.GetSystemModifierKeys();
 
             bool handled = ((IKeyboardInputSink)this).TranslateAccelerator(ref msg, modifiers);
@@ -162,17 +153,7 @@ namespace System.Windows.Interop
         /// <param name="e"></param>
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            MSG msg;
-            if (_fTrusted)
-            {
-                msg = ComponentDispatcher.UnsecureCurrentKeyboardMessage;
-            }
-            else
-            {
-                msg = ComponentDispatcher.CurrentKeyboardMessage;
-            }
-
-
+            MSG msg = ComponentDispatcher.CurrentKeyboardMessage;
             ModifierKeys modifiers = HwndKeyboardInputProvider.GetSystemModifierKeys();
 
             bool handled = ((IKeyboardInputSink)this).TranslateAccelerator(ref msg, modifiers);

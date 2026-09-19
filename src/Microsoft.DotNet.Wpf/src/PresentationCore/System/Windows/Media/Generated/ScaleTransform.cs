@@ -363,11 +363,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(ScaleTransform);
             ScaleXProperty =
                   RegisterProperty("ScaleX",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(ScaleTransform),
                                    1.0,
                                    new PropertyChangedCallback(ScaleXPropertyChanged),
                                    null,
@@ -376,7 +375,7 @@ namespace System.Windows.Media
             ScaleYProperty =
                   RegisterProperty("ScaleY",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(ScaleTransform),
                                    1.0,
                                    new PropertyChangedCallback(ScaleYPropertyChanged),
                                    null,
@@ -385,7 +384,7 @@ namespace System.Windows.Media
             CenterXProperty =
                   RegisterProperty("CenterX",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(ScaleTransform),
                                    0.0,
                                    new PropertyChangedCallback(CenterXPropertyChanged),
                                    null,
@@ -394,7 +393,7 @@ namespace System.Windows.Media
             CenterYProperty =
                   RegisterProperty("CenterY",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(ScaleTransform),
                                    0.0,
                                    new PropertyChangedCallback(CenterYPropertyChanged),
                                    null,

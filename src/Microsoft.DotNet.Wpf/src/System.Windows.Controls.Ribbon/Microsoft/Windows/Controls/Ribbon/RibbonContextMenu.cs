@@ -41,14 +41,13 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         static RibbonContextMenu()
         {
-            Type ownerType = typeof(RibbonContextMenu);
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            IsOpenProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsOpenChanged)));
-            EventManager.RegisterClassHandler(ownerType, Mouse.PreviewMouseDownOutsideCapturedElementEvent, new MouseButtonEventHandler(OnClickThroughThunk));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonContextMenu), new FrameworkPropertyMetadata(typeof(RibbonContextMenu)));
+            IsOpenProperty.OverrideMetadata(typeof(RibbonContextMenu), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsOpenChanged)));
+            EventManager.RegisterClassHandler(typeof(RibbonContextMenu), Mouse.PreviewMouseDownOutsideCapturedElementEvent, new MouseButtonEventHandler(OnClickThroughThunk));
 
             ItemsPanelTemplate template = new ItemsPanelTemplate(new FrameworkElementFactory(typeof(RibbonMenuItemsPanel)));
             template.Seal();
-            ItemsPanelProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(template));
+            ItemsPanelProperty.OverrideMetadata(typeof(RibbonContextMenu), new FrameworkPropertyMetadata(template));
         }
 
         public RibbonContextMenu()

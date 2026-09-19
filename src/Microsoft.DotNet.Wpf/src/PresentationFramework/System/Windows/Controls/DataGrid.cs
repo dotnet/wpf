@@ -34,36 +34,34 @@ namespace System.Windows.Controls
         /// </summary>
         static DataGrid()
         {
-            Type ownerType = typeof(DataGrid);
-
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(typeof(DataGrid)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(DataGrid), new FrameworkPropertyMetadata(typeof(DataGrid)));
             FrameworkElementFactory dataGridRowPresenterFactory = new FrameworkElementFactory(typeof(DataGridRowsPresenter));
             dataGridRowPresenterFactory.SetValue(FrameworkElement.NameProperty, ItemsPanelPartName);
-            ItemsPanelProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new ItemsPanelTemplate(dataGridRowPresenterFactory)));
-            VirtualizingPanel.IsVirtualizingProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(true, null, new CoerceValueCallback(OnCoerceIsVirtualizingProperty)));
-            VirtualizingPanel.VirtualizationModeProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(VirtualizationMode.Recycling));
-            ItemContainerStyleProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerceItemContainerStyle)));
-            ItemContainerStyleSelectorProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerceItemContainerStyleSelector)));
-            ItemsSourceProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata((PropertyChangedCallback)null, OnCoerceItemsSourceProperty));
-            AlternationCountProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(0, null, new CoerceValueCallback(OnCoerceAlternationCount)));
-            IsEnabledProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsEnabledChanged)));
-            IsKeyboardFocusWithinPropertyKey.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsKeyboardFocusWithinChanged)));
-            IsSynchronizedWithCurrentItemProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerceIsSynchronizedWithCurrentItem)));
-            IsTabStopProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false));
-            KeyboardNavigation.DirectionalNavigationProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(KeyboardNavigationMode.Contained));
-            KeyboardNavigation.ControlTabNavigationProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(KeyboardNavigationMode.Once));
+            ItemsPanelProperty.OverrideMetadata(typeof(DataGrid), new FrameworkPropertyMetadata(new ItemsPanelTemplate(dataGridRowPresenterFactory)));
+            VirtualizingPanel.IsVirtualizingProperty.OverrideMetadata(typeof(DataGrid), new FrameworkPropertyMetadata(true, null, new CoerceValueCallback(OnCoerceIsVirtualizingProperty)));
+            VirtualizingPanel.VirtualizationModeProperty.OverrideMetadata(typeof(DataGrid), new FrameworkPropertyMetadata(VirtualizationMode.Recycling));
+            ItemContainerStyleProperty.OverrideMetadata(typeof(DataGrid), new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerceItemContainerStyle)));
+            ItemContainerStyleSelectorProperty.OverrideMetadata(typeof(DataGrid), new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerceItemContainerStyleSelector)));
+            ItemsSourceProperty.OverrideMetadata(typeof(DataGrid), new FrameworkPropertyMetadata((PropertyChangedCallback)null, OnCoerceItemsSourceProperty));
+            AlternationCountProperty.OverrideMetadata(typeof(DataGrid), new FrameworkPropertyMetadata(0, null, new CoerceValueCallback(OnCoerceAlternationCount)));
+            IsEnabledProperty.OverrideMetadata(typeof(DataGrid), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsEnabledChanged)));
+            IsKeyboardFocusWithinPropertyKey.OverrideMetadata(typeof(DataGrid), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsKeyboardFocusWithinChanged)));
+            IsSynchronizedWithCurrentItemProperty.OverrideMetadata(typeof(DataGrid), new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerceIsSynchronizedWithCurrentItem)));
+            IsTabStopProperty.OverrideMetadata(typeof(DataGrid), new FrameworkPropertyMetadata(false));
+            KeyboardNavigation.DirectionalNavigationProperty.OverrideMetadata(typeof(DataGrid), new FrameworkPropertyMetadata(KeyboardNavigationMode.Contained));
+            KeyboardNavigation.ControlTabNavigationProperty.OverrideMetadata(typeof(DataGrid), new FrameworkPropertyMetadata(KeyboardNavigationMode.Once));
 
-            CommandManager.RegisterClassInputBinding(ownerType, new InputBinding(BeginEditCommand, new KeyGesture(Key.F2)));
-            CommandManager.RegisterClassCommandBinding(ownerType, new CommandBinding(BeginEditCommand, new ExecutedRoutedEventHandler(OnExecutedBeginEdit), new CanExecuteRoutedEventHandler(OnCanExecuteBeginEdit)));
+            CommandManager.RegisterClassInputBinding(typeof(DataGrid), new InputBinding(BeginEditCommand, new KeyGesture(Key.F2)));
+            CommandManager.RegisterClassCommandBinding(typeof(DataGrid), new CommandBinding(BeginEditCommand, new ExecutedRoutedEventHandler(OnExecutedBeginEdit), new CanExecuteRoutedEventHandler(OnCanExecuteBeginEdit)));
 
-            CommandManager.RegisterClassCommandBinding(ownerType, new CommandBinding(CommitEditCommand, new ExecutedRoutedEventHandler(OnExecutedCommitEdit), new CanExecuteRoutedEventHandler(OnCanExecuteCommitEdit)));
+            CommandManager.RegisterClassCommandBinding(typeof(DataGrid), new CommandBinding(CommitEditCommand, new ExecutedRoutedEventHandler(OnExecutedCommitEdit), new CanExecuteRoutedEventHandler(OnCanExecuteCommitEdit)));
 
-            CommandManager.RegisterClassInputBinding(ownerType, new InputBinding(CancelEditCommand, new KeyGesture(Key.Escape)));
-            CommandManager.RegisterClassCommandBinding(ownerType, new CommandBinding(CancelEditCommand, new ExecutedRoutedEventHandler(OnExecutedCancelEdit), new CanExecuteRoutedEventHandler(OnCanExecuteCancelEdit)));
+            CommandManager.RegisterClassInputBinding(typeof(DataGrid), new InputBinding(CancelEditCommand, new KeyGesture(Key.Escape)));
+            CommandManager.RegisterClassCommandBinding(typeof(DataGrid), new CommandBinding(CancelEditCommand, new ExecutedRoutedEventHandler(OnExecutedCancelEdit), new CanExecuteRoutedEventHandler(OnCanExecuteCancelEdit)));
 
-            CommandManager.RegisterClassCommandBinding(ownerType, new CommandBinding(SelectAllCommand, new ExecutedRoutedEventHandler(OnExecutedSelectAll), new CanExecuteRoutedEventHandler(OnCanExecuteSelectAll)));
+            CommandManager.RegisterClassCommandBinding(typeof(DataGrid), new CommandBinding(SelectAllCommand, new ExecutedRoutedEventHandler(OnExecutedSelectAll), new CanExecuteRoutedEventHandler(OnCanExecuteSelectAll)));
 
-            CommandManager.RegisterClassCommandBinding(ownerType, new CommandBinding(DeleteCommand, new ExecutedRoutedEventHandler(OnExecutedDelete), new CanExecuteRoutedEventHandler(OnCanExecuteDelete)));
+            CommandManager.RegisterClassCommandBinding(typeof(DataGrid), new CommandBinding(DeleteCommand, new ExecutedRoutedEventHandler(OnExecutedDelete), new CanExecuteRoutedEventHandler(OnCanExecuteDelete)));
 
             // Default Clipboard handling
             CommandManager.RegisterClassCommandBinding(typeof(DataGrid), new CommandBinding(ApplicationCommands.Copy, new ExecutedRoutedEventHandler(OnExecutedCopy), new CanExecuteRoutedEventHandler(OnCanExecuteCopy)));

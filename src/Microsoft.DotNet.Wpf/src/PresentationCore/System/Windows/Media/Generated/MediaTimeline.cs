@@ -201,11 +201,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(MediaTimeline);
             SourceProperty =
                   RegisterProperty("Source",
                                    typeof(Uri),
-                                   typeofThis,
+                                   typeof(MediaTimeline),
                                    null,
                                    null,
                                    null,

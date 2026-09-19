@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -15,11 +15,10 @@ namespace Microsoft.Windows.Controls
     {
         static KeyTipControl()
         {
-            Type ownerType = typeof(KeyTipControl);
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            IsHitTestVisibleProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false));
-            FocusableProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false));
-            EventManager.RegisterClassHandler(ownerType, SizeChangedEvent, new SizeChangedEventHandler(OnSizeChanged), true);
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(KeyTipControl), new FrameworkPropertyMetadata(typeof(KeyTipControl)));
+            IsHitTestVisibleProperty.OverrideMetadata(typeof(KeyTipControl), new FrameworkPropertyMetadata(false));
+            FocusableProperty.OverrideMetadata(typeof(KeyTipControl), new FrameworkPropertyMetadata(false));
+            EventManager.RegisterClassHandler(typeof(KeyTipControl), SizeChangedEvent, new SizeChangedEventHandler(OnSizeChanged), true);
         }
 
         internal KeyTipAdorner KeyTipAdorner { get; set; }

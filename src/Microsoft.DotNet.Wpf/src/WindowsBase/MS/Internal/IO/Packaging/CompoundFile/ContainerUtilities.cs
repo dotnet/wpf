@@ -11,11 +11,7 @@ using System.IO;
 using System.Text;          // for StringBuilder
 using System.Diagnostics;   // for Debug.Assert
 
-
-#if PBTCOMPILER
-using MS.Utility;     // For SR.cs
-using MS.Internal.PresentationBuildTasks;
-#else
+#if !PBTCOMPILER
 using System.Windows;
 using MS.Internal.WindowsBase;
 #endif

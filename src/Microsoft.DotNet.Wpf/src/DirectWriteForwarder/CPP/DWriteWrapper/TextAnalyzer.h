@@ -120,7 +120,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
                 }
             }
 
-            static IList<Span^>^ AnalyzeExtendedAndItemize(
+            static IList<Span>^ AnalyzeExtendedAndItemize(
                 TextItemizer^ textItemizer, 
                 __in_ecount(length) const WCHAR *text, 
                 UINT32 length, 
@@ -147,7 +147,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
                 IDWriteTextAnalyzer* textAnalyzer
                 );
 
-            static IList<Span^>^ Itemize(
+            static IList<Span>^ Itemize(
                 __in_ecount(length) const WCHAR* text,
                 UINT32                     length,
                 CultureInfo^               culture,

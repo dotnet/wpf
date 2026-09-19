@@ -217,15 +217,15 @@ namespace Microsoft.Internal.AlphaFlattener
             
             Decode();
 
-            Byte[] map = new Byte[256];
-            
-            for (int i = 0; i < 256; i ++)
+            Span<byte> map = stackalloc byte[256];
+
+            for (int i = 0; i < 256; i++)
             {
-                map[i] = (Byte)(i * op / 255);
+                map[i] = (byte)(i * op / 255);
             }
 
             int count = _pixelWidth * _pixelHeight * 4;
-            
+
             for (int i = 0; i < count; i++)
             {
                 _pixels[i] = map[_pixels[i]];

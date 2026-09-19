@@ -67,19 +67,19 @@ namespace MS.Internal.MilCodeGen.Helpers
                 }
             }
 
-            return cs.ToString();
+            return cs.IsEmpty ? null : cs.ToString();
         }
 
         internal static string WriteFieldStatements(McgField[] fields, string statement)
         {
             StringCodeSink cs = new StringCodeSink();
 
-            foreach(McgField field in fields)
+            foreach (McgField field in fields)
             {
                 cs.WriteBlock(WriteFieldStatement(field, statement));
             }
 
-            return cs.ToString();
+            return cs.IsEmpty ? null : cs.ToString();
         }
 
         internal static string WriteFieldStatement(McgField field, string statement)

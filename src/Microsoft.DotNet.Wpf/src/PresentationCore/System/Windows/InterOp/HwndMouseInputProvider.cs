@@ -446,6 +446,7 @@ namespace System.Windows.Interop
                 break;
 
                 case WindowMessage.WM_MOUSEWHEEL:
+                case WindowMessage.WM_MOUSEHWHEEL:
                 {
                     int wheel = NativeMethods.SignedHIWORD(wParam);
                     int x = NativeMethods.SignedLOWORD(lParam);
@@ -457,6 +458,13 @@ namespace System.Windows.Interop
                     {
                         SafeNativeMethods.ScreenToClient(new HandleRef(this,hwnd), ref pt);
 
+                        RawMouseActions actions = RawMouseActions.VerticalWheelRotate;
+                        if (msg == WindowMessage.WM_MOUSEHWHEEL)
+                        {
+                            wheel = -wheel;
+                            actions = RawMouseActions.HorizontalWheelRotate;
+                        }
+
                         x = pt.x;
                         y = pt.y;
 
@@ -467,7 +475,7 @@ namespace System.Windows.Interop
                             handled = ReportInput(hwnd,
                                               InputMode.Foreground,
                                               _msgTime,
-                                              RawMouseActions.VerticalWheelRotate,
+                                              actions,
                                               x,
                                               y,
                                               wheel);

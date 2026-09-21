@@ -1721,6 +1721,17 @@ namespace System.Windows.Input
                             _inputManager.MostRecentInputDevice = this;
                         }
 
+                        // Mouse horizontal wheel rotate events are never considered redundant.
+                        if ((rawMouseInputReport.Actions & RawMouseActions.HorizontalWheelRotate) == RawMouseActions.HorizontalWheelRotate)
+                        {
+                            // Console.WriteLine("RawMouseActions.HorizontalWheelRotate");
+
+                            actions |= RawMouseActions.HorizontalWheelRotate;
+
+                            // Tell the InputManager that the MostRecentDevice is us.
+                            _inputManager.MostRecentInputDevice = this;
+                        }
+
                         // Mouse query cursor events are never considered redundant.
                         if ((rawMouseInputReport.Actions & RawMouseActions.QueryCursor) == RawMouseActions.QueryCursor)
                         {
@@ -1836,6 +1847,27 @@ namespace System.Windows.Input
                 }
             }
 
+            // PreviewMouseHorizontalWheel --> MouseHorizontalWheel
+            if (e.StagingItem.Input.RoutedEvent == Mouse.PreviewMouseHorizontalWheelEvent)
+            {
+                if (!e.StagingItem.Input.Handled)
+                {
+                    MouseWheelEventArgs previewWheel = (MouseWheelEventArgs)e.StagingItem.Input;
+                    MouseWheelEventArgs wheel = new MouseWheelEventArgs(this, previewWheel.Timestamp, previewWheel.Delta)
+                    {
+                        RoutedEvent = Mouse.MouseHorizontalWheelEvent
+                    };
+
+#if SEND_WHEEL_EVENTS_TO_FOCUS
+                    // wheel events are treated as if they came from the
+                    // element with keyboard focus
+                    wheel.Source = previewWheel.Source;
+#endif
+
+                    e.PushInput(wheel, e.StagingItem);
+                }
+            }
+
             // PreviewMouseDown --> MouseDown
             if (e.StagingItem.Input.RoutedEvent == Mouse.PreviewMouseDownEvent)
             {
@@ -1916,12 +1948,32 @@ namespace System.Windows.Input
                         }
 
                         // Raw --> PreviewMouseWheel
-                        // HorizontalWheelRotate hasn't been handled yet
                         if ((actions & RawMouseActions.VerticalWheelRotate) == RawMouseActions.VerticalWheelRotate)
                         {
                             MouseWheelEventArgs previewWheel = new MouseWheelEventArgs(this, rawMouseInputReport.Timestamp, rawMouseInputReport.Wheel)
                             {
                                 RoutedEvent = Mouse.PreviewMouseWheelEvent
+                            };
+
+#if SEND_WHEEL_EVENTS_TO_FOCUS
+                            // wheel events are treated as if they came from the
+                            // element with keyboard focus
+                            DependencyObject focus = Keyboard.FocusedElement as DependencyObject;
+                            if (focus != null)
+                            {
+                                previewWheel.Source = focus;
+                            }
+#endif
+
+                            e.PushInput(previewWheel, e.StagingItem);
+                        }
+
+                        // Raw --> PreviewMouseHorizontalWheel
+                        if ((actions & RawMouseActions.HorizontalWheelRotate) == RawMouseActions.HorizontalWheelRotate)
+                        {
+                            MouseWheelEventArgs previewWheel = new MouseWheelEventArgs(this, rawMouseInputReport.Timestamp, rawMouseInputReport.Wheel)
+                            {
+                                RoutedEvent = Mouse.PreviewMouseHorizontalWheelEvent
                             };
 
 #if SEND_WHEEL_EVENTS_TO_FOCUS

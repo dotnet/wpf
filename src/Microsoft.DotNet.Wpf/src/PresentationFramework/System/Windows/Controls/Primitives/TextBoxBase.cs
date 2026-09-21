@@ -1061,6 +1061,37 @@ namespace System.Windows.Controls.Primitives
         }
 
         /// <summary>
+        /// ScrollViewer marks all mouse wheel events as handled, even if no scrolling occurs.  This means that
+        /// when mousewheeling through a document, if the cursor happens to land on a textbox, scrolling will
+        /// stop when the textbox reaches the end of its content.  We want the scroll event to continue to the
+        /// outer control in such a case so that outer control continues scrolling.
+        /// </summary>
+        /// <param name="e">MouseWheelEventArgs</param>
+        protected override void OnMouseHorizontalWheel(MouseWheelEventArgs e)
+        {
+            ArgumentNullException.ThrowIfNull(e);
+
+            if (this.ScrollViewer != null)
+            {
+                // Only raise the event on ScrollViewer if we're actually going to scroll
+                if ((e.Delta > 0 && HorizontalOffset != 0) /* scrolling up */ || (e.Delta < 0 && HorizontalOffset < this.ScrollViewer.ScrollableWidth) /* scrolling down */ )
+                {
+                    Invariant.Assert(this.RenderScope is IScrollInfo);
+                    if (e.Delta > 0)
+                    {
+                        ((IScrollInfo)this.RenderScope).MouseWheelLeft();
+                    }
+                    else
+                    {
+                        ((IScrollInfo)this.RenderScope).MouseWheelRight();
+                    }
+                    e.Handled = true;
+                }
+            }
+            base.OnMouseHorizontalWheel(e);
+        }
+
+        /// <summary>
         ///     Virtual method reporting a key was pressed
         /// </summary>
         protected override void OnPreviewKeyDown(KeyEventArgs e)

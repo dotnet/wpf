@@ -727,6 +727,34 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
+        /// Mouse wheel horizontal rotation handler.
+        /// </summary>
+        /// <param name="e">MouseWheelEventArgs</param>
+        protected override void OnMouseHorizontalWheel(MouseWheelEventArgs e)
+        {
+            if (e.Handled) { return; }
+
+            if (_contentHost != null)
+            {
+                if (e.Delta < 0)
+                {
+                    _contentHost.LineRight();
+                }
+                else
+                {
+                    _contentHost.LineLeft();
+                }
+                e.Handled = true;
+            }
+
+            // If not handled, do default handling.
+            if (!e.Handled)
+            {
+                base.OnMouseHorizontalWheel(e);
+            }
+        }
+
+        /// <summary>
         /// Called when ContextMenuOpening is raised on this element.
         /// </summary>
         /// <param name="e">Event arguments</param>

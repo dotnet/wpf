@@ -1065,6 +1065,44 @@ namespace System.Windows
         protected internal virtual void OnMouseMove(MouseEventArgs e) {}
 
         /// <summary>
+        ///     Alias to the Mouse.PreviewMouseHorizontalWheelEvent.
+        /// </summary>
+        public static readonly RoutedEvent PreviewMouseHorizontalWheelEvent = Mouse.PreviewMouseHorizontalWheelEvent.AddOwner(_typeofThis);
+
+        /// <summary>
+        ///     Event reporting a mouse horizontal wheel rotation
+        /// </summary>
+        public event MouseWheelEventHandler PreviewMouseHorizontalWheel
+        {
+            add { AddHandler(Mouse.PreviewMouseHorizontalWheelEvent, value, false); }
+            remove { RemoveHandler(Mouse.PreviewMouseHorizontalWheelEvent, value); }
+        }
+
+        /// <summary>
+        ///     Virtual method reporting a mouse horizontal wheel rotation
+        /// </summary>
+        protected internal virtual void OnPreviewMouseHorizontalWheel(MouseWheelEventArgs e) {}
+
+        /// <summary>
+        ///     Alias to the Mouse.MouseHorizontalWheelEvent.
+        /// </summary>
+        public static readonly RoutedEvent MouseHorizontalWheelEvent = Mouse.MouseHorizontalWheelEvent.AddOwner(_typeofThis);
+
+        /// <summary>
+        ///     Event reporting a mouse horizontal wheel rotation
+        /// </summary>
+        public event MouseWheelEventHandler MouseHorizontalWheel
+        {
+            add { AddHandler(Mouse.MouseHorizontalWheelEvent, value, false); }
+            remove { RemoveHandler(Mouse.MouseHorizontalWheelEvent, value); }
+        }
+
+        /// <summary>
+        ///     Virtual method reporting a mouse horizontal wheel rotation
+        /// </summary>
+        protected internal virtual void OnMouseHorizontalWheel(MouseWheelEventArgs e) {}
+
+        /// <summary>
         ///     Alias to the Mouse.PreviewMouseWheelEvent.
         /// </summary>
         public static readonly RoutedEvent PreviewMouseWheelEvent = Mouse.PreviewMouseWheelEvent.AddOwner(_typeofThis);

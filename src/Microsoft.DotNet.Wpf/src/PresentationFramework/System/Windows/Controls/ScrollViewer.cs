@@ -1131,8 +1131,8 @@ namespace System.Windows.Controls
 
             if (ScrollInfo != null)
             {
-                if (e.Delta < 0) { ScrollInfo.MouseWheelRight(); }
-                else { ScrollInfo.MouseWheelLeft(); }
+                if (e.Delta < 0) { ScrollInfo.MouseWheelLeft(); }
+                else { ScrollInfo.MouseWheelRight(); }
             }
 
             e.Handled = true;

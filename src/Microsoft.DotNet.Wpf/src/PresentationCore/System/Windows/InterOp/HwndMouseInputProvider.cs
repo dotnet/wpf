@@ -461,10 +461,6 @@ namespace System.Windows.Interop
                         RawMouseActions actions = RawMouseActions.VerticalWheelRotate;
                         if (msg == WindowMessage.WM_MOUSEHWHEEL)
                         {
-                            // WM_MOUSEHWHEEL uses the opposite sign convention from WM_MOUSEWHEEL:
-                            // a right tilt reports a positive delta. Negate it so horizontal and
-                            // vertical wheel deltas share the same convention (negative = down/right).
-                            wheel = -wheel;
                             actions = RawMouseActions.HorizontalWheelRotate;
                         }
 

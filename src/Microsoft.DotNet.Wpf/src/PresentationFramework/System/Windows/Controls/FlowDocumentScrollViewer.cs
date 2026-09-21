@@ -738,11 +738,11 @@ namespace System.Windows.Controls
             {
                 if (e.Delta < 0)
                 {
-                    _contentHost.LineRight();
+                    _contentHost.LineLeft();
                 }
                 else
                 {
-                    _contentHost.LineLeft();
+                    _contentHost.LineRight();
                 }
                 e.Handled = true;
             }

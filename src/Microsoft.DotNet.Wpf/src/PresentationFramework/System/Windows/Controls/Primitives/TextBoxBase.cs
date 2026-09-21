@@ -1074,7 +1074,7 @@ namespace System.Windows.Controls.Primitives
             if (this.ScrollViewer != null)
             {
                 // Only raise the event on ScrollViewer if we're actually going to scroll
-                if ((e.Delta > 0 && HorizontalOffset != 0) /* scrolling up */ || (e.Delta < 0 && HorizontalOffset < this.ScrollViewer.ScrollableWidth) /* scrolling down */ )
+                if ((e.Delta > 0 && HorizontalOffset != 0) /* scrolling left */ || (e.Delta < 0 && HorizontalOffset < this.ScrollViewer.ScrollableWidth) /* scrolling right */ )
                 {
                     Invariant.Assert(this.RenderScope is IScrollInfo);
                     if (e.Delta > 0)

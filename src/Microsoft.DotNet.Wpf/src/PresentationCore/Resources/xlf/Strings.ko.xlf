@@ -2402,11 +2402,6 @@
         <target state="translated">다음 페이지</target>
         <note />
       </trans-unit>
-      <trans-unit id="NonCLSException">
-        <source>Text formatting engine encountered a non-CLS exception.</source>
-        <target state="translated">텍스트 서식 엔진에서 비 CLS 예외가 발생했습니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NonPackAppAbsoluteUriNotAllowed">
         <source>Unsupported Uri syntax. Method expects a relative Uri or a pack://application:,,,/ form of absolute Uri.</source>
         <target state="translated">지원되지 않는 URI 구문입니다. 메서드에 상대 URI 또는 pack://application:,,,/ 형식의 절대 URI가 필요합니다.</target>

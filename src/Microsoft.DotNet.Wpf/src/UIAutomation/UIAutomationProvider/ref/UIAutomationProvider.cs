@@ -157,6 +157,15 @@ namespace System.Windows.Automation.Provider
         void Resize(double width, double height);
         void Rotate(double degrees);
     }
+    public partial interface ITransformProvider2 : ITransformProvider
+    {
+        bool CanZoom { get; }
+        double ZoomLevel { get; }
+        double ZoomMinimum { get; }
+        double ZoomMaximum { get; }
+        void Zoom(double zoomAmount);
+        void ZoomByUnit(ZoomUnit zoomUnit);
+    }
     public partial interface IValueProvider
     {
         bool IsReadOnly { get; }

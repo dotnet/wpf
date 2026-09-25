@@ -72,6 +72,7 @@ namespace System.Windows.Automation
         public static readonly System.Windows.Automation.AutomationProperty IsTextPatternAvailableProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsTogglePatternAvailableProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsTransformPatternAvailableProperty;
+        public static readonly System.Windows.Automation.AutomationProperty IsTransformPattern2AvailableProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsValuePatternAvailableProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsVirtualizedItemPatternAvailableProperty;
         public static readonly System.Windows.Automation.AutomationProperty IsWindowPatternAvailableProperty;
@@ -566,6 +567,27 @@ namespace System.Windows.Automation
             public bool CanMove { get { throw null; } }
             public bool CanResize { get { throw null; } }
             public bool CanRotate { get { throw null; } }
+        }
+    }
+    public partial class TransformPattern2 : TransformPattern
+    {
+        internal TransformPattern2() { }
+        public static readonly System.Windows.Automation.AutomationProperty CanZoomProperty;
+        public static readonly System.Windows.Automation.AutomationProperty ZoomLevelProperty;
+        public static readonly System.Windows.Automation.AutomationProperty ZoomMinimumProperty;
+        public static readonly System.Windows.Automation.AutomationProperty ZoomMaximumProperty;
+        public void Zoom(double zoomAmount) { }
+        public void ZoomByUnit(ZoomUnit zoomUnit) { }
+        public static new readonly System.Windows.Automation.AutomationPattern Pattern;
+        public new System.Windows.Automation.TransformPattern2.TransformPattern2Information Cached { get { throw null; } }
+        public new System.Windows.Automation.TransformPattern2.TransformPattern2Information Current { get { throw null; } }
+
+        public partial struct TransformPattern2Information
+        {
+            public bool CanZoom { get { throw null; } }
+            public double ZoomLevel { get { throw null; } }
+            public double ZoomMinimum { get { throw null; } }
+            public double ZoomMaximum { get { throw null; } }
         }
     }
     public sealed partial class TreeWalker

@@ -358,9 +358,54 @@ namespace MS.Internal.IO.Packaging
             {
                 return Compare(otherPartUri) == 0;
             }
-             
-            #endregion IEqualityComparer Methods
 
+            #endregion IEqualityComparer Methods
+            public override bool Equals(object obj)
+            {
+                return obj is ValidatedPartUri other && Compare(other) == 0;
+            }
+
+            public override int GetHashCode()
+            {
+                return NormalizedPartUriString.GetHashCode();
+            }
+
+            public static bool operator ==(ValidatedPartUri left, ValidatedPartUri right)
+            {
+                if (left is null)
+                    return right is null;
+                return left.Equals(right);
+            }
+
+            public static bool operator !=(ValidatedPartUri left, ValidatedPartUri right) => !(left == right);
+
+            public static bool operator <(ValidatedPartUri left, ValidatedPartUri right)
+            {
+                if (left is null)
+                    return right is not null;
+                return left.Compare(right) < 0; 
+            }
+
+            public static bool operator >(ValidatedPartUri left, ValidatedPartUri right)
+            {
+                if (left is null)
+                    return false;
+                return left.Compare(right) > 0;
+            }
+
+            public static bool operator <=(ValidatedPartUri left, ValidatedPartUri right)
+            {
+                if (left is null)
+                    return true;
+                return left.Compare(right) <= 0;
+            }
+
+            public static bool operator >=(ValidatedPartUri left, ValidatedPartUri right)
+            {
+                if (left is null)
+                    return right is null;
+                return left.Compare(right) >= 0;
+            }
             #region Internal Properties
 
             //------------------------------------------------------

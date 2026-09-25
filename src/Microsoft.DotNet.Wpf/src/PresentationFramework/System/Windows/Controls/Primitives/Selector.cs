@@ -862,11 +862,16 @@ namespace System.Windows.Controls.Primitives
                 throw new InvalidOperationException(SR.ChangingCollectionNotSupported);
             }
 
+            // If we have a range operation, treat it as a refresh for now
+            NotifyCollectionChangedAction effectiveAction = IsCollectionChangedRangeAction(e)
+                ? NotifyCollectionChangedAction.Reset
+                : e.Action;
+
             SelectionChange.Begin();
             bool succeeded=false;
             try
             {
-                switch (e.Action)
+                switch (effectiveAction)
                 {
                     case NotifyCollectionChangedAction.Add:
                         if (e.NewItems.Count != 1)
@@ -922,6 +927,15 @@ namespace System.Windows.Controls.Primitives
                     SelectionChange.Cancel();
                 }
             }
+        }
+
+        private bool IsCollectionChangedRangeAction(NotifyCollectionChangedEventArgs e)
+        {
+            return
+                (e.Action == NotifyCollectionChangedAction.Add && e.NewItems.Count > 1) ||
+                (e.Action == NotifyCollectionChangedAction.Remove && e.OldItems.Count > 1) ||
+                (e.Action == NotifyCollectionChangedAction.Replace && (e.OldItems.Count > 1 || e.NewItems.Count > 1)) ||
+                (e.Action == NotifyCollectionChangedAction.Move && (e.OldItems.Count > 1 || e.NewItems.Count > 1));
         }
 
         #endregion

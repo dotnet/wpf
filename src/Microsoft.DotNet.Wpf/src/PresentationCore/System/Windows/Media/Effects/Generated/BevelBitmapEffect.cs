@@ -46,8 +46,6 @@ namespace System.Windows.Media.Effects
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -60,13 +58,11 @@ namespace System.Windows.Media.Effects
         {
             BevelBitmapEffect target = ((BevelBitmapEffect) d);
 
-
             target.PropertyChanged(BevelWidthProperty);
         }
         private static void ReliefPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             BevelBitmapEffect target = ((BevelBitmapEffect) d);
-
 
             target.PropertyChanged(ReliefProperty);
         }
@@ -74,17 +70,14 @@ namespace System.Windows.Media.Effects
         {
             BevelBitmapEffect target = ((BevelBitmapEffect) d);
 
-
             target.PropertyChanged(LightAngleProperty);
         }
         private static void SmoothnessPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             BevelBitmapEffect target = ((BevelBitmapEffect) d);
 
-
             target.PropertyChanged(SmoothnessProperty);
         }
-
 
         #region Public Properties
 
@@ -182,8 +175,6 @@ namespace System.Windows.Media.Effects
             return new BevelBitmapEffect();
         }
 
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -195,13 +186,6 @@ namespace System.Windows.Media.Effects
         #region Internal Methods
 
 
-
-
-
-
-
-
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -211,9 +195,6 @@ namespace System.Windows.Media.Effects
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -257,10 +238,6 @@ namespace System.Windows.Media.Effects
 
         #region Internal Fields
 
-
-
-
-
         internal const double c_BevelWidth = 5.0;
         internal const double c_Relief = 0.3;
         internal const double c_LightAngle = 135.0;
@@ -268,7 +245,6 @@ namespace System.Windows.Media.Effects
         internal const EdgeProfile c_EdgeProfile = EdgeProfile.Linear;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -335,7 +311,6 @@ namespace System.Windows.Media.Effects
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

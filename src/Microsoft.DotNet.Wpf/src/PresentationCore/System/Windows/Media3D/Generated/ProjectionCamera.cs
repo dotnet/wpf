@@ -51,8 +51,6 @@ namespace System.Windows.Media.Media3D
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -65,13 +63,11 @@ namespace System.Windows.Media.Media3D
         {
             ProjectionCamera target = ((ProjectionCamera) d);
 
-
             target.PropertyChanged(NearPlaneDistanceProperty);
         }
         private static void FarPlaneDistancePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ProjectionCamera target = ((ProjectionCamera) d);
-
 
             target.PropertyChanged(FarPlaneDistanceProperty);
         }
@@ -79,13 +75,11 @@ namespace System.Windows.Media.Media3D
         {
             ProjectionCamera target = ((ProjectionCamera) d);
 
-
             target.PropertyChanged(PositionProperty);
         }
         private static void LookDirectionPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ProjectionCamera target = ((ProjectionCamera) d);
-
 
             target.PropertyChanged(LookDirectionProperty);
         }
@@ -93,10 +87,8 @@ namespace System.Windows.Media.Media3D
         {
             ProjectionCamera target = ((ProjectionCamera) d);
 
-
             target.PropertyChanged(UpDirectionProperty);
         }
-
 
         #region Public Properties
 
@@ -186,9 +178,6 @@ namespace System.Windows.Media.Media3D
         #region Protected Methods
 
 
-
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -200,13 +189,6 @@ namespace System.Windows.Media.Media3D
         #region Internal Methods
 
 
-
-
-
-
-
-
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -216,9 +198,6 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -262,10 +241,6 @@ namespace System.Windows.Media.Media3D
 
         #region Internal Fields
 
-
-
-
-
         internal const double c_NearPlaneDistance = (double)0.125;
         internal const double c_FarPlaneDistance = (double)Double.PositiveInfinity;
         internal static Point3D s_Position = new Point3D();
@@ -273,7 +248,6 @@ namespace System.Windows.Media.Media3D
         internal static Vector3D s_UpDirection = new Vector3D(0,1,0);
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -340,7 +314,6 @@ namespace System.Windows.Media.Media3D
                                    /* isIndependentlyAnimated  = */ true,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

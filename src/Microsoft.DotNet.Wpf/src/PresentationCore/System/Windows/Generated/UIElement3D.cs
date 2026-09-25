@@ -19,8 +19,6 @@ namespace System.Windows
 {
     public partial class UIElement3D 
     {
-        static private readonly Type _typeofThis = typeof(UIElement3D);
-
 
 
         #region Commands
@@ -531,7 +529,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Mouse.PreviewMouseDownEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewMouseDownEvent = Mouse.PreviewMouseDownEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewMouseDownEvent = Mouse.PreviewMouseDownEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the mouse button was pressed
@@ -550,7 +548,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Mouse.MouseDownEvent.
         /// </summary>
-        public static readonly RoutedEvent MouseDownEvent = Mouse.MouseDownEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent MouseDownEvent = Mouse.MouseDownEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the mouse button was pressed
@@ -569,7 +567,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Mouse.PreviewMouseUpEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewMouseUpEvent = Mouse.PreviewMouseUpEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewMouseUpEvent = Mouse.PreviewMouseUpEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the mouse button was released
@@ -588,7 +586,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Mouse.MouseUpEvent.
         /// </summary>
-        public static readonly RoutedEvent MouseUpEvent = Mouse.MouseUpEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent MouseUpEvent = Mouse.MouseUpEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the mouse button was released
@@ -607,7 +605,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the UIElement.PreviewMouseLeftButtonDownEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewMouseLeftButtonDownEvent = UIElement.PreviewMouseLeftButtonDownEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewMouseLeftButtonDownEvent = UIElement.PreviewMouseLeftButtonDownEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the left mouse button was pressed
@@ -626,7 +624,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the UIElement.MouseLeftButtonDownEvent.
         /// </summary>
-        public static readonly RoutedEvent MouseLeftButtonDownEvent = UIElement.MouseLeftButtonDownEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent MouseLeftButtonDownEvent = UIElement.MouseLeftButtonDownEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the left mouse button was pressed
@@ -645,7 +643,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the UIElement.PreviewMouseLeftButtonUpEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewMouseLeftButtonUpEvent = UIElement.PreviewMouseLeftButtonUpEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewMouseLeftButtonUpEvent = UIElement.PreviewMouseLeftButtonUpEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the left mouse button was released
@@ -664,7 +662,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the UIElement.MouseLeftButtonUpEvent.
         /// </summary>
-        public static readonly RoutedEvent MouseLeftButtonUpEvent = UIElement.MouseLeftButtonUpEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent MouseLeftButtonUpEvent = UIElement.MouseLeftButtonUpEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the left mouse button was released
@@ -683,7 +681,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the UIElement.PreviewMouseRightButtonDownEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewMouseRightButtonDownEvent = UIElement.PreviewMouseRightButtonDownEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewMouseRightButtonDownEvent = UIElement.PreviewMouseRightButtonDownEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the right mouse button was pressed
@@ -702,7 +700,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the UIElement.MouseRightButtonDownEvent.
         /// </summary>
-        public static readonly RoutedEvent MouseRightButtonDownEvent = UIElement.MouseRightButtonDownEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent MouseRightButtonDownEvent = UIElement.MouseRightButtonDownEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the right mouse button was pressed
@@ -721,7 +719,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the UIElement.PreviewMouseRightButtonUpEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewMouseRightButtonUpEvent = UIElement.PreviewMouseRightButtonUpEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewMouseRightButtonUpEvent = UIElement.PreviewMouseRightButtonUpEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the right mouse button was released
@@ -740,7 +738,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the UIElement.MouseRightButtonUpEvent.
         /// </summary>
-        public static readonly RoutedEvent MouseRightButtonUpEvent = UIElement.MouseRightButtonUpEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent MouseRightButtonUpEvent = UIElement.MouseRightButtonUpEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the right mouse button was released
@@ -759,7 +757,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Mouse.PreviewMouseMoveEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewMouseMoveEvent = Mouse.PreviewMouseMoveEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewMouseMoveEvent = Mouse.PreviewMouseMoveEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a mouse move
@@ -778,7 +776,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Mouse.MouseMoveEvent.
         /// </summary>
-        public static readonly RoutedEvent MouseMoveEvent = Mouse.MouseMoveEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent MouseMoveEvent = Mouse.MouseMoveEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a mouse move
@@ -797,7 +795,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Mouse.PreviewMouseWheelEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewMouseWheelEvent = Mouse.PreviewMouseWheelEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewMouseWheelEvent = Mouse.PreviewMouseWheelEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a mouse wheel rotation
@@ -816,7 +814,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Mouse.MouseWheelEvent.
         /// </summary>
-        public static readonly RoutedEvent MouseWheelEvent = Mouse.MouseWheelEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent MouseWheelEvent = Mouse.MouseWheelEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a mouse wheel rotation
@@ -835,7 +833,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Mouse.MouseEnterEvent.
         /// </summary>
-        public static readonly RoutedEvent MouseEnterEvent = Mouse.MouseEnterEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent MouseEnterEvent = Mouse.MouseEnterEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the mouse entered this element
@@ -854,7 +852,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Mouse.MouseLeaveEvent.
         /// </summary>
-        public static readonly RoutedEvent MouseLeaveEvent = Mouse.MouseLeaveEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent MouseLeaveEvent = Mouse.MouseLeaveEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the mouse left this element
@@ -873,7 +871,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Mouse.GotMouseCaptureEvent.
         /// </summary>
-        public static readonly RoutedEvent GotMouseCaptureEvent = Mouse.GotMouseCaptureEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent GotMouseCaptureEvent = Mouse.GotMouseCaptureEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting that this element got the mouse capture
@@ -892,7 +890,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Mouse.LostMouseCaptureEvent.
         /// </summary>
-        public static readonly RoutedEvent LostMouseCaptureEvent = Mouse.LostMouseCaptureEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent LostMouseCaptureEvent = Mouse.LostMouseCaptureEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting that this element lost the mouse capture
@@ -911,7 +909,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Mouse.QueryCursorEvent.
         /// </summary>
-        public static readonly RoutedEvent QueryCursorEvent = Mouse.QueryCursorEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent QueryCursorEvent = Mouse.QueryCursorEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the cursor to display was requested
@@ -930,7 +928,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Stylus.PreviewStylusDownEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewStylusDownEvent = Stylus.PreviewStylusDownEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewStylusDownEvent = Stylus.PreviewStylusDownEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a stylus-down
@@ -949,7 +947,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Stylus.StylusDownEvent.
         /// </summary>
-        public static readonly RoutedEvent StylusDownEvent = Stylus.StylusDownEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent StylusDownEvent = Stylus.StylusDownEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a stylus-down
@@ -968,7 +966,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Stylus.PreviewStylusUpEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewStylusUpEvent = Stylus.PreviewStylusUpEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewStylusUpEvent = Stylus.PreviewStylusUpEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a stylus-up
@@ -987,7 +985,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Stylus.StylusUpEvent.
         /// </summary>
-        public static readonly RoutedEvent StylusUpEvent = Stylus.StylusUpEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent StylusUpEvent = Stylus.StylusUpEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a stylus-up
@@ -1006,7 +1004,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Stylus.PreviewStylusMoveEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewStylusMoveEvent = Stylus.PreviewStylusMoveEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewStylusMoveEvent = Stylus.PreviewStylusMoveEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a stylus move
@@ -1025,7 +1023,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Stylus.StylusMoveEvent.
         /// </summary>
-        public static readonly RoutedEvent StylusMoveEvent = Stylus.StylusMoveEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent StylusMoveEvent = Stylus.StylusMoveEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a stylus move
@@ -1044,7 +1042,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Stylus.PreviewStylusInAirMoveEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewStylusInAirMoveEvent = Stylus.PreviewStylusInAirMoveEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewStylusInAirMoveEvent = Stylus.PreviewStylusInAirMoveEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a stylus-in-air-move
@@ -1063,7 +1061,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Stylus.StylusInAirMoveEvent.
         /// </summary>
-        public static readonly RoutedEvent StylusInAirMoveEvent = Stylus.StylusInAirMoveEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent StylusInAirMoveEvent = Stylus.StylusInAirMoveEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a stylus-in-air-move
@@ -1082,7 +1080,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Stylus.StylusEnterEvent.
         /// </summary>
-        public static readonly RoutedEvent StylusEnterEvent = Stylus.StylusEnterEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent StylusEnterEvent = Stylus.StylusEnterEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the stylus entered this element
@@ -1101,7 +1099,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Stylus.StylusLeaveEvent.
         /// </summary>
-        public static readonly RoutedEvent StylusLeaveEvent = Stylus.StylusLeaveEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent StylusLeaveEvent = Stylus.StylusLeaveEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the stylus left this element
@@ -1120,7 +1118,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Stylus.PreviewStylusInRangeEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewStylusInRangeEvent = Stylus.PreviewStylusInRangeEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewStylusInRangeEvent = Stylus.PreviewStylusInRangeEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the stylus is now in range of the digitizer
@@ -1139,7 +1137,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Stylus.StylusInRangeEvent.
         /// </summary>
-        public static readonly RoutedEvent StylusInRangeEvent = Stylus.StylusInRangeEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent StylusInRangeEvent = Stylus.StylusInRangeEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the stylus is now in range of the digitizer
@@ -1158,7 +1156,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Stylus.PreviewStylusOutOfRangeEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewStylusOutOfRangeEvent = Stylus.PreviewStylusOutOfRangeEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewStylusOutOfRangeEvent = Stylus.PreviewStylusOutOfRangeEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the stylus is now out of range of the digitizer
@@ -1177,7 +1175,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Stylus.StylusOutOfRangeEvent.
         /// </summary>
-        public static readonly RoutedEvent StylusOutOfRangeEvent = Stylus.StylusOutOfRangeEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent StylusOutOfRangeEvent = Stylus.StylusOutOfRangeEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the stylus is now out of range of the digitizer
@@ -1196,7 +1194,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Stylus.PreviewStylusSystemGestureEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewStylusSystemGestureEvent = Stylus.PreviewStylusSystemGestureEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewStylusSystemGestureEvent = Stylus.PreviewStylusSystemGestureEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a stylus system gesture
@@ -1215,7 +1213,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Stylus.StylusSystemGestureEvent.
         /// </summary>
-        public static readonly RoutedEvent StylusSystemGestureEvent = Stylus.StylusSystemGestureEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent StylusSystemGestureEvent = Stylus.StylusSystemGestureEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a stylus system gesture
@@ -1234,7 +1232,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Stylus.GotStylusCaptureEvent.
         /// </summary>
-        public static readonly RoutedEvent GotStylusCaptureEvent = Stylus.GotStylusCaptureEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent GotStylusCaptureEvent = Stylus.GotStylusCaptureEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting that this element got the stylus capture
@@ -1253,7 +1251,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Stylus.LostStylusCaptureEvent.
         /// </summary>
-        public static readonly RoutedEvent LostStylusCaptureEvent = Stylus.LostStylusCaptureEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent LostStylusCaptureEvent = Stylus.LostStylusCaptureEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting that this element lost the stylus capture
@@ -1272,7 +1270,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Stylus.StylusButtonDownEvent.
         /// </summary>
-        public static readonly RoutedEvent StylusButtonDownEvent = Stylus.StylusButtonDownEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent StylusButtonDownEvent = Stylus.StylusButtonDownEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the stylus button is down
@@ -1291,7 +1289,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Stylus.StylusButtonUpEvent.
         /// </summary>
-        public static readonly RoutedEvent StylusButtonUpEvent = Stylus.StylusButtonUpEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent StylusButtonUpEvent = Stylus.StylusButtonUpEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the stylus button is up
@@ -1310,7 +1308,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Stylus.PreviewStylusButtonDownEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewStylusButtonDownEvent = Stylus.PreviewStylusButtonDownEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewStylusButtonDownEvent = Stylus.PreviewStylusButtonDownEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the stylus button is down
@@ -1329,7 +1327,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Stylus.PreviewStylusButtonUpEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewStylusButtonUpEvent = Stylus.PreviewStylusButtonUpEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewStylusButtonUpEvent = Stylus.PreviewStylusButtonUpEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the stylus button is up
@@ -1348,7 +1346,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Keyboard.PreviewKeyDownEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewKeyDownEvent = Keyboard.PreviewKeyDownEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewKeyDownEvent = Keyboard.PreviewKeyDownEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a key was pressed
@@ -1367,7 +1365,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Keyboard.KeyDownEvent.
         /// </summary>
-        public static readonly RoutedEvent KeyDownEvent = Keyboard.KeyDownEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent KeyDownEvent = Keyboard.KeyDownEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a key was pressed
@@ -1386,7 +1384,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Keyboard.PreviewKeyUpEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewKeyUpEvent = Keyboard.PreviewKeyUpEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewKeyUpEvent = Keyboard.PreviewKeyUpEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a key was released
@@ -1405,7 +1403,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Keyboard.KeyUpEvent.
         /// </summary>
-        public static readonly RoutedEvent KeyUpEvent = Keyboard.KeyUpEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent KeyUpEvent = Keyboard.KeyUpEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a key was released
@@ -1424,7 +1422,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Keyboard.PreviewGotKeyboardFocusEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewGotKeyboardFocusEvent = Keyboard.PreviewGotKeyboardFocusEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewGotKeyboardFocusEvent = Keyboard.PreviewGotKeyboardFocusEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting that the keyboard is focused on this element
@@ -1443,7 +1441,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Keyboard.GotKeyboardFocusEvent.
         /// </summary>
-        public static readonly RoutedEvent GotKeyboardFocusEvent = Keyboard.GotKeyboardFocusEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent GotKeyboardFocusEvent = Keyboard.GotKeyboardFocusEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting that the keyboard is focused on this element
@@ -1462,7 +1460,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Keyboard.PreviewLostKeyboardFocusEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewLostKeyboardFocusEvent = Keyboard.PreviewLostKeyboardFocusEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewLostKeyboardFocusEvent = Keyboard.PreviewLostKeyboardFocusEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting that the keyboard is no longer focusekeyboard is no longer focuseed
@@ -1481,7 +1479,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Keyboard.LostKeyboardFocusEvent.
         /// </summary>
-        public static readonly RoutedEvent LostKeyboardFocusEvent = Keyboard.LostKeyboardFocusEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent LostKeyboardFocusEvent = Keyboard.LostKeyboardFocusEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting that the keyboard is no longer focusekeyboard is no longer focuseed
@@ -1500,7 +1498,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the TextCompositionManager.PreviewTextInputEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewTextInputEvent = TextCompositionManager.PreviewTextInputEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewTextInputEvent = TextCompositionManager.PreviewTextInputEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting text composition
@@ -1519,7 +1517,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the TextCompositionManager.TextInputEvent.
         /// </summary>
-        public static readonly RoutedEvent TextInputEvent = TextCompositionManager.TextInputEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent TextInputEvent = TextCompositionManager.TextInputEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting text composition
@@ -1538,7 +1536,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the DragDrop.PreviewQueryContinueDragEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewQueryContinueDragEvent = DragDrop.PreviewQueryContinueDragEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewQueryContinueDragEvent = DragDrop.PreviewQueryContinueDragEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the preview query continue drag is going to happen
@@ -1557,7 +1555,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the DragDrop.QueryContinueDragEvent.
         /// </summary>
-        public static readonly RoutedEvent QueryContinueDragEvent = DragDrop.QueryContinueDragEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent QueryContinueDragEvent = DragDrop.QueryContinueDragEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the query continue drag is going to happen
@@ -1576,7 +1574,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the DragDrop.PreviewGiveFeedbackEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewGiveFeedbackEvent = DragDrop.PreviewGiveFeedbackEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewGiveFeedbackEvent = DragDrop.PreviewGiveFeedbackEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the preview give feedback is going to happen
@@ -1595,7 +1593,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the DragDrop.GiveFeedbackEvent.
         /// </summary>
-        public static readonly RoutedEvent GiveFeedbackEvent = DragDrop.GiveFeedbackEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent GiveFeedbackEvent = DragDrop.GiveFeedbackEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the give feedback is going to happen
@@ -1614,7 +1612,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the DragDrop.PreviewDragEnterEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewDragEnterEvent = DragDrop.PreviewDragEnterEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewDragEnterEvent = DragDrop.PreviewDragEnterEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the preview drag enter is going to happen
@@ -1633,7 +1631,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the DragDrop.DragEnterEvent.
         /// </summary>
-        public static readonly RoutedEvent DragEnterEvent = DragDrop.DragEnterEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent DragEnterEvent = DragDrop.DragEnterEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the drag enter is going to happen
@@ -1652,7 +1650,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the DragDrop.PreviewDragOverEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewDragOverEvent = DragDrop.PreviewDragOverEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewDragOverEvent = DragDrop.PreviewDragOverEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the preview drag over is going to happen
@@ -1671,7 +1669,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the DragDrop.DragOverEvent.
         /// </summary>
-        public static readonly RoutedEvent DragOverEvent = DragDrop.DragOverEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent DragOverEvent = DragDrop.DragOverEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the drag over is going to happen
@@ -1690,7 +1688,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the DragDrop.PreviewDragLeaveEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewDragLeaveEvent = DragDrop.PreviewDragLeaveEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewDragLeaveEvent = DragDrop.PreviewDragLeaveEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the preview drag leave is going to happen
@@ -1709,7 +1707,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the DragDrop.DragLeaveEvent.
         /// </summary>
-        public static readonly RoutedEvent DragLeaveEvent = DragDrop.DragLeaveEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent DragLeaveEvent = DragDrop.DragLeaveEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the drag leave is going to happen
@@ -1728,7 +1726,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the DragDrop.PreviewDropEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewDropEvent = DragDrop.PreviewDropEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewDropEvent = DragDrop.PreviewDropEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the preview drop is going to happen
@@ -1747,7 +1745,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the DragDrop.DropEvent.
         /// </summary>
-        public static readonly RoutedEvent DropEvent = DragDrop.DropEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent DropEvent = DragDrop.DropEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the drag enter is going to happen
@@ -1766,7 +1764,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Touch.PreviewTouchDownEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewTouchDownEvent = Touch.PreviewTouchDownEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewTouchDownEvent = Touch.PreviewTouchDownEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a finger touched the screen
@@ -1786,7 +1784,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Touch.TouchDownEvent.
         /// </summary>
-        public static readonly RoutedEvent TouchDownEvent = Touch.TouchDownEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent TouchDownEvent = Touch.TouchDownEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a finger touched the screen
@@ -1806,7 +1804,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Touch.PreviewTouchMoveEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewTouchMoveEvent = Touch.PreviewTouchMoveEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewTouchMoveEvent = Touch.PreviewTouchMoveEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a finger moved across the screen
@@ -1826,7 +1824,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Touch.TouchMoveEvent.
         /// </summary>
-        public static readonly RoutedEvent TouchMoveEvent = Touch.TouchMoveEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent TouchMoveEvent = Touch.TouchMoveEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a finger moved across the screen
@@ -1846,7 +1844,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Touch.PreviewTouchUpEvent.
         /// </summary>
-        public static readonly RoutedEvent PreviewTouchUpEvent = Touch.PreviewTouchUpEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent PreviewTouchUpEvent = Touch.PreviewTouchUpEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a finger lifted off the screen
@@ -1866,7 +1864,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Touch.TouchUpEvent.
         /// </summary>
-        public static readonly RoutedEvent TouchUpEvent = Touch.TouchUpEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent TouchUpEvent = Touch.TouchUpEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a finger lifted off the screen
@@ -1886,7 +1884,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Touch.GotTouchCaptureEvent.
         /// </summary>
-        public static readonly RoutedEvent GotTouchCaptureEvent = Touch.GotTouchCaptureEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent GotTouchCaptureEvent = Touch.GotTouchCaptureEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a finger was captured to an element
@@ -1906,7 +1904,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Touch.LostTouchCaptureEvent.
         /// </summary>
-        public static readonly RoutedEvent LostTouchCaptureEvent = Touch.LostTouchCaptureEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent LostTouchCaptureEvent = Touch.LostTouchCaptureEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting a finger is no longer captured to an element
@@ -1926,7 +1924,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Touch.TouchEnterEvent.
         /// </summary>
-        public static readonly RoutedEvent TouchEnterEvent = Touch.TouchEnterEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent TouchEnterEvent = Touch.TouchEnterEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the mouse entered this element
@@ -1946,7 +1944,7 @@ namespace System.Windows
         /// <summary>
         ///     Alias to the Touch.TouchLeaveEvent.
         /// </summary>
-        public static readonly RoutedEvent TouchLeaveEvent = Touch.TouchLeaveEvent.AddOwner(_typeofThis);
+        public static readonly RoutedEvent TouchLeaveEvent = Touch.TouchLeaveEvent.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     Event reporting the mouse left this element
@@ -1966,7 +1964,7 @@ namespace System.Windows
         /// <summary>
         ///     The dependency property for the IsMouseDirectlyOver property.
         /// </summary>
-        public static readonly DependencyProperty IsMouseDirectlyOverProperty = UIElement.IsMouseDirectlyOverProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty IsMouseDirectlyOverProperty = UIElement.IsMouseDirectlyOverProperty.AddOwner(typeof(UIElement3D));
 
         private static void IsMouseDirectlyOver_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -2001,17 +1999,17 @@ namespace System.Windows
         /// <summary>
         ///     The dependency property for the IsMouseOver property.
         /// </summary>
-        public static readonly DependencyProperty IsMouseOverProperty = UIElement.IsMouseOverProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty IsMouseOverProperty = UIElement.IsMouseOverProperty.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     The dependency property for the IsStylusOver property.
         /// </summary>
-        public static readonly DependencyProperty IsStylusOverProperty = UIElement.IsStylusOverProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty IsStylusOverProperty = UIElement.IsStylusOverProperty.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     The dependency property for the IsKeyboardFocusWithin property.
         /// </summary>
-        public static readonly DependencyProperty IsKeyboardFocusWithinProperty = UIElement.IsKeyboardFocusWithinProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty IsKeyboardFocusWithinProperty = UIElement.IsKeyboardFocusWithinProperty.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     An event reporting that the IsKeyboardFocusWithin property changed.
@@ -2041,7 +2039,7 @@ namespace System.Windows
         /// <summary>
         ///     The dependency property for the IsMouseCaptured property.
         /// </summary>
-        public static readonly DependencyProperty IsMouseCapturedProperty = UIElement.IsMouseCapturedProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty IsMouseCapturedProperty = UIElement.IsMouseCapturedProperty.AddOwner(typeof(UIElement3D));
 
         private static void IsMouseCaptured_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -2076,7 +2074,7 @@ namespace System.Windows
         /// <summary>
         ///     The dependency property for the IsMouseCaptureWithin property.
         /// </summary>
-        public static readonly DependencyProperty IsMouseCaptureWithinProperty = UIElement.IsMouseCaptureWithinProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty IsMouseCaptureWithinProperty = UIElement.IsMouseCaptureWithinProperty.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     An event reporting that the IsMouseCaptureWithin property changed.
@@ -2106,7 +2104,7 @@ namespace System.Windows
         /// <summary>
         ///     The dependency property for the IsStylusDirectlyOver property.
         /// </summary>
-        public static readonly DependencyProperty IsStylusDirectlyOverProperty = UIElement.IsStylusDirectlyOverProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty IsStylusDirectlyOverProperty = UIElement.IsStylusDirectlyOverProperty.AddOwner(typeof(UIElement3D));
 
         private static void IsStylusDirectlyOver_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -2141,7 +2139,7 @@ namespace System.Windows
         /// <summary>
         ///     The dependency property for the IsStylusCaptured property.
         /// </summary>
-        public static readonly DependencyProperty IsStylusCapturedProperty = UIElement.IsStylusCapturedProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty IsStylusCapturedProperty = UIElement.IsStylusCapturedProperty.AddOwner(typeof(UIElement3D));
 
         private static void IsStylusCaptured_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -2176,7 +2174,7 @@ namespace System.Windows
         /// <summary>
         ///     The dependency property for the IsStylusCaptureWithin property.
         /// </summary>
-        public static readonly DependencyProperty IsStylusCaptureWithinProperty = UIElement.IsStylusCaptureWithinProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty IsStylusCaptureWithinProperty = UIElement.IsStylusCaptureWithinProperty.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     An event reporting that the IsStylusCaptureWithin property changed.
@@ -2206,7 +2204,7 @@ namespace System.Windows
         /// <summary>
         ///     The dependency property for the IsKeyboardFocused property.
         /// </summary>
-        public static readonly DependencyProperty IsKeyboardFocusedProperty = UIElement.IsKeyboardFocusedProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty IsKeyboardFocusedProperty = UIElement.IsKeyboardFocusedProperty.AddOwner(typeof(UIElement3D));
 
         private static void IsKeyboardFocused_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -2241,22 +2239,22 @@ namespace System.Windows
         /// <summary>
         ///     The dependency property for the AreAnyTouchesDirectlyOver property.
         /// </summary>
-        public static readonly DependencyProperty AreAnyTouchesDirectlyOverProperty = UIElement.AreAnyTouchesDirectlyOverProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty AreAnyTouchesDirectlyOverProperty = UIElement.AreAnyTouchesDirectlyOverProperty.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     The dependency property for the AreAnyTouchesOver property.
         /// </summary>
-        public static readonly DependencyProperty AreAnyTouchesOverProperty = UIElement.AreAnyTouchesOverProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty AreAnyTouchesOverProperty = UIElement.AreAnyTouchesOverProperty.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     The dependency property for the AreAnyTouchesCaptured property.
         /// </summary>
-        public static readonly DependencyProperty AreAnyTouchesCapturedProperty = UIElement.AreAnyTouchesCapturedProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty AreAnyTouchesCapturedProperty = UIElement.AreAnyTouchesCapturedProperty.AddOwner(typeof(UIElement3D));
 
         /// <summary>
         ///     The dependency property for the AreAnyTouchesCapturedWithin property.
         /// </summary>
-        public static readonly DependencyProperty AreAnyTouchesCapturedWithinProperty = UIElement.AreAnyTouchesCapturedWithinProperty.AddOwner(_typeofThis);
+        public static readonly DependencyProperty AreAnyTouchesCapturedWithinProperty = UIElement.AreAnyTouchesCapturedWithinProperty.AddOwner(typeof(UIElement3D));
 
         internal bool ReadFlag(CoreFlags field)
         {

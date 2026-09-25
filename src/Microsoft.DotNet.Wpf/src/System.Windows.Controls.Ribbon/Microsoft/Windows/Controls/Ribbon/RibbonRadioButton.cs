@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -38,17 +38,15 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         static RibbonRadioButton()
         {
-            Type ownerType = typeof(RibbonRadioButton);
-
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            FocusableProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerceFocusable)));
-            ToolTipProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(RibbonHelper.CoerceRibbonToolTip)));
-            ToolTipService.ShowOnDisabledProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(true));
-            CommandProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(RibbonHelper.OnCommandChanged));
-            ContextMenuProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(RibbonHelper.OnContextMenuChanged, RibbonHelper.OnCoerceContextMenu));
-            ContextMenuService.ShowOnDisabledProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(true));
-            EventManager.RegisterClassHandler(ownerType, KeyTipService.ActivatingKeyTipEvent, new ActivatingKeyTipEventHandler(OnActivatingKeyTipThunk));
-            EventManager.RegisterClassHandler(ownerType, KeyTipService.KeyTipAccessedEvent, new KeyTipAccessedEventHandler(OnKeyTipAccessedThunk));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonRadioButton), new FrameworkPropertyMetadata(typeof(RibbonRadioButton)));
+            FocusableProperty.OverrideMetadata(typeof(RibbonRadioButton), new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerceFocusable)));
+            ToolTipProperty.OverrideMetadata(typeof(RibbonRadioButton), new FrameworkPropertyMetadata(null, new CoerceValueCallback(RibbonHelper.CoerceRibbonToolTip)));
+            ToolTipService.ShowOnDisabledProperty.OverrideMetadata(typeof(RibbonRadioButton), new FrameworkPropertyMetadata(true));
+            CommandProperty.OverrideMetadata(typeof(RibbonRadioButton), new FrameworkPropertyMetadata(RibbonHelper.OnCommandChanged));
+            ContextMenuProperty.OverrideMetadata(typeof(RibbonRadioButton), new FrameworkPropertyMetadata(RibbonHelper.OnContextMenuChanged, RibbonHelper.OnCoerceContextMenu));
+            ContextMenuService.ShowOnDisabledProperty.OverrideMetadata(typeof(RibbonRadioButton), new FrameworkPropertyMetadata(true));
+            EventManager.RegisterClassHandler(typeof(RibbonRadioButton), KeyTipService.ActivatingKeyTipEvent, new ActivatingKeyTipEventHandler(OnActivatingKeyTipThunk));
+            EventManager.RegisterClassHandler(typeof(RibbonRadioButton), KeyTipService.KeyTipAccessedEvent, new KeyTipAccessedEventHandler(OnKeyTipAccessedThunk));
         }
 
         #endregion

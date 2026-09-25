@@ -203,11 +203,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(PolyLineSegment);
             PointsProperty =
                   RegisterProperty("Points",
                                    typeof(PointCollection),
-                                   typeofThis,
+                                   typeof(PolyLineSegment),
                                    new FreezableDefaultValueFactory(PointCollection.Empty),
                                    null,
                                    null,

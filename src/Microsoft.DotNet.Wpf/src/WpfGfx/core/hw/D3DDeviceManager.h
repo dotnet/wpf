@@ -29,6 +29,7 @@
 
 
 class CD3DDeviceLevel1;
+class CHybridSurfaceRenderTarget;
 
 // Implement this interface and add yourself to the manager to receive
 // notification when adapters are created or destroyed
@@ -85,6 +86,7 @@ public:
         );
 
 private:
+    friend class CHybridSurfaceRenderTarget;
 
     struct D3DDeviceCreationParameters : public D3DDEVICE_CREATION_PARAMETERS
     {

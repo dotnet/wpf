@@ -31,7 +31,7 @@ namespace System.Windows.Documents
 
         static FixedDocumentSequence()
         {
-            FocusableProperty.OverrideMetadata(typeof(FixedDocumentSequence), new FrameworkPropertyMetadata(true));
+            FocusableProperty.OverrideMetadata(typeof(FixedDocumentSequence), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
         }
 
         /// <summary>

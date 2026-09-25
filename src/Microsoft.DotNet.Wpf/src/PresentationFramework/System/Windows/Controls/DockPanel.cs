@@ -155,7 +155,7 @@ namespace System.Windows.Controls
                         "LastChildFill", 
                         typeof(bool), 
                         typeof(DockPanel),
-                        new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsArrange));
+                        new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, FrameworkPropertyMetadataOptions.AffectsArrange));
 
 
         /// <summary>

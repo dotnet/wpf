@@ -813,15 +813,15 @@ namespace System.Windows
         public Int32Rect(int x, int y, int width, int height) { throw null; }
         public static System.Windows.Int32Rect Empty { get { throw null; } }
         public bool HasArea { get { throw null; } }
-        public int Height { get { throw null; } set { } }
-        public bool IsEmpty { get { throw null; } }
-        public int Width { get { throw null; } set { } }
-        public int X { get { throw null; } set { } }
-        public int Y { get { throw null; } set { } }
-        public override bool Equals(object o) { throw null; }
-        public bool Equals(System.Windows.Int32Rect value) { throw null; }
+        public int Height { readonly get { throw null; } set { } }
+        public readonly bool IsEmpty { get { throw null; } }
+        public int Width { readonly get { throw null; } set { } }
+        public int X { readonly get { throw null; } set { } }
+        public int Y { readonly get { throw null; } set { } }
+        public override readonly bool Equals(object o) { throw null; }
+        public readonly bool Equals(System.Windows.Int32Rect value) { throw null; }
         public static bool Equals(System.Windows.Int32Rect int32Rect1, System.Windows.Int32Rect int32Rect2) { throw null; }
-        public override int GetHashCode() { throw null; }
+        public override readonly int GetHashCode() { throw null; }
         public static bool operator ==(System.Windows.Int32Rect int32Rect1, System.Windows.Int32Rect int32Rect2) { throw null; }
         public static bool operator !=(System.Windows.Int32Rect int32Rect1, System.Windows.Int32Rect int32Rect2) { throw null; }
         public static System.Windows.Int32Rect Parse(string source) { throw null; }
@@ -894,13 +894,13 @@ namespace System.Windows
     public partial struct Point : System.IFormattable
     {
         public Point(double x, double y) { throw null; }
-        public double X { get { throw null; } set { } }
-        public double Y { get { throw null; } set { } }
+        public double X { readonly get { throw null; } set { } }
+        public double Y { readonly get { throw null; } set { } }
         public static System.Windows.Point Add(System.Windows.Point point, System.Windows.Vector vector) { throw null; }
-        public override bool Equals(object o) { throw null; }
-        public bool Equals(System.Windows.Point value) { throw null; }
+        public override readonly bool Equals(object o) { throw null; }
+        public readonly bool Equals(System.Windows.Point value) { throw null; }
         public static bool Equals(System.Windows.Point point1, System.Windows.Point point2) { throw null; }
-        public override int GetHashCode() { throw null; }
+        public override readonly int GetHashCode() { throw null; }
         public static System.Windows.Point Multiply(System.Windows.Point point, System.Windows.Media.Matrix matrix) { throw null; }
         public void Offset(double offsetX, double offsetY) { }
         public static System.Windows.Point operator +(System.Windows.Point point, System.Windows.Vector vector) { throw null; }
@@ -954,8 +954,8 @@ namespace System.Windows
         public System.Windows.Point BottomLeft { get { throw null; } }
         public System.Windows.Point BottomRight { get { throw null; } }
         public static System.Windows.Rect Empty { get { throw null; } }
-        public double Height { get { throw null; } set { } }
-        public bool IsEmpty { get { throw null; } }
+        public double Height { readonly get { throw null; } set { } }
+        public readonly bool IsEmpty { get { throw null; } }
         public double Left { get { throw null; } }
         public System.Windows.Point Location { get { throw null; } set { } }
         public double Right { get { throw null; } }
@@ -963,16 +963,16 @@ namespace System.Windows
         public double Top { get { throw null; } }
         public System.Windows.Point TopLeft { get { throw null; } }
         public System.Windows.Point TopRight { get { throw null; } }
-        public double Width { get { throw null; } set { } }
-        public double X { get { throw null; } set { } }
-        public double Y { get { throw null; } set { } }
+        public double Width { readonly get { throw null; } set { } }
+        public double X { readonly get { throw null; } set { } }
+        public double Y { readonly get { throw null; } set { } }
         public bool Contains(double x, double y) { throw null; }
         public bool Contains(System.Windows.Point point) { throw null; }
         public bool Contains(System.Windows.Rect rect) { throw null; }
-        public override bool Equals(object o) { throw null; }
-        public bool Equals(System.Windows.Rect value) { throw null; }
+        public override readonly bool Equals(object o) { throw null; }
+        public readonly bool Equals(System.Windows.Rect value) { throw null; }
         public static bool Equals(System.Windows.Rect rect1, System.Windows.Rect rect2) { throw null; }
-        public override int GetHashCode() { throw null; }
+        public override readonly int GetHashCode() { throw null; }
         public void Inflate(double width, double height) { }
         public static System.Windows.Rect Inflate(System.Windows.Rect rect, double width, double height) { throw null; }
         public static System.Windows.Rect Inflate(System.Windows.Rect rect, System.Windows.Size size) { throw null; }
@@ -1012,13 +1012,13 @@ namespace System.Windows
     {
         public Size(double width, double height) { throw null; }
         public static System.Windows.Size Empty { get { throw null; } }
-        public double Height { get { throw null; } set { } }
-        public bool IsEmpty { get { throw null; } }
-        public double Width { get { throw null; } set { } }
-        public override bool Equals(object o) { throw null; }
-        public bool Equals(System.Windows.Size value) { throw null; }
+        public double Height { readonly get { throw null; } set { } }
+        public readonly bool IsEmpty { get { throw null; } }
+        public double Width { readonly get { throw null; } set { } }
+        public override readonly bool Equals(object o) { throw null; }
+        public readonly bool Equals(System.Windows.Size value) { throw null; }
         public static bool Equals(System.Windows.Size size1, System.Windows.Size size2) { throw null; }
-        public override int GetHashCode() { throw null; }
+        public override readonly int GetHashCode() { throw null; }
         public static bool operator ==(System.Windows.Size size1, System.Windows.Size size2) { throw null; }
         public static explicit operator System.Windows.Point (System.Windows.Size size) { throw null; }
         public static explicit operator System.Windows.Vector (System.Windows.Size size) { throw null; }
@@ -1052,18 +1052,18 @@ namespace System.Windows
         public Vector(double x, double y) { throw null; }
         public double Length { get { throw null; } }
         public double LengthSquared { get { throw null; } }
-        public double X { get { throw null; } set { } }
-        public double Y { get { throw null; } set { } }
+        public double X { readonly get { throw null; } set { } }
+        public double Y { readonly get { throw null; } set { } }
         public static System.Windows.Point Add(System.Windows.Vector vector, System.Windows.Point point) { throw null; }
         public static System.Windows.Vector Add(System.Windows.Vector vector1, System.Windows.Vector vector2) { throw null; }
         public static double AngleBetween(System.Windows.Vector vector1, System.Windows.Vector vector2) { throw null; }
         public static double CrossProduct(System.Windows.Vector vector1, System.Windows.Vector vector2) { throw null; }
         public static double Determinant(System.Windows.Vector vector1, System.Windows.Vector vector2) { throw null; }
         public static System.Windows.Vector Divide(System.Windows.Vector vector, double scalar) { throw null; }
-        public override bool Equals(object o) { throw null; }
-        public bool Equals(System.Windows.Vector value) { throw null; }
+        public override readonly bool Equals(object o) { throw null; }
+        public readonly bool Equals(System.Windows.Vector value) { throw null; }
         public static bool Equals(System.Windows.Vector vector1, System.Windows.Vector vector2) { throw null; }
-        public override int GetHashCode() { throw null; }
+        public override readonly int GetHashCode() { throw null; }
         public static System.Windows.Vector Multiply(double scalar, System.Windows.Vector vector) { throw null; }
         public static System.Windows.Vector Multiply(System.Windows.Vector vector, double scalar) { throw null; }
         public static System.Windows.Vector Multiply(System.Windows.Vector vector, System.Windows.Media.Matrix matrix) { throw null; }
@@ -1630,17 +1630,17 @@ namespace System.Windows.Media
         public bool HasInverse { get { throw null; } }
         public static System.Windows.Media.Matrix Identity { get { throw null; } }
         public bool IsIdentity { get { throw null; } }
-        public double M11 { get { throw null; } set { } }
-        public double M12 { get { throw null; } set { } }
-        public double M21 { get { throw null; } set { } }
-        public double M22 { get { throw null; } set { } }
-        public double OffsetX { get { throw null; } set { } }
-        public double OffsetY { get { throw null; } set { } }
+        public double M11 { readonly get { throw null; } set { } }
+        public double M12 { readonly get { throw null; } set { } }
+        public double M21 { readonly get { throw null; } set { } }
+        public double M22 { readonly get { throw null; } set { } }
+        public double OffsetX { readonly get { throw null; } set { } }
+        public double OffsetY { readonly get { throw null; } set { } }
         public void Append(System.Windows.Media.Matrix matrix) { }
-        public override bool Equals(object o) { throw null; }
-        public bool Equals(System.Windows.Media.Matrix value) { throw null; }
+        public override readonly bool Equals(object o) { throw null; }
+        public readonly bool Equals(System.Windows.Media.Matrix value) { throw null; }
         public static bool Equals(System.Windows.Media.Matrix matrix1, System.Windows.Media.Matrix matrix2) { throw null; }
-        public override int GetHashCode() { throw null; }
+        public override readonly int GetHashCode() { throw null; }
         public void Invert() { }
         public static System.Windows.Media.Matrix Multiply(System.Windows.Media.Matrix trans1, System.Windows.Media.Matrix trans2) { throw null; }
         public static bool operator ==(System.Windows.Media.Matrix matrix1, System.Windows.Media.Matrix matrix2) { throw null; }

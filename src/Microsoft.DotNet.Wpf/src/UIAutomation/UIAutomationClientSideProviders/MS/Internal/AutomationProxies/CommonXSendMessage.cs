@@ -1482,57 +1482,22 @@ namespace MS.Internal.AutomationProxies
                     throw new Win32Exception();
                 }
 
-                // Windows XP(major version 5 and minor version 1) and above
-                if (Environment.OSVersion.Version.Major > 5 || (Environment.OSVersion.Version.Major == 5 && Environment.OSVersion.Version.Minor == 1))
+                try
                 {
-                    try
-                    {
-                        // IsWow64Process() implemented in Windows XP
-                        bool isWOW64Process;
-
-                        if (!Misc.IsWow64Process(hProcess, out isWOW64Process))
-                        {
-                            // Function failed. Assume not running under WOW64.
-                            return false;
-                        }
-
-                        return isWOW64Process;
-                    }
-                    catch (Win32Exception)
+                    if (!Misc.IsWow64Process(hProcess, out bool isWOW64Process))
                     {
                         // Function failed. Assume not running under WOW64.
                         return false;
                     }
+
+                    return isWOW64Process;
                 }
-                // Windows 2000 (major version 5)
-                else if (Environment.OSVersion.Version.Major == 5)
+                catch (Win32Exception)
                 {
-                    // NtQueryInformationProcess is available for use in Windows 2000 and Windows XP.
-                    // It may be altered or unavailable in subsequent versions. Applications should use the alternate functions
-                    ulong infoWOW64 = 0;
-                    int status = UnsafeNativeMethods.NtQueryInformationProcess(hProcess, UnsafeNativeMethods.ProcessWow64Information, ref infoWOW64, sizeof(ulong), null);
-                    if (NT_ERROR(status))
-                    {
-                        // Query failed. Assume not running under WOW64.
-                        return false;
-                    }
-                    return infoWOW64 != 0;
-                }
-                // Windows 95, Windows 98, Windows Me, or Windows NT (major version 4)
-                else
-                {
-                    // WOW64 was not available in these versions of Windows.
+                    // Function failed. Assume not running under WOW64.
                     return false;
                 }
             }
-        }
-
-        //
-        // Generic test for error on any status value.
-        //
-        private static bool NT_ERROR(int status)
-        {
-            return (ulong)(status) >> 30 == 3;
         }
 
         #endregion

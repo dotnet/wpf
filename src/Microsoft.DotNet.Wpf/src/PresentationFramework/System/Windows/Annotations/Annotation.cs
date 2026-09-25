@@ -858,10 +858,7 @@ namespace System.Windows.Annotations
             // Always update the modification time before firing change events
             _modified = DateTime.Now;
 
-            if (AuthorChanged != null)
-            {
-                AuthorChanged(this, new AnnotationAuthorChangedEventArgs(this, action, author));
-            }
+            AuthorChanged?.Invoke(this, new AnnotationAuthorChangedEventArgs(this, action, author));
         }
 
         /// <summary>
@@ -878,10 +875,7 @@ namespace System.Windows.Annotations
             // Always update the modification time before firing change events
             _modified = DateTime.Now;
 
-            if (handlers != null)
-            {
-                handlers(this, new AnnotationResourceChangedEventArgs(this, action, resource));
-            }
+            handlers?.Invoke(this, new AnnotationResourceChangedEventArgs(this, action, resource));
         }
 
 

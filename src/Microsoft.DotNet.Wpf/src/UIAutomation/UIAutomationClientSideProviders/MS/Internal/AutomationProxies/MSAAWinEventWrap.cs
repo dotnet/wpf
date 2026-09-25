@@ -27,12 +27,14 @@ namespace MS.Internal.AutomationProxies
  
         #region Constructors
 
-        // ctor that takes a range of events
-        internal MSAAWinEventWrap(int eventMin, int eventMax)
+        // ctor that takes one or more event ranges as min/max pairs
+        internal MSAAWinEventWrap(params int[] eventRanges)
         {
-            _eventMin = eventMin;
-            _eventMax = eventMax;
-            _hHooks = new IntPtr[1];
+            if (eventRanges == null || eventRanges.Length == 0 || eventRanges.Length % 2 != 0)
+                throw new ArgumentException(SR.InvalidParameter);
+
+            _eventRanges = (int[])eventRanges.Clone();
+            _hHooks = new IntPtr[eventRanges.Length / 2];
             Init();
         }
 
@@ -74,12 +76,21 @@ namespace MS.Internal.AutomationProxies
         {
             _fBusy = true;
 
+            for (int i = 0; i < _hHooks.Length; i++)
             {
-                // in a single hook, listen for a range of WinEvent types
-                _hHooks[0] = Misc.SetWinEventHook(_eventMin, _eventMax, IntPtr.Zero, _winEventProc, 0, 0, _fFlags);
-                if (_hHooks[0] == IntPtr.Zero)
+                int rangeIndex = i * 2;
+                _hHooks[i] = Misc.SetWinEventHook(
+                    _eventRanges[rangeIndex],
+                    _eventRanges[rangeIndex + 1],
+                    IntPtr.Zero,
+                    _winEventProc,
+                    0,
+                    0,
+                    _fFlags);
+                if (_hHooks[i] == IntPtr.Zero)
                 {
                     StopListening();
+                    return;
                 }
             }
             _fBusy = false;
@@ -213,8 +224,7 @@ namespace MS.Internal.AutomationProxies
         }
  
         private Queue _qEvents;                // Queue of events waiting to be processed
-        private int _eventMin;                 // minimum WinEvent type in range
-        private int _eventMax;                 // maximium WinEventType in range
+        private int[] _eventRanges;            // pairs of minimum and maximum WinEvent types
         private IntPtr [] _hHooks;             // the returned handles(s) from SetWinEventHook
         private bool _fBusy;                   // Flag indicating if we're busy processing
         private int _fFlags;                   // SetWinEventHook flags

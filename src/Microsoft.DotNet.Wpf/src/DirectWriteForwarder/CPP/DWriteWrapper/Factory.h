@@ -6,7 +6,6 @@
 #define __FACTORY_H
 
 #include "Common.h"
-#include "FactoryType.h"
 #include "FontFile.h"
 #include "FontFace.h"
 #include "FontCollection.h"

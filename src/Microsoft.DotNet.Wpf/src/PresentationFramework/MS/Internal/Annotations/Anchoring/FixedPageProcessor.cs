@@ -273,7 +273,7 @@ namespace MS.Internal.Annotations.Anchoring
         ///     is done by the framework and does not need to be repeated.  Use this
         ///     string in markup as a value for SubTreeProcessorIdProperty.
         /// </summary>
-        public static readonly String Id = "FixedPage";
+        public const String Id = "FixedPage";
 
         #endregion Public Properties
 
@@ -334,7 +334,7 @@ namespace MS.Internal.Annotations.Anchoring
         #region Private Fields
 
         // Name of the value attribute containing the hash
-        private static readonly String ValueAttributeName = "Value";
+        private const String ValueAttributeName = "Value";
 
         // Name of the locator part produced by this processor.
         private static readonly XmlQualifiedName PageNumberElementName = new XmlQualifiedName("PageNumber", AnnotationXmlConstants.Namespaces.BaseSchemaNamespace);

@@ -1,9 +1,10 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using MS.Internal;
-using MS.Win32;
 using System.Runtime.InteropServices;
+using MS.Internal;
+using System.IO;
+using MS.Win32;
 
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
@@ -116,8 +117,7 @@ namespace System.Windows.Media
         private const int STREAM_SEEK_CUR = 0x1;
         private const int STREAM_SEEK_END = 0x2;
 
-        protected System.IO.Stream dataStream;
-        private Exception _lastException;
+        protected Stream dataStream;
 
         // to support seeking ahead of the stream length...
         private long virtualPosition = -1;
@@ -160,9 +160,7 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.E_NOTIMPL;
@@ -179,9 +177,7 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.S_OK;
@@ -211,9 +207,8 @@ namespace System.Windows.Media
                         toRead  = (uint) (cb - cbWritten);
                     }
 
-                    uint read = 0;
 
-                    hr = Read(buffer.AsSpan(0, (int) toRead), out read);
+                    hr = Read(buffer.AsSpan(0, (int)toRead), out uint read);
 
                     if (read == 0)
                     {
@@ -222,9 +217,8 @@ namespace System.Windows.Media
 
                     cbRead += read;
 
-                    uint written = 0;
 
-                    hr = MILIStreamWrite(pstm, buffer, read, out written);
+                    hr = MILIStreamWrite(pstm, buffer, read, out uint written);
 
                     if (written != read)
                     {
@@ -236,9 +230,7 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return hr;
@@ -252,9 +244,7 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.E_NOTIMPL;
@@ -273,9 +263,7 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.S_OK;
@@ -289,9 +277,7 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.E_NOTIMPL;
@@ -361,9 +347,7 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.S_OK;
@@ -379,9 +363,7 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.S_OK;
@@ -404,9 +386,7 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.S_OK;
@@ -420,9 +400,7 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.E_NOTIMPL;
@@ -444,9 +422,7 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.S_OK;
@@ -464,9 +440,7 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.S_OK;
@@ -484,9 +458,7 @@ namespace System.Windows.Media
             }
             catch (Exception e)
             {
-                // store the last exception
-                _lastException = e;
-                return SecurityHelper.GetHRForException(e);
+                return Marshal.GetHRForException(e);
             }
 
             return NativeMethods.S_OK;
@@ -507,8 +479,8 @@ namespace System.Windows.Media
         internal static StreamAsIStream FromSD(ref StreamDescriptor sd)
         {
             Debug.Assert(((IntPtr)sd.m_handle) != IntPtr.Zero, "Stream is disposed.");
-            System.Runtime.InteropServices.GCHandle handle = (System.Runtime.InteropServices.GCHandle)(sd.m_handle);
-            return (StreamAsIStream)(handle.Target);
+
+            return (StreamAsIStream)sd.m_handle.Target;
         }
 
         internal static int Clone(ref StreamDescriptor pSD, out IntPtr stream)
@@ -533,8 +505,7 @@ namespace System.Windows.Media
 
         internal static unsafe int Read(ref StreamDescriptor pSD, IntPtr buffer, uint cb, out uint cbRead)
         {
-            var span = new Span<byte>(buffer.ToPointer(), (int) cb);
-            return (StreamAsIStream.FromSD(ref pSD)).Read(span, out cbRead);
+            return (StreamAsIStream.FromSD(ref pSD)).Read(new Span<byte>((void*)buffer, (int)cb), out cbRead);
         }
 
         internal static int Revert(ref StreamDescriptor pSD)

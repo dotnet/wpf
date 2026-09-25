@@ -4,7 +4,7 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using MS.Internal.Text.TextInterface.Interfaces;
+using MS.Internal.Interop.DWrite;
 
 namespace MS.Internal.Text.TextInterface
 {
@@ -63,7 +63,7 @@ namespace MS.Internal.Text.TextInterface
                 FontFileEnumerator fontFileEnum = new FontFileEnumerator(
                                                           fontSourceCollection,
                                                           _fontFileLoader,
-                                                          (Native.IDWriteFactory*)factory.ToPointer()
+                                                          (IDWriteFactory*)factory.ToPointer()
                                                           );
                 IntPtr pIDWriteFontFileEnumeratorMirror = Marshal.GetComInterfaceForObject(
                                                         fontFileEnum,

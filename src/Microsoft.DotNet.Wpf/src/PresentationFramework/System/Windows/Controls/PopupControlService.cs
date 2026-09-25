@@ -330,7 +330,7 @@ namespace System.Windows.Controls
                 switch (triggerAction)
                 {
                     case ToolTipService.TriggerAction.Mouse:
-                        if (SafeArea != null)
+                        if (HasValidSafeArea)
                         {
                             // the mouse has moved over a tooltip owner o, while still
                             // within the safe area of the current tooltip (which must be from mouse).
@@ -909,8 +909,8 @@ namespace System.Windows.Controls
 
         private bool MouseHasLeftSafeArea()
         {
-            // if there is no SafeArea, the mouse didn't leave it
-            if (SafeArea == null)
+            // if there is no valid SafeArea, the mouse didn't leave it
+            if (!HasValidSafeArea)
                 return false;
 
             // if the current tooltip's owner is no longer being displayed, the safe area is no longer valid
@@ -925,6 +925,17 @@ namespace System.Windows.Controls
         }
 
         private ConvexHull SafeArea { get; set; }
+
+        private bool HasValidSafeArea
+        {
+            get
+            {
+                // There are plenty of Watsons which indicate that source might get disposed
+                // (i.e. underlying HWND gets destroyed) while we are still holding on it.
+                // If such a case treat it as if there is no valid safe area.
+                return SafeArea != null && SafeArea.IsValid;
+            }
+        }
 
         #endregion
 
@@ -1373,6 +1384,8 @@ namespace System.Windows.Controls
                     BuildHullIncrementally(points);
                 }
             }
+
+            internal bool IsValid => !_source.IsDisposed;
 
             // sort by y (and by x among equal y's)
             private void SortPoints(PointList points)

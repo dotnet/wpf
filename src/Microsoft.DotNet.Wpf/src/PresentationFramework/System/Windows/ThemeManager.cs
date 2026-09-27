@@ -2,8 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using Microsoft.Win32;
-using System.Windows.Appearance;
 using System.Windows.Navigation;
+using System.Windows.Shell;
 
 namespace System.Windows;
 
@@ -265,49 +265,42 @@ internal static class ThemeManager
         if (window == null || window.IsDisposed)
             return;
 
+        // The caption theme and the backdrop are owned by the window's WindowChromeWorker; the values pushed
+        // here apply when the chrome's CaptionTheme / BackdropType are left to Auto.
         if (IsFluentThemeEnabled || window.ThemeMode != ThemeMode.None)
         {
             bool useLightColors = GetUseLightColors(Application.Current.ThemeMode);
-            window.SetImmersiveDarkMode(!useLightColors);
-            WindowBackdropManager.SetBackdrop(window, WindowBackdropType.MainWindow);
+            WindowChromeWorker.EnsureWorker(window).ApplyThemeState(useLightColors, WindowBackdropKind.Mica);
         }
         else
         {
             // TODO : Remove the styles from windows which have BackdropDisabledWidowStyle
-            window.SetImmersiveDarkMode(false);
-            WindowBackdropManager.SetBackdrop(window, WindowBackdropType.None);
+            WindowChromeWorker.EnsureWorker(window).ApplyThemeState(true, WindowBackdropKind.None);
         }
 
     }
 
-    private static void ApplyStyleOnWindow(Window window, bool useLightColors)
+    internal static void ApplyStyleOnWindow(Window window, bool useLightColors)
     {
         if (window == null || window.IsDisposed)
             return;
 
-        // We only apply Style on window, if the Window.Style has not already been set to avoid overriding users setting. 
-        if (window.Style == null)
+        // We only apply Style on window, if the Window.Style has not already been set to avoid overriding users setting.
+        // The style is looked up by the window's own DefaultStyleKey rather than by typeof(Window): for Window and
+        // NavigationWindow this is the same key as before, while a derived window with its own theme style (for
+        // instance RibbonWindow, keyed by a ComponentResourceKey) keeps that style instead of getting the plain
+        // Fluent Window template, which would drop its WindowChrome.  A Fluent dictionary can still restyle such a
+        // window by defining a style with the same key, since application resources win over theme dictionaries.
+        if (window.Style == null && window.DefaultStyleKey != null)
         {
-            if(window is NavigationWindow)
-            {
-                window.SetResourceReference(FrameworkElement.StyleProperty, typeof(NavigationWindow));
-            }
-            else
-            {
-                window.SetResourceReference(FrameworkElement.StyleProperty, typeof(Window));
-            }            
+            window.SetResourceReference(FrameworkElement.StyleProperty, window.DefaultStyleKey);
         }
 
-        window.SetImmersiveDarkMode(!useLightColors);
-
-        if (SystemParameters.HighContrast)
-        {
-            WindowBackdropManager.SetBackdrop(window, WindowBackdropType.None);
-        }
-        else
-        {
-            WindowBackdropManager.SetBackdrop(window, WindowBackdropType.MainWindow);
-        }
+        // The caption theme and the backdrop are owned by the window's WindowChromeWorker, which attaches a
+        // SystemFrame WindowChrome when the window has none.  Explicit WindowChrome.CaptionTheme /
+        // BackdropType values set by the application take precedence over these theme defaults.
+        WindowBackdropKind backdrop = SystemParameters.HighContrast ? WindowBackdropKind.None : WindowBackdropKind.Mica;
+        WindowChromeWorker.EnsureWorker(window).ApplyThemeState(useLightColors, backdrop);
     }
 
     #endregion
@@ -451,7 +444,7 @@ internal static class ThemeManager
         return indices;
     }
 
-    private static bool IsSystemThemeLight()
+    internal static bool IsSystemThemeLight()
     {
         var useLightTheme = Registry.GetValue(RegPersonalizeKeyPath,
             "AppsUseLightTheme", null) as int?;

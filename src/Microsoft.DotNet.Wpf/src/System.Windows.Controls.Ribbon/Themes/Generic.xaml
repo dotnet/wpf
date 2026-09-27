@@ -1986,10 +1986,6 @@ To automatically copy the files, set the environment variable
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <Grid.Effect>
-                                <DropShadowEffect Color="White" BlurRadius="15.0" ShadowDepth="0"/>
-                            </Grid.Effect>
-
                             <primitives:RibbonQuickAccessToolBarPanel IsItemsHost="true" Name="PART_MainPanel" Grid.Column="0"/>
                             
                             <ContentPresenter Name="MainCustomizeMenuHost"
@@ -2097,11 +2093,14 @@ To automatically copy the files, set the environment variable
 
     <shell:WindowChrome x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=WindowChromeGeneric}" x:Shared="False"/>
 
-    <shell:WindowChrome x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=WindowChromeAeroLiteWithGlass}" x:Shared="False" NonClientFrameEdges="Bottom"/>
+    <!-- Windows 8 and later with composition: the system frame is kept and the client area is extended over it, so the
+         window lines up with the invisible borders of modern Windows and DWM draws the caption buttons.  The Ribbon
+         draws the icon and the title itself, so DWM must not paint its own copies. -->
+    <shell:WindowChrome x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=WindowChromeAeroLiteWithGlass}" x:Shared="False" FrameMode="ExtendedClientArea" ShowTitle="False" ShowSystemIcon="False"/>
 
     <shell:WindowChrome x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=WindowChromeAeroLiteBasic}" x:Shared="False" />
 
-    <shell:WindowChrome x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=WindowChromeAeroWithGlass}" x:Shared="False" NonClientFrameEdges="Bottom"/>
+    <shell:WindowChrome x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=WindowChromeAeroWithGlass}" x:Shared="False" NonClientFrameEdges="Bottom" ShowTitle="False" ShowSystemIcon="False"/>
 
     <shell:WindowChrome x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type ribbon:Ribbon},ResourceId=WindowChromeAeroBasic}" x:Shared="False" CornerRadius="9,9,0,0"/>
 
@@ -2216,121 +2215,6 @@ To automatically copy the files, set the environment variable
                                    VerticalAlignment="Center"/>
 
 
-                            <Grid HorizontalAlignment="Right"
-                                  Height="{Binding Path=(SystemParameters.WindowCaptionButtonHeight)}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="{Binding Path=(SystemParameters.WindowCaptionButtonWidth)}"/>
-                                    <ColumnDefinition Width="{Binding Path=(SystemParameters.WindowCaptionButtonWidth)}"/>
-                                    <ColumnDefinition Width="2"/>
-                                    <ColumnDefinition Width="{Binding Path=(SystemParameters.WindowCaptionButtonWidth)}"/>
-                                </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0"
-                                        Margin="4,2,-4,3"
-                                        Padding="0,0,2,0">
-                                    <Button Name="PART_MinimizeWindowButton"
-                                            shell:WindowChrome.IsHitTestVisibleInChrome="True"
-                                            Command="windows:SystemCommands.MinimizeWindowCommand"
-                                            Focusable="False"
-                                            Style="{StaticResource &#305;}">
-                                        <Path x:Name="MinimizeWindowButtonGlyph"
-                                              Stroke="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"
-                                              StrokeThickness="2">
-                                            <Path.Data>
-                                                <PathGeometry>
-                                                    <PathFigure StartPoint="0,6">
-                                                        <LineSegment Point="6,6"/>
-                                                    </PathFigure>
-                                                </PathGeometry>
-                                            </Path.Data>
-                                        </Path>
-                                    </Button>
-                                </Border>
-                                <Border Grid.Column="1"
-                                        Margin="2,2,-2,3"
-                                        Padding="0,0,2,0">
-                                    <Grid>
-                                        <Button Name="PART_RestoreWindowButton"
-                                                shell:WindowChrome.IsHitTestVisibleInChrome="True"
-                                                Command="windows:SystemCommands.RestoreWindowCommand"
-                                                Focusable="False"
-                                                Style="{StaticResource &#305;}"
-                                                Visibility="Collapsed">
-                                            <Path x:Name="RestoreWindowButtonGlyph"
-                                                  Stroke="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"
-                                                  StrokeThickness="1">
-                                                <Path.Data>
-                                                    <PathGeometry>
-                                                        <PathFigure StartPoint="0,3" IsClosed="False">
-                                                            <LineSegment Point="0,8" />
-                                                            <LineSegment Point="5,8" />
-                                                            <LineSegment Point="5,3" />
-                                                            <LineSegment Point="0,3" />
-                                                            <LineSegment Point="0,4" />
-                                                            <LineSegment Point="5,4" />
-                                                            <LineSegment Point="5,5" />
-                                                            <LineSegment Point="7,5" />
-                                                            <LineSegment Point="7,0" />
-                                                            <LineSegment Point="2,0" />
-                                                            <LineSegment Point="2,1" />
-                                                            <LineSegment Point="7,1" />
-                                                        </PathFigure>
-                                                        <PathFigure StartPoint="2,1" IsClosed="False">
-                                                            <LineSegment Point="2,3" />
-                                                        </PathFigure>
-                                                    </PathGeometry>
-                                                </Path.Data>
-                                            </Path>
-                                        </Button>
-                                        <Button Name="PART_MaximizeWindowButton"
-                                                shell:WindowChrome.IsHitTestVisibleInChrome="True"
-                                                Command="windows:SystemCommands.MaximizeWindowCommand"
-                                                Focusable="False"
-                                                Style="{StaticResource &#305;}">
-                                            <Path x:Name="MaximizeWindowButtonGlyph"
-                                                  Stroke="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"
-                                                  StrokeThickness="1">
-                                                <Path.Data>
-                                                    <PathGeometry>
-                                                        <PathFigure StartPoint="0,0" IsClosed="False">
-                                                            <LineSegment Point="0,8" />
-                                                            <LineSegment Point="8,8" />
-                                                            <LineSegment Point="8,0" />
-                                                            <LineSegment Point="0,0" />
-                                                        </PathFigure>
-                                                        <PathFigure StartPoint="0.5,1">
-                                                            <LineSegment Point="7.5,1" />
-                                                        </PathFigure>
-                                                    </PathGeometry>
-                                                </Path.Data>
-                                            </Path>
-                                        </Button>
-                                    </Grid>
-                                </Border>
-                                <Border Grid.Column="3"
-                                        Margin="0,2,0,3"
-                                        Padding="0,0,2,0">
-                                    <Button Name="PART_CloseWindowButton"
-                                            shell:WindowChrome.IsHitTestVisibleInChrome="True"
-                                            Command="windows:SystemCommands.CloseWindowCommand"
-                                            Focusable="False"
-                                            Style="{StaticResource &#305;}">
-                                        <Path x:Name="CloseWindowButtonGlyph"
-                                              Stroke="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"
-                                              StrokeThickness="1.5">
-                                            <Path.Data>
-                                                <PathGeometry>
-                                                    <PathFigure StartPoint="0,0">
-                                                        <LineSegment Point="8,7"/>
-                                                    </PathFigure>
-                                                    <PathFigure StartPoint="8,0">
-                                                        <LineSegment Point="0,7"/>
-                                                    </PathFigure>
-                                                </PathGeometry>
-                                            </Path.Data>
-                                        </Path>
-                                    </Button>
-                                </Border>
-                            </Grid>
 
 
 
@@ -2461,6 +2345,128 @@ To automatically copy the files, set the environment variable
                           </Grid>
                         </Border>
 
+                        <!-- The caption buttons are declared after the content so that they stay above it: the content
+                             presenter spans the caption band too (the Ribbon draws its title there) and an opaque content
+                             root would otherwise cover the buttons and take their hit test. -->
+                        <Grid Margin="{Binding Path=(shell:WindowChrome.WindowChrome).ResizeBorderThickness, RelativeSource={RelativeSource TemplatedParent}}"
+                              Height="{Binding Path=(shell:WindowChrome.WindowChrome).CaptionHeight, RelativeSource={RelativeSource TemplatedParent}}"
+                              VerticalAlignment="Top">
+                            <Grid HorizontalAlignment="Right"
+                                  Height="{Binding Path=(SystemParameters.WindowCaptionButtonHeight)}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="{Binding Path=(SystemParameters.WindowCaptionButtonWidth)}"/>
+                                    <ColumnDefinition Width="{Binding Path=(SystemParameters.WindowCaptionButtonWidth)}"/>
+                                    <ColumnDefinition Width="2"/>
+                                    <ColumnDefinition Width="{Binding Path=(SystemParameters.WindowCaptionButtonWidth)}"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0"
+                                        Margin="4,2,-4,3"
+                                        Padding="0,0,2,0">
+                                    <Button Name="PART_MinimizeWindowButton"
+                                            shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                            Command="windows:SystemCommands.MinimizeWindowCommand"
+                                            Focusable="False"
+                                            Style="{StaticResource &#305;}">
+                                        <Path x:Name="MinimizeWindowButtonGlyph"
+                                              Stroke="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"
+                                              StrokeThickness="2">
+                                            <Path.Data>
+                                                <PathGeometry>
+                                                    <PathFigure StartPoint="0,6">
+                                                        <LineSegment Point="6,6"/>
+                                                    </PathFigure>
+                                                </PathGeometry>
+                                            </Path.Data>
+                                        </Path>
+                                    </Button>
+                                </Border>
+                                <Border Grid.Column="1"
+                                        Margin="2,2,-2,3"
+                                        Padding="0,0,2,0">
+                                    <Grid>
+                                        <Button Name="PART_RestoreWindowButton"
+                                                shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                                Command="windows:SystemCommands.RestoreWindowCommand"
+                                                Focusable="False"
+                                                Style="{StaticResource &#305;}"
+                                                Visibility="Collapsed">
+                                            <Path x:Name="RestoreWindowButtonGlyph"
+                                                  Stroke="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"
+                                                  StrokeThickness="1">
+                                                <Path.Data>
+                                                    <PathGeometry>
+                                                        <PathFigure StartPoint="0,3" IsClosed="False">
+                                                            <LineSegment Point="0,8" />
+                                                            <LineSegment Point="5,8" />
+                                                            <LineSegment Point="5,3" />
+                                                            <LineSegment Point="0,3" />
+                                                            <LineSegment Point="0,4" />
+                                                            <LineSegment Point="5,4" />
+                                                            <LineSegment Point="5,5" />
+                                                            <LineSegment Point="7,5" />
+                                                            <LineSegment Point="7,0" />
+                                                            <LineSegment Point="2,0" />
+                                                            <LineSegment Point="2,1" />
+                                                            <LineSegment Point="7,1" />
+                                                        </PathFigure>
+                                                        <PathFigure StartPoint="2,1" IsClosed="False">
+                                                            <LineSegment Point="2,3" />
+                                                        </PathFigure>
+                                                    </PathGeometry>
+                                                </Path.Data>
+                                            </Path>
+                                        </Button>
+                                        <Button Name="PART_MaximizeWindowButton"
+                                                shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                                Command="windows:SystemCommands.MaximizeWindowCommand"
+                                                Focusable="False"
+                                                Style="{StaticResource &#305;}">
+                                            <Path x:Name="MaximizeWindowButtonGlyph"
+                                                  Stroke="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"
+                                                  StrokeThickness="1">
+                                                <Path.Data>
+                                                    <PathGeometry>
+                                                        <PathFigure StartPoint="0,0" IsClosed="False">
+                                                            <LineSegment Point="0,8" />
+                                                            <LineSegment Point="8,8" />
+                                                            <LineSegment Point="8,0" />
+                                                            <LineSegment Point="0,0" />
+                                                        </PathFigure>
+                                                        <PathFigure StartPoint="0.5,1">
+                                                            <LineSegment Point="7.5,1" />
+                                                        </PathFigure>
+                                                    </PathGeometry>
+                                                </Path.Data>
+                                            </Path>
+                                        </Button>
+                                    </Grid>
+                                </Border>
+                                <Border Grid.Column="3"
+                                        Margin="0,2,0,3"
+                                        Padding="0,0,2,0">
+                                    <Button Name="PART_CloseWindowButton"
+                                            shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                            Command="windows:SystemCommands.CloseWindowCommand"
+                                            Focusable="False"
+                                            Style="{StaticResource &#305;}">
+                                        <Path x:Name="CloseWindowButtonGlyph"
+                                              Stroke="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}"
+                                              StrokeThickness="1.5">
+                                            <Path.Data>
+                                                <PathGeometry>
+                                                    <PathFigure StartPoint="0,0">
+                                                        <LineSegment Point="8,7"/>
+                                                    </PathFigure>
+                                                    <PathFigure StartPoint="8,0">
+                                                        <LineSegment Point="0,7"/>
+                                                    </PathFigure>
+                                                </PathGeometry>
+                                            </Path.Data>
+                                        </Path>
+                                    </Button>
+                                </Border>
+                            </Grid>
+                        </Grid>
                     </Grid>
 
                     <ControlTemplate.Triggers>
@@ -2616,14 +2622,17 @@ To automatically copy the files, set the environment variable
                                   BorderThickness="0,0,0,1"
                                   Visibility="Collapsed"/>
 
-                    <DockPanel Grid.Column="0" Grid.ColumnSpan="3" Height="{Binding Path=(SystemParameters.WindowCaptionHeight)}" LastChildFill="True">
+                    <!-- Inside a RibbonWindow the title area is as tall as the system caption band (WindowChrome.TitleBarBounds);
+                         elsewhere that value is zero and the caption height applies. -->
+                    <DockPanel Grid.Column="0" Grid.ColumnSpan="3" Height="{Binding Path=(shell:WindowChrome.TitleBarBounds).Height, RelativeSource={RelativeSource Self}}" MinHeight="{Binding Path=(SystemParameters.WindowCaptionHeight)}" LastChildFill="True">
 
 
 
                         <!-- This makes sure that the title and QAT does not overlap the close minimize and restore buttons. -->
                         <ContentControl x:Name="windowButtonPlaceHolder"
 
-                                        Width="{Binding Path=(SystemParameters.WindowCaptionButtonWidth)}"
+                                        Width="{Binding Path=(shell:WindowChrome.CaptionButtonsBounds).Width, RelativeSource={RelativeSource Self}}"
+                                        MinWidth="{Binding Path=(SystemParameters.WindowCaptionButtonWidth)}"
 
 
 
@@ -2635,10 +2644,10 @@ To automatically copy the files, set the environment variable
                         <ContentControl x:Name="windowIconPadding"
 
                                         Width="{Binding Path=(SystemParameters.SmallIconWidth)}"
+                                        Margin="8,0,3,0"
 
 
 
-                                        Margin="0,0,3,0"
                                         IsHitTestVisible="False" 
                                         DockPanel.Dock="Left" 
                                         Focusable="False"/>
@@ -2680,40 +2689,29 @@ To automatically copy the files, set the environment variable
                                               TextBlock.FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}"
                                               TextBlock.FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}"
                                               TextBlock.FontWeight="{DynamicResource {x:Static SystemFonts.CaptionFontWeightKey}}"
-                                              TextElement.Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"
+
+                                              TextElement.Foreground="{Binding Path=(shell:WindowChrome.CaptionForeground), RelativeSource={RelativeSource Self}}"
+
+
+
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               Margin="3,0"
 
-                                              MinHeight="{Binding Path=(SystemParameters.WindowCaptionHeight)}"
 
 
 
                                               MinWidth="75"
                                               IsHitTestVisible="False">
                                 <ContentPresenter.Resources>
-                                    <!-- Glowing effect around Title in Aero glass theme -->
+                                    <!-- The title is drawn over the system caption; no glow is needed on the solid captions of
+                                         Windows 8 and later. -->
                                     <DataTemplate DataType="{x:Type system:String}">
-                                        <TextBlock x:Name="titleTextBlock" 
+                                        <TextBlock x:Name="titleTextBlock"
                                                    Margin="0,-2,0,0"
                                                    Text="{TemplateBinding Content}"
                                                    TextTrimming="CharacterEllipsis"
                                                    HorizontalAlignment="{TemplateBinding HorizontalAlignment}"/>
                                         <DataTemplate.Triggers>
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-
-                                                    <Condition Binding="{Binding Path=(SystemParameters.IsGlassEnabled)}" Value="True"/>
-
-
-
-                                                    <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ribbon:Ribbon}, Path=IsHostedInRibbonWindow}" Value="True" />
-                                                </MultiDataTrigger.Conditions>
-                                                <Setter TargetName="titleTextBlock" Property="TextBlock.Effect">
-                                                    <Setter.Value>
-                                                        <DropShadowEffect Color="White" BlurRadius="5.0" ShadowDepth="0"/>
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </MultiDataTrigger>
 
                                             <DataTrigger Binding="{Binding Path=(SystemParameters.IsGlassEnabled)}" Value="False">
 

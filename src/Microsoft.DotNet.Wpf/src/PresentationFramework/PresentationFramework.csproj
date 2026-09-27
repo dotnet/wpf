@@ -419,7 +419,6 @@
     <Compile Include="System\Windows\Annotations\Storage\AnnotationStore.cs" />
     <Compile Include="System\Windows\Annotations\Storage\StoreContentChangedEventArgs.cs" />
     <Compile Include="System\Windows\Annotations\Storage\XmlStreamStore.cs" />
-    <Compile Include="System\Windows\Appearance\WindowBackdropManager.cs" />
     <Compile Include="System\Windows\Application.cs" />
     <Compile Include="System\Windows\AttachedPropertyBrowsableForChildrenAttribute.cs" />
     <Compile Include="System\Windows\Automation\Peers\ButtonAutomationPeer.cs" />
@@ -1302,7 +1301,9 @@
     <Compile Include="System\Windows\Shell\JumpTask.cs" />
     <Compile Include="System\Windows\Shell\TaskbarItemInfo.cs" />
     <Compile Include="System\Windows\Shell\ThumbButtonInfo.cs" />
+    <Compile Include="System\Windows\Shell\CaptionTextColorHelper.cs" />
     <Compile Include="System\Windows\Shell\ThumbButtonInfoCollection.cs" />
+    <Compile Include="System\Windows\Shell\WindowCaptionAdorner.cs" />
     <Compile Include="System\Windows\Shell\WindowChrome.cs" />
     <Compile Include="System\Windows\Shell\WindowChromeWorker.cs" />
     <Compile Include="System\Windows\SizeChangedEventArgs.cs" />
@@ -1364,7 +1365,6 @@
     <Compile Include="System\Windows\VisualStateManager.cs" />
     <Compile Include="System\Windows\VisualTransition.cs" />
     <Compile Include="System\Windows\Window.cs" />
-    <Compile Include="System\Windows\WindowBackdropType.cs" />
     <Compile Include="System\Windows\WindowCollection.cs" />
   </ItemGroup>
 

@@ -253,7 +253,7 @@ public:
 
     // CMILGradientBrush members
 
-    BOOL IsRadial() { return FALSE; }
+    BOOL IsRadial() { return TRUE; }
 
     // Sweep-specific accessors
 

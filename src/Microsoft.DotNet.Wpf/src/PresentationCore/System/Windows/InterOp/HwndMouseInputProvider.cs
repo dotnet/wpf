@@ -1261,7 +1261,8 @@ namespace System.Windows.Interop
             {
                 // We have lost capture, but don't do anything else.
             }
-            else if(!_active && (actions & RawMouseActions.VerticalWheelRotate) == RawMouseActions.VerticalWheelRotate)
+            else if(!_active && ((actions & RawMouseActions.VerticalWheelRotate) == RawMouseActions.VerticalWheelRotate ||
+                                 (actions & RawMouseActions.HorizontalWheelRotate) == RawMouseActions.HorizontalWheelRotate))
             {
                 // report mouse wheel events as if they came from the window that
                 // is under the mouse (even though they are reported to the window

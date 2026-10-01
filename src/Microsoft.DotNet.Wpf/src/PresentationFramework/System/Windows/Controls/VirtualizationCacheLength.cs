@@ -65,12 +65,12 @@ namespace System.Windows.Controls
         {
             if (double.IsNaN(cacheBeforeViewport))
             {
-                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoNaN, "cacheBeforeViewport"));
+                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoNaN, nameof(cacheBeforeViewport)));
             }
 
             if (double.IsNaN(cacheAfterViewport))
             {
-                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoNaN, "cacheAfterViewport"));
+                throw new ArgumentException(SR.Format(SR.InvalidCtorParameterNoNaN, nameof(cacheAfterViewport)));
             }
 
             _cacheBeforeViewport = cacheBeforeViewport;

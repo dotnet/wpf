@@ -47,7 +47,7 @@ namespace MS.Internal.Automation
         {
             if (!(range is TextRangeProviderWrapper))
             {
-                throw new ArgumentException(SR.Format(SR.TextRangeProvider_InvalidRangeProvider, "range"));
+                throw new ArgumentException(SR.Format(SR.TextRangeProvider_InvalidRangeProvider, nameof(range)));
             }
 
             return (bool)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(Compare), range);
@@ -57,7 +57,7 @@ namespace MS.Internal.Automation
         {
             if (!(targetRange is TextRangeProviderWrapper))
             {
-                throw new ArgumentException(SR.Format(SR.TextRangeProvider_InvalidRangeProvider, "targetRange"));
+                throw new ArgumentException(SR.Format(SR.TextRangeProvider_InvalidRangeProvider, nameof(targetRange)));
             }
 
             object[] args = new object[] { endpoint, targetRange, targetEndpoint };
@@ -120,7 +120,7 @@ namespace MS.Internal.Automation
         {
             if (!(targetRange is TextRangeProviderWrapper))
             {
-                throw new ArgumentException(SR.Format(SR.TextRangeProvider_InvalidRangeProvider, "targetRange"));
+                throw new ArgumentException(SR.Format(SR.TextRangeProvider_InvalidRangeProvider, nameof(targetRange)));
             }
 
             object[] args = new object[] { endpoint, targetRange, targetEndpoint };

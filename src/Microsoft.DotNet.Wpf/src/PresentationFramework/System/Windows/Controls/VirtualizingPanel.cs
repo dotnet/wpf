@@ -6,6 +6,7 @@ using MS.Internal;
 using System.Collections.Specialized;
 using System.Windows.Media;
 using System.Windows.Controls.Primitives;   // IItemContainerGenerator
+using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Controls
 {
@@ -333,7 +334,8 @@ namespace System.Windows.Controls
         private static object CoerceIsVirtualizingWhenGrouping(DependencyObject d, object baseValue)
         {
             bool isVirtualizing = GetIsVirtualizing(d);
-            return isVirtualizing && (bool)baseValue;
+
+            return BooleanBoxes.Box(isVirtualizing && (bool)baseValue);
         }
 
         internal static void OnVirtualizationPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

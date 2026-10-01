@@ -83,21 +83,9 @@ namespace Microsoft.Build.Tasks.Windows
                         Log.LogMessageFromResources(nameof(SR.CommentFileGenerated), _outputFile);
                     }
                 }
-                catch (Exception e)
+                catch (Exception e) when (e is not (NullReferenceException or SEHException))
                 {
-                    if (e is NullReferenceException || e is SEHException)
-                    {
-                        throw;
-                    }
-                    else
-                    {
-                        Log.LogErrorFromException(e);
-                        return false;
-                    }
-                }
-                catch // Non-CLS compliant errors
-                {
-                    Log.LogErrorWithCodeFromResources(nameof(SR.NonClsError));
+                    Log.LogErrorFromException(e);
                     return false;
                 }
             }

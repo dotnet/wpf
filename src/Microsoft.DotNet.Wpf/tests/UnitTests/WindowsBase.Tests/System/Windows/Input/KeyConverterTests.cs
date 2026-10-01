@@ -23,8 +23,7 @@ public class KeyConverterTests
         yield return new object?[] { new CustomTypeDescriptorContext(), typeof(Key), false };
         yield return new object?[] { new CustomTypeDescriptorContext { Instance = new object() }, null, false };
         yield return new object?[] { new CustomTypeDescriptorContext { Instance = new object() }, typeof(object), false };
-        // TODO: this should not throw.
-        //yield return new object?[] { new CustomTypeDescriptorContext { Instance = new object() }, typeof(string), false };
+        yield return new object?[] { new CustomTypeDescriptorContext { Instance = new object() }, typeof(string), false };
         yield return new object?[] { new CustomTypeDescriptorContext { Instance = new object() }, typeof(InstanceDescriptor), false };
         yield return new object?[] { new CustomTypeDescriptorContext { Instance = new object() }, typeof(Key), false };
         yield return new object?[] { new CustomTypeDescriptorContext { Instance = Key.None }, null, false };
@@ -40,6 +39,7 @@ public class KeyConverterTests
         yield return new object?[] { new CustomTypeDescriptorContext { Instance = Key.A }, null, false };
         yield return new object?[] { new CustomTypeDescriptorContext { Instance = Key.A }, typeof(object), false };
         yield return new object?[] { new CustomTypeDescriptorContext { Instance = Key.A }, typeof(string), true };
+        yield return new object?[] { new CustomTypeDescriptorContext { Instance = (int)Key.A }, typeof(string), false };
         yield return new object?[] { new CustomTypeDescriptorContext { Instance = Key.A }, typeof(InstanceDescriptor), false };
         yield return new object?[] { new CustomTypeDescriptorContext { Instance = Key.A }, typeof(Key), false };
         yield return new object?[] { new CustomTypeDescriptorContext { Instance = Key.OemClear }, null, false };
@@ -70,15 +70,6 @@ public class KeyConverterTests
     {
         var converter = new KeyConverter();
         Assert.Equal(expected, converter.CanConvertTo(context, destinationType));
-    }
-
-    [Fact]
-    public void CanConvertTo_InvokeToStringInstanceNotKey_ThrowsInvalidCastException()
-    {
-        // TODO: this should return false.
-        var converter = new KeyConverter();
-        var context = new CustomTypeDescriptorContext { Instance = new object() };
-        Assert.Throws<InvalidCastException>(() => converter.CanConvertTo(context, typeof(string)));
     }
 
     public static IEnumerable<object[]> ConvertTo_KeyToString_TestData()
@@ -142,7 +133,7 @@ public class KeyConverterTests
         Assert.Equal(expected, converter.ConvertTo(new CustomTypeDescriptorContext(), null, value, typeof(string)));
         Assert.Equal(expected, converter.ConvertTo(new CustomTypeDescriptorContext(), CultureInfo.InvariantCulture, value, typeof(string)));
     }
-    
+
     [Theory]
     [InlineData((Key)int.MinValue)]
     [InlineData((Key)(-1))]
@@ -158,27 +149,14 @@ public class KeyConverterTests
 
     [Theory]
     [InlineData(null)]
-    // TODO: this should not throw InvalidCastException.
-    //[InlineData("", "")]
-    //[InlineData("value", "value")]
+    [InlineData("")]
+    [InlineData("value")]
     public void ConvertTo_InvokeNotKeyToStringNull_ThrowsNotSupportedException(object? value)
     {
         var converter = new KeyConverter();
         Assert.Throws<NotSupportedException>(() => converter.ConvertTo(value, typeof(string)));
         Assert.Throws<NotSupportedException>(() => converter.ConvertTo(new CustomTypeDescriptorContext(), null, value, typeof(string)));
         Assert.Throws<NotSupportedException>(() => converter.ConvertTo(new CustomTypeDescriptorContext(), CultureInfo.InvariantCulture, value, typeof(string)));
-    }
-
-    [Theory]
-    [InlineData("")]
-    [InlineData("value")]
-    public void ConvertTo_InvokeNotKeyToStringNotNull_ThrowsInvalidCastException(object value)
-    {
-        // TODO: this should not throw InvalidCastException.
-        var converter = new KeyConverter();
-        Assert.Throws<InvalidCastException>(() => converter.ConvertTo(value, typeof(string)));
-        Assert.Throws<InvalidCastException>(() => converter.ConvertTo(new CustomTypeDescriptorContext(), null, value, typeof(string)));
-        Assert.Throws<InvalidCastException>(() => converter.ConvertTo(new CustomTypeDescriptorContext(), CultureInfo.InvariantCulture, value, typeof(string)));
     }
 
     public static IEnumerable<object?[]> ConvertTo_CantConvert_TestData()

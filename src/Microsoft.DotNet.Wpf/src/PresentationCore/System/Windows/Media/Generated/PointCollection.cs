@@ -713,16 +713,16 @@ namespace System.Windows.Media
         {
             IFormatProvider formatProvider = System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS;
 
-            TokenizerHelper th = new TokenizerHelper(source, formatProvider);
+            ValueTokenizerHelper tokenizer = new(source, formatProvider);
             PointCollection resource = new PointCollection();
 
             Point value;
 
-            while (th.NextToken())
+            while (tokenizer.NextToken())
             {
                 value = new Point(
-                    Convert.ToDouble(th.GetCurrentToken(), formatProvider),
-                    Convert.ToDouble(th.NextTokenRequired(), formatProvider));
+                    double.Parse(tokenizer.GetCurrentToken(), formatProvider),
+                    double.Parse(tokenizer.NextTokenRequired(), formatProvider));
 
                 resource.Add(value);
             }

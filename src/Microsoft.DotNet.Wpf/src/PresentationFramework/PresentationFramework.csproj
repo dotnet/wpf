@@ -469,6 +469,7 @@
     <Compile Include="System\Windows\Automation\Peers\InkPresenterAutomationPeer.cs" />
     <Compile Include="System\Windows\Automation\Peers\ItemAutomationPeer.cs" />
     <Compile Include="System\Windows\Automation\Peers\ItemsControlAutomationPeer.cs" />
+    <Compile Include="System\Windows\Automation\Peers\ItemsControlElementAutomationPeer.cs" />
     <Compile Include="System\Windows\Automation\Peers\ItemsControlItemAutomationPeer.cs" />
     <Compile Include="System\Windows\Automation\Peers\ItemsControlWrapperAutomationPeer.cs" />
     <Compile Include="System\Windows\Automation\Peers\IViewAutomationPeer.cs" />

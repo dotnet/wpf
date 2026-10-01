@@ -494,10 +494,7 @@ namespace System.Windows.Annotations
         /// </summary>
         private void FireResourceChanged(string name)
         {
-            if (_propertyChanged != null)
-            {
-                _propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(name));
-            }
+            _propertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(name));
         }
 
         #endregion Private Methods

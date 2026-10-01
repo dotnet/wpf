@@ -363,11 +363,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(SkewTransform);
             AngleXProperty =
                   RegisterProperty("AngleX",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(SkewTransform),
                                    0.0,
                                    new PropertyChangedCallback(AngleXPropertyChanged),
                                    null,
@@ -376,7 +375,7 @@ namespace System.Windows.Media
             AngleYProperty =
                   RegisterProperty("AngleY",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(SkewTransform),
                                    0.0 ,
                                    new PropertyChangedCallback(AngleYPropertyChanged),
                                    null,
@@ -385,7 +384,7 @@ namespace System.Windows.Media
             CenterXProperty =
                   RegisterProperty("CenterX",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(SkewTransform),
                                    0.0,
                                    new PropertyChangedCallback(CenterXPropertyChanged),
                                    null,
@@ -394,7 +393,7 @@ namespace System.Windows.Media
             CenterYProperty =
                   RegisterProperty("CenterY",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(SkewTransform),
                                    0.0,
                                    new PropertyChangedCallback(CenterYPropertyChanged),
                                    null,

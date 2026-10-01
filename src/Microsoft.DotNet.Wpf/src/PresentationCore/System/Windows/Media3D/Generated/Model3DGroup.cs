@@ -460,11 +460,10 @@ namespace System.Windows.Media.Media3D
 
 
             // Initializations
-            Type typeofThis = typeof(Model3DGroup);
             ChildrenProperty =
                   RegisterProperty("Children",
                                    typeof(Model3DCollection),
-                                   typeofThis,
+                                   typeof(Model3DGroup),
                                    new FreezableDefaultValueFactory(Model3DCollection.Empty),
                                    new PropertyChangedCallback(ChildrenPropertyChanged),
                                    null,

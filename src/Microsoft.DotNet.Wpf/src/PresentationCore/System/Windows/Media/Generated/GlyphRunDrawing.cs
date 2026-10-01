@@ -361,11 +361,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(GlyphRunDrawing);
             GlyphRunProperty =
                   RegisterProperty("GlyphRun",
                                    typeof(GlyphRun),
-                                   typeofThis,
+                                   typeof(GlyphRunDrawing),
                                    null,
                                    new PropertyChangedCallback(GlyphRunPropertyChanged),
                                    null,
@@ -374,7 +373,7 @@ namespace System.Windows.Media
             ForegroundBrushProperty =
                   RegisterProperty("ForegroundBrush",
                                    typeof(Brush),
-                                   typeofThis,
+                                   typeof(GlyphRunDrawing),
                                    null,
                                    new PropertyChangedCallback(ForegroundBrushPropertyChanged),
                                    null,

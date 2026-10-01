@@ -322,11 +322,10 @@ namespace System.Windows.Media.Effects
 
 
             // Initializations
-            Type typeofThis = typeof(DropShadowBitmapEffect);
             ShadowDepthProperty =
                   RegisterProperty("ShadowDepth",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(DropShadowBitmapEffect),
                                    5.0,
                                    new PropertyChangedCallback(ShadowDepthPropertyChanged),
                                    null,
@@ -335,7 +334,7 @@ namespace System.Windows.Media.Effects
             ColorProperty =
                   RegisterProperty("Color",
                                    typeof(Color),
-                                   typeofThis,
+                                   typeof(DropShadowBitmapEffect),
                                    Colors.Black,
                                    new PropertyChangedCallback(ColorPropertyChanged),
                                    null,
@@ -344,7 +343,7 @@ namespace System.Windows.Media.Effects
             DirectionProperty =
                   RegisterProperty("Direction",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(DropShadowBitmapEffect),
                                    315.0,
                                    new PropertyChangedCallback(DirectionPropertyChanged),
                                    null,
@@ -353,7 +352,7 @@ namespace System.Windows.Media.Effects
             NoiseProperty =
                   RegisterProperty("Noise",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(DropShadowBitmapEffect),
                                    0.0,
                                    new PropertyChangedCallback(NoisePropertyChanged),
                                    null,
@@ -362,7 +361,7 @@ namespace System.Windows.Media.Effects
             OpacityProperty =
                   RegisterProperty("Opacity",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(DropShadowBitmapEffect),
                                    1.0,
                                    new PropertyChangedCallback(OpacityPropertyChanged),
                                    null,
@@ -371,7 +370,7 @@ namespace System.Windows.Media.Effects
             SoftnessProperty =
                   RegisterProperty("Softness",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(DropShadowBitmapEffect),
                                    0.5,
                                    new PropertyChangedCallback(SoftnessPropertyChanged),
                                    null,

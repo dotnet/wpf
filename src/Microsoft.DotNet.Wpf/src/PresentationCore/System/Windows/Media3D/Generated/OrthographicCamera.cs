@@ -311,11 +311,10 @@ namespace System.Windows.Media.Media3D
 
 
             // Initializations
-            Type typeofThis = typeof(OrthographicCamera);
             WidthProperty =
                   RegisterProperty("Width",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(OrthographicCamera),
                                    (double)2.0,
                                    new PropertyChangedCallback(WidthPropertyChanged),
                                    null,

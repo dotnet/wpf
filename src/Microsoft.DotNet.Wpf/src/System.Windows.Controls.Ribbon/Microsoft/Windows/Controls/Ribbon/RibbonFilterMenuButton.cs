@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -32,9 +32,8 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         static RibbonFilterMenuButton()
         {
-            Type ownerType = typeof(RibbonFilterMenuButton);
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            RibbonControlService.CanAddToQuickAccessToolBarDirectlyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonFilterMenuButton), new FrameworkPropertyMetadata(typeof(RibbonFilterMenuButton)));
+            RibbonControlService.CanAddToQuickAccessToolBarDirectlyProperty.OverrideMetadata(typeof(RibbonFilterMenuButton), new FrameworkPropertyMetadata(false));
         }
         
         #endregion

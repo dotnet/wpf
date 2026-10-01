@@ -375,11 +375,10 @@ namespace System.Windows.Media.Media3D
 
 
             // Initializations
-            Type typeofThis = typeof(DiffuseMaterial);
             ColorProperty =
                   RegisterProperty("Color",
                                    typeof(Color),
-                                   typeofThis,
+                                   typeof(DiffuseMaterial),
                                    Colors.White,
                                    new PropertyChangedCallback(ColorPropertyChanged),
                                    null,
@@ -388,7 +387,7 @@ namespace System.Windows.Media.Media3D
             AmbientColorProperty =
                   RegisterProperty("AmbientColor",
                                    typeof(Color),
-                                   typeofThis,
+                                   typeof(DiffuseMaterial),
                                    Colors.White,
                                    new PropertyChangedCallback(AmbientColorPropertyChanged),
                                    null,
@@ -397,7 +396,7 @@ namespace System.Windows.Media.Media3D
             BrushProperty =
                   RegisterProperty("Brush",
                                    typeof(Brush),
-                                   typeofThis,
+                                   typeof(DiffuseMaterial),
                                    null,
                                    new PropertyChangedCallback(BrushPropertyChanged),
                                    null,

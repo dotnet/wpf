@@ -12545,31 +12545,86 @@ namespace System.Windows.Shell
         public ThumbButtonInfoCollection() { }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
     }
+    public enum WindowBackdropKind
+    {
+        Auto = 0,
+        None = 1,
+        Mica = 2,
+        Acrylic = 3,
+        Tabbed = 4,
+    }
+    public enum WindowCaptionTheme
+    {
+        Auto = 0,
+        Light = 1,
+        Dark = 2,
+    }
     public partial class WindowChrome : System.Windows.Freezable
     {
+        public static readonly System.Windows.DependencyProperty BackdropTypeProperty;
+        public static readonly System.Windows.DependencyProperty BorderColorProperty;
+        public static readonly System.Windows.DependencyProperty CaptionButtonsBoundsProperty;
+        public static readonly System.Windows.DependencyProperty CaptionButtonsClipProperty;
+        public static readonly System.Windows.DependencyProperty CaptionColorProperty;
+        public static readonly System.Windows.DependencyProperty CaptionForegroundProperty;
         public static readonly System.Windows.DependencyProperty CaptionHeightProperty;
+        public static readonly System.Windows.DependencyProperty CaptionTextColorProperty;
+        public static readonly System.Windows.DependencyProperty CaptionThemeProperty;
+        public static readonly System.Windows.DependencyProperty CornerPreferenceProperty;
         public static readonly System.Windows.DependencyProperty CornerRadiusProperty;
+        public static readonly System.Windows.DependencyProperty FrameModeProperty;
         public static readonly System.Windows.DependencyProperty GlassFrameThicknessProperty;
         public static readonly System.Windows.DependencyProperty IsHitTestVisibleInChromeProperty;
         public static readonly System.Windows.DependencyProperty NonClientFrameEdgesProperty;
         public static readonly System.Windows.DependencyProperty ResizeBorderThicknessProperty;
         public static readonly System.Windows.DependencyProperty ResizeGripDirectionProperty;
+        public static readonly System.Windows.DependencyProperty ShowSystemIconProperty;
+        public static readonly System.Windows.DependencyProperty ShowTitleProperty;
+        public static readonly System.Windows.DependencyProperty TitleBarBoundsProperty;
         public static readonly System.Windows.DependencyProperty UseAeroCaptionButtonsProperty;
         public static readonly System.Windows.DependencyProperty WindowChromeProperty;
         public WindowChrome() { }
+        public System.Windows.Shell.WindowBackdropKind BackdropType { get { throw null; } set { } }
+        public System.Windows.Media.Color? BorderColor { get { throw null; } set { } }
+        public System.Windows.Media.Color? CaptionColor { get { throw null; } set { } }
         public double CaptionHeight { get { throw null; } set { } }
+        public System.Windows.Media.Color? CaptionTextColor { get { throw null; } set { } }
+        public System.Windows.Shell.WindowCaptionTheme CaptionTheme { get { throw null; } set { } }
+        public System.Windows.Shell.WindowCornerPreference CornerPreference { get { throw null; } set { } }
         public System.Windows.CornerRadius CornerRadius { get { throw null; } set { } }
+        public System.Windows.Shell.WindowChromeFrameMode FrameMode { get { throw null; } set { } }
         public static System.Windows.Thickness GlassFrameCompleteThickness { get { throw null; } }
         public System.Windows.Thickness GlassFrameThickness { get { throw null; } set { } }
+        public static bool IsBackdropSupported { get { throw null; } }
+        public static bool IsCaptionCustomizationSupported { get { throw null; } }
         public System.Windows.Shell.NonClientFrameEdges NonClientFrameEdges { get { throw null; } set { } }
         public System.Windows.Thickness ResizeBorderThickness { get { throw null; } set { } }
+        public bool? ShowSystemIcon { get { throw null; } set { } }
+        public bool? ShowTitle { get { throw null; } set { } }
         public bool UseAeroCaptionButtons { get { throw null; } set { } }
         protected override System.Windows.Freezable CreateInstanceCore() { throw null; }
+        public static System.Windows.Rect GetCaptionButtonsBounds(System.Windows.DependencyObject element) { throw null; }
+        public static System.Windows.Media.Geometry GetCaptionButtonsClip(System.Windows.DependencyObject element) { throw null; }
+        public static System.Windows.Media.Brush GetCaptionForeground(System.Windows.DependencyObject element) { throw null; }
         public static bool GetIsHitTestVisibleInChrome(System.Windows.IInputElement inputElement) { throw null; }
         public static System.Windows.Shell.ResizeGripDirection GetResizeGripDirection(System.Windows.IInputElement inputElement) { throw null; }
+        public static System.Windows.Rect GetTitleBarBounds(System.Windows.DependencyObject element) { throw null; }
         public static System.Windows.Shell.WindowChrome GetWindowChrome(System.Windows.Window window) { throw null; }
         public static void SetIsHitTestVisibleInChrome(System.Windows.IInputElement inputElement, bool hitTestVisible) { }
         public static void SetResizeGripDirection(System.Windows.IInputElement inputElement, System.Windows.Shell.ResizeGripDirection direction) { }
         public static void SetWindowChrome(System.Windows.Window window, System.Windows.Shell.WindowChrome chrome) { }
+    }
+    public enum WindowChromeFrameMode
+    {
+        Custom = 0,
+        ExtendedClientArea = 1,
+        SystemFrame = 2,
+    }
+    public enum WindowCornerPreference
+    {
+        Default = 0,
+        DoNotRound = 1,
+        Round = 2,
+        RoundSmall = 3,
     }
 }

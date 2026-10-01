@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -92,6 +92,16 @@ namespace Standard
         public static bool IsOSWindows10OrNewer => _osVersion.Build >= 10240;
 
         /// <summary>
+        /// Whether the operating system version is greater than or equal to Windows 10 1809 (build 17763),
+        /// </summary>
+        public static bool IsOSWindows10_1809OrNewer => _osVersion.Build >= 17763;
+
+        /// <summary>
+        /// Whether the operating system version is greater than or equal to Windows 10 20H1 (build 18985),
+        /// </summary>
+        public static bool IsOSWindows10_20H1OrNewer => _osVersion.Build >= 18985;
+
+        /// <summary>
         /// Whether the operating system version is greater than or equal to 11.0* (build 22000).
         /// </summary>
         public static bool IsOSWindows11OrNewer => _osVersion.Build >= 22000;
@@ -100,6 +110,12 @@ namespace Standard
         /// Whether the operating system version is greater than or equal to 11.0* (build 22621).
         /// </summary>
         public static bool IsWindows11_22H2OrNewer => _osVersion.Build >= 22621;
+
+        /// <summary>Convert a Color to a native COLORREF (0x00BBGGRR).  The alpha channel is dropped.</summary>
+        public static uint ColorRefFromColor(Color color)
+        {
+            return (uint)(color.R | (color.G << 8) | (color.B << 16));
+        }
 
         public static BitmapFrame GetBestMatch(IList<BitmapFrame> frames, int width, int height)
         {

@@ -373,46 +373,57 @@ To automatically copy the files, set the environment variable
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ribbon:RibbonWindow}">
+                            <!-- With FrameMode=ExtendedClientArea the client area starts at the visible frame: the invisible
+                                 resize borders stay outside of it and only the top resize zone plus the caption band lie inside.
+                                 The Ribbon paints the caption band (title, QAT) and leaves the DWM caption buttons uncovered
+                                 through WindowChrome.CaptionButtonsBounds. -->
                             <Grid>
+                                <Grid.RowDefinitions>
+                                    <!-- Off-screen part of the caption band (maximized), then the visible band as tall as the system
+                                         caption buttons (WindowChrome.TitleBarBounds), then the client area. -->
+                                    <RowDefinition Height="{Binding Path=(shell:WindowChrome.TitleBarBounds).Y, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                    <RowDefinition Height="{Binding Path=(shell:WindowChrome.TitleBarBounds).Height, RelativeSource={RelativeSource TemplatedParent}}"
+                                                   MinHeight="{Binding Path=(shell:WindowChrome.WindowChrome).CaptionHeight, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
                                 <!-- We must place our template bindings on a separate Border since PART_RootContentPresenter extends into
-                                     non-client area, and setting BorderBrush or Background should only affect client area.
+                                     the caption band, and setting BorderBrush or Background should only affect client area.
                                      This deviates from Window, where setting Window.BorderThickness indents the Window.Content.
                                   -->
                                 <Border Name="PART_ClientAreaBorder"
-
-                                        Margin="{Binding Path=(SystemParameters.WindowNonClientFrameThickness)}"
-
-
-
+                                        Grid.Row="2"
                                         Background="{TemplateBinding Background}"
                                         BorderBrush="{TemplateBinding BorderBrush}"
                                         BorderThickness="{TemplateBinding BorderThickness}"/>
 
-                                <Border BorderThickness="{Binding Path=(shell:WindowChrome.WindowChrome).ResizeBorderThickness, RelativeSource={RelativeSource TemplatedParent}}">
-                                    <Grid>
-                                        <Image Name="PART_Icon"
-                                               shell:WindowChrome.IsHitTestVisibleInChrome="True"
-                                               Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Icon, Converter={StaticResource &#200;}}"
-                                               HorizontalAlignment="Left"
-                                               VerticalAlignment="Top"
+                                <Grid Grid.Row="1" Grid.RowSpan="2">
+                                    <AdornerDecorator>
+                                        <ContentPresenter Name="PART_RootContentPresenter"/>
+                                    </AdornerDecorator>
+                                    <ResizeGrip x:Name="WindowResizeGrip"
+                                                shell:WindowChrome.ResizeGripDirection="BottomRight"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Bottom"
+                                                Visibility="Collapsed"
+                                                IsTabStop="false"/>
+                                </Grid>
 
-                                               Width="{Binding Path=(SystemParameters.SmallIconWidth)}"
-                                               Height="{Binding Path=(SystemParameters.SmallIconHeight)}"/>
+                                <!-- The window icon sits in the caption band where the standard frame puts it; the Ribbon reserves
+                                     the same space (windowIconPadding) in its title area. -->
+                                <Image Name="PART_Icon"
+                                       Grid.Row="1"
+                                       shell:WindowChrome.IsHitTestVisibleInChrome="True"
+                                       Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Icon, Converter={StaticResource &#200;}}"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       Margin="8,0,0,0"
+
+                                       Width="{Binding Path=(SystemParameters.SmallIconWidth)}"
+                                       Height="{Binding Path=(SystemParameters.SmallIconHeight)}"/>
 
 
 
 
-                                        <AdornerDecorator>
-                                            <ContentPresenter Name="PART_RootContentPresenter"/>
-                                        </AdornerDecorator>
-                                        <ResizeGrip x:Name="WindowResizeGrip"
-                                                    shell:WindowChrome.ResizeGripDirection="BottomRight"
-                                                    HorizontalAlignment="Right"
-                                                    VerticalAlignment="Bottom"
-                                                    Visibility="Collapsed"
-                                                    IsTabStop="false"/>
-                                    </Grid>
-                                </Border>
                             </Grid>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="Icon" Value="{x:Null}">
@@ -421,9 +432,6 @@ To automatically copy the files, set the environment variable
 
 
 
-                                </Trigger>
-                                <Trigger Property="WindowState" Value="Maximized">
-                                    <Setter TargetName="PART_Icon" Property="Margin" Value="0,2,0,0"/>
                                 </Trigger>
                                 <MultiTrigger>
                                     <!-- There may be perf implications b/c of the following conditions.  We may cause

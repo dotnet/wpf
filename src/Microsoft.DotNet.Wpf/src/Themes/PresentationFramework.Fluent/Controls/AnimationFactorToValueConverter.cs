@@ -16,7 +16,7 @@ namespace Fluent.Controls
                 return 0.0;
             }
 
-            if (values[1] is not double factor || factor == double.NaN)
+            if (values[1] is not double factor || double.IsNaN(factor))
             {
                 return 0.0;
             }

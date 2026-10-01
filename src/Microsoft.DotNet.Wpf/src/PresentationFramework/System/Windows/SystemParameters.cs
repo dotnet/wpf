@@ -4998,56 +4998,56 @@ namespace System.Windows
 
         #region Cache and Implementation
 
+        private static ReadOnlySpan<short> CachedParameters => [NativeMethods.SPI_SETFOCUSBORDERWIDTH,
+                                                                NativeMethods.SPI_SETFOCUSBORDERHEIGHT,
+                                                                NativeMethods.SPI_SETHIGHCONTRAST,
+                                                                NativeMethods.SPI_SETMOUSEVANISH,
+                                                                NativeMethods.SPI_SETDROPSHADOW,
+                                                                NativeMethods.SPI_SETFLATMENU,
+                                                                NativeMethods.SPI_SETWORKAREA,
+                                                                NativeMethods.SPI_SETICONMETRICS,
+                                                                NativeMethods.SPI_SETKEYBOARDCUES,
+                                                                NativeMethods.SPI_SETKEYBOARDDELAY,
+                                                                NativeMethods.SPI_SETKEYBOARDPREF,
+                                                                NativeMethods.SPI_SETKEYBOARDSPEED,
+                                                                NativeMethods.SPI_SETSNAPTODEFBUTTON,
+                                                                NativeMethods.SPI_SETWHEELSCROLLLINES,
+                                                                NativeMethods.SPI_SETMOUSEHOVERTIME,
+                                                                NativeMethods.SPI_SETMOUSEHOVERHEIGHT,
+                                                                NativeMethods.SPI_SETMOUSEHOVERWIDTH,
+                                                                NativeMethods.SPI_SETMENUDROPALIGNMENT,
+                                                                NativeMethods.SPI_SETMENUFADE,
+                                                                NativeMethods.SPI_SETMENUSHOWDELAY,
+                                                                NativeMethods.SPI_SETCOMBOBOXANIMATION,
+                                                                NativeMethods.SPI_SETCLIENTAREAANIMATION,
+                                                                NativeMethods.SPI_SETCURSORSHADOW,
+                                                                NativeMethods.SPI_SETGRADIENTCAPTIONS,
+                                                                NativeMethods.SPI_SETHOTTRACKING,
+                                                                NativeMethods.SPI_SETLISTBOXSMOOTHSCROLLING,
+                                                                NativeMethods.SPI_SETMENUANIMATION,
+                                                                NativeMethods.SPI_SETSELECTIONFADE,
+                                                                NativeMethods.SPI_SETSTYLUSHOTTRACKING,
+                                                                NativeMethods.SPI_SETTOOLTIPANIMATION,
+                                                                NativeMethods.SPI_SETTOOLTIPFADE,
+                                                                NativeMethods.SPI_SETUIEFFECTS,
+                                                                NativeMethods.SPI_SETANIMATION,
+                                                                NativeMethods.SPI_SETCARETWIDTH,
+                                                                NativeMethods.SPI_SETFOREGROUNDFLASHCOUNT,
+                                                                NativeMethods.SPI_SETDRAGFULLWINDOWS,
+                                                                NativeMethods.SPI_SETBORDER,
+                                                                NativeMethods.SPI_SETNONCLIENTMETRICS,
+                                                                NativeMethods.SPI_SETDRAGWIDTH,
+                                                                NativeMethods.SPI_SETDRAGHEIGHT,
+                                                                NativeMethods.SPI_SETPENWINDOWS,
+                                                                NativeMethods.SPI_SETSHOWSOUNDS,
+                                                                NativeMethods.SPI_SETMOUSEBUTTONSWAP];
+
         internal static void InvalidateCache()
         {
-            // Invalidate all Parameters
-            int[] param = {  NativeMethods.SPI_SETFOCUSBORDERWIDTH,
-                             NativeMethods.SPI_SETFOCUSBORDERHEIGHT,
-                             NativeMethods.SPI_SETHIGHCONTRAST,
-                             NativeMethods.SPI_SETMOUSEVANISH,
-                             NativeMethods.SPI_SETDROPSHADOW,
-                             NativeMethods.SPI_SETFLATMENU,
-                             NativeMethods.SPI_SETWORKAREA,
-                             NativeMethods.SPI_SETICONMETRICS,
-                             NativeMethods.SPI_SETKEYBOARDCUES,
-                             NativeMethods.SPI_SETKEYBOARDDELAY,
-                             NativeMethods.SPI_SETKEYBOARDPREF,
-                             NativeMethods.SPI_SETKEYBOARDSPEED,
-                             NativeMethods.SPI_SETSNAPTODEFBUTTON,
-                             NativeMethods.SPI_SETWHEELSCROLLLINES,
-                             NativeMethods.SPI_SETMOUSEHOVERTIME,
-                             NativeMethods.SPI_SETMOUSEHOVERHEIGHT,
-                             NativeMethods.SPI_SETMOUSEHOVERWIDTH,
-                             NativeMethods.SPI_SETMENUDROPALIGNMENT,
-                             NativeMethods.SPI_SETMENUFADE,
-                             NativeMethods.SPI_SETMENUSHOWDELAY,
-                             NativeMethods.SPI_SETCOMBOBOXANIMATION,
-                             NativeMethods.SPI_SETCLIENTAREAANIMATION,
-                             NativeMethods.SPI_SETCURSORSHADOW,
-                             NativeMethods.SPI_SETGRADIENTCAPTIONS,
-                             NativeMethods.SPI_SETHOTTRACKING,
-                             NativeMethods.SPI_SETLISTBOXSMOOTHSCROLLING,
-                             NativeMethods.SPI_SETMENUANIMATION,
-                             NativeMethods.SPI_SETSELECTIONFADE,
-                             NativeMethods.SPI_SETSTYLUSHOTTRACKING,
-                             NativeMethods.SPI_SETTOOLTIPANIMATION,
-                             NativeMethods.SPI_SETTOOLTIPFADE,
-                             NativeMethods.SPI_SETUIEFFECTS,
-                             NativeMethods.SPI_SETANIMATION,
-                             NativeMethods.SPI_SETCARETWIDTH,
-                             NativeMethods.SPI_SETFOREGROUNDFLASHCOUNT,
-                             NativeMethods.SPI_SETDRAGFULLWINDOWS,
-                             NativeMethods.SPI_SETBORDER,
-                             NativeMethods.SPI_SETNONCLIENTMETRICS,
-                             NativeMethods.SPI_SETDRAGWIDTH,
-                             NativeMethods.SPI_SETDRAGHEIGHT,
-                             NativeMethods.SPI_SETPENWINDOWS,
-                             NativeMethods.SPI_SETSHOWSOUNDS,
-                             NativeMethods.SPI_SETMOUSEBUTTONSWAP};
-
-            for (int i = 0; i < param.Length; i++)
+            // Invalidate cached system parameters
+            for (int i = 0; i < CachedParameters.Length; i++)
             {
-                InvalidateCache(param[i]);
+                InvalidateCache(CachedParameters[i]);
             }
         }
 

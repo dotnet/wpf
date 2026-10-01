@@ -24,6 +24,10 @@ internal sealed unsafe class WpfOleServices : IOleServices
 
     public static void EnsureThreadState() => OleServicesContext.EnsureThreadState();
 
+    // WPF also provides enhanced metafiles, which are handled in GetDataHere.
+    public static TYMED AllowedTymeds =>
+        TYMED.TYMED_HGLOBAL | TYMED.TYMED_ISTREAM | TYMED.TYMED_GDI | TYMED.TYMED_ENHMF;
+
     public static HRESULT GetDataHere(string format, object data, FORMATETC* pformatetc, STGMEDIUM* pmedium)
     {
         TYMED mediumType = (TYMED)pformatetc->tymed;
@@ -40,13 +44,15 @@ internal sealed unsafe class WpfOleServices : IOleServices
         // Handle enhanced metafiles.
         if (mediumType.HasFlag(TYMED.TYMED_ENHMF) && format.Equals(DataFormatNames.Emf))
         {
+            HENHMETAFILE hemf = HENHMETAFILE.Null;
+
             if (SystemDrawingHelper.IsMetafile(data))
             {
-                pmedium->u.hEnhMetaFile = SystemDrawingHelper.GetHandleFromMetafile(data);
+                hemf = SystemDrawingHelper.GetHandleFromMetafile(data);
             }
             else if (data is MemoryStream memoryStream && memoryStream.GetBuffer() is { } buffer && buffer.Length != 0)
             {
-                HENHMETAFILE hemf = PInvoke.SetEnhMetaFileBits(buffer);
+                hemf = PInvoke.SetEnhMetaFileBits(buffer);
 
                 if (hemf.IsNull)
                 {
@@ -54,6 +60,13 @@ internal sealed unsafe class WpfOleServices : IOleServices
                 }
             }
 
+            if (hemf.IsNull)
+            {
+                return HRESULT.E_FAIL;
+            }
+
+            pmedium->tymed = TYMED.TYMED_ENHMF;
+            pmedium->u.hEnhMetaFile = hemf;
             return HRESULT.S_OK;
         }
 

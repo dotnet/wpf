@@ -25,7 +25,6 @@ namespace System.Windows.Media.Media3D
     /// <summary>
     /// A collection of Material objects.
     /// </summary>
-
     public sealed partial class MaterialCollection : Animatable, IList, IList<Material>
     {
         //------------------------------------------------------

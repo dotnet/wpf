@@ -101,15 +101,9 @@ namespace System.Windows
         /// bool - true if the object is an instance of Size and if it's equal to "this".
         /// </returns>
         /// <param name='o'>The object to compare to "this"</param>
-        public override bool Equals(object o)
+        public override readonly bool Equals(object o)
         {
-            if ((null == o) || !(o is Size))
-            {
-                return false;
-            }
-
-            Size value = (Size)o;
-            return Size.Equals(this,value);
+            return o is Size other && Size.Equals(this, other);
         }
 
         /// <summary>
@@ -123,7 +117,7 @@ namespace System.Windows
         /// bool - true if "value" is equal to "this".
         /// </returns>
         /// <param name='value'>The Size to compare to "this"</param>
-        public bool Equals(Size value)
+        public readonly bool Equals(Size value)
         {
             return Size.Equals(this, value);
         }
@@ -133,7 +127,7 @@ namespace System.Windows
         /// <returns>
         /// int - the HashCode for this Size
         /// </returns>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             if (IsEmpty)
             {

@@ -936,6 +936,17 @@ namespace System.Windows.Shell
                     link.SetDescription(jumpTask.Description);
                 }
 
+				if (jumpTask.FlagsToEnable != null)
+				{
+					var shellLinkDataList = (IShellLinkDataList)link;
+					shellLinkDataList.GetFlags(out uint flags);
+					foreach (uint flagToEnable in jumpTask.FlagsToEnable)
+					{
+						flags |= flagToEnable;
+					}
+					shellLinkDataList.SetFlags(flags);
+				}
+
                 IPropertyStore propStore = (IPropertyStore)link;
                 var pv = new PROPVARIANT();
                 try

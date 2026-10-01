@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //----------------------------------------------------------------------------------------
@@ -429,8 +429,8 @@ namespace MS.Internal
 
         #region private data
 
-        private MarkupCompiler _mc;
-        private string         _sourceDir;
+        private readonly MarkupCompiler _mc;
+        private readonly string _sourceDir;
         private TaskLoggingHelper _taskLogger;
         private int    _nErrors;
         private string _unknownErrorID;

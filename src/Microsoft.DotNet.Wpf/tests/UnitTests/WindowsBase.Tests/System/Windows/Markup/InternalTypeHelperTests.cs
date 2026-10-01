@@ -17,19 +17,19 @@ public class InternalTypeHelperTests
 
     private class SubInternalTypeHelper : InternalTypeHelper
     {
-        protected override void AddEventHandler(EventInfo eventInfo, object target, Delegate handler)
+        protected internal override void AddEventHandler(EventInfo eventInfo, object target, Delegate handler)
             => throw new NotImplementedException();
 
-        protected override Delegate CreateDelegate(Type delegateType, object target, string handler)
+        protected internal override Delegate CreateDelegate(Type delegateType, object target, string handler)
             => throw new NotImplementedException();
 
-        protected override object CreateInstance(Type type, CultureInfo culture)
+        protected internal override object CreateInstance(Type type, CultureInfo culture)
             => throw new NotImplementedException();
 
-        protected override object GetPropertyValue(PropertyInfo propertyInfo, object target, CultureInfo culture)
+        protected internal override object GetPropertyValue(PropertyInfo propertyInfo, object target, CultureInfo culture)
             => throw new NotImplementedException();
 
-        protected override void SetPropertyValue(PropertyInfo propertyInfo, object target, object value, CultureInfo culture)
+        protected internal override void SetPropertyValue(PropertyInfo propertyInfo, object target, object value, CultureInfo culture)
             => throw new NotImplementedException();
     }
 }

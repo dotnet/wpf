@@ -1,203 +1,77 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-//
-// 
-//
-// Description: Scroll pattern provider wrapper for WCP
-//
-//
+#nullable enable
 
-using System.Windows.Threading;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
 
-namespace MS.Internal.Automation
+namespace MS.Internal.Automation;
+
+/// <summary>
+/// Wrapper class for the <see cref="IScrollProvider"/> interface, calls through to the managed <see cref="AutomationPeer"/>
+/// that implements it. The calls are made on the peer's context to ensure that the correct synchronization context is used.
+/// </summary>
+internal sealed class ScrollProviderWrapper : MarshalByRefObject, IScrollProvider
 {
-    // Automation/WCP Wrapper class: Implements that UIAutomation I...Provider
-    // interface, and calls through to a WCP AutomationPeer which implements the corresponding
-    // I...Provider inteface. Marshalls the call from the RPC thread onto the
-    // target AutomationPeer's context.
-    //
-    // Class has two major parts to it:
-    // * Implementation of the I...Provider, which uses Dispatcher.Invoke
-    //   to call a private method (lives in second half of the class) via a delegate,
-    //   if necessary, packages any params into an object param. Return type of Invoke
-    //   must be cast from object to appropriate type.
-    // * private methods - one for each interface entry point - which get called back
-    //   on the right context. These call through to the peer that's actually
-    //   implenting the I...Provider version of the interface. 
+    private readonly AutomationPeer _peer;
+    private readonly IScrollProvider _iface;
 
-    internal class ScrollProviderWrapper: MarshalByRefObject, IScrollProvider
+    private ScrollProviderWrapper(AutomationPeer peer, IScrollProvider iface)
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
- 
-        #region Constructors
+        Debug.Assert(peer is not null);
+        Debug.Assert(iface is not null);
 
-        private ScrollProviderWrapper( AutomationPeer peer, IScrollProvider iface )
-        {
-            _peer = peer;
-            _iface = iface;
-        }
+        _peer = peer;
+        _iface = iface;
+    }
 
-        #endregion Constructors
+    public void Scroll(ScrollAmount horizontalAmount, ScrollAmount verticalAmount)
+    {
+        ElementUtil.Invoke(_peer, static (state, values) => state.Scroll(values[0], values[1]), _iface, new ScrollAmount[] { horizontalAmount, verticalAmount });
+    }
 
+    public void SetScrollPercent(double horizontalPercent, double verticalPercent)
+    {
+        ElementUtil.Invoke(_peer, static (state, values) => state.SetScrollPercent(values[0], values[1]), _iface, new double[] { horizontalPercent, verticalPercent });
+    }
 
-        //------------------------------------------------------
-        //
-        //  Interface IScrollProvider
-        //
-        //------------------------------------------------------
- 
-        #region Interface IScrollProvider
+    public double HorizontalScrollPercent
+    {
+        get => ElementUtil.Invoke(_peer, static (state) => state.HorizontalScrollPercent, _iface);
+    }
 
-        public void Scroll( ScrollAmount horizontalAmount, ScrollAmount verticalAmount )
-        {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( Scroll ), new ScrollAmount [ ] { horizontalAmount, verticalAmount } );
-        }
+    public double VerticalScrollPercent
+    {
+        get => ElementUtil.Invoke(_peer, static (state) => state.VerticalScrollPercent, _iface);
+    }
 
-        public void SetScrollPercent( double horizontalPercent, double verticalPercent )
-        {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( SetScrollPercent ), new double [ ] { horizontalPercent, verticalPercent } );
-        }
-        
-        public double HorizontalScrollPercent
-        {
-            get
-            {
-                return (double) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetHorizontalScrollPercent ), null );
-            }
-        }
+    public double HorizontalViewSize
+    {
+        get => ElementUtil.Invoke(_peer, static (state) => state.HorizontalViewSize, _iface);
+    }
 
-        public double VerticalScrollPercent
-        {
-            get
-            {
-                return (double) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetVerticalScrollPercent ), null );
-            }
-        }
+    public double VerticalViewSize
+    {
+        get => ElementUtil.Invoke(_peer, static (state) => state.VerticalViewSize, _iface);
+    }
 
-        public double HorizontalViewSize
-        {
-            get
-            {
-                return (double) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetHorizontalViewSize ), null );
-            }
-        }
+    public bool HorizontallyScrollable
+    {
+        get => ElementUtil.Invoke(_peer, static (state) => state.HorizontallyScrollable, _iface);
+    }
 
-        public double VerticalViewSize
-        {
-            get
-            {
-                return (double) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetVerticalViewSize ), null );
-            }
-        }
-        
-        public bool HorizontallyScrollable
-        {
-            get
-            {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetHorizontallyScrollable ), null );
-            }
-        }
-        
-        public bool VerticallyScrollable
-        {
-            get
-            {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetVerticallyScrollable ), null );
-            }
-        }
+    public bool VerticallyScrollable
+    {
+        get => ElementUtil.Invoke(_peer, static (state) => state.VerticallyScrollable, _iface);
+    }
 
-        #endregion Interface IScrollProvider
-
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
- 
-        #region Internal Methods
-
-        internal static object Wrap( AutomationPeer peer, object iface )
-        {
-            return new ScrollProviderWrapper( peer, (IScrollProvider) iface );
-        }
-
-        #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
- 
-        #region Private Methods
-
-        private object Scroll( object arg )
-        {
-            ScrollAmount [ ] args = (ScrollAmount [ ]) arg;
-            _iface.Scroll( args[ 0 ], args[ 1 ] );
-            return null;
-        }
-
-        private object SetScrollPercent( object arg )
-        {
-            double [ ] args = (double [ ]) arg;
-            _iface.SetScrollPercent( args[ 0 ], args[ 1 ] );
-            return null;
-        }
-        
-        private object GetHorizontalScrollPercent( object unused )
-        {
-            return _iface.HorizontalScrollPercent;
-        }
-
-        private object GetVerticalScrollPercent( object unused )
-        {
-            return _iface.VerticalScrollPercent;
-        }
-
-        private object GetHorizontalViewSize( object unused )
-        {
-            return _iface.HorizontalViewSize;
-        }
-
-        private object GetVerticalViewSize( object unused )
-        {
-            return _iface.VerticalViewSize;
-        }
-        
-        private object GetHorizontallyScrollable( object unused )
-        {
-            return _iface.HorizontallyScrollable;
-        }
-        
-        private object GetVerticallyScrollable( object unused )
-        {
-            return _iface.VerticallyScrollable;
-        }
-
-        #endregion Private Methods
-
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
- 
-        #region Private Fields
-
-        private AutomationPeer _peer;
-        private IScrollProvider _iface;
-
-        #endregion Private Fields
+    /// <summary>
+    /// Creates a wrapper for the given <see cref="AutomationPeer"/> and <see cref="IScrollProvider"/> interface.
+    /// </summary>
+    internal static object Wrap(AutomationPeer peer, object iface)
+    {
+        return new ScrollProviderWrapper(peer, (IScrollProvider)iface);
     }
 }

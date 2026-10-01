@@ -607,8 +607,11 @@ namespace MS.Internal.Automation
                                     _start = lineRange.Start.CreatePointer();
                                 }
                                 // If this line contains also end position, move it to the
-                                // end of this line.
-                                if (lineRange.Contains(_end))
+                                // end of this line. Also handle blank/empty lines where
+                                // lineRange.Start == lineRange.End (ContentLength == 0):
+                                // snap _end to the blank line boundary so expandEnd doesn't
+                                // bleed into the next line.
+                                if (lineRange.Contains(_end) || lineRange.Start.CompareTo(lineRange.End) == 0)
                                 {
                                     snapEndPosition = false;
                                     if (_end.CompareTo(lineRange.End) != 0)

@@ -2388,35 +2388,46 @@ namespace System.Windows.Controls
             switch (args.Action)
             {
                 case NotifyCollectionChangedAction.Add:
+
+                    // Treat range operations as refresh operations, for minimum support.
+                    // This can be expanded later with a better implementation, if needed.
                     if (args.NewItems.Count != 1)
-                        throw new NotSupportedException(SR.RangeActionsNotSupported);
-                    OnItemAdded(args.NewItems[0], args.NewStartingIndex);
+                        OnRefresh();
+                    else
+                        OnItemAdded(args.NewItems[0], args.NewStartingIndex);
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
                     if (args.OldItems.Count != 1)
-                        throw new NotSupportedException(SR.RangeActionsNotSupported);
-                    OnItemRemoved(args.OldItems[0], args.OldStartingIndex);
+                        OnRefresh();
+                    else
+                        OnItemRemoved(args.OldItems[0], args.OldStartingIndex);
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
-                    // Don't check arguments if app targets 4.0, for compat ( 726682)
+                    // Don't check arguments if app targets 4.0, for compat (726682)
                     if (!FrameworkCompatibilityPreferences.TargetsDesktop_V4_0)
                     {
                         if (args.OldItems.Count != 1)
-                            throw new NotSupportedException(SR.RangeActionsNotSupported);
+                            OnRefresh();
+                        else
+                            OnItemReplaced(args.OldItems[0], args.NewItems[0], args.NewStartingIndex);
                     }
-                    OnItemReplaced(args.OldItems[0], args.NewItems[0], args.NewStartingIndex);
+                    else
+                        OnItemReplaced(args.OldItems[0], args.NewItems[0], args.NewStartingIndex);
                     break;
 
                 case NotifyCollectionChangedAction.Move:
-                    // Don't check arguments if app targets 4.0, for compat ( 726682)
+                    // Don't check arguments if app targets 4.0, for compat (726682)
                     if (!FrameworkCompatibilityPreferences.TargetsDesktop_V4_0)
                     {
                         if (args.OldItems.Count != 1)
-                            throw new NotSupportedException(SR.RangeActionsNotSupported);
+                            OnRefresh();
+                        else
+                            OnItemMoved(args.OldItems[0], args.OldStartingIndex, args.NewStartingIndex);
                     }
-                    OnItemMoved(args.OldItems[0], args.OldStartingIndex, args.NewStartingIndex);
+                    else
+                        OnItemMoved(args.OldItems[0], args.OldStartingIndex, args.NewStartingIndex);
                     break;
 
                 case NotifyCollectionChangedAction.Reset:

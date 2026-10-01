@@ -24,7 +24,13 @@ namespace MS.Internal.AutomationProxies
         #region Constructors
 
         private MSAAEventDispatcher()
-            : base(NativeMethods.EVENT_OBJECT_CREATE, NativeMethods.EVENT_OBJECT_ACCELERATORCHANGE)
+            : base(
+                NativeMethods.EVENT_OBJECT_CREATE,
+                NativeMethods.EVENT_OBJECT_ACCELERATORCHANGE,
+                ExpandCollapsePattern.ExpandCollapseStateProperty.Id,
+                ExpandCollapsePattern.ExpandCollapseStateProperty.Id,
+                TogglePattern.ToggleStateProperty.Id,
+                TogglePattern.ToggleStateProperty.Id)
         { }
 
         #endregion Constructors
@@ -179,6 +185,13 @@ namespace MS.Internal.AutomationProxies
                 // get the 2-nd level table of events and properties we are listening for in this window
                 Hashtable eventTable = (Hashtable)_hwndTable[hwnd];
 
+                AutomationProperty property = GetPatternPropertyFromWinEvent(eventId);
+                if (property != null)
+                {
+                    MaybeFirePropertyChangeEvent(null, property, eventTable, hwnd, idObject, idChild, true);
+                    return;
+                }
+
                 switch (eventId)
                 {
                     case NativeMethods.EVENT_OBJECT_CREATE:
@@ -242,6 +255,18 @@ namespace MS.Internal.AutomationProxies
 //                        break;
                 }
             }
+
+        }
+
+        internal static AutomationProperty GetPatternPropertyFromWinEvent(int eventId)
+        {
+            if (eventId == ExpandCollapsePattern.ExpandCollapseStateProperty.Id)
+                return ExpandCollapsePattern.ExpandCollapseStateProperty;
+
+            if (eventId == TogglePattern.ToggleStateProperty.Id)
+                return TogglePattern.ToggleStateProperty;
+
+            return null;
         }
 
         #endregion Internal Methods

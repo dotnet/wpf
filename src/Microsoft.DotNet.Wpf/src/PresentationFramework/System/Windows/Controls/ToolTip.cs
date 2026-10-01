@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Windows.Threading;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls.Primitives;
-using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Controls
 {
@@ -24,7 +23,7 @@ namespace System.Windows.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ToolTip), new FrameworkPropertyMetadata(typeof(ToolTip)));
             _dType = DependencyObjectType.FromSystemTypeInternal(typeof(ToolTip));
             BackgroundProperty.OverrideMetadata(typeof(ToolTip), new FrameworkPropertyMetadata(SystemColors.InfoBrush));
-            FocusableProperty.OverrideMetadata(typeof(ToolTip), new FrameworkPropertyMetadata(false));
+            FocusableProperty.OverrideMetadata(typeof(ToolTip), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
         }
 
         /// <summary>

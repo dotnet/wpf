@@ -1,12 +1,12 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Windows.Controls;
+using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-
-using System;
+using MS.Internal.KnownBoxes;
 
 namespace Microsoft.Windows.Themes
 {
@@ -22,7 +22,8 @@ namespace Microsoft.Windows.Themes
 
         static BulletChrome()
         {
-            IsEnabledProperty.OverrideMetadata(typeof(BulletChrome), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender, new PropertyChangedCallback(OnIsEnabledChanged)));
+            IsEnabledProperty.OverrideMetadata(typeof(BulletChrome), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox,
+                FrameworkPropertyMetadataOptions.AffectsRender, new PropertyChangedCallback(OnIsEnabledChanged)));
         }
 
         private static void OnIsEnabledChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)

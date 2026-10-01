@@ -164,7 +164,7 @@ namespace System.Windows.Controls.Primitives
             Debug.Assert(e.NewValue is bool);
             bool isEnabled = (bool)e.NewValue;
 
-            SetCurrentValueInternal(IsReadOnlyProperty, MS.Internal.KnownBoxes.BooleanBoxes.Box(!isEnabled));
+            SetCurrentValueInternal(IsReadOnlyProperty, BooleanBoxes.Box(!isEnabled));
         }
 
         private void OnWatermarkChanged()

@@ -301,7 +301,7 @@ namespace MS.Internal.Annotations.Anchoring
                 "FetchAnnotationsAsBatch",
                 typeof(bool),
                 typeof(DataIdProcessor),
-                new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits));
+                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
         ///    Sets the value of the FetchAnnotationsAsBatch attached property

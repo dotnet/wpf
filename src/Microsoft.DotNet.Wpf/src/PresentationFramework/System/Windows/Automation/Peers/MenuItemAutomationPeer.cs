@@ -220,7 +220,7 @@ namespace System.Windows.Automation.Peers
                 throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }
 
-            owner.SetCurrentValueInternal(MenuItem.IsSubmenuOpenProperty, MS.Internal.KnownBoxes.BooleanBoxes.FalseBox);
+            owner.SetCurrentValueInternal(MenuItem.IsSubmenuOpenProperty, BooleanBoxes.FalseBox);
         }
 
         ///
@@ -278,7 +278,7 @@ namespace System.Windows.Automation.Peers
                 throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }
 
-            owner.SetCurrentValueInternal(MenuItem.IsCheckedProperty, MS.Internal.KnownBoxes.BooleanBoxes.Box(!owner.IsChecked));
+            owner.SetCurrentValueInternal(MenuItem.IsCheckedProperty, BooleanBoxes.Box(!owner.IsChecked));
         }
 
         ///

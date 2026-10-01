@@ -1,14 +1,12 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-
 using System.Collections;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Automation.Peers;
-using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
 
 namespace System.Windows.Controls
@@ -87,9 +85,9 @@ namespace System.Windows.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(GridSplitter), new FrameworkPropertyMetadata(typeof(GridSplitter)));
             _dType = DependencyObjectType.FromSystemTypeInternal(typeof(GridSplitter));
 
-            FocusableProperty.OverrideMetadata(typeof(GridSplitter), new FrameworkPropertyMetadata(MS.Internal.KnownBoxes.BooleanBoxes.TrueBox));
+            FocusableProperty.OverrideMetadata(typeof(GridSplitter), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
             FrameworkElement.HorizontalAlignmentProperty.OverrideMetadata(typeof(GridSplitter), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
-            
+
             // Cursor depends on ResizeDirection, ActualWidth, and ActualHeight 
             CursorProperty.OverrideMetadata(typeof(GridSplitter), new FrameworkPropertyMetadata(null, new CoerceValueCallback(CoerceCursor)));
 

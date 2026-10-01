@@ -327,13 +327,13 @@
                     </Trigger>
                     <MultiDataTrigger>
                         <MultiDataTrigger.Conditions>
-                            <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ribbon:RibbonWindow}, Path=IsActive}" Value="False"/>
 #ifdef Net45
                             <Condition Binding="{Binding Path=(SystemParameters.IsGlassEnabled)}" Value="False"/>
 #else
                             <Condition Binding="{Binding Path=IsGlassEnabled, Source={x:Static windows:SystemParameters2.Current}}" Value="False"/>
 #endif
                             <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsHostedInRibbonWindow}" Value="True" />
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ribbon:RibbonWindow}, Path=IsActive}" Value="False"/>
                         </MultiDataTrigger.Conditions>
                         <Setter TargetName="PART_TitleHost" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.InactiveCaptionTextBrushKey}}" />
                     </MultiDataTrigger>
@@ -386,6 +386,7 @@
 #else
                             <Condition Binding="{Binding Path=UxThemeName, Source={x:Static windows:SystemParameters2.Current}}" Value="Aero"/>
 #endif
+                            <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsHostedInRibbonWindow}" Value="True" />
                             <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ribbon:RibbonWindow}, Path=WindowState}" Value="Maximized"/>
                         </MultiDataTrigger.Conditions>
                         <Setter TargetName="QatTopHost" Property="Margin" Value="0"/>

@@ -166,19 +166,20 @@ typedef enum
     /* 0x7e */ MilCmdSolidColorBrush                                   = 0x7e,
     /* 0x7f */ MilCmdLinearGradientBrush                               = 0x7f,
     /* 0x80 */ MilCmdRadialGradientBrush                               = 0x80,
-    /* 0x81 */ MilCmdImageBrush                                        = 0x81,
-    /* 0x82 */ MilCmdDrawingBrush                                      = 0x82,
-    /* 0x83 */ MilCmdVisualBrush                                       = 0x83,
-    /* 0x84 */ MilCmdBitmapCacheBrush                                  = 0x84,
-    /* 0x85 */ MilCmdDashStyle                                         = 0x85,
-    /* 0x86 */ MilCmdPen                                               = 0x86,
-    /* 0x87 */ MilCmdGeometryDrawing                                   = 0x87,
-    /* 0x88 */ MilCmdGlyphRunDrawing                                   = 0x88,
-    /* 0x89 */ MilCmdImageDrawing                                      = 0x89,
-    /* 0x8a */ MilCmdVideoDrawing                                      = 0x8a,
-    /* 0x8b */ MilCmdDrawingGroup                                      = 0x8b,
-    /* 0x8c */ MilCmdGuidelineSet                                      = 0x8c,
-    /* 0x8d */ MilCmdBitmapCache                                       = 0x8d,
+    /* 0x81 */ MilCmdSweepGradientBrush                                = 0x81,
+    /* 0x82 */ MilCmdImageBrush                                        = 0x82,
+    /* 0x83 */ MilCmdDrawingBrush                                      = 0x83,
+    /* 0x84 */ MilCmdVisualBrush                                       = 0x84,
+    /* 0x85 */ MilCmdBitmapCacheBrush                                  = 0x85,
+    /* 0x86 */ MilCmdDashStyle                                         = 0x86,
+    /* 0x87 */ MilCmdPen                                               = 0x87,
+    /* 0x88 */ MilCmdGeometryDrawing                                   = 0x88,
+    /* 0x89 */ MilCmdGlyphRunDrawing                                   = 0x89,
+    /* 0x8a */ MilCmdImageDrawing                                      = 0x8a,
+    /* 0x8b */ MilCmdVideoDrawing                                      = 0x8b,
+    /* 0x8c */ MilCmdDrawingGroup                                      = 0x8c,
+    /* 0x8d */ MilCmdGuidelineSet                                      = 0x8d,
+    /* 0x8e */ MilCmdBitmapCache                                       = 0x8e,
 
 #if DBG
     //
@@ -191,7 +192,7 @@ typedef enum
     // debug/retail and managed/unmanaged code.
     //
 
-    /* 0x8e */ MilCmdValidateStructureOrder                  = 0x8e
+    /* 0x8f */ MilCmdValidateStructureOrder                  = 0x8f
 #endif
 } MILCMD;
 

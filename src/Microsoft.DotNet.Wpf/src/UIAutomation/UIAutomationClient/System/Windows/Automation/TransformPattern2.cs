@@ -9,9 +9,9 @@ namespace System.Windows.Automation
 {
     ///<summary>wrapper class for Transform pattern </summary>
 #if (INTERNAL_COMPILE)
-    internal class TransformPattern: BasePattern
+    internal class TransformPattern2: TransformPattern
 #else
-    public class TransformPattern: BasePattern
+    public class TransformPattern2: TransformPattern
 #endif
     {
         //------------------------------------------------------
@@ -22,8 +22,8 @@ namespace System.Windows.Automation
  
         #region Constructors
 
-        private protected TransformPattern(AutomationElement el, SafePatternHandle hPattern, bool cached)
-            : base(el, hPattern)
+        private TransformPattern2(AutomationElement el, SafePatternHandle hPattern, bool cached)
+            : base(el, hPattern, cached)
         {
             _hPattern = hPattern;
             _cached = cached;
@@ -41,16 +41,16 @@ namespace System.Windows.Automation
         #region Public Constants and Readonly Fields
 
         /// <summary>Returns the Transform pattern identifier</summary>
-        public static readonly AutomationPattern Pattern = TransformPatternIdentifiers.Pattern;
+        public static new readonly AutomationPattern Pattern = TransformPattern2Identifiers.Pattern;
 
-        /// <summary>Property ID: CanMove - This window can be moved</summary>
-        public static readonly AutomationProperty CanMoveProperty = TransformPatternIdentifiers.CanMoveProperty;
+        /// <summary>Property ID: CanZoom - Indicates whether the control supports zooming of its viewport</summary>
+        public static readonly AutomationProperty CanZoomProperty = TransformPattern2Identifiers.CanZoomProperty;
 
-        /// <summary>Property ID: CanResize - This window can be resized</summary>
-        public static readonly AutomationProperty CanResizeProperty = TransformPatternIdentifiers.CanResizeProperty;
+        public static readonly AutomationProperty ZoomLevelProperty = TransformPattern2Identifiers.ZoomLevelProperty;
 
-        /// <summary>Property ID: CanRotate - This window can be rotated</summary>
-        public static readonly AutomationProperty CanRotateProperty = TransformPatternIdentifiers.CanRotateProperty;
+        public static readonly AutomationProperty ZoomMaximumProperty = TransformPattern2Identifiers.ZoomMaximumProperty;
+
+        public static readonly AutomationProperty ZoomMinimumProperty = TransformPattern2Identifiers.ZoomMinimumProperty;
 
 
         #endregion Public Constants and Readonly Fields
@@ -72,9 +72,9 @@ namespace System.Windows.Automation
         /// 
         /// <param name="x">absolute on-screen position of the top left corner</param>
         /// <param name="y">absolute on-screen position of the top left corner</param>
-        public void Move( double x, double y )
+        public void Zoom( double zoomValue )
         {
-            UiaCoreApi.TransformPattern_Move(_hPattern, x, y);
+            UiaCoreApi.TransformPattern2_Zoom(_hPattern, zoomValue);
         }
 
         /// <summary>
@@ -85,19 +85,9 @@ namespace System.Windows.Automation
         /// </summary>
         /// <param name="width">The requested width of the window.</param>
         /// <param name="height">The requested height of the window.</param>
-        public void Resize( double width, double height )
+        public void ZoomByUnit( ZoomUnit zoomUnit )
         {
-            UiaCoreApi.TransformPattern_Resize(_hPattern, width, height);
-        }
-
-        /// <summary>
-        /// Rotate the element the specified number of degrees.
-        /// </summary>
-        /// <param name="degrees">The requested degrees to rotate the element.  A positive number rotates clockwise
-        /// a negative number rotates counter clockwise</param>
-        public void Rotate( double degrees )
-        {
-            UiaCoreApi.TransformPattern_Rotate(_hPattern, degrees);
+            UiaCoreApi.TransformPattern2_ZoomByUnit(_hPattern, zoomUnit);
         }
 
 
@@ -126,12 +116,12 @@ namespace System.Windows.Automation
         /// access the property via the Current accessor instead of
         /// Cached.
         /// </remarks>
-        public TransformPatternInformation Cached
+        public new TransformPattern2Information Cached
         {
             get
             {
                 Misc.ValidateCached(_cached);
-                return new TransformPatternInformation(_el, true);
+                return new TransformPattern2Information(_el, true);
             }
         }
 
@@ -151,12 +141,12 @@ namespace System.Windows.Automation
         /// specified using a CacheRequest, access the property via the
         /// Cached accessor instead of Current.
         /// </remarks>
-        public TransformPatternInformation Current
+        public new TransformPattern2Information Current
         {
             get
             {
                 Misc.ValidateCurrent(_hPattern);
-                return new TransformPatternInformation(_el, false);
+                return new TransformPattern2Information(_el, false);
             }
         }
 
@@ -172,9 +162,9 @@ namespace System.Windows.Automation
  
         #region Internal Methods
 
-        internal static object Wrap(AutomationElement el, SafePatternHandle hPattern, bool cached)
+        internal static new object Wrap(AutomationElement el, SafePatternHandle hPattern, bool cached)
         {
-            return new TransformPattern(el, hPattern, cached);
+            return new TransformPattern2(el, hPattern, cached);
         }
 
         #endregion Internal Methods
@@ -207,7 +197,7 @@ namespace System.Windows.Automation
         /// properties on a pattern via the pattern's .Cached or
         /// .Current accessors.
         /// </summary>
-        public struct TransformPatternInformation
+        public struct TransformPattern2Information
         {
             //------------------------------------------------------
             //
@@ -217,7 +207,7 @@ namespace System.Windows.Automation
 
             #region Constructors
 
-            internal TransformPatternInformation(AutomationElement el, bool useCache)
+            internal TransformPattern2Information(AutomationElement el, bool useCache)
             {
                 _el = el;
                 _useCache = useCache;
@@ -235,31 +225,40 @@ namespace System.Windows.Automation
             #region Public Properties
 
             /// <summary>Returns true if the element can be moved otherwise returns false.</summary>
-            public bool CanMove
+            public bool CanZoom
             {
                 get
                 {
-                    return (bool)_el.GetPatternPropertyValue(CanMoveProperty, _useCache);
+                    return (bool)_el.GetPatternPropertyValue(CanZoomProperty, _useCache);
                 }
             }
 
             /// <summary>Returns true if the element can be resized otherwise returns false.</summary>
-            public bool CanResize
+            public double ZoomLevel
             {
                 get
                 {
-                    return (bool)_el.GetPatternPropertyValue(CanResizeProperty, _useCache);
+                    return (double)_el.GetPatternPropertyValue(ZoomLevelProperty, _useCache);
+                }
+            }
+
+            public double ZoomMinimum
+            {
+                get
+                {
+                    return (double)_el.GetPatternPropertyValue(ZoomMinimumProperty, _useCache);
                 }
             }
 
             /// <summary>Returns true if the element can be rotated otherwise returns false.</summary>
-            public bool CanRotate
+            public double ZoomMaximum
             {
                 get
                 {
-                    return (bool)_el.GetPatternPropertyValue(CanRotateProperty, _useCache);
+                    return (double)_el.GetPatternPropertyValue(ZoomMaximumProperty, _useCache);
                 }
             }
+
 
             #endregion Public Properties
 

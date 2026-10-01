@@ -319,6 +319,7 @@ namespace MS.Internal.Automation
             new AutomationPropertyInfo( convertToBool,                   AutomationElement.IsTextPatternAvailableProperty,           typeof(bool),  false  ),
             new AutomationPropertyInfo( convertToBool,                   AutomationElement.IsTogglePatternAvailableProperty,         typeof(bool),  false  ),
             new AutomationPropertyInfo( convertToBool,                   AutomationElement.IsTransformPatternAvailableProperty,      typeof(bool),  false  ),
+            new AutomationPropertyInfo( convertToBool,                   AutomationElement.IsTransformPattern2AvailableProperty,      typeof(bool),  false  ),
             new AutomationPropertyInfo( convertToBool,                   AutomationElement.IsValuePatternAvailableProperty,          typeof(bool),  false  ),
             new AutomationPropertyInfo( convertToBool,                   AutomationElement.IsWindowPatternAvailableProperty,         typeof(bool),  false  ),
                                                                        
@@ -369,6 +370,11 @@ namespace MS.Internal.Automation
             new AutomationPropertyInfo( convertToBool,                   TransformPattern.CanMoveProperty,                       typeof(bool),                  false                          ),
             new AutomationPropertyInfo( convertToBool,                   TransformPattern.CanResizeProperty,                     typeof(bool),                  false                          ),
             new AutomationPropertyInfo( convertToBool,                   TransformPattern.CanRotateProperty,                     typeof(bool),                  false                          ),
+            new AutomationPropertyInfo( convertToBool,                   TransformPattern2.CanZoomProperty,                      typeof(bool),                  false                          ),
+            new AutomationPropertyInfo( null,                            TransformPattern2.ZoomLevelProperty,                    typeof(double),                (double)0                      ),
+            new AutomationPropertyInfo( null,                            TransformPattern2.ZoomMinimumProperty,                  typeof(double),                (double)0                      ),
+            new AutomationPropertyInfo( null,                            TransformPattern2.ZoomMaximumProperty,                  typeof(double),                (double)0                      ),
+
         };
 
         // Basic properties assumed to be always supported
@@ -463,6 +469,13 @@ namespace MS.Internal.Automation
         private static readonly AutomationProperty [ ] TransformProperties = { TransformPattern.CanMoveProperty,
                                                                                TransformPattern.CanResizeProperty,
                                                                                TransformPattern.CanRotateProperty};
+
+
+        private static readonly AutomationProperty[] Transform2Properties = { TransformPattern2.CanZoomProperty,
+                                                                               TransformPattern2.ZoomLevelProperty,
+                                                                               TransformPattern2.ZoomMinimumProperty,
+                                                                               TransformPattern2.ZoomMaximumProperty};
+
         private static readonly AutomationPatternInfo [ ] _patternInfoTable =
         {
             new AutomationPatternInfo( InvokePattern.Pattern,                null,                            new WrapObjectClientSide(InvokePattern.Wrap)         ),
@@ -481,7 +494,8 @@ namespace MS.Internal.Automation
             new AutomationPatternInfo( TableItemPattern.Pattern,             TableItemProperties,             new WrapObjectClientSide(TableItemPattern.Wrap)      ), 
             new AutomationPatternInfo( TextPattern.Pattern,                  null,                            new WrapObjectClientSide(TextPattern.Wrap)           ), 
             new AutomationPatternInfo( TogglePattern.Pattern,                ToggleProperties,                new WrapObjectClientSide(TogglePattern.Wrap)         ),
-            new AutomationPatternInfo( TransformPattern.Pattern,             TransformProperties,             new WrapObjectClientSide(TransformPattern.Wrap)      ), 
+            new AutomationPatternInfo( TransformPattern.Pattern,             TransformProperties,             new WrapObjectClientSide(TransformPattern.Wrap)      ),
+            new AutomationPatternInfo( TransformPattern2.Pattern,            Transform2Properties,             new WrapObjectClientSide(TransformPattern2.Wrap)    ),
             new AutomationPatternInfo( ScrollItemPattern.Pattern,            null,                            new WrapObjectClientSide(ScrollItemPattern.Wrap)     ),
             new AutomationPatternInfo( SynchronizedInputPattern.Pattern,     null,                            new WrapObjectClientSide(SynchronizedInputPattern.Wrap)     ),
             new AutomationPatternInfo( VirtualizedItemPattern.Pattern,       null,                            new WrapObjectClientSide(VirtualizedItemPattern.Wrap)),

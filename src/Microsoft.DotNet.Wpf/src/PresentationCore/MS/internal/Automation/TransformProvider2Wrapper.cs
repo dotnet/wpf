@@ -8,7 +8,10 @@
 //
 //
 
+using System;
 using System.Windows.Threading;
+using System.Windows.Media;
+using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
 
@@ -27,7 +30,7 @@ namespace MS.Internal.Automation
     // * private methods - one for each interface entry point - which get called back
     //   on the right context. These call through to the peer that's actually
     //   implenting the I...Provider version of the interface. 
-    internal class TransformProviderWrapper: MarshalByRefObject, ITransformProvider
+    internal class TransformProvider2Wrapper: TransformProviderWrapper, ITransformProvider2
     {
         //------------------------------------------------------
         //
@@ -37,7 +40,7 @@ namespace MS.Internal.Automation
  
         #region Constructors
 
-        private protected TransformProviderWrapper( AutomationPeer peer, ITransformProvider iface )
+        private TransformProvider2Wrapper( AutomationPeer peer, ITransformProvider2 iface ) : base(peer, iface)
         {
             _peer = peer;
             _iface = iface;
@@ -52,49 +55,53 @@ namespace MS.Internal.Automation
         //
         //------------------------------------------------------
  
-        #region Interface ITransformProvider
+        #region Interface ITransformProvider2
 
 
-        public void Move( double x, double y )
+        public void Zoom( double zoomAmount )
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( Move ), new double [ ] { x, y } );
+            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( Zoom ), zoomAmount );
         }
 
-        public void Resize( double width, double height )
+        public void ZoomByUnit( ZoomUnit zoomUnit )
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( Resize ), new double [ ] { width, height } );
+            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( ZoomByUnit ), zoomUnit );
         }
 
-        public void Rotate( double degrees )
-        {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( Rotate ), degrees );
-        }
-
-        public bool CanMove
+        public bool CanZoom
         {
             get
             {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetCanMove ), null );
+                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetCanZoom ), null );
             }
         }
         
-        public bool CanResize
+        public double ZoomLevel
         {
             get
             {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetCanResize ), null );
+                return (double) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetZoomLevel ), null );
             }
         }
         
-        public bool CanRotate
+        public double ZoomMinimum
         {
             get
             {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetCanRotate ), null );
+                return (double) ElementUtil.Invoke( _peer, new DispatcherOperationCallback(GetZoomMinimum ), null );
             }
         }
-        
-        #endregion Interface ITransformProvider
+
+
+        public double ZoomMaximum
+        {
+            get
+            {
+                return (double)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetZoomMaximum), null);
+            }
+        }
+
+        #endregion Interface ITransformProvider2
 
 
         //------------------------------------------------------
@@ -102,12 +109,12 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static new object Wrap( AutomationPeer peer, object iface )
         {
-            return new TransformProviderWrapper( peer, (ITransformProvider) iface );
+            return new TransformProvider2Wrapper( peer, (ITransformProvider2) iface );
         }
 
         #endregion Internal Methods
@@ -120,41 +127,38 @@ namespace MS.Internal.Automation
  
         #region Private Methods
 
-        private object Move( object arg )
+        private object Zoom( object arg )
         {
-            double [ ] args = (double [ ]) arg;
-            _iface.Move( args[ 0 ], args[ 1 ] );
+            _iface.Zoom( (double)arg );
             return null;
         }
 
-        private object Resize( object arg )
+        private object ZoomByUnit( object arg )
         {
-            double [ ] args = (double [ ]) arg;
-            _iface.Resize( args[ 0 ], args[ 1 ] );
+            _iface.ZoomByUnit( (ZoomUnit)arg );
             return null;
         }
 
-        private object Rotate( object arg )
+        private object GetCanZoom( object unused )
         {
-            _iface.Rotate( (double)arg );
-            return null;
+            return _iface.CanZoom;
+        }
+        
+        private object GetZoomLevel( object unused )
+        {
+            return _iface.ZoomLevel;
+        }
+        
+        private object GetZoomMinimum( object unused )
+        {
+            return _iface.ZoomMinimum;
         }
 
-        private object GetCanMove( object unused )
+        private object GetZoomMaximum(object unused)
         {
-            return _iface.CanMove;
+            return _iface.ZoomMaximum;
         }
-        
-        private object GetCanResize( object unused )
-        {
-            return _iface.CanResize;
-        }
-        
-        private object GetCanRotate( object unused )
-        {
-            return _iface.CanRotate;
-        }
-        
+
         #endregion Private Methods
 
 
@@ -163,11 +167,11 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private AutomationPeer _peer;
-        private ITransformProvider _iface;
+        private ITransformProvider2 _iface;
 
         #endregion Private Fields
     }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -202,7 +202,7 @@ namespace MS.Internal.Csp
             {
                 // Detect "[[" or "]]", whichever we're expecting
                 int newIndex;
-                newIndex = line.IndexOf(InTag?"]]":"[[", _current.Column);
+                newIndex = line.IndexOf(InTag ? "]]" : "[[", _current.Column);
 
                 // 
 
@@ -212,7 +212,7 @@ namespace MS.Internal.Csp
                     break;
                 }
 
-                ProcessText(line.Substring(_current.Column, newIndex-_current.Column));
+                ProcessText(line.Substring(_current.Column, newIndex - _current.Column));
 
                 if (!InTag)
                 {
@@ -271,7 +271,7 @@ namespace MS.Internal.Csp
                 _inConditional = false;
                 if (!_isStartOfConditional)
                 {
-                    _stringBuilder.Append(" : String.Empty)");
+                    _stringBuilder.Append(" : \"<scratch-line>\")");
                 }
             }
             else // tag encountered inline - embedded source.

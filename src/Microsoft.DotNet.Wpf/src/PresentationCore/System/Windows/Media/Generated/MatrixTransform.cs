@@ -53,8 +53,6 @@ namespace System.Windows.Media
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -67,10 +65,8 @@ namespace System.Windows.Media
         {
             MatrixTransform target = ((MatrixTransform) d);
 
-
             target.PropertyChanged(MatrixProperty);
         }
-
 
         #region Public Properties
 
@@ -107,8 +103,6 @@ namespace System.Windows.Media
         {
             return new MatrixTransform();
         }
-
-
 
         #endregion ProtectedMethods
 
@@ -153,33 +147,25 @@ namespace System.Windows.Media
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_MATRIXTRANSFORM))
                 {
 
-
                     AddRefOnChannelAnimations(channel);
-
 
                     UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
                 }
 
                 return _duceResource.GetHandle(channel);
-
         }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
 
-
                     ReleaseOnChannelAnimations(channel);
-
                 }
-
         }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
@@ -196,7 +182,6 @@ namespace System.Windows.Media
             // Note that we are in a lock here already.
             return _duceResource.GetChannel(index);
         }
-
 
         #endregion Internal Methods
 
@@ -223,8 +208,6 @@ namespace System.Windows.Media
             }
         }
 
-
-
         #endregion Internal Properties
 
         //------------------------------------------------------
@@ -250,14 +233,10 @@ namespace System.Windows.Media
 
         #region Internal Fields
 
-
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
-
         internal static Matrix s_Matrix = new Matrix();
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -288,7 +267,6 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ true,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

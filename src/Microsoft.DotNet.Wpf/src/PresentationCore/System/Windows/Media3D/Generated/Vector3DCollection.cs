@@ -56,8 +56,6 @@ namespace System.Windows.Media.Media3D
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -65,7 +63,6 @@ namespace System.Windows.Media.Media3D
         //  Public Properties
         //
         //------------------------------------------------------
-
 
         #region IList<T>
 
@@ -115,11 +112,8 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public void Insert(int index, Vector3D value)
         {
-
-
             WritePreamble();
             _collection.Insert(index, value);
-
 
             ++_version;
             WritePostscript();
@@ -162,7 +156,6 @@ namespace System.Windows.Media.Media3D
             WritePostscript();
         }
 
-
         /// <summary>
         ///     Removes the element at the specified index without firing
         ///     the public Changed event.
@@ -174,12 +167,10 @@ namespace System.Windows.Media.Media3D
             WritePreamble();
             _collection.RemoveAt(index);
 
-
             ++_version;
 
             // No WritePostScript to avoid firing the Changed event.
         }
-
 
         /// <summary>
         ///     Indexer for the collection
@@ -194,11 +185,8 @@ namespace System.Windows.Media.Media3D
             }
             set
             {
-
-
                 WritePreamble();
-                _collection[ index ] = value;
-
+                _collection[index] = value;
 
                 ++_version;
                 WritePostscript();
@@ -439,7 +427,6 @@ namespace System.Windows.Media.Media3D
         }
 
 
-
         #endregion
 
         #region Private Helpers
@@ -474,10 +461,8 @@ namespace System.Windows.Media.Media3D
         {
             int index = -1;
 
-
             WritePreamble();
             index = _collection.Add(value);
-
 
             ++_version;
 
@@ -486,15 +471,12 @@ namespace System.Windows.Media.Media3D
             return index;
         }
 
-
-
         #endregion Private Helpers
 
         private static Vector3DCollection s_empty;
 
 
         #region Public Properties
-
 
 
         #endregion Public Properties
@@ -532,7 +514,6 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourceVector3DCollection._collection[i]);
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
@@ -551,7 +532,6 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourceVector3DCollection._collection[i]);
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
@@ -570,7 +550,6 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourceVector3DCollection._collection[i]);
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
@@ -589,9 +568,7 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourceVector3DCollection._collection[i]);
             }
-
         }
-
 
         #endregion ProtectedMethods
 
@@ -604,13 +581,6 @@ namespace System.Windows.Media.Media3D
         #region Internal Methods
 
 
-
-
-
-
-
-
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -620,7 +590,6 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
         #region Internal Properties
-
 
         /// <summary>
         /// Creates a string representation of this object based on the current culture.
@@ -740,7 +709,6 @@ namespace System.Windows.Media.Media3D
         #region Dependency Properties
 
 
-
         #endregion Dependency Properties
 
         //------------------------------------------------------
@@ -751,12 +719,8 @@ namespace System.Windows.Media.Media3D
 
         #region Internal Fields
 
-
-
-
         internal FrugalStructList<Vector3D> _collection;
         internal uint _version = 0;
-
 
         #endregion Internal Fields
 
@@ -894,7 +858,6 @@ namespace System.Windows.Media.Media3D
         //
         //------------------------------------------------------
 
-
         /// <summary>
         /// Initializes a new instance that is empty.
         /// </summary>
@@ -946,14 +909,12 @@ namespace System.Windows.Media.Media3D
 
                     foreach (Vector3D item in collection)
                     {
-
                         _collection.Add(item);
                     }
 
 
                 }
             }
-
 
 
 

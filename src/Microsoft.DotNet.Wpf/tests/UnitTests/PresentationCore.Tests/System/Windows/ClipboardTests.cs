@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections.Specialized;
+using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -269,5 +270,76 @@ public class ClipboardTests
 
         Clipboard.GetData("System.String").Should().BeNull();
         Clipboard.GetData("TEXT").Should().BeNull();
+    }
+
+    [WpfTheory(Skip = "Requires IOleServices.AllowedTymeds from dotnet/winforms")]
+    [BoolData]
+    public void SetDataObject_EnhancedMetafileStream_NativeConsumerGetsHandle(bool copy)
+    {
+        MemoryStream stream = new();
+        stream.Write(CreateEmfBytes());
+        Clipboard.SetDataObject(new DataObject(DataFormats.EnhancedMetafile, stream), copy);
+
+        // Read the data back the way another application would.
+        Native.OpenClipboard(0).Should().BeTrue();
+        try
+        {
+            Native.IsClipboardFormatAvailable(Native.CF_ENHMETAFILE).Should().BeTrue();
+            nint hemf = Native.GetClipboardData(Native.CF_ENHMETAFILE);
+            hemf.Should().NotBe(0);
+            Native.GetEnhMetaFileBits(hemf, 0, null).Should().BeGreaterThan(0u);
+        }
+        finally
+        {
+            Native.CloseClipboard();
+        }
+
+        static byte[] CreateEmfBytes()
+        {
+            nint hdc = Native.CreateEnhMetaFileW(0, null, 0, null);
+            Native.Rectangle(hdc, 0, 0, 200, 100);
+            nint hemf = Native.CloseEnhMetaFile(hdc);
+            byte[] bytes = new byte[Native.GetEnhMetaFileBits(hemf, 0, null)];
+            Native.GetEnhMetaFileBits(hemf, (uint)bytes.Length, bytes);
+            Native.DeleteEnhMetaFile(hemf);
+            return bytes;
+        }
+    }
+
+    private static class Native
+    {
+        public const uint CF_ENHMETAFILE = 14;
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool OpenClipboard(nint hWndNewOwner);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool CloseClipboard();
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsClipboardFormatAvailable(uint format);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern nint GetClipboardData(uint uFormat);
+
+        [DllImport("gdi32.dll", CharSet = CharSet.Unicode)]
+        public static extern nint CreateEnhMetaFileW(nint hdc, string? lpFilename, nint lprc, string? lpDesc);
+
+        [DllImport("gdi32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool Rectangle(nint hdc, int left, int top, int right, int bottom);
+
+        [DllImport("gdi32.dll")]
+        public static extern nint CloseEnhMetaFile(nint hdc);
+
+        [DllImport("gdi32.dll")]
+        public static extern uint GetEnhMetaFileBits(nint hEMF, uint nSize, byte[]? lpData);
+
+        [DllImport("gdi32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool DeleteEnhMetaFile(nint hemf);
     }
 }

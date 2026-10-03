@@ -75,13 +75,14 @@ namespace Microsoft.Windows.Shell
             }
 
             // The band is expressed in window coordinates; the adorner renders in the coordinate space of the
-            // adorned element, which is usually offset by the window border.
-            Rect captionBand = windowBand;
-            GeneralTransform toAdorned = _window.TransformToDescendant(AdornedElement);
-            if (toAdorned != null)
+            // adorned element, which is usually offset by the window border. After a template change the adorned
+            // element may no longer belong to the window: TransformToDescendant would throw, so draw nothing.
+            if (!_window.IsAncestorOf(AdornedElement))
             {
-                captionBand = toAdorned.TransformBounds(captionBand);
+                return;
             }
+
+            Rect captionBand = _window.TransformToDescendant(AdornedElement).TransformBounds(windowBand);
 
             bool rtl = _window.FlowDirection == FlowDirection.RightToLeft;
             double x = rtl ? captionBand.Right - IconMargin : captionBand.Left + IconMargin;

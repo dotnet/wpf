@@ -382,8 +382,21 @@ To automatically copy the files, set the environment variable
                                     <!-- Off-screen part of the caption band (maximized), then the visible band as tall as the system
                                          caption buttons (WindowChrome.TitleBarBounds), then the client area. -->
                                     <RowDefinition Height="{Binding Path=(shell:WindowChrome.TitleBarBounds).Y, RelativeSource={RelativeSource TemplatedParent}}"/>
-                                    <RowDefinition Height="{Binding Path=(shell:WindowChrome.TitleBarBounds).Height, RelativeSource={RelativeSource TemplatedParent}}"
-                                                   MinHeight="{Binding Path=(shell:WindowChrome.WindowChrome).CaptionHeight, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                    <!-- The band published by the chrome; without one (no composition) the caption height applies. A
+                                         MinHeight would not do: with the per-monitor V1 context CaptionHeight follows the system DPI and
+                                         can exceed the real band, leaving a strip without frame behind it. -->
+                                    <RowDefinition>
+                                        <RowDefinition.Style>
+                                            <Style TargetType="RowDefinition">
+                                                <Setter Property="Height" Value="{Binding Path=(shell:WindowChrome.TitleBarBounds).Height, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=(shell:WindowChrome.TitleBarBounds).Height, RelativeSource={RelativeSource TemplatedParent}}" Value="0">
+                                                        <Setter Property="Height" Value="{Binding Path=(shell:WindowChrome.WindowChrome).CaptionHeight, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </RowDefinition.Style>
+                                    </RowDefinition>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <!-- We must place our template bindings on a separate Border since PART_RootContentPresenter extends into

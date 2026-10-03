@@ -104,7 +104,18 @@
 #ifdef Net45
                     <!-- Inside a RibbonWindow the title area is as tall as the system caption band (WindowChrome.TitleBarBounds);
                          elsewhere that value is zero and the caption height applies. -->
-                    <DockPanel Grid.Column="0" Grid.ColumnSpan="3" Height="{Binding Path=(shell:WindowChrome.TitleBarBounds).Height, RelativeSource={RelativeSource Self}}" MinHeight="{Binding Path=(SystemParameters.WindowCaptionHeight)}" LastChildFill="True">
+                    <DockPanel Grid.Column="0" Grid.ColumnSpan="3" LastChildFill="True">
+                        <DockPanel.Style>
+                            <Style TargetType="DockPanel">
+                                <Setter Property="Height" Value="{Binding Path=(shell:WindowChrome.TitleBarBounds).Height, RelativeSource={RelativeSource Self}}"/>
+                                <Style.Triggers>
+                                    <!-- No band published (hosted outside a RibbonWindow, or no composition): the caption height applies. -->
+                                    <DataTrigger Binding="{Binding Path=(shell:WindowChrome.TitleBarBounds).Height, RelativeSource={RelativeSource Self}}" Value="0">
+                                        <Setter Property="Height" Value="{Binding Path=(SystemParameters.WindowCaptionHeight)}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DockPanel.Style>
 #else
                     <DockPanel Grid.Column="0" Grid.ColumnSpan="3" Height="{Binding Source={x:Static windows:SystemParameters2.Current}, Path=WindowCaptionHeight}" LastChildFill="True">
 #endif

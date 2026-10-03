@@ -4,6 +4,7 @@
 
 
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Windows.Data;
 using System.Windows.Media;
 using Standard;
@@ -431,6 +432,11 @@ namespace Microsoft.Windows.Shell
             typeof(WindowChrome),
             new FrameworkPropertyMetadata(true));
 
+        /// <summary>
+        /// Whether the caption buttons drawn by the system over the glass frame are hit-tested. Ignored in
+        /// <see cref="WindowChromeFrameMode.ExtendedClientArea"/>, where the system frame is kept and its buttons
+        /// are always in use.
+        /// </summary>
         public bool UseAeroCaptionButtons
         {
             get { return (bool)GetValue(UseAeroCaptionButtonsProperty); }
@@ -529,8 +535,9 @@ namespace Microsoft.Windows.Shell
         /// Whether the window icon is shown in the caption.  <c>null</c> (the default) means shown, except in
         /// <see cref="WindowChromeFrameMode.ExtendedClientArea"/> mode where the application usually provides its
         /// own title bar.  In <see cref="WindowChromeFrameMode.Custom"/> and <see cref="WindowChromeFrameMode.SystemFrame"/>
-        /// modes the system stops drawing the icon when false; in ExtendedClientArea mode the icon is drawn by WPF
-        /// when true.
+        /// modes the system is asked not to draw the icon when false, which current versions of Windows may not
+        /// honor for a system-drawn caption; in ExtendedClientArea mode the icon is drawn by WPF when true, so
+        /// there the value is always respected.
         /// </summary>
         // Custom / SystemFrame: WTNCA_NODRAWICON through SetWindowThemeAttribute.
         public bool? ShowSystemIcon
@@ -733,13 +740,16 @@ namespace Microsoft.Windows.Shell
                     Mode = BindingMode.OneWay,
                     UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
                 };
-                _defaultBindings[bp.DependencyProperty] = defaultBinding;
+                s_defaultBindings.Add(defaultBinding, s_defaultBindingMarker);
                 BindingOperations.SetBinding(this, bp.DependencyProperty, defaultBinding);
             }
         }
 
         // The bindings to the system defaults set by the constructor, to tell them apart from application values.
-        private readonly Dictionary<DependencyProperty, Binding> _defaultBindings = new Dictionary<DependencyProperty, Binding>();
+        // Kept per binding rather than per instance: a clone copies the binding expressions of its source, whose
+        // parent bindings are the ones created by the source's constructor.
+        private static readonly ConditionalWeakTable<Binding, object> s_defaultBindings = new ConditionalWeakTable<Binding, object>();
+        private static readonly object s_defaultBindingMarker = new object();
 
         /// <summary>
         /// Whether the application gave the property a value of its own (local value, style, template or a
@@ -750,8 +760,8 @@ namespace Microsoft.Windows.Shell
             BindingExpression expression = BindingOperations.GetBindingExpression(this, dp);
             if (expression != null)
             {
-                Binding defaultBinding;
-                return !_defaultBindings.TryGetValue(dp, out defaultBinding) || !ReferenceEquals(expression.ParentBinding, defaultBinding);
+                object marker;
+                return expression.ParentBinding == null || !s_defaultBindings.TryGetValue(expression.ParentBinding, out marker);
             }
 
             return DependencyPropertyHelper.GetValueSource(this, dp).BaseValueSource != BaseValueSource.Default;

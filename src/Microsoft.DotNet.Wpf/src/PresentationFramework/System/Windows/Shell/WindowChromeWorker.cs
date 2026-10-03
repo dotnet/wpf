@@ -89,6 +89,17 @@ namespace Microsoft.Windows.Shell
         private FrameInsets _normalFrameInsets;
         private bool _hasNormalFrameInsets;
 
+        /// <summary>
+        /// <see cref="_normalFrameInsets"/> was synthesized from system metrics because the window was maximized
+        /// when the insets were needed; it is replaced by a real measurement once the window is Normal again.
+        /// </summary>
+        private bool _frameInsetsProvisional;
+        private bool _remeasureProvisionalPending;
+        private int _provisionalRemeasureAttempts;
+
+        /// <summary>The SystemFrame chrome attached by <see cref="EnsureWorker"/>, so it can be removed again.</summary>
+        private WindowChrome _autoChrome;
+
         /// <summary>Window DPI at which <see cref="_normalFrameInsets"/> was measured.</summary>
         private double _frameInsetsDpi;
         /// <summary>Set by WM_THEMECHANGED: the frame may have switched between visible and invisible borders.</summary>
@@ -183,7 +194,8 @@ namespace Microsoft.Windows.Shell
 
             if (WindowChrome.GetWindowChrome(window) == null && !System.ComponentModel.DesignerProperties.GetIsInDesignMode(window))
             {
-                window.SetCurrentValue(WindowChrome.WindowChromeProperty, WindowChrome.CreateSystemFrameChrome());
+                worker._autoChrome = WindowChrome.CreateSystemFrameChrome();
+                window.SetCurrentValue(WindowChrome.WindowChromeProperty, worker._autoChrome);
             }
 
             return worker;
@@ -201,20 +213,22 @@ namespace Microsoft.Windows.Shell
             _UpdateDwmAttributes(WindowChromeDwmAttributes.CaptionTheme | WindowChromeDwmAttributes.Backdrop);
         }
 
-        /// <summary>Updates only the light/dark caption decision of the theme.</summary>
-        internal void SetThemeCaptionDark(bool useDarkMode)
+        /// <summary>
+        /// Detaches the SystemFrame chrome that <see cref="EnsureWorker"/> attached, when it is still the chrome
+        /// in use. Used by the ThemeManager when a window leaves the Fluent theme, so that the window looks like
+        /// it never had a chrome. A chrome set by the application (or by a style) is left alone.
+        /// </summary>
+        internal void RemoveAutomaticChrome()
         {
             VerifyAccess();
-            _themeUseLightColors = !useDarkMode;
-            _UpdateDwmAttributes(WindowChromeDwmAttributes.CaptionTheme);
-        }
 
-        /// <summary>Updates only the backdrop decision of the theme.</summary>
-        internal void ApplyThemeBackdrop(WindowBackdropKind backdropKind)
-        {
-            VerifyAccess();
-            _themeBackdropKind = backdropKind;
-            _UpdateDwmAttributes(WindowChromeDwmAttributes.Backdrop);
+            if (_autoChrome != null && _window != null && ReferenceEquals(WindowChrome.GetWindowChrome(_window), _autoChrome))
+            {
+                // SetCurrentValue left the base value untouched: clearing goes back to that base value.
+                _window.ClearValue(WindowChrome.WindowChromeProperty);
+            }
+
+            _autoChrome = null;
         }
 
         public void SetWindowChrome(WindowChrome newChrome)
@@ -453,7 +467,7 @@ namespace Microsoft.Windows.Shell
 
                 _UpdateFrameState(true);
 
-                NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, 0, 0, 0, 0, _SwpFlags);
+                _ChangeFrame();
             }
             else
             {
@@ -754,7 +768,8 @@ namespace Microsoft.Windows.Shell
         {
             handled = false;
 
-            if (wParam == IntPtr.Zero || lParam == IntPtr.Zero || !_isBackdropApplied || !_IsHwndMaximized())
+            // Only the sheet of glass moves the caption; explicit glass margins (a band) keep the standard layout.
+            if (wParam == IntPtr.Zero || lParam == IntPtr.Zero || !_systemFrameSheetOfGlassApplied || !_IsHwndMaximized())
             {
                 return IntPtr.Zero;
             }
@@ -786,7 +801,38 @@ namespace Microsoft.Windows.Shell
                 return _normalFrameInsets.Left;
             }
 
-            return NativeMethods.GetSystemMetrics(SM.CXSIZEFRAME) + NativeMethods.GetSystemMetrics(SM.CXPADDEDBORDER);
+            return _GetResizeFrameThickness(_GetNonClientDpi());
+        }
+
+        /// <summary>
+        /// Whether the system scales the non-client area of this window to the DPI of its monitor. Only the
+        /// per-monitor V2 awareness context does; with the V1 context the content follows the monitor while the
+        /// frame stays at the system DPI, and system-aware or unaware windows are virtualized as a whole.
+        /// </summary>
+        private bool _IsNonClientScaledPerMonitor()
+        {
+            return _hwnd != IntPtr.Zero
+                   && MS.Internal.DpiUtil.GetDpiAwarenessContext(_hwnd).Equals(MS.Utility.DpiAwarenessContextValue.PerMonitorAwareVersion2);
+        }
+
+        /// <summary>
+        /// The DPI the non-client metrics of the window are expressed at: the window's DPI when the frame is
+        /// scaled per monitor (V2), the system DPI otherwise. 96 when the HWND is not available yet.
+        /// </summary>
+        private uint _GetNonClientDpi()
+        {
+            if (_window == null || _hwnd == IntPtr.Zero)
+            {
+                return 96u;
+            }
+
+            if (_IsNonClientScaledPerMonitor())
+            {
+                return (uint)Math.Round(_window.GetDpi().PixelsPerInchY);
+            }
+
+            MS.Internal.DpiScale2 systemDpi = MS.Internal.DpiUtil.GetSystemDpi();
+            return systemDpi != null ? (uint)Math.Round(systemDpi.PixelsPerInchY) : 96u;
         }
 
         /// <summary>
@@ -817,8 +863,16 @@ namespace Microsoft.Windows.Shell
 
             if (!_hasNormalFrameInsets && !_MeasureNormalFrameInsets())
             {
-                handled = false;
-                return IntPtr.Zero;
+                if (!_IsHwndMaximized())
+                {
+                    handled = false;
+                    return IntPtr.Zero;
+                }
+
+                // The window is maximized (shown that way, or the theme changed while maximized): the standard
+                // frame cannot be measured now. Use the system metrics so the extended frame is applied anyway
+                // and measure for real once the window is restored (see _RemeasureProvisionalInsets).
+                _SynthesizeFrameInsets();
             }
 
             bool maximized = _IsHwndMaximized();
@@ -872,20 +926,29 @@ namespace Microsoft.Windows.Shell
                 return _normalFrameInsets;
             }
 
-            // A maximized window is inflated by the invisible border on every side, so one border thickness of
-            // the window lies above the screen. The client area is nevertheless kept at the very top of the
-            // window rect: DWM keeps hit-testing its caption buttons only while the client starts there, with both
-            // kinds of frame extension (moving the client top down disables them). The top border thus falls
-            // off-screen; _GetMaximizedTopOverhangLogical() lets the title and the caption band follow the visible
-            // frame. Where DWM draws the buttons depends on the extension: at the client top with a top band, at
-            // the visible frame with a sheet of glass (see _UpdateCaptionButtonsBounds).
+            // A maximized window is inflated by the resize frame on every side, so one frame thickness of the
+            // window lies above the screen. The client area is nevertheless kept at the very top of the window
+            // rect: DWM keeps hit-testing its caption buttons only while the client starts there, with both kinds
+            // of frame extension (moving the client top down disables them). The top frame thus falls off-screen;
+            // _GetMaximizedTopOverhangLogical() lets the title and the caption band follow the visible frame. Where
+            // DWM draws the buttons depends on the extension: at the client top with a top band, at the visible
+            // frame with a sheet of glass (see _UpdateCaptionButtonsBounds).
+            // Left, right and bottom use the frame thickness itself rather than the Normal-state inset (which is
+            // one border line smaller): the client then coincides with the work area, like a standard maximized window.
+            int frame = _GetMaximizedFrameThicknessDevice();
             return new FrameInsets
             {
-                Left = _normalFrameInsets.Left,
+                Left = frame,
                 Top = 0,
-                Right = _normalFrameInsets.Right,
-                Bottom = _normalFrameInsets.Top + _normalFrameInsets.Bottom,
+                Right = frame,
+                Bottom = frame,
             };
+        }
+
+        /// <summary>The thickness by which the system inflates a maximized window on every side, in device pixels.</summary>
+        private int _GetMaximizedFrameThicknessDevice()
+        {
+            return _GetResizeFrameThickness(_GetNonClientDpi());
         }
 
         /// <summary>Whether the DWM frame is extended over the whole window (MARGINS -1) rather than as a top band.</summary>
@@ -926,7 +989,7 @@ namespace Microsoft.Windows.Shell
 
         /// <summary>
         /// Device independent pixels of client area lying above the screen when the window is maximized: the
-        /// invisible border thickness (the same on every side). Used to place the title, and to extend the
+        /// resize frame thickness (the same on every side). Used to place the title, and to extend the
         /// caption hit-test band, so they line up with the visible part of the caption; the DWM buttons need no
         /// correction because DWM anchors them to the client top.
         /// </summary>
@@ -937,16 +1000,17 @@ namespace Microsoft.Windows.Shell
                 return 0;
             }
 
-            return _hwndSource.CompositionTarget.TransformFromDevice.Transform(new Vector(0, _normalFrameInsets.Left)).Y;
+            return _hwndSource.CompositionTarget.TransformFromDevice.Transform(new Vector(0, _GetMaximizedFrameThicknessDevice())).Y;
         }
 
         /// <summary>
-        /// DefWindowProc leaves a one pixel strip along the edges that host an auto-hide app bar (the taskbar)
-        /// when a window is maximized, otherwise the shell treats the window as full screen and the bar can no
-        /// longer be summoned. Replicate it, relative to the monitor: the maximized window is inflated by the
-        /// resize frame while the client is inset by the (one pixel smaller) invisible border, so the client may
-        /// still overhang the monitor by a pixel and an inset relative to the client would leave no free row.
-        /// The top is left alone: moving the client top makes DWM stop hit-testing its caption buttons.
+        /// A maximized window whose client covers the whole monitor is treated as full screen by the shell, and
+        /// an auto-hide app bar (the taskbar) can then no longer be summoned with the mouse. DefWindowProc avoids
+        /// it by leaving a one pixel strip free along the edge that hosts the bar; replicate it relative to the
+        /// monitor, since the client is positioned from the window rect. The top is never touched: moving the
+        /// client top makes DWM stop hit-testing its caption buttons. A bar on the top edge gets its free row at
+        /// the bottom instead: the shell only needs the window not to cover the entire monitor, on whichever edge
+        /// the free row lies.
         /// </summary>
         private static void _ApplyAutoHideTaskbarInset(ref RECT rc, RECT rcMonitor)
         {
@@ -969,12 +1033,10 @@ namespace Microsoft.Windows.Shell
                     case ABE.LEFT:
                         rc.Left = Math.Max(rc.Left, rcMonitor.Left + 1);
                         break;
-                    case ABE.TOP:
-                        rc.Top += 1;
-                        break;
                     case ABE.RIGHT:
                         rc.Right = Math.Min(rc.Right, rcMonitor.Right - 1);
                         break;
+                    case ABE.TOP:
                     case ABE.BOTTOM:
                         rc.Bottom = Math.Min(rc.Bottom, rcMonitor.Bottom - 1);
                         break;
@@ -1064,8 +1126,10 @@ namespace Microsoft.Windows.Shell
 
             FrameInsets insets = _ComputeNormalFrameInsets(windowRect, visibleRect, scale);
 
-            // A vertical inset much larger than the horizontal one means DWM reported stale (maximized) bounds.
-            if (insets.Bottom > 2 * insets.Left + 2)
+            // The invisible border has the same thickness left, right and bottom. A vertical inset clearly larger
+            // than the horizontal one means DWM reported stale (maximized) bounds: inflated by the border on every
+            // side, the vertical excess is twice the horizontal one.
+            if (insets.Bottom > insets.Left + 2)
             {
                 return false;
             }
@@ -1091,7 +1155,64 @@ namespace Microsoft.Windows.Shell
             _dwmToWindowScale = scale;
             _frameInsetsDpi = windowDpi;
             _hasNormalFrameInsets = true;
+            _frameInsetsProvisional = false;
+            _provisionalRemeasureAttempts = 0;
             return true;
+        }
+
+        /// <summary>
+        /// Fills the frame insets from the system metrics when they cannot be measured because the window is
+        /// maximized (DWMWA_EXTENDED_FRAME_BOUNDS then describes the maximized frame): the invisible border is the
+        /// resize frame plus the padded border minus the one pixel visible border, on the left, right and bottom.
+        /// The value is provisional and is replaced by a measurement once the window is Normal again.
+        /// </summary>
+        private void _SynthesizeFrameInsets()
+        {
+            double windowDpi = _hwndSource?.CompositionTarget != null
+                ? _hwndSource.CompositionTarget.TransformToDevice.M11 * 96.0
+                : 96.0;
+            int inset = Math.Max(0, _GetResizeFrameThickness(_GetNonClientDpi()) - 1);
+
+            _normalFrameInsets = new FrameInsets { Left = inset, Top = 0, Right = inset, Bottom = inset };
+            _dwmToWindowScale = _GetCurrentDwmToWindowScale();
+            _frameInsetsDpi = windowDpi;
+            _hasNormalFrameInsets = true;
+            _frameInsetsProvisional = true;
+        }
+
+        /// <summary>
+        /// Replaces provisional insets with a real measurement once the window is Normal and at rest: the standard
+        /// frame is put back for one pass, measured, and the extended frame is applied again.
+        /// </summary>
+        private void _RemeasureProvisionalInsets()
+        {
+            try
+            {
+                if (!_IsHwndAlive || !_IsExtendedMode || !_isExtendedFrameActive
+                    || !_hasNormalFrameInsets || !_frameInsetsProvisional || _IsHwndMaximized())
+                {
+                    return;
+                }
+
+                _provisionalRemeasureAttempts++;
+                _hasNormalFrameInsets = false;
+                _MeasureWithStandardFrame();
+
+                if (!_hasNormalFrameInsets)
+                {
+                    // Could not measure even in the Normal state: keep the metrics so the frame stays consistent.
+                    _SynthesizeFrameInsets();
+                }
+
+                _ChangeFrame();
+                _UpdateContentTopOffset();
+                _PostUpdateCaptionButtonsBounds();
+                _captionAdorner?.InvalidateVisual();
+            }
+            finally
+            {
+                _remeasureProvisionalPending = false;
+            }
         }
 
         /// <summary>
@@ -1133,7 +1254,11 @@ namespace Microsoft.Windows.Shell
             try
             {
                 NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, 0, 0, 0, 0, _SwpFlags);
-                _MeasureNormalFrameInsets();
+                if (!_MeasureNormalFrameInsets() && _IsHwndMaximized())
+                {
+                    // Maximized: measure later (see _RemeasureProvisionalInsets), use the metrics meanwhile.
+                    _SynthesizeFrameInsets();
+                }
             }
             finally
             {
@@ -1246,7 +1371,7 @@ namespace Microsoft.Windows.Shell
 
             mousePosWindow = DpiHelper.DevicePixelsToLogical(mousePosWindow, dpi.DpiScaleX, dpi.DpiScaleY);
 
-            if (_IsExtendedMode && _chromeInfo.UseAeroCaptionButtons && _AreDwmCaptionButtonsInUse)
+            if (_IsExtendedMode && _AreDwmCaptionButtonsInUse)
             {
                 // With a real system frame the caption buttons are DWM's and must always win, before any WPF
                 // content is consulted: the content is expected to stay out of CaptionButtonsBounds anyway.
@@ -1348,17 +1473,19 @@ namespace Microsoft.Windows.Shell
         {
             get
             {
-                if (_chromeInfo == null || !_chromeInfo.UseAeroCaptionButtons)
+                if (_chromeInfo == null)
                 {
                     return false;
                 }
 
                 if (_IsExtendedMode)
                 {
+                    // The system frame is kept, so DWM draws its buttons whatever UseAeroCaptionButtons says:
+                    // they must be hit-tested, otherwise they would be visible but dead.
                     return _isExtendedFrameActive;
                 }
 
-                return Utility.IsOSVistaOrNewer && _chromeInfo.GlassFrameThickness != default(Thickness) && _isGlassEnabled;
+                return _chromeInfo.UseAeroCaptionButtons && Utility.IsOSVistaOrNewer && _chromeInfo.GlassFrameThickness != default(Thickness) && _isGlassEnabled;
             }
         }
 
@@ -1406,7 +1533,12 @@ namespace Microsoft.Windows.Shell
             // window for the new DPI, so rescaling here makes the WM_NCCALCSIZE of that resize use the new values.
             if (_IsExtendedMode)
             {
-                _RescaleFrameInsets(Utility.LOWORD(wParam.ToInt32()));
+                // Only a frame scaled per monitor (V2) changes thickness with the DPI; with the V1 context the
+                // content is rescaled but the frame, and so the insets, stay at the system DPI.
+                if (_IsNonClientScaledPerMonitor())
+                {
+                    _RescaleFrameInsets(Utility.LOWORD(wParam.ToInt32()));
+                }
 
                 // The DWM frame extension is expressed in device pixels too: re-extend it once the window has
                 // been resized for the new DPI, otherwise the band hosting the caption buttons keeps the old height.
@@ -1519,9 +1651,24 @@ namespace Microsoft.Windows.Shell
             NativeMethods.InvalidateRect(_hwnd, IntPtr.Zero, true);
         }
 
+        /// <summary>
+        /// Asks the system to recompute the frame (SWP_FRAMECHANGED, no size or move) and then requests a fresh
+        /// frame from the application. The second step is not optional: with the client inset from the window
+        /// rect, DWM composes the last presented frame at the window origin (content shifted left by the inset)
+        /// until a new one is presented, which is what happens when a chrome property changes with the window
+        /// otherwise idle. The only frame change without it is the transient standard-frame pass used to measure.
+        /// </summary>
+        private void _ChangeFrame()
+        {
+            NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, 0, 0, 0, 0, _SwpFlags);
+            _RepaintAfterFrameRebuild();
+        }
+
         private IntPtr _HandleSize(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
+            const int SIZE_RESTORED = 0;
             const int SIZE_MAXIMIZED = 2;
+            const int MaxProvisionalRemeasureAttempts = 3;
 
             if (_ManagesNonClientArea && !_IsExtendedMode)
             {
@@ -1544,6 +1691,16 @@ namespace Microsoft.Windows.Shell
                 _UpdateCaptionButtonsBounds();
                 _PostUpdateCaptionButtonsBounds();
                 _captionAdorner?.InvalidateVisual();
+
+                // Back in the Normal state with insets taken from the metrics: measure them for real once this
+                // SetWindowPos has completed (the rectangles are stale while it runs).
+                if (wParam.ToInt32() == SIZE_RESTORED
+                    && _isExtendedFrameActive && _hasNormalFrameInsets && _frameInsetsProvisional
+                    && !_remeasureProvisionalPending && _provisionalRemeasureAttempts < MaxProvisionalRemeasureAttempts)
+                {
+                    _remeasureProvisionalPending = true;
+                    _window.Dispatcher.BeginInvoke(DispatcherPriority.Render, (_Action)_RemeasureProvisionalInsets);
+                }
             }
 
             // Still let the default WndProc handle this.
@@ -1652,6 +1809,7 @@ namespace Microsoft.Windows.Shell
             NativeMethods.SetWindowLongPtr(_hwnd, GWL.STYLE, new IntPtr((int)dwNewStyle));
             return true;
         }
+
 
         /// <summary>
         /// Get the WindowState as the native HWND knows it to be. This isn't necessarily the same as what Window thinks.
@@ -1792,7 +1950,7 @@ namespace Microsoft.Windows.Shell
                             _ExtendGlassFrame();
                         }
 
-                        NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, 0, 0, 0, 0, _SwpFlags);
+                        _ChangeFrame();
                     }
                     break;
             }
@@ -1834,10 +1992,11 @@ namespace Microsoft.Windows.Shell
                     _hasNormalFrameInsets = false;
                     _MeasureWithStandardFrame();
                 }
-                else if (!_hasNormalFrameInsets && !_IsHwndMaximized())
+                else if (!_hasNormalFrameInsets && !_MeasureNormalFrameInsets() && _IsHwndMaximized())
                 {
-                    // First application: the window still has its standard frame.
-                    _MeasureNormalFrameInsets();
+                    // First application: the window still has its standard frame, unless it was shown maximized,
+                    // in which case the metrics stand in until the window is restored.
+                    _SynthesizeFrameInsets();
                 }
             }
             else
@@ -1850,7 +2009,7 @@ namespace Microsoft.Windows.Shell
                 NativeMethods.DwmExtendFrameIntoClientArea(_hwnd, ref dwmMargin);
             }
 
-            NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, 0, 0, 0, 0, _SwpFlags);
+            _ChangeFrame();
         }
 
         private void _UpdateSystemFrameState(bool compositionEnabled)
@@ -1895,7 +2054,7 @@ namespace Microsoft.Windows.Shell
             // The maximized client rect depends on the extension (see _HandleNCCalcSizeSystemFrame): recompute it.
             if (extensionChanged && _IsHwndMaximized())
             {
-                NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, 0, 0, 0, 0, _SwpFlags);
+                _ChangeFrame();
             }
         }
 
@@ -1938,9 +2097,12 @@ namespace Microsoft.Windows.Shell
         /// </summary>
         private int _GetSystemCaptionBandDevice()
         {
-            int top = NativeMethods.GetSystemMetrics(SM.CYCAPTION)
-                      + NativeMethods.GetSystemMetrics(SM.CYSIZEFRAME)
-                      + NativeMethods.GetSystemMetrics(SM.CXPADDEDBORDER);
+            // Metrics at the DPI of the non-client area: with a frame scaled per monitor the plain (system DPI)
+            // values would give a band shorter than the caption buttons, leaving a black strip under them.
+            uint dpi = _GetNonClientDpi();
+            int top = NativeMethods.GetSystemMetricsForDpi(SM.CYCAPTION, dpi)
+                      + NativeMethods.GetSystemMetricsForDpi(SM.CYSIZEFRAME, dpi)
+                      + NativeMethods.GetSystemMetricsForDpi(SM.CXPADDEDBORDER, dpi);
 
             RECT buttons;
             if (NativeMethods.DwmGetWindowAttributeRect(_hwnd, DWMWA.CAPTION_BUTTON_BOUNDS, out buttons) && buttons.Height > 0)
@@ -2050,6 +2212,9 @@ namespace Microsoft.Windows.Shell
                 }
                 if (!_chromeInfo.EffectiveShowSystemIcon)
                 {
+                    // Best effort on a system-drawn caption: the composed frame of Windows 10 and later keeps
+                    // drawing the icon regardless of this attribute (the title does go away). The only known way
+                    // around it is the dialog frame extended style, which is not applied here on purpose.
                     flags |= WTNCA.NODRAWICON;
                 }
             }
@@ -2119,7 +2284,9 @@ namespace Microsoft.Windows.Shell
                     }
                 }
 
-                bool darkMode = _GetEffectiveDarkMode() ?? !ThemeManager.IsSystemThemeLight();
+                // The caption is dark only when this window asked DWM for it and DWM accepted: the system theme
+                // alone never darkens a Win32 caption, and before Windows 10 1809 DWM cannot draw a dark one at all.
+                bool darkMode = _appliedDarkMode ?? false;
 
                 color = _isActive
                     ? CaptionTextColorHelper.GetActiveCaptionText(background, darkMode)
@@ -2191,6 +2358,12 @@ namespace Microsoft.Windows.Shell
             {
                 _RemoveCaptionAdorner();
                 return;
+            }
+
+            if (_captionAdorner != null && (_captionAdornedElement == null || !_window.IsAncestorOf(_captionAdornedElement)))
+            {
+                // The template was replaced: the adorner still hangs from the old tree. Host it again in the new one.
+                _RemoveCaptionAdorner();
             }
 
             if (_captionAdorner == null)
@@ -2679,6 +2852,14 @@ namespace Microsoft.Windows.Shell
                 return;
             }
 
+            if (_savedBackgroundColor.HasValue && target.BackgroundColor != Colors.Transparent)
+            {
+                // The application set a background of its own while the frame was extended: that is the value it
+                // wants, not the one saved before the extension.
+                _savedBackgroundColor = null;
+                return;
+            }
+
             Color restore = SystemColors.WindowColor;
             if (_savedBackgroundColor.HasValue)
             {
@@ -2692,6 +2873,9 @@ namespace Microsoft.Windows.Shell
             }
 
             target.BackgroundColor = restore;
+
+            // Restored: the next extension saves the background in force at that time.
+            _savedBackgroundColor = null;
         }
 
         /// <summary>Resets every DWM attribute the worker applied, so the window looks like it never had a chrome.</summary>
@@ -3244,7 +3428,11 @@ namespace Microsoft.Windows.Shell
                 }
 
                 _RestoreDwmAttributes();
-                _RestoreCompositionBackground();
+                if (_savedBackgroundColor.HasValue)
+                {
+                    // Still extended (the mode-specific restore above did not undo it): put the background back.
+                    _RestoreCompositionBackground();
+                }
 
                 _window.ClearValue(WindowChrome.CaptionButtonsBoundsPropertyKey);
                 _window.ClearValue(WindowChrome.CaptionButtonsClipPropertyKey);
@@ -3318,7 +3506,7 @@ namespace Microsoft.Windows.Shell
         private void _RestoreHrgn()
         {
             _ClearRoundingRegion();
-            NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, 0, 0, 0, 0, _SwpFlags);
+            _ChangeFrame();
         }
 
         #endregion

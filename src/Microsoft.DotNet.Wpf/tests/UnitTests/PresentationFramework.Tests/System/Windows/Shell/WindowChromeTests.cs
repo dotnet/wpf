@@ -173,6 +173,22 @@ public sealed class WindowChromeTests
     }
 
     [WpfFact]
+    public void Clone_KeepsTheSystemDefaultsImplicit()
+    {
+        // A clone copies the binding expressions of its source: those still point at the constructor's bindings.
+        var chrome = new WindowChrome { FrameMode = WindowChromeFrameMode.ExtendedClientArea };
+
+        var clone = (WindowChrome)chrome.Clone();
+
+        clone.IsCaptionHeightSet.Should().BeFalse();
+        clone.IsGlassFrameThicknessSet.Should().BeFalse();
+        clone.FrameMode.Should().Be(WindowChromeFrameMode.ExtendedClientArea);
+
+        chrome.CaptionHeight = 40;
+        ((WindowChrome)chrome.Clone()).IsCaptionHeightSet.Should().BeTrue();
+    }
+
+    [WpfFact]
     public void CreateSystemFrameChrome_UsesSystemFrameMode()
     {
         WindowChrome.CreateSystemFrameChrome().FrameMode.Should().Be(WindowChromeFrameMode.SystemFrame);

@@ -275,7 +275,14 @@ internal static class ThemeManager
         else
         {
             // TODO : Remove the styles from windows which have BackdropDisabledWidowStyle
-            WindowChromeWorker.EnsureWorker(window).ApplyThemeState(true, WindowBackdropKind.None);
+            // Leaving the Fluent theme: a window that never got a worker has nothing to undo, and the SystemFrame
+            // chrome attached automatically is detached so the window looks like it never had one.
+            WindowChromeWorker worker = WindowChromeWorker.GetWindowChromeWorker(window);
+            if (worker != null)
+            {
+                worker.ApplyThemeState(true, WindowBackdropKind.None);
+                worker.RemoveAutomaticChrome();
+            }
         }
 
     }
@@ -444,7 +451,7 @@ internal static class ThemeManager
         return indices;
     }
 
-    internal static bool IsSystemThemeLight()
+    private static bool IsSystemThemeLight()
     {
         var useLightTheme = Registry.GetValue(RegPersonalizeKeyPath,
             "AppsUseLightTheme", null) as int?;

@@ -905,6 +905,7 @@ namespace Microsoft.Build.Tasks.Windows
                 return null;
             }
 
+            XmlNode firstTargetsImport = null;
             foreach (XmlNode childNode in root.ChildNodes)
             {
                 if (childNode is not XmlElement import ||
@@ -914,13 +915,19 @@ namespace Microsoft.Build.Tasks.Windows
                 }
 
                 string project = import.GetAttribute("Project");
-                if (project.EndsWith(".targets", StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(project, "Sdk.targets", StringComparison.OrdinalIgnoreCase) &&
+                    !string.IsNullOrEmpty(import.GetAttribute("Sdk")))
                 {
                     return import;
                 }
+
+                if (firstTargetsImport == null && project.EndsWith(".targets", StringComparison.OrdinalIgnoreCase))
+                {
+                    firstTargetsImport = import;
+                }
             }
 
-            return null;
+            return firstTargetsImport;
         }
 
         // Creates an XmlNode that contains an Import Project element

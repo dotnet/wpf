@@ -908,26 +908,102 @@ namespace Microsoft.Build.Tasks.Windows
             XmlNode firstTargetsImport = null;
             foreach (XmlNode childNode in root.ChildNodes)
             {
-                if (childNode is not XmlElement import ||
-                    !string.Equals(import.Name, "Import", StringComparison.OrdinalIgnoreCase))
+                if (childNode is not XmlElement element)
                 {
                     continue;
                 }
 
-                string project = import.GetAttribute("Project");
-                if (string.Equals(project, "Sdk.targets", StringComparison.OrdinalIgnoreCase) &&
-                    !string.IsNullOrEmpty(import.GetAttribute("Sdk")))
+                if (string.Equals(element.Name, "Import", StringComparison.OrdinalIgnoreCase))
                 {
-                    return import;
-                }
+                    if (IsSdkTargetsImport(element))
+                    {
+                        return element;
+                    }
 
-                if (firstTargetsImport == null && project.EndsWith(".targets", StringComparison.OrdinalIgnoreCase))
+                    if (firstTargetsImport == null && IsTargetsImport(element))
+                    {
+                        firstTargetsImport = element;
+                    }
+                }
+                else if (string.Equals(element.Name, "ImportGroup", StringComparison.OrdinalIgnoreCase))
                 {
-                    firstTargetsImport = import;
+                    foreach (XmlNode importNode in element.ChildNodes)
+                    {
+                        if (importNode is not XmlElement import ||
+                            !string.Equals(import.Name, "Import", StringComparison.OrdinalIgnoreCase))
+                        {
+                            continue;
+                        }
+
+                        if (IsSdkTargetsImport(import))
+                        {
+                            return SplitImportGroupBefore(element, import);
+                        }
+
+                        if (firstTargetsImport == null && IsTargetsImport(import))
+                        {
+                            firstTargetsImport = element;
+                        }
+                    }
                 }
             }
 
             return firstTargetsImport;
+        }
+
+        private static bool IsSdkTargetsImport(XmlElement import)
+        {
+            if (string.IsNullOrEmpty(import.GetAttribute("Sdk")))
+            {
+                return false;
+            }
+
+            string project = import.GetAttribute("Project");
+            return string.Equals(project, "Sdk.targets", StringComparison.OrdinalIgnoreCase) ||
+                project.EndsWith(@"\Sdk.targets", StringComparison.OrdinalIgnoreCase) ||
+                project.EndsWith("/Sdk.targets", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool IsTargetsImport(XmlElement import) =>
+            import.GetAttribute("Project").EndsWith(".targets", StringComparison.OrdinalIgnoreCase);
+
+        private static XmlNode SplitImportGroupBefore(
+            XmlElement importGroup,
+            XmlElement firstImportToMove)
+        {
+            bool hasEarlierImport = false;
+            foreach (XmlNode childNode in importGroup.ChildNodes)
+            {
+                if (ReferenceEquals(childNode, firstImportToMove))
+                {
+                    break;
+                }
+
+                if (childNode is XmlElement element &&
+                    string.Equals(element.Name, "Import", StringComparison.OrdinalIgnoreCase))
+                {
+                    hasEarlierImport = true;
+                    break;
+                }
+            }
+
+            if (!hasEarlierImport)
+            {
+                return importGroup;
+            }
+
+            XmlElement newImportGroup = (XmlElement)importGroup.CloneNode(deep: false);
+            importGroup.ParentNode.InsertAfter(newImportGroup, importGroup);
+
+            XmlNode nodeToMove = firstImportToMove;
+            while (nodeToMove != null)
+            {
+                XmlNode nextNode = nodeToMove.NextSibling;
+                newImportGroup.AppendChild(nodeToMove);
+                nodeToMove = nextNode;
+            }
+
+            return newImportGroup;
         }
 
         // Creates an XmlNode that contains an Import Project element

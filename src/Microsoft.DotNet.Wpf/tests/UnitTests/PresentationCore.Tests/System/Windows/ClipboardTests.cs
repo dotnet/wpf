@@ -3,6 +3,7 @@
 
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -632,14 +633,18 @@ public sealed class ClipboardTests
 
             Assert.True(Clipboard.ContainsFileDropList());
             Assert.True(Clipboard.ContainsData(DataFormats.FileDrop));
-            StringCollection returned = Clipboard.GetFileDropList();
+            StringCollection returned = RetryClipboardAccess(Clipboard.GetFileDropList);
             Assert.Equal(new[] { first, second }, returned.Cast<string>());
-            Assert.Equal(new[] { first, second }, Assert.IsType<string[]>(Clipboard.GetData(DataFormats.FileDrop)));
+            Assert.Equal(
+                new[] { first, second },
+                Assert.IsType<string[]>(RetryClipboardAccess(() => Clipboard.GetData(DataFormats.FileDrop))));
 
             returned[0] = "changed";
             returned.RemoveAt(1);
 
-            Assert.Equal(new[] { first, second }, Clipboard.GetFileDropList().Cast<string>());
+            Assert.Equal(
+                new[] { first, second },
+                RetryClipboardAccess(Clipboard.GetFileDropList).Cast<string>());
         }
         finally
         {
@@ -697,6 +702,558 @@ public sealed class ClipboardTests
         }
     }
 
+    // Captures that delayed EMF rendering returns a non-renderable copy and invalidates the source Metafile.
+    [StaFact]
+    public void SetDataObject_Metafile_CopyFalse_ReturnsNonRenderableCopyAndInvalidatesSource()
+    {
+        using Metafile source = EmfTestData.CreateMetafile();
+        DataObject sourceDataObject = new();
+        sourceDataObject.SetData(DataFormats.EnhancedMetafile, source, autoConvert: false);
+
+        try
+        {
+            Clipboard.SetDataObject(sourceDataObject, copy: false);
+
+            Assert.True(Clipboard.IsCurrent(sourceDataObject));
+            Assert.True(Clipboard.ContainsData(DataFormats.EnhancedMetafile));
+            IDataObject clipboardDataObject = Assert.IsAssignableFrom<IDataObject>(
+                RetryClipboardAccess(Clipboard.GetDataObject));
+            Assert.True(RetryClipboardAccess(
+                () => clipboardDataObject.GetDataPresent(
+                    DataFormats.EnhancedMetafile,
+                    autoConvert: false)));
+            Assert.True(RetryClipboardAccess(
+                () => clipboardDataObject.GetDataPresent(
+                    typeof(Metafile).FullName!,
+                    autoConvert: true)));
+
+            using Metafile result = GetClipboardMetafile(DataFormats.EnhancedMetafile);
+            Assert.NotSame(source, result);
+            AssertMetafileIsNotRenderable(result);
+            Assert.Throws<ArgumentException>(() => source.GetMetafileHeader());
+        }
+        finally
+        {
+            Clipboard.Clear();
+        }
+    }
+
+    // Captures that Flush persists an EMF object that cannot be rendered after the source is disposed.
+    [StaFact]
+    public void SetDataObject_Metafile_CopyFalseFlush_ReturnsNonRenderableMetafile()
+    {
+        Metafile? source = EmfTestData.CreateMetafile();
+
+        try
+        {
+            DataObject sourceDataObject = new();
+            sourceDataObject.SetData(DataFormats.EnhancedMetafile, source, autoConvert: false);
+
+            try
+            {
+                Clipboard.SetDataObject(sourceDataObject, copy: false);
+                Assert.True(Clipboard.IsCurrent(sourceDataObject));
+                Clipboard.Flush();
+                Assert.False(Clipboard.IsCurrent(sourceDataObject));
+
+                source.Dispose();
+                source = null;
+
+                using Metafile result = GetClipboardMetafile(DataFormats.EnhancedMetafile);
+                AssertMetafileIsNotRenderable(result);
+            }
+            finally
+            {
+                Clipboard.Clear();
+            }
+        }
+        finally
+        {
+            source?.Dispose();
+        }
+    }
+
+    // Captures that copy:true returns an EMF object that cannot be rendered after the source is disposed.
+    [StaFact]
+    public void SetDataObject_Metafile_CopyTrue_ReturnsNonRenderableMetafile()
+    {
+        Metafile? source = EmfTestData.CreateMetafile();
+
+        try
+        {
+            DataObject sourceDataObject = new();
+            sourceDataObject.SetData(DataFormats.EnhancedMetafile, source, autoConvert: false);
+
+            try
+            {
+                Clipboard.SetDataObject(sourceDataObject, copy: true);
+                Assert.False(Clipboard.IsCurrent(sourceDataObject));
+                source.Dispose();
+                source = null;
+
+                Assert.True(Clipboard.ContainsData(DataFormats.EnhancedMetafile));
+                using Metafile result = GetClipboardMetafile(DataFormats.EnhancedMetafile);
+                AssertMetafileIsNotRenderable(result);
+            }
+            finally
+            {
+                Clipboard.Clear();
+            }
+        }
+        finally
+        {
+            source?.Dispose();
+        }
+    }
+
+    // Characterizes the distinct SetDataObject(object, copy) path that wraps a raw Metafile by its CLR type.
+    [StaTheory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void SetDataObject_RawMetafile_AdvertisesMappedFormatsAndInvalidatesSource(bool copy)
+    {
+        using Metafile source = EmfTestData.CreateMetafile();
+
+        try
+        {
+            Clipboard.SetDataObject(source, copy);
+            string mappedFormat = typeof(Metafile).FullName!;
+            IDataObject clipboardDataObject = Assert.IsAssignableFrom<IDataObject>(
+                RetryClipboardAccess(Clipboard.GetDataObject));
+
+            Assert.Contains(
+                mappedFormat,
+                RetryClipboardAccess(() => clipboardDataObject.GetFormats(autoConvert: false)));
+            Assert.Contains(
+                DataFormats.EnhancedMetafile,
+                RetryClipboardAccess(() => clipboardDataObject.GetFormats(autoConvert: true)));
+            Assert.True(RetryClipboardAccess(
+                () => clipboardDataObject.GetDataPresent(mappedFormat, autoConvert: false)));
+            Assert.True(RetryClipboardAccess(
+                () => clipboardDataObject.GetDataPresent(
+                    DataFormats.EnhancedMetafile,
+                    autoConvert: true)));
+            Assert.True(RetryClipboardAccess(() => Clipboard.ContainsData(mappedFormat)));
+
+            COMException mappedException = Assert.Throws<COMException>(
+                () => RetryClipboardAccess(() => Clipboard.GetData(mappedFormat)));
+            // A live object fails immediately with DV_E_TYMED. After copy:true, the failed eager render is surfaced
+            // by the system clipboard as CLIPBRD_E_BAD_DATA.
+            int expectedHResult = copy
+                ? DataObject.CLIPBRD_E_BAD_DATA
+                : DataObject.DV_E_TYMED;
+            Assert.Equal(expectedHResult, mappedException.HResult);
+
+            using Metafile result = GetClipboardMetafile(DataFormats.EnhancedMetafile);
+            AssertMetafileIsNotRenderable(result);
+            Assert.Throws<ArgumentException>(() => source.GetMetafileHeader());
+        }
+        finally
+        {
+            Clipboard.Clear();
+        }
+    }
+
+    // Captures that mapped-format auto-conversion returns a Metafile object whose native handle is not renderable.
+    [StaFact]
+    public void SetDataObject_Metafile_MappedFormatRequiresAutoConvert()
+    {
+        Metafile? source = EmfTestData.CreateMetafile();
+
+        try
+        {
+            DataObject sourceDataObject = new();
+            sourceDataObject.SetData(DataFormats.EnhancedMetafile, source, autoConvert: false);
+
+            try
+            {
+                Clipboard.SetDataObject(sourceDataObject, copy: true);
+                source.Dispose();
+                source = null;
+
+                IDataObject clipboardDataObject = Assert.IsAssignableFrom<IDataObject>(
+                    RetryClipboardAccess(Clipboard.GetDataObject));
+                string mappedFormat = typeof(Metafile).FullName!;
+
+                Assert.False(Clipboard.ContainsData(mappedFormat));
+                Assert.Null(Clipboard.GetData(mappedFormat));
+                Assert.True(RetryClipboardAccess(
+                    () => clipboardDataObject.GetDataPresent(
+                        DataFormats.EnhancedMetafile,
+                        autoConvert: false)));
+                Assert.False(RetryClipboardAccess(
+                    () => clipboardDataObject.GetDataPresent(
+                        mappedFormat,
+                        autoConvert: false)));
+                Assert.True(RetryClipboardAccess(
+                    () => clipboardDataObject.GetDataPresent(
+                        mappedFormat,
+                        autoConvert: true)));
+                Assert.Contains(
+                    DataFormats.EnhancedMetafile,
+                    RetryClipboardAccess(() => clipboardDataObject.GetFormats(autoConvert: false)));
+                Assert.DoesNotContain(
+                    mappedFormat,
+                    RetryClipboardAccess(() => clipboardDataObject.GetFormats(autoConvert: false)));
+                Assert.Contains(
+                    mappedFormat,
+                    RetryClipboardAccess(() => clipboardDataObject.GetFormats(autoConvert: true)));
+                Assert.True(RetryClipboardAccess(
+                    () => clipboardDataObject.GetDataPresent(typeof(Metafile))));
+
+                Assert.Null(RetryClipboardAccess(
+                    () => clipboardDataObject.GetData(
+                        mappedFormat,
+                        autoConvert: false)));
+
+                using Metafile mappedResult = Assert.IsType<Metafile>(RetryClipboardAccess(
+                    () => clipboardDataObject.GetData(
+                        mappedFormat,
+                        autoConvert: true)));
+                AssertMetafileIsNotRenderable(mappedResult);
+
+                using Metafile typedResult = Assert.IsType<Metafile>(RetryClipboardAccess(
+                    () => clipboardDataObject.GetData(typeof(Metafile))));
+                AssertMetafileIsNotRenderable(typedResult);
+            }
+            finally
+            {
+                Clipboard.Clear();
+            }
+        }
+        finally
+        {
+            source?.Dispose();
+        }
+    }
+
+    // Captures the Clipboard facade result for the mapped CLR format on a fresh live data object.
+    [StaFact]
+    public void SetDataObject_Metafile_AutoConvertTrue_ClipboardMappedGetThrowsDvETymed()
+    {
+        using Metafile source = EmfTestData.CreateMetafile();
+        DataObject sourceDataObject = new();
+        sourceDataObject.SetData(DataFormats.EnhancedMetafile, source, autoConvert: true);
+
+        try
+        {
+            Clipboard.SetDataObject(sourceDataObject, copy: false);
+            string mappedFormat = typeof(Metafile).FullName!;
+
+            Assert.True(Clipboard.ContainsData(mappedFormat));
+            COMException facadeException = Assert.Throws<COMException>(
+                () => RetryClipboardAccess(() => Clipboard.GetData(mappedFormat)));
+            Assert.Equal(DataObject.DV_E_TYMED, facadeException.HResult);
+        }
+        finally
+        {
+            Clipboard.Clear();
+        }
+    }
+
+    // Captures the IDataObject result for the mapped CLR format without a preceding facade retrieval.
+    [StaFact]
+    public void SetDataObject_Metafile_AutoConvertTrue_IDataObjectMappedGetThrowsDvETymed()
+    {
+        using Metafile source = EmfTestData.CreateMetafile();
+        DataObject sourceDataObject = new();
+        sourceDataObject.SetData(DataFormats.EnhancedMetafile, source, autoConvert: true);
+
+        try
+        {
+            Clipboard.SetDataObject(sourceDataObject, copy: false);
+            string mappedFormat = typeof(Metafile).FullName!;
+            IDataObject clipboardDataObject = Assert.IsAssignableFrom<IDataObject>(
+                RetryClipboardAccess(Clipboard.GetDataObject));
+
+            Assert.True(RetryClipboardAccess(
+                () => clipboardDataObject.GetDataPresent(
+                    DataFormats.EnhancedMetafile,
+                    autoConvert: false)));
+            Assert.True(RetryClipboardAccess(
+                () => clipboardDataObject.GetDataPresent(
+                    mappedFormat,
+                    autoConvert: false)));
+            COMException exception = Assert.Throws<COMException>(
+                () => RetryClipboardAccess(
+                    () => clipboardDataObject.GetData(
+                        mappedFormat,
+                        autoConvert: false)));
+            Assert.Equal(DataObject.DV_E_TYMED, exception.HResult);
+        }
+        finally
+        {
+            Clipboard.Clear();
+        }
+    }
+
+    // Captures distinct managed lifetimes: disposing one non-renderable result does not alter the other result's behavior.
+    [StaFact]
+    public void SetDataObject_Metafile_RepeatedGetsReturnIndependentlyDisposableResults()
+    {
+        using Metafile source = EmfTestData.CreateMetafile();
+        DataObject sourceDataObject = new();
+        sourceDataObject.SetData(DataFormats.EnhancedMetafile, source, autoConvert: false);
+
+        try
+        {
+            Clipboard.SetDataObject(sourceDataObject, copy: true);
+            Metafile? first = GetClipboardMetafile(DataFormats.EnhancedMetafile);
+            Metafile? second = null;
+            try
+            {
+                second = GetClipboardMetafile(DataFormats.EnhancedMetafile);
+                Assert.NotSame(first, second);
+                AssertMetafileIsNotRenderable(first);
+                first.Dispose();
+                first = null;
+                AssertMetafileIsNotRenderable(second);
+            }
+            finally
+            {
+                first?.Dispose();
+                second?.Dispose();
+            }
+        }
+        finally
+        {
+            Clipboard.Clear();
+        }
+    }
+
+    // Captures that a valid non-public EMF stream is not consumed but produces CLIPBRD_E_BAD_DATA on retrieval.
+    [StaFact]
+    public void SetDataObject_ValidNonExposableMetafileStream_CopyTrue_GetDataThrowsClipboardBadData()
+    {
+        byte[] bytes;
+        using (Metafile metafile = EmfTestData.CreateMetafile())
+        {
+            bytes = EmfTestData.GetBytes(metafile);
+        }
+
+        using MemoryStream sourceStream = EmfTestData.CreateNonExposableStream(bytes);
+        sourceStream.Position = Math.Min(7, sourceStream.Length);
+        long originalPosition = sourceStream.Position;
+        DataObject sourceDataObject = new();
+        sourceDataObject.SetData(DataFormats.EnhancedMetafile, sourceStream, autoConvert: false);
+
+        try
+        {
+            Clipboard.SetDataObject(sourceDataObject, copy: true);
+
+            Assert.Equal(originalPosition, sourceStream.Position);
+            AssertClipboardBadData(() => Clipboard.GetData(DataFormats.EnhancedMetafile));
+        }
+        finally
+        {
+            Clipboard.Clear();
+        }
+    }
+
+    // Captures that a valid exposable EMF stream returns a non-renderable Metafile without moving the stream.
+    [StaFact]
+    public void SetDataObject_ValidExposableMetafileStream_CopyTrue_ReturnsNonRenderableMetafile()
+    {
+        byte[] bytes;
+        using (Metafile metafile = EmfTestData.CreateMetafile())
+        {
+            bytes = EmfTestData.GetBytes(metafile);
+        }
+
+        using MemoryStream source = EmfTestData.CreateExposableStream(bytes);
+        source.Position = Math.Min(7, source.Length);
+        long originalPosition = source.Position;
+        DataObject sourceDataObject = new();
+        sourceDataObject.SetData(DataFormats.EnhancedMetafile, source, autoConvert: false);
+
+        try
+        {
+            Clipboard.SetDataObject(sourceDataObject, copy: true);
+
+            Assert.Equal(originalPosition, source.Position);
+            using Metafile result = GetClipboardMetafile(DataFormats.EnhancedMetafile);
+            AssertMetafileIsNotRenderable(result);
+        }
+        finally
+        {
+            Clipboard.Clear();
+        }
+    }
+
+    // Captures that GetBuffer's trailing capacity bytes are accepted but still produce a non-renderable Metafile.
+    [StaFact]
+    public void SetDataObject_OverallocatedExposableMetafileStream_CopyTrue_ReturnsNonRenderableMetafile()
+    {
+        byte[] bytes;
+        using (Metafile metafile = EmfTestData.CreateMetafile())
+        {
+            bytes = EmfTestData.GetBytes(metafile);
+        }
+
+        using MemoryStream source = EmfTestData.CreateOverallocatedExposableStream(bytes);
+        DataObject sourceDataObject = new();
+        sourceDataObject.SetData(DataFormats.EnhancedMetafile, source, autoConvert: false);
+
+        try
+        {
+            Clipboard.SetDataObject(sourceDataObject, copy: true);
+
+            using Metafile result = GetClipboardMetafile(DataFormats.EnhancedMetafile);
+            AssertMetafileIsNotRenderable(result);
+        }
+        finally
+        {
+            Clipboard.Clear();
+        }
+    }
+
+    // Captures that only MemoryStream receives the .NET 9 native EMF stream treatment.
+    [StaFact]
+    public void SetDataObject_NonMemoryMetafileStream_CopyTrue_GetDataThrowsClipboardBadData()
+    {
+        byte[] bytes;
+        using (Metafile metafile = EmfTestData.CreateMetafile())
+        {
+            bytes = EmfTestData.GetBytes(metafile);
+        }
+
+        using MemoryStream inner = new(bytes, writable: false);
+        using BufferedStream source = new(inner);
+        DataObject sourceDataObject = new();
+        sourceDataObject.SetData(DataFormats.EnhancedMetafile, source, autoConvert: false);
+
+        try
+        {
+            Clipboard.SetDataObject(sourceDataObject, copy: true);
+
+            AssertClipboardBadData(() => Clipboard.GetData(DataFormats.EnhancedMetafile));
+        }
+        finally
+        {
+            Clipboard.Clear();
+        }
+    }
+
+    // Captures the in-process delayed-rendering exception for a non-exposable MemoryStream.
+    [StaFact]
+    public void SetDataObject_ValidNonExposableMetafileStream_CopyFalse_GetDataThrowsUnauthorizedAccessException()
+    {
+        byte[] bytes;
+        using (Metafile metafile = EmfTestData.CreateMetafile())
+        {
+            bytes = EmfTestData.GetBytes(metafile);
+        }
+
+        using MemoryStream source = EmfTestData.CreateNonExposableStream(bytes);
+        DataObject sourceDataObject = new();
+        sourceDataObject.SetData(DataFormats.EnhancedMetafile, source, autoConvert: false);
+
+        try
+        {
+            Clipboard.SetDataObject(sourceDataObject, copy: false);
+
+            Assert.Throws<UnauthorizedAccessException>(
+                () => RetryClipboardAccess(
+                    () => Clipboard.GetData(DataFormats.EnhancedMetafile)));
+        }
+        finally
+        {
+            Clipboard.Clear();
+        }
+    }
+
+    // Captures that publishing WMF as EnhancedMetafile produces CLIPBRD_E_BAD_DATA and invalidates the WMF source.
+    [StaFact]
+    public void SetDataObject_WmfAsEnhancedMetafile_CopyTrue_DoesNotReturnEmf()
+    {
+        using MemoryStream stream = new(EmfTestData.CreateWmfBytes(), writable: false);
+        using Metafile source = new(stream);
+        Assert.True(source.GetMetafileHeader().IsWmf());
+        DataObject sourceDataObject = new();
+        sourceDataObject.SetData(DataFormats.EnhancedMetafile, source, autoConvert: false);
+
+        try
+        {
+            Clipboard.SetDataObject(sourceDataObject, copy: true);
+
+            AssertClipboardBadData(() => Clipboard.GetData(DataFormats.EnhancedMetafile));
+            Assert.Throws<ArgumentException>(() => source.GetMetafileHeader());
+        }
+        finally
+        {
+            Clipboard.Clear();
+        }
+    }
+
+    // Captures the behavior of the Clipboard.SetData convenience API for a real EMF payload.
+    [StaFact]
+    public void SetData_Metafile_ReturnsNonRenderableMetafile()
+    {
+        using Metafile source = EmfTestData.CreateMetafile();
+
+        try
+        {
+            Clipboard.SetData(DataFormats.EnhancedMetafile, source);
+
+            Assert.True(Clipboard.ContainsData(DataFormats.EnhancedMetafile));
+            using Metafile result = GetClipboardMetafile(DataFormats.EnhancedMetafile);
+            AssertMetafileIsNotRenderable(result);
+            Assert.Throws<ArgumentException>(() => source.GetMetafileHeader());
+        }
+        finally
+        {
+            Clipboard.Clear();
+        }
+    }
+
+    // Verifies Clear removes EMF availability, retrieval state, and ownership even when assertions fail.
+    [StaFact]
+    public void Clear_EnhancedMetafile_RemovesData()
+    {
+        using Metafile source = EmfTestData.CreateMetafile();
+        DataObject sourceDataObject = new();
+        sourceDataObject.SetData(DataFormats.EnhancedMetafile, source, autoConvert: false);
+
+        try
+        {
+            Clipboard.SetDataObject(sourceDataObject, copy: false);
+            Assert.True(Clipboard.ContainsData(DataFormats.EnhancedMetafile));
+            Assert.True(Clipboard.IsCurrent(sourceDataObject));
+
+            Clipboard.Clear();
+
+            Assert.False(Clipboard.IsCurrent(sourceDataObject));
+            Assert.False(Clipboard.ContainsData(DataFormats.EnhancedMetafile));
+            Assert.Null(Clipboard.GetData(DataFormats.EnhancedMetafile));
+        }
+        finally
+        {
+            Clipboard.Clear();
+        }
+    }
+
+    // Captures empty and malformed publicly exposable EMF stream behavior.
+    [StaTheory]
+    [InlineData(new byte[] { })]
+    [InlineData(new byte[] { 1, 2, 3 })]
+    public void SetDataObject_InvalidMetafileStream_CopyTrue_GetDataThrowsClipboardBadData(byte[] bytes)
+    {
+        using MemoryStream source = EmfTestData.CreateExposableStream(bytes);
+        DataObject sourceDataObject = new();
+        sourceDataObject.SetData(DataFormats.EnhancedMetafile, source, autoConvert: false);
+
+        try
+        {
+            Clipboard.SetDataObject(sourceDataObject, copy: true);
+
+            AssertClipboardBadData(() => Clipboard.GetData(DataFormats.EnhancedMetafile));
+        }
+        finally
+        {
+            Clipboard.Clear();
+        }
+    }
+
     private static byte[] ReadAllBytes(Stream stream)
     {
         Assert.NotNull(stream);
@@ -713,17 +1270,35 @@ public sealed class ClipboardTests
     private static void EnsureWpfGraphicsLoaded() =>
         _ = s_wpfGraphics.Value;
 
+    private static Metafile GetClipboardMetafile(string format) =>
+        Assert.IsType<Metafile>(RetryClipboardAccess(() => Clipboard.GetData(format)));
+
+    private static void AssertMetafileIsNotRenderable(Metafile metafile) =>
+        Assert.Throws<ExternalException>(() => EmfTestData.AssertValid(metafile));
+
+    private static void AssertClipboardBadData(Action action)
+    {
+        COMException exception = Assert.Throws<COMException>(
+            () => RetryClipboardAccess(
+                () =>
+                {
+                    action();
+                    return true;
+                }));
+        Assert.Equal(DataObject.CLIPBRD_E_BAD_DATA, exception.HResult);
+    }
+
     private static T RetryClipboardAccess<T>(Func<T> operation)
     {
-        const int ClipboardCannotOpen = unchecked((int)0x800401D0);
-
         for (int attemptsRemaining = 10; ; attemptsRemaining--)
         {
             try
             {
                 return operation();
             }
-            catch (COMException exception) when (exception.HResult == ClipboardCannotOpen && attemptsRemaining > 1)
+            catch (COMException exception) when (
+                exception.HResult == DataObject.CLIPBRD_E_CANT_OPEN
+                && attemptsRemaining > 1)
             {
                 Thread.Sleep(100);
             }

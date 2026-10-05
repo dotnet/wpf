@@ -270,10 +270,12 @@ namespace Microsoft.Build.Tasks.Windows
                 // Add properties that must be available before SDK props are evaluated.
                 var earlyProperties = new List<(string PropertyName, string PropertyValue)>
                 {
+                    ( nameof(AssemblyName), AssemblyName ),
                     ( nameof(IntermediateOutputPath), IntermediateOutputPath ),
                     ( nameof(BaseIntermediateOutputPath), BaseIntermediateOutputPath ),
                     ( nameof(MSBuildProjectExtensionsPath), MSBuildProjectExtensionsPath ),
                     ( "_TargetAssemblyProjectName", Path.GetFileNameWithoutExtension(CurrentProject) ),
+                    ( nameof(RootNamespace), RootNamespace ),
                 };
 
                 //Removing duplicate AssemblyName
@@ -903,8 +905,6 @@ namespace Microsoft.Build.Tasks.Windows
                 return null;
             }
 
-            XmlNode fallbackTargetsImport = null;
-
             foreach (XmlNode childNode in root.ChildNodes)
             {
                 if (childNode is not XmlElement import ||
@@ -921,11 +921,11 @@ namespace Microsoft.Build.Tasks.Windows
 
                 if (project.EndsWith(".targets", StringComparison.OrdinalIgnoreCase))
                 {
-                    fallbackTargetsImport = import;
+                    return import;
                 }
             }
 
-            return fallbackTargetsImport;
+            return null;
         }
 
         // Creates an XmlNode that contains an Import Project element

@@ -914,11 +914,6 @@ namespace Microsoft.Build.Tasks.Windows
                 }
 
                 string project = import.GetAttribute("Project");
-                if (project.EndsWith("Sdk.targets", StringComparison.OrdinalIgnoreCase))
-                {
-                    return import;
-                }
-
                 if (project.EndsWith(".targets", StringComparison.OrdinalIgnoreCase))
                 {
                     return import;

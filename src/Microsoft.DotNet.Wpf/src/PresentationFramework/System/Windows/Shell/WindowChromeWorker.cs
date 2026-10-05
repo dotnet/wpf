@@ -5,6 +5,9 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using System.Windows.Automation;
+using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
 using System.Windows.Documents;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -121,6 +124,12 @@ namespace Microsoft.Windows.Shell
         private UIElement _captionAdornedElement;
         private bool _isTitleListenerAttached;
 
+        // Elements with a CaptionButtonRole the pointer is over / pressing: the system owns the pointer over
+        // them (the hit test answers a caption button code), so their states are driven from the non-client
+        // mouse messages instead of the input pipeline.
+        private DependencyObject _hoveredCaptionButton;
+        private DependencyObject _pressedCaptionButton;
+
         // Last values pushed to DWM, so redundant calls are skipped and restore knows what to undo.
         private WTNCA _appliedThemeAttributes;
         private bool _themeAttributesApplied;
@@ -161,6 +170,10 @@ namespace Microsoft.Windows.Shell
                 new HANDLE_MESSAGE(WM.NCCALCSIZE,            _HandleNCCalcSize),
                 new HANDLE_MESSAGE(WM.NCHITTEST,             _HandleNCHitTest),
                 new HANDLE_MESSAGE(WM.NCRBUTTONUP,           _HandleNCRButtonUp),
+                new HANDLE_MESSAGE(WM.NCMOUSEMOVE,           _HandleNCMouseMove),
+                new HANDLE_MESSAGE(WM.NCLBUTTONDOWN,         _HandleNCLButtonDown),
+                new HANDLE_MESSAGE(WM.NCLBUTTONDBLCLK,       _HandleNCLButtonDown),
+                new HANDLE_MESSAGE(WM.NCLBUTTONUP,           _HandleNCLButtonUp),
                 new HANDLE_MESSAGE(WM.NCMOUSELEAVE,          _HandleNCMouseLeave),
                 new HANDLE_MESSAGE(WM.ACTIVATE,              _HandleActivate),
                 new HANDLE_MESSAGE(WM.SIZE,                  _HandleSize),
@@ -1401,6 +1414,15 @@ namespace Microsoft.Windows.Shell
             IInputElement inputElement = _window.InputHitTest(mousePosWindow);
             if (inputElement != null)
             {
+                // An element standing for a caption button gets the system's hit code, so the system treats it as
+                // the button (window layout flyout over the maximize one); only while no system-drawn buttons exist.
+                CaptionButtonRole role;
+                if (!_AreDwmCaptionButtonsInUse && _FindCaptionButtonElement(inputElement as DependencyObject, out role) != null)
+                {
+                    handled = true;
+                    return new IntPtr((int)_GetHTFromCaptionButtonRole(role));
+                }
+
                 if (WindowChrome.GetIsHitTestVisibleInChrome(inputElement))
                 {
                     handled = true;
@@ -1491,9 +1513,11 @@ namespace Microsoft.Windows.Shell
 
         private IntPtr _HandleNCRButtonUp(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
-            // Emulate the system behavior of clicking the right mouse button over the caption area
-            // to bring up the system menu.
-            if (_ManagesNonClientArea && HT.CAPTION == (HT)wParam.ToInt32())
+            // Emulate the system behavior of clicking the right mouse button over the caption area, or over the
+            // window icon (the one drawn by the chrome, which the hit test reports as the system menu), to bring
+            // up the system menu.
+            var ht = (HT)wParam.ToInt32();
+            if (_ManagesNonClientArea && (ht == HT.CAPTION || ht == HT.SYSMENU))
             {
                 SystemCommands.ShowSystemMenuPhysicalCoordinates(_window, new Point(Utility.GET_X_LPARAM(lParam), Utility.GET_Y_LPARAM(lParam)));
             }
@@ -1501,8 +1525,227 @@ namespace Microsoft.Windows.Shell
             return IntPtr.Zero;
         }
 
+        #region Caption button roles (elements that stand for the system caption buttons)
+
+        private static HT _GetHTFromCaptionButtonRole(CaptionButtonRole role)
+        {
+            switch (role)
+            {
+                case CaptionButtonRole.Minimize:
+                    return HT.MINBUTTON;
+                case CaptionButtonRole.Maximize:
+                    return HT.MAXBUTTON;
+                case CaptionButtonRole.Close:
+                    return HT.CLOSE;
+                default:
+                    return HT.CLIENT;
+            }
+        }
+
+        private static bool _IsCaptionButtonHit(HT ht)
+        {
+            return ht == HT.MINBUTTON || ht == HT.MAXBUTTON || ht == HT.CLOSE;
+        }
+
+        /// <summary>
+        /// The element that carries the CaptionButtonRole covering <paramref name="hit"/>: the property is inherited,
+        /// so the hit element may be a child of the button; walk up to the element the role was set on.
+        /// </summary>
+        private static DependencyObject _FindCaptionButtonElement(DependencyObject hit, out CaptionButtonRole role)
+        {
+            role = CaptionButtonRole.None;
+            DependencyObject current = hit;
+            while (current != null)
+            {
+                var value = (CaptionButtonRole)current.GetValue(WindowChrome.CaptionButtonRoleProperty);
+                if (value == CaptionButtonRole.None)
+                {
+                    return null;
+                }
+
+                BaseValueSource source = DependencyPropertyHelper.GetValueSource(current, WindowChrome.CaptionButtonRoleProperty).BaseValueSource;
+                if (source != BaseValueSource.Inherited && source != BaseValueSource.Default)
+                {
+                    role = value;
+                    return current;
+                }
+
+                current = (current is Visual || current is System.Windows.Media.Media3D.Visual3D ? VisualTreeHelper.GetParent(current) : null)
+                          ?? LogicalTreeHelper.GetParent(current);
+            }
+
+            return null;
+        }
+
+        /// <summary>The caption button element under the screen point of a non-client mouse message, if any.</summary>
+        private DependencyObject _GetCaptionButtonAt(IntPtr lParam, out CaptionButtonRole role)
+        {
+            role = CaptionButtonRole.None;
+            if (!_IsHwndAlive || _window == null || _AreDwmCaptionButtonsInUse)
+            {
+                return null;
+            }
+
+            DpiScale dpi = _window.GetDpi();
+            var mousePosWindow = new Point(Utility.GET_X_LPARAM(lParam), Utility.GET_Y_LPARAM(lParam));
+            Rect windowPosition = _GetWindowRect();
+            mousePosWindow.Offset(-windowPosition.X, -windowPosition.Y);
+            if (_IsExtendedMode)
+            {
+                FrameInsets insets = _GetEffectiveFrameInsets(_IsHwndMaximized());
+                mousePosWindow.Offset(-insets.Left, -insets.Top);
+            }
+            mousePosWindow = DpiHelper.DevicePixelsToLogical(mousePosWindow, dpi.DpiScaleX, dpi.DpiScaleY);
+
+            return _FindCaptionButtonElement(_window.InputHitTest(mousePosWindow) as DependencyObject, out role);
+        }
+
+        private void _SetHoveredCaptionButton(DependencyObject element)
+        {
+            if (ReferenceEquals(element, _hoveredCaptionButton))
+            {
+                return;
+            }
+
+            _hoveredCaptionButton?.ClearValue(WindowChrome.IsCaptionButtonHoveredPropertyKey);
+            _hoveredCaptionButton = element;
+
+            if (element != null)
+            {
+                element.SetValue(WindowChrome.IsCaptionButtonHoveredPropertyKey, true);
+                // The input pipeline does not track the pointer here: ask for WM_NCMOUSELEAVE ourselves.
+                NativeMethods.TrackNonClientMouseLeave(_hwnd);
+            }
+            else
+            {
+                _SetPressedCaptionButton(null);
+            }
+        }
+
+        private void _SetPressedCaptionButton(DependencyObject element)
+        {
+            if (ReferenceEquals(element, _pressedCaptionButton))
+            {
+                return;
+            }
+
+            _pressedCaptionButton?.ClearValue(WindowChrome.IsCaptionButtonPressedPropertyKey);
+            _pressedCaptionButton = element;
+            element?.SetValue(WindowChrome.IsCaptionButtonPressedPropertyKey, true);
+        }
+
+        /// <summary>
+        /// Performs the action of a clicked caption button element: its own invoke pattern (command or click
+        /// handler) when it has one, the window command of its role otherwise.
+        /// </summary>
+        private void _InvokeCaptionButton(DependencyObject element, CaptionButtonRole role)
+        {
+            if (element is UIElement uiElement)
+            {
+                AutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(uiElement);
+                if (peer?.GetPattern(PatternInterface.Invoke) is IInvokeProvider invoke)
+                {
+                    try
+                    {
+                        invoke.Invoke();
+                    }
+                    catch (ElementNotEnabledException)
+                    {
+                        // A disabled button does nothing, like a disabled system button.
+                    }
+                    return;
+                }
+            }
+
+            switch (role)
+            {
+                case CaptionButtonRole.Minimize:
+                    SystemCommands.MinimizeWindow(_window);
+                    break;
+                case CaptionButtonRole.Maximize:
+                    if (_window.WindowState == WindowState.Maximized)
+                    {
+                        SystemCommands.RestoreWindow(_window);
+                    }
+                    else
+                    {
+                        SystemCommands.MaximizeWindow(_window);
+                    }
+                    break;
+                case CaptionButtonRole.Close:
+                    SystemCommands.CloseWindow(_window);
+                    break;
+            }
+        }
+
+        private IntPtr _HandleNCMouseMove(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            handled = false;
+            if (!_ManagesNonClientArea)
+            {
+                return IntPtr.Zero;
+            }
+
+            CaptionButtonRole role;
+            DependencyObject element = _IsCaptionButtonHit((HT)wParam.ToInt32()) ? _GetCaptionButtonAt(lParam, out role) : null;
+            _SetHoveredCaptionButton(element);
+            return IntPtr.Zero;
+        }
+
+        private IntPtr _HandleNCLButtonDown(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            handled = false;
+            if (!_ManagesNonClientArea || !_IsCaptionButtonHit((HT)wParam.ToInt32()))
+            {
+                return IntPtr.Zero;
+            }
+
+            CaptionButtonRole role;
+            DependencyObject element = _GetCaptionButtonAt(lParam, out role);
+            if (element == null)
+            {
+                return IntPtr.Zero;
+            }
+
+            // Swallowed: the default handling would act on the window itself (and track the press in the frame).
+            _SetHoveredCaptionButton(element);
+            _SetPressedCaptionButton(element);
+            handled = true;
+            return IntPtr.Zero;
+        }
+
+        private IntPtr _HandleNCLButtonUp(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            handled = false;
+            if (!_ManagesNonClientArea || !_IsCaptionButtonHit((HT)wParam.ToInt32()))
+            {
+                return IntPtr.Zero;
+            }
+
+            CaptionButtonRole role;
+            DependencyObject element = _GetCaptionButtonAt(lParam, out role);
+            DependencyObject pressed = _pressedCaptionButton;
+            _SetPressedCaptionButton(null);
+
+            if (element == null)
+            {
+                return IntPtr.Zero;
+            }
+
+            handled = true;
+            if (ReferenceEquals(element, pressed))
+            {
+                _InvokeCaptionButton(element, role);
+            }
+            return IntPtr.Zero;
+        }
+
+        #endregion
+
         private IntPtr _HandleNCMouseLeave(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
+            _SetHoveredCaptionButton(null);
+
             // Let DWM clear the hover state of its caption buttons, otherwise a button may stay highlighted.
             if (_ManagesNonClientArea && _AreDwmCaptionButtonsInUse)
             {
@@ -2267,15 +2510,20 @@ namespace Microsoft.Windows.Shell
             }
             else
             {
+                // The fill DWM paints behind the caption text, when known: the caption color, or the accent color
+                // when the user shows it on title bars. A transparent caption color over a backdrop asks DWM for
+                // no fill at all (see ResolveCaptionColor): the material shows through, the accent is not painted,
+                // and the text must follow only the light/dark rendering of the caption.
                 Color? background = null;
-                if (_chromeInfo.CaptionColor.HasValue && _chromeInfo.CaptionColor.Value.A != 0 && Utility.IsOSWindows11OrNewer)
+                bool noFill;
+                Color? captionColor = ResolveCaptionColor(_chromeInfo.CaptionColor, _isBackdropApplied, out noFill);
+                if (captionColor.HasValue && !noFill && Utility.IsOSWindows11OrNewer)
                 {
-                    // A transparent caption color is not a background: the backdrop or the system fill shows.
-                    Color c = _chromeInfo.CaptionColor.Value;
+                    Color c = captionColor.Value;
                     c.A = 0xFF;
                     background = c;
                 }
-                else if (_isActive)
+                else if (_isActive && !(noFill && Utility.IsOSWindows11OrNewer))
                 {
                     Color accent;
                     if (CaptionTextColorHelper.TryGetPrevalentAccentColor(out accent))
@@ -3406,6 +3654,7 @@ namespace Microsoft.Windows.Shell
 
             _UnhookCustomChrome();
             _RemoveCaptionAdorner();
+            _SetHoveredCaptionButton(null);
 
             if (!isClosing && _IsHwndAlive && _appliedFrameMode.HasValue)
             {

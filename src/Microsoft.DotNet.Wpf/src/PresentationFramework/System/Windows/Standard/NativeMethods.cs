@@ -2939,6 +2939,34 @@ namespace Standard
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool InvalidateRect(IntPtr hWnd, IntPtr lpRect, [MarshalAs(UnmanagedType.Bool)] bool bErase);
 
+        [StructLayout(LayoutKind.Sequential)]
+        private struct TRACKMOUSEEVENT
+        {
+            public int cbSize;
+            public uint dwFlags;
+            public IntPtr hwndTrack;
+            public uint dwHoverTime;
+        }
+
+        private const uint TME_LEAVE = 0x00000002;
+        private const uint TME_NONCLIENT = 0x00000010;
+
+        [DllImport("user32.dll", EntryPoint = "TrackMouseEvent", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool _TrackMouseEvent(ref TRACKMOUSEEVENT lpEventTrack);
+
+        /// <summary>Asks for a WM_NCMOUSELEAVE when the cursor leaves the non-client area of the window.</summary>
+        public static bool TrackNonClientMouseLeave(IntPtr hwnd)
+        {
+            var tme = new TRACKMOUSEEVENT
+            {
+                cbSize = Marshal.SizeOf<TRACKMOUSEEVENT>(),
+                dwFlags = TME_LEAVE | TME_NONCLIENT,
+                hwndTrack = hwnd,
+            };
+            return _TrackMouseEvent(ref tme);
+        }
+
         [DllImport("user32.dll")]
         public static extern int GetSystemMetrics(SM nIndex);
 

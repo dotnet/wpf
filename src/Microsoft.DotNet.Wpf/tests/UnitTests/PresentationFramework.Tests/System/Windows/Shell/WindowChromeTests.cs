@@ -189,6 +189,25 @@ public sealed class WindowChromeTests
     }
 
     [WpfFact]
+    public void CaptionButtonRole_IsInheritedAndStatesDefaultToFalse()
+    {
+        var button = new System.Windows.Controls.Button();
+        var glyph = new System.Windows.Controls.TextBlock();
+        button.Content = glyph;
+
+        WindowChrome.GetCaptionButtonRole(button).Should().Be(CaptionButtonRole.None);
+        WindowChrome.SetCaptionButtonRole(button, CaptionButtonRole.Maximize);
+        WindowChrome.GetCaptionButtonRole(button).Should().Be(CaptionButtonRole.Maximize);
+        WindowChrome.GetCaptionButtonRole(glyph).Should().Be(CaptionButtonRole.Maximize);
+
+        WindowChrome.GetIsCaptionButtonHovered(button).Should().BeFalse();
+        WindowChrome.GetIsCaptionButtonPressed(button).Should().BeFalse();
+
+        Action act = () => WindowChrome.SetCaptionButtonRole(button, (CaptionButtonRole)9);
+        act.Should().Throw<ArgumentException>();
+    }
+
+    [WpfFact]
     public void CreateSystemFrameChrome_UsesSystemFrameMode()
     {
         WindowChrome.CreateSystemFrameChrome().FrameMode.Should().Be(WindowChromeFrameMode.SystemFrame);

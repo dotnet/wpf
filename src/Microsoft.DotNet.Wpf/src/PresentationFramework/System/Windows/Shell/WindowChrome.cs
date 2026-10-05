@@ -56,6 +56,10 @@ namespace Microsoft.Windows.Shell
         /// area is extended over the visible frame, whose thickness is measured from the actual window frame rather
         /// than from system metrics.  WPF content must not paint over <see cref="WindowChrome.CaptionButtonsBoundsProperty"/>.
         /// The window must use <see cref="WindowStyle.SingleBorderWindow"/> or <see cref="WindowStyle.ThreeDBorderWindow"/>.
+        /// With a high contrast theme this mode works correctly only when the application manifest declares
+        /// compatibility with Windows 8 or later (the <c>supportedOS</c> entries of the compatibility section);
+        /// without that declaration the system draws the legacy high contrast frame, whose caption cannot be
+        /// extended into the client area.
         /// </summary>
         ExtendedClientArea = 1,
 
@@ -105,6 +109,22 @@ namespace Microsoft.Windows.Shell
         Acrylic = 3,
         /// <summary>Mica Alt, the variant used for tabbed windows.</summary>
         Tabbed = 4,
+    }
+
+    /// <summary>
+    /// The system caption button an element of a custom title bar stands for.
+    /// See <see cref="WindowChrome.CaptionButtonRoleProperty"/>.
+    /// </summary>
+    public enum CaptionButtonRole
+    {
+        /// <summary>An ordinary element.</summary>
+        None = 0,
+        /// <summary>The element minimizes the window.</summary>
+        Minimize = 1,
+        /// <summary>The element maximizes or restores the window; the system shows its window layout flyout over it.</summary>
+        Maximize = 2,
+        /// <summary>The element closes the window.</summary>
+        Close = 3,
     }
 
     /// <summary>Flags identifying which DWM-related properties of a <see cref="WindowChrome"/> changed.</summary>
@@ -258,6 +278,89 @@ namespace Microsoft.Windows.Shell
                 throw new ArgumentException("The element must be a DependencyObject", nameof(inputElement));
             }
             dobj.SetValue(ResizeGripDirectionProperty, direction);
+        }
+
+        public static readonly DependencyProperty CaptionButtonRoleProperty = DependencyProperty.RegisterAttached(
+            "CaptionButtonRole",
+            typeof(CaptionButtonRole),
+            typeof(WindowChrome),
+            new FrameworkPropertyMetadata(CaptionButtonRole.None, FrameworkPropertyMetadataOptions.Inherits),
+            value => Enum.IsDefined(typeof(CaptionButtonRole), value));
+
+        /// <summary>
+        /// Attached property marking an element of the window content as one of the system caption buttons, for a
+        /// chrome that draws the caption itself (<see cref="WindowChromeFrameMode.Custom"/> without system-drawn
+        /// buttons; ignored while the system draws its own).  The system then treats the element like its own
+        /// button: it shows the window layout flyout when the pointer rests on the <see cref="CaptionButtonRole.Maximize"/>
+        /// element, and a click invokes the element (its command or click handler) or, when the element cannot be
+        /// invoked, performs the window command of the role.  Because the system owns the pointer over such an
+        /// element, mouse events are not routed to it: its hover and pressed looks must follow
+        /// <see cref="IsCaptionButtonHoveredProperty"/> and <see cref="IsCaptionButtonPressedProperty"/>.
+        /// </summary>
+        // WM_NCHITTEST answers HTMINBUTTON / HTMAXBUTTON / HTCLOSE over the element; the worker handles the
+        // WM_NCMOUSEMOVE / WM_NCLBUTTONDOWN / WM_NCLBUTTONUP / WM_NCMOUSELEAVE that follow.
+        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        public static CaptionButtonRole GetCaptionButtonRole(IInputElement inputElement)
+        {
+            Verify.IsNotNull(inputElement, "inputElement");
+            var dobj = inputElement as DependencyObject;
+            if (dobj == null)
+            {
+                throw new ArgumentException("The element must be a DependencyObject", nameof(inputElement));
+            }
+            return (CaptionButtonRole)dobj.GetValue(CaptionButtonRoleProperty);
+        }
+
+        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
+        [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+        public static void SetCaptionButtonRole(IInputElement inputElement, CaptionButtonRole role)
+        {
+            Verify.IsNotNull(inputElement, "inputElement");
+            var dobj = inputElement as DependencyObject;
+            if (dobj == null)
+            {
+                throw new ArgumentException("The element must be a DependencyObject", nameof(inputElement));
+            }
+            dobj.SetValue(CaptionButtonRoleProperty, role);
+        }
+
+        internal static readonly DependencyPropertyKey IsCaptionButtonHoveredPropertyKey = DependencyProperty.RegisterAttachedReadOnly(
+            "IsCaptionButtonHovered",
+            typeof(bool),
+            typeof(WindowChrome),
+            new FrameworkPropertyMetadata(false));
+
+        /// <summary>
+        /// Read-only attached property, set on an element with a <see cref="CaptionButtonRoleProperty"/>: whether
+        /// the pointer is over it.  Replaces the mouse-over state, which the element does not receive.
+        /// </summary>
+        public static readonly DependencyProperty IsCaptionButtonHoveredProperty = IsCaptionButtonHoveredPropertyKey.DependencyProperty;
+
+        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
+        public static bool GetIsCaptionButtonHovered(DependencyObject element)
+        {
+            Verify.IsNotNull(element, "element");
+            return (bool)element.GetValue(IsCaptionButtonHoveredProperty);
+        }
+
+        internal static readonly DependencyPropertyKey IsCaptionButtonPressedPropertyKey = DependencyProperty.RegisterAttachedReadOnly(
+            "IsCaptionButtonPressed",
+            typeof(bool),
+            typeof(WindowChrome),
+            new FrameworkPropertyMetadata(false));
+
+        /// <summary>
+        /// Read-only attached property, set on an element with a <see cref="CaptionButtonRoleProperty"/>: whether
+        /// the primary mouse button is held down over it.  Replaces the pressed state, which the element does not receive.
+        /// </summary>
+        public static readonly DependencyProperty IsCaptionButtonPressedProperty = IsCaptionButtonPressedPropertyKey.DependencyProperty;
+
+        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
+        public static bool GetIsCaptionButtonPressed(DependencyObject element)
+        {
+            Verify.IsNotNull(element, "element");
+            return (bool)element.GetValue(IsCaptionButtonPressedProperty);
         }
 
         // The following attached properties hold per-window state that is computed by the WindowChromeWorker.
@@ -683,7 +786,14 @@ namespace Microsoft.Windows.Shell
                 (d, e) => ((WindowChrome)d)._OnDwmAttributeChanged(WindowChromeDwmAttributes.Backdrop)),
             value => Enum.IsDefined(typeof(WindowBackdropKind), value));
 
-        /// <summary>System backdrop material of the window.  Requires Windows 11 version 22H2; ignored on earlier versions.</summary>
+        /// <summary>
+        /// System backdrop material of the window.  Requires Windows 11 version 22H2; ignored on earlier versions.
+        /// The material shows through every part of the window that is extended into the frame: by default the whole
+        /// window, which is not supported when the content hosts a child window (an <see cref="System.Windows.Interop.HwndHost"/>,
+        /// such as a WebBrowser or a Win32 control) because the child window is composed without the material and
+        /// its area may render incorrectly.  In that case limit the extension with an explicit
+        /// <see cref="GlassFrameThickness"/> that leaves the area of the child window out of the extended frame.
+        /// </summary>
         // DWMWA_SYSTEMBACKDROP_TYPE.
         public WindowBackdropKind BackdropType
         {

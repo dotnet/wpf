@@ -12468,6 +12468,13 @@ namespace System.Windows.Shell
         public string Title { get { throw null; } set { } }
         public string WorkingDirectory { get { throw null; } set { } }
     }
+    public enum CaptionButtonRole
+    {
+        None = 0,
+        Minimize = 1,
+        Maximize = 2,
+        Close = 3,
+    }
     [System.FlagsAttribute]
     public enum NonClientFrameEdges
     {
@@ -12563,6 +12570,7 @@ namespace System.Windows.Shell
     {
         public static readonly System.Windows.DependencyProperty BackdropTypeProperty;
         public static readonly System.Windows.DependencyProperty BorderColorProperty;
+        public static readonly System.Windows.DependencyProperty CaptionButtonRoleProperty;
         public static readonly System.Windows.DependencyProperty CaptionButtonsBoundsProperty;
         public static readonly System.Windows.DependencyProperty CaptionButtonsClipProperty;
         public static readonly System.Windows.DependencyProperty CaptionColorProperty;
@@ -12574,6 +12582,8 @@ namespace System.Windows.Shell
         public static readonly System.Windows.DependencyProperty CornerRadiusProperty;
         public static readonly System.Windows.DependencyProperty FrameModeProperty;
         public static readonly System.Windows.DependencyProperty GlassFrameThicknessProperty;
+        public static readonly System.Windows.DependencyProperty IsCaptionButtonHoveredProperty;
+        public static readonly System.Windows.DependencyProperty IsCaptionButtonPressedProperty;
         public static readonly System.Windows.DependencyProperty IsHitTestVisibleInChromeProperty;
         public static readonly System.Windows.DependencyProperty NonClientFrameEdgesProperty;
         public static readonly System.Windows.DependencyProperty ResizeBorderThicknessProperty;
@@ -12606,10 +12616,14 @@ namespace System.Windows.Shell
         public static System.Windows.Rect GetCaptionButtonsBounds(System.Windows.DependencyObject element) { throw null; }
         public static System.Windows.Media.Geometry GetCaptionButtonsClip(System.Windows.DependencyObject element) { throw null; }
         public static System.Windows.Media.Brush GetCaptionForeground(System.Windows.DependencyObject element) { throw null; }
+        public static System.Windows.Shell.CaptionButtonRole GetCaptionButtonRole(System.Windows.IInputElement inputElement) { throw null; }
+        public static bool GetIsCaptionButtonHovered(System.Windows.DependencyObject element) { throw null; }
+        public static bool GetIsCaptionButtonPressed(System.Windows.DependencyObject element) { throw null; }
         public static bool GetIsHitTestVisibleInChrome(System.Windows.IInputElement inputElement) { throw null; }
         public static System.Windows.Shell.ResizeGripDirection GetResizeGripDirection(System.Windows.IInputElement inputElement) { throw null; }
         public static System.Windows.Rect GetTitleBarBounds(System.Windows.DependencyObject element) { throw null; }
         public static System.Windows.Shell.WindowChrome GetWindowChrome(System.Windows.Window window) { throw null; }
+        public static void SetCaptionButtonRole(System.Windows.IInputElement inputElement, System.Windows.Shell.CaptionButtonRole role) { }
         public static void SetIsHitTestVisibleInChrome(System.Windows.IInputElement inputElement, bool hitTestVisible) { }
         public static void SetResizeGripDirection(System.Windows.IInputElement inputElement, System.Windows.Shell.ResizeGripDirection direction) { }
         public static void SetWindowChrome(System.Windows.Window window, System.Windows.Shell.WindowChrome chrome) { }

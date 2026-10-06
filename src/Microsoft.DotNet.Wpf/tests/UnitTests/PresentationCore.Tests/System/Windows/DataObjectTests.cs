@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Drawing.Imaging;
 using System.Windows.Media.Imaging;
 
 namespace System.Windows;
@@ -293,6 +294,65 @@ public class DataObjectTests
 
         Action act = () => data.SetData(string.Empty, testData, true);
         act.Should().Throw<ArgumentException>();
+    }
+
+    // Verifies managed EMF mappings honor autoConvert while preserving the original Metafile instance.
+    [WpfTheory]
+    [InlineData("EnhancedMetafile", "System.Drawing.Imaging.Metafile")]
+    [InlineData("System.Drawing.Imaging.Metafile", "EnhancedMetafile")]
+    public void TryGetData_MetafileMappedFormat_RespectsAutoConvert(
+        string sourceFormat,
+        string mappedFormat)
+    {
+        using Metafile source = EmfTestData.CreateMetafile();
+        DataObject dataObject = new();
+        dataObject.SetData(sourceFormat, source, autoConvert: true);
+
+        dataObject.GetDataPresent(sourceFormat, autoConvert: false).Should().BeTrue();
+        dataObject.GetDataPresent(mappedFormat, autoConvert: false).Should().BeFalse();
+        dataObject.GetDataPresent(mappedFormat, autoConvert: true).Should().BeTrue();
+
+        dataObject.TryGetData(
+            sourceFormat,
+            autoConvert: false,
+            out Metafile? exactResult).Should().BeTrue();
+        exactResult.Should().BeSameAs(source);
+        EmfTestData.AssertValid(exactResult!);
+
+        dataObject.TryGetData(
+            mappedFormat,
+            autoConvert: false,
+            out Metafile? nonConvertedResult).Should().BeFalse();
+        nonConvertedResult.Should().BeNull();
+
+        dataObject.TryGetData(
+            mappedFormat,
+            autoConvert: true,
+            out Metafile? convertedResult).Should().BeTrue();
+        convertedResult.Should().BeSameAs(source);
+        EmfTestData.AssertValid(convertedResult!);
+
+        dataObject.GetData(sourceFormat, autoConvert: false).Should().BeSameAs(source);
+        dataObject.GetData(mappedFormat, autoConvert: false).Should().BeNull();
+        dataObject.GetData(mappedFormat, autoConvert: true).Should().BeSameAs(source);
+        EmfTestData.AssertValid(source);
+    }
+
+    // Verifies typed requests reject an incompatible result type without corrupting the stored Metafile.
+    [WpfFact]
+    public void TryGetData_Metafile_WrongTypedRequestThrowsNotSupportedException()
+    {
+        using Metafile source = EmfTestData.CreateMetafile();
+        DataObject dataObject = new();
+        dataObject.SetData(DataFormats.EnhancedMetafile, source);
+
+        Action action = () => dataObject.TryGetData(
+            DataFormats.EnhancedMetafile,
+            autoConvert: false,
+            out string? _);
+
+        action.Should().Throw<NotSupportedException>();
+        EmfTestData.AssertValid(source);
     }
     #endregion
 

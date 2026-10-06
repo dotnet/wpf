@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Buffers.Binary;
@@ -8,12 +8,11 @@ using System.Runtime.InteropServices;
 
 namespace System.Windows;
 
-// Creates deterministic EMF/WMF payloads and validates native records without relying on external test assets.
 internal static class EmfTestData
 {
     internal static Rectangle Frame { get; } = new(0, 0, 120, 80);
 
-    // Records a rectangle into an in-memory EMF, then transfers ownership of an independent HENHMETAFILE.
+    // Records a deterministic rectangle into an in-memory EMF and returns an independently owned Metafile.
     public static Metafile CreateMetafile()
     {
         using MemoryStream stream = new();
@@ -42,7 +41,7 @@ internal static class EmfTestData
             nint recordingHdc = graphics.GetHdc();
             try
             {
-                Assert.NotEqual(0, GdiRectangle(recordingHdc, 10, 10, 110, 62));
+                GdiRectangle(recordingHdc, 10, 10, 110, 62).Should().NotBe(0);
             }
             finally
             {
@@ -69,7 +68,7 @@ internal static class EmfTestData
         }
     }
 
-    // Copies the native EMF bits. GetHenhmetafile transfers a handle that this method must release.
+    // Copies the native EMF bits and releases the caller-owned handle returned by GetHenhmetafile.
     public static byte[] GetBytes(Metafile metafile)
     {
         nint handle = metafile.GetHenhmetafile();
@@ -78,7 +77,6 @@ internal static class EmfTestData
             throw new Win32Exception();
         }
 
-        bool completed = false;
         try
         {
             uint size = GetEnhMetaFileBits(handle, 0, null);
@@ -88,39 +86,23 @@ internal static class EmfTestData
             }
 
             byte[] bytes = new byte[size];
-            if (GetEnhMetaFileBits(handle, size, bytes) != size)
+            uint copied = GetEnhMetaFileBits(handle, size, bytes);
+            if (copied != size)
             {
                 throw new Win32Exception();
             }
 
-            completed = true;
             return bytes;
         }
         finally
         {
-            bool deleted = DeleteEnhMetaFile(handle);
-            if (completed)
-            {
-                Assert.True(deleted);
-            }
+            DeleteEnhMetaFile(handle).Should().BeTrue();
         }
     }
 
-    // The production .NET 9 path calls MemoryStream.GetBuffer, so public buffer visibility changes behavior.
+    // Forces production code to use the non-public-buffer stream path rather than MemoryStream.TryGetBuffer.
     public static MemoryStream CreateNonExposableStream(byte[] bytes) =>
         new(bytes, 0, bytes.Length, writable: false, publiclyVisible: false);
-
-    public static MemoryStream CreateExposableStream(byte[] bytes) =>
-        new(bytes, 0, bytes.Length, writable: false, publiclyVisible: true);
-
-    // GetBuffer returns the full capacity, not Length. This shape exposes trailing capacity bytes to production.
-    public static MemoryStream CreateOverallocatedExposableStream(byte[] bytes)
-    {
-        MemoryStream stream = new(bytes.Length + 32);
-        stream.Write(bytes);
-        stream.Position = 0;
-        return stream;
-    }
 
     // Converts the deterministic EMF to WMF bits and adds the placeable header required by GDI+ stream loading.
     public static byte[] CreateWmfBytes()
@@ -134,11 +116,9 @@ internal static class EmfTestData
 
         using Bitmap referenceBitmap = new(1, 1);
         using Graphics referenceGraphics = Graphics.FromImage(referenceBitmap);
-        nint referenceHdc = 0;
-        bool completed = false;
+        nint referenceHdc = referenceGraphics.GetHdc();
         try
         {
-            referenceHdc = referenceGraphics.GetHdc();
             const int MmAnisotropic = 8;
             uint size = GetWinMetaFileBits(emfHandle, 0, null, MmAnisotropic, referenceHdc);
             if (size == 0)
@@ -152,53 +132,14 @@ internal static class EmfTestData
                 throw new Win32Exception();
             }
 
-            byte[] result = AddPlaceableWmfHeader(wmfBits);
-            completed = true;
-            return result;
+            return AddPlaceableWmfHeader(wmfBits);
         }
+
         finally
         {
-            try
-            {
-                if (referenceHdc != 0)
-                {
-                    referenceGraphics.ReleaseHdc(referenceHdc);
-                }
-            }
-            finally
-            {
-                bool deleted = DeleteEnhMetaFile(emfHandle);
-                if (completed)
-                {
-                    Assert.True(deleted);
-                }
-            }
+            referenceGraphics.ReleaseHdc(referenceHdc);
+            DeleteEnhMetaFile(emfHandle).Should().BeTrue();
         }
-    }
-
-    // Verifies structure and meaningful drawing records rather than accepting any non-null Metafile.
-    public static void AssertValid(Metafile metafile)
-    {
-        MetafileHeader header = metafile.GetMetafileHeader();
-        Assert.True(header.IsEmfOrEmfPlus());
-        Assert.True(header.Bounds.Width > 0);
-        Assert.True(header.Bounds.Height > 0);
-
-        List<EmfPlusRecordType> records = [];
-        using Bitmap target = new(Frame.Width, Frame.Height);
-        using Graphics graphics = Graphics.FromImage(target);
-        graphics.EnumerateMetafile(
-            metafile,
-            System.Drawing.Point.Empty,
-            (recordType, _, _, _, _) =>
-            {
-                records.Add(recordType);
-                return true;
-            });
-
-        Assert.Contains(EmfPlusRecordType.EmfHeader, records);
-        Assert.Contains(EmfPlusRecordType.EmfRectangle, records);
-        Assert.Contains(EmfPlusRecordType.EmfEof, records);
     }
 
     // Prepends an Aldus placeable header and computes its XOR checksum over the first ten WORDs.
@@ -223,6 +164,33 @@ internal static class EmfTestData
         BinaryPrimitives.WriteUInt16LittleEndian(header[20..], checksum);
         wmfBits.CopyTo(result, HeaderSize);
         return result;
+    }
+
+    // Verifies a renderable EMF using DPI-independent bounds and meaningful drawing records.
+    public static void AssertValid(Metafile metafile)
+    {
+        MetafileHeader header = metafile.GetMetafileHeader();
+        header.IsEmfOrEmfPlus().Should().BeTrue();
+        header.Bounds.Width.Should().BePositive();
+        header.Bounds.Height.Should().BePositive();
+        ((double)header.Bounds.Width / header.Bounds.Height)
+            .Should().BeApproximately((double)Frame.Width / Frame.Height, precision: 0.01);
+
+        List<EmfPlusRecordType> records = [];
+        using Bitmap target = new(Frame.Width, Frame.Height);
+        using Graphics graphics = Graphics.FromImage(target);
+        graphics.EnumerateMetafile(
+            metafile,
+            System.Drawing.Point.Empty,
+            (recordType, _, _, _, _) =>
+            {
+                records.Add(recordType);
+                return true;
+            });
+
+        records.Should().Contain(EmfPlusRecordType.EmfHeader);
+        records.Should().Contain(EmfPlusRecordType.EmfRectangle);
+        records.Should().Contain(EmfPlusRecordType.EmfEof);
     }
 
     [DllImport("gdi32.dll", SetLastError = true)]

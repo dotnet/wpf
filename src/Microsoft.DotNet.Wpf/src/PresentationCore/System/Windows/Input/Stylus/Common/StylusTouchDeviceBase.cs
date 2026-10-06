@@ -147,7 +147,9 @@ namespace System.Windows.Input
 
             _activeDeviceCount++;
 
-            if (_activeDeviceCount == 1)
+            // Devices whose up has already been received are no longer in contact, so
+            // they should not prevent this device from becoming primary.
+            if (ActiveDeviceCountExcludingUpPending == 1)
             {
                 IsPrimary = true;
                 OnActivateImpl();
@@ -170,6 +172,12 @@ namespace System.Windows.Input
 
             _activeDeviceCount--;
 
+            if (IsUpPending)
+            {
+                IsUpPending = false;
+                _upPendingDeviceCount--;
+            }
+
             OnDeactivateImpl();
 
             IsPrimary = false;
@@ -191,6 +199,21 @@ namespace System.Windows.Input
         {
             _lastAction = TouchAction.Move;
             return ReportMove();
+        }
+
+        /// <summary>
+        /// Marks that the up for this active device has been received but has not finished
+        /// processing yet.  Processing the up (e.g. a synthesized Tap gesture promoted to mouse)
+        /// can run a nested message pump such as Window.ShowDialog, during which this device
+        /// stays active.  It must not block other touches from becoming primary meanwhile.
+        /// </summary>
+        internal void OnUpPending()
+        {
+            if (IsActive && !IsUpPending)
+            {
+                IsUpPending = true;
+                _upPendingDeviceCount++;
+            }
         }
 
         internal bool OnUp()
@@ -230,12 +253,22 @@ namespace System.Windows.Input
 
         internal static int ActiveDeviceCount { get { return _activeDeviceCount; } }
 
+        /// <summary>
+        ///     The number of active devices that are still in contact (their up has not been received).
+        /// </summary>
+        internal static int ActiveDeviceCountExcludingUpPending { get { return _activeDeviceCount - _upPendingDeviceCount; } }
+
+        internal bool IsUpPending { get; private set; }
+
         #endregion
 
         #region Member Variables
 
         [ThreadStatic]
         private static int _activeDeviceCount;
+
+        [ThreadStatic]
+        private static int _upPendingDeviceCount;
 
         private TouchAction _lastAction = TouchAction.Move;
 

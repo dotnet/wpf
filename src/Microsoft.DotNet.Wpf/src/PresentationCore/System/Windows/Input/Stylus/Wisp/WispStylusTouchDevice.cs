@@ -117,8 +117,18 @@ namespace System.Windows.Input.StylusWisp
 
         protected override void OnActivateImpl()
         {
-            if (ActiveDeviceCount == 1)
+            if (ActiveDeviceCountExcludingUpPending == 1)
             {
+                // The previous promotion device may still be processing its up (e.g. its tap
+                // opened a modal dialog).  Release its promoted mouse press so this device can
+                // promote its own mouse down.
+                if (_stylusLogic.CurrentMousePromotionStylusDevice is WispStylusDevice previous
+                    && previous != StylusDevice
+                    && previous.TouchDevice.IsUpPending)
+                {
+                    previous.AbandonPromotedMouseButton();
+                }
+
                 _stylusLogic.CurrentMousePromotionStylusDevice = StylusDevice;
             }
         }
@@ -127,11 +137,11 @@ namespace System.Windows.Input.StylusWisp
         {
             _storedStagingAreaItems?.Clear();
 
-            if (ActiveDeviceCount == 0)
+            if (ActiveDeviceCountExcludingUpPending == 0)
             {
                 _stylusLogic.CurrentMousePromotionStylusDevice = null;
             }
-            else if (IsPrimary)
+            else if (IsPrimary && _stylusLogic.CurrentMousePromotionStylusDevice == StylusDevice)
             {
                 _stylusLogic.CurrentMousePromotionStylusDevice = NoMousePromotionStylusDevice;
             }

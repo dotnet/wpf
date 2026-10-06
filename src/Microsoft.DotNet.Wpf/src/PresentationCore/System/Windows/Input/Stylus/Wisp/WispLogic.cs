@@ -937,6 +937,15 @@ namespace System.Windows.Input.StylusWisp
                                 {
                                     cancelInput = false; // We can process this event - don't cancel!
 
+                                    if (stylusInputReport.Actions == RawStylusActions.Up)
+                                    {
+                                        // The contact has been lifted.  The remaining processing of this up
+                                        // (gestures, TouchUp, mouse promotion) can enter a nested message
+                                        // pump (e.g. Window.ShowDialog); new touches must still be able to
+                                        // become primary and promote to mouse during it.
+                                        stylusDevice.TouchDevice.OnUpPending();
+                                    }
+
                                     // See if a static gesture can be generated
                                     WispTabletDevice tabletDevice = stylusDevice.TabletDevice?.As<WispTabletDevice>();
 

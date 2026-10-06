@@ -1837,6 +1837,21 @@ namespace System.Windows.Input.StylusWisp
             }
         }
 
+        /// <summary>
+        /// Drops the mouse button press promoted for this device without promoting a mouse up.
+        /// Used when another device takes over mouse promotion while the up for this device is
+        /// still being processed (e.g. its tap opened a modal dialog).  This mirrors a real mouse,
+        /// whose button up is lost to the window that was disabled by the dialog.
+        /// </summary>
+        internal void AbandonPromotedMouseButton()
+        {
+            if (_promotedMouseState == MouseButtonState.Pressed)
+            {
+                _promotedMouseState = MouseButtonState.Released;
+                _stylusLogic.UpdateMouseButtonState(_fLeftButtonDownTrigger ? RawMouseActions.Button1Release : RawMouseActions.Button2Release);
+            }
+        }
+
         /////////////////////////////////////////////////////////////////////
 
 

@@ -207,6 +207,72 @@ public sealed class ClipboardTests
         Assert.Equal(string.Empty, Clipboard.GetText(TextDataFormat.UnicodeText));
     }
 
+    // Verifies the production Clipboard retry loop survives temporary native clipboard ownership by another thread.
+    [StaFact]
+    public void Clear_ClipboardTemporarilyLocked_RetriesUntilAvailable()
+    {
+        using ManualResetEventSlim clipboardOpened = new();
+        using ManualResetEventSlim releaseClipboard = new();
+        Exception? lockerException = null;
+
+        Thread locker = new(() =>
+        {
+            bool opened = false;
+            try
+            {
+                opened = OpenClipboardWithRetry();
+                clipboardOpened.Set();
+                releaseClipboard.Wait(TimeSpan.FromSeconds(5));
+            }
+            catch (Exception exception)
+            {
+                lockerException = exception;
+                clipboardOpened.Set();
+            }
+            finally
+            {
+                if (opened && !CloseClipboard())
+                {
+                    lockerException ??= new Win32Exception(Marshal.GetLastWin32Error());
+                }
+            }
+        })
+        {
+            IsBackground = true,
+            Name = $"{nameof(ClipboardTests)} native clipboard owner"
+        };
+        locker.SetApartmentState(ApartmentState.MTA);
+        locker.Start();
+
+        Assert.True(clipboardOpened.Wait(TimeSpan.FromSeconds(5)));
+        Assert.Null(lockerException);
+
+        Thread releaser = new(() =>
+        {
+            Thread.Sleep(250);
+            releaseClipboard.Set();
+        })
+        {
+            IsBackground = true,
+            Name = $"{nameof(ClipboardTests)} native clipboard releaser"
+        };
+        releaser.Start();
+
+        try
+        {
+            // This call must initially receive CLIPBRD_E_CANT_OPEN and then succeed after the locker releases.
+            Clipboard.Clear();
+        }
+        finally
+        {
+            releaseClipboard.Set();
+            releaser.Join();
+            locker.Join();
+        }
+
+        Assert.Null(lockerException);
+    }
+
     // Verifies custom formats register case-insensitively and round-trip through Clipboard and IDataObject APIs.
     [StaFact]
     public void SetData_CustomFormat_RoundTripsThroughIDataObject()
@@ -1307,6 +1373,21 @@ public sealed class ClipboardTests
         }
     }
 
+    private static bool OpenClipboardWithRetry()
+    {
+        for (int attemptsRemaining = 10; attemptsRemaining > 0; attemptsRemaining--)
+        {
+            if (OpenClipboard(0))
+            {
+                return true;
+            }
+
+            Thread.Sleep(100);
+        }
+
+        throw new Win32Exception(Marshal.GetLastWin32Error());
+    }
+
     private static void AssertArgumentNull(string paramName, Action action) =>
         Assert.Equal(paramName, Assert.Throws<ArgumentNullException>(action).ParamName);
 
@@ -1321,6 +1402,14 @@ public sealed class ClipboardTests
             TextDataFormat.Xaml => DataFormats.Xaml,
             _ => throw new InvalidEnumArgumentException(nameof(format), (int)format, typeof(TextDataFormat)),
         };
+
+    [DllImport("user32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool OpenClipboard(nint newOwner);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool CloseClipboard();
 }
 
 [CollectionDefinition(Name, DisableParallelization = true)]

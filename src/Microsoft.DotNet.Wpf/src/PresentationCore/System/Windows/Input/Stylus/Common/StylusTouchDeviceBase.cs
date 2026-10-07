@@ -147,9 +147,9 @@ namespace System.Windows.Input
 
             _activeDeviceCount++;
 
-            // Devices whose up has already been received are no longer in contact, so
-            // they should not prevent this device from becoming primary.
-            if (ActiveDeviceCountExcludingUpPending == 1)
+            // Orphaned devices can no longer deliver input, so they should not
+            // prevent this device from becoming primary.
+            if (ActiveDeviceCountExcludingOrphaned == 1)
             {
                 IsPrimary = true;
                 OnActivateImpl();
@@ -172,10 +172,10 @@ namespace System.Windows.Input
 
             _activeDeviceCount--;
 
-            if (IsUpPending)
+            if (IsOrphaned)
             {
-                IsUpPending = false;
-                _upPendingDeviceCount--;
+                IsOrphaned = false;
+                _orphanedDeviceCount--;
             }
 
             OnDeactivateImpl();
@@ -202,18 +202,26 @@ namespace System.Windows.Input
         }
 
         /// <summary>
-        /// Marks that the up for this active device has been received but has not finished
-        /// processing yet.  Processing the up (e.g. a synthesized Tap gesture promoted to mouse)
-        /// can run a nested message pump such as Window.ShowDialog, during which this device
-        /// stays active.  It must not block other touches from becoming primary meanwhile.
+        /// Marks this active device as orphaned: the window it is active in has been disabled
+        /// (e.g. by Window.ShowDialog run while processing this device's input), so it cannot
+        /// deliver further input until its up arrives.  An orphaned device stays active but does
+        /// not block other touches from becoming primary.
         /// </summary>
-        internal void OnUpPending()
+        internal void OnOrphaned()
         {
-            if (IsActive && !IsUpPending)
+            if (IsActive && !IsOrphaned)
             {
-                IsUpPending = true;
-                _upPendingDeviceCount++;
+                IsOrphaned = true;
+                _orphanedDeviceCount++;
+                OnOrphanedImpl();
             }
+        }
+
+        /// <summary>
+        /// Override to provide stack specific behavior when an active device is orphaned
+        /// </summary>
+        protected virtual void OnOrphanedImpl()
+        {
         }
 
         internal bool OnUp()
@@ -254,11 +262,11 @@ namespace System.Windows.Input
         internal static int ActiveDeviceCount { get { return _activeDeviceCount; } }
 
         /// <summary>
-        ///     The number of active devices that are still in contact (their up has not been received).
+        ///     The number of active devices that are not orphaned (see <see cref="OnOrphaned"/>).
         /// </summary>
-        internal static int ActiveDeviceCountExcludingUpPending { get { return _activeDeviceCount - _upPendingDeviceCount; } }
+        internal static int ActiveDeviceCountExcludingOrphaned { get { return _activeDeviceCount - _orphanedDeviceCount; } }
 
-        internal bool IsUpPending { get; private set; }
+        internal bool IsOrphaned { get; private set; }
 
         #endregion
 
@@ -268,7 +276,7 @@ namespace System.Windows.Input
         private static int _activeDeviceCount;
 
         [ThreadStatic]
-        private static int _upPendingDeviceCount;
+        private static int _orphanedDeviceCount;
 
         private TouchAction _lastAction = TouchAction.Move;
 

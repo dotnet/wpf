@@ -1218,6 +1218,10 @@ namespace System.Windows.Input.StylusWisp
                                 // from raw and run the code to reset (Preview to Main promotion).  As such
                                 // we should reset state here similarly to what we do for TouchDevice.  This
                                 // allows for proper mouse state tracking in the StylusDevice in the future.
+                                // If this device promoted a mouse down before the window got disabled (e.g. the
+                                // down opened a modal dialog), also release the mouse button state; otherwise the
+                                // next device's promoted mouse down is dropped and its first tap raises no Click.
+                                stylusDevice.AbandonPromotedMouseButton();
                                 stylusDevice.ResetStateForStylusUp();
 
                                 WispStylusTouchDevice touchDevice = stylusDevice.TouchDevice;

@@ -754,7 +754,7 @@
       </trans-unit>
       <trans-unit id="NameNotFound">
         <source>Name resolution failure. '{0}' was not found.</source>
-        <target state="translated">이름 확인이 실패했습니다. {0}을(를) 찾을 수 없습니다.</target>
+        <target state="translated">이름 해결이 실패했습니다. {0}을(를) 찾을 수 없습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="NameScopeDuplicateNamesNotAllowed">

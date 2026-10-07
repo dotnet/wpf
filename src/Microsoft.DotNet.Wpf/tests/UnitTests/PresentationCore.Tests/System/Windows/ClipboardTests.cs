@@ -678,9 +678,10 @@ public sealed class ClipboardTests
                 stride: 8,
                 offset: 0);
 
-            Assert.True(Clipboard.ContainsImage());
-            Assert.True(Clipboard.ContainsData(DataFormats.Bitmap));
-            BitmapSource image = Assert.IsAssignableFrom<BitmapSource>(Clipboard.GetImage());
+            Assert.True(RetryClipboardAccess(Clipboard.ContainsImage));
+            Assert.True(RetryClipboardAccess(() => Clipboard.ContainsData(DataFormats.Bitmap)));
+            BitmapSource image = Assert.IsAssignableFrom<BitmapSource>(
+                RetryClipboardAccess(Clipboard.GetImage));
             Assert.Equal(2, image.PixelWidth);
             Assert.Equal(1, image.PixelHeight);
             Assert.NotSame(source, image);
@@ -694,7 +695,8 @@ public sealed class ClipboardTests
                     0x40, 0x50, 0x60,
                 },
                 actualPixels);
-            Assert.IsAssignableFrom<BitmapSource>(Clipboard.GetData(DataFormats.Bitmap));
+            Assert.IsAssignableFrom<BitmapSource>(
+                RetryClipboardAccess(() => Clipboard.GetData(DataFormats.Bitmap)));
         }
         finally
         {

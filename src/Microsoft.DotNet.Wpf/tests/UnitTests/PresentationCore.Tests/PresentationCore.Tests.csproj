@@ -15,7 +15,16 @@
     <ProjectReference Include="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
     </ProjectReference>
-    <!-- Clipboard tests create native WPF windows through OleServicesContext. -->
+    <!-- Clipboard image tests exercise the dynamically loaded BitmapSource/System.Drawing conversion extension. -->
+    <ProjectReference Include="$(WpfSourceDir)Extensions\PresentationFramework-SystemDrawing\PresentationFramework-SystemDrawing.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
+    <!-- Clipboard validation paths load PresentationCore resource metadata that depends on System.Xaml. -->
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+  </ItemGroup>
+
+  <!-- Clipboard tests create native WPF windows through OleServicesContext. -->
+  <ItemGroup Condition="'$(Platform)' != 'ARM64' And '$(Platform)' != 'AnyCPU'">
     <ProjectReference Include="$(WpfSourceDir)..\redist\PresentationNative\PresentationNative.vcxproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
@@ -36,12 +45,6 @@
       <SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
     </ProjectReference>
-    <!-- Clipboard image tests exercise the dynamically loaded BitmapSource/System.Drawing conversion extension. -->
-    <ProjectReference Include="$(WpfSourceDir)Extensions\PresentationFramework-SystemDrawing\PresentationFramework-SystemDrawing.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
-    <!-- Clipboard validation paths load PresentationCore resource metadata that depends on System.Xaml. -->
-    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -56,12 +59,36 @@
     <PackageReference Include="System.Runtime.Serialization.Formatters" Version="$(SystemRuntimeSerializationFormattersPackageVersion)" />
   </ItemGroup>
 
-  <Target Name="CopyClipboardTestNativeDependencies" AfterTargets="Build">
+  <Target Name="CopyClipboardTestNativeDependencies"
+          AfterTargets="Build"
+          Condition="'$(Platform)' != 'ARM64' And '$(Platform)' != 'AnyCPU'">
     <ItemGroup>
-      <_ClipboardTestNativeDependency Include="$(ArtifactsDir)bin\PresentationNative\$(Platform)\$(Configuration)\PresentationNative_cor3.dll" />
-      <_ClipboardTestNativeDependency Include="$(ArtifactsDir)bin\wpfgfx\$(Platform)\$(Configuration)\wpfgfx_cor3.dll" />
-      <_ClipboardTestNativeDependency Include="$(ArtifactsDir)bin\D3DCompiler\$(Platform)\$(Configuration)\D3DCompiler_47_cor3.dll" />
-      <_ClipboardTestNativeDependency Include="$(ArtifactsDir)bin\VCRuntime\$(Platform)\$(Configuration)\**\*.dll" />
+      <_ClipboardTestNativeDependency
+        Include="$(ArtifactsDir)bin\PresentationNative\$(Platform)\$(Configuration)\PresentationNative_cor3.dll"
+        Condition="Exists('$(ArtifactsDir)bin\PresentationNative\$(Platform)\$(Configuration)\PresentationNative_cor3.dll')" />
+      <_ClipboardTestNativeDependency
+        Include="$(ArtifactsDir)bin\wpfgfx\$(Platform)\$(Configuration)\wpfgfx_cor3.dll"
+        Condition="Exists('$(ArtifactsDir)bin\wpfgfx\$(Platform)\$(Configuration)\wpfgfx_cor3.dll')" />
+      <_ClipboardTestNativeDependency
+        Include="$(ArtifactsDir)bin\D3DCompiler\$(Platform)\$(Configuration)\D3DCompiler_47_cor3.dll"
+        Condition="Exists('$(ArtifactsDir)bin\D3DCompiler\$(Platform)\$(Configuration)\D3DCompiler_47_cor3.dll')" />
+      <_ClipboardTestNativeDependency
+        Include="$(ArtifactsDir)bin\VCRuntime\$(Platform)\$(Configuration)\**\*.dll"
+        Condition="Exists('$(ArtifactsDir)bin\VCRuntime\$(Platform)\$(Configuration)')" />
+
+      <!-- Native C++ projects use Win32 for x86 in Visual Studio builds. -->
+      <_ClipboardTestNativeDependency
+        Include="$(ArtifactsDir)bin\PresentationNative\Win32\$(Configuration)\PresentationNative_cor3.dll"
+        Condition="'$(Platform)' == 'x86' And Exists('$(ArtifactsDir)bin\PresentationNative\Win32\$(Configuration)\PresentationNative_cor3.dll')" />
+      <_ClipboardTestNativeDependency
+        Include="$(ArtifactsDir)bin\wpfgfx\Win32\$(Configuration)\wpfgfx_cor3.dll"
+        Condition="'$(Platform)' == 'x86' And Exists('$(ArtifactsDir)bin\wpfgfx\Win32\$(Configuration)\wpfgfx_cor3.dll')" />
+      <_ClipboardTestNativeDependency
+        Include="$(ArtifactsDir)bin\D3DCompiler\Win32\$(Configuration)\D3DCompiler_47_cor3.dll"
+        Condition="'$(Platform)' == 'x86' And Exists('$(ArtifactsDir)bin\D3DCompiler\Win32\$(Configuration)\D3DCompiler_47_cor3.dll')" />
+      <_ClipboardTestNativeDependency
+        Include="$(ArtifactsDir)bin\VCRuntime\Win32\$(Configuration)\**\*.dll"
+        Condition="'$(Platform)' == 'x86' And Exists('$(ArtifactsDir)bin\VCRuntime\Win32\$(Configuration)')" />
     </ItemGroup>
     <Copy SourceFiles="@(_ClipboardTestNativeDependency)"
           DestinationFolder="$(TargetDir)"

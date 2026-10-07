@@ -15,6 +15,27 @@
     <ProjectReference Include="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
     </ProjectReference>
+    <!-- Clipboard tests create native WPF windows through OleServicesContext. -->
+    <ProjectReference Include="$(WpfSourceDir)..\redist\PresentationNative\PresentationNative.vcxproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
+    </ProjectReference>
+    <ProjectReference Include="$(WpfSourceDir)WpfGfx\core\dll\wpfgfx.vcxproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
+    </ProjectReference>
+    <ProjectReference Include="$(WpfSourceDir)..\redist\D3DCompiler\D3DCompiler.vcxproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
+    </ProjectReference>
+    <ProjectReference Include="$(WpfSourceDir)..\redist\VCRuntime\VCRuntime.vcxproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <SkipGetTargetFrameworkProperties>true</SkipGetTargetFrameworkProperties>
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
+    </ProjectReference>
     <!-- Clipboard image tests exercise the dynamically loaded BitmapSource/System.Drawing conversion extension. -->
     <ProjectReference Include="$(WpfSourceDir)Extensions\PresentationFramework-SystemDrawing\PresentationFramework-SystemDrawing.csproj" />
     <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
@@ -34,5 +55,17 @@
     <PackageReference Include="System.Formats.Nrbf" Version="$(SystemFormatsNrbfVersion)" />
     <PackageReference Include="System.Runtime.Serialization.Formatters" Version="$(SystemRuntimeSerializationFormattersPackageVersion)" />
   </ItemGroup>
+
+  <Target Name="CopyClipboardTestNativeDependencies" AfterTargets="Build">
+    <ItemGroup>
+      <_ClipboardTestNativeDependency Include="$(ArtifactsDir)bin\PresentationNative\$(Platform)\$(Configuration)\PresentationNative_cor3.dll" />
+      <_ClipboardTestNativeDependency Include="$(ArtifactsDir)bin\wpfgfx\$(Platform)\$(Configuration)\wpfgfx_cor3.dll" />
+      <_ClipboardTestNativeDependency Include="$(ArtifactsDir)bin\D3DCompiler\$(Platform)\$(Configuration)\D3DCompiler_47_cor3.dll" />
+      <_ClipboardTestNativeDependency Include="$(ArtifactsDir)bin\VCRuntime\$(Platform)\$(Configuration)\**\*.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_ClipboardTestNativeDependency)"
+          DestinationFolder="$(TargetDir)"
+          SkipUnchangedFiles="true" />
+  </Target>
 
 </Project>

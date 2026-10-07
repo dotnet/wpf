@@ -1869,7 +1869,7 @@
       </trans-unit>
       <trans-unit id="InvalidStylusPointPropertyInfoResolution">
         <source>Resolution must be at least 0.0f.</source>
-        <target state="translated">해상도는 최소한 0.0f여야 합니다.</target>
+        <target state="translated">해결은 최소한 0.0f여야 합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidStylusPointXYNaN">

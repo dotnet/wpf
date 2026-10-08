@@ -2,9 +2,9 @@
 
 This document summarizes observable differences in the WPF `Clipboard`, `DataObject`, and related data-transfer APIs between the `release/9.0` and `release/10.0` branches.
 
-## Compatibility fix in this worktree
+## Coordinated compatibility fix
 
-The uncommitted changes in the WPF and WinForms worktrees restore the .NET 9 behavior for the existing WPF Clipboard APIs while preserving the .NET 10 WinForms behavior:
+The coordinated WPF and `System.Private.Windows.Core` changes restore the .NET 9 behavior for the existing WPF Clipboard APIs while preserving the .NET 10 WinForms behavior:
 
 - WPF `Clipboard.GetDataObject()` requests the OLE proxy instead of unwrapping the original managed data object.
 - WPF `Contains*` APIs use native `IsClipboardFormatAvailable` checks, including Windows-generated formats, and can again be called from an MTA thread.
@@ -227,7 +227,7 @@ After the .NET 10 auto-conversion restoration, the following legacy behaviors re
 
 ## Test coverage
 
-The `release/10.0` Clipboard test suite includes coverage for:
+The compatibility test suite added with this change includes coverage for:
 
 - The exact ANSI Text to UnicodeText scenario for rendered clipboard data.
 - Non-conversion through `Clipboard.GetText` for a live `DataObject`.

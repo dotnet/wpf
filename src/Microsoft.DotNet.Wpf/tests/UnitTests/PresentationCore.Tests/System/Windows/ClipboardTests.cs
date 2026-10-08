@@ -450,6 +450,72 @@ public class ClipboardTests : IDisposable
         Clipboard.GetText(TextDataFormat.UnicodeText).Should().BeEmpty();
     }
 
+    // Verifies the production Clipboard retry loop survives temporary native clipboard ownership by another thread.
+    [WpfFact]
+    public void Clear_ClipboardTemporarilyLocked_RetriesUntilAvailable()
+    {
+        using ManualResetEventSlim clipboardOpened = new();
+        using ManualResetEventSlim releaseClipboard = new();
+        Exception? lockerException = null;
+
+        Thread locker = new(() =>
+        {
+            bool opened = false;
+            try
+            {
+                opened = OpenClipboardWithRetry();
+                clipboardOpened.Set();
+                releaseClipboard.Wait(TimeSpan.FromSeconds(5));
+            }
+            catch (Exception exception)
+            {
+                lockerException = exception;
+                clipboardOpened.Set();
+            }
+            finally
+            {
+                if (opened && !CloseClipboard())
+                {
+                    lockerException ??= new Win32Exception(Marshal.GetLastWin32Error());
+                }
+            }
+        })
+        {
+            IsBackground = true,
+            Name = $"{nameof(ClipboardTests)} native clipboard owner"
+        };
+        locker.SetApartmentState(ApartmentState.MTA);
+        locker.Start();
+
+        clipboardOpened.Wait(TimeSpan.FromSeconds(5)).Should().BeTrue();
+        lockerException.Should().BeNull();
+
+        Thread releaser = new(() =>
+        {
+            Thread.Sleep(250);
+            releaseClipboard.Set();
+        })
+        {
+            IsBackground = true,
+            Name = $"{nameof(ClipboardTests)} native clipboard releaser"
+        };
+        releaser.Start();
+
+        try
+        {
+            // This call must initially receive CLIPBRD_E_CANT_OPEN and then succeed after the locker releases.
+            Clipboard.Clear();
+        }
+        finally
+        {
+            releaseClipboard.Set();
+            releaser.Join();
+            locker.Join();
+        }
+
+        lockerException.Should().BeNull();
+    }
+
     [WpfFact]
     public void SetData_CustomFormat_RoundTripsThroughIDataObject()
     {
@@ -1409,6 +1475,21 @@ public class ClipboardTests : IDisposable
         }
     }
 
+    private static bool OpenClipboardWithRetry()
+    {
+        for (int attemptsRemaining = 10; attemptsRemaining > 0; attemptsRemaining--)
+        {
+            if (OpenClipboard(0))
+            {
+                return true;
+            }
+
+            Thread.Sleep(100);
+        }
+
+        throw new Win32Exception(Marshal.GetLastWin32Error());
+    }
+
     private static string GetDataFormat(TextDataFormat format) =>
         format switch
         {
@@ -1420,4 +1501,12 @@ public class ClipboardTests : IDisposable
             TextDataFormat.Xaml => DataFormats.Xaml,
             _ => throw new InvalidEnumArgumentException(nameof(format), (int)format, typeof(TextDataFormat)),
         };
+
+    [DllImport("user32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool OpenClipboard(nint newOwner);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool CloseClipboard();
 }

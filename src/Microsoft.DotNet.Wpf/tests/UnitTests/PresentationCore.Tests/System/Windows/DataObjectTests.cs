@@ -312,6 +312,14 @@ public class DataObjectTests
         dataObject.GetDataPresent(mappedFormat, autoConvert: false).Should().BeFalse();
         dataObject.GetDataPresent(mappedFormat, autoConvert: true).Should().BeTrue();
 
+        string[] nativeFormats = dataObject.GetFormats(autoConvert: false);
+        nativeFormats.Should().Contain(sourceFormat);
+        nativeFormats.Should().NotContain(mappedFormat);
+
+        string[] convertedFormats = dataObject.GetFormats(autoConvert: true);
+        convertedFormats.Should().Contain(sourceFormat);
+        convertedFormats.Should().Contain(mappedFormat);
+
         dataObject.TryGetData(
             sourceFormat,
             autoConvert: false,

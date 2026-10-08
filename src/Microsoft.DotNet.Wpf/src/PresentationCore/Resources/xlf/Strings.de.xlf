@@ -1869,7 +1869,7 @@
       </trans-unit>
       <trans-unit id="InvalidStylusPointPropertyInfoResolution">
         <source>Resolution must be at least 0.0f.</source>
-        <target state="translated">Die Auflösung muss mindestens 0,0f betragen.</target>
+        <target state="translated">Die Auflösung muss mindestens 0.0f betragen.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidStylusPointXYNaN">

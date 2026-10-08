@@ -229,11 +229,11 @@ After the .NET 10 auto-conversion restoration, the following legacy behaviors re
 
 The compatibility test suite added with this change includes coverage for:
 
-- The exact ANSI Text to UnicodeText scenario for rendered clipboard data.
-- Non-conversion through `Clipboard.GetText` for a live `DataObject`.
+- The exact ANSI Text to UnicodeText system-synthesis scenario for a live default `copy: false` data object.
+- OLE-proxy text conversion through `Clipboard.GetText` for a live `DataObject`.
 - Both `autoConvert` values for the complete text mapping group.
 - Every built-in mapped-format family.
-- STA enforcement for all Clipboard APIs.
+- STA enforcement for OLE-backed Clipboard APIs and MTA-safe native `Contains*` checks.
 - Argument validation and exception parameter names.
 - `Clear`, `Flush`, `IsCurrent`, and `SetDataObject` copy semantics.
 - Audio, file-drop, image, custom-format, and text round trips.

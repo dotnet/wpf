@@ -754,7 +754,7 @@
       </trans-unit>
       <trans-unit id="NameNotFound">
         <source>Name resolution failure. '{0}' was not found.</source>
-        <target state="translated">Fehler bei der Namensauflösung. "{0}" wurde nicht gefunden.</target>
+        <target state="translated">Fehler bei Namensauflösung. '{0}' nicht gefunden.</target>
         <note />
       </trans-unit>
       <trans-unit id="NameScopeDuplicateNamesNotAllowed">

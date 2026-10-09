@@ -109,10 +109,10 @@ namespace MS.Internal.Ink
 
             Debug.Assert(to - from >= 4);
             int d = (to - from) / 4;
-            int[] i = { from, from + d, (to + from) / 2, to - d, to };
+            ReadOnlySpan<int> indices = [from, from + d, (to + from) / 2, to - d, to];
 
             // Test for "cubicness"
-            return CoCubic(data, i, error);
+            return CoCubic(data, indices, error);
         }
 
 
@@ -406,32 +406,32 @@ namespace MS.Internal.Ink
         /// Checks whether five points are co-cubic within tolerance
         /// </summary>
         /// <param name="data">In: Data points</param>
-        /// <param name="i">In: Array of 5 indices</param>
+        /// <param name="indices">In: Array of 5 indices</param>
         /// <param name="fitError">In: tolerated error - squared</param>
         /// <returns>Return true if extended</returns>
-        private static bool CoCubic(CuspData data, int[] i, double fitError)
+        private static bool CoCubic(CuspData data, ReadOnlySpan<int> indices, double fitError)
         {
             /* Our error estimate is (t[4]-t[0])^4 times the 4th divided difference
             * of the points with resect to the nodes. The divided difference is
             * equal to Sum(c(i)*p[i]), where c(i)=Product(t[i]-t[j]: j != i)
-            * (See Conte & deBoor's Elementary Numerical Analysis, Excercise 2.2-1).
+            * (See Conte & deBoor's Elementary Numerical Analysis, Exercise 2.2-1).
             * We multiply each factor in the product by t[4]-t[0].
             */
-            double d04 = data.Node(i[4]) - data.Node(i[0]);
-            double d01 = d04 / (data.Node(i[1]) - data.Node(i[0]));
-            double d02 = d04 / (data.Node(i[2]) - data.Node(i[0]));
-            double d03 = d04 / (data.Node(i[3]) - data.Node(i[0]));
-            double d12 = d04 / (data.Node(i[2]) - data.Node(i[1]));
-            double d13 = d04 / (data.Node(i[3]) - data.Node(i[1]));
-            double d14 = d04 / (data.Node(i[4]) - data.Node(i[1]));
-            double d23 = d04 / (data.Node(i[3]) - data.Node(i[2]));
-            double d24 = d04 / (data.Node(i[4]) - data.Node(i[2]));
-            double d34 = d04 / (data.Node(i[4]) - data.Node(i[3]));
-            Vector P =  d01 * d02 * d03 * data.XY(i[0]) - 
-                        d01 * d12 * d13 * d14 * data.XY(i[1]) + 
-                        d02 * d12 * d23 * d24 * data.XY(i[2]) - 
-                        d03 * d13 * d23 * d34 * data.XY(i[3]) + 
-                        d14 * d24 * d34 * data.XY(i[4]);
+            double d04 = data.Node(indices[4]) - data.Node(indices[0]);
+            double d01 = d04 / (data.Node(indices[1]) - data.Node(indices[0]));
+            double d02 = d04 / (data.Node(indices[2]) - data.Node(indices[0]));
+            double d03 = d04 / (data.Node(indices[3]) - data.Node(indices[0]));
+            double d12 = d04 / (data.Node(indices[2]) - data.Node(indices[1]));
+            double d13 = d04 / (data.Node(indices[3]) - data.Node(indices[1]));
+            double d14 = d04 / (data.Node(indices[4]) - data.Node(indices[1]));
+            double d23 = d04 / (data.Node(indices[3]) - data.Node(indices[2]));
+            double d24 = d04 / (data.Node(indices[4]) - data.Node(indices[2]));
+            double d34 = d04 / (data.Node(indices[4]) - data.Node(indices[3]));
+            Vector P =  d01 * d02 * d03 * data.XY(indices[0]) - 
+                        d01 * d12 * d13 * d14 * data.XY(indices[1]) + 
+                        d02 * d12 * d23 * d24 * data.XY(indices[2]) - 
+                        d03 * d13 * d23 * d34 * data.XY(indices[3]) + 
+                        d14 * d24 * d34 * data.XY(indices[4]);
 
             return ((P * P) < fitError);
         }

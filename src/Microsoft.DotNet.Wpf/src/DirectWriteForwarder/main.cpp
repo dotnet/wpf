@@ -4,7 +4,6 @@
 
 #include "CPP/precomp.hxx"
 #include <shlwapi.h>
-#include "Utils.hxx" // from shared\inc
 #include "dwriteloader.h" // from shared\inc
 
 // This is how these files are declared in truetype.cpp.

@@ -952,7 +952,7 @@ END_MILENUM
 //      MilMatrix3x2D
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilMatrix3x2D
 {
     DOUBLE S_11;
     DOUBLE S_12;
@@ -960,7 +960,7 @@ typedef struct
     DOUBLE S_22;
     DOUBLE DX;
     DOUBLE DY;
-} MilMatrix3x2D;
+};
 
 #define _MilMatrix3x2D_DEFINED
 
@@ -972,11 +972,11 @@ typedef struct
 //      MilPoint2F
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilPoint2F
 {
     FLOAT X;
     FLOAT Y;
-} MilPoint2F;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -984,13 +984,13 @@ typedef struct
 //      MilColorI
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilColorI
 {
     INT r;
     INT g;
     INT b;
     INT a;
-} MilColorI;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -998,12 +998,12 @@ typedef struct
 //      MilPoint3F
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilPoint3F
 {
     FLOAT X;
     FLOAT Y;
     FLOAT Z;
-} MilPoint3F;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1011,13 +1011,13 @@ typedef struct
 //      MilQuaternionF
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilQuaternionF
 {
     FLOAT X;
     FLOAT Y;
     FLOAT Z;
     FLOAT W;
-} MilQuaternionF;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1025,7 +1025,7 @@ typedef struct
 //      MilMatrix4x4D
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilMatrix4x4D
 {
     DOUBLE M_11;
     DOUBLE M_12;
@@ -1043,7 +1043,7 @@ typedef struct
     DOUBLE M_42;
     DOUBLE M_43;
     DOUBLE M_44;
-} MilMatrix4x4D;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1054,7 +1054,7 @@ typedef struct
 //      Description of a display or display set's graphics capabilities.
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilGraphicsAccelerationCaps
 {
     //
     // Tier value
@@ -1105,7 +1105,7 @@ typedef struct
     // Maximum number of instruction slots, if pixel shader 3.0 is supported
     //
     UINT MaxPixelShader30InstructionSlots;
-} MilGraphicsAccelerationCaps;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1118,11 +1118,11 @@ typedef struct
 //      display machine.
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilGraphicsAccelerationAssessment
 {
     UINT VideoMemoryBandwidth;
     UINT VideoMemorySize;
-} MilGraphicsAccelerationAssessment;
+};
 
 
 //
@@ -1137,11 +1137,11 @@ typedef struct
 //      MilPoint2L
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilPoint2L
 {
     INT X;
     INT Y;
-} MilPoint2L;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1149,11 +1149,11 @@ typedef struct
 //      MilPoint2D
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilPoint2D
 {
     DOUBLE X;
     DOUBLE Y;
-} MilPoint2D;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1161,13 +1161,13 @@ typedef struct
 //      MilPointAndSizeL
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilPointAndSizeL
 {
     INT X;
     INT Y;
     INT Width;
     INT Height;
-} MilPointAndSizeL;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1175,13 +1175,13 @@ typedef struct
 //      MilPointAndSizeF
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilPointAndSizeF
 {
     FLOAT X;
     FLOAT Y;
     FLOAT Width;
     FLOAT Height;
-} MilPointAndSizeF;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1189,13 +1189,13 @@ typedef struct
 //      MilRectF
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilRectF
 {
     FLOAT left;
     FLOAT top;
     FLOAT right;
     FLOAT bottom;
-} MilRectF;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1203,13 +1203,13 @@ typedef struct
 //      MilPointAndSizeD
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilPointAndSizeD
 {
     DOUBLE X;
     DOUBLE Y;
     DOUBLE Width;
     DOUBLE Height;
-} MilPointAndSizeD;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1217,13 +1217,13 @@ typedef struct
 //      MilRectD
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilRectD
 {
     DOUBLE left;
     DOUBLE top;
     DOUBLE right;
     DOUBLE bottom;
-} MilRectD;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1231,11 +1231,11 @@ typedef struct
 //      MilSizeD
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilSizeD
 {
     DOUBLE Width;
     DOUBLE Height;
-} MilSizeD;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1243,11 +1243,11 @@ typedef struct
 //      MilGradientStop
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilGradientStop
 {
     DOUBLE Position;
     MilColorF Color;
-} MilGradientStop;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1255,14 +1255,14 @@ typedef struct
 //      MilPathGeometry
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilPathGeometry
 {
     DWORD Size;
     DWORD Flags;
     MilRectD Bounds;
     UINT FigureCount;
     DWORD ForcePacking;
-} MilPathGeometry;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1270,7 +1270,7 @@ typedef struct
 //      MilPathFigure
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilPathFigure
 {
     DWORD BackSize;
     DWORD Flags;
@@ -1283,7 +1283,7 @@ typedef struct
     // See ForcePacking comment at beginning of this file.
     //
     UINT ForcePacking;
-} MilPathFigure;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1291,12 +1291,12 @@ typedef struct
 //      MilSegment
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilSegment
 {
     MilSegmentType::Enum Type;
     DWORD Flags;
     DWORD BackSize;
-} MilSegment;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1304,7 +1304,7 @@ typedef struct
 //      MilSegmentLine
 //
 //------------------------------------------------------------------------------
-typedef struct : MilSegment
+struct MilSegmentLine : MilSegment
 {
     //
     // See ForcePacking comment at beginning of this file.
@@ -1312,7 +1312,7 @@ typedef struct : MilSegment
     UINT ForcePacking;
 
     MilPoint2D Point;
-} MilSegmentLine;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1320,7 +1320,7 @@ typedef struct : MilSegment
 //      MilSegmentBezier
 //
 //------------------------------------------------------------------------------
-typedef struct : MilSegment
+struct MilSegmentBezier : MilSegment
 {
     //
     // See ForcePacking comment at beginning of this file.
@@ -1330,7 +1330,7 @@ typedef struct : MilSegment
     MilPoint2D Point1;
     MilPoint2D Point2;
     MilPoint2D Point3;
-} MilSegmentBezier;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1338,7 +1338,7 @@ typedef struct : MilSegment
 //      MilSegmentQuadraticBezier
 //
 //------------------------------------------------------------------------------
-typedef struct : MilSegment
+struct MilSegmentQuadraticBezier : MilSegment
 {
     //
     // See ForcePacking comment at beginning of this file.
@@ -1347,7 +1347,7 @@ typedef struct : MilSegment
 
     MilPoint2D Point1;
     MilPoint2D Point2;
-} MilSegmentQuadraticBezier;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1355,7 +1355,7 @@ typedef struct : MilSegment
 //      MilSegmentArc
 //
 //------------------------------------------------------------------------------
-typedef struct : MilSegment
+struct MilSegmentArc : MilSegment
 {
     UINT LargeArc;
     MilPoint2D Point;
@@ -1367,7 +1367,7 @@ typedef struct : MilSegment
     // See ForcePacking comment at beginning of this file.
     //
     UINT ForcePacking;
-} MilSegmentArc;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1375,10 +1375,10 @@ typedef struct : MilSegment
 //      MilSegmentPoly
 //
 //------------------------------------------------------------------------------
-typedef struct : MilSegment
+struct MilSegmentPoly : MilSegment
 {
     UINT Count;
-} MilSegmentPoly;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1386,7 +1386,7 @@ typedef struct : MilSegment
 //      MilPenData
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilPenData
 {
     DOUBLE Thickness;
     DOUBLE MiterLimit;
@@ -1396,7 +1396,7 @@ typedef struct
     MilPenCap::Enum DashCap;
     MilPenJoin::Enum LineJoin;
     UINT DashArraySize;
-} MilPenData;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1404,7 +1404,7 @@ typedef struct
 //      MilRenderOptions
 //
 //------------------------------------------------------------------------------
-typedef struct
+struct MilRenderOptions
 {
     MilRenderOptionFlags::Flags Flags;
     MilEdgeMode::Enum EdgeMode;
@@ -1413,7 +1413,7 @@ typedef struct
     MilClearTypeHint::Enum ClearTypeHint;
     MilTextRenderingMode::Enum TextRenderingMode;
     MilTextHintingMode::Enum TextHintingMode;
-} MilRenderOptions;
+};
 
 //+-----------------------------------------------------------------------------
 //
@@ -1422,11 +1422,11 @@ typedef struct
 //
 //------------------------------------------------------------------------------
 #pragma pack(push, 1)
-typedef struct
+struct MilMsgCompositionDeviceStateChangeData
 {
     MilCompositionDeviceState::Enum deviceStateOld;
     MilCompositionDeviceState::Enum deviceStateNew;
-} MilMsgCompositionDeviceStateChangeData;
+};
 #pragma pack(pop)
 
 //+-----------------------------------------------------------------------------
@@ -1436,10 +1436,10 @@ typedef struct
 //
 //------------------------------------------------------------------------------
 #pragma pack(push, 1)
-typedef struct
+struct MilMsgSyncFlushReplyData
 {
     HRESULT hr;
-} MilMsgSyncFlushReplyData;
+};
 #pragma pack(pop)
 
 //+-----------------------------------------------------------------------------
@@ -1449,10 +1449,10 @@ typedef struct
 //
 //------------------------------------------------------------------------------
 #pragma pack(push, 1)
-typedef struct
+struct MilMsgVersionReplyData
 {
     UINT SupportedVersionsCount;
-} MilMsgVersionReplyData;
+};
 #pragma pack(pop)
 
 //+-----------------------------------------------------------------------------
@@ -1462,7 +1462,7 @@ typedef struct
 //
 //------------------------------------------------------------------------------
 #pragma pack(push, 1)
-typedef struct
+struct MilMsgTierData
 {
     //
     // Is this caps description specific to the primary display or is it the minimum 
@@ -1478,7 +1478,7 @@ typedef struct
 
     MilGraphicsAccelerationCaps Caps;
     MilGraphicsAccelerationAssessment Assessment;
-} MilMsgTierData;
+};
 #pragma pack(pop)
 
 //+-----------------------------------------------------------------------------
@@ -1488,10 +1488,10 @@ typedef struct
 //
 //------------------------------------------------------------------------------
 #pragma pack(push, 1)
-typedef struct
+struct MilMsgPartitionIsZombieData
 {
     HRESULT hrFailureCode;
-} MilMsgPartitionIsZombieData;
+};
 #pragma pack(pop)
 
 //+-----------------------------------------------------------------------------
@@ -1501,10 +1501,10 @@ typedef struct
 //
 //------------------------------------------------------------------------------
 #pragma pack(push, 1)
-typedef struct
+struct MilMsgSyncModeStatusData
 {
     HRESULT hrEnabled;
-} MilMsgSyncModeStatusData;
+};
 #pragma pack(pop)
 
 //+-----------------------------------------------------------------------------
@@ -1514,12 +1514,12 @@ typedef struct
 //
 //------------------------------------------------------------------------------
 #pragma pack(push, 1)
-typedef struct
+struct MilMsgPresentedData
 {
     MilPresentationResults::Enum presentationResults;
     UINT refreshRate;
     LARGE_INTEGER presentationTime;
-} MilMsgPresentedData;
+};
 #pragma pack(pop)
 
 //+-----------------------------------------------------------------------------
@@ -1529,11 +1529,11 @@ typedef struct
 //
 //------------------------------------------------------------------------------
 #pragma pack(push, 1)
-typedef struct
+struct MilMsgSysMemUsageData
 {
     UINT percentSystemMemoryUsed;
     size_t totalClientSystemMemory;
-} MilMsgSysMemUsageData;
+};
 #pragma pack(pop)
 
 //+-----------------------------------------------------------------------------
@@ -1543,11 +1543,11 @@ typedef struct
 //
 //------------------------------------------------------------------------------
 #pragma pack(push, 1)
-typedef struct
+struct MilMsgAsyncFlushReplyData
 {
     UINT responseToken;
     HRESULT hrCode;
-} MilMsgAsyncFlushReplyData;
+};
 #pragma pack(pop)
 
 //+-----------------------------------------------------------------------------
@@ -1557,10 +1557,10 @@ typedef struct
 //
 //------------------------------------------------------------------------------
 #pragma pack(push, 1)
-typedef struct
+struct MilMsgRenderStatusData
 {
     HRESULT hrCode;
-} MilMsgRenderStatusData;
+};
 #pragma pack(pop)
 
 //+-----------------------------------------------------------------------------
@@ -1570,7 +1570,7 @@ typedef struct
 //
 //------------------------------------------------------------------------------
 #pragma pack(push, 1)
-typedef struct
+struct MIL_MESSAGE
 {
     MilMessageClass::Enum type;
     DWORD dwReserved;
@@ -1587,7 +1587,7 @@ typedef struct
         MilMsgAsyncFlushReplyData asyncFlushData;
         MilMsgRenderStatusData renderStatusData;
     };
-} MIL_MESSAGE;
+};
 #pragma pack(pop)
 
 #endif // MILCORE_KERNEL_COMPONENT

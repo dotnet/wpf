@@ -854,6 +854,42 @@ CSoftwareRasterizer::GetCS_Brush(
         }
         break;
 
+        case BrushGradientSweep:
+        {
+            CMILBrushSweepGradient *pGradBrush = static_cast<CMILBrushSweepGradient *>(pBrush);
+
+            UINT nColorCount = pGradBrush->GetColorData()->GetCount();
+
+            if (nColorCount < 2)
+            {
+                // Specifying at least 2 gradient stops is required
+                MIL_THR(WGXERR_INVALIDPARAMETER);
+                break;
+            }
+
+            //
+            // The brush stores the 3-point form (center + reference + perp)
+            // in the shared CMILBrushGradient base, populated by
+            // SetCenterAndReferenceDirection. Mirrors how the linear and
+            // radial cases above read 3 points via GetEndPoints.
+            //
+            MilPoint2F ptsGradient[3];
+            pGradBrush->GetEndPoints(&ptsGradient[0], &ptsGradient[1], &ptsGradient[2]);
+
+            hr = m_pCSCreator->GetCS_SweepGradient(
+                ptsGradient,
+                pGradBrush->GetStartAngle(),
+                pGradBrush->GetEndAngle(),
+                nColorCount,
+                pGradBrush->GetColorData()->GetColorsPtr(),
+                pGradBrush->GetColorData()->GetPositionsPtr(),
+                pGradBrush->GetWrapMode(),
+                pGradBrush->GetColorInterpolationMode(),
+                &matWorldHPCToDeviceHPC,
+                ppColorSource);
+        }
+        break;
+
         case BrushBitmap:
         {
             CMILBrushBitmap *pBitmapBrush = static_cast<CMILBrushBitmap *>(pBrush);
@@ -1163,6 +1199,7 @@ CColorSourceCreator_sRGB::CColorSourceCreator_sRGB()
     m_pLinearGradientSpan = NULL;
     m_pRadialGradientSpan = NULL;
     m_pFocalGradientSpan = NULL;
+    m_pSweepGradientSpan = NULL;
     m_pShaderEffectSpan = NULL;
 }
 
@@ -1172,6 +1209,7 @@ CColorSourceCreator_sRGB::~CColorSourceCreator_sRGB()
     delete m_pLinearGradientSpan;
     delete m_pRadialGradientSpan;
     delete m_pFocalGradientSpan;
+    delete m_pSweepGradientSpan;
     delete m_pShaderEffectSpan;
 }
 
@@ -1461,6 +1499,55 @@ CColorSourceCreator_sRGB::GetCS_FocalGradient(
 }
 
 HRESULT
+CColorSourceCreator_sRGB::GetCS_SweepGradient(
+    __in_ecount(3) const MilPoint2F *pGradientPoints,
+    FLOAT startAngleDegrees,
+    FLOAT endAngleDegrees,
+    UINT nColorCount,
+    const MilColorF *pColors,
+    const FLOAT *pPositions,
+    MilGradientWrapMode::Enum wrapMode,
+    MilColorInterpolationMode::Enum colorInterpolationMode,
+    const CMatrix<CoordinateSpace::BaseSamplingHPC,CoordinateSpace::DeviceHPC> *pmatWorldHPCToDeviceHPC,
+    OUT CColorSource **ppColorSource
+    )
+{
+    HRESULT hr = S_OK;
+
+    Assert(nColorCount >= 2);
+
+    if (m_pSweepGradientSpan == NULL)
+    {
+        m_pSweepGradientSpan = new CSweepGradientBrushSpan;
+        if (m_pSweepGradientSpan == NULL)
+        {
+            MIL_THR(E_OUTOFMEMORY);
+        }
+    }
+
+    if (SUCCEEDED(hr))
+    {
+        MIL_THR(m_pSweepGradientSpan->Initialize(
+            pmatWorldHPCToDeviceHPC,
+            pGradientPoints,
+            startAngleDegrees,
+            endAngleDegrees,
+            pColors,
+            pPositions,
+            nColorCount,
+            wrapMode,
+            colorInterpolationMode));
+    }
+
+    if (SUCCEEDED(hr))
+    {
+        *ppColorSource = m_pSweepGradientSpan;
+    }
+
+    return hr;
+}
+
+HRESULT
 CColorSourceCreator_sRGB::GetCS_Resample(
     __in_ecount(1) IWGXBitmapSource *pIBitmapSource,
     MilBitmapWrapMode::Enum wrapMode,
@@ -1604,6 +1691,25 @@ CColorSourceCreator_scRGB::GetCS_FocalGradient(
     )
 {
 
+    Assert(FALSE);
+
+    RRETURN(E_NOTIMPL);
+}
+
+HRESULT
+CColorSourceCreator_scRGB::GetCS_SweepGradient(
+    __in_ecount(3) const MilPoint2F *pGradientPoints,
+    FLOAT startAngleDegrees,
+    FLOAT endAngleDegrees,
+    UINT nColorCount,
+    const MilColorF *pColors,
+    const FLOAT *pPositions,
+    MilGradientWrapMode::Enum wrapMode,
+    MilColorInterpolationMode::Enum colorInterpolationMode,
+    const CMatrix<CoordinateSpace::BaseSamplingHPC,CoordinateSpace::DeviceHPC> *pmatWorldHPCToDeviceHPC,
+    OUT CColorSource **ppColorSource
+    )
+{
     Assert(FALSE);
 
     RRETURN(E_NOTIMPL);

@@ -66,6 +66,10 @@ public:
         __in_ecount(1) CHwRadialGradientColorSource *pRadialGradient
         );
 
+    override HRESULT Set_SweepGradient(
+        __in_ecount(1) CHwSweepGradientColorSource *pSweepGradient
+        );
+
     override HRESULT Mul_ConstAlpha(
         CHwConstantAlphaColorSource *pAlphaColorSource
         );

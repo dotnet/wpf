@@ -751,19 +751,20 @@ internal enum MILCMD
     /* 0x7e */ MilCmdSolidColorBrush                         = 0x7e,
     /* 0x7f */ MilCmdLinearGradientBrush                     = 0x7f,
     /* 0x80 */ MilCmdRadialGradientBrush                     = 0x80,
-    /* 0x81 */ MilCmdImageBrush                              = 0x81,
-    /* 0x82 */ MilCmdDrawingBrush                            = 0x82,
-    /* 0x83 */ MilCmdVisualBrush                             = 0x83,
-    /* 0x84 */ MilCmdBitmapCacheBrush                        = 0x84,
-    /* 0x85 */ MilCmdDashStyle                               = 0x85,
-    /* 0x86 */ MilCmdPen                                     = 0x86,
-    /* 0x87 */ MilCmdGeometryDrawing                         = 0x87,
-    /* 0x88 */ MilCmdGlyphRunDrawing                         = 0x88,
-    /* 0x89 */ MilCmdImageDrawing                            = 0x89,
-    /* 0x8a */ MilCmdVideoDrawing                            = 0x8a,
-    /* 0x8b */ MilCmdDrawingGroup                            = 0x8b,
-    /* 0x8c */ MilCmdGuidelineSet                            = 0x8c,
-    /* 0x8d */ MilCmdBitmapCache                             = 0x8d,
+    /* 0x81 */ MilCmdSweepGradientBrush                      = 0x81,
+    /* 0x82 */ MilCmdImageBrush                              = 0x82,
+    /* 0x83 */ MilCmdDrawingBrush                            = 0x83,
+    /* 0x84 */ MilCmdVisualBrush                             = 0x84,
+    /* 0x85 */ MilCmdBitmapCacheBrush                        = 0x85,
+    /* 0x86 */ MilCmdDashStyle                               = 0x86,
+    /* 0x87 */ MilCmdPen                                     = 0x87,
+    /* 0x88 */ MilCmdGeometryDrawing                         = 0x88,
+    /* 0x89 */ MilCmdGlyphRunDrawing                         = 0x89,
+    /* 0x8a */ MilCmdImageDrawing                            = 0x8a,
+    /* 0x8b */ MilCmdVideoDrawing                            = 0x8b,
+    /* 0x8c */ MilCmdDrawingGroup                            = 0x8c,
+    /* 0x8d */ MilCmdGuidelineSet                            = 0x8d,
+    /* 0x8e */ MilCmdBitmapCache                             = 0x8e,
 
 #if DBG
     //
@@ -776,7 +777,7 @@ internal enum MILCMD
     // debug/retail and managed/unmanaged code.
     //
 
-    /* 0x8e */ MilCmdValidateStructureOrder                  = 0x8e
+    /* 0x8e */ MilCmdValidateStructureOrder                  = 0x8f
 #endif
 };
 
@@ -867,25 +868,26 @@ internal enum MILCMD
             /* 0x4c */ TYPE_GRADIENTBRUSH = 76,
             /* 0x4d */ TYPE_LINEARGRADIENTBRUSH = 77,
             /* 0x4e */ TYPE_RADIALGRADIENTBRUSH = 78,
-            /* 0x4f */ TYPE_TILEBRUSH = 79,
-            /* 0x50 */ TYPE_IMAGEBRUSH = 80,
-            /* 0x51 */ TYPE_DRAWINGBRUSH = 81,
-            /* 0x52 */ TYPE_VISUALBRUSH = 82,
-            /* 0x53 */ TYPE_BITMAPCACHEBRUSH = 83,
-            /* 0x54 */ TYPE_DASHSTYLE = 84,
-            /* 0x55 */ TYPE_PEN = 85,
-            /* 0x56 */ TYPE_DRAWING = 86,
-            /* 0x57 */ TYPE_GEOMETRYDRAWING = 87,
-            /* 0x58 */ TYPE_GLYPHRUNDRAWING = 88,
-            /* 0x59 */ TYPE_IMAGEDRAWING = 89,
-            /* 0x5a */ TYPE_VIDEODRAWING = 90,
-            /* 0x5b */ TYPE_DRAWINGGROUP = 91,
-            /* 0x5c */ TYPE_GUIDELINESET = 92,
-            /* 0x5d */ TYPE_CACHEMODE = 93,
-            /* 0x5e */ TYPE_BITMAPCACHE = 94,
-            /* 0x5f */ TYPE_BITMAPSOURCE = 95,
-            /* 0x60 */ TYPE_DOUBLEBUFFEREDBITMAP = 96,
-            /* 0x61 */ TYPE_D3DIMAGE = 97,
+            /* 0x4f */ TYPE_SWEEPGRADIENTBRUSH = 79,
+            /* 0x50 */ TYPE_TILEBRUSH = 80,
+            /* 0x51 */ TYPE_IMAGEBRUSH = 81,
+            /* 0x52 */ TYPE_DRAWINGBRUSH = 82,
+            /* 0x53 */ TYPE_VISUALBRUSH = 83,
+            /* 0x54 */ TYPE_BITMAPCACHEBRUSH = 84,
+            /* 0x55 */ TYPE_DASHSTYLE = 85,
+            /* 0x56 */ TYPE_PEN = 86,
+            /* 0x57 */ TYPE_DRAWING = 87,
+            /* 0x58 */ TYPE_GEOMETRYDRAWING = 88,
+            /* 0x59 */ TYPE_GLYPHRUNDRAWING = 89,
+            /* 0x5a */ TYPE_IMAGEDRAWING = 90,
+            /* 0x5b */ TYPE_VIDEODRAWING = 91,
+            /* 0x5c */ TYPE_DRAWINGGROUP = 92,
+            /* 0x5d */ TYPE_GUIDELINESET = 93,
+            /* 0x5e */ TYPE_CACHEMODE = 94,
+            /* 0x5f */ TYPE_BITMAPCACHE = 95,
+            /* 0x60 */ TYPE_BITMAPSOURCE = 96,
+            /* 0x61 */ TYPE_DOUBLEBUFFEREDBITMAP = 97,
+            /* 0x62 */ TYPE_D3DIMAGE = 98,
         };
     }
 

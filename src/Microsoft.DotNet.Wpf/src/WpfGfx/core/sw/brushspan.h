@@ -25,6 +25,7 @@ MtExtern(CLinearGradientBrushSpan);
 MtExtern(CLinearGradientBrushSpan_MMX);
 MtExtern(CRadialGradientBrushSpan);
 MtExtern(CFocalGradientBrushSpan);
+MtExtern(CSweepGradientBrushSpan);
 MtExtern(CShaderEffectBrushSpan);
 
 //+-----------------------------------------------------------------------------
@@ -434,6 +435,79 @@ private:
         );
 
     friend VOID FASTCALL ColorSource_FocalGradient_32bppPARGB(
+        __in_ecount(1) const PipelineParams *, 
+        __in_ecount(1) const ScanOpParams *
+        );
+};
+
+
+//+-----------------------------------------------------------------------------
+//
+//  Class:
+//      CSweepGradientBrushSpan
+//
+//  Synopsis:
+//      sRGB SweepGradientBrush implementation. The color line is mapped to the
+//      angular sweep from StartAngle to EndAngle (in degrees, clockwise from
+//      the +X axis of the brush's local frame). Per pixel, we transform the
+//      device-IPC sample point into the brush's local frame (where the center
+//      maps to (0,0) and the post-transform +X reference direction maps to
+//      (1,0)), compute its angle via atan2, normalize to a position along the
+//      color line, apply the SpreadMethod, and sample the gradient texel LUT
+//      with the same fixed-point interpolation used by the radial brush.
+//
+//------------------------------------------------------------------------------
+class CSweepGradientBrushSpan : public CGradientBrushSpan
+{
+public:
+
+    CSweepGradientBrushSpan();
+    virtual ~CSweepGradientBrushSpan();
+    DECLARE_METERHEAP_ALLOC(ProcessHeap, Mt(CSweepGradientBrushSpan));
+
+    HRESULT Initialize(
+        __in_ecount(1) const CMatrix<CoordinateSpace::BaseSamplingHPC,CoordinateSpace::DeviceHPC> *pmatWorldHPCToDeviceHPC,
+        __in_ecount(3) const MilPoint2F *pGradientPoints,
+        __in FLOAT startAngleDegrees,
+        __in FLOAT endAngleDegrees,
+        __in_ecount(uCount) const MilColorF *pColors,
+        __in_ecount(uCount) const FLOAT *pPositions,
+        __in UINT uCount,
+        __in MilGradientWrapMode::Enum wrapMode,
+        __in MilColorInterpolationMode::Enum colorInterpolationMode
+        );
+
+    virtual ScanOpFunc GetScanOp() const { return ColorSource_SweepGradient_32bppPARGB; }
+
+    virtual VOID ReleaseExpensiveResources();
+
+protected:
+
+    // Matrix elements that map device-IPC pixel coordinates into the brush's
+    // local frame (center at origin, +X aligned with the post-transform
+    // reference direction).
+    FLOAT m_rM11;
+    FLOAT m_rM21;
+    FLOAT m_rDx;
+    FLOAT m_rM12;
+    FLOAT m_rM22;
+    FLOAT m_rDy;
+
+    // Angular sweep parameters, in radians, in the brush's local frame.
+    FLOAT m_flStartAngleRadians;
+    FLOAT m_flAngularSpanRadians;   // EndAngle - StartAngle; sign indicates direction.
+    bool  m_fAngularSpanIsZero;     // Special case: start == end (degenerate).
+
+private:
+
+    VOID GenerateColors(
+        __in INT nX, 
+        __in INT nY, 
+        __in INT nCount, 
+        __out_ecount_full(nCount) ARGB *pArgbDest
+        );
+
+    friend VOID FASTCALL ColorSource_SweepGradient_32bppPARGB(
         __in_ecount(1) const PipelineParams *, 
         __in_ecount(1) const ScanOpParams *
         );

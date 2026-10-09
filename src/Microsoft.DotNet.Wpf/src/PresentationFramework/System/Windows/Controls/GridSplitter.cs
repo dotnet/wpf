@@ -815,11 +815,29 @@ namespace System.Windows.Controls
             {
                 minDelta = definition1Min - definition1Len;
                 maxDelta = definition1Max - definition1Len;
+
+                // If definition2 has a star length, it absorbs the space freed up or consumed by
+                // definition1, so the delta must also keep definition2 within its Min/Max constraints.
+                // Otherwise definition1 can be given a size the layout cannot honor once definition2
+                // is clamped by one of its constraints; from that point the splitter no longer tracks
+                // the mouse and the accumulating drag delta resizes the definitions much faster than
+                // the mouse movement.
+                if (IsStar(_resizeData.Definition2))
+                {
+                    minDelta = Math.Max(minDelta, definition2Len - definition2Max);
+                    maxDelta = Math.Min(maxDelta, definition2Len - definition2Min);
+                }
             }
             else
             {
                 minDelta = definition2Len - definition2Max;
                 maxDelta = definition2Len - definition2Min;
+
+                // Resize2 implies that definition1 has a star length (see SetupDefinitionsToResize),
+                // so it absorbs the space freed up or consumed by definition2. Constrain the delta
+                // to keep definition1 within its Min/Max constraints for the same reason as above.
+                minDelta = Math.Max(minDelta, definition1Min - definition1Len);
+                maxDelta = Math.Min(maxDelta, definition1Max - definition1Len);
             }
         }
 

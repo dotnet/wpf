@@ -102,14 +102,28 @@
                                   BorderThickness="0,0,0,1"
                                   Visibility="Collapsed"/>
 #ifdef Net45
-                    <DockPanel Grid.Column="0" Grid.ColumnSpan="3" Height="{Binding Path=(SystemParameters.WindowCaptionHeight)}" LastChildFill="True">
+                    <!-- Inside a RibbonWindow the title area is as tall as the system caption band (WindowChrome.TitleBarBounds);
+                         elsewhere that value is zero and the caption height applies. -->
+                    <DockPanel Grid.Column="0" Grid.ColumnSpan="3" LastChildFill="True">
+                        <DockPanel.Style>
+                            <Style TargetType="DockPanel">
+                                <Setter Property="Height" Value="{Binding Path=(shell:WindowChrome.TitleBarBounds).Height, RelativeSource={RelativeSource Self}}"/>
+                                <Style.Triggers>
+                                    <!-- No band published (hosted outside a RibbonWindow, or no composition): the caption height applies. -->
+                                    <DataTrigger Binding="{Binding Path=(shell:WindowChrome.TitleBarBounds).Height, RelativeSource={RelativeSource Self}}" Value="0">
+                                        <Setter Property="Height" Value="{Binding Path=(SystemParameters.WindowCaptionHeight)}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DockPanel.Style>
 #else
                     <DockPanel Grid.Column="0" Grid.ColumnSpan="3" Height="{Binding Source={x:Static windows:SystemParameters2.Current}, Path=WindowCaptionHeight}" LastChildFill="True">
 #endif
                         <!-- This makes sure that the title and QAT does not overlap the close minimize and restore buttons. -->
                         <ContentControl x:Name="windowButtonPlaceHolder"
 #ifdef Net45
-                                        Width="{Binding Path=(SystemParameters.WindowCaptionButtonWidth)}"
+                                        Width="{Binding Path=(shell:WindowChrome.CaptionButtonsBounds).Width, RelativeSource={RelativeSource Self}}"
+                                        MinWidth="{Binding Path=(SystemParameters.WindowCaptionButtonWidth)}"
 #else
                                         Width="{Binding Source={x:Static windows:SystemParameters2.Current}, Path=WindowCaptionButtonsLocation.Width}"
 #endif
@@ -121,10 +135,11 @@
                         <ContentControl x:Name="windowIconPadding"
 #ifdef Net45
                                         Width="{Binding Path=(SystemParameters.SmallIconWidth)}"
+                                        Margin="8,0,3,0"
 #else
                                         Width="{Binding Source={x:Static windows:SystemParameters2.Current}, Path=SmallIconSize.Width}"
-#endif
                                         Margin="0,0,3,0"
+#endif
                                         IsHitTestVisible="False" 
                                         DockPanel.Dock="Left" 
                                         Focusable="False"/>
@@ -166,40 +181,29 @@
                                               TextBlock.FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}"
                                               TextBlock.FontFamily="{DynamicResource {x:Static SystemFonts.CaptionFontFamilyKey}}"
                                               TextBlock.FontWeight="{DynamicResource {x:Static SystemFonts.CaptionFontWeightKey}}"
+#ifdef Net45
+                                              TextElement.Foreground="{Binding Path=(shell:WindowChrome.CaptionForeground), RelativeSource={RelativeSource Self}}"
+#else
                                               TextElement.Foreground="{DynamicResource {x:Static SystemColors.ActiveCaptionTextBrushKey}}"
+#endif
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               Margin="3,0"
 #ifdef Net45
-                                              MinHeight="{Binding Path=(SystemParameters.WindowCaptionHeight)}"
 #else
                                               MinHeight="{Binding Path=WindowCaptionHeight, Source={x:Static windows:SystemParameters2.Current}}"
 #endif
                                               MinWidth="75"
                                               IsHitTestVisible="False">
                                 <ContentPresenter.Resources>
-                                    <!-- Glowing effect around Title in Aero glass theme -->
+                                    <!-- The title is drawn over the system caption; no glow is needed on the solid captions of
+                                         Windows 8 and later. -->
                                     <DataTemplate DataType="{x:Type system:String}">
-                                        <TextBlock x:Name="titleTextBlock" 
+                                        <TextBlock x:Name="titleTextBlock"
                                                    Margin="0,-2,0,0"
                                                    Text="{TemplateBinding Content}"
                                                    TextTrimming="CharacterEllipsis"
                                                    HorizontalAlignment="{TemplateBinding HorizontalAlignment}"/>
                                         <DataTemplate.Triggers>
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-#ifdef Net45
-                                                    <Condition Binding="{Binding Path=(SystemParameters.IsGlassEnabled)}" Value="True"/>
-#else
-                                                    <Condition Binding="{Binding Path=IsGlassEnabled, Source={x:Static windows:SystemParameters2.Current}}" Value="True"/>
-#endif
-                                                    <Condition Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ribbon:Ribbon}, Path=IsHostedInRibbonWindow}" Value="True" />
-                                                </MultiDataTrigger.Conditions>
-                                                <Setter TargetName="titleTextBlock" Property="TextBlock.Effect">
-                                                    <Setter.Value>
-                                                        <DropShadowEffect Color="White" BlurRadius="5.0" ShadowDepth="0"/>
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </MultiDataTrigger>
 #ifdef Net45
                                             <DataTrigger Binding="{Binding Path=(SystemParameters.IsGlassEnabled)}" Value="False">
 #else

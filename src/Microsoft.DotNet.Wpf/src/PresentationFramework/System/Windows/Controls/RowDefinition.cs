@@ -74,11 +74,11 @@ namespace System.Windows.Controls
             }
             if (index < 0)
             {
-                throw new ArgumentOutOfRangeException(SR.Format(SR.GridCollection_DestArrayInvalidLowerBound, "index"));
+                throw new ArgumentOutOfRangeException(SR.Format(SR.GridCollection_DestArrayInvalidLowerBound, nameof(index)));
             }
             if (array.Length - index < _size)
             {
-                throw new ArgumentException(SR.Format(SR.GridCollection_DestArrayInvalidLength, "array"));
+                throw new ArgumentException(SR.Format(SR.GridCollection_DestArrayInvalidLength, nameof(array)));
             }
 
             if (_size > 0)
@@ -96,11 +96,11 @@ namespace System.Windows.Controls
             ArgumentNullException.ThrowIfNull(array);
             if (index < 0)
             {
-                throw new ArgumentOutOfRangeException(SR.Format(SR.GridCollection_DestArrayInvalidLowerBound, "index"));
+                throw new ArgumentOutOfRangeException(SR.Format(SR.GridCollection_DestArrayInvalidLowerBound, nameof(index)));
             }
             if (array.Length - index < _size)
             {
-                throw new ArgumentException(SR.Format(SR.GridCollection_DestArrayInvalidLength, "array"));
+                throw new ArgumentException(SR.Format(SR.GridCollection_DestArrayInvalidLength, nameof(array)));
             }
 
             if (_size > 0)
@@ -590,7 +590,7 @@ namespace System.Windows.Controls
 
             if (item.Parent != null)
             {
-                throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "RowDefinitionCollection"));
+                throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, nameof(value), "RowDefinitionCollection"));
             }
         }
 

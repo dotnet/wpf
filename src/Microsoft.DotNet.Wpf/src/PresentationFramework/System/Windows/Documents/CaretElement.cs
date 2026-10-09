@@ -678,7 +678,9 @@ namespace System.Windows.Documents
                     // Snap the caret to device pixels.
                     if (!_italic || threadLocalStore.Bidi)
                     {
-                        GuidelineSet guidelineSet = new GuidelineSet(new double[] { -(_systemCaretWidth / 2), _systemCaretWidth / 2 }, null);
+                        GuidelineSet guidelineSet = new(guidelinesX: [-(_systemCaretWidth / 2), _systemCaretWidth / 2],
+                                                        guidelinesY: ReadOnlySpan<double>.Empty);
+
                         context.PushGuidelineSet(guidelineSet);
                         contextPushedCount++;
                     }

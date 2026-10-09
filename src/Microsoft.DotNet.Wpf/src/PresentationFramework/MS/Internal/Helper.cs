@@ -65,10 +65,9 @@ namespace MS.Internal
 
 
         // Find a data template (or table template) resource
-        internal static object FindTemplateResourceFromAppOrSystem(DependencyObject target, ArrayList keys, int exactMatch, ref int bestMatch)
+        internal static object FindTemplateResourceFromAppOrSystem(DependencyObject target, List<TemplateKey> keys, int exactMatch, ref int bestMatch)
         {
             object resource = null;
-            int k;
 
             // Comment out below three lines code.
             // For now, we will always get the resource from Application level
@@ -86,7 +85,7 @@ namespace MS.Internal
             if (app != null)
             {
                 // If the element is rooted to a Window and App exists, defer to App.
-                for (k = 0;  k < bestMatch;  ++k)
+                for (int k = 0; k < bestMatch; k++)
                 {
                     object appResource = Application.Current.FindResourceInternal(keys[k]);
                     if (appResource != null)
@@ -105,7 +104,7 @@ namespace MS.Internal
             if (bestMatch >= exactMatch)
             {
                 // Try the system resource collection.
-                for (k = 0;  k < bestMatch;  ++k)
+                for (int k = 0; k < bestMatch; k++)
                 {
                     object sysResource = SystemResources.FindResourceInternal(keys[k]);
                     if (sysResource != null)

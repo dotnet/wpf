@@ -3,6 +3,8 @@
 
 // Description: Item Container pattern provider interface
 
+#nullable enable
+
 using System.Runtime.InteropServices;
 
 namespace System.Windows.Automation.Provider
@@ -10,7 +12,7 @@ namespace System.Windows.Automation.Provider
     /// <summary>
     /// 
     /// Exposes a container control's ability to search over the items it contains.
-    /// This pattern must be implemented by containers which suppots virtualization and have 
+    /// This pattern must be implemented by containers which supports virtualization and have 
     /// no other means to find the virtualized element though it's orthogonal to virtualization
     /// and can be implemented by any containers which has items in it.
     /// 
@@ -53,7 +55,7 @@ namespace System.Windows.Automation.Provider
         /// <param name="propertyId">corresponds to property for whose value it want to search over.</param>
         /// <param name="value">value to be searched for, for specified property</param>
         /// <returns>The first item which matches the searched criterion, if no item matches, it returns null  </returns>
-        IRawElementProviderSimple FindItemByProperty(IRawElementProviderSimple startAfter, int propertyId, object value);
+        IRawElementProviderSimple? FindItemByProperty(IRawElementProviderSimple? startAfter, int propertyId, object? value);
 
     }
 }

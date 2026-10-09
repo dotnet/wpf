@@ -19,6 +19,8 @@ namespace System.Windows.Ole;
 
 internal sealed unsafe class WpfOleServices : IOleServices
 {
+    private const string BitmapSourceFormat = "System.Windows.Media.Imaging.BitmapSource";
+
     // Prevent instantiation
     private WpfOleServices() { }
 
@@ -38,23 +40,45 @@ internal sealed unsafe class WpfOleServices : IOleServices
         }
 
         // Handle enhanced metafiles.
-        if (mediumType.HasFlag(TYMED.TYMED_ENHMF) && format.Equals(DataFormatNames.Emf))
+        if (mediumType.HasFlag(TYMED.TYMED_ENHMF)
+            && pmedium->tymed == TYMED.TYMED_ENHMF
+            && IsEnhancedMetafileFormat(format))
         {
+            pmedium->u.hEnhMetaFile = HENHMETAFILE.Null;
+
             if (SystemDrawingHelper.IsMetafile(data))
             {
                 pmedium->u.hEnhMetaFile = SystemDrawingHelper.GetHandleFromMetafile(data);
+                return pmedium->u.hEnhMetaFile.IsNull ? HRESULT.E_FAIL : HRESULT.S_OK;
             }
-            else if (data is MemoryStream memoryStream && memoryStream.GetBuffer() is { } buffer && buffer.Length != 0)
+
+            if (data is MemoryStream memoryStream)
             {
-                HENHMETAFILE hemf = PInvoke.SetEnhMetaFileBits(buffer);
+                byte[] buffer = memoryStream.TryGetBuffer(out ArraySegment<byte> segment)
+                    ? segment.AsSpan().ToArray()
+                    : memoryStream.ToArray();
+
+                if (buffer.Length == 0)
+                {
+                    return HRESULT.E_FAIL;
+                }
+
+                HENHMETAFILE hemf;
+                fixed (byte* bufferPointer = buffer)
+                {
+                    hemf = PInvokeCore.SetEnhMetaFileBits(checked((uint)buffer.Length), bufferPointer);
+                }
 
                 if (hemf.IsNull)
                 {
-                    throw new Win32Exception();
+                    return HRESULT.E_FAIL;
                 }
+
+                pmedium->u.hEnhMetaFile = hemf;
+                return HRESULT.S_OK;
             }
 
-            return HRESULT.S_OK;
+            return HRESULT.DV_E_TYMED;
         }
 
         return HRESULT.DV_E_TYMED;
@@ -66,6 +90,10 @@ internal sealed unsafe class WpfOleServices : IOleServices
             return hbitmap.IsNull ? HBITMAP.Null : hbitmap.CreateCompatibleBitmap(width, height);
         }
     }
+
+    public static bool IsNativeTymedSupported(string format, TYMED tymed) =>
+        IsEnhancedMetafileFormat(format)
+        && tymed.HasFlag(TYMED.TYMED_ENHMF);
 
     public static bool TryGetObjectFromDataObject<T>(
         Com.IDataObject* dataObject,
@@ -82,10 +110,15 @@ internal sealed unsafe class WpfOleServices : IOleServices
             mediumType = TYMED.TYMED_GDI;
             formatId = (ushort)CLIPBOARD_FORMAT.CF_BITMAP;
         }
-        else if (format == DataFormatNames.Emf)
+        else if (format.Equals(DataFormatNames.Emf, StringComparison.OrdinalIgnoreCase))
         {
             mediumType = TYMED.TYMED_ENHMF;
             formatId = (ushort)CLIPBOARD_FORMAT.CF_ENHMETAFILE;
+        }
+        else if (format.Equals(DataFormatNames.BinaryFormatMetafile, StringComparison.OrdinalIgnoreCase))
+        {
+            mediumType = TYMED.TYMED_ENHMF;
+            formatId = checked((ushort)DataFormats.GetDataFormat(format).Id);
         }
         else
         {
@@ -100,22 +133,22 @@ internal sealed unsafe class WpfOleServices : IOleServices
             tymed = (uint)mediumType
         };
 
-        HRESULT result = dataObject->QueryGetData(formatEtc);
+        HRESULT result = ClipboardRetry.QueryGetData(dataObject, formatEtc);
 
         if (result.Failed)
         {
             return false;
         }
 
-        result = dataObject->GetData(formatEtc, out STGMEDIUM medium);
+        result = ClipboardRetry.GetData(dataObject, formatEtc, out STGMEDIUM medium);
+
+        if (result.Failed)
+        {
+            return false;
+        }
 
         try
         {
-            if (result.Failed)
-            {
-                return false;
-            }
-
             if (mediumType == TYMED.TYMED_GDI)
             {
                 // Get the bitmap from the handle of bitmap.
@@ -133,6 +166,11 @@ internal sealed unsafe class WpfOleServices : IOleServices
             }
             else
             {
+                if (medium.tymed != TYMED.TYMED_ENHMF || medium.u.hEnhMetaFile.IsNull)
+                {
+                    return false;
+                }
+
                 // Get the metafile object form the enhanced metafile handle.
                 object metafile = SystemDrawingHelper.GetMetafileFromHemf((HENHMETAFILE)(nint)medium.hGlobal);
                 if (metafile is T t)
@@ -140,6 +178,8 @@ internal sealed unsafe class WpfOleServices : IOleServices
                     data = t;
                     return true;
                 }
+
+                (metafile as IDisposable)?.Dispose();
             }
         }
         finally
@@ -150,10 +190,29 @@ internal sealed unsafe class WpfOleServices : IOleServices
         return false;
     }
 
+    private static bool IsEnhancedMetafileFormat(string format) =>
+        format.Equals(DataFormatNames.Emf, StringComparison.OrdinalIgnoreCase)
+        || format.Equals(DataFormatNames.BinaryFormatMetafile, StringComparison.OrdinalIgnoreCase);
+
     public static bool AllowTypeWithoutResolver<T>()
     {
         // Image is a special case because we are reading bitmaps directly from the SerializationRecord.
         return typeof(T).FullName.Equals("System.Drawing.Image");
+    }
+
+    public static void AddMappedFormats(string format, ICollection<string> formats)
+    {
+        // BitmapSource is a WPF-only synonym that was part of the .NET 9 DataObject mapping. Keep it in the WPF
+        // platform hook so the shared WinForms mapping does not advertise a type it cannot reference.
+        if (format is DataFormatNames.Bitmap or DataFormatNames.BinaryFormatBitmap)
+        {
+            formats.Add(BitmapSourceFormat);
+        }
+        else if (format == BitmapSourceFormat)
+        {
+            formats.Add(DataFormatNames.Bitmap);
+            formats.Add(DataFormatNames.BinaryFormatBitmap);
+        }
     }
 
     public static bool IsValidTypeForFormat(Type type, string format) => format switch

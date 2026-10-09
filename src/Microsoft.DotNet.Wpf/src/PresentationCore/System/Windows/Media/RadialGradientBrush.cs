@@ -96,32 +96,27 @@ namespace System.Windows.Media
                 DUCE.ResourceHandle hGradientOriginAnimations = GetAnimationResourceHandle(GradientOriginProperty, channel);
 
                 DUCE.MILCMD_RADIALGRADIENTBRUSH data;
+                data.Type = MILCMD.MilCmdRadialGradientBrush;
+                data.Handle = _duceResource.GetHandle(channel);
+                data.Opacity = Opacity;
+                data.hOpacityAnimations = hOpacityAnimations;
+                data.hTransform = hTransform;
+                data.hRelativeTransform = hRelativeTransform;
+                data.ColorInterpolationMode = ColorInterpolationMode;
+                data.MappingMode = MappingMode;
+                data.SpreadMethod = SpreadMethod;
+
+                data.Center = Center;
+                data.hCenterAnimations = hCenterAnimations;
+                data.RadiusX = RadiusX;
+                data.hRadiusXAnimations = hRadiusXAnimations;
+                data.RadiusY = RadiusY;
+                data.hRadiusYAnimations = hRadiusYAnimations;
+                data.GradientOrigin = GradientOrigin;
+                data.hGradientOriginAnimations = hGradientOriginAnimations;
+
                 unsafe
                 {
-                    data.Type = MILCMD.MilCmdRadialGradientBrush;
-                    data.Handle = _duceResource.GetHandle(channel);
-                    double tempOpacity = Opacity;
-                    DUCE.CopyBytes((byte*)&data.Opacity, (byte*)&tempOpacity, 8);
-                    data.hOpacityAnimations = hOpacityAnimations;
-                    data.hTransform = hTransform;
-                    data.hRelativeTransform = hRelativeTransform;
-                    data.ColorInterpolationMode = ColorInterpolationMode;
-                    data.MappingMode = MappingMode;
-                    data.SpreadMethod = SpreadMethod;
-
-                    Point tempCenter = Center;
-                    DUCE.CopyBytes((byte*)&data.Center, (byte*)&tempCenter, 16);
-                    data.hCenterAnimations = hCenterAnimations;
-                    double tempRadiusX = RadiusX;
-                    DUCE.CopyBytes((byte*)&data.RadiusX, (byte*)&tempRadiusX, 8);
-                    data.hRadiusXAnimations = hRadiusXAnimations;
-                    double tempRadiusY = RadiusY;
-                    DUCE.CopyBytes((byte*)&data.RadiusY, (byte*)&tempRadiusY, 8);
-                    data.hRadiusYAnimations = hRadiusYAnimations;
-                    Point tempGradientOrigin = GradientOrigin;
-                    DUCE.CopyBytes((byte*)&data.GradientOrigin, (byte*)&tempGradientOrigin, 16);
-                    data.hGradientOriginAnimations = hGradientOriginAnimations;
-
                     // GradientStopCollection:  Need to enforce upper-limit of gradient stop capacity
 
                     int count = (vGradientStops == null) ? 0 : vGradientStops.Count;
@@ -138,8 +133,7 @@ namespace System.Windows.Media
                         DUCE.MIL_GRADIENTSTOP stopCmd;
                         GradientStop gradStop = vGradientStops.Internal_GetItem(i);
 
-                        double temp = gradStop.Offset;
-                        DUCE.CopyBytes((byte*)&stopCmd.Position,(byte*)&temp, sizeof(double));
+                        stopCmd.Position = gradStop.Offset;
                         stopCmd.Color = CompositionResourceManager.ColorToMilColorF(gradStop.Color);
                         
                         channel.AppendCommandData(

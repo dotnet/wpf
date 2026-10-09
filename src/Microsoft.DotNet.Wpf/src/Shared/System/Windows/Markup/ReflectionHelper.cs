@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 #nullable disable
@@ -119,7 +119,14 @@ namespace System.Xaml
 
         internal static bool IsNullableType(Type type)
         {
-            return (type.IsGenericType && (type.GetGenericTypeDefinition() == typeof(Nullable<>)));
+#if NET11_0_OR_GREATER
+            return type.GetNullableUnderlyingType() is not null;
+#else
+            Type nullableType = _metadataLoadContext.CoreAssembly?.GetType("System.Nullable`1");
+            Debug.Assert(nullableType is not null, "System.Nullable`1 type not found in MetadataLoadContext");
+
+            return type.IsGenericType && nullableType == type.GetGenericTypeDefinition();
+#endif
         }
 
         internal static bool IsInternalType(Type type)

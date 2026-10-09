@@ -487,9 +487,8 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                                                      
                                             currentIterationValue = GetResolvedKeyFrame(currentResolvedKeyFrameIndex).InterpolateValue(fromValue, currentSegmentProgress);
                                         }
-                                        
+
                                         [[conditional(instance.CanInterpolate == true)]]
-                                      
                                         // If we're cumulative, we need to multiply the final key frame
                                         // value by the current repeat count and add this to the return
                                         // value.
@@ -511,7 +510,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                             return AnimatedTypeHelpers.Add[[instance.TypeName]](defaultOriginValue, currentIterationValue);
                                         }
                                         [[/conditional]]
-                                        
                                         return currentIterationValue;
                                     }
 

@@ -43,8 +43,6 @@ namespace System.Windows.Media.Imaging
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -57,8 +55,8 @@ namespace System.Windows.Media.Imaging
         {
             BitmapImage target = ((BitmapImage) d);
 
-
             target.UriCachePolicyPropertyChangedHook(e);
+
 
             target.PropertyChanged(UriCachePolicyProperty);
         }
@@ -66,8 +64,8 @@ namespace System.Windows.Media.Imaging
         {
             BitmapImage target = ((BitmapImage) d);
 
-
             target.UriSourcePropertyChangedHook(e);
+
 
             target.PropertyChanged(UriSourceProperty);
         }
@@ -75,8 +73,8 @@ namespace System.Windows.Media.Imaging
         {
             BitmapImage target = ((BitmapImage) d);
 
-
             target.StreamSourcePropertyChangedHook(e);
+
 
             target.PropertyChanged(StreamSourceProperty);
         }
@@ -84,8 +82,8 @@ namespace System.Windows.Media.Imaging
         {
             BitmapImage target = ((BitmapImage) d);
 
-
             target.DecodePixelWidthPropertyChangedHook(e);
+
 
             target.PropertyChanged(DecodePixelWidthProperty);
         }
@@ -93,8 +91,8 @@ namespace System.Windows.Media.Imaging
         {
             BitmapImage target = ((BitmapImage) d);
 
-
             target.DecodePixelHeightPropertyChangedHook(e);
+
 
             target.PropertyChanged(DecodePixelHeightProperty);
         }
@@ -102,8 +100,8 @@ namespace System.Windows.Media.Imaging
         {
             BitmapImage target = ((BitmapImage) d);
 
-
             target.RotationPropertyChangedHook(e);
+
 
             target.PropertyChanged(RotationProperty);
         }
@@ -111,8 +109,8 @@ namespace System.Windows.Media.Imaging
         {
             BitmapImage target = ((BitmapImage) d);
 
-
             target.SourceRectPropertyChangedHook(e);
+
 
             target.PropertyChanged(SourceRectProperty);
         }
@@ -120,8 +118,8 @@ namespace System.Windows.Media.Imaging
         {
             BitmapImage target = ((BitmapImage) d);
 
-
             target.CreateOptionsPropertyChangedHook(e);
+
 
             target.PropertyChanged(CreateOptionsProperty);
         }
@@ -129,12 +127,11 @@ namespace System.Windows.Media.Imaging
         {
             BitmapImage target = ((BitmapImage) d);
 
-
             target.CacheOptionPropertyChangedHook(e);
+
 
             target.PropertyChanged(CacheOptionProperty);
         }
-
 
         #region Public Properties
 
@@ -306,7 +303,6 @@ namespace System.Windows.Media.Imaging
             base.CloneCore(source);
 
 
-
             // Set state once clone has finished
             ClonePostscript(sourceBitmapImage);
         }
@@ -321,7 +317,6 @@ namespace System.Windows.Media.Imaging
             ClonePrequel(sourceBitmapImage);
 
             base.CloneCurrentValueCore(source);
-
 
 
             // Set state once clone has finished
@@ -340,7 +335,6 @@ namespace System.Windows.Media.Imaging
             base.GetAsFrozenCore(source);
 
 
-
             // Set state once clone has finished
             ClonePostscript(sourceBitmapImage);
         }
@@ -357,11 +351,9 @@ namespace System.Windows.Media.Imaging
             base.GetCurrentValueAsFrozenCore(source);
 
 
-
             // Set state once clone has finished
             ClonePostscript(sourceBitmapImage);
         }
-
 
         #endregion ProtectedMethods
 
@@ -374,13 +366,6 @@ namespace System.Windows.Media.Imaging
         #region Internal Methods
 
 
-
-
-
-
-
-
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -390,9 +375,6 @@ namespace System.Windows.Media.Imaging
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -452,10 +434,6 @@ namespace System.Windows.Media.Imaging
 
         #region Internal Fields
 
-
-
-
-
         internal static RequestCachePolicy s_UriCachePolicy = null;
         internal static Uri s_UriSource = null;
         internal static Stream s_StreamSource = null;
@@ -467,7 +445,6 @@ namespace System.Windows.Media.Imaging
         internal static BitmapCacheOption s_CacheOption = BitmapCacheOption.Default;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -570,7 +547,6 @@ namespace System.Windows.Media.Imaging
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ new CoerceValueCallback(CoerceCacheOption));
         }
-
 
 
         #endregion Constructors

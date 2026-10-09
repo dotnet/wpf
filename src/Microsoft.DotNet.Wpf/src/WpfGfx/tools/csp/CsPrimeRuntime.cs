@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -41,12 +41,14 @@ namespace MS.Internal.Csp
         /// </summary>
         public static string ConvertAndIndent(object o, int iLevel)
         {
-            // Convert to a string
+			// Append a magic string to avoid new line insertion
+			if (o is null)
+				return "<scratch-line>";
 
+            // Convert to a string
             string sText = o.ToString();
 
             // Handle the empty case
-
             if (sText.Length == 0)
             {
                 return "";

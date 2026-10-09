@@ -26,7 +26,8 @@ namespace MS.Internal.MilCodeGen.Helpers
     {
         public static string UpdateResource(McgResource resource)
         {
-            if (!resource.HasUnmanagedResource) return String.Empty;
+            if (!resource.HasUnmanagedResource)
+				return null;
 
             return
                 [[inline]]
@@ -66,6 +67,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                                 // At this time, these call-outs are not public, so we do not handle exceptions.
                                 OnRemove( /* oldValue */ oldCollection[i]);
                             }
+
                         [[/inline]];
                 }
                 else
@@ -82,6 +84,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                             _collection.Clear();
 
                             Debug.Assert(_collection.Count == 0);
+
                         [[/inline]];
                 }
             }
@@ -92,6 +95,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                         WritePreamble();
 
                         _collection.Clear();
+
                     [[/inline]];
             }
         }
@@ -100,7 +104,7 @@ namespace MS.Internal.MilCodeGen.Helpers
         {
             if (resource.CollectionType.IsFreezable)
             {
-                string onInsert = String.Empty;
+                string onInsert = null;
 
                 if (resource.IsCollectionOfHandles)
                 {
@@ -206,11 +210,14 @@ namespace MS.Internal.MilCodeGen.Helpers
         // Helper used by Remove and RemoveAt for removing Freezables.
         private static string Collection_RemoveFreezableAt(McgResource resource, string oldValue, string index)
         {
-            string onRemove = String.Empty;
+            string onRemove = null;
 
             if (resource.IsCollectionOfHandles)
             {
-                onRemove = [[inline]]OnRemove([[oldValue]]);[[/inline]];
+                onRemove = [[inline]]
+
+                               OnRemove([[oldValue]]);
+                           [[/inline]];
             }
 
             return
@@ -218,7 +225,6 @@ namespace MS.Internal.MilCodeGen.Helpers
                     OnFreezablePropertyChanged([[oldValue]], null);
 
                     _collection.RemoveAt([[index]]);
-
                     [[onRemove]]
                 [[/inline]];
         }
@@ -227,7 +233,7 @@ namespace MS.Internal.MilCodeGen.Helpers
         {
             if (resource.CollectionType.IsFreezable)
             {
-                string onInsert = String.Empty;
+                string onInsert = null;
 
                 if (resource.IsCollectionOfHandles)
                 {
@@ -242,6 +248,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                             {
                                 throw new System.ArgumentException(SR.Collection_NoNull);
                             }
+
                             OnFreezablePropertyChanged(/* oldValue = */ null, item);
                             [[onInsert]]
                         }
@@ -255,22 +262,25 @@ namespace MS.Internal.MilCodeGen.Helpers
         {
             if (index != String.Empty)
             {
-
                 index = [[inline]][[index]] = [[/inline]];
             }
 
             if (resource.CollectionType.IsFreezable)
             {
-                string onInsert = String.Empty;
+                string onInsert = null;
 
                 if (resource.IsCollectionOfHandles)
                 {
-                    onInsert = [[inline]]OnInsert(newValue);[[/inline]];
+                    onInsert = [[inline]]
+
+                                   OnInsert(newValue);
+                               [[/inline]];
                 }
 
                 return
                     [[inline]]
                         [[type]] newValue = [[value]];
+
                         OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                         [[index]]_collection.Add(newValue);
                         [[onInsert]]
@@ -295,35 +305,38 @@ namespace MS.Internal.MilCodeGen.Helpers
                         {
                             throw new System.ArgumentException(SR.Collection_NoNull);
                         }
+
                     [[/inline]];
             }
-            else
-                return String.Empty;
+
+			return null;
         }
 
         public static string Collection_SetValue(McgResource resource, string type, string index, string typedValue)
         {
             if (resource.CollectionType.IsFreezable)
             {
-                string onSet = String.Empty;
+                string onSet = null;
 
                 if (resource.IsCollectionOfHandles)
                 {
-                    onSet = [[inline]]OnSet(oldValue, [[typedValue]]);[[/inline]];
+                    onSet = [[inline]]
+
+                                OnSet(oldValue, [[typedValue]]);
+                            [[/inline]];
                 }
 
                 return
                     [[inline]]
                         WritePreamble();
 
-                        if (!Object.ReferenceEquals(_collection[ [[index]] ], [[typedValue]]))
+                        if (!Object.ReferenceEquals(_collection[index], [[typedValue]]))
                         {
+                            [[type]] oldValue = _collection[index];
 
-                            [[type]] oldValue = _collection[ [[index]] ];
                             OnFreezablePropertyChanged(oldValue, [[typedValue]]);
 
-                            _collection[ [[index]] ] = [[typedValue]];
-
+                            _collection[index] = [[typedValue]];
                             [[onSet]]
                         }
                     [[/inline]];
@@ -333,7 +346,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                 return
                     [[inline]]
                         WritePreamble();
-                        _collection[ [[index]] ] = [[typedValue]];
+                        _collection[index] = [[typedValue]];
                     [[/inline]];
             }
         }
@@ -406,7 +419,8 @@ namespace MS.Internal.MilCodeGen.Helpers
 
         public static string WriteCollectionSummary(McgResource resource)
         {
-            if (!resource.IsCollection) return String.Empty;
+            if (!resource.IsCollection)
+				return null;
 
             String summary = String.Empty;
 
@@ -435,7 +449,8 @@ namespace MS.Internal.MilCodeGen.Helpers
 
         public static string WriteCollectionConstructors(McgResource resource)
         {
-            if (!resource.IsCollection) return String.Empty;
+            if (!resource.IsCollection)
+				return null;
 
             String type = resource.CollectionType.ManagedName;
 
@@ -514,7 +529,8 @@ namespace MS.Internal.MilCodeGen.Helpers
 
         public static string WriteCollectionEvents(McgResource resource)
         {
-            if (!resource.CollectionType.IsFreezable) return String.Empty;
+            if (!resource.CollectionType.IsFreezable)
+				return null;
 
             if (resource.IsCollectionOfHandles)
             {
@@ -522,6 +538,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                 // owner can addref/release the items on its channel.
                 return
                     [[inline]]
+
                         internal event ItemInsertedHandler ItemInserted;
                         internal event ItemRemovedHandler ItemRemoved;
 
@@ -548,16 +565,14 @@ namespace MS.Internal.MilCodeGen.Helpers
                         }
                     [[/inline]];
             }
-            else
-            {
-                return String.Empty;
-            }
+
+			return null;
         }
 
         public static string FreezeCore(McgResource resource)
         {
-            if (!resource.IsCollection) return String.Empty;
-            if (!resource.CollectionType.IsFreezable) return String.Empty;
+            if (!resource.IsCollection || !resource.CollectionType.IsFreezable)
+				return null;
 
             return
                 [[inline]]
@@ -599,7 +614,8 @@ namespace MS.Internal.MilCodeGen.Helpers
 
         public static string CloneCollection(McgResource resource, string method, string argType, string source)
         {
-            if (!resource.IsCollection) return String.Empty;
+            if (!resource.IsCollection)
+				return null;
 
             String value;
 
@@ -654,7 +670,8 @@ namespace MS.Internal.MilCodeGen.Helpers
 
         public static string WriteCollectionEnumerator(McgResource resource)
         {
-            if (!resource.IsCollection) return String.Empty;
+            if (!resource.IsCollection)
+				return null;
 
             String type = resource.CollectionType.ManagedName;
 
@@ -790,7 +807,8 @@ namespace MS.Internal.MilCodeGen.Helpers
 
         public static string WriteCollectionMethods(McgResource resource)
         {
-            if (!resource.IsCollection) return String.Empty;
+            if (!resource.IsCollection)
+				return null;
 
             String type = resource.CollectionType.ManagedName;
 
@@ -832,7 +850,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                     [[/inline]];
             }
 
-            String onInheritanceContextChangedCoreMethod = String.Empty;
+            String onInheritanceContextChangedCoreMethod = null;
             if (resource.CollectionType.IsFreezable)
             {
                 onInheritanceContextChangedCoreMethod =
@@ -906,7 +924,6 @@ namespace MS.Internal.MilCodeGen.Helpers
                     public void Insert(int index, [[type]] value)
                     {
                         [[Collection_CheckNullInsert(resource, "value")]]
-
                         [[Collection_Insert(resource, type, "index", "value")]]
                         [[UpdateResource(resource)]]
 
@@ -939,7 +956,6 @@ namespace MS.Internal.MilCodeGen.Helpers
                         WritePostscript();
                     }
 
-
                     /// <summary>
                     ///     Removes the element at the specified index without firing
                     ///     the public Changed event.
@@ -956,7 +972,6 @@ namespace MS.Internal.MilCodeGen.Helpers
                         // No WritePostScript to avoid firing the Changed event.
                     }
 
-
                     /// <summary>
                     ///     Indexer for the collection
                     /// </summary>
@@ -971,7 +986,6 @@ namespace MS.Internal.MilCodeGen.Helpers
                         set
                         {
                             [[Collection_CheckNullInsert(resource, "value")]]
-
                             [[Collection_SetValue(resource, type, "index", "value")]]
                             [[UpdateResource(resource)]]
 
@@ -1200,7 +1214,6 @@ namespace MS.Internal.MilCodeGen.Helpers
 
                         return index;
                     }
-
                     [[WriteCollectionEvents(resource)]]
 
                     #endregion Private Helpers
@@ -1212,7 +1225,8 @@ namespace MS.Internal.MilCodeGen.Helpers
 
         public static string WriteCollectionFields(McgResource resource)
         {
-            if (!resource.IsCollection) return String.Empty;
+            if (!resource.IsCollection)
+				return null;
 
             return
                 [[inline]]

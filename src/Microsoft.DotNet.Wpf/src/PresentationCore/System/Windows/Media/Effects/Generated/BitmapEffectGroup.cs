@@ -46,8 +46,6 @@ namespace System.Windows.Media.Effects
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -55,8 +53,6 @@ namespace System.Windows.Media.Effects
         //  Public Properties
         //
         //------------------------------------------------------
-
-
 
 
         #region Public Properties
@@ -95,8 +91,6 @@ namespace System.Windows.Media.Effects
             return new BitmapEffectGroup();
         }
 
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -106,13 +100,6 @@ namespace System.Windows.Media.Effects
         //------------------------------------------------------
 
         #region Internal Methods
-
-
-
-
-
-
-
 
 
         #endregion Internal Methods
@@ -140,8 +127,6 @@ namespace System.Windows.Media.Effects
             }
         }
 
-
-
         #endregion Internal Properties
 
         //------------------------------------------------------
@@ -167,14 +152,9 @@ namespace System.Windows.Media.Effects
 
         #region Internal Fields
 
-
-
-
-
         internal static BitmapEffectCollection s_Children = BitmapEffectCollection.Empty;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -207,7 +187,6 @@ namespace System.Windows.Media.Effects
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

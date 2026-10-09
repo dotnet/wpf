@@ -51,8 +51,6 @@ namespace System.Windows.Media.Media3D
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -62,10 +60,7 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
 
-
-
         #region Public Properties
-
 
 
         #endregion Public Properties
@@ -79,9 +74,6 @@ namespace System.Windows.Media.Media3D
         #region Protected Methods
 
 
-
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -91,7 +83,6 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
         #region Internal Methods
-
 
         internal abstract DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel);
 
@@ -156,7 +147,6 @@ namespace System.Windows.Media.Media3D
             return GetChannelCore(index);
         }
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -166,9 +156,6 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -182,7 +169,6 @@ namespace System.Windows.Media.Media3D
         #region Dependency Properties
 
 
-
         #endregion Dependency Properties
 
         //------------------------------------------------------
@@ -194,13 +180,7 @@ namespace System.Windows.Media.Media3D
         #region Internal Fields
 
 
-
-
-
-
-
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -210,8 +190,6 @@ namespace System.Windows.Media.Media3D
         //  Constructors
         //
         //------------------------------------------------------
-
-
 
 
         #endregion Constructors

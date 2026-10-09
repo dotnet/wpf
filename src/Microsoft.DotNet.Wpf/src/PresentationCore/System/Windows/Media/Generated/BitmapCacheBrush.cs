@@ -53,8 +53,6 @@ namespace System.Windows.Media
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -67,14 +65,10 @@ namespace System.Windows.Media
         {
             BitmapCacheBrush target = ((BitmapCacheBrush) d);
 
-
             target.PropertyChanged(TargetProperty);
         }
         private static void BitmapCachePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
-
-
 
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
@@ -92,7 +86,6 @@ namespace System.Windows.Media
 
 
             BitmapCacheBrush target = ((BitmapCacheBrush) d);
-
 
             BitmapCache oldV = (BitmapCache) e.OldValue;
             BitmapCache newV = (BitmapCache) e.NewValue;
@@ -122,13 +115,11 @@ namespace System.Windows.Media
         {
             BitmapCacheBrush target = ((BitmapCacheBrush) d);
 
-
             target.PropertyChanged(AutoLayoutContentProperty);
         }
         private static void InternalTargetPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             BitmapCacheBrush target = ((BitmapCacheBrush) d);
-
 
             Visual oldV = (Visual) e.OldValue;
 
@@ -183,10 +174,8 @@ namespace System.Windows.Media
         {
             BitmapCacheBrush target = ((BitmapCacheBrush) d);
 
-
             target.PropertyChanged(AutoWrapTargetProperty);
         }
-
 
         #region Public Properties
 
@@ -289,8 +278,6 @@ namespace System.Windows.Media
             return new BitmapCacheBrush();
         }
 
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -372,7 +359,6 @@ namespace System.Windows.Media
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_BITMAPCACHEBRUSH))
                 {
                     Transform vTransform = Transform;
@@ -383,18 +369,16 @@ namespace System.Windows.Media
                     if (vBitmapCache != null) ((DUCE.IResource)vBitmapCache).AddRefOnChannel(channel);
                     Visual vInternalTarget = InternalTarget;
                     vInternalTarget?.AddRefOnChannelForCyclicBrush(this, channel);
-                    AddRefOnChannelAnimations(channel);
 
+                    AddRefOnChannelAnimations(channel);
 
                     UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
                 }
 
                 return _duceResource.GetHandle(channel);
-
         }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
@@ -407,10 +391,9 @@ namespace System.Windows.Media
                     if (vBitmapCache != null) ((DUCE.IResource)vBitmapCache).ReleaseOnChannel(channel);
                     Visual vInternalTarget = InternalTarget;
                     vInternalTarget?.ReleaseOnChannelForCyclicBrush(this, channel);
+
                     ReleaseOnChannelAnimations(channel);
-
                 }
-
         }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
@@ -427,7 +410,6 @@ namespace System.Windows.Media
             // Note that we are in a lock here already.
             return _duceResource.GetChannel(index);
         }
-
 
         #endregion Internal Methods
 
@@ -453,8 +435,6 @@ namespace System.Windows.Media
                 return 1;
             }
         }
-
-
 
         #endregion Internal Properties
 
@@ -497,15 +477,11 @@ namespace System.Windows.Media
 
         #region Internal Fields
 
-
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
-
         internal const bool c_AutoLayoutContent = true;
         internal const bool c_AutoWrapTarget = false;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -573,7 +549,6 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

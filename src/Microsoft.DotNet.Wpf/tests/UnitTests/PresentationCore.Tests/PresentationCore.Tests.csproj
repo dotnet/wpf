@@ -23,9 +23,16 @@
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
     <ProjectReference Include="$(WpfSourceDir)System.Windows.Primitives\System.Windows.Primitives.csproj" />
     <ProjectReference Include="$(WpfSourceDir)Extensions\PresentationFramework-SystemDrawing\PresentationFramework-SystemDrawing.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationClient\UIAutomationClient.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationClientSideProviders\UIAutomationClientSideProviders.csproj">
+      <Aliases>uiaProviders</Aliases>
+    </ProjectReference>
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <MicrosoftPrivateWinFormsReference Include="Accessibility" />
     <MicrosoftPrivateWinFormsReference Include="System.Private.Windows.Core" />
   </ItemGroup>
 

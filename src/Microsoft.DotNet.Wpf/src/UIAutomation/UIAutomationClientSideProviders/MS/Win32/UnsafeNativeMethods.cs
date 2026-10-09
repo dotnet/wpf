@@ -8,6 +8,7 @@ using Accessibility;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Diagnostics;
+using System.Windows.Automation.Provider;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.NativeMethodsSetLastError;
 
 namespace MS.Win32
@@ -78,6 +79,28 @@ namespace MS.Win32
         internal static Guid IID_IUnknown = new Guid(0x00000000, 0x0000, 0x0000, 0xc0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46);
         internal static Guid IID_IDispatch = new Guid(0x00020400, 0x0000, 0x0000, 0xC0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x46);
         internal static Guid IID_IAccessible = new Guid(0x618736e0, 0x3c3d, 0x11cf, 0x81, 0x0c, 0x00, 0xaa, 0x00, 0x38, 0x9b, 0x71);
+
+        [ComImport, Guid("6D5140C1-7436-11CE-8034-00AA006009FA"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        internal interface IServiceProvider
+        {
+            [return: MarshalAs(UnmanagedType.IUnknown)]
+            object QueryService(ref Guid service, ref Guid riid);
+        }
+
+        [ComImport, Guid("F8B80ADA-2C44-48D0-89BE-5FF23C9CD875"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        internal interface IAccessibleEx
+        {
+            [return: MarshalAs(UnmanagedType.Interface)]
+            IAccessibleEx GetObjectForChild(int idChild);
+
+            void GetIAccessiblePair([MarshalAs(UnmanagedType.Interface)] out IAccessible accessible, out int childId);
+
+            [return: MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_I4)]
+            int[] GetRuntimeId();
+
+            [return: MarshalAs(UnmanagedType.Interface)]
+            IAccessibleEx ConvertReturnedElement([MarshalAs(UnmanagedType.Interface)] IRawElementProviderSimple provider);
+        }
 
         [DllImport("oleacc.dll", SetLastError=true)]
         internal static extern IntPtr GetProcessHandleFromHwnd(IntPtr hwnd);
@@ -474,4 +497,3 @@ namespace MS.Win32
         }
     }
 }
-

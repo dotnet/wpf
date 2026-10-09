@@ -16,7 +16,7 @@ namespace System.Windows.Media
 #if DEBUG
         private const int s_initialSize = 4;
 #else
-        private static readonly int s_initialSize = 40; // sizeof(Matrix) * 40 =  2240 bytes. Must be > 4
+        private const int s_initialSize = 40; // sizeof(Matrix) * 40 =  2240 bytes. Must be > 4
 #endif
         private const int s_growFactor = 2;
         private const int s_shrinkFactor = s_growFactor + 1;

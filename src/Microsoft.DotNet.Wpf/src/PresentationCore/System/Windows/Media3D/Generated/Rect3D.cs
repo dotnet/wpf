@@ -115,15 +115,9 @@ namespace System.Windows.Media.Media3D
         /// bool - true if the object is an instance of Rect3D and if it's equal to "this".
         /// </returns>
         /// <param name='o'>The object to compare to "this"</param>
-        public override bool Equals(object o)
+        public override readonly bool Equals(object o)
         {
-            if ((null == o) || !(o is Rect3D))
-            {
-                return false;
-            }
-
-            Rect3D value = (Rect3D)o;
-            return Rect3D.Equals(this,value);
+            return o is Rect3D other && Rect3D.Equals(this, other);
         }
 
         /// <summary>
@@ -137,7 +131,7 @@ namespace System.Windows.Media.Media3D
         /// bool - true if "value" is equal to "this".
         /// </returns>
         /// <param name='value'>The Rect3D to compare to "this"</param>
-        public bool Equals(Rect3D value)
+        public readonly bool Equals(Rect3D value)
         {
             return Rect3D.Equals(this, value);
         }
@@ -147,7 +141,7 @@ namespace System.Windows.Media.Media3D
         /// <returns>
         /// int - the HashCode for this Rect3D
         /// </returns>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             if (IsEmpty)
             {

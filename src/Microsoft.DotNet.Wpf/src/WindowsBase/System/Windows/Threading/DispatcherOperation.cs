@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Threading;
@@ -257,11 +257,7 @@ namespace System.Windows.Threading
                     _taskSource.SetCanceled();
 
                     // Raise the aborted event.
-                    EventHandler aborted = _aborted;
-                    if (aborted != null)
-                    {
-                        aborted(this, EventArgs.Empty);
-                    }
+                    _aborted?.Invoke(this, EventArgs.Empty);
                 }
             }
 
@@ -441,11 +437,8 @@ namespace System.Windows.Threading
                     _status = DispatcherOperationStatus.Completed;
                 }
             }
-                
-            if(handler != null)
-            {
-                handler(this, EventArgs.Empty);
-            }
+
+            handler?.Invoke(this, EventArgs.Empty);
         }
 
         // Note: this is called by the Dispatcher to actually invoke the completions for the operation.

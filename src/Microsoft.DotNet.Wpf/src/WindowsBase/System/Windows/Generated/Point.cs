@@ -16,7 +16,6 @@ using System.Windows.Converters;
 
 namespace System.Windows
 {
-
     [Serializable]
     [TypeConverter(typeof(PointConverter))]
     [ValueSerializer(typeof(PointValueSerializer))] // Used by MarkupWriter

@@ -20,7 +20,6 @@ namespace System.Windows.Media.Effects
     /// <summary>
     /// A collection of BitmapEffect objects.
     /// </summary>
-
     public sealed partial class BitmapEffectCollection : Animatable, IList, IList<BitmapEffect>
     {
         //------------------------------------------------------

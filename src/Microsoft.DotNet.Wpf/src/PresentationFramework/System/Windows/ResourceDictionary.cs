@@ -1512,6 +1512,10 @@ namespace System.Windows
                     fe.ShouldLookupImplicitStyles = true;
                 }
 
+                // Owned dictionaries are never theme dictionaries; clear the flag the ctor may
+                // have inherited from SystemResources.IsSystemResourcesParsing. Propagates to merged dictionaries.
+                IsThemeDictionary = false;
+
                 _ownerFEs.Add(fe);
             }
             else
@@ -1533,6 +1537,10 @@ namespace System.Windows
                     {
                         fce.ShouldLookupImplicitStyles = true;
                     }
+
+                    // Owned dictionaries are never theme dictionaries; clear the flag the ctor may
+                    // have inherited from SystemResources.IsSystemResourcesParsing. Propagates to merged dictionaries.
+                    IsThemeDictionary = false;
 
                     _ownerFCEs.Add(fce);
                 }
@@ -1560,6 +1568,10 @@ namespace System.Windows
 
                         // An Application ResourceDictionary can be accessed across threads
                         CanBeAccessedAcrossThreads = true;
+
+                        // Owned dictionaries are never theme dictionaries; clear the flag the ctor may
+                        // have inherited from SystemResources.IsSystemResourcesParsing. Propagates to merged dictionaries.
+                        IsThemeDictionary = false;
 
                         // Seal all the styles and templates in this app dictionary
                         SealValues();

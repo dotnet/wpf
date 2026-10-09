@@ -10,7 +10,6 @@ using System.Windows.Controls.Primitives;
 
 using System.Windows.Input;
 using System.Windows.Media;
-using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
 
 namespace System.Windows.Controls
@@ -61,8 +60,8 @@ namespace System.Windows.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ToolBar), new FrameworkPropertyMetadata(typeof(ToolBar)));
             _dType = DependencyObjectType.FromSystemTypeInternal(typeof(ToolBar));
 
-            IsTabStopProperty.OverrideMetadata(typeof(ToolBar), new FrameworkPropertyMetadata(MS.Internal.KnownBoxes.BooleanBoxes.FalseBox));
-            FocusableProperty.OverrideMetadata(typeof(ToolBar), new FrameworkPropertyMetadata(MS.Internal.KnownBoxes.BooleanBoxes.FalseBox));
+            IsTabStopProperty.OverrideMetadata(typeof(ToolBar), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
+            FocusableProperty.OverrideMetadata(typeof(ToolBar), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
             KeyboardNavigation.DirectionalNavigationProperty.OverrideMetadata(typeof(ToolBar), new FrameworkPropertyMetadata(KeyboardNavigationMode.Cycle));
             KeyboardNavigation.TabNavigationProperty.OverrideMetadata(typeof(ToolBar), new FrameworkPropertyMetadata(KeyboardNavigationMode.Cycle));
             KeyboardNavigation.ControlTabNavigationProperty.OverrideMetadata(typeof(ToolBar), new FrameworkPropertyMetadata(KeyboardNavigationMode.Once));

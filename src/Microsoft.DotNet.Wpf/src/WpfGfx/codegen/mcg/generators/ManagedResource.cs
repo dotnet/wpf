@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -1002,7 +1002,7 @@ namespace MS.Internal.MilCodeGen.Generators
                               RegisterProperty("[[field.PropertyName]]",
                                                typeof([[field.Type.ManagedName]]),
                                                typeofThis,
-                                               [[GetDefaultValue(field)]],
+                                               [[GetDefaultValueBoxed(field)]],
                                                [[propertyChangedCallback]],
                     [[/inline]]
                 );
@@ -1062,6 +1062,18 @@ namespace MS.Internal.MilCodeGen.Generators
             else
             {
                 return "null";
+            }
+        }
+		
+		private string GetDefaultValueBoxed(McgField field)
+        {
+            if (field.Type.ManagedName == "bool")
+            {
+				return field.Default == "true" ? "BooleanBoxes.TrueBox" : "BooleanBoxes.FalseBox";
+            }
+            else
+            {
+                return GetDefaultValue(field);
             }
         }
 
@@ -1213,7 +1225,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         [[inline]]
                             [[field.PropertyAlias]].OverrideMetadata(
                                 typeof([[resource.ManagedName]]),
-                                new UIPropertyMetadata([[GetDefaultValue(field)]],
+                                new UIPropertyMetadata([[GetDefaultValueBoxed(field)]],
                                                        new PropertyChangedCallback([[field.PropertyName]]PropertyChanged)));
                         [[/inline]]
                         );

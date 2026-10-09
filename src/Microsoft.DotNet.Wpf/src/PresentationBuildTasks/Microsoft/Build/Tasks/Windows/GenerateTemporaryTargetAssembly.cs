@@ -265,10 +265,10 @@ namespace Microsoft.Build.Tasks.Windows
                 AddNewItems(xmlProjectDoc, AnalyzerTypeName, Analyzers);
 
                 // Replace implicit SDK imports with explicit SDK imports
-                ReplaceImplicitImports(xmlProjectDoc);
+                XmlNode sdkTargetsImport = ReplaceImplicitImports(xmlProjectDoc);
 
-                // Add properties required for temporary assembly compilation
-                var properties = new List<(string PropertyName, string PropertyValue)>
+                // Add properties that must be available before SDK props are evaluated.
+                var earlyProperties = new List<(string PropertyName, string PropertyValue)>
                 {
                     ( nameof(AssemblyName), AssemblyName ),
                     ( nameof(IntermediateOutputPath), IntermediateOutputPath ),
@@ -281,7 +281,17 @@ namespace Microsoft.Build.Tasks.Windows
                 //Removing duplicate AssemblyName
                 RemovePropertiesByName(xmlProjectDoc, nameof(AssemblyName));
 
-                AddNewProperties(xmlProjectDoc, properties);
+                PrependNewProperties(xmlProjectDoc, earlyProperties);
+
+                // Preserve the evaluated identity after project props and imports have run, but before SDK targets
+                // derive TargetName and related properties from it.
+                var identityProperties = new List<(string PropertyName, string PropertyValue)>
+                {
+                    ( nameof(AssemblyName), AssemblyName ),
+                    ( nameof(RootNamespace), RootNamespace ),
+                };
+
+                InsertNewPropertiesBefore(xmlProjectDoc, identityProperties, sdkTargetsImport ?? FindTargetsImport(xmlProjectDoc));
 
                 // Save the xmlDocument content into the temporary project file.
                 xmlProjectDoc.Save(TemporaryTargetAssemblyProjectName);
@@ -749,21 +759,41 @@ namespace Microsoft.Build.Tasks.Windows
             }
         }
 
-        private void AddNewProperties(XmlDocument xmlProjectDoc, List<(string PropertyName, string PropertyValue)> properties )
+        private static void PrependNewProperties(XmlDocument xmlProjectDoc, List<(string PropertyName, string PropertyValue)> properties)
+        {
+            XmlNode propertyGroup = CreatePropertyGroup(xmlProjectDoc, properties);
+            xmlProjectDoc.DocumentElement.PrependChild(propertyGroup);
+        }
+
+        private static void InsertNewPropertiesBefore(
+            XmlDocument xmlProjectDoc,
+            List<(string PropertyName, string PropertyValue)> properties,
+            XmlNode insertionPoint)
+        {
+            XmlNode propertyGroup = CreatePropertyGroup(xmlProjectDoc, properties);
+
+            if (insertionPoint == null)
+            {
+                xmlProjectDoc.DocumentElement.AppendChild(propertyGroup);
+            }
+            else
+            {
+                xmlProjectDoc.DocumentElement.InsertBefore(propertyGroup, insertionPoint);
+            }
+        }
+
+        private static XmlNode CreatePropertyGroup(XmlDocument xmlProjectDoc, List<(string PropertyName, string PropertyValue)> properties)
         {
             if (xmlProjectDoc == null || properties == null )
             {
-                // When the parameters are not valid, simply return it, instead of throwing exceptions.
-                return;
+                return null;
             }
 
             XmlNode root = xmlProjectDoc.DocumentElement;
 
             // Create a new PropertyGroup element
             XmlNode nodeItemGroup = xmlProjectDoc.CreateElement("PropertyGroup", root.NamespaceURI);
-            root.PrependChild(nodeItemGroup);
 
-            // Append this new ItemGroup item into the list of children of the document root.
             foreach(var property in properties)
             {
                 // Skip empty properties
@@ -777,20 +807,22 @@ namespace Microsoft.Build.Tasks.Windows
                     nodeItemGroup.AppendChild(nodeItem);
                 }
             }
+
+            return nodeItemGroup;
         }
 
         //
         // Replace implicit SDK imports with explicit imports
         //
-        private static void ReplaceImplicitImports(XmlDocument xmlProjectDoc)
+        private static XmlNode ReplaceImplicitImports(XmlDocument xmlProjectDoc)
         {
             if (xmlProjectDoc == null)
             {
-                // When the parameters are not valid, simply return it, instead of throwing exceptions.
-                return;
+                return null;
             }
 
             XmlNode root = xmlProjectDoc.DocumentElement;
+            XmlNode firstNodeImportTargets = null;
 
             for (int i = 0; i < root.Attributes.Count; i++)
             {
@@ -852,6 +884,7 @@ namespace Microsoft.Build.Tasks.Windows
                         if (previousNodeImportTargets == null)
                         {
                             previousNodeImportTargets = root.AppendChild(nodeImportTargets);
+                            firstNodeImportTargets = previousNodeImportTargets;
                         }
                         else
                         {
@@ -860,6 +893,117 @@ namespace Microsoft.Build.Tasks.Windows
                     }
                 }
             }
+
+            return firstNodeImportTargets;
+        }
+
+        private static XmlNode FindTargetsImport(XmlDocument xmlProjectDoc)
+        {
+            XmlNode root = xmlProjectDoc?.DocumentElement;
+            if (root == null)
+            {
+                return null;
+            }
+
+            XmlNode firstTargetsImport = null;
+            foreach (XmlNode childNode in root.ChildNodes)
+            {
+                if (childNode is not XmlElement element)
+                {
+                    continue;
+                }
+
+                if (string.Equals(element.Name, "Import", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (IsSdkTargetsImport(element))
+                    {
+                        return element;
+                    }
+
+                    if (firstTargetsImport == null && IsTargetsImport(element))
+                    {
+                        firstTargetsImport = element;
+                    }
+                }
+                else if (string.Equals(element.Name, "ImportGroup", StringComparison.OrdinalIgnoreCase))
+                {
+                    foreach (XmlNode importNode in element.ChildNodes)
+                    {
+                        if (importNode is not XmlElement import ||
+                            !string.Equals(import.Name, "Import", StringComparison.OrdinalIgnoreCase))
+                        {
+                            continue;
+                        }
+
+                        if (IsSdkTargetsImport(import))
+                        {
+                            return SplitImportGroupBefore(element, import);
+                        }
+
+                        if (firstTargetsImport == null && IsTargetsImport(import))
+                        {
+                            firstTargetsImport = element;
+                        }
+                    }
+                }
+            }
+
+            return firstTargetsImport;
+        }
+
+        private static bool IsSdkTargetsImport(XmlElement import)
+        {
+            if (string.IsNullOrEmpty(import.GetAttribute("Sdk")))
+            {
+                return false;
+            }
+
+            string project = import.GetAttribute("Project");
+            return string.Equals(project, "Sdk.targets", StringComparison.OrdinalIgnoreCase) ||
+                project.EndsWith(@"\Sdk.targets", StringComparison.OrdinalIgnoreCase) ||
+                project.EndsWith("/Sdk.targets", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool IsTargetsImport(XmlElement import) =>
+            import.GetAttribute("Project").EndsWith(".targets", StringComparison.OrdinalIgnoreCase);
+
+        private static XmlNode SplitImportGroupBefore(
+            XmlElement importGroup,
+            XmlElement firstImportToMove)
+        {
+            bool hasEarlierImport = false;
+            foreach (XmlNode childNode in importGroup.ChildNodes)
+            {
+                if (ReferenceEquals(childNode, firstImportToMove))
+                {
+                    break;
+                }
+
+                if (childNode is XmlElement element &&
+                    string.Equals(element.Name, "Import", StringComparison.OrdinalIgnoreCase))
+                {
+                    hasEarlierImport = true;
+                    break;
+                }
+            }
+
+            if (!hasEarlierImport)
+            {
+                return importGroup;
+            }
+
+            XmlElement newImportGroup = (XmlElement)importGroup.CloneNode(deep: false);
+            importGroup.ParentNode.InsertAfter(newImportGroup, importGroup);
+
+            XmlNode nodeToMove = firstImportToMove;
+            while (nodeToMove != null)
+            {
+                XmlNode nextNode = nodeToMove.NextSibling;
+                newImportGroup.AppendChild(nodeToMove);
+                nodeToMove = nextNode;
+            }
+
+            return newImportGroup;
         }
 
         // Creates an XmlNode that contains an Import Project element
@@ -944,5 +1088,3 @@ namespace Microsoft.Build.Tasks.Windows
 
     #endregion GenerateProjectForLocalTypeReference Task class
 }
-
-

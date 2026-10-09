@@ -214,11 +214,10 @@ namespace System.Windows.Media.Effects
 
 
             // Initializations
-            Type typeofThis = typeof(EmbossBitmapEffect);
             LightAngleProperty =
                   RegisterProperty("LightAngle",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(EmbossBitmapEffect),
                                    45.0,
                                    new PropertyChangedCallback(LightAnglePropertyChanged),
                                    null,
@@ -227,7 +226,7 @@ namespace System.Windows.Media.Effects
             ReliefProperty =
                   RegisterProperty("Relief",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(EmbossBitmapEffect),
                                    0.44,
                                    new PropertyChangedCallback(ReliefPropertyChanged),
                                    null,

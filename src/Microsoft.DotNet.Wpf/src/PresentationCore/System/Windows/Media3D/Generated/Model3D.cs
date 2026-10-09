@@ -340,11 +340,10 @@ namespace System.Windows.Media.Media3D
 
 
             // Initializations
-            Type typeofThis = typeof(Model3D);
             TransformProperty =
                   RegisterProperty("Transform",
                                    typeof(Transform3D),
-                                   typeofThis,
+                                   typeof(Model3D),
                                    Transform3D.Identity,
                                    new PropertyChangedCallback(TransformPropertyChanged),
                                    null,

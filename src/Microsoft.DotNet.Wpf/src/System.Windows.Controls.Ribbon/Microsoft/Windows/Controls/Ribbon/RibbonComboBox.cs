@@ -43,10 +43,9 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         static RibbonComboBox()
         {
-            Type ownerType = typeof(RibbonComboBox);
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonComboBox), new FrameworkPropertyMetadata(typeof(RibbonComboBox)));
+            IsTextSearchEnabledProperty.OverrideMetadata(typeof(RibbonComboBox), new FrameworkPropertyMetadata(true));
 
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            IsTextSearchEnabledProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(true));
             InitializeStringContentTemplate();
         }
 

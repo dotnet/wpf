@@ -293,11 +293,10 @@ namespace System.Windows.Media.Media3D
 
 
             // Initializations
-            Type typeofThis = typeof(ProjectionCamera);
             NearPlaneDistanceProperty =
                   RegisterProperty("NearPlaneDistance",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(ProjectionCamera),
                                    (double)0.125,
                                    new PropertyChangedCallback(NearPlaneDistancePropertyChanged),
                                    null,
@@ -306,7 +305,7 @@ namespace System.Windows.Media.Media3D
             FarPlaneDistanceProperty =
                   RegisterProperty("FarPlaneDistance",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(ProjectionCamera),
                                    (double)Double.PositiveInfinity,
                                    new PropertyChangedCallback(FarPlaneDistancePropertyChanged),
                                    null,
@@ -315,7 +314,7 @@ namespace System.Windows.Media.Media3D
             PositionProperty =
                   RegisterProperty("Position",
                                    typeof(Point3D),
-                                   typeofThis,
+                                   typeof(ProjectionCamera),
                                    new Point3D(),
                                    new PropertyChangedCallback(PositionPropertyChanged),
                                    null,
@@ -324,7 +323,7 @@ namespace System.Windows.Media.Media3D
             LookDirectionProperty =
                   RegisterProperty("LookDirection",
                                    typeof(Vector3D),
-                                   typeofThis,
+                                   typeof(ProjectionCamera),
                                    new Vector3D(0,0,-1),
                                    new PropertyChangedCallback(LookDirectionPropertyChanged),
                                    null,
@@ -333,7 +332,7 @@ namespace System.Windows.Media.Media3D
             UpDirectionProperty =
                   RegisterProperty("UpDirection",
                                    typeof(Vector3D),
-                                   typeofThis,
+                                   typeof(ProjectionCamera),
                                    new Vector3D(0,1,0),
                                    new PropertyChangedCallback(UpDirectionPropertyChanged),
                                    null,

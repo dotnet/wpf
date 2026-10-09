@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -93,14 +93,13 @@ namespace System.Windows.Input.StylusPlugIns
         {
             get
             {
-                Type managerType = typeof(DispatcherShutdownStartedEventManager);
-                DispatcherShutdownStartedEventManager manager = (DispatcherShutdownStartedEventManager)GetCurrentManager(managerType);
+                DispatcherShutdownStartedEventManager manager = (DispatcherShutdownStartedEventManager)GetCurrentManager(typeof(DispatcherShutdownStartedEventManager));
 
                 // at first use, create and register a new manager
                 if (manager == null)
                 {
                     manager = new DispatcherShutdownStartedEventManager();
-                    SetCurrentManager(managerType, manager);
+                    SetCurrentManager(typeof(DispatcherShutdownStartedEventManager), manager);
                 }
 
                 return manager;

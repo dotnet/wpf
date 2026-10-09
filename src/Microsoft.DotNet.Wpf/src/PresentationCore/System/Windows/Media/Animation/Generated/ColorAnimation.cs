@@ -44,36 +44,34 @@ namespace System.Windows.Media.Animation
         /// </summary>
         static ColorAnimation()
         {
-            Type typeofProp = typeof(Color?);
-            Type typeofThis = typeof(ColorAnimation);
             PropertyChangedCallback propCallback = new PropertyChangedCallback(AnimationFunction_Changed);
             ValidateValueCallback validateCallback = new ValidateValueCallback(ValidateFromToOrByValue);
 
             FromProperty = DependencyProperty.Register(
                 "From",
-                typeofProp,
-                typeofThis,
+                typeof(Color?),
+                typeof(ColorAnimation),
                 new PropertyMetadata((Color?)null, propCallback),
                 validateCallback);
 
             ToProperty = DependencyProperty.Register(
                 "To",
-                typeofProp,
-                typeofThis,
+                typeof(Color?),
+                typeof(ColorAnimation),
                 new PropertyMetadata((Color?)null, propCallback),
                 validateCallback);
 
             ByProperty = DependencyProperty.Register(
                 "By",
-                typeofProp,
-                typeofThis,
+                typeof(Color?),
+                typeof(ColorAnimation),
                 new PropertyMetadata((Color?)null, propCallback),
                 validateCallback);
 
             EasingFunctionProperty = DependencyProperty.Register(
                 "EasingFunction",
                 typeof(IEasingFunction),
-                typeofThis);
+                typeof(ColorAnimation));
         }
 
 

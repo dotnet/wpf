@@ -207,11 +207,10 @@ namespace System.Windows.Media.Effects
 
 
             // Initializations
-            Type typeofThis = typeof(BlurBitmapEffect);
             RadiusProperty =
                   RegisterProperty("Radius",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(BlurBitmapEffect),
                                    5.0,
                                    new PropertyChangedCallback(RadiusPropertyChanged),
                                    null,
@@ -220,7 +219,7 @@ namespace System.Windows.Media.Effects
             KernelTypeProperty =
                   RegisterProperty("KernelType",
                                    typeof(KernelType),
-                                   typeofThis,
+                                   typeof(BlurBitmapEffect),
                                    KernelType.Gaussian,
                                    null,
                                    new ValidateValueCallback(System.Windows.Media.Effects.ValidateEnums.IsKernelTypeValid),

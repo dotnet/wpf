@@ -998,7 +998,7 @@ namespace System.Windows
             {
                 // Null values are invalid for value-types
                 if (propertyType.IsValueType &&
-                    !(propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == NullableType))
+                    !(propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(Nullable<>)))
                 {
                     return false;
                 }
@@ -1173,9 +1173,6 @@ namespace System.Windows
 
         // Global, cross-object synchronization
         internal static readonly Lock Synchronized = new();
-
-        // Nullable Type
-        private static Type NullableType = typeof(Nullable<>);
 
         /// <summary>
         ///     Returns the number of all registered properties.

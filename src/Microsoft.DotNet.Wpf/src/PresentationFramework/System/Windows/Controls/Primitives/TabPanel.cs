@@ -223,14 +223,42 @@ namespace System.Windows.Controls.Primitives
             return headerSize;
         }
 
+        private static int CountRows(double rowWidthLimit, double[] headerWidth)
+        {
+            int numRows = 1;
+            double currentRowWidth = 0;
+            int numberOfHeadersInCurrentRow = 0;
+
+            for (int index = 0; index < headerWidth.Length; index++)
+            {
+                if (currentRowWidth + headerWidth[index] > rowWidthLimit && numberOfHeadersInCurrentRow > 0)
+                {
+                    numRows++;
+                    currentRowWidth = headerWidth[index];
+                    numberOfHeadersInCurrentRow = 1;
+                }
+                else
+                {
+                    currentRowWidth += headerWidth[index];
+                    if (headerWidth[index] != 0)
+                        numberOfHeadersInCurrentRow++;
+                }
+            }
+
+            return numRows;
+        }
+
         private void ArrangeHorizontal(Size arrangeSize)
         {
             Dock tabAlignment = TabStripPlacement;
-            bool isMultiRow = _numRows > 1;
             int activeRow = 0;
             int[] solution = Array.Empty<int>();
             Vector childOffset = new Vector();
             double[] headerSize = GetHeadersSize();
+
+            // Header sizes or the available width can change between measure and arrange.
+            _numRows = CountRows(arrangeSize.Width, headerSize);
+            bool isMultiRow = _numRows > 1;
 
             // If we have multirows, then calculate the best header distribution
             if (isMultiRow)
@@ -536,7 +564,7 @@ namespace System.Windows.Controls.Primitives
 
         #region Private data
 
-        private int _numRows = 1;       // Nubmer of row calculated in measure and used in arrange
+        private int _numRows = 1;       // Number of rows used by the current layout pass
         private int _numHeaders = 0;    // Number of headers excluding the collapsed items
         private double _rowHeight = 0;  // Maximum of all headers height
 

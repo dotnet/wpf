@@ -147,7 +147,9 @@ namespace System.Windows.Input
 
             _activeDeviceCount++;
 
-            if (_activeDeviceCount == 1)
+            // Orphaned devices can no longer deliver input, so they should not
+            // prevent this device from becoming primary.
+            if (ActiveDeviceCountExcludingOrphaned == 1)
             {
                 IsPrimary = true;
                 OnActivateImpl();
@@ -170,6 +172,12 @@ namespace System.Windows.Input
 
             _activeDeviceCount--;
 
+            if (IsOrphaned)
+            {
+                IsOrphaned = false;
+                _orphanedDeviceCount--;
+            }
+
             OnDeactivateImpl();
 
             IsPrimary = false;
@@ -191,6 +199,29 @@ namespace System.Windows.Input
         {
             _lastAction = TouchAction.Move;
             return ReportMove();
+        }
+
+        /// <summary>
+        /// Marks this active device as orphaned: the window it is active in has been disabled
+        /// (e.g. by Window.ShowDialog run while processing this device's input), so it cannot
+        /// deliver further input until its up arrives.  An orphaned device stays active but does
+        /// not block other touches from becoming primary.
+        /// </summary>
+        internal void OnOrphaned()
+        {
+            if (IsActive && !IsOrphaned)
+            {
+                IsOrphaned = true;
+                _orphanedDeviceCount++;
+                OnOrphanedImpl();
+            }
+        }
+
+        /// <summary>
+        /// Override to provide stack specific behavior when an active device is orphaned
+        /// </summary>
+        protected virtual void OnOrphanedImpl()
+        {
         }
 
         internal bool OnUp()
@@ -230,12 +261,22 @@ namespace System.Windows.Input
 
         internal static int ActiveDeviceCount { get { return _activeDeviceCount; } }
 
+        /// <summary>
+        ///     The number of active devices that are not orphaned (see <see cref="OnOrphaned"/>).
+        /// </summary>
+        internal static int ActiveDeviceCountExcludingOrphaned { get { return _activeDeviceCount - _orphanedDeviceCount; } }
+
+        internal bool IsOrphaned { get; private set; }
+
         #endregion
 
         #region Member Variables
 
         [ThreadStatic]
         private static int _activeDeviceCount;
+
+        [ThreadStatic]
+        private static int _orphanedDeviceCount;
 
         private TouchAction _lastAction = TouchAction.Move;
 

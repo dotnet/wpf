@@ -1117,6 +1117,28 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
+        /// This is the method that responds to the MouseHorizontalWheel event.
+        /// </summary>
+        /// <param name="e">Event Arguments</param>
+        protected override void OnMouseHorizontalWheel(MouseWheelEventArgs e)
+        {
+            if (e.Handled) { return; }
+
+            if (!HandlesMouseWheelScrolling)
+            {
+                return;
+            }
+
+            if (ScrollInfo != null)
+            {
+                if (e.Delta < 0) { ScrollInfo.MouseWheelLeft(); }
+                else { ScrollInfo.MouseWheelRight(); }
+            }
+
+            e.Handled = true;
+        }
+
+        /// <summary>
         /// This is the method that responds to the MouseButtonEvent event.
         /// </summary>
         /// <param name="e"></param>

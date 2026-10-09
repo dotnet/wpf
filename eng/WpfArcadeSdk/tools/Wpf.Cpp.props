@@ -240,6 +240,8 @@
       <!--<AdditionalOptions>/Zc:twoPhase- %(AdditionalOptions)</AdditionalOptions>-->
       <!--<ConformanceMode>false</ConformanceMode>-->
 
+      <!-- Compile source and string literals as UTF-8 independently of the Windows code page. -->
+      <AdditionalOptions>%(AdditionalOptions) /source-charset:utf-8 /execution-charset:utf-8</AdditionalOptions>
       <AdditionalOptions Condition="'$(ManagedCxx)'=='true'">%(AdditionalOptions) /clr:netcore /wd4956</AdditionalOptions>
       <ShowIncludes Condition="'$(ShowIncludes)'=='true'">true</ShowIncludes>
     </ClCompile>

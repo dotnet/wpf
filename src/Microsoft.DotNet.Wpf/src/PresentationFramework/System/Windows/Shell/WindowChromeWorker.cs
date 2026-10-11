@@ -1871,7 +1871,10 @@ namespace Microsoft.Windows.Shell
             _captionAdorner?.InvalidateVisual();
             _UpdateDwmAttributes(WindowChromeDwmAttributes.CaptionTheme | WindowChromeDwmAttributes.Backdrop);
 
-            if (_IsExtendedMode && _isExtendedFrameActive)
+            // Every mode whose client is inset from the window rect needs the fresh frame: ExtendedClientArea by
+            // construction, Custom as soon as NonClientFrameEdges keeps some frame edges (without the repaint the
+            // content drifts by the inset at every theme or color change, further each time).
+            if (_ManagesNonClientArea)
             {
                 _RepaintAfterFrameRebuild();
             }

@@ -36,20 +36,18 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         static RibbonContentPresenter()
         {
-            Type ownerType = typeof(RibbonContentPresenter);
-
-            IsInQuickAccessToolBarProperty.OverrideMetadata(ownerType,
+            IsInQuickAccessToolBarProperty.OverrideMetadata(typeof(RibbonContentPresenter),
                 new FrameworkPropertyMetadata(OnIsInQuickAccessToolBarChanged),
                 RibbonControlService.IsInQuickAccessToolBarPropertyKey);
 
-            IsInControlGroupProperty.OverrideMetadata(ownerType,
+            IsInControlGroupProperty.OverrideMetadata(typeof(RibbonContentPresenter),
                 new FrameworkPropertyMetadata(OnIsInControlGroupChanged),
                 RibbonControlService.IsInControlGroupPropertyKey);
 
-            ControlSizeDefinitionProperty.OverrideMetadata(ownerType,
+            ControlSizeDefinitionProperty.OverrideMetadata(typeof(RibbonContentPresenter),
                 new FrameworkPropertyMetadata(OnControlSizeDefinitionChanged, CoerceControlSizeDefinition));
 
-            RibbonControlService.RibbonPropertyKey.OverrideMetadata(ownerType,
+            RibbonControlService.RibbonPropertyKey.OverrideMetadata(typeof(RibbonContentPresenter),
                 new FrameworkPropertyMetadata(OnRibbonChanged));
         }
 

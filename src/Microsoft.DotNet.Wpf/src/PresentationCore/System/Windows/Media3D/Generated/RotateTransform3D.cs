@@ -422,11 +422,10 @@ namespace System.Windows.Media.Media3D
 
 
             // Initializations
-            Type typeofThis = typeof(RotateTransform3D);
             CenterXProperty =
                   RegisterProperty("CenterX",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(RotateTransform3D),
                                    0.0,
                                    new PropertyChangedCallback(CenterXPropertyChanged),
                                    null,
@@ -435,7 +434,7 @@ namespace System.Windows.Media.Media3D
             CenterYProperty =
                   RegisterProperty("CenterY",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(RotateTransform3D),
                                    0.0,
                                    new PropertyChangedCallback(CenterYPropertyChanged),
                                    null,
@@ -444,7 +443,7 @@ namespace System.Windows.Media.Media3D
             CenterZProperty =
                   RegisterProperty("CenterZ",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(RotateTransform3D),
                                    0.0,
                                    new PropertyChangedCallback(CenterZPropertyChanged),
                                    null,
@@ -453,7 +452,7 @@ namespace System.Windows.Media.Media3D
             RotationProperty =
                   RegisterProperty("Rotation",
                                    typeof(Rotation3D),
-                                   typeofThis,
+                                   typeof(RotateTransform3D),
                                    Rotation3D.Identity,
                                    new PropertyChangedCallback(RotationPropertyChanged),
                                    null,

@@ -44,36 +44,34 @@ namespace System.Windows.Media.Animation
         /// </summary>
         static Point3DAnimation()
         {
-            Type typeofProp = typeof(Point3D?);
-            Type typeofThis = typeof(Point3DAnimation);
             PropertyChangedCallback propCallback = new PropertyChangedCallback(AnimationFunction_Changed);
             ValidateValueCallback validateCallback = new ValidateValueCallback(ValidateFromToOrByValue);
 
             FromProperty = DependencyProperty.Register(
                 "From",
-                typeofProp,
-                typeofThis,
+                typeof(Point3D?),
+                typeof(Point3DAnimation),
                 new PropertyMetadata((Point3D?)null, propCallback),
                 validateCallback);
 
             ToProperty = DependencyProperty.Register(
                 "To",
-                typeofProp,
-                typeofThis,
+                typeof(Point3D?),
+                typeof(Point3DAnimation),
                 new PropertyMetadata((Point3D?)null, propCallback),
                 validateCallback);
 
             ByProperty = DependencyProperty.Register(
                 "By",
-                typeofProp,
-                typeofThis,
+                typeof(Point3D?),
+                typeof(Point3DAnimation),
                 new PropertyMetadata((Point3D?)null, propCallback),
                 validateCallback);
 
             EasingFunctionProperty = DependencyProperty.Register(
                 "EasingFunction",
                 typeof(IEasingFunction),
-                typeofThis);
+                typeof(Point3DAnimation));
         }
 
 

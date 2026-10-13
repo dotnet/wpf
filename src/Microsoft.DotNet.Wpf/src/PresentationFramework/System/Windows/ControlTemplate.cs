@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -149,14 +149,10 @@ namespace System.Windows.Controls
         //
         internal override Type TargetTypeInternal
         {
-            get 
-            {  
-                if (TargetType != null)
-                {
-                    return TargetType; 
-                }
-
-                return DefaultTargetType;
+            get
+            {
+                // Target type is FrameworkElement by default
+                return TargetType is not null ? TargetType : typeof(Control);
             }
         }
 
@@ -182,9 +178,6 @@ namespace System.Windows.Controls
 
         private Type                    _targetType;
         private TriggerCollection       _triggers;
-        
-        // Target type is FrameworkElement by default
-        internal static readonly Type DefaultTargetType = typeof(Control);
 
         #endregion Data
     }

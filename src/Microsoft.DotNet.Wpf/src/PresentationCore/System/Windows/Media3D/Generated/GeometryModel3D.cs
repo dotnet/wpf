@@ -473,11 +473,10 @@ namespace System.Windows.Media.Media3D
 
 
             // Initializations
-            Type typeofThis = typeof(GeometryModel3D);
             GeometryProperty =
                   RegisterProperty("Geometry",
                                    typeof(Geometry3D),
-                                   typeofThis,
+                                   typeof(GeometryModel3D),
                                    null,
                                    new PropertyChangedCallback(GeometryPropertyChanged),
                                    null,
@@ -486,7 +485,7 @@ namespace System.Windows.Media.Media3D
             MaterialProperty =
                   RegisterProperty("Material",
                                    typeof(Material),
-                                   typeofThis,
+                                   typeof(GeometryModel3D),
                                    null,
                                    new PropertyChangedCallback(MaterialPropertyChanged),
                                    null,
@@ -495,7 +494,7 @@ namespace System.Windows.Media.Media3D
             BackMaterialProperty =
                   RegisterProperty("BackMaterial",
                                    typeof(Material),
-                                   typeofThis,
+                                   typeof(GeometryModel3D),
                                    null,
                                    new PropertyChangedCallback(BackMaterialPropertyChanged),
                                    null,

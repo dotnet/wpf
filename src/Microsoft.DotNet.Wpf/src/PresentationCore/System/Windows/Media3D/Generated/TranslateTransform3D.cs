@@ -339,11 +339,10 @@ namespace System.Windows.Media.Media3D
 
 
             // Initializations
-            Type typeofThis = typeof(TranslateTransform3D);
             OffsetXProperty =
                   RegisterProperty("OffsetX",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(TranslateTransform3D),
                                    0.0,
                                    new PropertyChangedCallback(OffsetXPropertyChanged),
                                    null,
@@ -352,7 +351,7 @@ namespace System.Windows.Media.Media3D
             OffsetYProperty =
                   RegisterProperty("OffsetY",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(TranslateTransform3D),
                                    0.0,
                                    new PropertyChangedCallback(OffsetYPropertyChanged),
                                    null,
@@ -361,7 +360,7 @@ namespace System.Windows.Media.Media3D
             OffsetZProperty =
                   RegisterProperty("OffsetZ",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(TranslateTransform3D),
                                    0.0,
                                    new PropertyChangedCallback(OffsetZPropertyChanged),
                                    null,

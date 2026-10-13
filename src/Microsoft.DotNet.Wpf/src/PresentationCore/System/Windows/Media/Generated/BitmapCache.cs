@@ -320,11 +320,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(BitmapCache);
             RenderAtScaleProperty =
                   RegisterProperty("RenderAtScale",
                                    typeof(double),
-                                   typeofThis,
+                                   typeof(BitmapCache),
                                    1.0,
                                    new PropertyChangedCallback(RenderAtScalePropertyChanged),
                                    null,
@@ -333,7 +332,7 @@ namespace System.Windows.Media
             SnapsToDevicePixelsProperty =
                   RegisterProperty("SnapsToDevicePixels",
                                    typeof(bool),
-                                   typeofThis,
+                                   typeof(BitmapCache),
                                    false,
                                    new PropertyChangedCallback(SnapsToDevicePixelsPropertyChanged),
                                    null,
@@ -342,7 +341,7 @@ namespace System.Windows.Media
             EnableClearTypeProperty =
                   RegisterProperty("EnableClearType",
                                    typeof(bool),
-                                   typeofThis,
+                                   typeof(BitmapCache),
                                    false,
                                    new PropertyChangedCallback(EnableClearTypePropertyChanged),
                                    null,

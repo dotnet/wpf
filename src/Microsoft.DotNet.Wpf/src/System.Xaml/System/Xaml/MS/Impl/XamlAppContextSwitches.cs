@@ -58,5 +58,46 @@ namespace System.Xaml.MS.Impl
         }
 
         #endregion
+
+        #region DisableXamlNestingDepthGuard
+
+        /// <summary>
+        /// Switch: Switch.System.Xaml.DisableXamlNestingDepthGuard
+        ///   Default (false): The XAML element nesting depth cap is enforced,
+        ///                    preventing stack overflow from deeply nested elements
+        ///                    in attacker-supplied XAML (CWE-674 / CWE-770).
+        ///   Set to true:     The depth cap is skipped, restoring previous unbounded
+        ///                    behavior. This is the full opt-out for callers that must
+        ///                    parse legitimately deep documents.
+        /// </summary>
+        internal const string DisableXamlNestingDepthGuardSwitchName =
+            "Switch.System.Xaml.DisableXamlNestingDepthGuard";
+
+        private static int _disableXamlNestingDepthGuard; // 0 = not read, 1 = true, -1 = false
+
+        internal static bool DisableXamlNestingDepthGuard
+        {
+            get
+            {
+                if (_disableXamlNestingDepthGuard == 0)
+                {
+                    bool switchValue = false;
+                    try
+                    {
+                        AppContext.TryGetSwitch(DisableXamlNestingDepthGuardSwitchName, out switchValue);
+                    }
+                    catch (Exception)
+                    {
+                        // If AppContext is not available, default to the protected behavior.
+                    }
+
+                    _disableXamlNestingDepthGuard = switchValue ? 1 : -1;
+                }
+
+                return _disableXamlNestingDepthGuard > 0;
+            }
+        }
+
+        #endregion
     }
 }

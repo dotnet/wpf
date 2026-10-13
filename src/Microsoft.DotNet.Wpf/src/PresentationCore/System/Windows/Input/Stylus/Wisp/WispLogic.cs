@@ -464,6 +464,12 @@ namespace System.Windows.Input.StylusWisp
                 {
                     InputReportEventArgs input = e.StagingItem.Input as InputReportEventArgs;
 
+                    if (input?.Report is RawMouseInputReport mouseReport &&
+                        !(input.Device is StylusDevice) && !IsPromotedMouseEvent(mouseReport))
+                    {
+                        InvalidateMouseButtonOwnership(mouseReport.Actions);
+                    }
+
                     if (input != null && !input.Handled)
                     {
                         // See if we are in a DragDrop operation.  If so set our internal flag
@@ -1560,14 +1566,20 @@ namespace System.Windows.Input.StylusWisp
         private void PromoteMainDownToTouch(WispStylusDevice stylusDevice, StagingAreaInputItem stagingItem)
         {
             WispStylusTouchDevice touchDevice = stylusDevice.TouchDevice;
+            long generation = touchDevice.ContactGeneration;
             if (touchDevice.IsActive)
             {
                 // Deactivate and end the previous cycle if already active
                 touchDevice.OnDeactivate();
             }
+            if (generation != touchDevice.ContactGeneration)
+            {
+                return;
+            }
             touchDevice.OnActivate();
             bool shouldPromoteToMouse = ShouldPromoteToMouse(stylusDevice);
-            if (!touchDevice.OnDown() && shouldPromoteToMouse)
+            if (generation == touchDevice.ContactGeneration &&
+                !touchDevice.OnDown() && generation == touchDevice.ContactGeneration && shouldPromoteToMouse)
             {
                 if (touchDevice.PromotingToManipulation)
                 {
@@ -1583,10 +1595,11 @@ namespace System.Windows.Input.StylusWisp
         private void PromoteMainMoveToTouch(WispStylusDevice stylusDevice, StagingAreaInputItem stagingItem)
         {
             WispStylusTouchDevice touchDevice = stylusDevice.TouchDevice;
+            long generation = touchDevice.ContactGeneration;
             bool shouldPromoteToMouse = ShouldPromoteToMouse(stylusDevice);
             if (touchDevice.IsActive)
             {
-                if (!touchDevice.OnMove() && shouldPromoteToMouse)
+                if (!touchDevice.OnMove() && generation == touchDevice.ContactGeneration && shouldPromoteToMouse)
                 {
                     if (touchDevice.PromotingToManipulation)
                     {
@@ -1621,16 +1634,53 @@ namespace System.Windows.Input.StylusWisp
             bool shouldPromoteToMouse = ShouldPromoteToMouse(stylusDevice);
             if (touchDevice.IsActive)
             {
-                touchDevice.OnUp();
-
-                bool promotingToOther = touchDevice.PromotingToOther;
-
-                // PromoteMainToMouse is an outbound call that may have a nested message pump.
-                // Hence deactivate the touch device before calling it incase it
-                // turns out to be a blocking call.
-                if (touchDevice.IsActive)   // OnUp may also pump messages and deactivate the touch device
+                long generation = touchDevice.ContactGeneration;
+                bool deferred;
+                bool promotingToOther;
+                CompletedTouchMousePromotion promotion = null;
+                StagingAreaInputItem[] storedItems = null;
+                touchDevice.BeginTouchUp();
+                try
                 {
-                    touchDevice.OnDeactivate();
+                    touchDevice.OnUp();
+                    if (generation != touchDevice.ContactGeneration || !stylusDevice.IsValid)
+                    {
+                        return;
+                    }
+
+                    promotingToOther = touchDevice.PromotingToOther;
+                    if (shouldPromoteToMouse &&
+                        (touchDevice.DeferMousePromotion || touchDevice.PromotingToManipulation))
+                    {
+                        // Handling TouchUp can postpone cancellation until deactivation releases capture.
+                        // Snapshot first because deactivation clears the queue and DownHandled.
+                        StagingAreaInputItemList list = touchDevice.StoredStagingAreaItems;
+                        storedItems = list.ToArray();
+                        list.Clear();
+                        promotion = new CompletedTouchMousePromotion(touchDevice, list, touchDevice.DownHandled, _leavingDragDrop);
+                    }
+
+                    if (touchDevice.IsActive)
+                    {
+                        touchDevice.OnDeactivate();
+                    }
+                    deferred = touchDevice.DeferMousePromotion;
+                }
+                finally
+                {
+                    touchDevice.EndTouchUp(generation);
+                }
+
+                if (generation != touchDevice.ContactGeneration || !stylusDevice.IsValid)
+                {
+                    return;
+                }
+
+                if (deferred && promotion != null)
+                {
+                    _leavingDragDrop = false;
+                    ReplayCompletedTouch(promotion, storedItems, stagingItem);
+                    return;
                 }
 
                 // Promote Up to Mouse if mouse left/right button is
@@ -1658,6 +1708,7 @@ namespace System.Windows.Input.StylusWisp
         {
             if (!ShouldPromoteToMouse(touchDevice.StylusDevice.As<WispStylusDevice>()))
             {
+                touchDevice.StoredStagingAreaItems.Clear();
                 return;
             }
 
@@ -1673,8 +1724,11 @@ namespace System.Windows.Input.StylusWisp
                 // if the list's version changes during the loop, abandon the remaining
                 // items.  This means input arrived re-entrantly.
                 long version = list.IncrementVersion();
+                long generation = touchDevice.ContactGeneration;
+                bool downHandled = touchDevice.DownHandled;
 
-                for (int i = 0; i < count && version == list.Version; i++)
+                for (int i = 0; i < count && version == list.Version &&
+                    generation == touchDevice.ContactGeneration; i++)
                 {
                     // A stored item could be a Stylus input staging item queued to be promoted to mouse
                     // OR a raw mouse input report staging item for Button1Press delayed from
@@ -1691,9 +1745,51 @@ namespace System.Windows.Input.StylusWisp
                     }
                     else
                     {
-                        PromoteMainToMouse(stagingItem);
+                        PromoteMainToMouse(stagingItem, downHandled: downHandled);
                     }
                 }
+            }
+        }
+
+        private void ReplayCompletedTouch(CompletedTouchMousePromotion promotion,
+            StagingAreaInputItem[] storedItems, StagingAreaInputItem terminalUp)
+        {
+            promotion.Previous = _completedTouchMousePromotion;
+            _completedTouchMousePromotion = promotion;
+            try
+            {
+                foreach (StagingAreaInputItem item in storedItems)
+                {
+                    if (!IsCompletedTouchPromotionValid(promotion))
+                    {
+                        return;
+                    }
+
+                    if (item.Input is InputReportEventArgs report &&
+                        report.Report.Type == InputType.Mouse && !(report.Device is StylusDevice))
+                    {
+                        if (!promotion.DownHandled)
+                        {
+                            promotion.StylusDevice.PlayBackCachedDownInputReport(report.Report.Timestamp);
+                        }
+                    }
+                    else if (item.Input.RoutedEvent != Stylus.StylusUpEvent)
+                    {
+                        PromoteMainToMouse(item, promotion);
+                    }
+                }
+
+                if (IsCompletedTouchPromotionValid(promotion) &&
+                    (OwnsCompletedTouchMousePress(promotion) || promotion.LeavingDragDrop))
+                {
+                    // The terminal up must release an owned press even when TouchUp was handled.
+                    PromoteMainToMouse(terminalUp, promotion);
+                }
+            }
+            finally
+            {
+                RetireCompletedTouchMousePress(promotion);
+                _completedTouchMousePromotion = promotion.Previous;
             }
         }
 
@@ -1721,8 +1817,13 @@ namespace System.Windows.Input.StylusWisp
 
         /////////////////////////////////////////////////////////////////////
 
-        private void PromoteMainToMouse(StagingAreaInputItem stagingItem)
+        private void PromoteMainToMouse(StagingAreaInputItem stagingItem,
+            CompletedTouchMousePromotion promotion = null, bool? downHandled = null)
         {
+            if (promotion != null && !IsCompletedTouchPromotionValid(promotion))
+            {
+                return;
+            }
             if (!stagingItem.Input.Handled)
             {
                 StylusEventArgs stylusArgs = stagingItem.Input as StylusEventArgs;
@@ -1733,14 +1834,23 @@ namespace System.Windows.Input.StylusWisp
                     // We only want to promote to mouse when we actually have real stylus input.
                     if (stylusDevice != null)
                     {
-                        Debug.Assert(ShouldPromoteToMouse(stylusDevice) && stylusDevice.TouchDevice.PromotingToOther);
+                        // A primary up uses eligibility captured before deactivation installs the secondary-contact sentinel.
+                        Debug.Assert(promotion != null ||
+                            (stylusDevice.TouchDevice.PromotingToOther &&
+                             (ShouldPromoteToMouse(stylusDevice) || stylusArgs.RoutedEvent == Stylus.StylusUpEvent)));
 
-                        if (IgnoreGestureToMousePromotion(stylusArgs as StylusSystemGestureEventArgs, stylusDevice.TouchDevice))
+                        if (IgnoreGestureToMousePromotion(stylusArgs as StylusSystemGestureEventArgs,
+                            promotion?.DownHandled ?? downHandled ?? stylusDevice.TouchDevice.DownHandled))
                         {
                             return;
                         }
 
                         RawMouseActions actions = stylusDevice.GetMouseActionsFromStylusEventAndPlaybackCachedDown(stagingItem.Input.RoutedEvent, stylusArgs);
+
+                        if (promotion != null && !IsCompletedTouchPromotionValid(promotion))
+                        {
+                            return;
+                        }
 
                         if (actions != RawMouseActions.None)
                         {
@@ -1748,6 +1858,18 @@ namespace System.Windows.Input.StylusWisp
 
                             if (mouseInputSource != null)
                             {
+                                if (promotion != null)
+                                {
+                                    if (!IsMouseInputSourceEnabled(mouseInputSource))
+                                    {
+                                        RetireCompletedTouchMousePress(promotion);
+                                        return;
+                                    }
+                                    if (!promotion.MousePressPending)
+                                    {
+                                        promotion.MouseInputSource = mouseInputSource;
+                                    }
+                                }
                                 Point pt = PointUtil.ScreenToClient(stylusDevice.LastMouseScreenPoint, mouseInputSource);
 
                                 // DevDivVSO:153798
@@ -1779,9 +1901,9 @@ namespace System.Windows.Input.StylusWisp
             }
         }
 
-        private bool IgnoreGestureToMousePromotion(StylusSystemGestureEventArgs gestureArgs, WispStylusTouchDevice touchDevice)
+        private bool IgnoreGestureToMousePromotion(StylusSystemGestureEventArgs gestureArgs, bool downHandled)
         {
-            if (gestureArgs != null && touchDevice.DownHandled)
+            if (gestureArgs != null && downHandled)
             {
                 // If touchDevice's down event is already handled
                 // and if this gesture is a candidate for mouse
@@ -1965,8 +2087,16 @@ namespace System.Windows.Input.StylusWisp
             }
         }
 
-        internal bool UpdateMouseButtonState(RawMouseActions actions)
+        internal bool UpdateMouseButtonState(RawMouseActions actions, WispStylusDevice stylusDevice)
         {
+            CompletedTouchMousePromotion promotion = FindCompletedTouchPromotion(stylusDevice);
+            if (promotion != null && OwnsCompletedTouchMousePress(promotion) &&
+                ((promotion.LeftButton && actions == RawMouseActions.Button1Release) ||
+                 (!promotion.LeftButton && actions == RawMouseActions.Button2Release)))
+            {
+                promotion.MousePressPending = false;
+            }
+            InvalidateMouseButtonOwnership(actions);
             bool updated = false;
 
             switch (actions)
@@ -2009,9 +2139,143 @@ namespace System.Windows.Input.StylusWisp
 
         private void UpdateMouseState()
         {
+            InvalidateMouseButtonOwnership(RawMouseActions.Button1Release | RawMouseActions.Button2Release);
             MouseDevice mouseDevice = _inputManager.PrimaryMouseDevice;
             _mouseLeftButtonState = mouseDevice.GetButtonStateFromSystem(MouseButton.Left);
             _mouseRightButtonState = mouseDevice.GetButtonStateFromSystem(MouseButton.Right);
+        }
+
+        private void InvalidateMouseButtonOwnership(RawMouseActions actions)
+        {
+            if ((actions & (RawMouseActions.Button1Press | RawMouseActions.Button1Release)) != 0)
+            {
+                _mouseLeftButtonRevision = unchecked(_mouseLeftButtonRevision + 1);
+            }
+            if ((actions & (RawMouseActions.Button2Press | RawMouseActions.Button2Release)) != 0)
+            {
+                _mouseRightButtonRevision = unchecked(_mouseRightButtonRevision + 1);
+            }
+        }
+
+        internal bool IsReplayingCompletedTouch(WispStylusDevice stylusDevice)
+        {
+            return FindCompletedTouchPromotion(stylusDevice) != null;
+        }
+
+        internal bool CanPromoteCompletedTouch(WispStylusDevice stylusDevice)
+        {
+            CompletedTouchMousePromotion promotion = FindCompletedTouchPromotion(stylusDevice);
+            return promotion == null || IsCompletedTouchPromotionValid(promotion);
+        }
+
+        private CompletedTouchMousePromotion FindCompletedTouchPromotion(WispStylusDevice stylusDevice)
+        {
+            for (CompletedTouchMousePromotion promotion = _completedTouchMousePromotion;
+                promotion != null; promotion = promotion.Previous)
+            {
+                if (promotion.StylusDevice == stylusDevice &&
+                    promotion.Generation == promotion.TouchDevice.ContactGeneration)
+                {
+                    return promotion;
+                }
+            }
+            return null;
+        }
+
+        internal bool RecordCompletedTouchMousePress(WispStylusDevice stylusDevice,
+            RawMouseActions actions, PresentationSource source)
+        {
+            CompletedTouchMousePromotion promotion = FindCompletedTouchPromotion(stylusDevice);
+            if (promotion == null)
+            {
+                return true;
+            }
+
+            if (!IsCompletedTouchPromotionValid(promotion))
+            {
+                return false;
+            }
+
+            promotion.LeftButton = actions == RawMouseActions.Button1Press;
+            promotion.MouseInputSource = source;
+            promotion.MouseButtonRevision = promotion.LeftButton ? _mouseLeftButtonRevision : _mouseRightButtonRevision;
+            promotion.MousePressPending = true;
+
+            if (!IsMouseInputSourceEnabled(source))
+            {
+                RetireCompletedTouchMousePress(promotion);
+                return false;
+            }
+            return true;
+        }
+
+        private bool IsMouseInputSourceEnabled(PresentationSource source)
+        {
+            return !(source is HwndSource hwndSource) ||
+                (!hwndSource.IsDisposed && GetPenContextsFromHwnd(source)?.IsWindowDisabled != true);
+        }
+
+        private bool IsCompletedTouchPromotionValid(CompletedTouchMousePromotion promotion)
+        {
+            return !promotion.Cancelled && promotion.StylusDevice.IsValid &&
+                promotion.Generation == promotion.TouchDevice.ContactGeneration &&
+                promotion.QueueVersion == promotion.Queue.Version &&
+                (!promotion.MousePressPending || OwnsCompletedTouchMousePress(promotion));
+        }
+
+        private bool OwnsCompletedTouchMousePress(CompletedTouchMousePromotion promotion)
+        {
+            return promotion.MousePressPending && promotion.StylusDevice.IsValid &&
+                promotion.Generation == promotion.TouchDevice.ContactGeneration &&
+                promotion.MouseButtonRevision ==
+                    (promotion.LeftButton ? _mouseLeftButtonRevision : _mouseRightButtonRevision) &&
+                GetMouseLeftOrRightButtonState(promotion.LeftButton) == MouseButtonState.Pressed;
+        }
+
+        private void RetireCompletedTouchMousePress(CompletedTouchMousePromotion promotion)
+        {
+            // Do not route an up to a disabled/disposed source or release a newer press.
+            if (OwnsCompletedTouchMousePress(promotion))
+            {
+                RawMouseActions release = promotion.LeftButton ? RawMouseActions.Button1Release : RawMouseActions.Button2Release;
+                InvalidateMouseButtonOwnership(release);
+                if (promotion.LeftButton)
+                {
+                    _mouseLeftButtonState = MouseButtonState.Released;
+                }
+                else
+                {
+                    _mouseRightButtonState = MouseButtonState.Released;
+                }
+                promotion.StylusDevice.ResetStateForStylusUp();
+            }
+            promotion.MousePressPending = false;
+            promotion.Cancelled = true;
+            promotion.MouseInputSource = null;
+        }
+
+        internal void CancelCompletedTouchPromotion(WispStylusDevice stylusDevice)
+        {
+            for (CompletedTouchMousePromotion promotion = _completedTouchMousePromotion;
+                promotion != null; promotion = promotion.Previous)
+            {
+                if (promotion.StylusDevice == stylusDevice)
+                {
+                    RetireCompletedTouchMousePress(promotion);
+                }
+            }
+        }
+
+        private void CancelCompletedTouchPromotionsForSource(PresentationSource source)
+        {
+            for (CompletedTouchMousePromotion promotion = _completedTouchMousePromotion;
+                promotion != null; promotion = promotion.Previous)
+            {
+                if (promotion.MouseInputSource == source)
+                {
+                    RetireCompletedTouchMousePress(promotion);
+                }
+            }
         }
 
 
@@ -3191,6 +3455,7 @@ namespace System.Windows.Input.StylusWisp
 
         internal void UnRegisterHwndForInput(HwndSource hwndSource)
         {
+            CancelCompletedTouchPromotionsForSource(hwndSource);
             bool shutdownWorkThread = Dispatcher.HasShutdownStarted;
 
             
@@ -3537,6 +3802,11 @@ namespace System.Windows.Input.StylusWisp
             // client area.
             if (sourceHit != null)
             {
+                if (disabled)
+                {
+                    CancelCompletedTouchPromotionsForSource(sourceHit);
+                }
+
                 // Find the pencontexts for this window and update it's disabled window state
                 PenContexts penContexts = GetPenContextsFromHwnd(sourceHit);
                 penContexts?.IsWindowDisabled = disabled;
@@ -3545,6 +3815,7 @@ namespace System.Windows.Input.StylusWisp
             // See if we need to update the mouse state when going enabled.
             if (!disabled && _currentStylusDevice != null)
             {
+                InvalidateMouseButtonOwnership(RawMouseActions.Button1Release | RawMouseActions.Button2Release);
                 // If we are in air or have not fired down the set mouse in up state.
                 if (_currentStylusDevice.InAir || !_currentStylusDevice.GestureWasFired)
                 {
@@ -3650,6 +3921,15 @@ namespace System.Windows.Input.StylusWisp
 
         internal class StagingAreaInputItemList : List<StagingAreaInputItem>
         {
+            public new void Clear()
+            {
+                if (Count > 0)
+                {
+                    base.Clear();
+                    IncrementVersion();
+                }
+            }
+
             internal void AddItem(StagingAreaInputItem item)
             {
                 Add(item);
@@ -3663,6 +3943,35 @@ namespace System.Windows.Input.StylusWisp
                 return unchecked(++_version);
             }
             private long _version;
+        }
+
+        private sealed class CompletedTouchMousePromotion
+        {
+            internal CompletedTouchMousePromotion(WispStylusTouchDevice touchDevice,
+                StagingAreaInputItemList queue, bool downHandled, bool leavingDragDrop)
+            {
+                TouchDevice = touchDevice;
+                StylusDevice = touchDevice.StylusDevice.As<WispStylusDevice>();
+                Generation = touchDevice.ContactGeneration;
+                Queue = queue;
+                QueueVersion = queue.Version;
+                DownHandled = downHandled;
+                LeavingDragDrop = leavingDragDrop;
+            }
+
+            internal WispStylusTouchDevice TouchDevice { get; }
+            internal WispStylusDevice StylusDevice { get; }
+            internal long Generation { get; }
+            internal StagingAreaInputItemList Queue { get; }
+            internal long QueueVersion { get; }
+            internal bool DownHandled { get; }
+            internal bool LeavingDragDrop { get; }
+            internal CompletedTouchMousePromotion Previous { get; set; }
+            internal PresentationSource MouseInputSource { get; set; }
+            internal long MouseButtonRevision { get; set; }
+            internal bool LeftButton { get; set; }
+            internal bool MousePressPending { get; set; }
+            internal bool Cancelled { get; set; }
         }
 
         /////////////////////////////////////////////////////////////////////
@@ -3680,6 +3989,10 @@ namespace System.Windows.Input.StylusWisp
 
         private MouseButtonState _mouseLeftButtonState = MouseButtonState.Released;
         private MouseButtonState _mouseRightButtonState = MouseButtonState.Released;
+
+        private long _mouseLeftButtonRevision;
+        private long _mouseRightButtonRevision;
+        private CompletedTouchMousePromotion _completedTouchMousePromotion;
 
         private StylusPlugInCollection _activeMousePlugInCollection;
         private StylusPointDescription _mousePointDescription;

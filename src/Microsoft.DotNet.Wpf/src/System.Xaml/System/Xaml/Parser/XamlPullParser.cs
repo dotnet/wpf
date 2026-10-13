@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Xaml;
+using System.Xaml.MS.Impl;
 using System.Xaml.Schema;
 using MS.Internal.Xaml.Context;
 
@@ -18,6 +19,15 @@ namespace MS.Internal.Xaml.Parser
         XamlParserContext _context;
         XamlScanner _xamlScanner;
         XamlXmlReaderSettings _settings;
+        int _nestingDepth;
+
+        // SECURITY: Bound on the depth of recursive element nesting that the parser
+        // is willing to descend before throwing.
+        //
+        // The cap is intentionally generous so it does not break any legitimate
+        // document. Callers that must parse deeper trees can fully opt out via the
+        // Switch.System.Xaml.DisableXamlNestingDepthGuard AppContext switch.
+        internal const int MaxXamlNestingDepth = 512;
 
         public XamlPullParser(XamlParserContext context, XamlScanner scanner, XamlXmlReaderSettings settings)
         {
@@ -88,6 +98,17 @@ namespace MS.Internal.Xaml.Parser
         //
         public IEnumerable<XamlNode> P_Element()
         {
+            if (!XamlAppContextSwitches.DisableXamlNestingDepthGuard && _nestingDepth >= MaxXamlNestingDepth)
+            {
+                throw new XamlException(
+                    $"XAML element nesting depth exceeds the maximum allowed limit of {MaxXamlNestingDepth}. " +
+                    "This may indicate a maliciously crafted document.");
+            }
+
+            _nestingDepth++;
+
+            try
+            {
             ScannerNodeType nodeType = _xamlScanner.NodeType;
 
             switch (nodeType)
@@ -111,6 +132,11 @@ namespace MS.Internal.Xaml.Parser
                 break;
             default:
                 throw new XamlUnexpectedParseException(_xamlScanner, nodeType, ElementRuleException);
+            }
+            }
+            finally
+            {
+                _nestingDepth--;
             }
         }
 

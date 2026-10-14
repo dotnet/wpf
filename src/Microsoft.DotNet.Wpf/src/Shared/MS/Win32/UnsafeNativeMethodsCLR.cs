@@ -39,7 +39,7 @@ using MS.Internal.Drt;
 
 namespace MS.Win32
 {
-    internal partial class UnsafeNativeMethods
+    internal static partial class UnsafeNativeMethods
     {
 
         [DllImport(ExternDll.Uxtheme, CharSet = CharSet.Auto, BestFitMapping = false)]

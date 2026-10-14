@@ -65,6 +65,7 @@ namespace System
             LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.DisableCmapAndSbitOverflowProtectionSwitchName, false);
             LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.DoNotApplyZoneCheckForDefaultCredentialsSwitchName, false);
             LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.DisableXpsPackageBoundaryRestrictionSwitchName, false);
+            LocalAppContext.DefineSwitchDefault(CoreAppContextSwitches.DisableFontSecurityProtectionSwitchName, false);
         }
     }
 #pragma warning restore 436

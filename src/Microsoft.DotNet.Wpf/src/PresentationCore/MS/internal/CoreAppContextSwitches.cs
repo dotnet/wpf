@@ -466,6 +466,21 @@ namespace MS.Internal
 
         #endregion
 
+        #region DisableFontSecurityProtection
+
+        internal const string DisableFontSecurityProtectionSwitchName = "Switch.MS.Internal.TtfDelta.DisableFontSecurityProtection";
+        private static int _disableFontSecurityProtection;
+        public static bool DisableFontSecurityProtection
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(DisableFontSecurityProtectionSwitchName, ref _disableFontSecurityProtection);
+            }
+        }
+
+        #endregion
+
         #region DisablePenImcBoundsCheckProtection
 
         internal const string DisablePenImcBoundsCheckProtectionSwitchName = "Switch.MS.Internal.PenImc.DisablePenImcBoundsCheckProtection";

@@ -237,6 +237,14 @@ namespace MS.Internal
                 {
                     originPackage = packageOrigin;
                 }
+                catch (InvalidOperationException)
+                {
+                    originPackage = packageOrigin;
+                }
+                catch (UriFormatException)
+                {
+                    originPackage = packageOrigin;
+                }
 
                 return resolvedPackage != null
                     && originPackage != null

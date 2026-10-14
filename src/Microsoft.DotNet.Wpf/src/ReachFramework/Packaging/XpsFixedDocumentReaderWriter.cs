@@ -955,7 +955,12 @@ namespace System.Windows.Xps.Packaging
 
                     while (reader.Read())
                     {
-                        if (reader.NodeType == XmlNodeType.Element && reader.Name == XpsS0Markup.PageContent)
+                        if ((!MS.Internal.ReachAppContextSwitches.OptOutOfXpsPageSignatureCoverageEnforcement &&
+                             reader.NodeType == XmlNodeType.Element &&
+                             reader.LocalName == XpsS0Markup.PageContent &&
+                             reader.NamespaceURI == XpsS0Markup.FixedDocumentNamespace) ||
+                            (MS.Internal.ReachAppContextSwitches.OptOutOfXpsPageSignatureCoverageEnforcement &&
+                             reader.NodeType == XmlNodeType.Element && reader.Name == XpsS0Markup.PageContent))
                         {
                             string attribute = reader.GetAttribute(XmlTags.Source);
                             if (attribute != null)

@@ -27,10 +27,13 @@ public sealed class WispModalTouchTests
 
     [WpfTheory(Skip = "Requires an idle, interactive desktop and WPF_TEST_DESKTOP_TOUCH=1.",
         SkipUnless = nameof(DesktopTouchEnabled))]
-    [InlineData(PanningMode.Both, true)]
-    [InlineData(PanningMode.Both, false)]
-    [InlineData(PanningMode.None, false)]
-    public async Task ShowDialog_TouchPromotion_FirstDialogTouchClicks(PanningMode panningMode, bool previewDown)
+    [InlineData(PanningMode.Both, true, 0)]
+    [InlineData(PanningMode.Both, false, 0)]
+    [InlineData(PanningMode.None, false, 0)]
+    [InlineData(PanningMode.Both, true, 1)]
+    [InlineData(PanningMode.Both, true, 2)]
+    public async Task ShowDialog_TouchPromotion_FirstDialogTouchClicks(
+        PanningMode panningMode, bool previewDown, int handledStylusUp)
     {
         AssertLocalAssembly(typeof(Window).Assembly.Location);
         AssertLocalAssembly(typeof(Mouse).Assembly.Location);
@@ -52,13 +55,30 @@ public sealed class WispModalTouchTests
         int openingClicks = 0;
         int openingDowns = 0;
         int openingTouchUps = 0;
-        owner.PreviewTouchDown += (_, e) => touchDeviceType = e.TouchDevice.GetType().FullName;
+        int handledStylusUps = 0;
+        TouchDevice? openingTouchDevice = null;
+        owner.PreviewTouchDown += (_, e) =>
+        {
+            openingTouchDevice = e.TouchDevice;
+            touchDeviceType = e.TouchDevice.GetType().FullName;
+        };
         owner.PreviewTouchUp += (_, _) => openingTouchUps++;
         opener.PreviewMouseLeftButtonDown += (_, _) => openingDowns++;
         opener.Click += (_, _) => openingClicks++;
+        if (handledStylusUp != 0)
+        {
+            owner.AddHandler(handledStylusUp == 1 ? Stylus.PreviewStylusUpEvent : Stylus.StylusUpEvent,
+                new StylusEventHandler((_, e) =>
+                {
+                    handledStylusUps++;
+                    e.Handled = true;
+                }));
+        }
 
         void OpenDialog(object sender, RoutedEventArgs e)
         {
+            Assert.NotNull(openingTouchDevice);
+            Assert.False(openingTouchDevice.IsActive, "The opening touch must deactivate before replay.");
             Button probe = new() { Content = "Touch target", Height = 72 };
             dialog = CreateWindow(probe);
             dialog.Owner = owner;
@@ -130,6 +150,11 @@ public sealed class WispModalTouchTests
                     returned.Task.WaitAsync(TimeSpan.FromSeconds(15)).GetAwaiter().GetResult();
                     dispatcher.Invoke(() =>
                     {
+                        if (handledStylusUp != 0)
+                        {
+                            Assert.Equal(cycle + 1, handledStylusUps);
+                            Assert.Equal(0, openingTouchUps);
+                        }
                         Assert.Null(Mouse.Captured);
                         Assert.Null(Stylus.Captured);
                         ready = NewCompletionSource<DialogState>();

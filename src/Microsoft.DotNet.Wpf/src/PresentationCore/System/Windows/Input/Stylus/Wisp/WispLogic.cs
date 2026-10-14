@@ -467,7 +467,7 @@ namespace System.Windows.Input.StylusWisp
                     if (input?.Report is RawMouseInputReport mouseReport &&
                         !(input.Device is StylusDevice) && !IsPromotedMouseEvent(mouseReport))
                     {
-                        InvalidateMouseButtonOwnership(mouseReport.Actions);
+                        ReconcileMouseButtonState(mouseReport.Actions);
                     }
 
                     if (input != null && !input.Handled)
@@ -1462,7 +1462,8 @@ namespace System.Windows.Input.StylusWisp
                 if (stylusEventArgs?.RoutedEvent == Stylus.PreviewStylusUpEvent &&
                     stylusEventArgs.StylusDeviceImpl.As<WispStylusDevice>().TouchDevice.IsActive)
                 {
-                    stylusEventArgs.StylusDeviceImpl.As<WispStylusDevice>().TouchDevice.OnDeactivate();
+                    PromoteMainUpToTouch(stylusEventArgs.StylusDeviceImpl.As<WispStylusDevice>(),
+                        e.StagingItem, promoteTouchUp: false);
                 }
             }
         }
@@ -1490,7 +1491,7 @@ namespace System.Windows.Input.StylusWisp
                     if (stylusEventArgs.RoutedEvent == Stylus.StylusUpEvent &&
                         touchDevice.IsActive)
                     {
-                        touchDevice.OnDeactivate();
+                        PromoteMainUpToTouch(stylusDevice, stagingItem, promoteTouchUp: false);
                     }
                 }
                 else
@@ -1628,7 +1629,8 @@ namespace System.Windows.Input.StylusWisp
             }
         }
 
-        private void PromoteMainUpToTouch(WispStylusDevice stylusDevice, StagingAreaInputItem stagingItem)
+        private void PromoteMainUpToTouch(WispStylusDevice stylusDevice, StagingAreaInputItem stagingItem,
+            bool promoteTouchUp = true)
         {
             WispStylusTouchDevice touchDevice = stylusDevice.TouchDevice;
             bool shouldPromoteToMouse = ShouldPromoteToMouse(stylusDevice);
@@ -1642,7 +1644,10 @@ namespace System.Windows.Input.StylusWisp
                 touchDevice.BeginTouchUp();
                 try
                 {
-                    touchDevice.OnUp();
+                    if (promoteTouchUp)
+                    {
+                        touchDevice.OnUp();
+                    }
                     if (generation != touchDevice.ContactGeneration || !stylusDevice.IsValid)
                     {
                         return;
@@ -2134,7 +2139,59 @@ namespace System.Windows.Input.StylusWisp
                     break;
             }
 
+            if (updated)
+            {
+                _mouseButtonsOwnedByMouse &= ~(actions switch
+                {
+                    RawMouseActions.Button1Press or RawMouseActions.Button1Release => RawMouseActions.Button1Press,
+                    RawMouseActions.Button2Press or RawMouseActions.Button2Release => RawMouseActions.Button2Press,
+                    _ => RawMouseActions.None
+                });
+            }
             return updated;
+        }
+
+        private void ReconcileMouseButtonState(RawMouseActions actions)
+        {
+            for (CompletedTouchMousePromotion promotion = _completedTouchMousePromotion;
+                promotion != null; promotion = promotion.Previous)
+            {
+                RawMouseActions press = promotion.LeftButton ? RawMouseActions.Button1Press : RawMouseActions.Button2Press;
+                RawMouseActions release = promotion.LeftButton ? RawMouseActions.Button1Release : RawMouseActions.Button2Release;
+                if ((actions & (press | release)) != 0 && OwnsCompletedTouchMousePress(promotion))
+                {
+                    _mouseButtonsOwnedByMouse |= press;
+                    RetireCompletedTouchMousePress(promotion);
+                }
+            }
+
+            InvalidateMouseButtonOwnership(actions);
+
+            // Follow a physical takeover through its release, even after the replay has returned.
+            if ((_mouseButtonsOwnedByMouse & RawMouseActions.Button1Press) != 0)
+            {
+                if ((actions & RawMouseActions.Button1Release) != 0)
+                {
+                    _mouseLeftButtonState = MouseButtonState.Released;
+                    _mouseButtonsOwnedByMouse &= ~RawMouseActions.Button1Press;
+                }
+                else if ((actions & RawMouseActions.Button1Press) != 0)
+                {
+                    _mouseLeftButtonState = MouseButtonState.Pressed;
+                }
+            }
+            if ((_mouseButtonsOwnedByMouse & RawMouseActions.Button2Press) != 0)
+            {
+                if ((actions & RawMouseActions.Button2Release) != 0)
+                {
+                    _mouseRightButtonState = MouseButtonState.Released;
+                    _mouseButtonsOwnedByMouse &= ~RawMouseActions.Button2Press;
+                }
+                else if ((actions & RawMouseActions.Button2Press) != 0)
+                {
+                    _mouseRightButtonState = MouseButtonState.Pressed;
+                }
+            }
         }
 
         private void UpdateMouseState()
@@ -2143,6 +2200,14 @@ namespace System.Windows.Input.StylusWisp
             MouseDevice mouseDevice = _inputManager.PrimaryMouseDevice;
             _mouseLeftButtonState = mouseDevice.GetButtonStateFromSystem(MouseButton.Left);
             _mouseRightButtonState = mouseDevice.GetButtonStateFromSystem(MouseButton.Right);
+            if (_mouseLeftButtonState == MouseButtonState.Released)
+            {
+                _mouseButtonsOwnedByMouse &= ~RawMouseActions.Button1Press;
+            }
+            if (_mouseRightButtonState == MouseButtonState.Released)
+            {
+                _mouseButtonsOwnedByMouse &= ~RawMouseActions.Button2Press;
+            }
         }
 
         private void InvalidateMouseButtonOwnership(RawMouseActions actions)
@@ -3815,17 +3880,25 @@ namespace System.Windows.Input.StylusWisp
             // See if we need to update the mouse state when going enabled.
             if (!disabled && _currentStylusDevice != null)
             {
-                InvalidateMouseButtonOwnership(RawMouseActions.Button1Release | RawMouseActions.Button2Release);
-                // If we are in air or have not fired down the set mouse in up state.
-                if (_currentStylusDevice.InAir || !_currentStylusDevice.GestureWasFired)
+                if (_mouseButtonsOwnedByMouse != RawMouseActions.None)
                 {
-                    _mouseLeftButtonState = MouseButtonState.Released;
-                    _mouseRightButtonState = MouseButtonState.Released;
+                    UpdateMouseState();
                 }
                 else
                 {
-                    _mouseLeftButtonState = _currentStylusDevice.LeftIsActiveMouseButton ? MouseButtonState.Pressed : MouseButtonState.Released;
-                    _mouseRightButtonState = !_currentStylusDevice.LeftIsActiveMouseButton ? MouseButtonState.Pressed : MouseButtonState.Released;
+                    InvalidateMouseButtonOwnership(RawMouseActions.Button1Release | RawMouseActions.Button2Release);
+                }
+                // If we are in air or have not fired down the set mouse in up state.
+                bool released = _currentStylusDevice.InAir || !_currentStylusDevice.GestureWasFired;
+                if ((_mouseButtonsOwnedByMouse & RawMouseActions.Button1Press) == 0)
+                {
+                    _mouseLeftButtonState = !released && _currentStylusDevice.LeftIsActiveMouseButton
+                        ? MouseButtonState.Pressed : MouseButtonState.Released;
+                }
+                if ((_mouseButtonsOwnedByMouse & RawMouseActions.Button2Press) == 0)
+                {
+                    _mouseRightButtonState = !released && !_currentStylusDevice.LeftIsActiveMouseButton
+                        ? MouseButtonState.Pressed : MouseButtonState.Released;
                 }
             }
         }
@@ -3992,6 +4065,7 @@ namespace System.Windows.Input.StylusWisp
 
         private long _mouseLeftButtonRevision;
         private long _mouseRightButtonRevision;
+        private RawMouseActions _mouseButtonsOwnedByMouse;
         private CompletedTouchMousePromotion _completedTouchMousePromotion;
 
         private StylusPlugInCollection _activeMousePlugInCollection;

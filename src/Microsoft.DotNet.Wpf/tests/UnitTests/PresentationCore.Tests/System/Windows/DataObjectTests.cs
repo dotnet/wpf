@@ -1,7 +1,12 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Drawing.Imaging;
+using System.Formats.Nrbf;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Media.Imaging;
+using ComTypes = System.Runtime.InteropServices.ComTypes;
 
 namespace System.Windows;
 
@@ -11,6 +16,11 @@ namespace System.Windows;
 [UISettings(MaxAttempts = 3)]
 public class DataObjectTests
 {
+    private const int SOk = 0;
+    private const int SFalse = 1;
+    private const int E_FAIL = unchecked((int)0x80004005);
+    private const int DV_E_TYMED = unchecked((int)0x80040069);
+
     [WpfFact]
     public void GetData_NonExistentFormat_ReturnsNull()
     {
@@ -294,6 +304,513 @@ public class DataObjectTests
         Action act = () => data.SetData(string.Empty, testData, true);
         act.Should().Throw<ArgumentException>();
     }
+
+    // Verifies managed EMF mappings honor autoConvert while preserving the original Metafile instance.
+    [WpfTheory]
+    [InlineData("EnhancedMetafile", "System.Drawing.Imaging.Metafile")]
+    [InlineData("System.Drawing.Imaging.Metafile", "EnhancedMetafile")]
+    public void TryGetData_MetafileMappedFormat_RespectsAutoConvert(
+        string sourceFormat,
+        string mappedFormat)
+    {
+        using Metafile source = EmfTestData.CreateMetafile();
+        DataObject dataObject = new();
+        dataObject.SetData(sourceFormat, source, autoConvert: true);
+
+        dataObject.GetDataPresent(sourceFormat, autoConvert: false).Should().BeTrue();
+        dataObject.GetDataPresent(mappedFormat, autoConvert: false).Should().BeFalse();
+        dataObject.GetDataPresent(mappedFormat, autoConvert: true).Should().BeTrue();
+
+        string[] nativeFormats = dataObject.GetFormats(autoConvert: false);
+        nativeFormats.Should().Contain(sourceFormat);
+        nativeFormats.Should().NotContain(mappedFormat);
+
+        string[] convertedFormats = dataObject.GetFormats(autoConvert: true);
+        convertedFormats.Should().Contain(sourceFormat);
+        convertedFormats.Should().Contain(mappedFormat);
+
+        dataObject.TryGetData(
+            sourceFormat,
+            autoConvert: false,
+            out Metafile? exactResult).Should().BeTrue();
+        exactResult.Should().BeSameAs(source);
+        EmfTestData.AssertValid(exactResult!);
+
+        dataObject.TryGetData(
+            mappedFormat,
+            autoConvert: false,
+            out Metafile? nonConvertedResult).Should().BeFalse();
+        nonConvertedResult.Should().BeNull();
+
+        dataObject.TryGetData(
+            mappedFormat,
+            autoConvert: true,
+            out Metafile? convertedResult).Should().BeTrue();
+        convertedResult.Should().BeSameAs(source);
+        EmfTestData.AssertValid(convertedResult!);
+
+        dataObject.GetData(sourceFormat, autoConvert: false).Should().BeSameAs(source);
+        dataObject.GetData(mappedFormat, autoConvert: false).Should().BeNull();
+        dataObject.GetData(mappedFormat, autoConvert: true).Should().BeSameAs(source);
+        EmfTestData.AssertValid(source);
+    }
+
+    // Verifies typed requests reject an incompatible result type without corrupting the stored Metafile.
+    [WpfFact]
+    public void TryGetData_Metafile_WrongTypedRequestThrowsNotSupportedException()
+    {
+        using Metafile source = EmfTestData.CreateMetafile();
+        DataObject dataObject = new();
+        dataObject.SetData(DataFormats.EnhancedMetafile, source);
+
+        Action action = () => dataObject.TryGetData(
+            DataFormats.EnhancedMetafile,
+            autoConvert: false,
+            out string? _);
+
+        action.Should().Throw<NotSupportedException>();
+        EmfTestData.AssertValid(source);
+    }
+
+    // WPF's native-medium callback recognizes only the exact canonical name, as in .NET 9.
+    [WpfTheory]
+    [InlineData("EnhancedMetafile", false, true, false, ComTypes.TYMED.TYMED_ENHMF)]
+    [InlineData("EnhancedMetafile", true, true, true, ComTypes.TYMED.TYMED_ENHMF)]
+    [InlineData("enhancedmetafile", false, true, false, ComTypes.TYMED.TYMED_HGLOBAL)]
+    [InlineData("ENHANCEDMETAFILE", false, true, false, ComTypes.TYMED.TYMED_HGLOBAL)]
+    [InlineData("System.Drawing.Imaging.Metafile", false, false, true, ComTypes.TYMED.TYMED_ENHMF)]
+    [InlineData("System.Drawing.Imaging.Metafile", true, true, true, ComTypes.TYMED.TYMED_ENHMF)]
+    public void EnumFormatEtc_Metafile_SeparatesNativeAndAliasMedia(
+        string sourceFormat,
+        bool autoConvert,
+        bool nativeAdvertised,
+        bool aliasAdvertised,
+        ComTypes.TYMED nativeMedium)
+    {
+        using Metafile source = EmfTestData.CreateMetafile();
+        DataObject dataObject = new();
+        dataObject.SetData(sourceFormat, source, autoConvert);
+
+        ComTypes.IDataObject comDataObject = (ComTypes.IDataObject)dataObject;
+        List<ComTypes.FORMATETC> formats = EnumerateComFormats(comDataObject);
+        formats.Should().HaveCount((nativeAdvertised ? 1 : 0) + (aliasAdvertised ? 1 : 0));
+
+        AssertFormat(DataFormats.EnhancedMetafile, nativeAdvertised, nativeMedium);
+        AssertFormat(typeof(Metafile).FullName!, aliasAdvertised, ComTypes.TYMED.TYMED_HGLOBAL);
+        EmfTestData.AssertValid(source);
+
+        void AssertFormat(string format, bool advertised, ComTypes.TYMED medium)
+        {
+            short id = unchecked((short)DataFormats.GetDataFormat(format).Id);
+            ComTypes.FORMATETC[] matches = formats.Where(entry => entry.cfFormat == id).ToArray();
+            if (!advertised)
+            {
+                matches.Should().BeEmpty();
+                return;
+            }
+
+            matches.Should().ContainSingle();
+            ComTypes.FORMATETC entry = matches[0];
+            entry.tymed.Should().Be(medium);
+            entry.dwAspect.Should().Be(ComTypes.DVASPECT.DVASPECT_CONTENT);
+            entry.lindex.Should().Be(-1);
+            entry.ptd.Should().Be(0);
+            // QueryGetData confirms the advertised medium, not whether its payload can be rendered.
+            comDataObject.QueryGetData(ref entry).Should().Be(SOk);
+        }
+    }
+
+    [WpfTheory]
+    [InlineData("EnhancedMetafile", ComTypes.TYMED.TYMED_ENHMF)]
+    [InlineData("enhancedmetafile", ComTypes.TYMED.TYMED_ENHMF)]
+    [InlineData("ENHANCEDMETAFILE", ComTypes.TYMED.TYMED_ENHMF)]
+    public void GetData_EnumeratedEnhancedMetafile_ReturnsOwnedNativeMedium(
+        string requestedFormat,
+        ComTypes.TYMED requestedMedium)
+    {
+        using Metafile source = EmfTestData.CreateMetafile();
+        DataObject dataObject = new();
+        // COM requests use case-insensitive numeric format IDs. Store the canonical key: rendering resolves
+        // that ID back to EnhancedMetafile, and case-insensitive managed-source lookup is not promised.
+        dataObject.SetData(DataFormats.EnhancedMetafile, source, autoConvert: false);
+        ComTypes.IDataObject comDataObject = (ComTypes.IDataObject)dataObject;
+        ComTypes.FORMATETC advertised = EnumerateComFormats(comDataObject).Single();
+        advertised.tymed.Should().Be(ComTypes.TYMED.TYMED_ENHMF);
+        ComTypes.FORMATETC format = CreateComFormat(requestedFormat, requestedMedium);
+        format.cfFormat.Should().Be(advertised.cfFormat);
+        comDataObject.QueryGetData(ref format).Should().Be(SOk);
+
+        ComTypes.STGMEDIUM medium = default;
+        try
+        {
+            comDataObject.GetData(ref format, out medium);
+            medium.tymed.Should().Be(ComTypes.TYMED.TYMED_ENHMF);
+            medium.unionmember.Should().NotBe(0);
+            using Metafile result = new(medium.unionmember, deleteEmf: false);
+            EmfTestData.AssertValid(result);
+        }
+        finally
+        {
+            ReleaseStgMedium(ref medium);
+        }
+
+        // Releasing the transferred handle must not consume the caller's source.
+        EmfTestData.AssertValid(source);
+    }
+
+    [WpfTheory]
+    [InlineData("System.Drawing.Imaging.Metafile", ComTypes.TYMED.TYMED_ENHMF)]
+    [InlineData("EnhancedMetafile", ComTypes.TYMED.TYMED_MFPICT)]
+    [InlineData("EnhancedMetafile", ComTypes.TYMED.TYMED_ISTORAGE)]
+    public void GetData_MetafileUnsupportedMedium_Fails(
+        string requestedFormat,
+        ComTypes.TYMED requestedMedium)
+    {
+        using Metafile source = EmfTestData.CreateMetafile();
+        DataObject dataObject = new();
+        dataObject.SetData(DataFormats.EnhancedMetafile, source, autoConvert: true);
+        AssertRuntimeGetDataFailure(
+            (ComTypes.IDataObject)dataObject,
+            requestedFormat,
+            requestedMedium,
+            DV_E_TYMED,
+            queryResult: DV_E_TYMED);
+        EmfTestData.AssertValid(source);
+    }
+
+    [WpfFact]
+    public void GetData_EnhancedMetafile_GdiTakesPrecedenceOverEnhMf()
+    {
+        using Metafile source = EmfTestData.CreateMetafile();
+        DataObject dataObject = new();
+        dataObject.SetData(DataFormats.EnhancedMetafile, source, autoConvert: false);
+
+        AssertRuntimeGetDataFailure(
+            (ComTypes.IDataObject)dataObject,
+            DataFormats.EnhancedMetafile,
+            ComTypes.TYMED.TYMED_GDI | ComTypes.TYMED.TYMED_ENHMF,
+            DV_E_TYMED,
+            queryResult: SOk);
+        EmfTestData.AssertValid(source);
+    }
+
+    // Request exactly the enumerated ENHMF medium: failure must not return a serialized HGLOBAL fallback.
+    [WpfTheory]
+    [InlineData(0)]
+    [InlineData(1)]
+    [InlineData(2)]
+    public void GetData_EnumeratedEnhancedMetafile_InvalidPayloadFailsWithoutSerializedFallback(int payloadKind)
+    {
+        using MemoryStream stream = new(payloadKind == 1 ? new byte[] { 1, 2, 3, 4 } : Array.Empty<byte>());
+        object payload = payloadKind == 2 ? "not a metafile" : stream;
+        DataObject dataObject = new();
+        dataObject.SetData(DataFormats.EnhancedMetafile, payload, autoConvert: false);
+        ComTypes.IDataObject runtimeDataObject = (ComTypes.IDataObject)dataObject;
+        ComTypes.FORMATETC advertised = EnumerateComFormats(runtimeDataObject).Single();
+        advertised.tymed.Should().Be(ComTypes.TYMED.TYMED_ENHMF);
+        runtimeDataObject.QueryGetData(ref advertised).Should().Be(SOk);
+
+        int expected = payloadKind == 2 ? DV_E_TYMED : E_FAIL;
+
+        AssertRuntimeGetDataFailure(
+            runtimeDataObject,
+            DataFormats.EnhancedMetafile,
+            ComTypes.TYMED.TYMED_ENHMF,
+            expected,
+            queryResult: SOk);
+        stream.CanRead.Should().BeTrue();
+    }
+
+    [WpfTheory]
+    [InlineData("EnhancedMetafile")]
+    [InlineData("enhancedmetafile")]
+    [InlineData("System.Drawing.Imaging.Metafile")]
+    public void GetDataHere_Metafile_DoesNotAcceptCallerProvidedEnhMfMedium(string requestedFormat)
+    {
+        using Metafile source = EmfTestData.CreateMetafile();
+        DataObject dataObject = new();
+        dataObject.SetData(DataFormats.EnhancedMetafile, source, autoConvert: true);
+        ComTypes.IDataObject comDataObject = (ComTypes.IDataObject)dataObject;
+        ComTypes.FORMATETC format = CreateComFormat(requestedFormat, ComTypes.TYMED.TYMED_ENHMF);
+        ComTypes.STGMEDIUM medium = new() { tymed = ComTypes.TYMED.TYMED_ENHMF };
+        try
+        {
+            Action getDataHere = () => comDataObject.GetDataHere(ref format, ref medium);
+            getDataHere.Should().Throw<COMException>().Which.HResult.Should().Be(DV_E_TYMED);
+            medium.unionmember.Should().Be(0);
+        }
+        finally
+        {
+            ReleaseStgMedium(ref medium);
+        }
+
+        EmfTestData.AssertValid(source);
+    }
+
+    [WpfTheory]
+    [InlineData("EnhancedMetafile", ComTypes.TYMED.TYMED_HGLOBAL)]
+    [InlineData("EnhancedMetafile", ComTypes.TYMED.TYMED_ENHMF | ComTypes.TYMED.TYMED_HGLOBAL)]
+    [InlineData("System.Drawing.Imaging.Metafile", ComTypes.TYMED.TYMED_HGLOBAL)]
+    [InlineData("Wpf.Metafile.Custom", ComTypes.TYMED.TYMED_HGLOBAL)]
+    public void GetData_MetafileHGlobal_RejectsWithoutNativeOrSerializedFallback(
+        string requestedFormat,
+        ComTypes.TYMED requestedMedium)
+    {
+        using Metafile source = EmfTestData.CreateMetafile();
+        DataObject dataObject = new();
+        dataObject.SetData(requestedFormat, source, autoConvert: false);
+
+        // QueryGetData remains a capability check; it does not promise serialization will succeed.
+        AssertRuntimeGetDataFailure(
+            (ComTypes.IDataObject)dataObject,
+            requestedFormat,
+            requestedMedium,
+            DV_E_TYMED,
+            queryResult: SOk);
+        EmfTestData.AssertValid(source);
+    }
+
+    [WpfTheory]
+    [InlineData(false, ComTypes.TYMED.TYMED_HGLOBAL)]
+    [InlineData(true, ComTypes.TYMED.TYMED_HGLOBAL)]
+    [InlineData(false, ComTypes.TYMED.TYMED_ENHMF | ComTypes.TYMED.TYMED_HGLOBAL)]
+    [InlineData(true, ComTypes.TYMED.TYMED_ENHMF | ComTypes.TYMED.TYMED_HGLOBAL)]
+    public void GetData_EnhancedMetafileNonStreamPayload_RejectsHGlobal(
+        bool useSerializableObject,
+        ComTypes.TYMED requestedMedium)
+    {
+        DataObject dataObject = new();
+        object payload = useSerializableObject ? 42 : "not a metafile";
+        dataObject.SetData(DataFormats.EnhancedMetafile, payload, autoConvert: false);
+
+        AssertRuntimeGetDataFailure(
+            (ComTypes.IDataObject)dataObject,
+            DataFormats.EnhancedMetafile,
+            requestedMedium,
+            DV_E_TYMED,
+            queryResult: SOk);
+        dataObject.GetData(DataFormats.EnhancedMetafile, autoConvert: false).Should().BeSameAs(payload);
+    }
+
+    [WpfTheory]
+    [InlineData("EnhancedMetafile")]
+    [InlineData("System.Drawing.Imaging.Metafile")]
+    [InlineData("Wpf.Metafile.Custom")]
+    public void GetDataHere_MetafileHGlobal_RejectionPreservesCallerStorage(string requestedFormat)
+    {
+        using Metafile source = EmfTestData.CreateMetafile();
+        DataObject dataObject = new();
+        dataObject.SetData(requestedFormat, source, autoConvert: false);
+        ComTypes.IDataObject comDataObject = (ComTypes.IDataObject)dataObject;
+        ComTypes.FORMATETC format = CreateComFormat(requestedFormat, ComTypes.TYMED.TYMED_HGLOBAL);
+        byte[] sentinel = Enumerable.Repeat((byte)0xA5, 256).ToArray();
+        nint callerStorage = GlobalAlloc(0x42, (nuint)sentinel.Length);
+        callerStorage.Should().NotBe(0);
+        ComTypes.STGMEDIUM medium = new()
+        {
+            tymed = ComTypes.TYMED.TYMED_HGLOBAL,
+            unionmember = callerStorage
+        };
+        try
+        {
+            nint pointer = GlobalLock(callerStorage);
+            pointer.Should().NotBe(0);
+            try
+            {
+                Marshal.Copy(sentinel, 0, pointer, sentinel.Length);
+            }
+            finally
+            {
+                GlobalUnlock(callerStorage);
+            }
+
+            Action getDataHere = () => comDataObject.GetDataHere(ref format, ref medium);
+            getDataHere.Should().Throw<COMException>().Which.HResult.Should().Be(DV_E_TYMED);
+            medium.tymed.Should().Be(ComTypes.TYMED.TYMED_HGLOBAL);
+            medium.unionmember.Should().Be(callerStorage);
+            ReadHGlobal(callerStorage, sentinel.Length).Should().Equal(sentinel);
+        }
+        finally
+        {
+            ReleaseStgMedium(ref medium);
+        }
+
+        EmfTestData.AssertValid(source);
+    }
+
+    [WpfTheory]
+    [InlineData("EnhancedMetafile", ComTypes.TYMED.TYMED_HGLOBAL)]
+    [InlineData("EnhancedMetafile", ComTypes.TYMED.TYMED_ENHMF | ComTypes.TYMED.TYMED_HGLOBAL)]
+    [InlineData("System.Drawing.Imaging.Metafile", ComTypes.TYMED.TYMED_HGLOBAL)]
+    [InlineData("Wpf.Metafile.Custom", ComTypes.TYMED.TYMED_HGLOBAL)]
+    public void GetData_StreamHGlobal_BypassesRejectionAndCopiesWholeStream(
+        string requestedFormat,
+        ComTypes.TYMED requestedMedium)
+    {
+        byte[] bytes = [1, 2, 3, 4, 5, 6, 7];
+        using MemoryStream source = EmfTestData.CreateNonExposableStream(bytes);
+        source.Position = 3;
+        DataObject dataObject = new();
+        dataObject.SetData(requestedFormat, source, autoConvert: false);
+        ComTypes.IDataObject comDataObject = (ComTypes.IDataObject)dataObject;
+        ComTypes.FORMATETC format = CreateComFormat(requestedFormat, requestedMedium);
+        ComTypes.STGMEDIUM medium = default;
+        try
+        {
+            comDataObject.QueryGetData(ref format).Should().Be(SOk);
+            comDataObject.GetData(ref format, out medium);
+            medium.tymed.Should().Be(ComTypes.TYMED.TYMED_HGLOBAL);
+            ReadHGlobal(medium.unionmember, bytes.Length).Should().Equal(bytes);
+            // The legacy raw stream path rewinds and consumes the stream, rather than copying its suffix.
+            source.Position.Should().Be(source.Length);
+            source.CanRead.Should().BeTrue();
+        }
+        finally
+        {
+            ReleaseStgMedium(ref medium);
+        }
+    }
+
+    [WpfTheory]
+    [InlineData("Text", false)]
+    [InlineData("UnicodeText", true)]
+    public void GetData_MetafileTextHGlobal_UsesToStringBeforeRejection(string requestedFormat, bool unicode)
+    {
+        using Metafile source = EmfTestData.CreateMetafile();
+        DataObject dataObject = new();
+        dataObject.SetData(requestedFormat, source, autoConvert: false);
+        ComTypes.IDataObject comDataObject = (ComTypes.IDataObject)dataObject;
+        ComTypes.FORMATETC format = CreateComFormat(requestedFormat, ComTypes.TYMED.TYMED_HGLOBAL);
+        ComTypes.STGMEDIUM medium = default;
+        try
+        {
+            comDataObject.GetData(ref format, out medium);
+            medium.tymed.Should().Be(ComTypes.TYMED.TYMED_HGLOBAL);
+            nint pointer = GlobalLock(medium.unionmember);
+            pointer.Should().NotBe(0);
+            try
+            {
+                string? text = unicode ? Marshal.PtrToStringUni(pointer) : Marshal.PtrToStringAnsi(pointer);
+                text.Should().Be(source.ToString());
+            }
+            finally
+            {
+                GlobalUnlock(medium.unionmember);
+            }
+        }
+        finally
+        {
+            ReleaseStgMedium(ref medium);
+        }
+
+        EmfTestData.AssertValid(source);
+    }
+
+    [WpfTheory]
+    [InlineData("Wpf.HGlobal.Integer")]
+    [InlineData("System.Int32")]
+    public void GetData_OrdinaryObjectHGlobal_StillSerializes(string requestedFormat)
+    {
+        DataObject dataObject = new();
+        dataObject.SetData(requestedFormat, 42, autoConvert: false);
+        ComTypes.IDataObject comDataObject = (ComTypes.IDataObject)dataObject;
+        ComTypes.FORMATETC format = CreateComFormat(requestedFormat, ComTypes.TYMED.TYMED_HGLOBAL);
+        ComTypes.STGMEDIUM medium = default;
+        try
+        {
+            comDataObject.GetData(ref format, out medium);
+            medium.tymed.Should().Be(ComTypes.TYMED.TYMED_HGLOBAL);
+            byte[] bytes = ReadHGlobal(medium.unionmember, checked((int)GlobalSize(medium.unionmember)));
+            byte[] prefix = new Guid("FD9EA796-3B13-4370-A679-56106BB288FB").ToByteArray();
+            bytes.Take(prefix.Length).Should().Equal(prefix);
+            using MemoryStream serialized = new(bytes, prefix.Length, bytes.Length - prefix.Length, writable: false);
+            NrbfDecoder.Decode(serialized).Should().BeAssignableTo<PrimitiveTypeRecord<int>>().Which.Value.Should().Be(42);
+        }
+        finally
+        {
+            ReleaseStgMedium(ref medium);
+        }
+    }
+
+    private static byte[] ReadHGlobal(nint handle, int count)
+    {
+        nint pointer = GlobalLock(handle);
+        pointer.Should().NotBe(0);
+        try
+        {
+            byte[] bytes = new byte[count];
+            Marshal.Copy(pointer, bytes, 0, count);
+            return bytes;
+        }
+        finally
+        {
+            GlobalUnlock(handle);
+        }
+    }
+
+    private static List<ComTypes.FORMATETC> EnumerateComFormats(ComTypes.IDataObject dataObject)
+    {
+        ComTypes.IEnumFORMATETC enumerator = dataObject.EnumFormatEtc(ComTypes.DATADIR.DATADIR_GET);
+        List<ComTypes.FORMATETC> formats = [];
+        ComTypes.FORMATETC[] entry = new ComTypes.FORMATETC[1];
+        int[] fetched = new int[1];
+        int result;
+        while ((result = enumerator.Next(1, entry, fetched)) == SOk)
+        {
+            fetched[0].Should().Be(1);
+            formats.Add(entry[0]);
+        }
+
+        result.Should().Be(SFalse);
+        fetched[0].Should().Be(0);
+        return formats;
+    }
+
+    private static ComTypes.FORMATETC CreateComFormat(string format, ComTypes.TYMED medium) => new()
+    {
+        cfFormat = unchecked((short)DataFormats.GetDataFormat(format).Id),
+        dwAspect = ComTypes.DVASPECT.DVASPECT_CONTENT,
+        lindex = -1,
+        tymed = medium
+    };
+
+    private static void AssertRuntimeGetDataFailure(
+        ComTypes.IDataObject dataObject,
+        string requestedFormat,
+        ComTypes.TYMED requestedMedium,
+        int expected,
+        int queryResult)
+    {
+        ComTypes.FORMATETC format = CreateComFormat(requestedFormat, requestedMedium);
+        dataObject.QueryGetData(ref format).Should().Be(queryResult);
+        ComTypes.STGMEDIUM medium = default;
+        try
+        {
+            Action getData = () => dataObject.GetData(ref format, out medium);
+            getData.Should().Throw<COMException>().Which.HResult.Should().Be(expected);
+            medium.unionmember.Should().Be(0);
+        }
+        finally
+        {
+            ReleaseStgMedium(ref medium);
+        }
+    }
+
+    [DllImport("ole32.dll")]
+    private static extern void ReleaseStgMedium(ref ComTypes.STGMEDIUM medium);
+
+    [DllImport("kernel32.dll")]
+    private static extern nint GlobalAlloc(uint flags, nuint bytes);
+
+    [DllImport("kernel32.dll")]
+    private static extern nint GlobalLock(nint handle);
+
+    [DllImport("kernel32.dll")]
+    private static extern nuint GlobalSize(nint handle);
+
+    [DllImport("kernel32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool GlobalUnlock(nint handle);
     #endregion
 
     #region ContainsText Tests

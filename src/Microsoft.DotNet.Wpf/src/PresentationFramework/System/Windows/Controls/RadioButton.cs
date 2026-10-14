@@ -2,10 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections;
-using System.ComponentModel;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Media;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using System.Windows.Automation.Peers;
+using System.Windows.Controls.Primitives;
 using MS.Internal.Telemetry.PresentationFramework;
 
 // Disable CS3001: Warning as Error: not CLS-compliant
@@ -66,64 +67,52 @@ namespace System.Windows.Controls
 
         private static void Register(string groupName, RadioButton radioButton)
         {
-            if (_groupNameToElements == null)
-                _groupNameToElements = new Hashtable(1);
+            t_groupNameToElements ??= new Dictionary<string, List<WeakReference<RadioButton>>>(1);
 
-            lock (_groupNameToElements)
+            ref List<WeakReference<RadioButton>> elements = ref CollectionsMarshal.GetValueRefOrAddDefault(t_groupNameToElements, groupName, out bool exists);
+            if (!exists)
             {
-                ArrayList elements = (ArrayList)_groupNameToElements[groupName];
-
-                if (elements == null)
-                {
-                    elements = new ArrayList(1);
-                    _groupNameToElements[groupName] = elements;
-                }
-                else
-                {
-                    // There were some elements there, remove dead ones
-                    PurgeDead(elements, null);
-                }
-
-                elements.Add(new WeakReference(radioButton));
+                // Create new collection
+                elements = new List<WeakReference<RadioButton>>(2);
             }
+            else
+            {
+                // There were some elements there, remove dead ones
+                PurgeDead(elements, null);
+            }
+
+            elements.Add(new WeakReference<RadioButton>(radioButton));
+
             _currentlyRegisteredGroupName.SetValue(radioButton, groupName);
         }
 
         private static void Unregister(string groupName, RadioButton radioButton)
         {
-            if (_groupNameToElements == null)
+            Debug.Assert(t_groupNameToElements is not null, "Unregister was called before Register");
+
+            if (t_groupNameToElements is null)
                 return;
 
-            lock (_groupNameToElements)
+            // Get all elements bound to this key and remove this element
+            if (t_groupNameToElements.TryGetValue(groupName, out List<WeakReference<RadioButton>> elements))
             {
-                // Get all elements bound to this key and remove this element
-                ArrayList elements = (ArrayList)_groupNameToElements[groupName];
+                PurgeDead(elements, radioButton);
 
-                if (elements != null)
-                {
-                    PurgeDead(elements, radioButton);
-                    if (elements.Count == 0)
-                    {
-                        _groupNameToElements.Remove(groupName);
-                    }
-                }
+                // If the group has zero elements, remove it
+                if (elements.Count == 0)
+                    t_groupNameToElements.Remove(groupName);
             }
+
             _currentlyRegisteredGroupName.SetValue(radioButton, null);
         }
 
-        private static void PurgeDead(ArrayList elements, object elementToRemove)
+        private static void PurgeDead(List<WeakReference<RadioButton>> elements, RadioButton elementToRemove)
         {
-            for (int i = 0; i < elements.Count; )
+            for (int i = elements.Count - 1; i >= 0; i--)
             {
-                WeakReference weakReference = (WeakReference)elements[i];
-                object element = weakReference.Target;
-                if (element == null || element == elementToRemove)
+                if (!elements[i].TryGetTarget(out RadioButton element) || element == elementToRemove)
                 {
                     elements.RemoveAt(i);
-                }
-                else
-                {
-                    i++;
                 }
             }
         }
@@ -133,45 +122,53 @@ namespace System.Windows.Controls
             string groupName = GroupName;
             if (!string.IsNullOrEmpty(groupName))
             {
-                Visual rootScope = KeyboardNavigation.GetVisualRoot(this);
-                if (_groupNameToElements == null)
-                    _groupNameToElements = new Hashtable(1);
-                lock (_groupNameToElements)
+                t_groupNameToElements ??= new Dictionary<string, List<WeakReference<RadioButton>>>(1);
+
+                // Get all elements bound to this key
+                if (t_groupNameToElements.TryGetValue(groupName, out List<WeakReference<RadioButton>> elements))
                 {
-                    // Get all elements bound to this key and remove this element
-                    ArrayList elements = (ArrayList)_groupNameToElements[groupName];
-                    for (int i = 0; i < elements.Count; )
+                    for (int i = elements.Count - 1; i >= 0; i--)
                     {
-                        WeakReference weakReference = (WeakReference)elements[i];
-                        RadioButton rb = weakReference.Target as RadioButton;
-                        if (rb == null)
+                        // Either remove the dead element or uncheck if we're checked
+                        if (elements[i].TryGetTarget(out RadioButton radioButton))
                         {
-                            // Remove dead instances
-                            elements.RemoveAt(i);
+                            // Uncheck all checked RadioButtons but this one
+                            if (radioButton != this && radioButton.IsChecked is true)
+                            {
+                                DependencyObject rootScope = KeyboardNavigation.GetVisualRoot(this);
+                                DependencyObject otherRoot = KeyboardNavigation.GetVisualRoot(radioButton);
+
+                                // If elements have the same group name but the visual roots are different, we still treat them
+                                // as unique since we want to promote reuse of group names to make them easier to work with.
+                                if (rootScope != otherRoot)
+                                    continue;
+
+                                radioButton.UncheckRadioButton();
+                            }
                         }
                         else
                         {
-                            // Uncheck all checked RadioButtons different from the current one
-                            if (rb != this && (rb.IsChecked == true) && rootScope == KeyboardNavigation.GetVisualRoot(rb))
-                                rb.UncheckRadioButton();
-                            i++;
+                            // Remove dead instances
+                            elements.RemoveAt(i);
                         }
                     }
                 }
             }
             else // Logical parent should be the group
             {
-                DependencyObject parent = this.Parent;
-                if (parent != null)
+                DependencyObject parent = Parent;
+                if (parent is not null)
                 {
                     // Traverse logical children
                     IEnumerable children = LogicalTreeHelper.GetChildren(parent);
                     IEnumerator itor = children.GetEnumerator();
                     while (itor.MoveNext())
                     {
-                        RadioButton rb = itor.Current as RadioButton;
-                        if (rb != null && rb != this && string.IsNullOrEmpty(rb.GroupName) && (rb.IsChecked == true))
-                            rb.UncheckRadioButton();
+                        if (itor.Current is RadioButton radioButton && radioButton.IsChecked is true &&
+                            radioButton != this && string.IsNullOrEmpty(radioButton.GroupName))
+                        {
+                            radioButton.UncheckRadioButton();
+                        }
                     }
                 }
             }
@@ -194,7 +191,7 @@ namespace System.Windows.Controls
             "GroupName",
             typeof(string),
             typeof(RadioButton),
-            new FrameworkPropertyMetadata(String.Empty, new PropertyChangedCallback(OnGroupNameChanged)));
+            new FrameworkPropertyMetadata(string.Empty, new PropertyChangedCallback(OnGroupNameChanged)));
 
         /// <summary>
         /// GroupName determine mutually excusive radiobutton groups
@@ -221,9 +218,9 @@ namespace System.Windows.Controls
         /// <summary>
         /// Creates AutomationPeer (<see cref="UIElement.OnCreateAutomationPeer"/>)
         /// </summary>
-        protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer()
+        protected override AutomationPeer OnCreateAutomationPeer()
         {
-            return new System.Windows.Automation.Peers.RadioButtonAutomationPeer(this);
+            return new RadioButtonAutomationPeer(this);
         }
 
         /// <summary>
@@ -263,10 +260,6 @@ namespace System.Windows.Controls
 
         #endregion
 
-        #region Accessibility
-
-        #endregion Accessibility
-
         #region DTypeThemeStyleKey
 
         // Returns the DependencyObjectType for the registered ThemeStyleKey's default
@@ -276,13 +269,15 @@ namespace System.Windows.Controls
             get { return _dType; }
         }
 
-        private static DependencyObjectType _dType;
+        private static readonly DependencyObjectType _dType;
 
         #endregion DTypeThemeStyleKey
 
         #region private data
 
-        [ThreadStatic] private static Hashtable _groupNameToElements;
+        [ThreadStatic]
+        private static Dictionary<string, List<WeakReference<RadioButton>>> t_groupNameToElements;
+
         private static readonly UncommonField<string> _currentlyRegisteredGroupName = new UncommonField<string>();
 
         #endregion private data

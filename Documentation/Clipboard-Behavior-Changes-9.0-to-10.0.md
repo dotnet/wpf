@@ -12,7 +12,41 @@ The coordinated WPF and `System.Private.Windows.Core` changes restore the .NET 9
 - Shared format mapping now permits platform-specific synonyms, restoring WPF's `BitmapSource` mapping without adding it to WinForms.
 - WinForms continues to unwrap original managed data objects by default.
 
-The remaining sections describe the behavior of the unmodified `release/9.0` and `release/10.0` branches that motivated the fix.
+### Enhanced metafile compatibility
+
+The coordinated metafile changes preserve the .NET 9 separation between the native
+`EnhancedMetafile` format (`CF_ENHMETAFILE`) and the registered
+`System.Drawing.Imaging.Metafile` format:
+
+- OLE format enumeration advertises `EnhancedMetafile` as `TYMED_ENHMF` only.
+  A failed native rendering attempt is not retried as HGLOBAL serialization when
+  the caller requests that enumerated medium.
+- The registered CLR format advertises `TYMED_HGLOBAL` only. WPF does not render
+  or request native EMF handles under that format name.
+- Managed format mappings and their `autoConvert` behavior remain separate from
+  the OLE storage medium. Advertising the CLR format does not guarantee that its
+  payload can be serialized or retrieved as a `Metafile`.
+
+The shared HGLOBAL serialization policy restores WPF 9's rejection behavior:
+`EnhancedMetafile` data and `Metafile` objects are rejected with `DV_E_TYMED`
+before generic object serialization. No serialized exception payload substitutes
+for that failure. Stream and standard text/file rendering retain their earlier
+precedence, so a stream under `EnhancedMetafile` can still be copied as raw
+HGLOBAL bytes, as in WPF 9. This does not add safe `Metafile` serialization.
+
+When a request offers both HGLOBAL and a native medium, WPF selects HGLOBAL
+first, matching WPF 9. A `Metafile` object is therefore rejected for such a
+request; callers requesting the enumerated `TYMED_ENHMF` alone continue to
+receive a native handle. If HGLOBAL is absent but both GDI and ENHMF are offered,
+GDI takes precedence and the `EnhancedMetafile` request is rejected, as in WPF 9.
+WinForms retains its existing serialization policy and
+native-medium preference through the shared hooks' defaults.
+
+WPF's native metafile format-name checks are ordinal and case-sensitive, as in
+WPF 9. Noncanonical spellings advertise HGLOBAL rather than native EMF support;
+managed data-store keys are not made case-insensitive.
+
+The remaining sections describe the behavior of the unmodified `release/9.0` and `release/10.0` branches that motivated the fixes.
 
 ## Summary
 
@@ -237,9 +271,16 @@ The compatibility test suite added with this change includes coverage for:
 - Argument validation and exception parameter names.
 - `Clear`, `Flush`, `IsCurrent`, and `SetDataObject` copy semantics.
 - Audio, file-drop, image, custom-format, and text round trips.
+- Native EMF versus registered CLR metafile media, including case-variant names,
+  native rendering failures, and independently owned native handles.
+- HGLOBAL rejection of metafile objects, HGLOBAL-first mixed-medium requests,
+  unchanged caller-owned storage on rejection, and raw-stream/text precedence.
+- Metafile alias advertisement versus payload retrieval for live, copied, and
+  explicitly flushed clipboard data.
 
-The relevant test file is:
+The relevant test files are:
 
 ```text
 src/Microsoft.DotNet.Wpf/tests/UnitTests/PresentationCore.Tests/System/Windows/ClipboardTests.cs
+src/Microsoft.DotNet.Wpf/tests/UnitTests/PresentationCore.Tests/System/Windows/DataObjectTests.cs
 ```

@@ -1206,9 +1206,14 @@ public class ClipboardTests : IDisposable
         }
     }
 
-    // Verifies an auto-convertible EMF advertises and retrieves both native and CLR mapped formats.
-    [WpfFact]
-    public void SetDataObject_Metafile_AutoConvertTrue_ExposesMappedIDataObjectFormat()
+    // The CLR alias is advertised as HGLOBAL, not ENHMF. Advertisement does not promise a usable serialized Metafile.
+    [WpfTheory]
+    [InlineData(false, false)]
+    [InlineData(false, true)]
+    [InlineData(true, false)]
+    public void SetDataObject_Metafile_AutoConvertTrue_SeparatesAliasAdvertisementFromNativePayload(
+        bool copy,
+        bool flush)
     {
         Metafile? source = EmfTestData.CreateMetafile();
 
@@ -1219,8 +1224,25 @@ public class ClipboardTests : IDisposable
 
             try
             {
-                Clipboard.SetDataObject(sourceDataObject, copy: false);
-                Clipboard.IsCurrent(sourceDataObject).Should().BeTrue();
+                Clipboard.SetDataObject(sourceDataObject, copy);
+                Clipboard.IsCurrent(sourceDataObject).Should().Be(!copy);
+
+                if (flush)
+                {
+                    RetryClipboardAccess(
+                        () =>
+                        {
+                            Clipboard.Flush();
+                            return true;
+                        }).Should().BeTrue();
+                }
+
+                if (copy || flush)
+                {
+                    Clipboard.IsCurrent(sourceDataObject).Should().BeFalse();
+                    source.Dispose();
+                    source = null;
+                }
 
                 string mappedFormat = typeof(Metafile).FullName!;
                 Clipboard.ContainsData(DataFormats.EnhancedMetafile).Should().BeTrue();
@@ -1249,22 +1271,48 @@ public class ClipboardTests : IDisposable
                     .Should().BeOfType<Metafile>().Subject;
                 EmfTestData.AssertValid(nativeResult);
 
-                using Metafile mappedResult = RetryClipboardAccess(
+                // Rejection is a failed HRESULT, not a successfully serialized NotSupportedException payload.
+                RetryClipboardAccess(
                     () => clipboardDataObject.GetData(
                         mappedFormat,
                         autoConvert: false))
-                    .Should().BeOfType<Metafile>().Subject;
-                EmfTestData.AssertValid(mappedResult);
+                    .Should().BeNull();
+
+                Metafile? exactAliasResult = null;
+                try
+                {
+                    RetryClipboardAccess(
+                        () => clipboardDataObject.TryGetData(
+                            mappedFormat,
+                            autoConvert: false,
+                            out exactAliasResult)).Should().BeFalse();
+                    exactAliasResult.Should().BeNull();
+                }
+                finally
+                {
+                    exactAliasResult?.Dispose();
+                }
 
                 using Metafile clipboardResult = RetryClipboardAccess(
                     () => Clipboard.GetData(DataFormats.EnhancedMetafile))
                     .Should().BeOfType<Metafile>().Subject;
                 EmfTestData.AssertValid(clipboardResult);
 
-                using Metafile mappedClipboardResult = RetryClipboardAccess(
-                    () => Clipboard.GetData(mappedFormat))
+                // Both untyped and typed auto-converting reads can now fall back to the native format.
+                using Metafile untypedConvertedResult = RetryClipboardAccess(
+                    () => clipboardDataObject.GetData(mappedFormat, autoConvert: true))
                     .Should().BeOfType<Metafile>().Subject;
-                EmfTestData.AssertValid(mappedClipboardResult);
+                EmfTestData.AssertValid(untypedConvertedResult);
+
+                // Clipboard.GetData does not opt the CLR alias into auto-conversion (.NET 9 behavior).
+                RetryClipboardAccess(
+                    () => Clipboard.GetData(mappedFormat)).Should().BeNull();
+
+                using Metafile convertedResult = GetTypedDataObjectMetafile(
+                    clipboardDataObject,
+                    mappedFormat,
+                    autoConvert: true);
+                EmfTestData.AssertValid(convertedResult);
 
                 using Metafile typedResult = GetTypedClipboardMetafile(DataFormats.EnhancedMetafile);
                 EmfTestData.AssertValid(typedResult);

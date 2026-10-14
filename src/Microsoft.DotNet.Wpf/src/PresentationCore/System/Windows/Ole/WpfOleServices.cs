@@ -26,6 +26,14 @@ internal sealed unsafe class WpfOleServices : IOleServices
 
     public static void EnsureThreadState() => OleServicesContext.EnsureThreadState();
 
+    // .NET 9 chose HGLOBAL before ENHMF when both were requested, even when that choice rejected a metafile.
+    public static bool PreferHGlobalOverEnhMf => true;
+
+    // After raw-stream and standard-format conversions, .NET 9 rejected the native EMF format and
+    // Metafile objects under any format rather than serializing them (or a serialization-error payload).
+    public static bool AllowHGlobalSerialization(string format, object data) =>
+        format != DataFormatNames.Emf && !SystemDrawingHelper.IsMetafile(data);
+
     public static HRESULT GetDataHere(string format, object data, FORMATETC* pformatetc, STGMEDIUM* pmedium)
     {
         TYMED mediumType = (TYMED)pformatetc->tymed;
@@ -39,8 +47,10 @@ internal sealed unsafe class WpfOleServices : IOleServices
             return HRESULT.S_OK;
         }
 
-        // Handle enhanced metafiles.
+        // .NET 9 tried GDI before ENHMF. An EMF request offering both must fail the GDI path,
+        // not succeed by skipping straight to an enhanced-metafile handle.
         if (mediumType.HasFlag(TYMED.TYMED_ENHMF)
+            && !mediumType.HasFlag(TYMED.TYMED_GDI)
             && pmedium->tymed == TYMED.TYMED_ENHMF
             && IsEnhancedMetafileFormat(format))
         {
@@ -110,15 +120,10 @@ internal sealed unsafe class WpfOleServices : IOleServices
             mediumType = TYMED.TYMED_GDI;
             formatId = (ushort)CLIPBOARD_FORMAT.CF_BITMAP;
         }
-        else if (format.Equals(DataFormatNames.Emf, StringComparison.OrdinalIgnoreCase))
+        else if (IsEnhancedMetafileFormat(format))
         {
             mediumType = TYMED.TYMED_ENHMF;
             formatId = (ushort)CLIPBOARD_FORMAT.CF_ENHMETAFILE;
-        }
-        else if (format.Equals(DataFormatNames.BinaryFormatMetafile, StringComparison.OrdinalIgnoreCase))
-        {
-            mediumType = TYMED.TYMED_ENHMF;
-            formatId = checked((ushort)DataFormats.GetDataFormat(format).Id);
         }
         else
         {
@@ -190,9 +195,10 @@ internal sealed unsafe class WpfOleServices : IOleServices
         return false;
     }
 
+    // Only the canonical name denotes native EMF transfer. The CLR Metafile alias uses HGLOBAL;
+    // keep the ordinal comparison used by .NET 9 rather than treating managed keys as case-insensitive.
     private static bool IsEnhancedMetafileFormat(string format) =>
-        format.Equals(DataFormatNames.Emf, StringComparison.OrdinalIgnoreCase)
-        || format.Equals(DataFormatNames.BinaryFormatMetafile, StringComparison.OrdinalIgnoreCase);
+        format == DataFormatNames.Emf;
 
     public static bool AllowTypeWithoutResolver<T>()
     {

@@ -141,11 +141,31 @@ namespace MS.Internal.AppModel
             }
         }
 
-        // Per-host result cache. The decision for a given hostname is stable for the
-        // lifetime of the process barring DNS changes; caching avoids a synchronous
-        // DNS lookup on every outgoing request.
-        private static readonly ConcurrentDictionary<string, bool> s_localHostCache =
+        // Per-host result cache with expiration. Positive ("send credentials")
+        // decisions are NEVER cached because a stale "true" is the dangerous
+        // direction — it would leak credentials after a DNS rebinding attack.
+        // Negative ("do not send") decisions are cached with a short TTL since
+        // a stale "false" is safe (fail-closed).
+        private static readonly ConcurrentDictionary<string, CachedZoneDecision> s_localHostCache =
             new(StringComparer.OrdinalIgnoreCase);
+
+        // Cache TTL for negative (deny) decisions only. Positive decisions are
+        // always re-resolved to prevent DNS rebinding credential leaks.
+        private static readonly TimeSpan s_cacheTtl = TimeSpan.FromSeconds(120);
+
+        private readonly struct CachedZoneDecision
+        {
+            public readonly bool IsLocalOrPrivate;
+            public readonly long ExpiresAtTicks;
+
+            public CachedZoneDecision(bool isLocalOrPrivate)
+            {
+                IsLocalOrPrivate = isLocalOrPrivate;
+                ExpiresAtTicks = Environment.TickCount64 + (long)s_cacheTtl.TotalMilliseconds;
+            }
+
+            public bool IsExpired => Environment.TickCount64 >= ExpiresAtTicks;
+        }
 
         /// <summary>
         /// Returns true when every IP address that <paramref name="host"/> resolves
@@ -159,7 +179,8 @@ namespace MS.Internal.AppModel
         /// loopback/Intranet decisions are reliable even on modern Windows installs
         /// where the zone manager is degraded (no IE/Edge zone configuration).
         /// DNS failures resolve to "not local/private" and fail closed in the caller.
-        /// Results are cached per host for the lifetime of the process.
+        /// Positive (allow) decisions are always re-resolved to prevent DNS rebinding.
+        /// Negative (deny) decisions are cached with a TTL.
         /// </remarks>
         private static bool AllResolvedAddressesAreLocalOrPrivate(string host)
         {
@@ -168,41 +189,54 @@ namespace MS.Internal.AppModel
                 return false;
             }
 
-            return s_localHostCache.GetOrAdd(host, static h =>
+            // Only serve cached NEGATIVE results (fail-closed is safe to cache).
+            // Positive results must always be re-resolved to detect DNS rebinding.
+            if (s_localHostCache.TryGetValue(host, out CachedZoneDecision cached)
+                && !cached.IsExpired
+                && !cached.IsLocalOrPrivate)
             {
-                IPAddress[] addresses;
-                if (IPAddress.TryParse(h, out IPAddress literal))
-                {
-                    addresses = new[] { literal };
-                }
-                else
-                {
-                    try
-                    {
-                        addresses = Dns.GetHostAddresses(h);
-                    }
-                    catch
-                    {
-                        // DNS failure: do not relax the policy. Fall through to
-                        // MapUrlToZone (which will deny by default for unknown zones).
-                        return false;
-                    }
-                }
+                return false;
+            }
 
-                if (addresses == null || addresses.Length == 0)
+            bool result = ResolveAndCheckLocalOrPrivate(host);
+            s_localHostCache[host] = new CachedZoneDecision(result);
+            return result;
+        }
+
+        private static bool ResolveAndCheckLocalOrPrivate(string host)
+        {
+            IPAddress[] addresses;
+            if (IPAddress.TryParse(host, out IPAddress literal))
+            {
+                addresses = new[] { literal };
+            }
+            else
+            {
+                try
+                {
+                    addresses = Dns.GetHostAddresses(host);
+                }
+                catch
+                {
+                    // DNS failure: do not relax the policy. Fall through to
+                    // MapUrlToZone (which will deny by default for unknown zones).
+                    return false;
+                }
+            }
+
+            if (addresses == null || addresses.Length == 0)
+            {
+                return false;
+            }
+
+            foreach (IPAddress a in addresses)
+            {
+                if (!IsLocalOrPrivate(a))
                 {
                     return false;
                 }
-
-                foreach (IPAddress a in addresses)
-                {
-                    if (!IsLocalOrPrivate(a))
-                    {
-                        return false;
-                    }
-                }
-                return true;
-            });
+            }
+            return true;
         }
 
         private static bool IsLocalOrPrivate(IPAddress address)

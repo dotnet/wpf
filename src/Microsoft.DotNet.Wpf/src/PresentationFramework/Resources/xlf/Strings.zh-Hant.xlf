@@ -6273,6 +6273,16 @@ Do you want to replace it?</source>
         <target state="translated">ValueSerializer 執行轉換失敗，因為 IValueSerializerContext 未提供 '{0}'。</target>
         <note />
       </trans-unit>
+	  <trans-unit id="Verify_ApartmentState">
+        <source>This operation requires the thread's apartment state to be '{0}'.</source>
+        <target state="translated">此作業需要執行緒的 Apartment 狀態為 '{0}'。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Verify_FileExists">
+        <source>No file exists at '{0}'.</source>
+        <target state="translated">'{0}' 沒有任何檔案。</target>
+        <note />
+      </trans-unit>
       <trans-unit id="VirtualizedCellInfoCollection_DoesNotSupportIndexChanges">
         <source>This collection does not support changing values with specific indexes.</source>
         <target state="translated">此集合不支援變更具有特定索引的值。</target>

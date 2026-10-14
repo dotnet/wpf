@@ -3834,6 +3834,12 @@ Do you want to replace it?</value>
   <data name="ValueSerializerContextUnavailable" xml:space="preserve">
     <value>Conversion by a ValueSerializer failed because the IValueSerializerContext was not provided '{0}'.</value>
   </data>
+  <data name="Verify_ApartmentState" xml:space="preserve">
+    <value>This operation requires the thread's apartment state to be '{0}'.</value>
+  </data>
+  <data name="Verify_FileExists" xml:space="preserve">
+    <value>No file exists at '{0}'.</value>
+  </data>
   <data name="VirtualizedCellInfoCollection_DoesNotSupportIndexChanges" xml:space="preserve">
     <value>This collection does not support changing values with specific indexes.</value>
   </data>

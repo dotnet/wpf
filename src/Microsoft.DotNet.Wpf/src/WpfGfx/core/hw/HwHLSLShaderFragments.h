@@ -281,6 +281,7 @@ namespace ShaderFunctions
         MultiplyAlphaMask_NoTransformFromTexCoord,
         MultiplyRadialGradientCentered,
         MultiplyRadialGradientNonCentered,
+        MultiplySweepGradient,
 
         // Vertex Only Functions
         Get3DTransforms,

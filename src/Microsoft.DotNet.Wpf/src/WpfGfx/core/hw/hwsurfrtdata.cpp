@@ -304,6 +304,7 @@ HRESULT CHwSurfaceRenderTargetSharedData::GetCachedBrush(
 
     if (   pBrush->GetType() != BrushGradientLinear
         && pBrush->GetType() != BrushGradientRadial
+        && pBrush->GetType() != BrushGradientSweep
        )
     {
         goto Cleanup;
@@ -480,15 +481,16 @@ HRESULT CHwSurfaceRenderTargetSharedData::DeriveHWTexturedColorSource(
     }
     case BrushGradientLinear:
     case BrushGradientRadial:
+    case BrushGradientSweep:
     {
         //
-        // Derive a primary color source for the linear or radial gradient
-        // and grab the color source from it.
+        // Derive a primary color source for the linear, radial, or sweep
+        // gradient and grab the color source from it.
         //
 
         //
-        // We derive a linear gradient hw brush for both linear
-        // and radial gradients. Both should be realized as a 1D texture
+        // We derive a linear gradient hw brush for linear, radial, and sweep
+        // gradients. All three should be realized as a 1D texture.
         //
 
         //

@@ -3262,6 +3262,40 @@ switch (nCmdType)
     }
     break;
 
+    case MilCmdSweepGradientBrush:
+    {
+        #ifdef DEBUG
+        if (cbSize < sizeof(MILCMD_SWEEPGRADIENTBRUSH))
+        {
+            IFC(WGXERR_UCE_MALFORMEDPACKET);
+        }
+        #endif
+
+        const MILCMD_SWEEPGRADIENTBRUSH* pCmd = 
+            reinterpret_cast<const MILCMD_SWEEPGRADIENTBRUSH*>(pcvData);
+
+        LPCVOID pPayload = reinterpret_cast<LPCVOID>(pCmd + 1);
+        UINT cbPayload = cbSize - sizeof(MILCMD_SWEEPGRADIENTBRUSH);
+
+        /* Resource handles are validated in the ProcessUpdate method. */
+
+        CMilSweepGradientBrushDuce* pResource =
+            static_cast<CMilSweepGradientBrushDuce*>(pHandleTable->GetResource(
+                pCmd->Handle,
+                TYPE_SWEEPGRADIENTBRUSH
+                ));
+
+        if (pResource == NULL)
+        {
+            RIP("Invalid resource handle.");
+            IFC(WGXERR_UCE_MALFORMEDPACKET);
+        }
+
+
+        IFC(pResource->ProcessUpdate(pHandleTable, pCmd, pPayload, cbPayload));
+    }
+    break;
+
     case MilCmdImageBrush:
     {
         #ifdef DEBUG

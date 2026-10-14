@@ -16,7 +16,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         _textAnalyzer = gcnew NativeIUnknownWrapper<IDWriteTextAnalyzer>(textAnalyzer);
     }
 
-    IList<Span^>^ TextAnalyzer::Itemize(
+    IList<Span>^ TextAnalyzer::Itemize(
         __in_ecount(length) const WCHAR* text,
         UINT32                           length,
         CultureInfo^                     culture,
@@ -46,7 +46,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             try
             {
                 hr = pDWriteFactory->CreateTextAnalyzer(&pTextAnalyzer);
-                ConvertHresultToException(hr, "List<Span^>^ TextAnalyzer::Itemize");
+                ConvertHresultToException(hr, "List<Span>^ TextAnalyzer::Itemize");
                 
                 pin_ptr<const WCHAR> pNumberSubstitutionLocaleNamePinned;
 
@@ -73,7 +73,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
                                                                       ignoreUserOverride,
                                                                       numberSubstitutionMethod,
                                                                       (void**)&pTextAnalysisSource));
-                ConvertHresultToException(hr, "List<Span^>^ TextAnalyzer::Itemize");
+                ConvertHresultToException(hr, "List<Span>^ TextAnalyzer::Itemize");
 
             
                 pTextAnalysisSink = (IDWriteTextAnalysisSink*)pfnCreateTextAnalysisSink();
@@ -83,14 +83,14 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
                                                  0,
                                                  length,
                                                  pTextAnalysisSink);
-                ConvertHresultToException(hr, "List<Span^>^ TextAnalyzer::Itemize");
+                ConvertHresultToException(hr, "List<Span>^ TextAnalyzer::Itemize");
 
                 // Analyze the number substitution ranges.
                 hr = pTextAnalyzer->AnalyzeNumberSubstitution(pTextAnalysisSource,
                                                             0,
                                                             length,
                                                             pTextAnalysisSink);
-                ConvertHresultToException(hr, "List<Span^>^ TextAnalyzer::Itemize");
+                ConvertHresultToException(hr, "List<Span>^ TextAnalyzer::Itemize");
 
                 DWriteTextAnalysisNode<DWRITE_SCRIPT_ANALYSIS>*     dwriteScriptAnalysisNode     = (DWriteTextAnalysisNode<DWRITE_SCRIPT_ANALYSIS>*)pfnGetScriptAnalysisList((void*)pTextAnalysisSink);
                 DWriteTextAnalysisNode<IDWriteNumberSubstitution*>* dwriteNumberSubstitutionNode = (DWriteTextAnalysisNode<IDWriteNumberSubstitution*>*)pfnGetNumberSubstitutionList((void*)pTextAnalysisSink);
@@ -114,7 +114,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
 
     }
 
-    IList<Span^>^ TextAnalyzer::AnalyzeExtendedAndItemize(
+    IList<Span>^ TextAnalyzer::AnalyzeExtendedAndItemize(
         TextItemizer^ textItemizer, 
         __in_ecount(length) const WCHAR *text, 
         UINT32 length, 

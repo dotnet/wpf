@@ -259,4 +259,33 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         
         return success; 
     }
+
+    /// Checks whether the font face contains a COLR table by probing via
+    /// IDWriteFontFace::TryGetFontTable. The table data is immediately released
+    /// since we only need to know whether the table exists, not its contents.
+    /// TranslateColorGlyphRun does its own deep parsing of COLR/CPAL.
+    __declspec(noinline) bool FontFace::HasColorGlyphs()
+    {
+        const void* tableData;
+        void* tableContext;
+        UINT32 tableSize = 0;
+        BOOL exists = FALSE;
+
+        HRESULT hr = _fontFace->Value->TryGetFontTable(
+            DWRITE_MAKE_OPENTYPE_TAG('C','O','L','R'),
+            &tableData,
+            &tableSize,
+            &tableContext,
+            &exists
+            );
+
+        if (SUCCEEDED(hr) && exists)
+        {
+            _fontFace->Value->ReleaseFontTable(tableContext);
+        }
+
+        System::GC::KeepAlive(_fontFace);
+        return (!!exists);
+    }
+
 }}}}//MS::Internal::Text::TextInterface

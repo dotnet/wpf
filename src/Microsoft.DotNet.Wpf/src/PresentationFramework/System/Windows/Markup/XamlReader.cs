@@ -421,6 +421,10 @@ namespace System.Windows.Markup
                             {
                                 nw.NavigationService.IsUnsafe = true;
                             }
+                            else if (!FrameworkAppContextSwitches.OptOutOfRestrictiveXamlNavigationBlock && args.Instance is DependencyObject rootElement)
+                            {
+                                RestrictiveXamlContext.SetIsRestrictivelyLoaded(rootElement, true);
+                            }
                         }
                     };
 

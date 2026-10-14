@@ -16,7 +16,7 @@ namespace MS.Internal.Xaml.Parser
         private XamlParserContext _context;
         private XamlScanner _xamlScanner;
         private XamlXmlReaderSettings _settings;
-        int _nestingDepth;
+        private int _nestingDepth;
 
         // SECURITY: Bound on the depth of recursive element nesting that the parser
         // is willing to descend before throwing.

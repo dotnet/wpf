@@ -81,14 +81,27 @@ namespace System.Windows.Input.StylusWisp
 
         protected override void OnManipulationEnded(bool cancel)
         {
+            long generation = ContactGeneration;
             base.OnManipulationEnded(cancel);
+            if (generation != ContactGeneration)
+            {
+                return;
+            }
+
             if (cancel)
             {
                 // Set PromotingToOther to true because the
                 // the manipulation has been canceled and hence
                 // we want the promotions to happen.
                 PromotingToOther = true;
-                _stylusLogic.PromoteStoredItemsToMouse(this);
+                if (_processingTouchUp)
+                {
+                    _deferMousePromotion = true;
+                }
+                else
+                {
+                    _stylusLogic.PromoteStoredItemsToMouse(this);
+                }
             }
             else
             {
@@ -96,8 +109,35 @@ namespace System.Windows.Input.StylusWisp
                 // dont want any mouse promotions to happen for
                 // rest of this touch cycle.
                 PromotingToOther = false;
+                _storedStagingAreaItems?.Clear();
             }
-            _storedStagingAreaItems?.Clear();
+        }
+
+        internal long ContactGeneration { get; private set; }
+
+        internal void BeginContact()
+        {
+            _stylusLogic.CancelCompletedTouchPromotion(StylusDevice.As<WispStylusDevice>());
+            ContactGeneration = unchecked(ContactGeneration + 1);
+            _processingTouchUp = false;
+            _deferMousePromotion = false;
+        }
+
+        internal void BeginTouchUp()
+        {
+            _processingTouchUp = true;
+            _deferMousePromotion = false;
+        }
+
+        internal bool DeferMousePromotion => _deferMousePromotion;
+
+        internal void EndTouchUp(long generation)
+        {
+            if (generation == ContactGeneration)
+            {
+                _processingTouchUp = false;
+                _deferMousePromotion = false;
+            }
         }
 
         /// <summary>
@@ -144,6 +184,9 @@ namespace System.Windows.Input.StylusWisp
         private WispLogic _stylusLogic;
 
         private WispLogic.StagingAreaInputItemList _storedStagingAreaItems;
+
+        private bool _processingTouchUp;
+        private bool _deferMousePromotion;
 
         private static object NoMousePromotionStylusDevice = new object();
 

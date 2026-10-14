@@ -46,8 +46,6 @@ namespace System.Windows.Media.Effects
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -57,10 +55,7 @@ namespace System.Windows.Media.Effects
         //------------------------------------------------------
 
 
-
-
         #region Public Properties
-
 
 
         #endregion Public Properties
@@ -81,8 +76,6 @@ namespace System.Windows.Media.Effects
         {
             return new ImplicitInputBrush();
         }
-
-
 
         #endregion ProtectedMethods
 
@@ -157,7 +150,6 @@ namespace System.Windows.Media.Effects
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_IMPLICITINPUTBRUSH))
                 {
                     Transform vTransform = Transform;
@@ -167,16 +159,13 @@ namespace System.Windows.Media.Effects
 
                     AddRefOnChannelAnimations(channel);
 
-
                     UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
                 }
 
                 return _duceResource.GetHandle(channel);
-
         }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
@@ -187,9 +176,7 @@ namespace System.Windows.Media.Effects
                     if (vRelativeTransform != null) ((DUCE.IResource)vRelativeTransform).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
-
                 }
-
         }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
@@ -207,7 +194,6 @@ namespace System.Windows.Media.Effects
             return _duceResource.GetChannel(index);
         }
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -217,9 +203,6 @@ namespace System.Windows.Media.Effects
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -233,7 +216,6 @@ namespace System.Windows.Media.Effects
         #region Dependency Properties
 
 
-
         #endregion Dependency Properties
 
         //------------------------------------------------------
@@ -244,14 +226,9 @@ namespace System.Windows.Media.Effects
 
         #region Internal Fields
 
-
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
 
-
-
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -261,8 +238,6 @@ namespace System.Windows.Media.Effects
         //  Constructors
         //
         //------------------------------------------------------
-
-
 
 
         #endregion Constructors

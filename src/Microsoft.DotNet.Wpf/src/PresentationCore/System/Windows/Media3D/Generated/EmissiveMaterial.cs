@@ -51,8 +51,6 @@ namespace System.Windows.Media.Media3D
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -65,14 +63,10 @@ namespace System.Windows.Media.Media3D
         {
             EmissiveMaterial target = ((EmissiveMaterial) d);
 
-
             target.PropertyChanged(ColorProperty);
         }
         private static void BrushPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
-
-
 
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
@@ -90,7 +84,6 @@ namespace System.Windows.Media.Media3D
 
 
             EmissiveMaterial target = ((EmissiveMaterial) d);
-
 
             Brush oldV = (Brush) e.OldValue;
             Brush newV = (Brush) e.NewValue;
@@ -116,7 +109,6 @@ namespace System.Windows.Media.Media3D
 
             target.PropertyChanged(BrushProperty);
         }
-
 
         #region Public Properties
 
@@ -169,8 +161,6 @@ namespace System.Windows.Media.Media3D
             return new EmissiveMaterial();
         }
 
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -214,7 +204,6 @@ namespace System.Windows.Media.Media3D
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_EMISSIVEMATERIAL))
                 {
                     Brush vBrush = Brush;
@@ -222,16 +211,13 @@ namespace System.Windows.Media.Media3D
 
                     AddRefOnChannelAnimations(channel);
 
-
                     UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
                 }
 
                 return _duceResource.GetHandle(channel);
-
         }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
@@ -240,9 +226,7 @@ namespace System.Windows.Media.Media3D
                     if (vBrush != null) ((DUCE.IResource)vBrush).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
-
                 }
-
         }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
@@ -259,7 +243,6 @@ namespace System.Windows.Media.Media3D
             // Note that we are in a lock here already.
             return _duceResource.GetChannel(index);
         }
-
 
         #endregion Internal Methods
 
@@ -285,8 +268,6 @@ namespace System.Windows.Media.Media3D
                 return 1;
             }
         }
-
-
 
         #endregion Internal Properties
 
@@ -317,15 +298,11 @@ namespace System.Windows.Media.Media3D
 
         #region Internal Fields
 
-
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
-
         internal static Color s_Color = Colors.White;
         internal static Brush s_Brush = null;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -367,7 +344,6 @@ namespace System.Windows.Media.Media3D
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

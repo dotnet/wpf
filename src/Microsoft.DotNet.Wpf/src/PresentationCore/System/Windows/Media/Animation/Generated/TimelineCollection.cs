@@ -17,7 +17,6 @@ namespace System.Windows.Media.Animation
     /// <summary>
     /// A collection of Timeline objects.
     /// </summary>
-
     public sealed partial class TimelineCollection : Animatable, IList, IList<Timeline>
     {
         //------------------------------------------------------
@@ -47,8 +46,6 @@ namespace System.Windows.Media.Animation
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -56,7 +53,6 @@ namespace System.Windows.Media.Animation
         //  Public Properties
         //
         //------------------------------------------------------
-
 
         #region IList<T>
 
@@ -124,8 +120,6 @@ namespace System.Windows.Media.Animation
 
             _collection.Insert(index, value);
 
-
-
             ++_version;
             WritePostscript();
         }
@@ -155,9 +149,6 @@ namespace System.Windows.Media.Animation
 
                 _collection.RemoveAt(index);
 
-
-
-
                 ++_version;
                 WritePostscript();
 
@@ -182,7 +173,6 @@ namespace System.Windows.Media.Animation
             WritePostscript();
         }
 
-
         /// <summary>
         ///     Removes the element at the specified index without firing
         ///     the public Changed event.
@@ -199,14 +189,10 @@ namespace System.Windows.Media.Animation
 
             _collection.RemoveAt(index);
 
-
-
-
             ++_version;
 
             // No WritePostScript to avoid firing the Changed event.
         }
-
 
         /// <summary>
         ///     Indexer for the collection
@@ -228,17 +214,14 @@ namespace System.Windows.Media.Animation
 
                 WritePreamble();
 
-                if (!Object.ReferenceEquals(_collection[ index ], value))
+                if (!Object.ReferenceEquals(_collection[index], value))
                 {
+                    Timeline oldValue = _collection[index];
 
-                    Timeline oldValue = _collection[ index ];
                     OnFreezablePropertyChanged(oldValue, value);
 
-                    _collection[ index ] = value;
-
-
+                    _collection[index] = value;
                 }
-
 
                 ++_version;
                 WritePostscript();
@@ -521,12 +504,12 @@ namespace System.Windows.Media.Animation
             {
                 throw new System.ArgumentException(SR.Collection_NoNull);
             }
+
             WritePreamble();
             Timeline newValue = value;
+
             OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
             index = _collection.Add(newValue);
-
-
 
             ++_version;
 
@@ -535,15 +518,12 @@ namespace System.Windows.Media.Animation
             return index;
         }
 
-
-
         #endregion Private Helpers
 
         private static TimelineCollection s_empty;
 
 
         #region Public Properties
-
 
 
         #endregion Public Properties
@@ -580,11 +560,10 @@ namespace System.Windows.Media.Animation
             for (int i = 0; i < count; i++)
             {
                 Timeline newValue = (Timeline)sourceTimelineCollection._collection[i].Clone();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
@@ -602,11 +581,10 @@ namespace System.Windows.Media.Animation
             for (int i = 0; i < count; i++)
             {
                 Timeline newValue = (Timeline)sourceTimelineCollection._collection[i].CloneCurrentValue();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
@@ -624,11 +602,10 @@ namespace System.Windows.Media.Animation
             for (int i = 0; i < count; i++)
             {
                 Timeline newValue = (Timeline)sourceTimelineCollection._collection[i].GetAsFrozen();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
@@ -646,11 +623,10 @@ namespace System.Windows.Media.Animation
             for (int i = 0; i < count; i++)
             {
                 Timeline newValue = (Timeline)sourceTimelineCollection._collection[i].GetCurrentValueAsFrozen();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-
             }
-
         }
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.FreezeCore">Freezable.FreezeCore</see>.
@@ -679,13 +655,6 @@ namespace System.Windows.Media.Animation
         #region Internal Methods
 
 
-
-
-
-
-
-
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -695,9 +664,6 @@ namespace System.Windows.Media.Animation
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -711,7 +677,6 @@ namespace System.Windows.Media.Animation
         #region Dependency Properties
 
 
-
         #endregion Dependency Properties
 
         //------------------------------------------------------
@@ -722,12 +687,8 @@ namespace System.Windows.Media.Animation
 
         #region Internal Fields
 
-
-
-
         internal FrugalStructList<Timeline> _collection;
         internal uint _version = 0;
-
 
         #endregion Internal Fields
 
@@ -865,7 +826,6 @@ namespace System.Windows.Media.Animation
         //
         //------------------------------------------------------
 
-
         /// <summary>
         /// Initializes a new instance that is empty.
         /// </summary>
@@ -921,10 +881,11 @@ namespace System.Windows.Media.Animation
                         {
                             throw new System.ArgumentException(SR.Collection_NoNull);
                         }
+
                         Timeline newValue = item;
+
                         OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                         _collection.Add(newValue);
-
                     }
 
                     needsItemValidation = false;
@@ -939,11 +900,10 @@ namespace System.Windows.Media.Animation
                     {
                         throw new System.ArgumentException(SR.Collection_NoNull);
                     }
-                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
 
+                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
                 }
             }
-
 
             WritePostscript();
         }

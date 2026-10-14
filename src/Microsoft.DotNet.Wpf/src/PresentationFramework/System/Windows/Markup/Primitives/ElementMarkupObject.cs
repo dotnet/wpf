@@ -495,15 +495,16 @@ namespace System.Windows.Markup.Primitives
                             Type keyType = GetDictionaryKeyType(dictionary);
 
                             // Attempt to emit the contents of the dictionary in a more deterministic
-                            // order. This is not guarenteed to be deterministic because it uses ToString
-                            // which is not guarenteed to be unique for each value. Keys with non-unique
+                            // order. This is not guaranteed to be deterministic because it uses ToString
+                            // which is not guaranteed to be unique for each value. Keys with non-unique
                             // ToString() values will not be emitted deterministically.
                             DictionaryEntry[] entries = new DictionaryEntry[dictionary.Count];
                             dictionary.CopyTo(entries, 0);
-                            Array.Sort(entries, delegate(DictionaryEntry one, DictionaryEntry two)
+                            Array.Sort(entries, static (DictionaryEntry one, DictionaryEntry two) =>
                             {
-                                return String.Compare(one.Key.ToString(), two.Key.ToString());
+                                return string.Compare(one.Key.ToString(), two.Key.ToString(), StringComparison.Ordinal);
                             });
+
                             foreach (DictionaryEntry entry in entries)
                             {
                                 ElementMarkupObject subItem 

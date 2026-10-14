@@ -484,12 +484,6 @@ public class ClipboardTests : IDisposable
             IsBackground = true,
             Name = $"{nameof(ClipboardTests)} native clipboard owner"
         };
-        locker.SetApartmentState(ApartmentState.MTA);
-        locker.Start();
-
-        clipboardOpened.Wait(TimeSpan.FromSeconds(5)).Should().BeTrue();
-        lockerException.Should().BeNull();
-
         Thread releaser = new(() =>
         {
             Thread.Sleep(250);
@@ -499,17 +493,30 @@ public class ClipboardTests : IDisposable
             IsBackground = true,
             Name = $"{nameof(ClipboardTests)} native clipboard releaser"
         };
-        releaser.Start();
+        bool releaserStarted = false;
+        locker.SetApartmentState(ApartmentState.MTA);
+        locker.Start();
 
         try
         {
+            clipboardOpened.Wait(TimeSpan.FromSeconds(5)).Should().BeTrue();
+            lockerException.Should().BeNull();
+
+            releaser.Start();
+            releaserStarted = true;
+
             // This call must initially receive CLIPBRD_E_CANT_OPEN and then succeed after the locker releases.
             Clipboard.Clear();
         }
         finally
         {
+            // Keep the events alive until the worker exits, even if its startup wait or assertions fail.
             releaseClipboard.Set();
-            releaser.Join();
+            if (releaserStarted)
+            {
+                releaser.Join();
+            }
+
             locker.Join();
         }
 

@@ -27,7 +27,6 @@ namespace System.Windows.Media
     /// <summary>
     /// A collection of GeneralTransform objects.
     /// </summary>
-
     public sealed partial class GeneralTransformCollection : Animatable, IList, IList<GeneralTransform>
     {
         //------------------------------------------------------

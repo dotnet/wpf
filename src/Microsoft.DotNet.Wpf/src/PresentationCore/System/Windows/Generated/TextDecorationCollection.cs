@@ -18,7 +18,6 @@ namespace System.Windows
     /// <summary>
     /// A collection of TextDecoration objects.
     /// </summary>
-
     public sealed partial class TextDecorationCollection : Animatable, IList, IList<TextDecoration>
     {
         //------------------------------------------------------

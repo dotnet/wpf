@@ -17,7 +17,6 @@ namespace System.Windows.Media.Animation
     /// <summary>
     /// A collection of Timeline objects.
     /// </summary>
-
     public sealed partial class TimelineCollection : Animatable, IList, IList<Timeline>
     {
         //------------------------------------------------------

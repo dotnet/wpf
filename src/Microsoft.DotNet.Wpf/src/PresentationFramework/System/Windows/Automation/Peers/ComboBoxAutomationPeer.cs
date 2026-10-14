@@ -193,7 +193,7 @@ namespace System.Windows.Automation.Peers
                 throw new ElementNotEnabledException();
 
             ComboBox owner = (ComboBox)((ComboBoxAutomationPeer)this).Owner;
-            owner.SetCurrentValueInternal(ComboBox.IsDropDownOpenProperty, MS.Internal.KnownBoxes.BooleanBoxes.TrueBox);
+            owner.SetCurrentValueInternal(ComboBox.IsDropDownOpenProperty, BooleanBoxes.TrueBox);
         }
 
 
@@ -207,7 +207,7 @@ namespace System.Windows.Automation.Peers
                 throw new ElementNotEnabledException();
 
             ComboBox owner = (ComboBox)((ComboBoxAutomationPeer)this).Owner;
-            owner.SetCurrentValueInternal(ComboBox.IsDropDownOpenProperty, MS.Internal.KnownBoxes.BooleanBoxes.FalseBox);
+            owner.SetCurrentValueInternal(ComboBox.IsDropDownOpenProperty, BooleanBoxes.FalseBox);
         }
 
 

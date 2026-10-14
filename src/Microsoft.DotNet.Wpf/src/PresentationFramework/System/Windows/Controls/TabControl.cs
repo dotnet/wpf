@@ -33,7 +33,7 @@ namespace System.Windows.Controls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TabControl), new FrameworkPropertyMetadata(typeof(TabControl)));
             _dType = DependencyObjectType.FromSystemTypeInternal(typeof(TabControl));
-            IsTabStopProperty.OverrideMetadata(typeof(TabControl), new FrameworkPropertyMetadata(MS.Internal.KnownBoxes.BooleanBoxes.FalseBox));
+            IsTabStopProperty.OverrideMetadata(typeof(TabControl), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
             KeyboardNavigation.DirectionalNavigationProperty.OverrideMetadata(typeof(TabControl), new FrameworkPropertyMetadata(KeyboardNavigationMode.Contained));
 
             IsEnabledProperty.OverrideMetadata(typeof(TabControl), new UIPropertyMetadata(new PropertyChangedCallback(OnVisualStatePropertyChanged)));
@@ -383,7 +383,7 @@ namespace System.Windows.Controls
                 if (startIndex > Items.Count)
                     startIndex = 0;
                 TabItem nextTabItem = FindNextTabItem(startIndex, -1);
-                nextTabItem?.SetCurrentValueInternal(TabItem.IsSelectedProperty, MS.Internal.KnownBoxes.BooleanBoxes.TrueBox);
+                nextTabItem?.SetCurrentValueInternal(TabItem.IsSelectedProperty, BooleanBoxes.TrueBox);
             }
         }
 

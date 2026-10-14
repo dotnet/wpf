@@ -32,7 +32,7 @@ namespace System.Windows.Input
         {
             if (!RawStylusSystemGestureInputReport.IsValidSystemGesture(systemGesture, false, false))
             {
-                throw new InvalidEnumArgumentException(SR.Format(SR.Enum_Invalid, "systemGesture"));
+                throw new InvalidEnumArgumentException(SR.Format(SR.Enum_Invalid, nameof(systemGesture)));
             }
             
             _id        = systemGesture;
@@ -74,7 +74,7 @@ namespace System.Windows.Input
         {
             if (!RawStylusSystemGestureInputReport.IsValidSystemGesture(systemGesture, true, false))
             {
-                throw new InvalidEnumArgumentException(SR.Format(SR.Enum_Invalid, "systemGesture"));
+                throw new InvalidEnumArgumentException(SR.Format(SR.Enum_Invalid, nameof(systemGesture)));
             }
 
             _id          = systemGesture;

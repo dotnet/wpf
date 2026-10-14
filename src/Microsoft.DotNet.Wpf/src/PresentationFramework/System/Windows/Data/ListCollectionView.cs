@@ -434,7 +434,7 @@ namespace System.Windows.Data
                 if (AllowsCrossThreadChanges)
                     VerifyAccess();
                 if (IsAddingNew || IsEditingItem)
-                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, "Filter"));
+                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, nameof(Filter)));
 
                 base.Filter = value;
             }
@@ -458,7 +458,7 @@ namespace System.Windows.Data
                 if (AllowsCrossThreadChanges)
                     VerifyAccess();
                 if (IsAddingNew || IsEditingItem)
-                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, "CustomSort"));
+                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, nameof(CustomSort)));
                 _customSort = value;
 
                 SetSortDescriptions(null);
@@ -539,7 +539,7 @@ namespace System.Windows.Data
                 VerifyRefreshNotDeferred();
 
                 if (value != _newItemPlaceholderPosition && IsAddingNew)
-                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringTransaction, "NewItemPlaceholderPosition", "AddNew"));
+                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringTransaction, nameof(NewItemPlaceholderPosition), "AddNew"));
 
                 if (value != _newItemPlaceholderPosition && _isRemoving)
                 {

@@ -2222,12 +2222,14 @@ namespace System.Windows
 
         private const int DV_E_FORMATETC     =       unchecked((int)0x80040064);
         private const int DV_E_LINDEX        =       unchecked((int)0x80040068);
-        private const int DV_E_TYMED         =       unchecked((int)0x80040069);
+        internal const int DV_E_TYMED        =       unchecked((int)0x80040069);
         private const int DV_E_DVASPECT      =       unchecked((int)0x8004006B);
         private const int OLE_E_NOTRUNNING   =       unchecked((int)0x80040005);
         private const int OLE_E_ADVISENOTSUPPORTED = unchecked((int)0x80040003);
         private const int DATA_S_SAMEFORMATETC =     unchecked((int)0x00040130);
         private const int STG_E_MEDIUMFULL   =       unchecked((int)0x80030070);
+        internal const int CLIPBRD_E_CANT_OPEN =     unchecked((int)0x800401D0);
+        internal const int CLIPBRD_E_BAD_DATA =      unchecked((int)0x800401D3);
 
         // Const integer base size of the file drop list: "4 + 8 + 4 + 4"
         private const int FILEDROPBASESIZE   = 20;

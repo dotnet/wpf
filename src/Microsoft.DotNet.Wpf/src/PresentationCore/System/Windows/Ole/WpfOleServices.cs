@@ -64,8 +64,8 @@ internal sealed unsafe class WpfOleServices : IOleServices
 
             if (data is MemoryStream memoryStream)
             {
-                byte[] buffer = memoryStream.TryGetBuffer(out ArraySegment<byte> segment)
-                    ? segment.AsSpan().ToArray()
+                ReadOnlySpan<byte> buffer = memoryStream.TryGetBuffer(out ArraySegment<byte> segment)
+                    ? segment.AsSpan()
                     : memoryStream.ToArray();
 
                 if (buffer.Length == 0)

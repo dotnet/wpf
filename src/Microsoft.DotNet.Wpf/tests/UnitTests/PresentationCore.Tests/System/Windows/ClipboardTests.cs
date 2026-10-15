@@ -1381,9 +1381,12 @@ public class ClipboardTests : IDisposable
         }
     }
 
-    // Verifies a non-exposable EMF stream is fully rendered despite its current position and survives source disposal.
-    [WpfFact]
-    public void SetDataObject_ValidMetafileStream_CopyTrue_RoundTripsAsMetafile()
+    // Render only the logical stream contents, regardless of buffer visibility, offset, or current position.
+    [WpfTheory]
+    [InlineData(false, 0)]
+    [InlineData(true, 0)]
+    [InlineData(true, 13)]
+    public void SetDataObject_ValidMetafileStream_CopyTrue_RoundTripsAsMetafile(bool publiclyVisible, int offset)
     {
         byte[] bytes;
         using (Metafile metafile = EmfTestData.CreateMetafile())
@@ -1391,7 +1394,9 @@ public class ClipboardTests : IDisposable
             bytes = EmfTestData.GetBytes(metafile);
         }
 
-        MemoryStream? sourceStream = EmfTestData.CreateNonExposableStream(bytes);
+        byte[] buffer = new byte[offset + bytes.Length + 16];
+        bytes.CopyTo(buffer, offset);
+        MemoryStream? sourceStream = new(buffer, offset, bytes.Length, writable: false, publiclyVisible: publiclyVisible);
         sourceStream.Position = Math.Min(7, sourceStream.Length);
 
         try

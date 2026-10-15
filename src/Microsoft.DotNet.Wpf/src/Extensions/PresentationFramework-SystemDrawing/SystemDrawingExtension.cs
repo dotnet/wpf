@@ -6,10 +6,12 @@
 // Description: Helper methods for code that uses types from System.Drawing.
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Runtime.InteropServices;
 
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -26,13 +28,47 @@ namespace MS.Internal
 
         internal override bool IsMetafile(object? data) => data is Metafile;
 
-        internal override nint GetHandleFromMetafile(object? data) => data switch
+        internal override nint GetHandleFromMetafile(object? data)
         {
-            Metafile metafile => metafile.GetHenhmetafile(),
-            _ => 0
-        };
+            if (data is not Metafile metafile)
+            {
+                return 0;
+            }
 
-        internal override object GetMetafileFromHemf(nint hMetafile) => new Metafile(hMetafile, deleteEmf: false);
+            if (!metafile.GetMetafileHeader().IsEmfOrEmfPlus())
+            {
+                return 0;
+            }
+
+            using Metafile clone = (Metafile)metafile.Clone();
+            return clone.GetHenhmetafile();
+        }
+
+        internal override object GetMetafileFromHemf(nint hMetafile)
+        {
+            nint copy = CopyEnhMetaFile(hMetafile, null);
+            if (copy == 0)
+            {
+                throw new Win32Exception();
+            }
+
+            try
+            {
+                return new Metafile(copy, deleteEmf: true);
+            }
+            catch
+            {
+                DeleteEnhMetaFile(copy);
+                throw;
+            }
+        }
+
+        [DllImport("gdi32.dll", EntryPoint = "CopyEnhMetaFileW", CharSet = CharSet.Unicode, SetLastError = true)]
+        private static extern nint CopyEnhMetaFile(nint hEnhMetaFile, string? fileName);
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool DeleteEnhMetaFile(nint hEnhMetaFile);
 
         internal override object? GetBitmap(object? data) => GetBitmapImpl(data);
 

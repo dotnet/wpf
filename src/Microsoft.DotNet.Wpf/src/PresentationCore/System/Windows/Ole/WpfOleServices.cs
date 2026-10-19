@@ -24,6 +24,10 @@ internal sealed unsafe class WpfOleServices : IOleServices
 
     public static void EnsureThreadState() => OleServicesContext.EnsureThreadState();
 
+    // WPF renders enhanced metafiles; opt in without enabling that medium for WinForms.
+    public static TYMED AllowedTymeds =>
+        TYMED.TYMED_HGLOBAL | TYMED.TYMED_ISTREAM | TYMED.TYMED_GDI | TYMED.TYMED_ENHMF;
+
     public static HRESULT GetDataHere(string format, object data, FORMATETC* pformatetc, STGMEDIUM* pmedium)
     {
         TYMED mediumType = (TYMED)pformatetc->tymed;
@@ -52,6 +56,9 @@ internal sealed unsafe class WpfOleServices : IOleServices
                 {
                     throw new Win32Exception();
                 }
+
+                // Return the new handle to the caller, which owns it through STGMEDIUM.
+                pmedium->u.hEnhMetaFile = hemf;
             }
 
             return HRESULT.S_OK;

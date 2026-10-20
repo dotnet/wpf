@@ -22,9 +22,11 @@ public class DataObjectEnhancedMetafileTests
     private const short CfEnhMetafile = 14;
 
     [StaTheory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void ComDataObject_EnhancedMetafile_ReturnsValidHandle(bool useMetafile)
+    [InlineData(false, TYMED.TYMED_ENHMF)]
+    [InlineData(true, TYMED.TYMED_ENHMF)]
+    [InlineData(false, TYMED.TYMED_ENHMF | TYMED.TYMED_ISTREAM)]
+    [InlineData(true, TYMED.TYMED_ENHMF | TYMED.TYMED_ISTREAM)]
+    public void ComDataObject_EnhancedMetafile_ReturnsValidHandle(bool useMetafile, TYMED requestedMedium)
     {
         // Supply identical EMF content as either a raw stream or a System.Drawing metafile.
         byte[] expected = CreateMetafileBytes();
@@ -34,6 +36,8 @@ public class DataObjectEnhancedMetafileTests
         using Metafile? metafile = useMetafile ? new Metafile(stream) : null;
         ComDataObject dataObject = new DataObject(DataFormats.EnhancedMetafile, (object?)metafile ?? stream);
         FORMATETC format = CreateFormat();
+        // Allowing IStream as well must still select exactly ENHMF for this format.
+        format.tymed = requestedMedium;
 
         // Advertising ENHMF must agree with both QueryGetData and the actual native GetData result.
         FORMATETC[] formats = new FORMATETC[1];
@@ -55,10 +59,31 @@ public class DataObjectEnhancedMetafileTests
         }
         finally
         {
+            // A regression may mislabel a valid EMF; normalize only cleanup, never the asserted result.
+            if (medium.unionmember != IntPtr.Zero && GetEnhMetaFileBits(medium.unionmember, 0, null) != 0)
+            {
+                medium.tymed = TYMED.TYMED_ENHMF;
+            }
+
             // GetData transfers ownership of the returned handle to the consumer.
             ReleaseStgMedium(ref medium);
             GC.KeepAlive(dataObject);
         }
+    }
+
+    [StaTheory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void ComDataObject_EnhancedMetafile_InvalidPayload_ThrowsCOMException(bool useEmptyStream)
+    {
+        // Neither an empty expandable stream nor an unsupported object can supply an EMF handle.
+        using MemoryStream stream = new();
+        ComDataObject dataObject = new DataObject(DataFormats.EnhancedMetafile, useEmptyStream ? stream : new object());
+        FORMATETC format = CreateFormat();
+
+        // Native consumers must receive E_FAIL, not success with a null handle.
+        COMException exception = Assert.Throws<COMException>(() => dataObject.GetData(ref format, out _));
+        Assert.Equal(unchecked((int)0x80004005), exception.HResult);
     }
 
     [StaTheory]

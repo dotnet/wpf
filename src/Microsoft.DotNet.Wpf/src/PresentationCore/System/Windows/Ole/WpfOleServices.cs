@@ -44,22 +44,31 @@ internal sealed unsafe class WpfOleServices : IOleServices
         // Handle enhanced metafiles.
         if (mediumType.HasFlag(TYMED.TYMED_ENHMF) && format.Equals(DataFormatNames.Emf))
         {
+            HENHMETAFILE hemf = HENHMETAFILE.Null;
+
             if (SystemDrawingHelper.IsMetafile(data))
             {
-                pmedium->u.hEnhMetaFile = SystemDrawingHelper.GetHandleFromMetafile(data);
+                hemf = SystemDrawingHelper.GetHandleFromMetafile(data);
             }
             else if (data is MemoryStream memoryStream && memoryStream.GetBuffer() is { } buffer && buffer.Length != 0)
             {
-                HENHMETAFILE hemf = PInvoke.SetEnhMetaFileBits(buffer);
+                hemf = PInvoke.SetEnhMetaFileBits(buffer);
 
                 if (hemf.IsNull)
                 {
                     throw new Win32Exception();
                 }
-
-                // Return the new handle to the caller, which owns it through STGMEDIUM.
-                pmedium->u.hEnhMetaFile = hemf;
             }
+
+            // Match .NET 9: an unsupported payload or empty buffer must not succeed with a null handle.
+            if (hemf.IsNull)
+            {
+                return HRESULT.E_FAIL;
+            }
+
+            // Report the selected medium, not a request's flags, and transfer the handle to its caller.
+            pmedium->tymed = TYMED.TYMED_ENHMF;
+            pmedium->u.hEnhMetaFile = hemf;
 
             return HRESULT.S_OK;
         }

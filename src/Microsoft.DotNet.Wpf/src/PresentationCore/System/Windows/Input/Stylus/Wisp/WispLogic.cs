@@ -2153,18 +2153,7 @@ namespace System.Windows.Input.StylusWisp
 
         private void ReconcileMouseButtonState(RawMouseActions actions)
         {
-            for (CompletedTouchMousePromotion promotion = _completedTouchMousePromotion;
-                promotion != null; promotion = promotion.Previous)
-            {
-                RawMouseActions press = promotion.LeftButton ? RawMouseActions.Button1Press : RawMouseActions.Button2Press;
-                RawMouseActions release = promotion.LeftButton ? RawMouseActions.Button1Release : RawMouseActions.Button2Release;
-                if ((actions & (press | release)) != 0 && OwnsCompletedTouchMousePress(promotion))
-                {
-                    _mouseButtonsOwnedByMouse |= press;
-                    RetireCompletedTouchMousePress(promotion);
-                }
-            }
-
+            _mouseButtonsOwnedByMouse |= RetireCompletedTouchMousePresses(actions);
             InvalidateMouseButtonOwnership(actions);
 
             // Follow a physical takeover through its release, even after the replay has returned.
@@ -2196,6 +2185,8 @@ namespace System.Windows.Input.StylusWisp
 
         private void UpdateMouseState()
         {
+            _mouseButtonsOwnedByMouse |= RetireCompletedTouchMousePresses(
+                RawMouseActions.Button1Release | RawMouseActions.Button2Release);
             InvalidateMouseButtonOwnership(RawMouseActions.Button1Release | RawMouseActions.Button2Release);
             MouseDevice mouseDevice = _inputManager.PrimaryMouseDevice;
             _mouseLeftButtonState = mouseDevice.GetButtonStateFromSystem(MouseButton.Left);
@@ -2208,6 +2199,24 @@ namespace System.Windows.Input.StylusWisp
             {
                 _mouseButtonsOwnedByMouse &= ~RawMouseActions.Button2Press;
             }
+        }
+
+        private RawMouseActions RetireCompletedTouchMousePresses(RawMouseActions actions)
+        {
+            RawMouseActions retired = RawMouseActions.None;
+            for (CompletedTouchMousePromotion promotion = _completedTouchMousePromotion;
+                promotion != null; promotion = promotion.Previous)
+            {
+                RawMouseActions press = promotion.LeftButton ? RawMouseActions.Button1Press : RawMouseActions.Button2Press;
+                RawMouseActions release = promotion.LeftButton ? RawMouseActions.Button1Release : RawMouseActions.Button2Release;
+                if ((actions & (press | release)) != 0 && OwnsCompletedTouchMousePress(promotion))
+                {
+                    // Retire device state while the receipt still proves ownership of this press.
+                    RetireCompletedTouchMousePress(promotion);
+                    retired |= press;
+                }
+            }
+            return retired;
         }
 
         private void InvalidateMouseButtonOwnership(RawMouseActions actions)
@@ -3880,6 +3889,8 @@ namespace System.Windows.Input.StylusWisp
             // See if we need to update the mouse state when going enabled.
             if (!disabled && _currentStylusDevice != null)
             {
+                _mouseButtonsOwnedByMouse |= RetireCompletedTouchMousePresses(
+                    RawMouseActions.Button1Release | RawMouseActions.Button2Release);
                 if (_mouseButtonsOwnedByMouse != RawMouseActions.None)
                 {
                     UpdateMouseState();

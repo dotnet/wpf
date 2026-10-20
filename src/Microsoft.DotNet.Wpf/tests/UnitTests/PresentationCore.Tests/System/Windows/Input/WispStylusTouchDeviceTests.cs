@@ -403,6 +403,134 @@ public sealed class WispStylusTouchDeviceTests
     }
 
     [WpfTheory]
+    [InlineData(true, false, false)]
+    [InlineData(false, false, false)]
+    [InlineData(true, true, false)]
+    [InlineData(false, true, false)]
+    [InlineData(true, false, true)]
+    [InlineData(false, false, true)]
+    [InlineData(true, true, true)]
+    [InlineData(false, true, true)]
+    public void CompletedReplay_Resynchronize_RetiresPressAndPreservesSystemState(
+        bool left, bool systemPressed, bool sourceEnabled)
+    {
+        using ReplayStylusDevice stylus = new();
+        using ReplayStylusDevice next = new(-2);
+        using CompletedReplayScope replay = new(stylus);
+        MouseButtonState state = systemPressed ? MouseButtonState.Pressed : MouseButtonState.Released;
+        using SystemStateMouseDevice mouse = new(
+            left ? state : MouseButtonState.Released, left ? MouseButtonState.Released : state);
+        replay.Press(left);
+
+        replay.Resynchronize(sourceEnabled);
+
+        Assert.False(stylus.SentMouseDown);
+        Assert.False(replay.Logic.CanPromoteCompletedTouch(stylus));
+        Assert.Equal(state, replay.Logic.GetMouseLeftOrRightButtonState(left));
+        replay.EndReplay();
+        Assert.Equal(state, replay.Logic.GetMouseLeftOrRightButtonState(left));
+        if (systemPressed)
+        {
+            Assert.False(replay.Logic.UpdateMouseButtonState(Press(left), next));
+            replay.ProcessMouseReport(left ? RawMouseActions.Button1Release : RawMouseActions.Button2Release);
+        }
+        Assert.Equal(MouseButtonState.Released, replay.Logic.GetMouseLeftOrRightButtonState(left));
+        Assert.True(replay.Logic.UpdateMouseButtonState(Press(left), next));
+        Assert.Equal(RawMouseActions.None, stylus.GetMouseActionsFromStylusEventAndPlaybackCachedDown(
+            Stylus.StylusUpEvent, new StylusEventArgs(stylus.StylusDevice, 0)));
+        Assert.Equal(MouseButtonState.Pressed, replay.Logic.GetMouseLeftOrRightButtonState(left));
+        replay.Logic.UpdateMouseButtonState(
+            left ? RawMouseActions.Button1Release : RawMouseActions.Button2Release, next);
+    }
+
+    [WpfTheory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void CompletedReplay_Resynchronize_RetiresNestedPresses(bool sourceEnabled)
+    {
+        using ReplayStylusDevice outerDevice = new(-1);
+        using ReplayStylusDevice innerDevice = new(-2);
+        using CompletedReplayScope outer = new(outerDevice);
+        outer.Press(left: true);
+        using CompletedReplayScope inner = new(innerDevice);
+        inner.Press(left: false);
+        using SystemStateMouseDevice mouse = new(MouseButtonState.Pressed, MouseButtonState.Released);
+
+        inner.Resynchronize(sourceEnabled);
+
+        Assert.False(outerDevice.SentMouseDown);
+        Assert.False(innerDevice.SentMouseDown);
+        Assert.False(inner.Logic.CanPromoteCompletedTouch(outerDevice));
+        Assert.False(inner.Logic.CanPromoteCompletedTouch(innerDevice));
+        inner.EndReplay();
+        outer.EndReplay();
+        Assert.Equal(MouseButtonState.Pressed, outer.Logic.GetMouseLeftOrRightButtonState(true));
+        Assert.Equal(MouseButtonState.Released, outer.Logic.GetMouseLeftOrRightButtonState(false));
+        outer.ProcessMouseReport(RawMouseActions.Button1Release);
+        Assert.Equal(MouseButtonState.Released, outer.Logic.GetMouseLeftOrRightButtonState(true));
+    }
+
+    [WpfTheory]
+    [InlineData(true, false)]
+    [InlineData(false, false)]
+    [InlineData(true, true)]
+    [InlineData(false, true)]
+    public void CompletedReplay_Resynchronize_DoesNotRetireNewContactState(bool left, bool sourceEnabled)
+    {
+        using ReplayStylusDevice stylus = new();
+        using CompletedReplayScope replay = new(stylus);
+        using SystemStateMouseDevice mouse = new(
+            left ? MouseButtonState.Pressed : MouseButtonState.Released,
+            left ? MouseButtonState.Released : MouseButtonState.Pressed);
+        replay.Press(left);
+        stylus.TouchDevice.BeginContact();
+        // Source re-enable reconstructs a live contact's button state from these flags.
+        typeof(WispStylusDevice).GetField("_fInAir", BindingFlags.Instance | BindingFlags.NonPublic)!
+            .SetValue(stylus, false);
+        typeof(WispStylusDevice).GetField("_fLeftButtonDownTrigger", BindingFlags.Instance | BindingFlags.NonPublic)!
+            .SetValue(stylus, left);
+        replay.Press(left);
+
+        replay.Resynchronize(sourceEnabled);
+        replay.Logic.CancelCompletedTouchPromotion(stylus);
+
+        Assert.True(stylus.SentMouseDown);
+        Assert.Equal(MouseButtonState.Pressed, replay.Logic.GetMouseLeftOrRightButtonState(left));
+    }
+
+    [WpfTheory]
+    [InlineData(false, false)]
+    [InlineData(false, true)]
+    [InlineData(true, false)]
+    [InlineData(true, true)]
+    public void CompletedReplay_SourceEnabled_ResynchronizesExistingPhysicalTakeover(
+        bool leftPressed, bool rightPressed)
+    {
+        using ReplayStylusDevice outerDevice = new(-1);
+        using ReplayStylusDevice innerDevice = new(-2);
+        using CompletedReplayScope outer = new(outerDevice);
+        outer.Press(left: true);
+        outer.ProcessMouseReport(RawMouseActions.Button1Press);
+        using CompletedReplayScope inner = new(innerDevice);
+        inner.Press(left: false);
+        MouseButtonState left = leftPressed ? MouseButtonState.Pressed : MouseButtonState.Released;
+        MouseButtonState right = rightPressed ? MouseButtonState.Pressed : MouseButtonState.Released;
+        using SystemStateMouseDevice mouse = new(left, right);
+
+        inner.Resynchronize(sourceEnabled: true);
+
+        Assert.False(outerDevice.SentMouseDown);
+        Assert.False(innerDevice.SentMouseDown);
+        inner.EndReplay();
+        outer.EndReplay();
+        Assert.Equal(left, outer.Logic.GetMouseLeftOrRightButtonState(true));
+        Assert.Equal(right, outer.Logic.GetMouseLeftOrRightButtonState(false));
+        outer.ProcessMouseReport(RawMouseActions.Button1Release | RawMouseActions.Button2Release);
+        Assert.Equal(MouseButtonState.Released, outer.Logic.GetMouseLeftOrRightButtonState(true));
+        Assert.Equal(MouseButtonState.Released, outer.Logic.GetMouseLeftOrRightButtonState(false));
+    }
+
+    [WpfTheory]
     [InlineData(true)]
     [InlineData(false)]
     public void CompletedReplay_NewContact_PreservesNewQueueAndButtonState(bool left)
@@ -605,6 +733,47 @@ public sealed class WispStylusTouchDeviceTests
         protected override CompositionTarget GetCompositionTargetCore() => null!;
     }
 
+    // Model hardware state only; restore the primary device and detach the base input hooks.
+    private sealed class SystemStateMouseDevice : MouseDevice, IDisposable
+    {
+        private const BindingFlags PrivateInstance = BindingFlags.Instance | BindingFlags.NonPublic;
+        private static readonly FieldInfo s_primaryMouse =
+            typeof(InputManager).GetField("_primaryMouseDevice", PrivateInstance)!;
+        private readonly MouseDevice _previous;
+        private readonly MouseButtonState _left;
+        private readonly MouseButtonState _right;
+
+        internal SystemStateMouseDevice(MouseButtonState left, MouseButtonState right)
+            : base(InputManager.Current)
+        {
+            _previous = InputManager.Current.PrimaryMouseDevice;
+            _left = left;
+            _right = right;
+            s_primaryMouse.SetValue(InputManager.Current, this);
+        }
+
+        internal override MouseButtonState GetButtonStateFromSystem(MouseButton mouseButton) =>
+            mouseButton switch
+            {
+                MouseButton.Left => _left,
+                MouseButton.Right => _right,
+                _ => MouseButtonState.Released
+            };
+
+        private T Handler<T>(string name) where T : Delegate =>
+            typeof(MouseDevice).GetMethod(name, PrivateInstance)!.CreateDelegate<T>(this);
+
+        public void Dispose()
+        {
+            InputManager manager = InputManager.Current;
+            s_primaryMouse.SetValue(manager, _previous);
+            manager.PreProcessInput -= Handler<PreProcessInputEventHandler>("PreProcessInput");
+            manager.PreNotifyInput -= Handler<NotifyInputEventHandler>("PreNotifyInput");
+            manager.PostProcessInput -= Handler<ProcessInputEventHandler>("PostProcessInput");
+            manager.HitTestInvalidatedAsync -= Handler<EventHandler>("OnHitTestInvalidatedAsync");
+        }
+    }
+
     // Install the private receipt through its real constructor, without exposing test-only product APIs.
     private sealed class CompletedReplayScope : IDisposable
     {
@@ -615,6 +784,10 @@ public sealed class WispStylusTouchDeviceTests
             typeof(WispLogic).GetField("_completedTouchMousePromotion", PrivateInstance)!;
         private static readonly FieldInfo s_inputEnabled =
             typeof(WispLogic).GetField("_inputEnabled", PrivateInstance)!;
+        private static readonly FieldInfo s_currentStylus =
+            typeof(WispLogic).GetField("_currentStylusDevice", PrivateInstance)!;
+        private static readonly MethodInfo s_updateMouseState =
+            typeof(WispLogic).GetMethod("UpdateMouseState", PrivateInstance)!;
         private static readonly MethodInfo s_preProcessInput =
             typeof(WispLogic).GetMethod("PreProcessInput", PrivateInstance)!;
         private static readonly MethodInfo s_cancelSource =
@@ -658,6 +831,25 @@ public sealed class WispStylusTouchDeviceTests
             Assert.True(Logic.UpdateMouseButtonState(WispStylusTouchDeviceTests.Press(left), _stylus));
             s_promotedMouseState.SetValue(_stylus, MouseButtonState.Pressed);
             Assert.True(Logic.RecordCompletedTouchMousePress(_stylus, WispStylusTouchDeviceTests.Press(left), _source));
+        }
+
+        internal void Resynchronize(bool sourceEnabled)
+        {
+            if (!sourceEnabled)
+            {
+                s_updateMouseState.Invoke(Logic, null);
+                return;
+            }
+            object? previous = s_currentStylus.GetValue(Logic);
+            try
+            {
+                s_currentStylus.SetValue(Logic, _stylus);
+                Logic.OnWindowEnableChanged(new IntPtr(-1), disabled: false);
+            }
+            finally
+            {
+                s_currentStylus.SetValue(Logic, previous);
+            }
         }
 
         internal void ProcessMouseReport(RawMouseActions actions,

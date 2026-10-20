@@ -3551,8 +3551,10 @@ namespace System.Windows.Input.StylusWisp
                 }
             }
 
-            // See if we need to update the mouse state when going enabled.
-            if (!disabled && _currentStylusDevice != null)
+            // An orphaned contact has abandoned its press. Re-enabling must not restore it
+            // or overwrite a newer contact's mouse state.
+            if (!disabled && _currentStylusDevice != null &&
+                _currentStylusDevice.ActiveTouchDevice?.IsOrphaned != true)
             {
                 // If we are in air or have not fired down the set mouse in up state.
                 if (_currentStylusDevice.InAir || !_currentStylusDevice.GestureWasFired)

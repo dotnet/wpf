@@ -114,7 +114,10 @@ namespace PrintWin32Thunk
 
             Stream^         spoolerStream;
 
+#pragma warning ( push )
+#pragma warning ( disable:4995 )
             IXpsPrintJob*   xpsPrintJob;
+#pragma warning ( pop )
 
             int             jobIdentifier;
     };    

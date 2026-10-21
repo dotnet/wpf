@@ -294,12 +294,16 @@ uint16 usBytesRead;
 uint16 usBytesWritten;
 uint16 usNewFirstCode= 0xFFFF;
 uint16 usNewLastCode=0;  /* saved to calc NewEntryCount */
+uint16 usOriginalFirstCode;  /* saved for rebase calculation */
+uint16 usOriginalEntryCount;
 uint32 ulInGlyphOffset;  /* to point to a glyph value to read */
 uint32 ulOutGlyphOffset;  /* to point to a glyph value to write */
 
 
     if ((errCode = ReadGeneric(pOutputBufferInfo, (uint8 *)&CmapFormat6, SIZEOF_CMAP_FORMAT6, CMAP_FORMAT6_CONTROL, ulOffset, &usBytesRead)) != NO_ERROR)
         return errCode; 
+    usOriginalFirstCode = CmapFormat6.firstCode;
+    usOriginalEntryCount = CmapFormat6.entryCount;
     ulInGlyphOffset = ulOutGlyphOffset = ulOffset + usBytesRead;
     /* first figure out where the start and end are */
     for ( i = 0; i < CmapFormat6.entryCount; i++ )
@@ -325,7 +329,30 @@ uint32 ulOutGlyphOffset;  /* to point to a glyph value to write */
         CmapFormat6.firstCode = usNewFirstCode;
         CmapFormat6.entryCount = usNewLastCode - usNewFirstCode+1;
         
-        ulInGlyphOffset = ulOutGlyphOffset + usNewFirstCode * sizeof(GlyphIndex); /* where to read the first code */
+        // Rebase the second-pass source offset by the original firstCode, not usNewFirstCode.
+        // usNewFirstCode is a character code value; the correct 0-based array index is
+        // (usNewFirstCode - usOriginalFirstCode).  Using usNewFirstCode directly as an index
+        // skips past the end of the copied glyph array and reads unrelated heap bytes
+        if (FONT_SECURITY_CHECKS_ENABLED())
+        {
+            if (usNewFirstCode < usOriginalFirstCode || usNewLastCode < usOriginalFirstCode)
+                return ERR_INVALID_CMAP;
+
+            uint32 ulArrayIndex = (uint32)(usNewFirstCode - usOriginalFirstCode);
+            uint32 ulEndIndex   = (uint32)(usNewLastCode  - usOriginalFirstCode);
+            /* Validate the read range: end index must not exceed the original entryCount */
+            if (ulEndIndex >= (uint32)usOriginalEntryCount ||
+                ulArrayIndex > ulEndIndex)
+            {
+                return ERR_INVALID_CMAP;
+            }
+            ulInGlyphOffset = ulOutGlyphOffset + ulArrayIndex * sizeof(GlyphIndex);
+        }
+        else
+        {
+            ulInGlyphOffset = ulOutGlyphOffset + usNewFirstCode * sizeof(GlyphIndex); /* where to read the first code */
+        }
+
         for ( i = usNewFirstCode; i <= usNewLastCode; i++ )
         {
             if ((errCode = ReadWord(pOutputBufferInfo, &GlyphIndex, ulInGlyphOffset)) != NO_ERROR)

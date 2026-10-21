@@ -159,6 +159,33 @@ namespace MS.Internal
                 return LocalAppContext.GetCachedSwitchValue(DisableDWMCrashContainmentSwitchName, ref _disableDWMCrashContainment);
             }
         }
+
+        // Opt-out of blocking non-pack absolute URIs and UNC paths on Uri/ImageSource properties
+        // in the restrictive XAML reader, and of TextRange.Load engaging the restrictive reader.
+        internal const string OptOutOfRestrictiveXamlUriBlockSwitchName = "Switch.System.Windows.Markup.OptOutOfRestrictiveXamlUriBlock";
+        private static int _optOutOfRestrictiveXamlUriBlock;
+        public static bool OptOutOfRestrictiveXamlUriBlock
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => LocalAppContext.GetCachedSwitchValue(OptOutOfRestrictiveXamlUriBlockSwitchName, ref _optOutOfRestrictiveXamlUriBlock);
+        }
+
+        // Opt-out of blocking WebBrowser, Frame, NavigationWindow in the restrictive XAML reader.
+        internal const string OptOutOfNavigationTypeRestrictiveXamlBlockSwitchName = "Switch.System.Windows.Markup.OptOutOfNavigationTypeRestrictiveXamlBlock";
+        private static int _optOutOfNavigationTypeRestrictiveXamlBlock;
+        public static bool OptOutOfNavigationTypeRestrictiveXamlBlock
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => LocalAppContext.GetCachedSwitchValue(OptOutOfNavigationTypeRestrictiveXamlBlockSwitchName, ref _optOutOfNavigationTypeRestrictiveXamlBlock);
+        }
+
+        internal const string OptOutOfRestrictiveXamlNavigationBlockSwitchName = "Switch.System.Windows.Navigation.OptOutOfRestrictiveXamlNavigationBlock";
+        private static int _optOutOfRestrictiveXamlNavigationBlock;
+        public static bool OptOutOfRestrictiveXamlNavigationBlock
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => LocalAppContext.GetCachedSwitchValue(OptOutOfRestrictiveXamlNavigationBlockSwitchName, ref _optOutOfRestrictiveXamlNavigationBlock);
+        }
     }
 }
 

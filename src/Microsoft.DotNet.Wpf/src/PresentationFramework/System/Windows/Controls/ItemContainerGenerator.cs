@@ -1115,7 +1115,7 @@ namespace System.Windows.Controls
 
                 const string PublicKeyToken = "PublicKeyToken=";
                 string aqn = sourceType.AssemblyQualifiedName;
-                int index = aqn.LastIndexOf(PublicKeyToken);
+                int index = aqn.LastIndexOf(PublicKeyToken, StringComparison.Ordinal);
                 if (index >= 0)
                 {
                     ReadOnlySpan<char> token = aqn.AsSpan(index + PublicKeyToken.Length);

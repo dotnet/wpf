@@ -327,6 +327,48 @@ protected:
 //+-----------------------------------------------------------------------------
 //
 //  Class:
+//      CHwSweepGradientBrushPoolManager
+//
+//  Synopsis:
+//      This is the sweep gradient brush specific version of a
+//      CHwBrushPoolManager.  Its specialization is the ability to realize a D3D
+//      version of a CMILBrushSweepGradient.
+//
+//------------------------------------------------------------------------------
+class CHwSweepGradientBrushPoolManager
+    : public CHwBrushPoolManager
+{
+public:
+
+protected:
+
+    //
+    // Give container class sole ability to create a pool manager
+    //
+
+    friend CHwBrushPool;
+
+    DECLARE_METERHEAP_ALLOC(ProcessHeap, Mt(CHwBrushPoolManager));
+
+    CHwSweepGradientBrushPoolManager(
+        __in_ecount(1) CD3DDeviceLevel1 *pDevice
+        ) :
+        CHwBrushPoolManager(pDevice)
+    {
+    }
+
+protected:
+
+    override HRESULT CreateHwBrush(
+        __inout_ecount(1) CMILBrush *pBrush,
+        __in_ecount(1) const CHwBrushContext &hwBrushContext,
+        __deref_out_ecount(1) CHwBrush ** const ppHwBrush
+        );
+};
+
+//+-----------------------------------------------------------------------------
+//
+//  Class:
 //      CHwBrushPool
 //
 //  Synopsis:
@@ -363,6 +405,7 @@ private:
 
     CHwLinearGradientBrushPoolManager *m_pbpmGradientLinear;
     CHwRadialGradientBrushPoolManager *m_pbpmGradientRadial;
+    CHwSweepGradientBrushPoolManager *m_pbpmGradientSweep;
 
     CHwBitmapBrush *m_pbbScratch;
 

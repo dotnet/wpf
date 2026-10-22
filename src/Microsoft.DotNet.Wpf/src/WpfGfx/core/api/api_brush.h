@@ -209,6 +209,86 @@ private:
 
 
 /*=========================================================================*\
+    CMILBrushSweepGradient - MIL Sweep Gradient Brush
+\*=========================================================================*/
+
+MtExtern(CMILBrushSweepGradient);
+
+class CMILBrushSweepGradient :
+    public CMILBrushGradient
+{
+public:
+
+    // Creation methods
+
+    static HRESULT Create(
+        CMILBrushSweepGradient **ppSweepGradientBrush)
+    {
+        RRETURN(Create(NULL, ppSweepGradientBrush));
+    }
+
+    static HRESULT Create(
+        CMILFactory *pFactory,
+        CMILBrushSweepGradient **ppSweepGradientBrush);
+
+protected:
+
+    CMILBrushSweepGradient(__in_ecount_opt(1) CMILFactory *pFactory = NULL);
+    virtual ~CMILBrushSweepGradient();
+
+private:
+    // Create should be used to instantiate this object, not operator new.
+    DECLARE_METERHEAP_ALLOC(ProcessHeap, Mt(CMILBrushSweepGradient));
+
+public:
+
+    DECLARE_MIL_OBJECT
+
+    // CMILBrush Methods
+
+    BrushTypes GetType() const
+    {
+        return BrushGradientSweep;
+    }
+
+    // CMILGradientBrush members
+
+    BOOL IsRadial() { return TRUE; }
+
+    // Sweep-specific accessors
+
+    void SetCenterAndReferenceDirection(
+        __in_ecount(1) const MilPoint2F *pptCenter,
+        __in_ecount(1) const MilPoint2F *pptReferenceDirection)
+    {
+        // perpendicular to referenceDirection
+        MilPoint2F ptPerpendicular = {
+            -(pptReferenceDirection->Y - pptCenter->Y) + pptCenter->X,
+             (pptReferenceDirection->X - pptCenter->X) + pptCenter->Y
+        };
+
+        CMILBrushGradient::SetEndPoints(pptCenter, pptReferenceDirection, &ptPerpendicular);
+    }
+
+    const MilPoint2F &GetCenter() const { return m_ptStartPointOrCenter; }
+    const MilPoint2F &GetReferenceDirection() const { return m_ptEndPoint; }
+
+    void SetAngles(FLOAT startAngleDegrees, FLOAT endAngleDegrees)
+    {
+        m_StartAngle = startAngleDegrees;
+        m_EndAngle = endAngleDegrees;
+    }
+
+    FLOAT GetStartAngle() const { return m_StartAngle; }
+    FLOAT GetEndAngle() const { return m_EndAngle; }
+
+private:
+    FLOAT m_StartAngle;
+    FLOAT m_EndAngle;
+};
+
+
+/*=========================================================================*\
     CMILBrushBitmap - MIL Bitmap Brush
 \*=========================================================================*/
 
@@ -554,6 +634,5 @@ private:
     CMatrix<CoordinateSpace::RealizationSampling,CoordinateSpace::BaseSampling> m_matBitmapToBaseSamplingSpace;   
     CMilEffectDuce *m_pShaderEffectWeakRef;
 };
-
 
 

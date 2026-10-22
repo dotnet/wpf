@@ -46,8 +46,6 @@ namespace System.Windows.Media.Effects
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -60,8 +58,8 @@ namespace System.Windows.Media.Effects
         {
             PixelShader target = ((PixelShader) d);
 
-
             target.UriSourcePropertyChangedHook(e);
+
 
             target.PropertyChanged(UriSourceProperty);
         }
@@ -69,10 +67,8 @@ namespace System.Windows.Media.Effects
         {
             PixelShader target = ((PixelShader) d);
 
-
             target.PropertyChanged(ShaderRenderModeProperty);
         }
-
 
         #region Public Properties
 
@@ -125,8 +121,6 @@ namespace System.Windows.Media.Effects
             return new PixelShader();
         }
 
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -149,9 +143,7 @@ namespace System.Windows.Media.Effects
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_PIXELSHADER))
                 {
 
-
                     AddRefOnChannelAnimations(channel);
-
 
                     UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
                 }
@@ -168,9 +160,7 @@ namespace System.Windows.Media.Effects
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
 
-
                     ReleaseOnChannelAnimations(channel);
-
                 }
             }
         }
@@ -194,7 +184,6 @@ namespace System.Windows.Media.Effects
             // in a lock already
             return _duceResource.GetChannel(index);
         }
-
 
         #endregion Internal Methods
 
@@ -220,8 +209,6 @@ namespace System.Windows.Media.Effects
                 return 1;
             }
         }
-
-
 
         #endregion Internal Properties
 
@@ -252,15 +239,11 @@ namespace System.Windows.Media.Effects
 
         #region Internal Fields
 
-
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
-
         internal static Uri s_UriSource = null;
         internal const ShaderRenderMode c_ShaderRenderMode = ShaderRenderMode.Auto;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -300,7 +283,6 @@ namespace System.Windows.Media.Effects
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

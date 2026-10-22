@@ -46,8 +46,6 @@ namespace System.Windows.Media.Effects
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -60,13 +58,11 @@ namespace System.Windows.Media.Effects
         {
             OuterGlowBitmapEffect target = ((OuterGlowBitmapEffect) d);
 
-
             target.PropertyChanged(GlowColorProperty);
         }
         private static void GlowSizePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             OuterGlowBitmapEffect target = ((OuterGlowBitmapEffect) d);
-
 
             target.PropertyChanged(GlowSizeProperty);
         }
@@ -74,17 +70,14 @@ namespace System.Windows.Media.Effects
         {
             OuterGlowBitmapEffect target = ((OuterGlowBitmapEffect) d);
 
-
             target.PropertyChanged(NoiseProperty);
         }
         private static void OpacityPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             OuterGlowBitmapEffect target = ((OuterGlowBitmapEffect) d);
 
-
             target.PropertyChanged(OpacityProperty);
         }
-
 
         #region Public Properties
 
@@ -167,8 +160,6 @@ namespace System.Windows.Media.Effects
             return new OuterGlowBitmapEffect();
         }
 
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -180,13 +171,6 @@ namespace System.Windows.Media.Effects
         #region Internal Methods
 
 
-
-
-
-
-
-
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -196,9 +180,6 @@ namespace System.Windows.Media.Effects
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -238,17 +219,12 @@ namespace System.Windows.Media.Effects
 
         #region Internal Fields
 
-
-
-
-
         internal static Color s_GlowColor = Colors.Gold;
         internal const double c_GlowSize = 5.0;
         internal const double c_Noise = 0.0;
         internal const double c_Opacity = 1.0;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -306,7 +282,6 @@ namespace System.Windows.Media.Effects
                                    /* isIndependentlyAnimated  = */ true,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

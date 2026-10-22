@@ -11,11 +11,12 @@
 using System.Collections;           // IEnumerable
 using System.Collections.ObjectModel;   // ObservableCollection<T>
 using System.Collections.Specialized;   // NotifyCollectionChanged*
-using System.Globalization;         // CultureInfo
 using System.ComponentModel;        // ICollectionView
+using System.Globalization;         // CultureInfo
 using System.Windows.Markup;        // XmlLanguage
 using MS.Internal;                  // Invariant.Assert
 using MS.Internal.Data;             // DataBindEngine
+using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Data
 {
@@ -329,7 +330,7 @@ namespace System.Windows.Data
         public bool? IsLiveSorting
         {
             get { return (bool?)GetValue(IsLiveSortingProperty); }
-            private set { SetValue(IsLiveSortingPropertyKey, value); }
+            private set { SetValue(IsLiveSortingPropertyKey, BooleanBoxes.Box(value)); }
         }
 
         ///<summary>
@@ -452,7 +453,7 @@ namespace System.Windows.Data
         public bool? IsLiveFiltering
         {
             get { return (bool?)GetValue(IsLiveFilteringProperty); }
-            private set { SetValue(IsLiveFilteringPropertyKey, value); }
+            private set { SetValue(IsLiveFilteringPropertyKey, BooleanBoxes.Box(value)); }
         }
 
         ///<summary>
@@ -573,7 +574,7 @@ namespace System.Windows.Data
         public bool? IsLiveGrouping
         {
             get { return (bool?)GetValue(IsLiveGroupingProperty); }
-            private set { SetValue(IsLiveGroupingPropertyKey, value); }
+            private set { SetValue(IsLiveGroupingPropertyKey, BooleanBoxes.Box(value)); }
         }
 
         ///<summary>

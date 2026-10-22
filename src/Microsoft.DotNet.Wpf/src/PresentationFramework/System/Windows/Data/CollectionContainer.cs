@@ -256,8 +256,7 @@ namespace System.Windows.Data
         /// </summary>
         protected virtual void OnContainedCollectionChanged(NotifyCollectionChangedEventArgs args)
         {
-            if (CollectionChanged != null)
-                CollectionChanged(this, args);
+            CollectionChanged?.Invoke(this, args);
         }
 
         #endregion INotifyCollectionChanged

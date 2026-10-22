@@ -171,10 +171,7 @@ namespace MS.Win32
                 // finalizable - thus don't call the Disposed callback.
 
                 // Notify listeners that we are being disposed.
-                if(Disposed != null)
-                {
-                    Disposed(this, EventArgs.Empty);
-                }
+                Disposed?.Invoke(this, EventArgs.Empty);
             }
 
             // We are now considered disposed.

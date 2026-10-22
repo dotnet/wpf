@@ -32,7 +32,7 @@ namespace System.Windows.Media.Animation
                 "IsAdditive",               // Property Name
                 typeof(bool),               // Property Type
                 typeof(AnimationTimeline),  // Owner Class
-                new PropertyMetadata(false,
+                new PropertyMetadata(BooleanBoxes.FalseBox,
                                      new PropertyChangedCallback(AnimationTimeline_PropertyChangedFunction)));
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace System.Windows.Media.Animation
                 "IsCumulative",             // Property Name
                 typeof(bool),               // Property Type
                 typeof(AnimationTimeline),  // Owner Class
-                new PropertyMetadata(false,
+                new PropertyMetadata(BooleanBoxes.FalseBox,
                                      new PropertyChangedCallback(AnimationTimeline_PropertyChangedFunction)));
 
         #endregion

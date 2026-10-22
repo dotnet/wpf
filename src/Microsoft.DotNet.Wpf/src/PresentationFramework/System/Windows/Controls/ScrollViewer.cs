@@ -1,11 +1,9 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-
 using MS.Internal;
 using MS.Internal.Commands;
 using MS.Internal.Documents;
-using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;
 using MS.Internal.Telemetry.PresentationFramework;
 using MS.Utility;

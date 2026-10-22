@@ -243,8 +243,8 @@ namespace MS.Internal.Data
 
         #endregion Private Methods
 
-        private static readonly string AllListenersKey = "<All Listeners>"; // not a legal property name
-        private static readonly string StaticPropertyChanged = "StaticPropertyChanged";
+        private const string AllListenersKey = "<All Listeners>"; // not a legal property name
+        private const string StaticPropertyChanged = "StaticPropertyChanged";
 
         #region TypeRecord
 

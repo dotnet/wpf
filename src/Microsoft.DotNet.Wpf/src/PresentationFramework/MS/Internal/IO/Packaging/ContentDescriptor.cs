@@ -77,8 +77,8 @@ namespace MS.Internal.IO.Packaging
         private string      _baseName;
         private string      _xmlNamespace;
 
-        public static readonly string  XamlNamespace = "http://schemas.microsoft.com/winfx/2006/xaml/presentation";
-        public static readonly string  FixedMarkupNamespace = "http://schemas.microsoft.com/xps/2005/06";
+        public const string XamlNamespace = "http://schemas.microsoft.com/winfx/2006/xaml/presentation";
+        public const string FixedMarkupNamespace = "http://schemas.microsoft.com/xps/2005/06";
     }
                 
     ///<summary>Content-location information for an element.</summary>

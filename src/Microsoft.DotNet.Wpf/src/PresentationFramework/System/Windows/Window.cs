@@ -5,7 +5,6 @@ using System.Collections;
 using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.InteropServices;
-using System.Windows.Appearance;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -1948,9 +1947,6 @@ namespace System.Windows
         {
             VerifyContextAndObjectState();
 
-            // Setting WindowBackdrop
-            WindowBackdropManager.SetBackdrop(this, WindowBackdropType);
-
             EventHandler handler = (EventHandler)Events[EVENT_SOURCEINITIALIZED];
             if (handler != null) handler(this, e);
         }
@@ -2591,23 +2587,6 @@ namespace System.Windows
             OnSourceInitialized(EventArgs.Empty);
         }
 
-        internal void SetImmersiveDarkMode(bool useDarkMode)
-        {
-            if(!Standard.Utility.IsOSWindows11OrNewer) return;
-
-            if(_useDarkMode == useDarkMode) return;
-
-            IntPtr handle = Handle;
-            if (handle != IntPtr.Zero)
-            {
-                bool succeeded = SNM.DwmSetWindowAttributeUseImmersiveDarkMode(handle, useDarkMode);
-                if(succeeded)
-                {
-                    _useDarkMode = useDarkMode;
-                }
-            }
-        }
-
         internal virtual HwndSourceParameters CreateHwndSourceParameters()
         {
             HwndSourceParameters param = new HwndSourceParameters(Title, NativeMethods.CW_USEDEFAULT, NativeMethods.CW_USEDEFAULT)
@@ -3104,42 +3083,6 @@ namespace System.Windows
         //
         //----------------------------------------------
         #region Internal Properties
-
-        /// <summary>
-        /// Gets or sets a value determining preferred backdrop type for current <see cref="Window"/>.
-        /// </summary>
-        internal WindowBackdropType WindowBackdropType
-        {
-            get => (WindowBackdropType)GetValue(WindowBackdropTypeProperty);
-            set => SetValue(WindowBackdropTypeProperty, value);
-        }
-
-        /// <summary>
-        /// Property for <see cref="WindowBackdropType"/>.
-        /// </summary>
-        internal static readonly DependencyProperty WindowBackdropTypeProperty = DependencyProperty.Register(
-            nameof(WindowBackdropType),
-            typeof(WindowBackdropType),
-            typeof(Window),
-            new PropertyMetadata(
-                WindowBackdropType.MainWindow,
-                new PropertyChangedCallback(OnBackdropTypeChanged)));
-
-        private static void OnBackdropTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is not Window window)
-            {
-                return;
-            }
-
-            if (e.OldValue == e.NewValue)
-            {
-                return;
-            }
-
-            WindowBackdropManager.SetBackdrop(window, (WindowBackdropType)e.NewValue);
-        }
-
 
         internal bool HwndCreatedButNotShown
         {
@@ -7259,8 +7202,6 @@ namespace System.Windows
 
         private ThemeMode           _themeMode = ThemeMode.None;
         internal bool               _deferThemeLoading = false;
-        private bool                _useDarkMode = false;
-
         //Never expose this at any cost
         private bool                        _inTrustedSubWindow;
 

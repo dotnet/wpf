@@ -280,6 +280,8 @@ namespace Standard
     internal enum GCLP
     {
         HBRBACKGROUND = -10,
+        HICON = -14,
+        HICONSM = -34,
     }
 
     /// <summary>
@@ -859,6 +861,7 @@ namespace Standard
         NCMOUSELEAVE = 0x02A2,
 
         TABLET_DEFBASE = 0x02C0,
+        DPICHANGED = 0x02E0,
         //WM_TABLET_MAXOFFSET = 0x20,
 
         TABLET_ADDED = TABLET_DEFBASE + 8,
@@ -1064,6 +1067,8 @@ namespace Standard
         FREEZE_REPRESENTATION = 15,
         PASSIVE_UPDATE_MODE = 16,
         USE_HOSTBACKDROPBRUSH = 17,
+        /// <summary>Undocumented value used by Windows 10 builds 17763 through 18984.</summary>
+        USE_IMMERSIVE_DARK_MODE_BEFORE_20H1 = 19,
         USE_IMMERSIVE_DARK_MODE = 20,
         WINDOW_CORNER_PREFERENCE = 33,
         BORDER_COLOR = 34,
@@ -1083,6 +1088,36 @@ namespace Standard
         DWMSBT_MAINWINDOW = 2,
         DWMSBT_TRANSIENTWINDOW = 3,
         DWMSBT_TABBEDWINDOW = 4
+    }
+
+    /// <summary>
+    /// DWM_WINDOW_CORNER_PREFERENCE.  DWMWCP_*
+    /// </summary>
+    internal enum DWMWCP
+    {
+        DEFAULT = 0,
+        DONOTROUND = 1,
+        ROUND = 2,
+        ROUNDSMALL = 3,
+    }
+
+    /// <summary>
+    /// SHAppBarMessage messages.  ABM_*
+    /// </summary>
+    internal enum ABM : uint
+    {
+        GETAUTOHIDEBAREX = 0x0000000B,
+    }
+
+    /// <summary>
+    /// App bar edges.  ABE_*
+    /// </summary>
+    internal enum ABE : uint
+    {
+        LEFT = 0,
+        TOP = 1,
+        RIGHT = 2,
+        BOTTOM = 3,
     }
 
     /// <summary>
@@ -1930,6 +1965,35 @@ namespace Standard
         public int cyBottomHeight;
     };
 
+    /// <summary>APPBARDATA, used with SHAppBarMessage.</summary>
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct APPBARDATA
+    {
+        public int cbSize;
+        public IntPtr hWnd;
+        public uint uCallbackMessage;
+        public ABE uEdge;
+        public RECT rc;
+        public IntPtr lParam;
+    }
+
+    /// <summary>
+    /// NCCALCSIZE_PARAMS.  The native declaration uses a RECT rgrc[3] array; it is
+    /// flattened here so the structure can be marshaled directly.
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct NCCALCSIZE_PARAMS
+    {
+        /// <summary>On input the new window rect, on output the new client rect (screen coordinates).</summary>
+        public RECT rgrc0;
+        /// <summary>The window rect before it was moved or resized.</summary>
+        public RECT rgrc1;
+        /// <summary>The client rect before it was moved or resized.</summary>
+        public RECT rgrc2;
+        /// <summary>WINDOWPOS* describing the pending move/resize.</summary>
+        public IntPtr lppos;
+    }
+
     [StructLayout(LayoutKind.Sequential)]
     internal class MONITORINFO
     {
@@ -2503,6 +2567,31 @@ namespace Standard
         [DllImport("dwmapi.dll", PreserveSig = false)]
         public static extern int DwmGetWindowAttribute(IntPtr hWnd, DWMWA dwAttributeToGet, ref int pvAttributeValue, int cbAttribute);
 
+        [DllImport("dwmapi.dll", EntryPoint = "DwmGetWindowAttribute", PreserveSig = true)]
+        private static extern HRESULT _DwmGetWindowAttributeRect(IntPtr hWnd, DWMWA dwAttributeToGet, out RECT pvAttributeValue, int cbAttribute);
+
+        /// <summary>
+        /// Queries a RECT-valued DWM window attribute (e.g. DWMWA_EXTENDED_FRAME_BOUNDS,
+        /// DWMWA_CAPTION_BUTTON_BOUNDS).  Never throws: returns false on down-level OSes or failure.
+        /// </summary>
+        public static bool DwmGetWindowAttributeRect(IntPtr hwnd, DWMWA dwAttributeToGet, out RECT rc)
+        {
+            rc = default(RECT);
+            if (hwnd == IntPtr.Zero || !Utility.IsOSVistaOrNewer)
+            {
+                return false;
+            }
+
+            HRESULT hr = _DwmGetWindowAttributeRect(hwnd, dwAttributeToGet, out rc, Marshal.SizeOf(typeof(RECT)));
+            return hr.Succeeded;
+        }
+
+        /// <summary>DWMWA_COLOR_DEFAULT: restores the system default caption/border/text color.</summary>
+        public const uint DWMWA_COLOR_DEFAULT = 0xFFFFFFFF;
+
+        /// <summary>DWMWA_COLOR_NONE: suppresses the border (valid for DWMWA_BORDER_COLOR only).</summary>
+        public const uint DWMWA_COLOR_NONE = 0xFFFFFFFE;
+
         [DllImport("dwmapi.dll", EntryPoint = "DwmExtendFrameIntoClientArea", PreserveSig = true, SetLastError = true)]
         private static extern HRESULT _DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);
 
@@ -2574,19 +2663,96 @@ namespace Standard
         [DllImport("dwmapi.dll", EntryPoint = "DwmSetWindowAttribute")]
         private static extern HRESULT _DwmSetWindowAttribute(IntPtr hwnd, DWMWA dwAttribute, ref int pvAttribute, int cbAttribute);
 
+        [DllImport("dwmapi.dll", EntryPoint = "DwmSetWindowAttribute")]
+        private static extern HRESULT _DwmSetWindowAttribute(IntPtr hwnd, DWMWA dwAttribute, ref uint pvAttribute, int cbAttribute);
+
+        /// <summary>
+        /// Sets DWMWA_SYSTEMBACKDROP_TYPE.  Requires Windows 11 22H2 (build 22621); returns E_NOTIMPL on older OSes.
+        /// </summary>
         public static HRESULT DwmSetWindowAttributeSystemBackdropType(IntPtr hwnd, DWMSBT dwBackdropType)
         {
-            Assert.IsTrue(Utility.IsWindows11_22H2OrNewer);
+            if (hwnd == IntPtr.Zero || !Utility.IsWindows11_22H2OrNewer)
+            {
+                return HRESULT.E_NOTIMPL;
+            }
+
             var dwmWindowAttribute = (int)dwBackdropType;
             return _DwmSetWindowAttribute(hwnd, DWMWA.SYSTEMBACKDROP_TYPE, ref dwmWindowAttribute, sizeof(int));
         }
 
+        /// <summary>
+        /// Sets DWMWA_USE_IMMERSIVE_DARK_MODE.  Supported from Windows 10 1809 (build 17763); builds before
+        /// 20H1 (18985) use the undocumented attribute value 19.  Never throws.
+        /// </summary>
         public static bool DwmSetWindowAttributeUseImmersiveDarkMode(IntPtr hwnd, bool useImmersiveDarkMode)
         {
-            Assert.IsTrue(Utility.IsWindows11_22H2OrNewer);
+            if (hwnd == IntPtr.Zero || !Utility.IsOSWindows10_1809OrNewer)
+            {
+                return false;
+            }
+
+            DWMWA attribute = Utility.IsOSWindows10_20H1OrNewer
+                ? DWMWA.USE_IMMERSIVE_DARK_MODE
+                : DWMWA.USE_IMMERSIVE_DARK_MODE_BEFORE_20H1;
             var pvAttribute = useImmersiveDarkMode ? 0x1 : 0x0;
-            var dwmResult = _DwmSetWindowAttribute(hwnd, DWMWA.USE_IMMERSIVE_DARK_MODE, ref pvAttribute, sizeof(int));
+            var dwmResult = _DwmSetWindowAttribute(hwnd, attribute, ref pvAttribute, sizeof(int));
             return dwmResult == HRESULT.S_OK;
+        }
+
+        /// <summary>
+        /// Sets one of the COLORREF-valued attributes (DWMWA_CAPTION_COLOR, DWMWA_TEXT_COLOR, DWMWA_BORDER_COLOR).
+        /// Requires Windows 11 (build 22000).  Never throws.
+        /// </summary>
+        private static bool _DwmSetWindowAttributeColor(IntPtr hwnd, DWMWA dwAttribute, uint colorRef)
+        {
+            if (hwnd == IntPtr.Zero || !Utility.IsOSWindows11OrNewer)
+            {
+                return false;
+            }
+
+            return _DwmSetWindowAttribute(hwnd, dwAttribute, ref colorRef, sizeof(uint)).Succeeded;
+        }
+
+        /// <summary>Sets DWMWA_CAPTION_COLOR.  Use DWMWA_COLOR_DEFAULT to restore the system color.</summary>
+        public static bool DwmSetWindowAttributeCaptionColor(IntPtr hwnd, uint colorRef)
+        {
+            return _DwmSetWindowAttributeColor(hwnd, DWMWA.CAPTION_COLOR, colorRef);
+        }
+
+        /// <summary>Sets DWMWA_TEXT_COLOR.  Use DWMWA_COLOR_DEFAULT to restore the system color.</summary>
+        public static bool DwmSetWindowAttributeTextColor(IntPtr hwnd, uint colorRef)
+        {
+            return _DwmSetWindowAttributeColor(hwnd, DWMWA.TEXT_COLOR, colorRef);
+        }
+
+        /// <summary>Sets DWMWA_BORDER_COLOR.  Accepts DWMWA_COLOR_DEFAULT and DWMWA_COLOR_NONE.</summary>
+        public static bool DwmSetWindowAttributeBorderColor(IntPtr hwnd, uint colorRef)
+        {
+            return _DwmSetWindowAttributeColor(hwnd, DWMWA.BORDER_COLOR, colorRef);
+        }
+
+        /// <summary>Sets DWMWA_WINDOW_CORNER_PREFERENCE.  Requires Windows 11 (build 22000).  Never throws.</summary>
+        public static bool DwmSetWindowAttributeWindowCornerPreference(IntPtr hwnd, DWMWCP preference)
+        {
+            if (hwnd == IntPtr.Zero || !Utility.IsOSWindows11OrNewer)
+            {
+                return false;
+            }
+
+            int value = (int)preference;
+            return _DwmSetWindowAttribute(hwnd, DWMWA.WINDOW_CORNER_PREFERENCE, ref value, sizeof(int)).Succeeded;
+        }
+
+        /// <summary>Sets DWMWA_NCRENDERING_POLICY.  Never throws.</summary>
+        public static bool DwmSetWindowAttributeNCRenderingPolicy(IntPtr hwnd, DWMNCRP policy)
+        {
+            if (hwnd == IntPtr.Zero || !Utility.IsOSVistaOrNewer)
+            {
+                return false;
+            }
+
+            int value = (int)policy;
+            return _DwmSetWindowAttribute(hwnd, DWMWA.NCRENDERING_POLICY, ref value, sizeof(int)).Succeeded;
         }
 
         public static void DwmSetWindowAttributeFlip3DPolicy(IntPtr hwnd, DWMFLIP3D flip3dPolicy)
@@ -2770,7 +2936,66 @@ namespace Standard
         public static extern IntPtr GetSystemMenu(IntPtr hWnd, [MarshalAs(UnmanagedType.Bool)] bool bRevert);
 
         [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool InvalidateRect(IntPtr hWnd, IntPtr lpRect, [MarshalAs(UnmanagedType.Bool)] bool bErase);
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct TRACKMOUSEEVENT
+        {
+            public int cbSize;
+            public uint dwFlags;
+            public IntPtr hwndTrack;
+            public uint dwHoverTime;
+        }
+
+        private const uint TME_LEAVE = 0x00000002;
+        private const uint TME_NONCLIENT = 0x00000010;
+
+        [DllImport("user32.dll", EntryPoint = "TrackMouseEvent", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool _TrackMouseEvent(ref TRACKMOUSEEVENT lpEventTrack);
+
+        /// <summary>Asks for a WM_NCMOUSELEAVE when the cursor leaves the non-client area of the window.</summary>
+        public static bool TrackNonClientMouseLeave(IntPtr hwnd)
+        {
+            var tme = new TRACKMOUSEEVENT
+            {
+                cbSize = Marshal.SizeOf<TRACKMOUSEEVENT>(),
+                dwFlags = TME_LEAVE | TME_NONCLIENT,
+                hwndTrack = hwnd,
+            };
+            return _TrackMouseEvent(ref tme);
+        }
+
+        [DllImport("user32.dll")]
         public static extern int GetSystemMetrics(SM nIndex);
+
+        [DllImport("user32.dll", EntryPoint = "GetSystemMetricsForDpi")]
+        private static extern int _GetSystemMetricsForDpi(SM nIndex, uint dpi);
+
+        /// <summary>
+        /// System metric for the given DPI (Windows 10 1607+); falls back to the plain metric when the
+        /// per-DPI variant is unavailable or fails.
+        /// </summary>
+        public static int GetSystemMetricsForDpi(SM nIndex, uint dpi)
+        {
+            if (Utility.IsOSWindows10OrNewer)
+            {
+                try
+                {
+                    int value = _GetSystemMetricsForDpi(nIndex, dpi);
+                    if (value != 0)
+                    {
+                        return value;
+                    }
+                }
+                catch (EntryPointNotFoundException)
+                {
+                }
+            }
+
+            return GetSystemMetrics(nIndex);
+        }
 
         // This is aliased as a macro in 32bit Windows.
         public static IntPtr GetWindowLongPtr(IntPtr hwnd, GWL nIndex)
@@ -2789,6 +3014,36 @@ namespace Standard
                 throw new Win32Exception();
             }
             return ret;
+        }
+
+        [DllImport("user32.dll", EntryPoint = "GetClassLongPtrW")]
+        private static extern IntPtr _GetClassLongPtr64(IntPtr hwnd, int nIndex);
+
+        [DllImport("user32.dll", EntryPoint = "GetClassLongW")]
+        private static extern uint _GetClassLong32(IntPtr hwnd, int nIndex);
+
+        /// <summary>GetClassLongPtr for the icon and brush class values.  Returns IntPtr.Zero when unset.</summary>
+        public static IntPtr GetClassLongPtr(IntPtr hwnd, GCLP nIndex)
+        {
+            if (hwnd == IntPtr.Zero)
+            {
+                return IntPtr.Zero;
+            }
+
+            return 8 == IntPtr.Size
+                ? _GetClassLongPtr64(hwnd, (int)nIndex)
+                : new IntPtr((int)_GetClassLong32(hwnd, (int)nIndex));
+        }
+
+        [DllImport("user32.dll", EntryPoint = "LoadIconW", CharSet = CharSet.Unicode)]
+        private static extern IntPtr _LoadIcon(IntPtr hInstance, IntPtr lpIconName);
+
+        private const int IDI_APPLICATION = 32512;
+
+        /// <summary>The stock application icon (IDI_APPLICATION), a shared handle that must not be destroyed.</summary>
+        public static IntPtr LoadDefaultApplicationIcon()
+        {
+            return _LoadIcon(IntPtr.Zero, new IntPtr(IDI_APPLICATION));
         }
 
         /// <summary>
@@ -2813,6 +3068,36 @@ namespace Standard
         [DllImport("uxtheme.dll", PreserveSig = false)]
         public static extern void SetWindowThemeAttribute([In] IntPtr hwnd, [In] WINDOWTHEMEATTRIBUTETYPE eAttribute, [In] ref WTA_OPTIONS pvAttribute, [In] uint cbAttribute);
 
+        [DllImport("uxtheme.dll", EntryPoint = "SetWindowThemeAttribute", PreserveSig = true)]
+        private static extern HRESULT _SetWindowThemeAttribute([In] IntPtr hwnd, [In] WINDOWTHEMEATTRIBUTETYPE eAttribute, [In] ref WTA_OPTIONS pvAttribute, [In] uint cbAttribute);
+
+        /// <summary>
+        /// Sets the WTA_NONCLIENT attributes (WTNCA_NODRAWCAPTION, WTNCA_NODRAWICON, ...) of a window.
+        /// Never throws: returns false when theming is not active or the call fails.
+        /// </summary>
+        public static bool SetWindowThemeNonClientAttributes(IntPtr hwnd, WTNCA flags, WTNCA mask)
+        {
+            if (hwnd == IntPtr.Zero || !Utility.IsOSVistaOrNewer)
+            {
+                return false;
+            }
+
+            try
+            {
+                if (!IsThemeActive())
+                {
+                    return false;
+                }
+            }
+            catch (DllNotFoundException)
+            {
+                return false;
+            }
+
+            var options = new WTA_OPTIONS { dwFlags = flags, dwMask = mask };
+            return _SetWindowThemeAttribute(hwnd, WINDOWTHEMEATTRIBUTETYPE.WTA_NONCLIENT, ref options, WTA_OPTIONS.Size).Succeeded;
+        }
+
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool GetWindowPlacement(IntPtr hwnd, WINDOWPLACEMENT lpwndpl);
@@ -2830,6 +3115,23 @@ namespace Standard
         [DllImport("user32.dll", EntryPoint = "GetWindowRect", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool _GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
+        [DllImport("user32.dll", EntryPoint = "ClientToScreen", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool _ClientToScreen(IntPtr hWnd, ref POINT lpPoint);
+
+        /// <summary>The client rectangle of the window in screen coordinates.</summary>
+        public static RECT GetClientRectInScreen(IntPtr hwnd)
+        {
+            RECT rc = GetClientRect(hwnd);
+            var topLeft = new POINT { x = rc.Left, y = rc.Top };
+            var bottomRight = new POINT { x = rc.Right, y = rc.Bottom };
+            if (!_ClientToScreen(hwnd, ref topLeft) || !_ClientToScreen(hwnd, ref bottomRight))
+            {
+                HRESULT.ThrowLastError();
+            }
+            return new RECT { Left = topLeft.x, Top = topLeft.y, Right = bottomRight.x, Bottom = bottomRight.y };
+        }
 
         public static RECT GetWindowRect(IntPtr hwnd)
         {
@@ -2871,6 +3173,82 @@ namespace Standard
 
         [DllImport("user32.dll")]
         public static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr MonitorFromRect([In] ref RECT lprc, uint dwFlags);
+
+        [DllImport("shell32.dll")]
+        public static extern IntPtr SHAppBarMessage(ABM dwMessage, ref APPBARDATA pData);
+
+        [DllImport("shcore.dll", EntryPoint = "GetDpiForMonitor", PreserveSig = true)]
+        private static extern HRESULT _GetDpiForMonitor(IntPtr hmonitor, int dpiType, out uint dpiX, out uint dpiY);
+
+        [DllImport("user32.dll", EntryPoint = "SetThreadDpiAwarenessContext")]
+        private static extern IntPtr _SetThreadDpiAwarenessContext(IntPtr dpiContext);
+
+        private static readonly IntPtr DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE = new IntPtr(-3);
+        private static readonly IntPtr DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 = new IntPtr(-4);
+        private const int MDT_EFFECTIVE_DPI = 0;
+
+        // The per-monitor DPI APIs do not exist before Windows 10 1607.  Stop probing after the first failure.
+        private static bool s_perMonitorDpiApisAvailable = true;
+
+        /// <summary>
+        /// Returns the effective DPI of the monitor nearest to <paramref name="hwnd"/>, measured from a
+        /// per-monitor-aware thread context so the value is not virtualized for system-DPI-aware processes.
+        /// Returns 0 when the value cannot be determined.  Never throws.
+        /// </summary>
+        public static uint GetEffectiveMonitorDpi(IntPtr hwnd)
+        {
+            const uint MONITOR_DEFAULTTONEAREST = 0x00000002;
+
+            if (!s_perMonitorDpiApisAvailable || hwnd == IntPtr.Zero)
+            {
+                return 0;
+            }
+
+            IntPtr previousContext = IntPtr.Zero;
+            try
+            {
+                IntPtr monitor = MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
+                if (monitor == IntPtr.Zero)
+                {
+                    return 0;
+                }
+
+                // The V2 context exists from Windows 10 1703; on 1607 fall back to V1.
+                previousContext = _SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
+                if (previousContext == IntPtr.Zero)
+                {
+                    previousContext = _SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE);
+                }
+
+                if (previousContext == IntPtr.Zero)
+                {
+                    return 0;
+                }
+
+                uint dpiX, dpiY;
+                return _GetDpiForMonitor(monitor, MDT_EFFECTIVE_DPI, out dpiX, out dpiY).Succeeded ? dpiX : 0;
+            }
+            catch (EntryPointNotFoundException)
+            {
+                s_perMonitorDpiApisAvailable = false;
+            }
+            catch (DllNotFoundException)
+            {
+                s_perMonitorDpiApisAvailable = false;
+            }
+            finally
+            {
+                if (previousContext != IntPtr.Zero)
+                {
+                    _SetThreadDpiAwarenessContext(previousContext);
+                }
+            }
+
+            return 0;
+        }
 
         [DllImport("user32.dll", EntryPoint = "PostMessage", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]

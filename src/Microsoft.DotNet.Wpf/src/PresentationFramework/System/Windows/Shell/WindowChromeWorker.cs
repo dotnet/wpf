@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -190,14 +190,16 @@ namespace Microsoft.Windows.Shell
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static WindowChromeWorker GetWindowChromeWorker(Window window)
         {
-            Verify.IsNotNull(window, "window");
+            ArgumentNullException.ThrowIfNull(window, nameof(window));
+
             return (WindowChromeWorker)window.GetValue(WindowChromeWorkerProperty);
         }
 
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static void SetWindowChromeWorker(Window window, WindowChromeWorker chrome)
         {
-            Verify.IsNotNull(window, "window");
+            ArgumentNullException.ThrowIfNull(window, nameof(window));
+
             window.SetValue(WindowChromeWorkerProperty, chrome);
         }
 

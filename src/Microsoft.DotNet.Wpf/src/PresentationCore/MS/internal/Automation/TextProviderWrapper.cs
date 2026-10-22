@@ -53,7 +53,7 @@ namespace MS.Internal.Automation
         {
             if (!(childElement is ElementProxy))
             {
-                throw new ArgumentException(SR.Format(SR.TextProvider_InvalidChild, "childElement"));
+                throw new ArgumentException(SR.Format(SR.TextProvider_InvalidChild, nameof(childElement)));
             }
 
             return (ITextRangeProvider)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(RangeFromChild), childElement);

@@ -1591,7 +1591,7 @@ namespace System.Windows
             // in the function that calls us.
 
             // We use a while loop like this because closing a window will modify the windows list.
-            while(WindowsInternal.Count > 0)
+            while (WindowsInternal.Count > 0)
             {
                 if (!WindowsInternal[0].IsDisposed)
                 {

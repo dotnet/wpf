@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 /*++
@@ -17,11 +17,10 @@ using System.Globalization;
 
 namespace MS.Internal.Printing.Configuration
 {
-    internal class PrintTicketEditor
+    internal static class PrintTicketEditor
     {
-        #region Constructors
 
-        private PrintTicketEditor() {}
+        #region Constructors
 
         #endregion Constructors
 
@@ -405,11 +404,10 @@ namespace MS.Internal.Printing.Configuration
         #endregion Private Methods
     }
 
-    internal class XmlDocQName
+    internal static class XmlDocQName
     {
-        #region Constructors
 
-        private XmlDocQName() {}
+        #region Constructors
 
         #endregion Constructors
 

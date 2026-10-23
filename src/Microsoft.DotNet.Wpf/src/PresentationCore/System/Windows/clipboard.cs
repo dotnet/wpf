@@ -209,7 +209,11 @@ public static class Clipboard
     /// </summary>
     public static IDataObject? GetDataObject()
     {
-        ClipboardCore.GetDataObject<DataObject, IDataObject>(out IDataObject? dataObject).ThrowOnFailure();
+        // .NET 9 returned the OLE view of clipboard data. Keep using the proxy so Windows-generated formats and
+        // delayed rendering remain observable instead of exposing the original managed object's native formats.
+        ClipboardCore.GetDataObject<DataObject, IDataObject>(
+            out IDataObject? dataObject,
+            unwrapUserDataObject: false).ThrowOnFailure();
         return dataObject;
     }
 
@@ -261,8 +265,30 @@ public static class Clipboard
     /// <summary>
     ///  Query the specified data format from Clipboard.
     /// </summary>
-    private static bool ContainsDataInternal(string format) =>
-        GetDataObject() is { } dataObject && dataObject.GetDataPresent(format, IsDataFormatAutoConvert(format));
+    private static bool ContainsDataInternal(string format)
+    {
+        List<string> formats = [format];
+
+        if (IsDataFormatAutoConvert(format))
+        {
+            // File-drop and bitmap queries historically considered their mapped native and platform formats.
+            ClipboardCore.AddMappedFormats(format, formats);
+        }
+
+        foreach (string availableFormat in formats)
+        {
+            uint formatId = unchecked((uint)DataFormats.GetDataFormat(availableFormat).Id);
+
+            // Query Windows directly rather than opening the OLE data object. This reports formats Windows can
+            // synthesize (for example UnicodeText from Text) and preserves the legacy MTA-safe Contains behavior.
+            if (ClipboardCore.IsClipboardFormatAvailable(formatId))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     /// <summary>
     ///  Get the specified format from Clipboard.

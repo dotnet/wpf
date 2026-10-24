@@ -602,7 +602,19 @@ namespace System.Windows.Documents
             if (BindUriHelper.IsXamlMimeType(mimeType))
             {
                 XpsValidatingLoader loader = new XpsValidatingLoader();
-                o = loader.Load(pageStream, baseUri, pc, mimeType);
+                try
+                {
+                    o = loader.Load(pageStream, baseUri, pc, mimeType);
+                }
+                catch (NullReferenceException) when (
+                    !FrameworkAppContextSwitches.OptOutOfNavigationTypeRestrictiveXamlBlock)
+                {
+                    // A dangerous type (e.g. MediaElement, WebBrowser, Frame) was stripped
+                    // from the XAML node stream by RestrictiveXamlXmlReader, leaving a null
+                    // child that the XAML object writer cannot add to the parent collection.
+                    // Treat the page as unloadable rather than crashing the application.
+                    o = null;
+                }
             }
             else if (MS.Internal.MimeTypeMapper.BamlMime.AreTypeAndSubTypeEqual(mimeType))
             {

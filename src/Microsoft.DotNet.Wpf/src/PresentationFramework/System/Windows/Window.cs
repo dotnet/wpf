@@ -3619,9 +3619,11 @@ namespace System.Windows
 
         private NativeMethods.WINDOWPLACEMENT ReadDevicePlacement()
         {
-            NativeMethods.WINDOWPLACEMENT placement = new NativeMethods.WINDOWPLACEMENT();
-            placement.length = Marshal.SizeOf(typeof(NativeMethods.WINDOWPLACEMENT));
-            UnsafeNativeMethods.GetWindowPlacement(new HandleRef(this, CriticalHandle), ref placement);
+            NativeMethods.WINDOWPLACEMENT placement = new NativeMethods.WINDOWPLACEMENT
+            {
+                length = Marshal.SizeOf(typeof(NativeMethods.WINDOWPLACEMENT))
+            };
+            UnsafeNativeMethods.GetWindowPlacement(new HandleRef(this, Handle), ref placement);
             return placement;
         }
 
@@ -3649,15 +3651,17 @@ namespace System.Windows
                 return bounds;
             }
 
-            NativeMethods.RECT rect = new NativeMethods.RECT();
-            rect.left = DoubleUtil.DoubleToInt(bounds.Left);
-            rect.top = DoubleUtil.DoubleToInt(bounds.Top);
+            NativeMethods.RECT rect = new NativeMethods.RECT
+            {
+                left = DoubleUtil.DoubleToInt(bounds.Left),
+                top = DoubleUtil.DoubleToInt(bounds.Top)
+            };
             rect.right = checked(rect.left + DoubleUtil.DoubleToInt(bounds.Width));
             rect.bottom = checked(rect.top + DoubleUtil.DoubleToInt(bounds.Height));
             // WINDOWPLACEMENT stores workspace coordinates, so the result has to be moved between
             // the working area and the monitor rectangle.  A read uses the monitor of the HWND, a
             // write uses the monitor that contains the whole target rect.
-            IntPtr monitor = toScreen ? MonitorFromWindow(CriticalHandle) :
+            IntPtr monitor = toScreen ? MonitorFromWindow(Handle) :
                 SafeNativeMethods.MonitorFromRect(ref rect, NativeMethods.MONITOR_DEFAULTTONEAREST);
             NativeMethods.MONITORINFOEX info = new NativeMethods.MONITORINFOEX();
             SafeNativeMethods.GetMonitorInfo(new HandleRef(this, monitor), info);
@@ -3863,7 +3867,7 @@ namespace System.Windows
                         flags |= NativeMethods.SWP_NOSIZE;
                     }
 
-                    if (!UnsafeNativeMethods.SetWindowPos(new HandleRef(this, CriticalHandle), new HandleRef(null, IntPtr.Zero),
+                    if (!UnsafeNativeMethods.SetWindowPos(new HandleRef(this, Handle), new HandleRef(null, IntPtr.Zero),
                         DoubleUtil.DoubleToInt(bounds.X), DoubleUtil.DoubleToInt(bounds.Y),
                         DoubleUtil.DoubleToInt(bounds.Width), DoubleUtil.DoubleToInt(bounds.Height), flags))
                     {
@@ -3878,7 +3882,7 @@ namespace System.Windows
                     placement.rcNormalPosition_top = DoubleUtil.DoubleToInt(normal.Y);
                     placement.rcNormalPosition_right = checked(placement.rcNormalPosition_left + DoubleUtil.DoubleToInt(normal.Width));
                     placement.rcNormalPosition_bottom = checked(placement.rcNormalPosition_top + DoubleUtil.DoubleToInt(normal.Height));
-                    UnsafeNativeMethods.SetWindowPlacement(new HandleRef(this, CriticalHandle), ref placement);
+                    UnsafeNativeMethods.SetWindowPlacement(new HandleRef(this, Handle), ref placement);
                 }
             }
             finally

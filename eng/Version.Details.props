@@ -8,14 +8,14 @@ This file should be imported by eng/Versions.props
     <!-- dotnet-dotnet dependencies -->
     <MicrosoftBuildFrameworkPackageVersion>15.9.20</MicrosoftBuildFrameworkPackageVersion>
     <MicrosoftBuildUtilitiesCorePackageVersion>15.9.20</MicrosoftBuildUtilitiesCorePackageVersion>
-    <MicrosoftDotNetArcadeSdkPackageVersion>10.0.0-beta.26525.101</MicrosoftDotNetArcadeSdkPackageVersion>
-    <MicrosoftDotNetCodeAnalysisPackageVersion>10.0.0-beta.26525.101</MicrosoftDotNetCodeAnalysisPackageVersion>
-    <MicrosoftDotNetGenAPIPackageVersion>10.0.0-beta.26525.101</MicrosoftDotNetGenAPIPackageVersion>
-    <MicrosoftDotNetHelixSdkPackageVersion>10.0.0-beta.26525.101</MicrosoftDotNetHelixSdkPackageVersion>
-    <MicrosoftDotnetWinFormsProjectTemplatesPackageVersion>10.0.15-servicing.26525.101</MicrosoftDotnetWinFormsProjectTemplatesPackageVersion>
+    <MicrosoftDotNetArcadeSdkPackageVersion>10.0.0-beta.26526.119</MicrosoftDotNetArcadeSdkPackageVersion>
+    <MicrosoftDotNetCodeAnalysisPackageVersion>10.0.0-beta.26526.119</MicrosoftDotNetCodeAnalysisPackageVersion>
+    <MicrosoftDotNetGenAPIPackageVersion>10.0.0-beta.26526.119</MicrosoftDotNetGenAPIPackageVersion>
+    <MicrosoftDotNetHelixSdkPackageVersion>10.0.0-beta.26526.119</MicrosoftDotNetHelixSdkPackageVersion>
+    <MicrosoftDotnetWinFormsProjectTemplatesPackageVersion>10.0.15-servicing.26526.119</MicrosoftDotnetWinFormsProjectTemplatesPackageVersion>
     <MicrosoftNETCoreAppRefPackageVersion>10.0.15</MicrosoftNETCoreAppRefPackageVersion>
-    <MicrosoftNETCorePlatformsPackageVersion>10.0.15-servicing.26525.101</MicrosoftNETCorePlatformsPackageVersion>
-    <MicrosoftPrivateWinformsPackageVersion>10.0.15-servicing.26525.101</MicrosoftPrivateWinformsPackageVersion>
+    <MicrosoftNETCorePlatformsPackageVersion>10.0.15-servicing.26526.119</MicrosoftNETCorePlatformsPackageVersion>
+    <MicrosoftPrivateWinformsPackageVersion>10.0.15-servicing.26526.119</MicrosoftPrivateWinformsPackageVersion>
     <MicrosoftSourceLinkAzureReposGitPackageVersion>8.0.0-beta.23409.2</MicrosoftSourceLinkAzureReposGitPackageVersion>
     <MicrosoftSourceLinkGitHubPackageVersion>8.0.0-beta.23409.2</MicrosoftSourceLinkGitHubPackageVersion>
     <SystemCodeDomPackageVersion>10.0.15</SystemCodeDomPackageVersion>
@@ -25,7 +25,7 @@ This file should be imported by eng/Versions.props
     <SystemDrawingCommonPackageVersion>10.0.15</SystemDrawingCommonPackageVersion>
     <SystemFormatsNrbfPackageVersion>10.0.15</SystemFormatsNrbfPackageVersion>
     <SystemIOPackagingPackageVersion>10.0.15</SystemIOPackagingPackageVersion>
-    <SystemPrivateWindowsCoreTestUtilitiesPackageVersion>10.0.15-servicing.26525.101</SystemPrivateWindowsCoreTestUtilitiesPackageVersion>
+    <SystemPrivateWindowsCoreTestUtilitiesPackageVersion>10.0.15-servicing.26526.119</SystemPrivateWindowsCoreTestUtilitiesPackageVersion>
     <SystemReflectionMetadataLoadContextPackageVersion>10.0.15</SystemReflectionMetadataLoadContextPackageVersion>
     <SystemResourcesExtensionsPackageVersion>10.0.15</SystemResourcesExtensionsPackageVersion>
     <SystemRuntimeSerializationFormattersPackageVersion>10.0.15</SystemRuntimeSerializationFormattersPackageVersion>

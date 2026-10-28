@@ -13,10 +13,10 @@
     "dotnet": "11.0.100-rc.2.26504.105",
     "runtimes": {
       "dotnet/x64": [
-        "$(MicrosoftNETCoreAppRefVersion)"
+        "$(MicrosoftNETCorePlatformsVersion)"
       ],
       "dotnet/x86": [
-        "$(MicrosoftNETCoreAppRefVersion)"
+        "$(MicrosoftNETCorePlatformsVersion)"
       ]
     },
     "vs": {

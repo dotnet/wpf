@@ -34,6 +34,10 @@
       <Uri>https://github.com/dotnet/dotnet</Uri>
       <Sha>a69d27567bd8be379e504329c965b9ca3fdf53fd</Sha>
     </Dependency>
+    <Dependency Name="Microsoft.NETCore.Platforms" Version="12.0.0-alpha.1.26519.114">
+      <Uri>https://github.com/dotnet/dotnet</Uri>
+      <Sha>a69d27567bd8be379e504329c965b9ca3fdf53fd</Sha>
+    </Dependency>
     <Dependency Name="System.CodeDom" Version="12.0.0-alpha.1.26519.114">
       <Uri>https://github.com/dotnet/dotnet</Uri>
       <Sha>a69d27567bd8be379e504329c965b9ca3fdf53fd</Sha>

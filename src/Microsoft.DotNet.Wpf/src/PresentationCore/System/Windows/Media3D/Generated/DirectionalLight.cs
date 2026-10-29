@@ -51,8 +51,6 @@ namespace System.Windows.Media.Media3D
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -65,10 +63,8 @@ namespace System.Windows.Media.Media3D
         {
             DirectionalLight target = ((DirectionalLight) d);
 
-
             target.PropertyChanged(DirectionProperty);
         }
-
 
         #region Public Properties
 
@@ -105,8 +101,6 @@ namespace System.Windows.Media.Media3D
         {
             return new DirectionalLight();
         }
-
-
 
         #endregion ProtectedMethods
 
@@ -174,7 +168,6 @@ namespace System.Windows.Media.Media3D
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_DIRECTIONALLIGHT))
                 {
                     Transform3D vTransform = Transform;
@@ -182,16 +175,13 @@ namespace System.Windows.Media.Media3D
 
                     AddRefOnChannelAnimations(channel);
 
-
                     UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
                 }
 
                 return _duceResource.GetHandle(channel);
-
         }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
@@ -200,9 +190,7 @@ namespace System.Windows.Media.Media3D
                     if (vTransform != null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
-
                 }
-
         }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
@@ -220,7 +208,6 @@ namespace System.Windows.Media.Media3D
             return _duceResource.GetChannel(index);
         }
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -230,9 +217,6 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -260,14 +244,10 @@ namespace System.Windows.Media.Media3D
 
         #region Internal Fields
 
-
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
-
         internal static Vector3D s_Direction = new Vector3D(0,0,-1);
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -298,7 +278,6 @@ namespace System.Windows.Media.Media3D
                                    /* isIndependentlyAnimated  = */ true,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

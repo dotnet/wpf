@@ -53,8 +53,6 @@ namespace System.Windows.Media
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -64,10 +62,7 @@ namespace System.Windows.Media
         //------------------------------------------------------
 
 
-
-
         #region Public Properties
-
 
 
         #endregion Public Properties
@@ -81,9 +76,6 @@ namespace System.Windows.Media
         #region Protected Methods
 
 
-
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -95,13 +87,6 @@ namespace System.Windows.Media
         #region Internal Methods
 
 
-
-
-
-
-
-
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -111,7 +96,6 @@ namespace System.Windows.Media
         //------------------------------------------------------
 
         #region Internal Properties
-
 
         /// <summary>
         /// Creates a string representation of this object based on the current culture.
@@ -170,7 +154,6 @@ namespace System.Windows.Media
             return base.ToString();
         }
 
-
         #endregion Internal Properties
 
         //------------------------------------------------------
@@ -180,7 +163,6 @@ namespace System.Windows.Media
         //------------------------------------------------------
 
         #region Dependency Properties
-
 
 
         #endregion Dependency Properties
@@ -194,13 +176,7 @@ namespace System.Windows.Media
         #region Internal Fields
 
 
-
-
-
-
-
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -210,8 +186,6 @@ namespace System.Windows.Media
         //  Constructors
         //
         //------------------------------------------------------
-
-
 
 
         #endregion Constructors

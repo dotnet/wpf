@@ -43,8 +43,6 @@ namespace System.Windows.Media.Animation
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -54,10 +52,7 @@ namespace System.Windows.Media.Animation
         //------------------------------------------------------
 
 
-
-
         #region Public Properties
-
 
 
         #endregion Public Properties
@@ -79,8 +74,6 @@ namespace System.Windows.Media.Animation
             return new ParallelTimeline();
         }
 
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -90,13 +83,6 @@ namespace System.Windows.Media.Animation
         //------------------------------------------------------
 
         #region Internal Methods
-
-
-
-
-
-
-
 
 
         #endregion Internal Methods
@@ -110,9 +96,6 @@ namespace System.Windows.Media.Animation
         #region Internal Properties
 
 
-
-
-
         #endregion Internal Properties
 
         //------------------------------------------------------
@@ -122,7 +105,6 @@ namespace System.Windows.Media.Animation
         //------------------------------------------------------
 
         #region Dependency Properties
-
 
 
         #endregion Dependency Properties
@@ -136,13 +118,7 @@ namespace System.Windows.Media.Animation
         #region Internal Fields
 
 
-
-
-
-
-
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -152,8 +128,6 @@ namespace System.Windows.Media.Animation
         //  Constructors
         //
         //------------------------------------------------------
-
-
 
 
         #endregion Constructors

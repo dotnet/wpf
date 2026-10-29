@@ -624,7 +624,7 @@
       </trans-unit>
       <trans-unit id="MarkupExtensionDepthExceeded">
         <source>Markup extension nesting depth exceeded the maximum allowed ({0}). Deeply nested markup extensions are not supported.</source>
-        <target state="new">Markup extension nesting depth exceeded the maximum allowed ({0}). Deeply nested markup extensions are not supported.</target>
+        <target state="translated">Глубина вложенного расширения разметки превысила максимально допустимую ({0}). Вложенные расширения разметки не поддерживаются.</target>
         <note />
       </trans-unit>
       <trans-unit id="MarkupExtensionNoContext">

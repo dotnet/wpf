@@ -735,6 +735,8 @@ namespace System.Windows
             EventManager.RegisterClassHandler(type, UIElement.MouseRightButtonUpEvent, new MouseButtonEventHandler(UIElement.OnMouseRightButtonUpThunk), false);
             EventManager.RegisterClassHandler(type, Mouse.PreviewMouseMoveEvent, new MouseEventHandler(UIElement.OnPreviewMouseMoveThunk), false);
             EventManager.RegisterClassHandler(type, Mouse.MouseMoveEvent, new MouseEventHandler(UIElement.OnMouseMoveThunk), false);
+            EventManager.RegisterClassHandler(type, Mouse.PreviewMouseHorizontalWheelEvent, new MouseWheelEventHandler(UIElement.OnPreviewMouseHorizontalWheelThunk), false);
+            EventManager.RegisterClassHandler(type, Mouse.MouseHorizontalWheelEvent, new MouseWheelEventHandler(UIElement.OnMouseHorizontalWheelThunk), false);
             EventManager.RegisterClassHandler(type, Mouse.PreviewMouseWheelEvent, new MouseWheelEventHandler(UIElement.OnPreviewMouseWheelThunk), false);
             EventManager.RegisterClassHandler(type, Mouse.MouseWheelEvent, new MouseWheelEventHandler(UIElement.OnMouseWheelThunk), false);
             EventManager.RegisterClassHandler(type, Mouse.MouseEnterEvent, new MouseEventHandler(UIElement.OnMouseEnterThunk), false);
@@ -1172,6 +1174,61 @@ namespace System.Windows
                 else
                 {
                     ((UIElement3D)sender).OnMouseMove(e);
+                }
+            }
+        }
+
+        private static void OnPreviewMouseHorizontalWheelThunk(object sender, MouseWheelEventArgs e)
+        {
+            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+
+            UIElement uie = sender as UIElement;
+
+            if (uie != null)
+            {
+                uie.OnPreviewMouseHorizontalWheel(e);
+            }
+            else
+            {
+                ContentElement ce = sender as ContentElement;
+
+                if (ce != null)
+                {
+                    ce.OnPreviewMouseHorizontalWheel(e);
+                }
+                else
+                {
+                    ((UIElement3D)sender).OnPreviewMouseHorizontalWheel(e);
+                }
+            }
+        }
+
+        private static void OnMouseHorizontalWheelThunk(object sender, MouseWheelEventArgs e)
+        {
+            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+
+            CommandManager.TranslateInput((IInputElement)sender, e);
+
+            if (!e.Handled)
+            {
+                UIElement uie = sender as UIElement;
+
+                if (uie != null)
+                {
+                    uie.OnMouseHorizontalWheel(e);
+                }
+                else
+                {
+                    ContentElement ce = sender as ContentElement;
+
+                    if (ce != null)
+                    {
+                        ce.OnMouseHorizontalWheel(e);
+                    }
+                    else
+                    {
+                        ((UIElement3D)sender).OnMouseHorizontalWheel(e);
+                    }
                 }
             }
         }
@@ -3016,6 +3073,44 @@ namespace System.Windows
         ///     Virtual method reporting a mouse move
         /// </summary>
         protected virtual void OnMouseMove(MouseEventArgs e) {}
+
+        /// <summary>
+        ///     Alias to the Mouse.PreviewMouseHorizontalWheelEvent.
+        /// </summary>
+        public static readonly RoutedEvent PreviewMouseHorizontalWheelEvent = Mouse.PreviewMouseHorizontalWheelEvent.AddOwner(_typeofThis);
+
+        /// <summary>
+        ///     Event reporting a mouse horizontal wheel rotation
+        /// </summary>
+        public event MouseWheelEventHandler PreviewMouseHorizontalWheel
+        {
+            add { AddHandler(Mouse.PreviewMouseHorizontalWheelEvent, value, false); }
+            remove { RemoveHandler(Mouse.PreviewMouseHorizontalWheelEvent, value); }
+        }
+
+        /// <summary>
+        ///     Virtual method reporting a mouse horizontal wheel rotation
+        /// </summary>
+        protected virtual void OnPreviewMouseHorizontalWheel(MouseWheelEventArgs e) {}
+
+        /// <summary>
+        ///     Alias to the Mouse.MouseHorizontalWheelEvent.
+        /// </summary>
+        public static readonly RoutedEvent MouseHorizontalWheelEvent = Mouse.MouseHorizontalWheelEvent.AddOwner(_typeofThis);
+
+        /// <summary>
+        ///     Event reporting a mouse horizontal wheel rotation
+        /// </summary>
+        public event MouseWheelEventHandler MouseHorizontalWheel
+        {
+            add { AddHandler(Mouse.MouseHorizontalWheelEvent, value, false); }
+            remove { RemoveHandler(Mouse.MouseHorizontalWheelEvent, value); }
+        }
+
+        /// <summary>
+        ///     Virtual method reporting a mouse horizontal wheel rotation
+        /// </summary>
+        protected virtual void OnMouseHorizontalWheel(MouseWheelEventArgs e) {}
 
         /// <summary>
         ///     Alias to the Mouse.PreviewMouseWheelEvent.

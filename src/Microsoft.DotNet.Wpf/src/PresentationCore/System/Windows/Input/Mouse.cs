@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace System.Windows.Input
@@ -161,6 +161,56 @@ namespace System.Windows.Input
         public static void RemoveMouseDownHandler(DependencyObject element, MouseButtonEventHandler handler)
         {
             UIElement.RemoveHandler(element, MouseDownEvent, handler);
+        }
+
+        /// <summary>
+        ///     PreviewMouseHorizontalWheel
+        /// </summary>
+        public static readonly RoutedEvent PreviewMouseHorizontalWheelEvent = EventManager.RegisterRoutedEvent("PreviewMouseHorizontalWheel", RoutingStrategy.Tunnel, typeof(MouseWheelEventHandler), typeof(Mouse));
+
+        /// <summary>
+        ///     Adds a handler for the PreviewMouseHorizontalWheel attached event
+        /// </summary>
+        /// <param name="element">UIElement or ContentElement that listens to this event</param>
+        /// <param name="handler">Event Handler to be added</param>
+        public static void AddPreviewMouseHorizontalWheelHandler(DependencyObject element, MouseWheelEventHandler handler)
+        {
+            UIElement.AddHandler(element, PreviewMouseHorizontalWheelEvent, handler);
+        }
+
+        /// <summary>
+        ///     Removes a handler for the PreviewMouseHorizontalWheel attached event
+        /// </summary>
+        /// <param name="element">UIElement or ContentElement that listens to this event</param>
+        /// <param name="handler">Event Handler to be removed</param>
+        public static void RemovePreviewMouseHorizontalWheelHandler(DependencyObject element, MouseWheelEventHandler handler)
+        {
+            UIElement.RemoveHandler(element, PreviewMouseHorizontalWheelEvent, handler);
+        }
+
+        /// <summary>
+        ///     MouseHorizontalWheel
+        /// </summary>
+        public static readonly RoutedEvent MouseHorizontalWheelEvent = EventManager.RegisterRoutedEvent("MouseHorizontalWheel", RoutingStrategy.Bubble, typeof(MouseWheelEventHandler), typeof(Mouse));
+
+        /// <summary>
+        ///     Adds a handler for the MouseHorizontalWheel attached event
+        /// </summary>
+        /// <param name="element">UIElement or ContentElement that listens to this event</param>
+        /// <param name="handler">Event Handler to be added</param>
+        public static void AddMouseHorizontalWheelHandler(DependencyObject element, MouseWheelEventHandler handler)
+        {
+            UIElement.AddHandler(element, MouseHorizontalWheelEvent, handler);
+        }
+
+        /// <summary>
+        ///     Removes a handler for the MouseHorizontalWheel attached event
+        /// </summary>
+        /// <param name="element">UIElement or ContentElement that listens to this event</param>
+        /// <param name="handler">Event Handler to be removed</param>
+        public static void RemoveMouseHorizontalWheelHandler(DependencyObject element, MouseWheelEventHandler handler)
+        {
+            UIElement.RemoveHandler(element, MouseHorizontalWheelEvent, handler);
         }
 
         /// <summary>

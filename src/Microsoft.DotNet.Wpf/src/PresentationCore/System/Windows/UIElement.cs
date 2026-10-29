@@ -978,14 +978,13 @@ namespace System.Windows
             }
             else
             {
-                DoubleCollection xLines = this.VisualXSnappingGuidelines;
+                DoubleCollection xLines = VisualXSnappingGuidelines;
 
-                if(xLines == null)
+                if (xLines is null)
                 {
-                    xLines = new DoubleCollection();
-                    xLines.Add(0d);
-                    xLines.Add(this.RenderSize.Width);
-                    this.VisualXSnappingGuidelines = xLines;
+                    xLines = new DoubleCollection(0d, RenderSize.Width);
+
+                    VisualXSnappingGuidelines = xLines;
                 }
                 else
                 {
@@ -996,13 +995,12 @@ namespace System.Windows
                         xLines[lastGuideline] = this.RenderSize.Width;
                 }
 
-                DoubleCollection yLines = this.VisualYSnappingGuidelines;
-                if(yLines == null)
+                DoubleCollection yLines = VisualYSnappingGuidelines;
+                if (yLines is null)
                 {
-                    yLines = new DoubleCollection();
-                    yLines.Add(0d);
-                    yLines.Add(this.RenderSize.Height);
-                    this.VisualYSnappingGuidelines = yLines;
+                    yLines = new DoubleCollection(0d, RenderSize.Height);
+
+                    VisualYSnappingGuidelines = yLines;
                 }
                 else
                 {

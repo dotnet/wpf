@@ -69,6 +69,7 @@ namespace System.Windows.Input.StylusWisp
             {
                 if (disposing)
                 {
+                    _stylusLogic.CancelCompletedTouchPromotion(this);
                     _stylusLogic.UnregisterStylusDeviceCore(StylusDevice);
 
                     // DevDiv:1078091
@@ -1398,6 +1399,12 @@ namespace System.Windows.Input.StylusWisp
             Debug.Assert(report.TabletDeviceId == _tabletDevice.Id);
             Debug.Assert((report.Actions & RawStylusActions.None) == 0);
 
+            if ((report.Actions & RawStylusActions.Down) != 0 && _tabletDevice.Type == TabletDeviceType.Touch)
+            {
+                // Advance before input callbacks can resume an older replay on this device.
+                TouchDevice.BeginContact();
+            }
+
             _eventStylusPoints =
                 new StylusPointCollection(report.StylusPointDescription,
                                             report.GetRawPacketData(),
@@ -1655,8 +1662,14 @@ namespace System.Windows.Input.StylusWisp
         /////////////////////////////////////////////////////////////////////
         internal void PlayBackCachedDownInputReport(int timestamp)
         {
+            if (!_stylusLogic.CanPromoteCompletedTouch(this))
+            {
+                return;
+            }
             if (_needToSendMouseDown)
             {
+                _needToSendMouseDown = false;
+
                 // if we have marked this as handled we need to play the down otherwise we can ignore the down
                 // as it will be process anyway and either way we need to clean up the cached down
                 PresentationSource mouseInputSource = GetMousePresentationSource();
@@ -1665,16 +1678,22 @@ namespace System.Windows.Input.StylusWisp
                 {
                     Point pt = PointUtil.ScreenToClient(_lastMouseScreenLocation, mouseInputSource);
 
-                    _needToSendMouseDown = false; // We've sent down, don't send again.
-
                     // Update the state we report to the mouse (GetButtonState).
-                    _promotedMouseState = MouseButtonState.Pressed;
+                    if (!_stylusLogic.IsReplayingCompletedTouch(this))
+                    {
+                        _promotedMouseState = MouseButtonState.Pressed;
+                    }
 
                     RawMouseActions actions = _fLeftButtonDownTrigger ? RawMouseActions.Button1Press : RawMouseActions.Button2Press;
 
                     // StylusLogic manages the mouse state reported to the MouseDevice to deal with multiple stylusdevice input.
-                    if (_stylusLogic.UpdateMouseButtonState(actions))
+                    if (_stylusLogic.UpdateMouseButtonState(actions, this))
                     {
+                        _promotedMouseState = MouseButtonState.Pressed;
+                        if (!_stylusLogic.RecordCompletedTouchMousePress(this, actions, mouseInputSource))
+                        {
+                            return;
+                        }
                         // See if we need to set the Mouse Activate flag.
                         InputManager inputManager = (InputManager)Dispatcher.InputManager;
 
@@ -1699,7 +1718,6 @@ namespace System.Windows.Input.StylusWisp
                     }
                 }
 
-                _needToSendMouseDown = false; // so we don't try and resend it later.
 }
         }
 
@@ -1810,7 +1828,7 @@ namespace System.Windows.Input.StylusWisp
                                                     RawMouseActions.Button2Release;
                     // Make sure we only promote a mouse up if the mouse is in the down 
                     // state (UpdateMousebuttonState returns true in that case)!
-                    if (_stylusLogic.UpdateMouseButtonState(actions))
+                    if (_stylusLogic.UpdateMouseButtonState(actions, this))
                     {
                         return actions;
                     }

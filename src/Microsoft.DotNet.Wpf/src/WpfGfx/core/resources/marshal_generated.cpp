@@ -6080,6 +6080,233 @@ Cleanup:
     UnRegisterNotifier(m_data.m_pGradientOriginAnimation);
 }
 
+HRESULT CMilSweepGradientBrushDuce::ProcessUpdate(
+    __in_ecount(1) CMilSlaveHandleTable* pHandleTable,
+    __in_ecount(1) const MILCMD_SWEEPGRADIENTBRUSH* pCmd,
+    __in_bcount(cbPayload) LPCVOID pPayload,
+    UINT cbPayload
+    )
+{
+    HRESULT hr = S_OK;
+
+    const BYTE* pbDataSection =
+        reinterpret_cast<const BYTE*>(pPayload);
+
+
+
+
+    // Remove any pre-existing registered resources.
+    UnRegisterNotifiers();
+    m_data.m_Opacity = pCmd->Opacity;
+    if (pCmd->hOpacityAnimations != NULL)
+    {
+        m_data.m_pOpacityAnimation =
+            static_cast<CMilSlaveDouble*>(pHandleTable->GetResource(
+                pCmd->hOpacityAnimations,
+                TYPE_DOUBLERESOURCE
+                ));
+
+        if (m_data.m_pOpacityAnimation == NULL)
+        {
+            RIP("Invalid handle.");
+            IFC(WGXERR_UCE_MALFORMEDPACKET);
+        }
+    }
+    else
+    {
+        m_data.m_pOpacityAnimation = NULL;
+    }
+
+
+    if (pCmd->hTransform != NULL)
+    {
+        m_data.m_pTransform =
+            static_cast<CMilTransformDuce*>(pHandleTable->GetResource(
+                pCmd->hTransform,
+                TYPE_TRANSFORM
+                ));
+
+        if (m_data.m_pTransform == NULL)
+        {
+            RIP("Invalid handle.");
+            IFC(WGXERR_UCE_MALFORMEDPACKET);
+        }
+    }
+    else
+    {
+        m_data.m_pTransform = NULL;
+    }
+
+
+    if (pCmd->hRelativeTransform != NULL)
+    {
+        m_data.m_pRelativeTransform =
+            static_cast<CMilTransformDuce*>(pHandleTable->GetResource(
+                pCmd->hRelativeTransform,
+                TYPE_TRANSFORM
+                ));
+
+        if (m_data.m_pRelativeTransform == NULL)
+        {
+            RIP("Invalid handle.");
+            IFC(WGXERR_UCE_MALFORMEDPACKET);
+        }
+    }
+    else
+    {
+        m_data.m_pRelativeTransform = NULL;
+    }
+
+    m_data.m_ColorInterpolationMode = pCmd->ColorInterpolationMode;
+    m_data.m_MappingMode = pCmd->MappingMode;
+    m_data.m_SpreadMethod = pCmd->SpreadMethod;
+    m_data.m_Center = pCmd->Center;
+    if (pCmd->hCenterAnimations != NULL)
+    {
+        m_data.m_pCenterAnimation =
+            static_cast<CMilSlavePoint*>(pHandleTable->GetResource(
+                pCmd->hCenterAnimations,
+                TYPE_POINTRESOURCE
+                ));
+
+        if (m_data.m_pCenterAnimation == NULL)
+        {
+            RIP("Invalid handle.");
+            IFC(WGXERR_UCE_MALFORMEDPACKET);
+        }
+    }
+    else
+    {
+        m_data.m_pCenterAnimation = NULL;
+    }
+
+    m_data.m_StartAngle = pCmd->StartAngle;
+    if (pCmd->hStartAngleAnimations != NULL)
+    {
+        m_data.m_pStartAngleAnimation =
+            static_cast<CMilSlaveDouble*>(pHandleTable->GetResource(
+                pCmd->hStartAngleAnimations,
+                TYPE_DOUBLERESOURCE
+                ));
+
+        if (m_data.m_pStartAngleAnimation == NULL)
+        {
+            RIP("Invalid handle.");
+            IFC(WGXERR_UCE_MALFORMEDPACKET);
+        }
+    }
+    else
+    {
+        m_data.m_pStartAngleAnimation = NULL;
+    }
+
+    m_data.m_EndAngle = pCmd->EndAngle;
+    if (pCmd->hEndAngleAnimations != NULL)
+    {
+        m_data.m_pEndAngleAnimation =
+            static_cast<CMilSlaveDouble*>(pHandleTable->GetResource(
+                pCmd->hEndAngleAnimations,
+                TYPE_DOUBLERESOURCE
+                ));
+
+        if (m_data.m_pEndAngleAnimation == NULL)
+        {
+            RIP("Invalid handle.");
+            IFC(WGXERR_UCE_MALFORMEDPACKET);
+        }
+    }
+    else
+    {
+        m_data.m_pEndAngleAnimation = NULL;
+    }
+
+    // Read the GradientStops
+    m_data.m_cbGradientStopsSize = pCmd->GradientStopsSize;
+    if (m_data.m_cbGradientStopsSize > 0)
+    {
+        //
+        // Check if the manifested size of the payload matches what we have
+        // received from the transport. Also, the manifested size should be
+        // a multiply of the size of the contained type.
+        //
+
+        if (m_data.m_cbGradientStopsSize > cbPayload
+            || m_data.m_cbGradientStopsSize % sizeof(MilGradientStop) != 0)
+        {
+            IFC(WGXERR_UCE_MALFORMEDPACKET);
+        }
+
+        // Allocate memory for copy of data
+        IFC(HrAlloc(
+            Mt(CMilSweepGradientBrushDuce),
+            m_data.m_cbGradientStopsSize,
+            reinterpret_cast<void**>(&m_data.m_pGradientStopsData)
+            ));
+
+        // Copy data
+        RtlCopyMemory(m_data.m_pGradientStopsData, pbDataSection, m_data.m_cbGradientStopsSize);
+
+        // Advance data pointer and reduce data size
+        cbPayload -= m_data.m_cbGradientStopsSize;
+        pbDataSection += m_data.m_cbGradientStopsSize;
+    }
+
+    // Register the new resources.
+    IFC(RegisterNotifiers(pHandleTable));
+
+
+
+Cleanup:
+    if (FAILED(hr))
+    {
+        //
+        // We have failed to process the update command. Performing unregistration
+        // now guarantees that we leave the resource in a predictable state.
+        //
+
+        UnRegisterNotifiers();
+    }
+
+    NotifyOnChanged(this);
+
+    RRETURN(hr);
+}
+
+HRESULT CMilSweepGradientBrushDuce::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
+{
+    HRESULT hr = S_OK;
+
+    IFC(RegisterNotifier(m_data.m_pTransform));
+    IFC(RegisterNotifier(m_data.m_pRelativeTransform));
+
+    IFC(RegisterNotifier(m_data.m_pOpacityAnimation));
+    IFC(RegisterNotifier(m_data.m_pCenterAnimation));
+    IFC(RegisterNotifier(m_data.m_pStartAngleAnimation));
+    IFC(RegisterNotifier(m_data.m_pEndAngleAnimation));
+
+Cleanup:
+
+    RRETURN(hr);
+}
+
+/*override*/ void CMilSweepGradientBrushDuce::UnRegisterNotifiers()
+{
+    UnRegisterNotifier(m_data.m_pTransform);
+    UnRegisterNotifier(m_data.m_pRelativeTransform);
+
+    if (m_data.m_pGradientStopsData)
+    {
+
+        WPFFree(ProcessHeap, m_data.m_pGradientStopsData);
+        m_data.m_pGradientStopsData = NULL;
+    }
+    m_data.m_cbGradientStopsSize = 0;
+    UnRegisterNotifier(m_data.m_pOpacityAnimation);
+    UnRegisterNotifier(m_data.m_pCenterAnimation);
+    UnRegisterNotifier(m_data.m_pStartAngleAnimation);
+    UnRegisterNotifier(m_data.m_pEndAngleAnimation);
+}
+
 HRESULT CMilImageBrushDuce::ProcessUpdate(
     __in_ecount(1) CMilSlaveHandleTable* pHandleTable,
     __in_ecount(1) const MILCMD_IMAGEBRUSH* pCmd

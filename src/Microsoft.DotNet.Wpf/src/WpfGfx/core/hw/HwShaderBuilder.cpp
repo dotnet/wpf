@@ -399,7 +399,78 @@ Cleanup:
 //+-----------------------------------------------------------------------------
 //
 //  Member:
-//      CHwPipelineBuilder::Set_Constant
+//      CHwShaderPipelineBuilder::Set_SweepGradient
+//
+//  Synopsis:
+//      Adds a sweep gradient to the pipeline.
+//
+//------------------------------------------------------------------------------
+HRESULT
+CHwShaderPipelineBuilder::Set_SweepGradient(
+    __in_ecount(1) CHwSweepGradientColorSource *pSweepGradient
+    )
+{
+    HRESULT hr = S_OK;
+
+    int iSampler = ReserveCurrentTextureSampler();
+    MilVertexFormatAttribute mvfaTextureCoordinate;
+
+    MILSPHandle rgPixelParameterHandles[3];
+    UINT const uNumPixelParameters = 3;
+
+#if DBG
+    ShaderFunctionConstantData::Enum rgDbgPixelParameterTypes[3];
+    rgDbgPixelParameterTypes[0] = ShaderFunctionConstantData::Float;
+    rgDbgPixelParameterTypes[1] = ShaderFunctionConstantData::Float;
+    rgDbgPixelParameterTypes[2] = ShaderFunctionConstantData::Float;
+#endif
+
+    if (!(GetAvailableForReference() & MILVFAttrUV1))
+    {
+        mvfaTextureCoordinate = MIL_TEXTURESTAGE_TO_MILVFATTR(iSampler);
+    }
+    else
+    {
+        // Always use the first texture coordinate for HW transform.
+        mvfaTextureCoordinate = MILVFAttrUV1;
+    }
+
+    IFC(AddShaderPipelineItem(
+        pSweepGradient,
+        iSampler,
+        mvfaTextureCoordinate,
+        ShaderFunctions::MultiplySweepGradient
+        ));
+
+    //
+    // Get handles and verify types for constant data parameters.
+    //
+    GetShaderParameterHandles(
+        ShaderFunctions::MultiplySweepGradient,
+        0,
+        DBG_PARAM_COMMA(NULL)
+        NULL,
+        uNumPixelParameters,
+        DBG_PARAM_COMMA(rgDbgPixelParameterTypes)
+        rgPixelParameterHandles
+        );
+
+    pSweepGradient->SetSweepGradientParamData(
+        rgPixelParameterHandles[0],
+        rgPixelParameterHandles[1],
+        rgPixelParameterHandles[2]
+        );
+
+    SetLastItemAsEarliestAvailableForAlphaMultiply();
+
+Cleanup:
+    RRETURN(hr);
+}
+
+//+-----------------------------------------------------------------------------
+//
+//  Member:
+//      CHwShaderPipelineBuilder::Set_Constant
 //
 //  Synopsis:
 //      Adds the appropriate HwShaderPipelineItem.

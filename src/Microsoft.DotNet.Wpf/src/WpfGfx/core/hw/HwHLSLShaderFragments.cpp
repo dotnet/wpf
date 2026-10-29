@@ -602,6 +602,67 @@ PS_END;
 
 //+----------------------------------------------------------------------------
 //
+// MultiplySweepGradient Pixel Function
+//
+//+----------------------------------------------------------------------------
+DEFINE_PIXEL_SHADER_FUNCTION(MultiplySweepGradient)
+
+    PS_BODY =
+        "(\n"
+        "    float2 samplePos,\n"
+        "    sampler TextureSampler,\n"
+        "    MultiplySweepGradient_PS_ConstData GradInfoParams,\n"
+        "    inout float4 color\n"
+        "    )\n"
+        "{\n"
+        "    float4 sampleGradientColor;\n"
+        "\n"
+        "    float angle = atan2(samplePos.y, samplePos.x);\n"
+        "    if (angle < 0.0f) angle += 6.28318530717958647692f;\n"
+        "\n"
+        "    float t;\n"
+        "    if (GradInfoParams.flAngularSpanIsZero != 0.0f)\n"
+        "    {\n"
+        "        t = (angle > GradInfoParams.flStartAngleRadians) ? 1.0f : 0.0f;\n"
+        "    }\n"
+        "    else\n"
+        "    {\n"
+        "        t = (angle - GradInfoParams.flStartAngleRadians) * GradInfoParams.flInvAngularSpan;\n"
+        "    }\n"
+        "\n"
+        "    sampleGradientColor = tex1D(TextureSampler, t);\n"
+        "\n"
+        "    color *= sampleGradientColor;\n"
+        "}\n";
+
+    PS_INPUTS =
+        {
+            PixelFunctionParameter::Interpolator_TexCoord2,
+            PixelFunctionParameter::Sampler,
+            PixelFunctionParameter::FragmentConstData,
+            PixelFunctionParameter::ShaderOutputStruct,
+        };
+
+    PS_DATA =
+        {
+            {
+                "flStartAngleRadians",
+                ShaderFunctionConstantData::Float
+            },
+            {
+                "flInvAngularSpan",
+                ShaderFunctionConstantData::Float
+            },
+            {
+                "flAngularSpanIsZero",
+                ShaderFunctionConstantData::Float
+            },
+        };
+
+PS_END;
+
+//+----------------------------------------------------------------------------
+//
 // MultiplyRadialGradientNonCentered Pixel Function
 // 
 //+----------------------------------------------------------------------------
@@ -1466,6 +1527,17 @@ ShaderFunction g_oMultiplyRadialGradientNonCentered_Function
 //
 // Shader Function description.
 //
+ShaderFunction g_oMultiplySweepGradient_Function
+(
+    "MultiplySweepGradient",                            // Function Name
+    TransparencyEffect::BlendsColorSource,
+    Pass_InputVertex_UV2_ToTexCoord2::VS,               // Vertex Function
+    MultiplySweepGradient::PS                           // Pixel Function
+);
+
+//
+// Shader Function description.
+//
 ShaderFunction g_Get3DTransforms_Function
 (
     "Get3DTransforms",                  // Fragment Name
@@ -1605,6 +1677,7 @@ const ShaderFunction *g_pHwHLSLShaderFunctions[] =
     &g_oMultiplyAlphaMask_From_Input_Vertex_TexCoord2_Function,
     &g_oMultiplyRadialGradientCentered_Function,
     &g_oMultiplyRadialGradientNonCentered_Function,
+    &g_oMultiplySweepGradient_Function,
 
     &g_Get3DTransforms_Function,
     &g_Transform3D_Function,

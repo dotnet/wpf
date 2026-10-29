@@ -3229,6 +3229,15 @@
             </Fields>
         </Resource>
 
+        <!-- SkipUpdate:true -> The unmanaged GradientStopCollection resource is busted. -->
+        <Resource Name="SweepGradientBrush" Extends="GradientBrush" SkipUpdate="true" SkipToString="true" CanIntroduceCycles="false" >
+            <Fields>
+                <Field Name="Center" Type="Point" Default="new Point(0.5,0.5)" Animate="true"/>
+                <Field Name="StartAngle" Type="Double" Default="0.0" Animate="true"/>
+                <Field Name="EndAngle" Type="Double" Default="360.0" Animate="true"/>
+            </Fields>
+        </Resource>
+
         <Resource Name="TileBrush" IsAbstract="true" Extends="Brush">
             <Fields>
                 <Field Name="ViewportUnits" Type="BrushMappingMode" Default="BrushMappingMode.RelativeToBoundingBox"/>
@@ -4029,6 +4038,7 @@
         <Generate Name="SolidColorBrush" ManagedClass="true" NativeDuce="true"/>
         <Generate Name="LinearGradientBrush" ManagedClass="true" NativeDuce="true"/>
         <Generate Name="RadialGradientBrush" ManagedClass="true" NativeDuce="true"/>
+        <Generate Name="SweepGradientBrush" ManagedClass="true" NativeDuce="true"/>
         <Generate Name="ImageBrush" ManagedClass="true" NativeDuce="true"/>
         <Generate Name="DrawingBrush" ManagedClass="true" NativeDuce="true"/>
         <Generate Name="VisualBrush" ManagedClass="true" NativeDuce="true"/>

@@ -503,6 +503,26 @@
     </ItemGroup>
   </Target>
 
+  <!--
+    ================================================================
+                                   FilterTemporaryAssemblyAnalyzers
+    ================================================================
+
+        Name : FilterTemporaryAssemblyAnalyzers
+
+        This target runs only inside the temporary project, where it drops analyzers re-resolved on their own
+         (those lacking the parent's WpfTempProjectAnalyzers marker), keeping only the set flowed from the parent.
+
+        Condition: _WpfTempProjectIncludesPackageReferences == true
+  -->
+  <Target Name="FilterTemporaryAssemblyAnalyzers"
+          BeforeTargets="RemoveDuplicateAnalyzers;CoreCompile"
+          Condition="'$(_WpfTempProjectIncludesPackageReferences)' == 'true'">
+    <ItemGroup>
+        <Analyzer Remove="@(Analyzer)" Condition="'%(Analyzer.WpfTempProjectAnalyzers)' != 'true'" />
+    </ItemGroup>
+  </Target>
+
 <!--
     ================================================================
                                    SatelliteOnlyMarkupCompilePass2

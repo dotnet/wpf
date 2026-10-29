@@ -195,7 +195,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             if (qat != null)
             {
                 qatDesiredWidth = qat.DesiredSize.Width;
-                qat.Arrange(new Rect(0, 0.0, qatDesiredWidth, qat.DesiredSize.Height));
+                qat.Arrange(new Rect(0, CenterY(finalSize, qat), qatDesiredWidth, qat.DesiredSize.Height));
             }
 
             endContextualTabX = Math.Max(endContextualTabX, qatDesiredWidth);
@@ -221,10 +221,20 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                     x = endContextualTabX; ;
                 }
             
-                titleHost.Arrange(new Rect(x, 0.0, width, height));
+                titleHost.Arrange(new Rect(x, CenterY(finalSize, titleHost), width, height));
             }
-            
+
             return finalSize;
+        }
+
+        /// <summary>
+        /// Vertical offset centering a child in the panel.  The panel is normally exactly as tall as its children;
+        /// hosted in a RibbonWindow it is as tall as the system caption band, and QAT and title must then sit in
+        /// its middle, like the caption text of a standard window.
+        /// </summary>
+        private static double CenterY(Size finalSize, UIElement child)
+        {
+            return Math.Max(0.0, (finalSize.Height - child.DesiredSize.Height) / 2.0);
         }
         
         #endregion

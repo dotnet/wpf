@@ -93,20 +93,15 @@ namespace System.Windows.Input
                 // We scan back to front to enable list cleanup.
                 for (int i = _penThreadWeakRefList.Count - 1; i >= 0; i--)
                 {
-                    PenThread candidatePenThread = null;
-
-                    // Select a thread if it's a valid WeakReference and we're not ignoring it
-                    // Allow selection to happen multiple times so we get the first valid candidate
-                    // in forward order.
-                    if (_penThreadWeakRefList[i].TryGetTarget(out candidatePenThread)
-                        && !ignoredThreads.Contains(candidatePenThread))
-                    {
-                        selectedPenThread = candidatePenThread;
-                    }
-                    // This is an invalid WeakReference and should be removed
-                    else if (candidatePenThread == null)
+                    // Check if the WeakReference is still alive and not disposed.
+                    if (!_penThreadWeakRefList[i].TryGetTarget(out PenThread candidatePenThread) ||
+                        candidatePenThread.IsDisposed)
                     {
                         _penThreadWeakRefList.RemoveAt(i);
+                    }
+                    else if (!ignoredThreads.Contains(candidatePenThread))
+                    {
+                        selectedPenThread = candidatePenThread;
                     }
                 }
 

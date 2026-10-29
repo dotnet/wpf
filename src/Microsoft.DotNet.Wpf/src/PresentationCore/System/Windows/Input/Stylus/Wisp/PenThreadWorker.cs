@@ -559,8 +559,15 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
+        internal bool IsDisposed => __disposed;
+
         internal TabletDeviceInfo[] WorkerGetTabletsInfo()
         {
+            if (__disposed)
+            {
+                return Array.Empty<TabletDeviceInfo>();
+            }
+
             // Set data up for this call
             WorkerOperationGetTabletsInfo getTablets = new WorkerOperationGetTabletsInfo();
             

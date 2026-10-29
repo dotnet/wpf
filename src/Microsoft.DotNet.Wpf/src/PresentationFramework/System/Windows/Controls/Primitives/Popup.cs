@@ -1517,7 +1517,10 @@ namespace System.Windows.Controls.Primitives
             // This ensures that a recycled HWND that is moving from one display
             // to another does not undergo a WM_DPICHANGED event and thus cause a
             // cascading failure.
-            if (PopupInitialPlacementHelper.IsPerMonitorDpiScalingActive)
+            // Also create a new window if the popup animation is set to Fade,
+            // otherwise reusing the same window will interrupt the fade-out animation,
+            // causing together with the call to SetWindowPos a brief flicker instead of smooth fade-in.
+            if (PopupInitialPlacementHelper.IsPerMonitorDpiScalingActive || PopupAnimation is PopupAnimation.Fade)
             {
                 DestroyWindowImpl();
                 _positionInfo = null;

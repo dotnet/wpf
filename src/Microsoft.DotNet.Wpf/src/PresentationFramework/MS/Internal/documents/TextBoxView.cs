@@ -576,7 +576,6 @@ namespace System.Windows.Controls
             Rect rect;
 
             Invariant.Assert(this.IsLayoutValid);
-            Invariant.Assert(Contains(position));
 
             int offset = position.Offset;
             if (offset > 0 && position.LogicalDirection == LogicalDirection.Backward)
@@ -717,7 +716,6 @@ namespace System.Windows.Controls
         ITextPointer ITextView.GetPositionAtNextLine(ITextPointer position, double suggestedX, int count, out double newSuggestedX, out int linesMoved)
         {
             Invariant.Assert(this.IsLayoutValid);
-            Invariant.Assert(Contains(position));
 
             newSuggestedX = suggestedX;
             int lineIndex = GetLineIndexFromPosition(position);
@@ -764,7 +762,6 @@ namespace System.Windows.Controls
         bool ITextView.IsAtCaretUnitBoundary(ITextPointer position)
         {
             Invariant.Assert(this.IsLayoutValid);
-            Invariant.Assert(Contains(position));
             bool boundary = false;
 
             int lineIndex = GetLineIndexFromPosition(position);
@@ -803,7 +800,6 @@ namespace System.Windows.Controls
         ITextPointer ITextView.GetNextCaretUnitPosition(ITextPointer position, LogicalDirection direction)
         {
             Invariant.Assert(this.IsLayoutValid);
-            Invariant.Assert(Contains(position));
 
             // Special case document start/end.
             if (position.Offset == 0 && direction == LogicalDirection.Backward)
@@ -880,7 +876,6 @@ namespace System.Windows.Controls
         ITextPointer ITextView.GetBackspaceCaretUnitPosition(ITextPointer position)
         {
             Invariant.Assert(this.IsLayoutValid);
-            Invariant.Assert(Contains(position));
 
             // Special case document start.
             if (position.Offset == 0)
@@ -928,7 +923,6 @@ namespace System.Windows.Controls
         TextSegment ITextView.GetLineRange(ITextPointer position)
         {
             Invariant.Assert(this.IsLayoutValid);
-            Invariant.Assert(Contains(position));
 
             int lineIndex = GetLineIndexFromPosition(position);
 
@@ -1124,20 +1118,35 @@ namespace System.Windows.Controls
         // Returns the index of the line containing the specified offset.
         // Offset has forward direction -- we always return the following
         // line in ambiguous cases.
+        // 
+        // When background layout is pending, offsets beyond the measured region
+        // are clamped to the last measured line to prevent crashes during
+        // incremental layout operations (e.g., text selection highlighting).
         internal int GetLineIndexFromOffset(int offset)
         {
             int index = -1;
             int min = 0;
             int max = _lineMetrics.Count;
+            int lastIndex = max - 1;
+            Invariant.Assert(lastIndex >= 0);
 
-            Invariant.Assert(_lineMetrics.Count >= 1);
+            // Defensive: If offset is beyond what we've measured during background layout,
+            // clamp to last line. This is expected behavior when large text selections occur
+            // before layout completes, similar to the behavior in GetLineIndexFromPoint and GetVisibleLines methods.
+            LineRecord record = _lineMetrics[lastIndex];
+            if (offset > record.EndOffset)
+            {
+                // This should only happen during background layout
+                Invariant.Assert(IsBackgroundLayoutPending);
+                return lastIndex;
+            }
 
             while (true)
             {
                 Invariant.Assert(min < max, "Couldn't find offset!");
 
                 index = min + (max - min) / 2;
-                LineRecord record = _lineMetrics[index];
+                record = _lineMetrics[index];
 
                 if (offset < record.Offset)
                 {
@@ -1149,7 +1158,7 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    if (offset == record.EndOffset && index < _lineMetrics.Count - 1)
+                    if (offset == record.EndOffset && index < lastIndex)
                     {
                         // Go to the next line if we're between two lines.
                         index++;

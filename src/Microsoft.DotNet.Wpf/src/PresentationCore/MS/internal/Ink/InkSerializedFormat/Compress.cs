@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //#define OLD_ISF
 
 namespace MS.Internal.Ink.InkSerializedFormat
 {
-    internal class Compressor 
+    internal static class Compressor 
 #if OLD_ISF
         : IDisposable
 #endif

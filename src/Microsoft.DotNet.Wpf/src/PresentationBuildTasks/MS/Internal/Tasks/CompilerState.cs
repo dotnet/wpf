@@ -417,9 +417,9 @@ namespace MS.Internal.Tasks
 
         #region private data
 
-        private String [] _cacheInfoList;
-        private string    _stateFilePath;
-        private ITaskFileService _taskFileService = null;
+        private readonly string[] _cacheInfoList;
+        private readonly string _stateFilePath;
+        private readonly ITaskFileService _taskFileService;
 
         #endregion
 

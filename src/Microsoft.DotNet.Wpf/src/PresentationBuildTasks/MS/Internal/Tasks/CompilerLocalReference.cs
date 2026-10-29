@@ -25,11 +25,12 @@ namespace MS.Internal.Tasks
     // </summary>
     internal class LocalReferenceFile
     {
-        private bool   _localizable;
-        private string _filePath;
-        private string _linkAlias;
-        private string _logicalName;
-        private static LocalReferenceFile _empty = new LocalReferenceFile(String.Empty, false, String.Empty, String.Empty);
+        private readonly bool _localizable;
+        private readonly string _filePath;
+        private readonly string _linkAlias;
+        private readonly string _logicalName;
+        private static readonly LocalReferenceFile _empty = new LocalReferenceFile(String.Empty, false, String.Empty, String.Empty);
+
         private const char trueChar  = 'T';
         private const char falseChar = 'F';
         private const char semiColonChar = ';';
@@ -332,9 +333,10 @@ namespace MS.Internal.Tasks
         private LocalReferenceFile    _localApplicationFile;
         private LocalReferenceFile[]  _localMarkupPages;
 
-        private string                _localCacheFile;
         private string                _internalTypeHelperFile = String.Empty;
-        private ITaskFileService      _taskFileService = null;
+
+        private readonly string _localCacheFile;
+        private readonly ITaskFileService _taskFileService;
 
         #endregion
 

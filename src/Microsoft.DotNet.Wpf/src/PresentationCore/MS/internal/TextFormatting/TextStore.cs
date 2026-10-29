@@ -590,6 +590,51 @@ namespace MS.Internal.TextFormatting
                 // Starting edge is always in front.
                 return IsStart ? -1 : 1;
             }
+
+            public bool Equals(TextEffectBoundary other)
+            {
+                return _position == other._position && _isStart == other._isStart;
+            }
+
+            public override bool Equals(object obj)
+            {
+                return obj is TextEffectBoundary other && Equals(other);
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(_position, _isStart);
+            }
+
+            public static bool operator ==(TextEffectBoundary left, TextEffectBoundary right)
+            {
+                return left.Equals(right);
+            }
+
+            public static bool operator !=(TextEffectBoundary left, TextEffectBoundary right)
+            {
+                return !left.Equals(right);
+            }
+
+            public static bool operator <(TextEffectBoundary left, TextEffectBoundary right)
+            {
+                return left.CompareTo(right) < 0;
+            }
+
+            public static bool operator >(TextEffectBoundary left, TextEffectBoundary right)
+            {
+                return left.CompareTo(right) > 0;
+            }
+
+            public static bool operator <=(TextEffectBoundary left, TextEffectBoundary right)
+            {
+                return left.CompareTo(right) <= 0;
+            }
+
+            public static bool operator >=(TextEffectBoundary left, TextEffectBoundary right)
+            {
+                return left.CompareTo(right) >= 0;
+            }
         }
 
 

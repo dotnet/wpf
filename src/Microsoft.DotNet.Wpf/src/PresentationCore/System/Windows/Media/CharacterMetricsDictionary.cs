@@ -118,7 +118,7 @@ namespace System.Windows.Media
             ArgumentOutOfRangeException.ThrowIfNegative(index);
 
             if (index >= array.Length)
-                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, nameof(index), nameof(array)));
 
             CharacterMetrics[][] pageTable = _pageTable;
             if (pageTable != null)
@@ -136,7 +136,7 @@ namespace System.Windows.Media
                             if (metrics != null)
                             {
                                 if (k >= array.Length)
-                                    throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));
+                                    throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, nameof(array)));
 
                                 array[k++] = new KeyValuePair<int, CharacterMetrics>(
                                     (i << PageShift) | j,
@@ -175,10 +175,10 @@ namespace System.Windows.Media
             ArgumentOutOfRangeException.ThrowIfNegative(index);
 
             if (index >= array.Length)
-                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, nameof(index), nameof(array)));
 
             if (Count > array.Length - index)
-                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, nameof(array)));
 
             SC.DictionaryEntry[] typedArray = array as SC.DictionaryEntry[];
             if (typedArray != null)

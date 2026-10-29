@@ -209,7 +209,7 @@ namespace System.Windows.Data
 
             DependencyProperty dp = args.Property;
             if (dp == null)
-                throw new InvalidOperationException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "Property", "args"));
+                throw new InvalidOperationException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "Property", nameof(args)));
 
             // ignore irrelevant notifications.  This test must happen before any marshalling.
             bool relevant = !IgnoreSourcePropertyChange;

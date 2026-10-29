@@ -8,7 +8,6 @@
 //              model tree -- design.doc
 //
 
-
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -16,9 +15,7 @@ using System.ComponentModel;
 using System.Windows.Data;  // for CollectionContainer
 using MS.Internal.Controls;
 using MS.Internal.Data;     // for IndexedEnumerable
-using MS.Internal.KnownBoxes; // for BooleanBoxes
 using MS.Internal.Utility;
-
 
 namespace System.Windows.Controls
 {

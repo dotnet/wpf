@@ -213,7 +213,7 @@ namespace System.Windows.Input
                         typeof(bool),
                         typeof(InputMethod),
                         new PropertyMetadata(
-                                true, 
+                                BooleanBoxes.TrueBox,
                                 new PropertyChangedCallback(IsInputMethodEnabled_Changed)));
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace System.Windows.Input
                         "IsInputMethodSuspended",
                         typeof(bool),
                         typeof(InputMethod),
-                        new PropertyMetadata(false));
+                        new PropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Setter for IsInputMethodSuspended DependencyProperty
@@ -379,7 +379,7 @@ namespace System.Windows.Input
                         "InputScope",
                         typeof(InputScope),
                         typeof(InputMethod),
-                        new PropertyMetadata((InputScope) null));
+                        new PropertyMetadata((InputScope)null));
 
         /// <summary>
         /// Setter for InputScope DependencyProperty

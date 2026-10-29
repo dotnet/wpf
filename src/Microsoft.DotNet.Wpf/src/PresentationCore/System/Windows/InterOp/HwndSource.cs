@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Threading;
@@ -429,6 +429,83 @@ namespace System.Windows.Interop
             OnDpiChangedAfterParent(e);
         }
 
+        // Set by Window for the duration of a single native placement operation, including the
+        // synchronous DPI messages raised by that operation.  The default value keeps the
+        // rectangle suggested by Windows.
+        internal DpiRectOverride DpiSuggestedRect { get; set; }
+
+        /// <summary>
+        ///     Device units requested for one native placement operation, together with the
+        ///     logical size constraints that apply to it.  This is not a persistent sizing
+        ///     policy.  Every axis left at null keeps the rectangle suggested by Windows.
+        /// </summary>
+        internal readonly struct DpiRectOverride
+        {
+            internal DpiRectOverride(double? left, double? top, double? width, double? height,
+                Size minimum = default, Size? maximum = null)
+            {
+                Left = left;
+                Top = top;
+                Width = width;
+                Height = height;
+                _minimum = minimum;
+                _maximum = maximum ?? new Size(double.PositiveInfinity, double.PositiveInfinity);
+            }
+
+            internal double? Left { get; }
+            internal double? Top { get; }
+            internal double? Width { get; }
+            internal double? Height { get; }
+            private readonly Size _minimum;
+            private readonly Size _maximum;
+
+            internal Rect ApplyTo(Rect suggested)
+            {
+                if (Left.HasValue)
+                {
+                    suggested.X = Left.Value;
+                }
+
+                if (Top.HasValue)
+                {
+                    suggested.Y = Top.Value;
+                }
+
+                if (Width.HasValue)
+                {
+                    suggested.Width = Width.Value;
+                }
+
+                if (Height.HasValue)
+                {
+                    suggested.Height = Height.Value;
+                }
+
+                return suggested;
+            }
+
+            internal Rect ApplyTo(Rect suggested, DpiScale dpi)
+            {
+                suggested = ApplyTo(suggested);
+                // The constraints are logical values, so they have to be converted with the
+                // destination DPI.  During a cross-monitor native move the HWND still reports
+                // the DPI of the monitor the window is leaving.
+                if (Width.HasValue)
+                {
+                    suggested.Width = Math.Round(Math.Max(_minimum.Width * dpi.DpiScaleX,
+                        Math.Min(Width.Value, _maximum.Width * dpi.DpiScaleX)), MidpointRounding.AwayFromZero);
+                }
+
+                if (Height.HasValue)
+                {
+                    suggested.Height = Math.Round(Math.Max(_minimum.Height * dpi.DpiScaleY,
+                        Math.Min(Height.Value, _maximum.Height * dpi.DpiScaleY)), MidpointRounding.AwayFromZero);
+                }
+
+                return suggested;
+            }
+        }
+
         /// <summary>
         ///     Announces when the DPI is going to change for the window. If the user handles this event,
         ///     WPF does not scale any visual.
@@ -439,7 +516,7 @@ namespace System.Windows.Interop
 
             if (!e.Handled)
             {
-                _hwndTarget?.OnDpiChanged(e);
+                _hwndTarget?.OnDpiChanged(e, DpiSuggestedRect.ApplyTo(e.SuggestedRect, e.NewDpi));
 
                 // New world transform has been set-up by HwndTarget
                 // set the layouts size again to account for this

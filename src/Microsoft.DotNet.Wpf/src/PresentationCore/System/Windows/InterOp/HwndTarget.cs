@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Windows.Threading;
@@ -1734,9 +1734,10 @@ namespace System.Windows.Interop
         }
 
         /// <summary>
-        /// Resizes and repositions the HWND based on suggestedRect and the new DPI.
+        /// Resizes and repositions the HWND based on the requested device rectangle, or on
+        /// suggestedRect when no rectangle was requested, and the new DPI.
         /// </summary>
-        internal void OnDpiChanged(HwndDpiChangedEventArgs e)
+        internal void OnDpiChanged(HwndDpiChangedEventArgs e, Rect? deviceRect = null)
         {
             var oldDpi = CurrentDpiScale;
             var newDpi = new DpiScale2(e.NewDpi);
@@ -1747,11 +1748,13 @@ namespace System.Windows.Interop
             NotifyListenersOfWorldTransformAndClipBoundsChanged();
             NotifyRendererOfDpiChange(afterParent:false);
 
-            // Set the new window size.
+            // Set the new window size.  A rectangle requested by the caller replaces only the
+            // rectangle suggested for the new DPI.
+            Rect bounds = deviceRect ?? e.SuggestedRect;
             UnsafeNativeMethods.SetWindowPos(
                 _hWnd.MakeHandleRef(this),
                 new HandleRef(null, IntPtr.Zero), // HWND_TOP
-                (int)e.SuggestedRect.Left, (int)e.SuggestedRect.Top, (int)e.SuggestedRect.Width, (int)e.SuggestedRect.Height,
+                (int)bounds.Left, (int)bounds.Top, (int)bounds.Width, (int)bounds.Height,
                 NativeMethods.SWP_NOZORDER | NativeMethods.SWP_ASYNCWINDOWPOS);
         }
 

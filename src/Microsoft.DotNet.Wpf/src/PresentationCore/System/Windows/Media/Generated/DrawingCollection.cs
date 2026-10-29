@@ -27,7 +27,6 @@ namespace System.Windows.Media
     /// <summary>
     /// A collection of Drawing objects.
     /// </summary>
-
     public sealed partial class DrawingCollection : Animatable, IList, IList<Drawing>
     {
         //------------------------------------------------------

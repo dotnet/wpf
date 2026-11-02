@@ -1,8 +1,12 @@
 ---
 name: WPF issue assessment
-run-name: WPF assessment ${{ inputs.request_id || github.run_id }}
+run-name: WPF assessment ${{ inputs.request_id || format('issue-{0}', inputs.issue_number || github.event.issue.number) }}
 description: Assess one human-created WPF issue without publishing labels or comments.
 on:
+  issues:
+    types: [opened, edited, reopened]
+  issue_comment:
+    types: [created, edited]
   workflow_dispatch:
     inputs:
       issue_number:
@@ -14,9 +18,41 @@ on:
         required: false
         type: string
   roles: all
-if: github.repository == 'dotnet/wpf' && github.ref == 'refs/heads/main'
+  permissions:
+    contents: read
+    issues: read
+  steps:
+    - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      with:
+        ref: ${{ github.sha }}
+        persist-credentials: false
+    - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+      with:
+        python-version: '3.12'
+    - name: Exclude ineligible issues before inference
+      id: eligibility
+      continue-on-error: true
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      run: python .github/scripts/issue-triage/triage.py eligible "$GITHUB_EVENT_PATH"
+if: >-
+  github.repository == 'dotnet/wpf' && github.ref == 'refs/heads/main' &&
+  (github.event_name == 'workflow_dispatch' || vars.WPF_TRIAGE_ANALYSIS_ENABLED == 'true') &&
+  (github.event_name == 'workflow_dispatch' ||
+   (github.event.issue.state == 'open' && github.event.issue.pull_request == null &&
+    github.event.issue.user.type == 'User' &&
+    (github.event_name != 'issue_comment' ||
+     (github.event.comment.user.id == github.event.issue.user.id && github.event.comment.user.type == 'User'))))
+user-rate-limit:
+  max-runs-per-window: 5
+  window: 60
 concurrency:
-  group: wpf-assessment-${{ inputs.issue_number }}
+  group: >-
+    wpf-assessment-${{
+      (github.event_name == 'issue_comment' &&
+       github.event.comment.user.id != github.event.issue.user.id &&
+       format('ignored-{0}', github.run_id)) ||
+      inputs.issue_number || github.event.issue.number || github.run_id }}
   job-discriminator: ${{ github.run_id }}
   cancel-in-progress: true
 timeout-minutes: 10
@@ -52,6 +88,9 @@ pre-agent-steps:
   - name: Attach bounded evidence
     run: python .github/scripts/issue-triage/triage.py attach-context /tmp/gh-aw/wpf-context.json /tmp/gh-aw/aw-prompts/prompt.txt
 jobs:
+  agent:
+    needs: [activation, pre_activation]
+    if: needs.pre_activation.outputs.eligibility_result == 'success'
   detection:
     if: "!cancelled() && needs.agent.result == 'success'"
 safe-outputs:

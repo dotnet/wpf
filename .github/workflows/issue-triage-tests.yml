@@ -20,3 +20,11 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m unittest discover -s .github/scripts/issue-triage/tests -v
+      - name: Install pinned workflow compiler
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh extension install github/gh-aw --pin v0.89.21
+      - name: Check generated workflow
+        run: |
+          gh aw compile issue-triage --strict --no-check-update
+          git diff --exit-code -- .github/workflows/issue-triage.lock.yml .github/aw

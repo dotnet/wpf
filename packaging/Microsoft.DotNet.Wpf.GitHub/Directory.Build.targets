@@ -6,7 +6,7 @@
     <_PowerShellExe Condition="'$(_PowerShellExe)' == ''">%WINDIR%\System32\WindowsPowerShell\v1.0\powershell.exe</_PowerShellExe>
     <_ScriptLocation Condition="'$(_ScriptLocation)' == ''">$(MSBuildProjectDirectory)\Check-AssemblyVersions.ps1</_ScriptLocation>
     <_IsServicingRelease>false</_IsServicingRelease>
-    <_IsServicingRelease Condition="'$(PreReleaseVersionLabel)' == 'servicing'">true</_IsServicingRelease>
+    <_IsServicingRelease Condition="'$(PreReleaseVersionLabel)' == 'servicing' or '$(PreReleaseVersionLabel)' == 'hotfix'">true</_IsServicingRelease>
   </PropertyGroup>
 
   <!-- 

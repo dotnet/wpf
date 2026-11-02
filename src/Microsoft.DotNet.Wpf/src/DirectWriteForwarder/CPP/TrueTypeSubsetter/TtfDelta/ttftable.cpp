@@ -904,6 +904,16 @@ int16 errCode;
 /* check if this is a composite glyph */
 
     *pusnGlyphs = 0;  /* number of glyphs at this level and below */
+
+    /* Enforce maximum recursion depth to prevent stack overflow
+       from malicious fonts with deeply nested or circular composite glyphs */
+    if (FONT_SECURITY_CHECKS_ENABLED())
+    {
+        #define MAX_COMPOSITE_GLYPH_DEPTH 64
+        if (usLevelValue > MAX_COMPOSITE_GLYPH_DEPTH)
+            return ERR_INVALID_GLYF;
+    }
+
     if ((errCode = GetGlyphHeader( pInputBufferInfo, usCompositeGlyphIdx, usIdxToLocFmt, ulLocaOffset, ulGlyfOffset, &GlyfHeader, &ulOffset, &usLength )) != NO_ERROR)
         return(errCode);
     if (*pusnComponentDepth < usLevelValue)
@@ -950,6 +960,12 @@ int16 errCode;
         else if ( usFlags & WE_HAVE_A_TWO_BY_TWO )
             ulCrntOffset += 4 * sizeof( uint16 );
         /* now deal with any components of this component */
+        /* Detect direct circular reference (component points back to parent) */
+        if (FONT_SECURITY_CHECKS_ENABLED())
+        {
+            if (usComponentGlyphIdx == usCompositeGlyphIdx)
+                return ERR_INVALID_GLYF;
+        }
         if ((errCode = GetComponentGlyphList(pInputBufferInfo, usComponentGlyphIdx, &usnGlyphs, &(ausGlyphIdxs[*pusnGlyphs]), (uint16) (cMaxGlyphs - *pusnGlyphs), pusnComponentDepth, 
                             (uint16) (usLevelValue + 1), usIdxToLocFmt, ulLocaOffset, ulGlyfOffset)) != NO_ERROR)
             return(errCode);
@@ -1155,8 +1171,8 @@ int16 errCode = NO_ERROR;
             {
                 sIDIdx = (uint16) i - (uint16) usSegCount; 
                 sIDIdx += (uint16) (pFormat4Segments[i].idRangeOffset / 2) + usCharCodeValue - pFormat4Segments[i].startCount;
-                /* check bounds */
-                if (sIDIdx < usnFormat4Glyphs)
+                /* check bounds — upper and lower */
+                if (FONT_SECURITY_CHECKS_ENABLED() ? (sIDIdx >= 0 && sIDIdx < usnFormat4Glyphs) : (sIDIdx < usnFormat4Glyphs))
                 {
                     usGlyphIndex = pFormat4GlyphIdArray[ sIDIdx ];
                     if (usGlyphIndex)

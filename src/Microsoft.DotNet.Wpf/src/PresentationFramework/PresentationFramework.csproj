@@ -1195,6 +1195,7 @@
     <Compile Include="System\Windows\Markup\Primitives\MarkupWriter.cs" />
     <Compile Include="System\Windows\Markup\ProvideValueServiceProvider.cs" />
     <Compile Include="System\Windows\Markup\ReaderContextStackData.cs" />
+    <Compile Include="System\Windows\Markup\RestrictiveXamlContext.cs" />
     <Compile Include="System\Windows\Markup\RestrictiveXamlXmlReader.cs" />
     <Compile Include="System\Windows\Markup\RoutedEventConverter.cs" />
     <Compile Include="System\Windows\Markup\RoutedEventValueSerializer.cs" />

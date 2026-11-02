@@ -150,8 +150,19 @@ namespace System.Windows.Xps.Packaging
                 {
                     try
                     {
-                        string convertedId = XmlConvert.DecodeName(sig.Id);
-                        id = new Guid(convertedId);
+                        if (MS.Internal.ReachAppContextSwitches.OptOutOfXpsSignatureIdBindingVerification)
+                        {
+                            string convertedId = XmlConvert.DecodeName(sig.Id);
+                            id = new Guid(convertedId);
+                        }
+                        else
+                        {
+                            string rawId = sig.Id;
+                            if (!string.IsNullOrEmpty(rawId) && IsSignatureIdBound(sig, rawId))
+                            {
+                                id = new Guid(XmlConvert.DecodeName(rawId));
+                            }
+                        }
                     }
                     catch( ArgumentNullException  )
                     {
@@ -164,6 +175,62 @@ namespace System.Windows.Xps.Packaging
                 }
                 return id;
             }
+        }
+
+        private static bool IsSignatureIdBound(Signature sig, string signatureId)
+        {
+            Dictionary<string, object> signedObjectIds = new Dictionary<string, object>(StringComparer.Ordinal);
+            if (sig.SignedInfo != null)
+            {
+                foreach (Reference reference in sig.SignedInfo.References)
+                {
+                    string uri = reference.Uri;
+                    if (!string.IsNullOrEmpty(uri) && uri.Length > 1 && uri[0] == '#')
+                    {
+                        signedObjectIds[uri.Substring(1)] = null;
+                    }
+                }
+            }
+
+            string expectedTarget = "#" + signatureId;
+            foreach (System.Security.Cryptography.Xml.DataObject dataObject in sig.ObjectList)
+            {
+                if (string.IsNullOrEmpty(dataObject.Id) || !signedObjectIds.ContainsKey(dataObject.Id))
+                {
+                    continue;
+                }
+
+                XmlNodeList objectData = dataObject.Data;
+                if (objectData == null)
+                {
+                    continue;
+                }
+
+                foreach (XmlNode node in objectData)
+                {
+                    XmlElement signatureProperties = node as XmlElement;
+                    if (signatureProperties == null ||
+                        !string.Equals(signatureProperties.LocalName, "SignatureProperties", StringComparison.Ordinal) ||
+                        !string.Equals(signatureProperties.NamespaceURI, SignedXml.XmlDsigNamespaceUrl, StringComparison.Ordinal))
+                    {
+                        continue;
+                    }
+
+                    foreach (XmlNode propertyNode in signatureProperties.ChildNodes)
+                    {
+                        XmlElement propertyElement = propertyNode as XmlElement;
+                        if (propertyElement != null &&
+                            string.Equals(propertyElement.LocalName, "SignatureProperty", StringComparison.Ordinal) &&
+                            string.Equals(propertyElement.NamespaceURI, SignedXml.XmlDsigNamespaceUrl, StringComparison.Ordinal) &&
+                            string.Equals(propertyElement.GetAttribute("Target"), expectedTarget, StringComparison.Ordinal))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
         }
 
         /// <summary>

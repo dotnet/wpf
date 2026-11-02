@@ -31,6 +31,11 @@ class FakeGitHub:
 
 
 class EvidenceTests(unittest.TestCase):
+    def setUp(self):
+        releases = patch("priority.fetch_releases", return_value={"supported_stable": [], "latest_stable": "None"})
+        self.addCleanup(releases.stop)
+        releases.start()
+
     def test_ineligible_issue_stops_before_other_api_reads(self):
         client = FakeGitHub()
         client.issue["user"]["type"] = "Bot"

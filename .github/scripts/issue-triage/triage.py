@@ -411,6 +411,16 @@ def agent_result(output: dict) -> dict:
     return item
 
 
+def event_eligible(client: GitHub, event: dict) -> bool:
+    issue = client.get(f"issues/{event_number(event)}")
+    if not eligible(issue):
+        return False
+    if "comment" in event:
+        author = event["comment"].get("user") or {}
+        return author.get("id") == issue["user"]["id"] and author.get("type") == "User"
+    return True
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="WPF issue triage")
     modes = parser.add_subparsers(dest="mode", required=True)
@@ -426,9 +436,15 @@ def main(argv: list[str] | None = None) -> int:
     assess.add_argument("event", type=Path)
     assess.add_argument("result", type=Path)
     assess.add_argument("destination", type=Path)
+    gate = modes.add_parser("eligible")
+    gate.add_argument("source", type=Path)
     args = parser.parse_args(argv)
     try:
-        if args.mode == "attach-context":
+        if args.mode == "eligible":
+            if os.environ.get("GITHUB_REPOSITORY") != REPOSITORY:
+                raise TriageError("Only the WPF repository is supported")
+            return 0 if event_eligible(GitHub(), read_json(args.source)) else 1
+        elif args.mode == "attach-context":
             attach_context(args.source, args.destination)
         elif args.mode == "prepare":
             if os.environ.get("GITHUB_REPOSITORY") != REPOSITORY:

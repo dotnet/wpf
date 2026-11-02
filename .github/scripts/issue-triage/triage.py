@@ -357,6 +357,16 @@ def event_number(event: dict) -> int:
     return value
 
 
+def agent_result(output: dict) -> dict:
+    items = output.get("items")
+    if not isinstance(items, list) or len(items) != 1 or not isinstance(items[0], dict):
+        raise TriageError("Exactly one assessment output is required")
+    item = dict(items[0])
+    if item.pop("type", None) != "assess_wpf_issue":
+        raise TriageError("Unexpected output operation")
+    return item
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="WPF issue triage")
     modes = parser.add_subparsers(dest="mode", required=True)
@@ -368,6 +378,10 @@ def main(argv: list[str] | None = None) -> int:
     preview.add_argument("context", type=Path)
     preview.add_argument("result", type=Path)
     preview.add_argument("destination", type=Path)
+    assess = modes.add_parser("assess")
+    assess.add_argument("event", type=Path)
+    assess.add_argument("result", type=Path)
+    assess.add_argument("destination", type=Path)
     args = parser.parse_args(argv)
     try:
         if args.mode == "attach-context":
@@ -376,6 +390,15 @@ def main(argv: list[str] | None = None) -> int:
             if os.environ.get("GITHUB_REPOSITORY") != REPOSITORY:
                 raise TriageError("Only the WPF repository is supported")
             write_json(args.destination, prepare(GitHub(), event_number(read_json(args.source))))
+        elif args.mode == "assess":
+            if os.environ.get("GITHUB_REPOSITORY") != REPOSITORY:
+                raise TriageError("Only the WPF repository is supported")
+            evidence = prepare(GitHub(), event_number(read_json(args.event)))
+            if not evidence["should_process"]:
+                raise TriageError("Issue became ineligible")
+            plan = label_plan(agent_result(read_json(args.result)), evidence)
+            plan.update(evidence=evidence, assessed_at=int(time.time()), run_id=os.environ.get("GITHUB_RUN_ID"))
+            write_json(args.destination, plan)
         else:
             write_json(args.destination, label_plan(read_json(args.result), read_json(args.context)))
         return 0

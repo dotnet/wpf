@@ -5,10 +5,15 @@ import unittest
 from unittest.mock import patch
 
 from test_output import assessment_fixture
-from triage import TriageError, event_number, main, read_json
+from triage import TriageError, agent_result, event_number, main, read_json
 
 
 class CommandTests(unittest.TestCase):
+    def test_native_output_has_exactly_one_allowed_operation(self):
+        self.assertEqual(agent_result({"items": [{"type": "assess_wpf_issue", "area": "None"}]}), {"area": "None"})
+        for value in ({"items": []}, {"items": [{"type": "comment"}]}, {"items": [{}, {}]}):
+            with self.subTest(value=value), self.assertRaises(TriageError):
+                agent_result(value)
     def test_preview_uses_no_api_client_and_writes_only_the_requested_file(self):
         _, evidence, result = assessment_fixture()
         with tempfile.TemporaryDirectory() as directory:

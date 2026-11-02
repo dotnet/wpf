@@ -46,6 +46,7 @@ jobs:
           PUBLISH: ${{ github.event_name == 'workflow_dispatch' && inputs.publish || false }}
           AREA_ENABLED: ${{ vars.WPF_TRIAGE_AREA_ENABLED == 'true' }}
           WPF_TRIAGE_AREA_PILOT_APPROVED: ${{ vars.WPF_TRIAGE_AREA_PILOT_APPROVED == 'true' }}
+          WPF_TRIAGE_PRIORITY_PILOT_APPROVED: ${{ vars.WPF_TRIAGE_PRIORITY_PILOT_APPROVED == 'true' }}
           PRIORITY_ENABLED: ${{ vars.WPF_TRIAGE_PRIORITY_ENABLED == 'true' }}
           APPROVAL_RUN: ${{ vars.WPF_TRIAGE_APPROVAL_RUN || '0' }}
         run: >-

@@ -1,8 +1,8 @@
 # WPF issue triage
 
-This directory defines the policy for a planned issue triage bot. It does not
-install a workflow or change issues. Area labeling, priority labeling, and project
-updates will be introduced separately, starting with read-only previews.
+These scripts and workflows assess human-created WPF issues, publish guarded
+area/P0/P1 labels, and maintain a private top-10 bug shortlist. Automatic analysis
+and publication stay off until maintainers configure the controls below.
 
 ## Scope
 
@@ -26,22 +26,22 @@ The bot will not post issue comments, change issue Type, assign people, change
 milestones, close issues, request reproductions, suggest duplicates, or add team,
 feedback, or stale labels. Existing issue-management workflows remain unchanged.
 
-## Intended operation
+## Operation
 
-Automatic assessment will cover issue opens, edits, reopens, and author
-follow-ups. Manual dispatch will support previews and resumable backlog
+Automatic assessment covers issue opens, edits, reopens, and author
+follow-ups. Manual dispatch supports previews and resumable backlog
 assessment. Automatic publication remains disabled until its rollout checks pass.
 
-Analysis will receive bounded issue evidence and return structured output. Issue
+Analysis receives bounded issue evidence and returns structured output. Issue
 text, comments, code samples, and links are untrusted evidence, not instructions.
 The model must not execute samples, fetch arbitrary links, or write issues.
 
-A separate publisher must require successful threat detection, validate the
-output against trusted policy and existing labels, and recheck the issue before
+A separate publisher requires successful threat detection, validates the
+output against trusted policy and existing labels, and rechecks the issue before
 an additive write. Stale, incomplete, or invalid results must not authorize writes.
 Ambiguous mutation results require inspection rather than blind retries.
 
-Versioned Actions artifacts will hold public-issue assessments and resumable
+Versioned Actions artifacts hold public-issue assessments and resumable
 checkpoints with explicit retention. Expired artifacts or incomplete coverage
 require read-only repair before board publication resumes.
 
@@ -53,17 +53,17 @@ The manual board workflow defaults to preview and uploads no project data.
 
 ## Private top-10 project
 
-The planned project will have private visibility and a selected-issues view
+The project must have private visibility and a selected-issues view
 containing at most 10 open, human-created bugs. Private maintainer controls will
 pin or exclude issues; pins count toward the limit. More than 10 eligible pins
 requires maintainer resolution.
 
-Selection will use eligible pins, authoritative or approved priority,
+Selection uses eligible pins, authoritative or approved priority,
 evidence-backed impact, compatibility/regression, issue-body thumbs-up reactions,
 and issue number as a stable final tie-breaker. Unprioritized bugs may fill
 remaining places without receiving P2/P3 labels.
 
-A separate GitHub Action will refresh the project daily and on manual dispatch,
+A separate GitHub Action refreshes the project daily and on manual dispatch,
 using current assessments without rerunning the model. It must preserve human
 controls and stop without board writes when assessment coverage, access, private
 visibility, or project schema cannot be verified.
@@ -103,6 +103,21 @@ publication additionally requires both `WPF_TRIAGE_AREA_ENABLED=true` and
 manual label pilot is verified. Manual publication still requires an explicit
 publish request and the corresponding capability control. Priority publication
 requires calibration even during a manual pilot.
+
+Automatic priority writes require `WPF_TRIAGE_PRIORITY_ENABLED=true`,
+`WPF_TRIAGE_PRIORITY_PILOT_APPROVED=true`, and `WPF_TRIAGE_APPROVAL_RUN` set to the
+successful protected calibration run. The publisher checks complete current
+coverage and the 20/50 limits before writing. A changed policy invalidates approval.
+
+Manual board writes require `WPF_TRIAGE_BOARD_ENABLED=true` and an explicit
+publish request. Daily publication at 04:23 UTC additionally requires
+`WPF_TRIAGE_BOARD_PILOT_APPROVED=true`. The board uses the same approval run and
+requires current coverage, configured private project secrets, and valid schema.
+Unset or false controls disable the corresponding automatic capability.
+
+Merge the stacked PRs in sequence, retargeting the next PR to `main` after its
+predecessor merges. Configure setup, calibration, and pilot acceptance on the
+final policy version; do not activate intermediate branches.
 
 ## Pilot and recovery
 

@@ -83,3 +83,17 @@ Rollout starts with offline fixtures and read-only previews. Priority publicatio
 requires a reviewed complete backlog assessment. Area publication and project
 publication each require an accepted narrow pilot before automatic activation.
 Each capability must remain independently disableable.
+
+## Area configuration and tests
+
+`area-map.json` lists permitted primary-area labels and their routing guidance.
+Validate every configured name against the current repository label catalog
+before analysis. Names are case-sensitive; an unclear or unmapped area must
+remain unlabelled.
+
+The configuration loader and tests use Python 3.12 and the standard library.
+Run from the repository root:
+
+```powershell
+python -m unittest discover -s .github\scripts\issue-triage\tests -v
+```

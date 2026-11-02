@@ -11,7 +11,7 @@
     </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="$(PkgMicrosoft_Private_Winforms)\lib\$(TargetFramework)\Accessibility.dll" />
+    <MicrosoftPrivateWinFormsReference Include="Accessibility" />
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
   </ItemGroup>
 </Project>

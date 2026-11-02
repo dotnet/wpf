@@ -310,6 +310,12 @@ class Project:
             raise TriageError("Private field mutation was not confirmed")
 
 
+def board_publication(event: str, requested: bool, enabled: bool, pilot_approved: bool) -> bool:
+    if event not in {"workflow_dispatch", "schedule"}:
+        raise TriageError("Unsupported private refresh event")
+    return requested and enabled and (event == "workflow_dispatch" or pilot_approved)
+
+
 def main(argv: list[str] | None = None) -> int:
     from backlog import inventory, load_approval, resolve_coverage
 
@@ -329,7 +335,12 @@ def main(argv: list[str] | None = None) -> int:
             raise TriageError("Public issue evidence changed during private refresh")
 
     project = Project(int(os.environ.get("WPF_TRIAGE_PROJECT_NUMBER", "0")))
-    reconcile(project, issues, records, args.publish == "true", verify_public)
+    publish = board_publication(
+        os.environ.get("GITHUB_EVENT_NAME"), args.publish == "true",
+        os.environ.get("WPF_TRIAGE_BOARD_ENABLED") == "true",
+        os.environ.get("WPF_TRIAGE_BOARD_PILOT_APPROVED") == "true",
+    )
+    reconcile(project, issues, records, publish, verify_public)
     print("Private WPF project refresh passed.")
     return 0
 

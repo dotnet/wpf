@@ -1,5 +1,7 @@
 name: Refresh private WPF shortlist
 on:
+  schedule:
+    - cron: '23 4 * * *'
   workflow_dispatch:
     inputs:
       publish:
@@ -12,7 +14,10 @@ concurrency:
   cancel-in-progress: false
 jobs:
   project:
-    if: github.repository == 'dotnet/wpf' && github.ref == 'refs/heads/main'
+    if: >-
+      github.repository == 'dotnet/wpf' && github.ref == 'refs/heads/main' &&
+      (github.event_name == 'workflow_dispatch' ||
+       (vars.WPF_TRIAGE_BOARD_ENABLED == 'true' && vars.WPF_TRIAGE_BOARD_PILOT_APPROVED == 'true'))
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
@@ -34,5 +39,7 @@ jobs:
           WPF_TRIAGE_PROJECT_TOKEN: ${{ secrets.WPF_TRIAGE_PROJECT_TOKEN }}
           WPF_TRIAGE_PROJECT_NUMBER: ${{ secrets.WPF_TRIAGE_PROJECT_NUMBER }}
           WPF_TRIAGE_APPROVAL_RUN: ${{ vars.WPF_TRIAGE_APPROVAL_RUN || '0' }}
-          PUBLISH: ${{ inputs.publish && vars.WPF_TRIAGE_BOARD_ENABLED == 'true' || false }}
+          WPF_TRIAGE_BOARD_ENABLED: ${{ vars.WPF_TRIAGE_BOARD_ENABLED == 'true' }}
+          WPF_TRIAGE_BOARD_PILOT_APPROVED: ${{ vars.WPF_TRIAGE_BOARD_PILOT_APPROVED == 'true' }}
+          PUBLISH: ${{ github.event_name == 'schedule' || inputs.publish || false }}
         run: python .github/scripts/issue-triage/project.py --publish "$PUBLISH"

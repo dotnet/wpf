@@ -79,6 +79,77 @@ def shortlist(issues: list[dict], records: dict[int, dict], items: list[dict]) -
     ]
 
 
+def control_snapshot(items: list[dict]) -> list[tuple]:
+    return sorted((
+        item["id"], item["isArchived"], (item.get("content") or {}).get("id"),
+        (item.get("content") or {}).get("number"),
+        ((item.get("content") or {}).get("repository") or {}).get("nameWithOwner"),
+        item["values"].get("Selection control", "Auto"),
+    ) for item in items)
+
+
+def reconcile(project, issues: list[dict], records: dict[int, dict], publish: bool = False, verify_public=None) -> None:
+    layout = project.preflight()
+    items = project.items(layout["id"])
+    members = issue_items(items)
+    chosen = shortlist(issues, records, items)
+    desired = {item["number"]: item for item in chosen}
+    if any(item["isArchived"] for number, item in members.items() if number in desired):
+        raise TriageError("An archived selection needs private review")
+    if any(item["values"].get("Selected") == "Yes" and item["id"] not in {
+        member["id"] for member in members.values()
+    } for item in items):
+        raise TriageError("Unexpected selected project content needs private review")
+    if not publish:
+        return
+    if verify_public is None:
+        raise TriageError("Live public evidence verification is required")
+    expected = control_snapshot(items)
+
+    def guard():
+        verify_public()
+        if project.preflight() != layout or control_snapshot(project.items(layout["id"])) != expected:
+            raise TriageError("Private controls changed; inspect partial writes")
+
+    for number, item in members.items():
+        if number not in desired and item["values"].get("Selected") == "Yes":
+            guard()
+            project.set_field(layout, item["id"], "Selected", "No")
+    for number, choice in desired.items():
+        item = members.get(number)
+        if item is None:
+            if not isinstance(choice["node_id"], str) or not choice["node_id"]:
+                raise TriageError("Public issue node identity is unavailable")
+            guard()
+            item_id = project.add_item(layout["id"], choice["node_id"])
+            item = {
+                "id": item_id, "isArchived": False, "values": {},
+                "content": {"id": choice["node_id"], "number": number,
+                            "repository": {"nameWithOwner": "dotnet/wpf"}},
+            }
+            items.append(item)
+            expected = control_snapshot(items)
+        for field, value in (
+            ("Rank", choice["rank"]), ("Priority", choice["priority"]),
+            ("Selection reason", choice["reason"]), ("Selected", "Yes"),
+        ):
+            if item["values"].get(field) != value:
+                guard()
+                project.set_field(layout, item["id"], field, value)
+    guard()
+    final = project.items(layout["id"])
+    selected = issue_items([item for item in final if item["values"].get("Selected") == "Yes"])
+    if set(selected) != set(desired):
+        raise TriageError("Private shortlist membership read-back failed")
+    for number, choice in desired.items():
+        values = selected[number]["values"]
+        if (
+            values.get("Rank") != choice["rank"] or values.get("Priority") != choice["priority"]
+            or values.get("Selection reason") != choice["reason"] or selected[number]["isArchived"]
+        ):
+            raise TriageError("Private shortlist field read-back failed")
+
+
 class Project:
     def __init__(self, number: int, token: str | None = None):
         self.token = token or os.environ.get("WPF_TRIAGE_PROJECT_TOKEN")
@@ -189,3 +260,50 @@ class Project:
                 raise TriageError("Private item pagination is incomplete")
             seen.add(cursor)
         raise TriageError("Private project item limit reached")
+
+    def add_item(self, project_id: str, content_id: str) -> str:
+        data = self.query("""
+        mutation($project:ID!,$content:ID!) {
+          addProjectV2ItemById(input:{projectId:$project,contentId:$content}) { item { id } }
+        }""", {"project": project_id, "content": content_id})
+        item_id = data.get("addProjectV2ItemById", {}).get("item", {}).get("id")
+        if not isinstance(item_id, str) or not item_id:
+            raise TriageError("Private membership mutation was not confirmed")
+        return item_id
+
+    def set_field(self, layout: dict, item_id: str, name: str, value) -> None:
+        if name not in {"Selected", "Rank", "Priority", "Selection reason"}:
+            raise TriageError("Maintainer controls cannot be changed by the publisher")
+        variables = {"project": layout["id"], "item": item_id, "field": layout["fields"][name]["id"]}
+        if value is None:
+            operation = "clearProjectV2ItemFieldValue"
+            query = """
+            mutation($project:ID!,$item:ID!,$field:ID!) {
+              clearProjectV2ItemFieldValue(input:{projectId:$project,itemId:$item,fieldId:$field}) {
+                projectV2Item { id }
+              }
+            }"""
+        else:
+            field = layout["fields"][name]
+            if name in FIELD_OPTIONS:
+                matches = [option["id"] for option in field["options"] if option["name"] == value]
+                if len(matches) != 1:
+                    raise TriageError("Private selection option is unavailable")
+                payload = {"singleSelectOptionId": matches[0]}
+            elif name == "Rank":
+                if type(value) is not int or not 1 <= value <= 10:
+                    raise TriageError("Private rank must be within the shortlist")
+                payload = {"number": value}
+            else:
+                payload = {"text": value}
+            variables["value"] = payload
+            operation = "updateProjectV2ItemFieldValue"
+            query = """
+            mutation($project:ID!,$item:ID!,$field:ID!,$value:ProjectV2FieldValue!) {
+              updateProjectV2ItemFieldValue(input:{projectId:$project,itemId:$item,fieldId:$field,value:$value}) {
+                projectV2Item { id }
+              }
+            }"""
+        data = self.query(query, variables)
+        if data.get(operation, {}).get("projectV2Item", {}).get("id") != item_id:
+            raise TriageError("Private field mutation was not confirmed")

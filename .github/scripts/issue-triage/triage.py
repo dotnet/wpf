@@ -221,6 +221,12 @@ def digest(value: object) -> str:
     return hashlib.sha256(encoded.encode("utf-8")).hexdigest()
 
 
+def issue_stamp(issue: dict) -> str:
+    return digest({name: issue.get(name) for name in (
+        "number", "title", "body", "user", "labels", "state", "locked", "updated_at", "comments",
+    )})
+
+
 def policy_digest() -> str:
     directory = AREA_MAP_PATH.parent
     files = sorted(directory.glob("*.py")) + [directory / "area-map.json", directory / "priority-policy.md"]
@@ -277,6 +283,7 @@ def prepare(client: GitHub, number: int, releases: dict | None = None) -> dict:
     return {
         "schema": 1, "should_process": True, "repository": REPOSITORY, "number": number,
         "input_sha256": digest(source), "policy_sha256": source["policy_sha256"],
+        "issue_sha256": issue_stamp(issue),
         "issue_kind": issue_kind(issue), "title": issue["title"][:300], "body": body[:16000],
         "existing_labels": sorted(label_names(issue)), "human_removed_labels": removed,
         "allowed_areas": areas, "followups": [{**item, "body": item["body"][:2000]} for item in selected],

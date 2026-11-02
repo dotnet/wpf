@@ -83,17 +83,3 @@ Rollout starts with offline fixtures and read-only previews. Priority publicatio
 requires a reviewed complete backlog assessment. Area publication and project
 publication each require an accepted narrow pilot before automatic activation.
 Each capability must remain independently disableable.
-
-## Reference implementation
-
-The starting reference is the
-[WinUI triage workflow and scripts](https://github.com/microsoft/microsoft-ui-xaml/tree/645e05171fda55ce3f9db0f3b3b3db668f530f4f/.github/scripts/issue-triage)
-at commit `645e05171fda55ce3f9db0f3b3b3db668f530f4f`.
-[microsoft/microsoft-ui-xaml#12467](https://github.com/microsoft/microsoft-ui-xaml/pull/12467)
-is an unmerged priority extension; the reviewed head is
-`b451f3e37a7c9d6088f596ab9416fad674153fd7`. Neither reference replaces WPF's
-reviewed priority policy.
-
-Reuse bounded evidence preparation, structured output, isolated publication,
-freshness checks, and pinned workflow compilation. Do not port WinUI labels,
-team routing, UWP handling, duplicate search, or comment publication.

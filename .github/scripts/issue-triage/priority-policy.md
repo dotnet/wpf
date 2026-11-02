@@ -32,6 +32,12 @@ the report supplies none; it does not prove that none exists. A viable workaroun
 narrow configuration, or unsupported runtime can reduce confidence or defer
 priority. Truncated evidence cannot authorize a P0/P1 addition.
 
+The initial automatic rule requires HIGH confidence, a broad or core scenario,
+and no reported workaround. A viable or uncertain workaround defers priority.
+The affected runtime must match a supported channel's current stable patch from
+trusted metadata. P0 additionally requires the latest stable runtime across those
+channels; older supported-channel crashes or regressions can be P1 candidates.
+
 ## Calibration before publication
 
 1. Enumerate the full open issue backlog with pagination, excluding pull requests,

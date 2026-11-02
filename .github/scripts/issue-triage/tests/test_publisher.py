@@ -1,4 +1,5 @@
 import copy
+import time
 import unittest
 from unittest.mock import patch
 
@@ -15,7 +16,7 @@ class PublisherTests(unittest.TestCase):
         self.addCleanup(releases.stop)
         releases.start()
         self.client, evidence, result = assessment_fixture()
-        self.record = {**label_plan(result, evidence), "evidence": evidence}
+        self.record = {**label_plan(result, evidence), "evidence": evidence, "assessed_at": int(time.time())}
 
     def test_preview_and_disabled_axes_never_mutate(self):
         for publish, area, priority in ((False, True, False), (True, False, False)):
@@ -31,6 +32,7 @@ class PublisherTests(unittest.TestCase):
         self.assertTrue(result["published"])
         self.assertEqual(result["published_labels"], ["TextBox"])
         self.assertEqual(result["add_labels"], ["Priority:0"])
+        self.assertEqual(result["assessed_at"], self.record["assessed_at"])
 
     def test_stale_input_and_missing_priority_approval_stop_writes(self):
         with patch.object(self.client, "add_labels", create=True) as write:

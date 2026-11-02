@@ -5,12 +5,14 @@ import os
 from pathlib import Path
 import time
 
-from backlog import artifact_json, inventory, load_approval, validated_assessments
+from backlog import RETENTION_SECONDS, artifact_json, inventory, load_approval, resolve_coverage
 from priority import enforce_limits, projected_counts
 from triage import GitHub, REPOSITORY, TriageError, label_plan, prepare, write_json
 
 
 def publish_record(client: GitHub, record: dict, publish: bool, area_enabled: bool, priority_enabled: bool, approval_run: int = 0) -> dict:
+    if type(record.get("assessed_at")) is not int or not int(time.time()) - RETENTION_SECONDS <= record["assessed_at"] <= int(time.time()):
+        raise TriageError("Assessment is expired")
     evidence = prepare(client, record["number"])
     if not evidence.get("should_process") or record.get("input_sha256") != evidence["input_sha256"]:
         raise TriageError("Issue changed before publication")
@@ -20,11 +22,11 @@ def publish_record(client: GitHub, record: dict, publish: bool, area_enabled: bo
     if any(name.startswith("Priority:") for name in labels):
         approval = load_approval(client, approval_run)
         issues = inventory(client)
-        records = validated_assessments(approval["manifest"], issues)
+        records = resolve_coverage(client, approval, issues, (record,))
         proposed = {number: item["add_labels"] for number, item in records.items()}
         proposed[record["number"]] = labels
         enforce_limits(projected_counts(issues, proposed))
-    plan.update(evidence=evidence, enabled_labels=labels, assessed_at=int(time.time()), run_id=os.environ.get("GITHUB_RUN_ID"))
+    plan.update(evidence=evidence, enabled_labels=labels, assessed_at=record["assessed_at"], run_id=os.environ.get("GITHUB_RUN_ID"))
     if not publish or not labels:
         return plan
     latest = prepare(client, record["number"])
@@ -41,7 +43,7 @@ def publish_record(client: GitHub, record: dict, publish: bool, area_enabled: bo
     updated = label_plan(result, refreshed)
     updated.update(
         evidence=refreshed, published=True, published_labels=labels,
-        assessed_at=int(time.time()), run_id=os.environ.get("GITHUB_RUN_ID"),
+        assessed_at=record["assessed_at"], run_id=os.environ.get("GITHUB_RUN_ID"),
     )
     return updated
 

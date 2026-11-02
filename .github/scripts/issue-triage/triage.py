@@ -177,11 +177,14 @@ def digest(value: object) -> str:
 
 def policy_digest() -> str:
     directory = AREA_MAP_PATH.parent
-    files = ("area-map.json", "priority-policy.md", "triage.py")
-    return digest({name: (directory / name).read_text(encoding="utf-8") for name in files})
+    files = sorted(directory.glob("*.py")) + [directory / "area-map.json", directory / "priority-policy.md"]
+    workflow = directory.parents[1] / "workflows" / "issue-triage.md"
+    if workflow.exists():
+        files.append(workflow)
+    return digest({path.name: path.read_text(encoding="utf-8") for path in files})
 
 
-def prepare(client: GitHub, number: int) -> dict:
+def prepare(client: GitHub, number: int, releases: dict | None = None) -> dict:
     if type(number) is not int or not 0 < number < 1_000_000_000:
         raise TriageError("Invalid issue number")
     issue = client.get(f"issues/{number}")
@@ -192,6 +195,8 @@ def prepare(client: GitHub, number: int) -> dict:
     if type(issue.get("comments")) is not int or not 0 <= issue["comments"] < 1000:
         raise TriageError("Issue comment coverage requires manual review")
     catalog = {item["name"] for item in client.pages("labels")}
+    if not {"Priority:0", "Priority:1"} <= catalog:
+        raise TriageError("Required priority labels are missing; labels will not be created")
     areas = load_area_map(catalog)
     comments = client.pages(f"issues/{number}/comments", max_pages=10)
     timeline = client.pages(f"issues/{number}/timeline", max_pages=20)
@@ -214,7 +219,7 @@ def prepare(client: GitHub, number: int) -> dict:
     })
     source = {
         "issue": issue, "followups": followups, "human_removed_labels": removed,
-        "policy_sha256": policy_digest(), "catalog": sorted(catalog),
+        "policy_sha256": policy_digest(), "catalog": sorted(catalog), "releases": releases or {},
     }
     selected = followups[:5] + followups[max(5, len(followups) - 5):]
     body = issue.get("body") or ""
@@ -226,6 +231,7 @@ def prepare(client: GitHub, number: int) -> dict:
         "issue_kind": issue_kind(issue), "title": issue["title"][:300], "body": body[:16000],
         "existing_labels": sorted(label_names(issue)), "human_removed_labels": removed,
         "allowed_areas": areas, "followups": [{**item, "body": item["body"][:2000]} for item in selected],
+        "releases": source["releases"],
         "context_truncated": len(body) > 16000 or len(followups) > 10
         or any(len(item["body"]) > 2000 for item in selected),
     }
@@ -239,3 +245,78 @@ def attach_context(context_path: Path, prompt_path: Path) -> None:
         raise TriageError("Prompt must have exactly one evidence slot")
     encoded = json.dumps(evidence, ensure_ascii=True).replace("<", "\\u003c").replace(">", "\\u003e")
     prompt_path.write_text(prompt.replace(marker, encoded), encoding="utf-8")
+
+
+RESULT_FIELDS = {
+    "input_sha256", "issue_kind", "area", "area_confidence", "area_quote",
+    "confidence", "impact", "scope", "workaround", "affected_version", "evidence_quote",
+}
+
+
+def validate_result(result: object, evidence: dict) -> dict:
+    if not evidence.get("should_process") or not isinstance(result, dict) or set(result) != RESULT_FIELDS:
+        raise TriageError("Unexpected assessment schema")
+    if result["input_sha256"] != evidence["input_sha256"]:
+        raise TriageError("Assessment does not match the prepared evidence")
+    enums = {
+        "issue_kind": {"BUG", "FEATURE", "OTHER"},
+        "area_confidence": {"HIGH", "MEDIUM", "LOW", "NONE"},
+        "confidence": {"HIGH", "MEDIUM", "LOW", "NONE"},
+        "impact": {"CRASH", "REGRESSION", "BROKEN_FUNCTIONALITY", "OTHER"},
+        "scope": {"BROAD", "CORE", "NARROW", "UNKNOWN"},
+        "workaround": {"NONE_REPORTED", "VIABLE", "UNKNOWN"},
+    }
+    for field, values in enums.items():
+        if not isinstance(result[field], str) or result[field] not in values:
+            raise TriageError(f"Invalid assessment field: {field}")
+    for field in ("area", "area_quote", "affected_version", "evidence_quote"):
+        if not isinstance(result[field], str) or not 1 <= len(result[field]) <= 700:
+            raise TriageError(f"Invalid assessment text: {field}")
+    corpus = "\n".join([evidence["title"], evidence["body"]] + [
+        item["body"] for item in evidence["followups"]
+    ])
+    if result["area"] == "None":
+        if result["area_confidence"] != "NONE" or result["area_quote"] != "None":
+            raise TriageError("Unknown area must not claim routing confidence")
+    elif result["area"] not in evidence["allowed_areas"]:
+        raise TriageError("Area is not allowlisted")
+    elif result["area_confidence"] == "HIGH" and (
+        result["area_quote"] == "None" or result["area_quote"] not in corpus
+    ):
+        raise TriageError("High-confidence area requires a report quote")
+    if result["confidence"] == "HIGH" and result["impact"] != "OTHER":
+        if result["evidence_quote"] == "None" or result["evidence_quote"] not in corpus:
+            raise TriageError("High-confidence impact requires a report quote")
+    version = result["affected_version"]
+    if version != "None" and (
+        not re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+", version)
+        or not re.search(r"(?<![0-9.])" + re.escape(version) + r"(?![0-9.])", corpus)
+    ):
+        raise TriageError("Affected version must be quoted in the report")
+    return dict(result)
+
+
+def label_plan(result: dict, evidence: dict) -> dict:
+    from priority import candidate_priority
+
+    result = validate_result(result, evidence)
+    existing = set(evidence["existing_labels"])
+    removed = set(evidence["human_removed_labels"])
+    areas = set(evidence["allowed_areas"])
+    additions = []
+    if (
+        not evidence["context_truncated"] and result["area"] in areas
+        and result["area_confidence"] == "HIGH" and not existing & areas and not removed & areas
+    ):
+        additions.append(result["area"])
+    priority = candidate_priority(result, evidence)
+    if (
+        priority and not any(name.startswith("Priority:") for name in existing | removed)
+        and not existing & (FEATURE_LABELS | OTHER_LABELS)
+    ):
+        additions.append(priority)
+    return {
+        "schema": 1, "repository": REPOSITORY, "number": evidence["number"],
+        "input_sha256": evidence["input_sha256"], "policy_sha256": evidence["policy_sha256"],
+        "result": result, "add_labels": additions, "published": False,
+    }

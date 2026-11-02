@@ -24,7 +24,9 @@ class FakeGitHub:
         self.reads.append(path)
         if path == "labels":
             area_path = Path(__file__).resolve().parents[1] / "area-map.json"
-            return [{"name": name} for name in json.loads(area_path.read_text())]
+            return [{"name": name} for name in list(json.loads(area_path.read_text())) + [
+                "Priority:0", "Priority:1", "Priority:2", "Priority:3",
+            ]]
         return copy.deepcopy(self.comments if path.endswith("/comments") else self.timeline)
 
 

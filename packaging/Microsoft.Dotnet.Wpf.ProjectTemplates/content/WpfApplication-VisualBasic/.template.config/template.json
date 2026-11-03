@@ -56,10 +56,15 @@
           "choice": "net11.0",
           "description": "Target net11.0",
           "displayName": ".NET 11.0"
+        },
+        {
+          "choice": "net12.0",
+          "description": "Target net12.0",
+          "displayName": ".NET 12.0"
         }
       ],
       "replaces": "FrameworkParameter",
-      "defaultValue": "net11.0",
+      "defaultValue": "net12.0",
       "displayName": "Framework"
     },
     "UseWindowsDesktopSdk": {

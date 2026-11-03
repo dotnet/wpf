@@ -53,10 +53,15 @@
                 "choice": "net11.0",
                 "description": "Target net11.0",
                 "displayName": ".NET 11.0"
+            },
+            {
+                "choice": "net12.0",
+                "description": "Target net12.0",
+                "displayName": ".NET 12.0"
             }
         ],
       "replaces": "FrameworkParameter",
-      "defaultValue": "net11.0",
+      "defaultValue": "net12.0",
       "displayName": "Framework"
     },
     "UseWindowsDesktopSdk": {
@@ -118,11 +123,11 @@
     },
     "csharpFeature_ImplicitUsings" : {
       "type": "computed",
-      "value": "(Framework == \"net11.0\" || Framework == \"net10.0\" || Framework == \"net9.0\" || Framework == \"net8.0\" || Framework == \"net7.0\" || Framework == \"net6.0\") && csharp9orOlder == \"false\""
+      "value": "(Framework == \"net12.0\" || Framework == \"net11.0\" || Framework == \"net10.0\" || Framework == \"net9.0\" || Framework == \"net8.0\" || Framework == \"net7.0\" || Framework == \"net6.0\") && csharp9orOlder == \"false\""
     },
     "csharpFeature_FileScopedNamespaces" : {
       "type": "computed",
-      "value": "(Framework == \"net11.0\" || Framework == \"net10.0\" || Framework == \"net9.0\" || Framework == \"net8.0\" || Framework == \"net7.0\" || Framework == \"net6.0\") && csharp9orOlder == \"false\""
+      "value": "(Framework == \"net12.0\" || Framework == \"net11.0\" || Framework == \"net10.0\" || Framework == \"net9.0\" || Framework == \"net8.0\" || Framework == \"net7.0\" || Framework == \"net6.0\") && csharp9orOlder == \"false\""
     }
   },
   "primaryOutputs": [
@@ -147,7 +152,7 @@
     },
     {
       "exclude": [ "**/[Bb]in/**", "**/[Oo]bj/**", ".template.config/**/*", "**/*.filelist", "**/*.lock.json" ],
-      "condition": "(Framework == \"net11.0\" || Framework == \"net10.0\" || Framework == \"net9.0\" || Framework == \"net8.0\" || Framework == \"net7.0\" || Framework == \"net6.0\")",
+      "condition": "(Framework == \"net12.0\" || Framework == \"net11.0\" || Framework == \"net10.0\" || Framework == \"net9.0\" || Framework == \"net8.0\" || Framework == \"net7.0\" || Framework == \"net6.0\")",
       "source": "./net6.0",
       "target": "./"
     }  

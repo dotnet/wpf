@@ -84,7 +84,7 @@ namespace Microsoft.Windows.Shell
         RoundSmall = 3,
     }
 
-    /// <summary>Selects the light or dark rendering of the system caption.  Requires Windows 10 version 1809.</summary>
+    /// <summary>Selects the light or dark rendering of the system caption.  Requires Windows 11.</summary>
     public enum WindowCaptionTheme
     {
         /// <summary>Follow the theme decided by the framework (Fluent theme mode); leave the system default otherwise.</summary>
@@ -769,7 +769,7 @@ namespace Microsoft.Windows.Shell
                 (d, e) => ((WindowChrome)d)._OnDwmAttributeChanged(WindowChromeDwmAttributes.CaptionTheme)),
             value => Enum.IsDefined(typeof(WindowCaptionTheme), value));
 
-        /// <summary>Light or dark rendering of the system caption.  Requires Windows 10 version 1809; ignored on earlier versions.</summary>
+        /// <summary>Light or dark rendering of the system caption.  Requires Windows 11; ignored on earlier versions.</summary>
         // DWMWA_USE_IMMERSIVE_DARK_MODE.
         public WindowCaptionTheme CaptionTheme
         {

@@ -2536,7 +2536,7 @@ namespace Microsoft.Windows.Shell
                 }
 
                 // The caption is dark only when this window asked DWM for it and DWM accepted: the system theme
-                // alone never darkens a Win32 caption, and before Windows 10 1809 DWM cannot draw a dark one at all.
+                // alone never darkens a Win32 caption, and before Windows 11 the attribute is not documented at all.
                 bool darkMode = _appliedDarkMode ?? false;
 
                 color = _isActive

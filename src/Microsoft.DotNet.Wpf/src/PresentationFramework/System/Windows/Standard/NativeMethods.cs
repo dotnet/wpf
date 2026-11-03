@@ -1067,8 +1067,6 @@ namespace Standard
         FREEZE_REPRESENTATION = 15,
         PASSIVE_UPDATE_MODE = 16,
         USE_HOSTBACKDROPBRUSH = 17,
-        /// <summary>Undocumented value used by Windows 10 builds 17763 through 18984.</summary>
-        USE_IMMERSIVE_DARK_MODE_BEFORE_20H1 = 19,
         USE_IMMERSIVE_DARK_MODE = 20,
         WINDOW_CORNER_PREFERENCE = 33,
         BORDER_COLOR = 34,
@@ -2681,21 +2679,18 @@ namespace Standard
         }
 
         /// <summary>
-        /// Sets DWMWA_USE_IMMERSIVE_DARK_MODE.  Supported from Windows 10 1809 (build 17763); builds before
-        /// 20H1 (18985) use the undocumented attribute value 19.  Never throws.
+        /// Sets DWMWA_USE_IMMERSIVE_DARK_MODE. Requires Windows 11 (build 22000).
+        /// Never throws.
         /// </summary>
         public static bool DwmSetWindowAttributeUseImmersiveDarkMode(IntPtr hwnd, bool useImmersiveDarkMode)
         {
-            if (hwnd == IntPtr.Zero || !Utility.IsOSWindows10_1809OrNewer)
+            if (hwnd == IntPtr.Zero || !Utility.IsOSWindows11OrNewer)
             {
                 return false;
             }
 
-            DWMWA attribute = Utility.IsOSWindows10_20H1OrNewer
-                ? DWMWA.USE_IMMERSIVE_DARK_MODE
-                : DWMWA.USE_IMMERSIVE_DARK_MODE_BEFORE_20H1;
             var pvAttribute = useImmersiveDarkMode ? 0x1 : 0x0;
-            var dwmResult = _DwmSetWindowAttribute(hwnd, attribute, ref pvAttribute, sizeof(int));
+            var dwmResult = _DwmSetWindowAttribute(hwnd, DWMWA.USE_IMMERSIVE_DARK_MODE, ref pvAttribute, sizeof(int));
             return dwmResult == HRESULT.S_OK;
         }
 

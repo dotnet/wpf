@@ -272,8 +272,9 @@ public class ClipboardTests
         Clipboard.GetData("TEXT").Should().BeNull();
     }
 
-    [WpfTheory(Skip = "Requires IOleServices.AllowedTymeds from dotnet/winforms")]
-    [BoolData]
+    [WpfTheory]
+    [InlineData(true)]
+    [InlineData(false)]
     public void SetDataObject_EnhancedMetafileStream_NativeConsumerGetsHandle(bool copy)
     {
         MemoryStream stream = new();

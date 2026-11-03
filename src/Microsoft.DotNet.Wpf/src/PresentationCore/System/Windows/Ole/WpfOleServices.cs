@@ -56,12 +56,14 @@ internal sealed unsafe class WpfOleServices : IOleServices
 
                 if (hemf.IsNull)
                 {
+                    // Preserve .NET 9's exception when native EMF creation was attempted and failed.
                     throw new Win32Exception();
                 }
             }
 
             if (hemf.IsNull)
             {
+                // .NET 9 returned E_FAIL for matching EMF data that could not supply a handle.
                 return HRESULT.E_FAIL;
             }
 
@@ -70,6 +72,7 @@ internal sealed unsafe class WpfOleServices : IOleServices
             return HRESULT.S_OK;
         }
 
+        // A format/medium mismatch still returns DV_E_TYMED, as it did in .NET 9.
         return HRESULT.DV_E_TYMED;
 
         static HBITMAP GetCompatibleBitmap(object data)

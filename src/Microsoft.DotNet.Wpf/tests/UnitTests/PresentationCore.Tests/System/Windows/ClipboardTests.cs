@@ -272,7 +272,9 @@ public class ClipboardTests
         Clipboard.GetData("TEXT").Should().BeNull();
     }
 
-    [BoolData]
+    [WpfTheory]
+    [InlineData(true)]
+    [InlineData(false)]
     public void SetDataObject_EnhancedMetafileStream_NativeConsumerGetsHandle(bool copy)
     {
         MemoryStream stream = new();

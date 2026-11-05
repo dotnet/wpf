@@ -22,6 +22,9 @@ internal sealed unsafe class WpfOleServices : IOleServices
     // Prevent instantiation
     private WpfOleServices() { }
 
+    // Restore WPF's .NET 9 text synthesis even when shared clipboard retrieval unwraps the managed source.
+    public static bool UseNativeClipboardTextFallback => true;
+
     public static void EnsureThreadState() => OleServicesContext.EnsureThreadState();
 
     public static HRESULT GetDataHere(string format, object data, FORMATETC* pformatetc, STGMEDIUM* pmedium)

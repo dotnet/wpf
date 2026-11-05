@@ -1100,25 +1100,6 @@ namespace Standard
     }
 
     /// <summary>
-    /// SHAppBarMessage messages.  ABM_*
-    /// </summary>
-    internal enum ABM : uint
-    {
-        GETAUTOHIDEBAREX = 0x0000000B,
-    }
-
-    /// <summary>
-    /// App bar edges.  ABE_*
-    /// </summary>
-    internal enum ABE : uint
-    {
-        LEFT = 0,
-        TOP = 1,
-        RIGHT = 2,
-        BOTTOM = 3,
-    }
-
-    /// <summary>
     /// WindowThemeNonClientAttributes
     /// </summary>
     [Flags]
@@ -1962,18 +1943,6 @@ namespace Standard
         /// <summary>Height of bottom border that retains its size.</summary>
         public int cyBottomHeight;
     };
-
-    /// <summary>APPBARDATA, used with SHAppBarMessage.</summary>
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct APPBARDATA
-    {
-        public int cbSize;
-        public IntPtr hWnd;
-        public uint uCallbackMessage;
-        public ABE uEdge;
-        public RECT rc;
-        public IntPtr lParam;
-    }
 
     /// <summary>
     /// NCCALCSIZE_PARAMS.  The native declaration uses a RECT rgrc[3] array; it is
@@ -3171,9 +3140,6 @@ namespace Standard
 
         [DllImport("user32.dll")]
         public static extern IntPtr MonitorFromRect([In] ref RECT lprc, uint dwFlags);
-
-        [DllImport("shell32.dll")]
-        public static extern IntPtr SHAppBarMessage(ABM dwMessage, ref APPBARDATA pData);
 
         [DllImport("shcore.dll", EntryPoint = "GetDpiForMonitor", PreserveSig = true)]
         private static extern HRESULT _GetDpiForMonitor(IntPtr hmonitor, int dpiType, out uint dpiX, out uint dpiY);

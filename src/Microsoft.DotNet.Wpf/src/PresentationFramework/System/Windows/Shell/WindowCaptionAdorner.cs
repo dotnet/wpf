@@ -82,10 +82,14 @@ namespace Microsoft.Windows.Shell
                 return;
             }
 
+            // In a right-to-left layout that transform also mirrors the band, because the adorner follows the
+            // flow direction of the adorned element. From here on the coordinates run along the flow direction:
+            // the icon comes first (at the right of the screen in a right-to-left layout) and the title follows
+            // it, exactly as in a left-to-right layout.
             Rect captionBand = _window.TransformToDescendant(AdornedElement).TransformBounds(windowBand);
 
             bool rtl = _window.FlowDirection == FlowDirection.RightToLeft;
-            double x = rtl ? captionBand.Right - IconMargin : captionBand.Left + IconMargin;
+            double x = captionBand.Left + IconMargin;
 
             if (ShowIcon)
             {
@@ -94,12 +98,12 @@ namespace Microsoft.Windows.Shell
                 {
                     double iconWidth = SystemParameters.SmallIconWidth;
                     double iconHeight = SystemParameters.SmallIconHeight;
-                    double iconX = rtl ? x - iconWidth : x;
+                    double iconX = x;
                     double iconY = captionBand.Top + Math.Max(0, (captionBand.Height - iconHeight) / 2);
                     drawingContext.DrawImage(icon, new Rect(iconX, iconY, iconWidth, iconHeight));
-                    x = rtl ? iconX - TextMargin : iconX + iconWidth + TextMargin;
+                    x = iconX + iconWidth + TextMargin;
 
-                    // Same rect, back in window coordinates for the hit test.
+                    // Same rect, back in window coordinates (left to right) for the hit test.
                     double windowIconX = rtl ? windowBand.Right - IconMargin - iconWidth : windowBand.Left + IconMargin;
                     double windowIconY = windowBand.Top + Math.Max(0, (windowBand.Height - iconHeight) / 2);
                     IconBounds = new Rect(windowIconX, windowIconY, iconWidth, iconHeight);
@@ -114,7 +118,7 @@ namespace Microsoft.Windows.Shell
                     return;
                 }
 
-                double available = rtl ? x - captionBand.Left - TextMargin : captionBand.Right - x - TextMargin;
+                double available = captionBand.Right - x - TextMargin;
                 if (available <= 0)
                 {
                     return;
@@ -130,7 +134,7 @@ namespace Microsoft.Windows.Shell
                 var text = new FormattedText(
                     title,
                     CultureInfo.CurrentUICulture,
-                    _window.FlowDirection,
+                    FlowDirection.LeftToRight,
                     typeface,
                     SystemFonts.CaptionFontSize,
                     foreground,
@@ -142,8 +146,19 @@ namespace Microsoft.Windows.Shell
                 };
 
                 double textY = captionBand.Top + Math.Max(0, (captionBand.Height - text.Height) / 2);
-                double textX = rtl ? x - text.Width : x;
-                drawingContext.DrawText(text, new Point(textX, textY));
+                if (rtl)
+                {
+                    // The mirrored coordinate space would mirror the glyphs as well. Flipping the text box
+                    // around its own center cancels that: the text reads normally and stays in the band next
+                    // to the icon.
+                    drawingContext.PushTransform(new MatrixTransform(-1, 0, 0, 1, 2 * x + text.Width, 0));
+                    drawingContext.DrawText(text, new Point(x, textY));
+                    drawingContext.Pop();
+                }
+                else
+                {
+                    drawingContext.DrawText(text, new Point(x, textY));
+                }
             }
         }
 

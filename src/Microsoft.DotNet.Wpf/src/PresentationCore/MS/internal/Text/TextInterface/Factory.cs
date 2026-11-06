@@ -1,6 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using MS.Internal.Interop;
 using MS.Internal.Interop.DWrite;
@@ -36,6 +37,13 @@ namespace MS.Internal.Text.TextInterface
         private readonly IFontSourceFactory _fontSourceFactory;
 
         /// <summary>
+        /// Pointer to the IDWriteFactory2 interface, or null if not available.
+        /// Used for COLR v0 color glyph support (TranslateColorGlyphRun).
+        /// Available on Windows 8.1+.
+        /// </summary>
+        private IDWriteFactory2* _pFactory2;
+
+        /// <summary>
         /// Constructs a factory object.
         /// </summary>
         /// <param name="factoryType">Identifies whether the factory object will be shared or isolated.</param>
@@ -49,6 +57,16 @@ namespace MS.Internal.Text.TextInterface
         private Factory(FactoryType factoryType, IFontSourceCollectionFactory fontSourceCollectionFactory, IFontSourceFactory fontSourceFactory)
         {
             Initialize(factoryType);
+
+            // QueryInterface for IDWriteFactory2, which provides TranslateColorGlyphRun
+            // for COLR v0 color glyph decomposition. Available on Windows 8.1+; on older
+            // versions the QI returns E_NOINTERFACE and _pFactory2 stays null, which
+            // disables color glyph rendering gracefully.
+            Guid iidFactory2 = new Guid(0x0439fc60, 0xca44, 0x4994, 0x8d, 0xee, 0x3a, 0x9a, 0xf7, 0xb7, 0x32, 0xec);
+            void* pFactory2 = null;
+            int qiHr = _factory.Value->QueryInterface(&iidFactory2, &pFactory2);
+            if (qiHr == 0 && pFactory2 != null)
+                _pFactory2 = (IDWriteFactory2*)pFactory2;
 
             _wpfFontFileLoader = new FontFileLoader(fontSourceFactory);
             _wpfFontCollectionLoader = new FontCollectionLoader(
@@ -330,6 +348,179 @@ namespace MS.Internal.Text.TextInterface
             return new TextAnalyzer((Native.IDWriteTextAnalyzer*)textAnalyzer);
         }
 
+        /// <summary>
+        /// Gets whether this factory supports color glyph rendering (IDWriteFactory2+).
+        /// </summary>
+        internal bool SupportsColorGlyphs => _pFactory2 != null;
+
+        // DWRITE_E_NOCOLOR: font has no COLR table or glyphs have no color layers.
+        private const int DWRITE_E_NOCOLOR = unchecked((int)0x8898500C);
+
+        /// <summary>
+        /// Translates a glyph run into color glyph layers using IDWriteFactory2.
+        /// Returns null if the glyph run has no color layers or color glyphs are not supported.
+        /// </summary>
+        internal List<ColorGlyphLayer> TranslateColorGlyphRun(
+            FontFace fontFace,
+            float fontEmSize,
+            ushort[] glyphIndices,
+            float[] glyphAdvances,
+            float[] glyphOffsets,
+            uint glyphCount,
+            bool isSideways,
+            uint bidiLevel,
+            float baselineOriginX,
+            float baselineOriginY,
+            uint measuringMode)
+        {
+            if (_pFactory2 == null || fontFace == null ||
+                glyphIndices == null || glyphAdvances == null || glyphCount == 0 ||
+                glyphCount > (uint)int.MaxValue ||
+                glyphIndices.Length < (int)glyphCount ||
+                glyphAdvances.Length < (int)glyphCount)
+            {
+                return null;
+            }
+
+            IDWriteColorGlyphRunEnumerator* pColorEnum = null;
+            try
+            {
+                fixed (ushort* pGlyphIndices = glyphIndices)
+                fixed (float* pGlyphAdvances = glyphAdvances)
+                {
+                    // Convert interleaved float pairs to DWRITE_GLYPH_OFFSET structs.
+                    DWRITE_GLYPH_OFFSET* pOffsets = null;
+                    DWRITE_GLYPH_OFFSET* allocatedOffsets = null;
+
+                    try
+                    {
+                        if (glyphOffsets != null && glyphCount <= (uint)(glyphOffsets.Length / 2))
+                        {
+                            allocatedOffsets = (DWRITE_GLYPH_OFFSET*)Marshal.AllocHGlobal(
+                                (int)(glyphCount * (uint)sizeof(DWRITE_GLYPH_OFFSET)));
+
+                            fixed (float* pGlyphOffsets = glyphOffsets)
+                            {
+                                for (uint i = 0; i < glyphCount; i++)
+                                {
+                                    allocatedOffsets[i].advanceOffset = pGlyphOffsets[i * 2];
+                                    allocatedOffsets[i].ascenderOffset = pGlyphOffsets[i * 2 + 1];
+                                }
+                            }
+                            pOffsets = allocatedOffsets;
+                        }
+
+                        DWRITE_GLYPH_RUN glyphRun;
+                        glyphRun.fontFace = (void*)fontFace.DWriteFontFaceAddRef;
+                        glyphRun.fontEmSize = fontEmSize;
+                        glyphRun.glyphCount = glyphCount;
+                        glyphRun.glyphIndices = pGlyphIndices;
+                        glyphRun.glyphAdvances = pGlyphAdvances;
+                        glyphRun.glyphOffsets = pOffsets;
+                        glyphRun.isSideways = isSideways ? 1 : 0;
+                        glyphRun.bidiLevel = bidiLevel;
+
+                        IDWriteColorGlyphRunEnumerator* pEnum = null;
+                        int hr = _pFactory2->TranslateColorGlyphRun(
+                            baselineOriginX,
+                            baselineOriginY,
+                            &glyphRun,
+                            null,
+                            (int)measuringMode,
+                            null,
+                            0,
+                            &pEnum);
+
+                        // Release the AddRef'd font face now that the DWrite call is complete.
+                        ((IDWriteFontFace*)glyphRun.fontFace)->Release();
+                        glyphRun.fontFace = null;
+
+                        GC.KeepAlive(fontFace);
+                        GC.KeepAlive(this);
+
+                        if (hr == DWRITE_E_NOCOLOR || hr < 0 || pEnum == null)
+                        {
+                            if (pEnum != null)
+                                ((IDWriteColorGlyphRunEnumerator*)pEnum)->Release();
+                            return null;
+                        }
+
+                        pColorEnum = (IDWriteColorGlyphRunEnumerator*)pEnum;
+                    }
+                    finally
+                    {
+                        if (allocatedOffsets != null)
+                            Marshal.FreeHGlobal((IntPtr)allocatedOffsets);
+                    }
+                }
+
+                // Enumerate color layers. DirectWrite returns them in back-to-front paint order.
+                const int MaxColorLayers = 1024;
+                var layers = new List<ColorGlyphLayer>();
+
+                int hasRun = 0;
+                while (pColorEnum->MoveNext(&hasRun) >= 0 && hasRun != 0 && layers.Count < MaxColorLayers)
+                {
+                    DWRITE_COLOR_GLYPH_RUN* pColorRun = null;
+                    int runHr = pColorEnum->GetCurrentRun(&pColorRun);
+                    if (runHr < 0 || pColorRun == null)
+                        break;
+
+                    ColorGlyphLayer layer;
+                    layer.BaselineOriginX = pColorRun->baselineOriginX;
+                    layer.BaselineOriginY = pColorRun->baselineOriginY;
+
+                    // paletteIndex 0xFFFF means "use the text foreground color".
+                    layer.UseForegroundColor = (pColorRun->paletteIndex == 0xFFFF);
+
+                    // Clamp RGBA to [0,1].
+                    layer.ColorR = Clamp01(pColorRun->runColor.r);
+                    layer.ColorG = Clamp01(pColorRun->runColor.g);
+                    layer.ColorB = Clamp01(pColorRun->runColor.b);
+                    layer.ColorA = Clamp01(pColorRun->runColor.a);
+
+                    uint layerGlyphCount = pColorRun->glyphRun.glyphCount;
+
+                    // Deep-copy glyph data (pointer is only valid until next MoveNext).
+                    layer.GlyphIndices = new ushort[layerGlyphCount];
+                    for (uint i = 0; i < layerGlyphCount; i++)
+                        layer.GlyphIndices[i] = pColorRun->glyphRun.glyphIndices[i];
+
+                    layer.GlyphAdvances = new float[layerGlyphCount];
+                    if (pColorRun->glyphRun.glyphAdvances != null)
+                    {
+                        for (uint i = 0; i < layerGlyphCount; i++)
+                            layer.GlyphAdvances[i] = pColorRun->glyphRun.glyphAdvances[i];
+                    }
+
+                    if (pColorRun->glyphRun.glyphOffsets != null)
+                    {
+                        layer.GlyphOffsets = new float[layerGlyphCount * 2];
+                        for (uint i = 0; i < layerGlyphCount; i++)
+                        {
+                            layer.GlyphOffsets[i * 2] = pColorRun->glyphRun.glyphOffsets[i].advanceOffset;
+                            layer.GlyphOffsets[i * 2 + 1] = pColorRun->glyphRun.glyphOffsets[i].ascenderOffset;
+                        }
+                    }
+                    else
+                    {
+                        layer.GlyphOffsets = null;
+                    }
+
+                    layers.Add(layer);
+                }
+
+                return layers.Count > 0 ? layers : null;
+            }
+            finally
+            {
+                if (pColorEnum != null)
+                    pColorEnum->Release();
+            }
+        }
+
+        private static float Clamp01(float v) => v < 0f ? 0f : v > 1f ? 1f : v;
+
         internal static bool IsLocalUri(Uri uri)
         {
             return uri.IsFile && uri.IsLoopback && !uri.IsUnc;
@@ -369,6 +560,13 @@ namespace MS.Internal.Text.TextInterface
                     Value->UnregisterFontFileLoader((IDWriteFontFileLoader*)pIDWriteFontFileLoaderMirror.ToPointer());
                     Marshal.Release(pIDWriteFontFileLoaderMirror);
                     _managedFactory._wpfFontFileLoader = null;
+                }
+
+                // Release the IDWriteFactory2 interface obtained via QueryInterface.
+                if (_managedFactory._pFactory2 != null)
+                {
+                    _managedFactory._pFactory2->Release();
+                    _managedFactory._pFactory2 = null;
                 }
 
                 return base.ReleaseHandle();

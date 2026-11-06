@@ -32,6 +32,8 @@
         <!-- Mouse Move Events -->
         <Event Name="Mouse.PreviewMouseMove" HandlerType="MouseEventHandler" Comment="a mouse move" />
         <Event Name="Mouse.MouseMove" HandlerType="MouseEventHandler" Comment="a mouse move" />
+        <Event Name="Mouse.PreviewMouseHorizontalWheel" HandlerType="MouseWheelEventHandler" Comment="a mouse horizontal wheel rotation" />
+        <Event Name="Mouse.MouseHorizontalWheel" HandlerType="MouseWheelEventHandler" TranslateInput="true" Comment="a mouse horizontal wheel rotation" />
         <Event Name="Mouse.PreviewMouseWheel" HandlerType="MouseWheelEventHandler" Comment="a mouse wheel rotation" />
         <Event Name="Mouse.MouseWheel" HandlerType="MouseWheelEventHandler" TranslateInput="true" Comment="a mouse wheel rotation" />
         <Event Name="Mouse.MouseEnter" HandlerType="MouseEventHandler" Comment="the mouse entered this element" />

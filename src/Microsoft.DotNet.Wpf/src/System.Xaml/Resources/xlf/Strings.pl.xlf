@@ -624,7 +624,7 @@
       </trans-unit>
       <trans-unit id="MarkupExtensionDepthExceeded">
         <source>Markup extension nesting depth exceeded the maximum allowed ({0}). Deeply nested markup extensions are not supported.</source>
-        <target state="new">Markup extension nesting depth exceeded the maximum allowed ({0}). Deeply nested markup extensions are not supported.</target>
+        <target state="translated">Głębokość zagnieżdżenia rozszerzenia znaczników przekroczyła maksymalny dozwolony poziom ({0}). Głęboko zagnieżdżone rozszerzenia znaczników nie są obsługiwane.</target>
         <note />
       </trans-unit>
       <trans-unit id="MarkupExtensionNoContext">

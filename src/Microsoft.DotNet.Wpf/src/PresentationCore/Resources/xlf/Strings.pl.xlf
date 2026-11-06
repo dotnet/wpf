@@ -2754,7 +2754,7 @@
       </trans-unit>
       <trans-unit id="Resource_XpsPackageBoundaryViolation">
         <source>The URI references a resource outside the current XPS package. External URIs (http, https, file, UNC, cross-package) are not permitted when loading XPS content.</source>
-        <target state="new">The URI references a resource outside the current XPS package. External URIs (http, https, file, UNC, cross-package) are not permitted when loading XPS content.</target>
+        <target state="translated">Odwołanie URI wskazuje na zasób poza bieżącym pakietem XPS. Zewnętrzne URI (http, https, file, UNC, między pakietami) nie są dozwolone podczas ładowania zawartości XPS.</target>
         <note />
       </trans-unit>
       <trans-unit id="RoutedEventArgsMustHaveRoutedEvent">

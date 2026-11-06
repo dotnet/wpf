@@ -24,6 +24,10 @@ internal sealed unsafe class WpfOleServices : IOleServices
 
     public static void EnsureThreadState() => OleServicesContext.EnsureThreadState();
 
+    // WPF also provides enhanced metafiles, which are handled in GetDataHere.
+    public static TYMED AllowedTymeds =>
+        TYMED.TYMED_HGLOBAL | TYMED.TYMED_ISTREAM | TYMED.TYMED_GDI | TYMED.TYMED_ENHMF;
+        
     public static HRESULT GetDataHere(string format, object data, FORMATETC* pformatetc, STGMEDIUM* pmedium)
     {
         TYMED mediumType = (TYMED)pformatetc->tymed;

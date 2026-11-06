@@ -154,23 +154,30 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         bool isLatin;
         bool isStrong;
         bool isExtended;
+        bool isScriptAgnosticCombining;
 
+        WCHAR ch = text[0];
         classificationUtility->GetCharAttribute(
-            text[0],
+            ch,
             isCombining,
             needsCaretInfo,
             isIndic,
             isDigit,
             isLatin,
-            isStrong
-            );
+            isStrong,
+            isScriptAgnosticCombining
+        );
 
-        isExtended = ItemizerHelper::IsExtendedCharacter(text[0]);
+        isExtended = ItemizerHelper::IsExtendedCharacter(ch);
 
         UINT32 isDigitRangeStart = 0;
         UINT32 isDigitRangeEnd = 0;
         bool   previousIsDigitValue = (numberCulture == nullptr) ? false : isDigit;
         bool   currentIsDigitValue;
+
+        // Track base character for combining mark script comparison (PR #6857 / Issue #6801)
+        // A combining mark should only stay with its base character if they have the same script.
+        int baseChar = isCombining ? -1 : ch;
 
         // pCharAttribute is assumed to have the same length as text. This is enforced by Itemize().
         pCharAttribute[0] = (CharAttributeType)
@@ -183,18 +190,40 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
 
         for (UINT32 i = 1; i < length; ++i)
         {
+            ch = text[i];
             classificationUtility->GetCharAttribute(
-            text[i],
-            isCombining,
-            needsCaretInfo,
-            isIndic,
-            isDigit,
-            isLatin,
-            isStrong
+                ch,
+                isCombining,
+                needsCaretInfo,
+                isIndic,
+                isDigit,
+                isLatin,
+                isStrong,
+                isScriptAgnosticCombining
             );
 
-            isExtended = ItemizerHelper::IsExtendedCharacter(text[i]);
-            
+            isExtended = ItemizerHelper::IsExtendedCharacter(ch);
+
+            // For combining marks, check if they have the same script as the base character.
+            // If not, they should not be treated as combining with the base (PR #6857 / Issue #6801).
+            // However, script-agnostic combining marks (variation selectors, ZWJ, emoji modifiers, etc.)
+            // are designed to work with any base character regardless of script, so skip the check
+            // for them to allow emoji sequences to stay together.
+            bool isCombiningWithBase = isCombining;
+            if (isCombining && baseChar >= 0 && !isScriptAgnosticCombining)
+            {
+                if (!classificationUtility->IsSameScript(baseChar, ch))
+                {
+                    // Different script - this combining mark should not stay with the base character
+                    isCombiningWithBase = false;
+                }
+            }
+
+            // Update base character tracking
+            if (!isCombining)
+            {
+                baseChar = ch;
+            }
 
             pCharAttribute[i] = (CharAttributeType)
                                 (((isCombining)    ? CharAttribute::IsCombining    : CharAttribute::None)

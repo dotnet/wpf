@@ -565,12 +565,7 @@ namespace System.Windows.Media.Media3D
                 }
 
                 // If there is a handler on this node, then fire it.
-                Visual.AncestorChangedEventHandler handler = AncestorChangedEventField.GetValue(eAsVisual3D);
-
-                if(handler != null)
-                {
-                    handler(eAsVisual3D, args);
-                }
+                AncestorChangedEventField.GetValue(eAsVisual3D)?.Invoke(eAsVisual3D, args);
 
                 // Decend into the children.
                 int count = eAsVisual3D.InternalVisual2DOr3DChildrenCount;

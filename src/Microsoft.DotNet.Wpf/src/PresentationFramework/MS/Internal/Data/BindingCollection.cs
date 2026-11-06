@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -116,8 +116,7 @@ namespace MS.Internal.Data
 
         private void OnBindingCollectionChanged()
         {
-            if (_collectionChangedCallback != null)
-                _collectionChangedCallback();
+            _collectionChangedCallback?.Invoke();
         }
 
         //------------------------------------------------------

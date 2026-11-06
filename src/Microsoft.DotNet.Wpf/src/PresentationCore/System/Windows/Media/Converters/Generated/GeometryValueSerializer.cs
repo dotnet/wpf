@@ -8,19 +8,10 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-using MS.Internal.KnownBoxes;
-using MS.Internal.Collections;
-using MS.Utility;
-using System.Collections;
-using System.ComponentModel;
-using System.Globalization;
-using System.Text;
-using System.Windows.Media.Effects;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
+using System.Windows.Media;
 using System.Windows.Markup;
-using System.Windows.Media.Converters;
+
+using ConverterHelper = System.Windows.Markup.TypeConverterHelper;
 
 namespace System.Windows.Media.Converters
 {
@@ -44,14 +35,7 @@ namespace System.Windows.Media.Converters
         public override bool CanConvertToString(object value, IValueSerializerContext context)
         {
             // When invoked by the serialization engine we can convert to string only for some instances
-            if (!(value is Geometry))
-            {
-                return false;
-            }
-
-            Geometry instance  = (Geometry) value;
-
-            return instance.CanSerializeToString();
+            return value is Geometry geometry && geometry.CanSerializeToString();
         }
 
         /// <summary>
@@ -59,14 +43,7 @@ namespace System.Windows.Media.Converters
         /// </summary>
         public override object ConvertFromString(string value, IValueSerializerContext context)
         {
-            if (value != null)
-            {
-                return Geometry.Parse(value );
-            }
-            else
-            {
-                return base.ConvertFromString( value, context );
-            }
+            return value is not null ? Geometry.Parse(value) : base.ConvertFromString(value, context);
         }
 
         /// <summary>
@@ -74,19 +51,14 @@ namespace System.Windows.Media.Converters
         /// </summary>
         public override string ConvertToString(object value, IValueSerializerContext context)
         {
-            if (value is Geometry instance)
+            // When invoked by the serialization engine we can convert to string only for some instances
+            if (value is not Geometry geometry || !geometry.CanSerializeToString())
             {
-                // When invoked by the serialization engine we can convert to string only for some instances
-                if (!instance.CanSerializeToString())
-                {
-                    // Let base throw an exception.
-                    return base.ConvertToString(value, context);
-                }
-
-                return instance.ConvertToString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
+                // Let base throw an exception.
+                return base.ConvertToString(value, context);
             }
 
-            return base.ConvertToString(value, context);
+            return geometry.ConvertToString(null, ConverterHelper.InvariantEnglishUS);
         }
     }
 }

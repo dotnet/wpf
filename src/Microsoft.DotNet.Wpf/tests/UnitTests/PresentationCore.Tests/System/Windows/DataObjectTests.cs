@@ -475,7 +475,7 @@ public class DataObjectTests
 
     #region EnhancedMetafile COM contract
 
-    [WpfTheory(Skip = "Requires IOleServices.AllowedTymeds from dotnet/winforms")]
+    [WpfTheory]
     [InlineData(true)]
     [InlineData(false)]
     public void ComDataObject_EnhancedMetafile_InvalidPayload_ThrowsCOMException(bool useEmptyStream)
@@ -490,7 +490,7 @@ public class DataObjectTests
         action.Should().Throw<COMException>().Which.HResult.Should().Be(unchecked((int)0x80004005));
     }
 
-    [WpfFact(Skip = "Requires IOleServices.AllowedTymeds from dotnet/winforms")]
+    [WpfFact]
     public void ComDataObject_EnhancedMetafile_MalformedStream_ReturnsFailureHResult()
     {
         // Unlike an empty stream, this expandable/exposable buffer reaches SetEnhMetaFileBits.

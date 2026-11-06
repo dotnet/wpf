@@ -45,7 +45,7 @@ namespace System.Windows.Media
     {
         // the transform is identity by default
         // Actually fill in the fields - some (internal) code uses the fields directly for perf.
-        private static Matrix s_identity = CreateIdentity();
+        private static readonly Matrix s_identity = CreateIdentity();
 
 #region Constructor
 

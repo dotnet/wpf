@@ -4,8 +4,8 @@
     <RepositoryName>wpf</RepositoryName>
     <PackageProjectUrl>https://github.com/dotnet/wpf</PackageProjectUrl>
     <WindowsDesktopARM64Support>true</WindowsDesktopARM64Support>
-    <TargetFramework>net11.0</TargetFramework>
-    <TargetFrameworkVersion>11.0</TargetFrameworkVersion>
+    <TargetFramework>net12.0</TargetFramework>
+    <TargetFrameworkVersion>12.0</TargetFrameworkVersion>
     <BuildWithNetFrameworkHostedCompiler>true</BuildWithNetFrameworkHostedCompiler>
     <PublishWindowsPdb>false</PublishWindowsPdb>
     <TestRunnerName>XUnitV3</TestRunnerName>

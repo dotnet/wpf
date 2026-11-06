@@ -52,7 +52,7 @@ Go to the csproj file and append this line at the bottom of it. `<Import Project
 ```xml
     <PropertyGroup>
       <OutputType>WinExe</OutputType>
-      <TargetFramework>net11.0-windows</TargetFramework>
+      <TargetFramework>net12.0-windows</TargetFramework>
       <UseWPF>true</UseWPF>
     </PropertyGroup>
 

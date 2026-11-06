@@ -460,6 +460,33 @@ namespace System.Windows.Baml2006
             }
 
             AssemblyName assemblyName = new AssemblyName(bamlAssembly.Name);
+
+#if NETCOREAPP
+            // Try to resolve the requested assembly in the same AssemblyLoadContext as the local assembly which requests it.
+            if (_localAssembly != null)
+            {
+                System.Runtime.Loader.AssemblyLoadContext alc = System.Runtime.Loader.AssemblyLoadContext.GetLoadContext(_localAssembly);
+
+                if (alc != null)
+                {
+                    try
+                    {
+                        bamlAssembly.Assembly = alc.LoadFromAssemblyName(assemblyName);
+                        if (bamlAssembly.Assembly != null)
+                        {
+                            return bamlAssembly.Assembly;
+                        }
+                    }
+                    catch (System.Exception ex) when (ex is System.IO.FileNotFoundException ||
+                                                     ex is System.IO.FileLoadException ||
+                                                     ex is System.BadImageFormatException)
+                    {
+                        // Fallback to legacy resolution logic.
+                    }
+                }
+            }
+#endif
+
             bamlAssembly.Assembly = MS.Internal.WindowsBase.SafeSecurityHelper.GetLoadedAssembly(assemblyName);
             if (bamlAssembly.Assembly == null)
             {

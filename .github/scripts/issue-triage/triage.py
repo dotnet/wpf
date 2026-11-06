@@ -1,8 +1,14 @@
 """Trusted configuration and intake rules for WPF issue triage."""
 
 import json
+import hashlib
+import os
 from pathlib import Path
 import re
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
 
 
 AREA_MAP_PATH = Path(__file__).with_name("area-map.json")
@@ -96,6 +102,7 @@ def issue_kind(issue: dict) -> str:
     if signals:
         return next(iter(signals)) if len(signals) == 1 else "OTHER"
 
+
     body = issue.get("body")
     if body is None:
         body = ""
@@ -110,3 +117,125 @@ def issue_kind(issue: dict) -> str:
     if {"background and motivation", "api proposal", "api usage"} <= headings:
         signals.add("FEATURE")
     return next(iter(signals)) if len(signals) == 1 else "OTHER"
+
+
+class NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
+
+class GitHub:
+    def __init__(self, token: str | None = None):
+        self.token = token or os.environ.get("GITHUB_TOKEN")
+        if not self.token:
+            raise TriageError("GITHUB_TOKEN is required")
+        self.opener = urllib.request.build_opener(NoRedirect)
+
+    def get(self, path: str, **params):
+        if not re.fullmatch(r"(?:issues(?:/[1-9][0-9]*(?:/(?:comments|timeline|labels))?)?|labels)", path):
+            raise TriageError("Unsupported repository API path")
+        url = f"https://api.github.com/repos/{REPOSITORY}/{path}"
+        if params:
+            url += "?" + urllib.parse.urlencode(params)
+        request = urllib.request.Request(url, headers={
+            "Authorization": f"Bearer {self.token}", "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+        })
+        for attempt in range(3):
+            try:
+                with self.opener.open(request, timeout=30) as response:
+                    data = response.read(2 * 1024 * 1024 + 1)
+                if len(data) > 2 * 1024 * 1024:
+                    raise TriageError("GitHub response exceeds the read limit")
+                return json.loads(data)
+            except urllib.error.HTTPError as error:
+                retryable = error.code in {429, 502, 503, 504} or (
+                    error.code == 403 and error.headers.get("X-RateLimit-Remaining") == "0"
+                )
+                if not retryable or attempt == 2:
+                    raise TriageError(f"GitHub read failed with HTTP {error.code}") from None
+                time.sleep(2 ** attempt)
+            except (urllib.error.URLError, TimeoutError, UnicodeError, json.JSONDecodeError):
+                raise TriageError("GitHub read failed") from None
+
+    def pages(self, path: str, max_pages: int = 100, **params) -> list:
+        items = []
+        for page in range(1, max_pages + 1):
+            batch = self.get(path, **params, per_page=100, page=page)
+            if not isinstance(batch, list):
+                raise TriageError("Expected a paginated GitHub list")
+            items.extend(batch)
+            if len(batch) < 100:
+                return items
+        raise TriageError("GitHub pagination limit reached; coverage is incomplete")
+
+
+def digest(value: object) -> str:
+    encoded = json.dumps(value, sort_keys=True, ensure_ascii=True, separators=(",", ":"))
+    return hashlib.sha256(encoded.encode("utf-8")).hexdigest()
+
+
+def policy_digest() -> str:
+    directory = AREA_MAP_PATH.parent
+    files = ("area-map.json", "priority-policy.md", "triage.py")
+    return digest({name: (directory / name).read_text(encoding="utf-8") for name in files})
+
+
+def prepare(client: GitHub, number: int) -> dict:
+    if type(number) is not int or not 0 < number < 1_000_000_000:
+        raise TriageError("Invalid issue number")
+    issue = client.get(f"issues/{number}")
+    if not isinstance(issue, dict) or issue.get("number") != number:
+        raise TriageError("GitHub returned an unexpected issue")
+    if not eligible(issue):
+        return {"should_process": False, "number": number, "reason": "Ineligible issue"}
+    if type(issue.get("comments")) is not int or not 0 <= issue["comments"] < 1000:
+        raise TriageError("Issue comment coverage requires manual review")
+    catalog = {item["name"] for item in client.pages("labels")}
+    areas = load_area_map(catalog)
+    comments = client.pages(f"issues/{number}/comments", max_pages=10)
+    timeline = client.pages(f"issues/{number}/timeline", max_pages=20)
+    followups = []
+    for comment in comments:
+        author = comment.get("user") or {}
+        if author.get("type") == "User" and (
+            author.get("id") == issue["user"]["id"]
+            or comment.get("author_association") in {"OWNER", "MEMBER", "COLLABORATOR"}
+        ) and not str(author.get("login", "")).casefold().endswith(("-bot", "[bot]")):
+            if str(author.get("login", "")).casefold() not in SERVICE_ACCOUNTS:
+                followups.append({
+                    "id": comment["id"], "body": comment.get("body") or "",
+                    "author_id": author.get("id"), "association": comment.get("author_association"),
+                })
+    removed = sorted({
+        event["label"]["name"] for event in timeline
+        if event.get("event") == "unlabeled" and isinstance(event.get("label"), dict)
+        and (event.get("actor") or {}).get("type") == "User"
+    })
+    source = {
+        "issue": issue, "followups": followups, "human_removed_labels": removed,
+        "policy_sha256": policy_digest(), "catalog": sorted(catalog),
+    }
+    selected = followups[:5] + followups[max(5, len(followups) - 5):]
+    body = issue.get("body") or ""
+    if not isinstance(body, str) or not isinstance(issue.get("title"), str):
+        raise TriageError("Issue title and body must be text")
+    return {
+        "schema": 1, "should_process": True, "repository": REPOSITORY, "number": number,
+        "input_sha256": digest(source), "policy_sha256": source["policy_sha256"],
+        "issue_kind": issue_kind(issue), "title": issue["title"][:300], "body": body[:16000],
+        "existing_labels": sorted(label_names(issue)), "human_removed_labels": removed,
+        "allowed_areas": areas, "followups": [{**item, "body": item["body"][:2000]} for item in selected],
+        "context_truncated": len(body) > 16000 or len(followups) > 10
+        or any(len(item["body"]) > 2000 for item in selected),
+    }
+
+
+def attach_context(context_path: Path, prompt_path: Path) -> None:
+    evidence = json.loads(context_path.read_text(encoding="utf-8"))
+    prompt = prompt_path.read_text(encoding="utf-8")
+    marker = "[WPF_TRIAGE_CONTEXT]"
+    if prompt.count(marker) != 1:
+        raise TriageError("Prompt must have exactly one evidence slot")
+    encoded = json.dumps(evidence, ensure_ascii=True).replace("<", "\\u003c").replace(">", "\\u003e")
+    prompt_path.write_text(prompt.replace(marker, encoded), encoding="utf-8")

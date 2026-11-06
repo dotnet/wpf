@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //----------------------------------------------------------------------------------------
@@ -605,7 +605,8 @@ namespace MS.Internal.Tasks
 
         #region private data
 
-        private MarkupCompilePass1 _mcPass1;
+        private readonly MarkupCompilePass1 _mcPass1;
+
         private RecompileCategory  _analyzeResult;
         private DateTime           _lastCompileTime = new DateTime(0);
 

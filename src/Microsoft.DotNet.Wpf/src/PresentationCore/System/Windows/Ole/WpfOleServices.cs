@@ -44,23 +44,35 @@ internal sealed unsafe class WpfOleServices : IOleServices
         // Handle enhanced metafiles.
         if (mediumType.HasFlag(TYMED.TYMED_ENHMF) && format.Equals(DataFormatNames.Emf))
         {
+            HENHMETAFILE hemf = HENHMETAFILE.Null;
+
             if (SystemDrawingHelper.IsMetafile(data))
             {
-                pmedium->u.hEnhMetaFile = SystemDrawingHelper.GetHandleFromMetafile(data);
+                hemf = SystemDrawingHelper.GetHandleFromMetafile(data);
             }
             else if (data is MemoryStream memoryStream && memoryStream.GetBuffer() is { } buffer && buffer.Length != 0)
             {
-                HENHMETAFILE hemf = PInvoke.SetEnhMetaFileBits(buffer);
+                hemf = PInvoke.SetEnhMetaFileBits(buffer);
 
                 if (hemf.IsNull)
                 {
+                    // Preserve .NET 9's exception when native EMF creation was attempted and failed.
                     throw new Win32Exception();
                 }
             }
 
+            if (hemf.IsNull)
+            {
+                // .NET 9 returned E_FAIL for matching EMF data that could not supply a handle.
+                return HRESULT.E_FAIL;
+            }
+
+            pmedium->tymed = TYMED.TYMED_ENHMF;
+            pmedium->u.hEnhMetaFile = hemf;
             return HRESULT.S_OK;
         }
 
+        // A format/medium mismatch still returns DV_E_TYMED, as it did in .NET 9.
         return HRESULT.DV_E_TYMED;
 
         static HBITMAP GetCompatibleBitmap(object data)

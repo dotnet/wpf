@@ -33,7 +33,7 @@ namespace System.Windows.Media.Imaging
 
             if (newTransform == null)
             {
-                throw new InvalidOperationException(SR.Format(SR.Image_NoArgument, "Transform"));
+                throw new InvalidOperationException(SR.Format(SR.Image_NoArgument, nameof(Transform)));
             }
 
             if (!CheckTransform(newTransform))
@@ -274,7 +274,7 @@ namespace System.Windows.Media.Imaging
             {
                 if (throwIfInvalid)
                 {
-                    throw new InvalidOperationException(SR.Format(SR.Image_NoArgument, "Source"));
+                    throw new InvalidOperationException(SR.Format(SR.Image_NoArgument, nameof(Source)));
                 }
                 return false;
             }
@@ -284,7 +284,7 @@ namespace System.Windows.Media.Imaging
             {
                 if (throwIfInvalid)
                 {
-                    throw new InvalidOperationException(SR.Format(SR.Image_NoArgument, "Transform"));
+                    throw new InvalidOperationException(SR.Format(SR.Image_NoArgument, nameof(Transform)));
                 }
                 return false;
             }

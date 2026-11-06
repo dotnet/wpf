@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.ComponentModel;
@@ -24,7 +24,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                throw new InvalidEnumArgumentException(SR.Format(SR.Enum_Invalid, "DesignerSerializationOptions"));
+                throw new InvalidEnumArgumentException(SR.Format(SR.Enum_Invalid, nameof(DesignerSerializationOptions)));
             }
         }
 

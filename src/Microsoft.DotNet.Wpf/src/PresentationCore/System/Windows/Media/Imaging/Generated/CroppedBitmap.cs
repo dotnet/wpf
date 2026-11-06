@@ -43,8 +43,6 @@ namespace System.Windows.Media.Imaging
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -62,7 +60,6 @@ namespace System.Windows.Media.Imaging
             target.SourcePropertyChangedHook(e);
 
 
-
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -77,20 +74,17 @@ namespace System.Windows.Media.Imaging
                 return;
             }
 
-
-
             target.PropertyChanged(SourceProperty);
         }
         private static void SourceRectPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             CroppedBitmap target = ((CroppedBitmap) d);
 
-
             target.SourceRectPropertyChangedHook(e);
+
 
             target.PropertyChanged(SourceRectProperty);
         }
-
 
         #region Public Properties
 
@@ -155,7 +149,6 @@ namespace System.Windows.Media.Imaging
             base.CloneCore(source);
 
 
-
             // Set state once clone has finished
             ClonePostscript(sourceCroppedBitmap);
         }
@@ -170,7 +163,6 @@ namespace System.Windows.Media.Imaging
             ClonePrequel(sourceCroppedBitmap);
 
             base.CloneCurrentValueCore(source);
-
 
 
             // Set state once clone has finished
@@ -189,7 +181,6 @@ namespace System.Windows.Media.Imaging
             base.GetAsFrozenCore(source);
 
 
-
             // Set state once clone has finished
             ClonePostscript(sourceCroppedBitmap);
         }
@@ -206,11 +197,9 @@ namespace System.Windows.Media.Imaging
             base.GetCurrentValueAsFrozenCore(source);
 
 
-
             // Set state once clone has finished
             ClonePostscript(sourceCroppedBitmap);
         }
-
 
         #endregion ProtectedMethods
 
@@ -223,13 +212,6 @@ namespace System.Windows.Media.Imaging
         #region Internal Methods
 
 
-
-
-
-
-
-
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -239,9 +221,6 @@ namespace System.Windows.Media.Imaging
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -273,15 +252,10 @@ namespace System.Windows.Media.Imaging
 
         #region Internal Fields
 
-
-
-
-
         internal static BitmapSource s_Source = null;
         internal static Int32Rect s_SourceRect = Int32Rect.Empty;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -323,7 +297,6 @@ namespace System.Windows.Media.Imaging
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ new CoerceValueCallback(CoerceSourceRect));
         }
-
 
 
         #endregion Constructors

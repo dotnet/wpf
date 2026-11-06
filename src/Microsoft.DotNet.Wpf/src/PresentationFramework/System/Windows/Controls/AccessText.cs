@@ -12,6 +12,7 @@ using System.Windows.Markup;
 using System.Xml;
 
 using MS.Internal;
+using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Controls
 {
@@ -555,7 +556,7 @@ namespace System.Windows.Controls
                     Trigger trigger = new Trigger
                     {
                         Property = KeyboardNavigation.ShowKeyboardCuesProperty,
-                        Value = true
+                        Value = BooleanBoxes.TrueBox
                     };
                     trigger.Setters.Add(new Setter(TextDecorationsProperty, System.Windows.TextDecorations.Underline));
                     accessKeyStyle.Triggers.Add(trigger);

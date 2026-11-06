@@ -330,7 +330,11 @@ namespace System.Windows.Controls
                         }
                     }
 
-                    if (!e.Handled && GetBoolField(BoolField.SetFocusOnContent))
+                    // Guard against re-entrancy: MoveFocus below can trigger a focus-changed
+                    // cascade (e.g. a GotKeyboardFocus handler redirecting focus back to this
+                    // TabItem), which would re-enter OnPreviewGotKeyboardFocus and overflow the stack.
+                    if (!e.Handled && GetBoolField(BoolField.SetFocusOnContent)
+                        && !GetBoolField(BoolField.MovingFocusToContent))
                     {
                         TabControl parentTabControl = TabControlParent;
                         if (parentTabControl != null)
@@ -341,25 +345,33 @@ namespace System.Windows.Controls
                             if (selectedContentPresenter != null)
                             {
                                 parentTabControl.UpdateLayout(); // Wait for layout
-                                bool success = selectedContentPresenter.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
-
-                                // If we successfully move focus inside the content then don't set focus to the header
-                                if (success)
+                                SetBoolField(BoolField.MovingFocusToContent, true);
+                                try
                                 {
-                                    e.Handled = true;
+                                    bool success = selectedContentPresenter.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
 
-                                    // However, if the focus got switched to a different focus scope,
-                                    // mark the header as the one last focused in its focus scope. #8293
-                                    if (Keyboard.FocusedElement is DependencyObject focusedElement)
+                                    // If we successfully move focus inside the content then don't set focus to the header
+                                    if (success)
                                     {
-                                        DependencyObject thisFocusScope = FocusManager.GetFocusScope(this);
-                                        if (thisFocusScope != null && Keyboard.FocusedElement is DependencyObject currentFocus)
+                                        e.Handled = true;
+
+                                        // However, if the focus got switched to a different focus scope,
+                                        // mark the header as the one last focused in its focus scope. #8293
+                                        if (Keyboard.FocusedElement is DependencyObject focusedElement)
                                         {
-                                            DependencyObject currentFocusScope = FocusManager.GetFocusScope(currentFocus);
-                                            if (currentFocusScope != thisFocusScope && thisFocusScope != null)
-                                                FocusManager.SetFocusedElement(thisFocusScope, this);
+                                            DependencyObject thisFocusScope = FocusManager.GetFocusScope(this);
+                                            if (thisFocusScope != null && Keyboard.FocusedElement is DependencyObject currentFocus)
+                                            {
+                                                DependencyObject currentFocusScope = FocusManager.GetFocusScope(currentFocus);
+                                                if (currentFocusScope != thisFocusScope && thisFocusScope != null)
+                                                    FocusManager.SetFocusedElement(thisFocusScope, this);
+                                            }
                                         }
                                     }
+                                }
+                                finally
+                                {
+                                    SetBoolField(BoolField.MovingFocusToContent, false);
                                 }
                             }
                         }
@@ -531,6 +543,7 @@ namespace System.Windows.Controls
         {
             SetFocusOnContent      = 0x10, // This flag determine if we want to set focus on active TabItem content
             SettingFocus           = 0x20, // This flag indicates that the TabItem is in the process of setting focus
+            MovingFocusToContent   = 0x40, // Re-entrancy guard for MoveFocus in OnPreviewGotKeyboardFocus
 
             // By default ListBoxItem is selectable
             DefaultValue = 0,

@@ -27,13 +27,13 @@ namespace MS.Internal.IO.Packaging.CompoundFile
     /// </summary>
     internal static class ContainerUtilities
     {
-        private static readonly Int32 _int16Size = sizeof(Int16);
-        private static readonly Int32 _int32Size = sizeof(Int32);
+        private const Int32 _int16Size = sizeof(Int16);
+        private const Int32 _int32Size = sizeof(Int32);
         private static readonly byte[] _paddingBuf = new byte[4];        // for writing DWORD padding
 
 
 #if !PBTCOMPILER
-        private static readonly Int32 _int64Size = sizeof(Int64);
+        private const Int32 _int64Size = sizeof(Int64);
 
         /// Used by ConvertBackSlashPathToStringArrayPath and 
         ///     ConvertStringArrayPathToBackSlashPath to separate path elements.

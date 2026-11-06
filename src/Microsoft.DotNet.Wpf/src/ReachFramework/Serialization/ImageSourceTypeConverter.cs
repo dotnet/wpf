@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 /*++
@@ -508,8 +508,8 @@ namespace System.Windows.Xps.Serialization
         #endregion Private static helper methods
 
         #region Private static data
-        
-        private static readonly int _readBlockSize = 1048576; //1MB
+
+        private const int _readBlockSize = 1_048_576; //1MB
 
         /// <summary>
         /// Cached hash values for image tables

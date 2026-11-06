@@ -143,9 +143,9 @@ namespace MS.Internal.Text
         // ------------------------------------------------------------------
         internal TextLineBreak TextLineBreak { get { return _textLineBreak; } }
         private TextLineBreak _textLineBreak;
-       
-        private static readonly uint HasBeenUpdatedMask = 0x40000000;
-        private static readonly uint LengthMask = 0x3FFFFFFF;
-        private static readonly uint HasInlineObjectsMask = 0x80000000;
+
+        private const uint HasBeenUpdatedMask = 0x40000000;
+        private const uint LengthMask = 0x3FFFFFFF;
+        private const uint HasInlineObjectsMask = 0x80000000;
     }
 }

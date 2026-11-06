@@ -1638,10 +1638,10 @@
                 <Field Name="a" Type="Single" />
             </Fields>
         </Resource>
-        <Resource Name="Double" ManagedType="double" UnmanagedName="DOUBLE" IsValueType="true" MarshaledSize="8" ParseMethod="Convert.ToDouble"/>
+        <Resource Name="Double" ManagedType="double" UnmanagedName="DOUBLE" IsValueType="true" MarshaledSize="8" ParseMethod="double.Parse"/>
         <Resource Name="Single" ManagedType="float" UnmanagedName="FLOAT" IsValueType="true" MarshaledSize="4" />
         <Resource Name="Int16" ManagedType="short" UnmanagedName="SHORT" IsValueType="true" MarshaledSize="2" />
-        <Resource Name="Int32" ManagedType="int" UnmanagedName="INT" IsValueType="true" MarshaledSize="4" ParseMethod="Convert.ToInt32"/>
+        <Resource Name="Int32" ManagedType="int" UnmanagedName="INT" IsValueType="true" MarshaledSize="4" ParseMethod="Int32.Parse"/>
         <Resource Name="Boolean" ManagedType="bool" UnmanagedName="BOOL" IsValueType="true" NeedsConvert="true" MarshaledSize="4"/>
         <Resource Name="LtrbRectF" ManagedType="MilRectF" UnmanagedName="MilRectF" IsValueType="true" MarshaledSize="16"/>
     </Resources>

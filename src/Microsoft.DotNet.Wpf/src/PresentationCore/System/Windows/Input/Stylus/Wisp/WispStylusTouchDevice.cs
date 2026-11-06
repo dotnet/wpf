@@ -117,9 +117,24 @@ namespace System.Windows.Input.StylusWisp
 
         protected override void OnActivateImpl()
         {
-            if (ActiveDeviceCount == 1)
+            if (ActiveDeviceCountExcludingOrphaned == 1)
             {
                 _stylusLogic.CurrentMousePromotionStylusDevice = StylusDevice;
+            }
+        }
+
+        protected override void OnOrphanedImpl()
+        {
+            // The window was disabled.  Windows sent it WM_CANCELMODE, which already released mouse
+            // capture, and this device's mouse up will not be delivered.  Drop its promoted mouse
+            // press and give up mouse promotion so touches in the enabled (e.g. modal dialog) window
+            // can promote to mouse.
+            StylusDevice.As<WispStylusDevice>().AbandonPromotedMouseButton();
+
+            if (_stylusLogic.CurrentMousePromotionStylusDevice == StylusDevice)
+            {
+                _stylusLogic.CurrentMousePromotionStylusDevice =
+                    ActiveDeviceCountExcludingOrphaned == 0 ? null : NoMousePromotionStylusDevice;
             }
         }
 
@@ -131,7 +146,7 @@ namespace System.Windows.Input.StylusWisp
             {
                 _stylusLogic.CurrentMousePromotionStylusDevice = null;
             }
-            else if (IsPrimary)
+            else if (IsPrimary && _stylusLogic.CurrentMousePromotionStylusDevice == StylusDevice)
             {
                 _stylusLogic.CurrentMousePromotionStylusDevice = NoMousePromotionStylusDevice;
             }

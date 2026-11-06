@@ -1209,6 +1209,10 @@ namespace System.Windows.Input.StylusWisp
                                 // from raw and run the code to reset (Preview to Main promotion).  As such
                                 // we should reset state here similarly to what we do for TouchDevice.  This
                                 // allows for proper mouse state tracking in the StylusDevice in the future.
+                                // If this device promoted a mouse down before the window got disabled (e.g. the
+                                // down opened a modal dialog), also release the mouse button state; otherwise the
+                                // next device's promoted mouse down is dropped and its first tap raises no Click.
+                                stylusDevice.AbandonPromotedMouseButton();
                                 stylusDevice.ResetStateForStylusUp();
 
                                 WispStylusTouchDevice touchDevice = stylusDevice.TouchDevice;
@@ -3540,10 +3544,17 @@ namespace System.Windows.Input.StylusWisp
                 // Find the pencontexts for this window and update it's disabled window state
                 PenContexts penContexts = GetPenContextsFromHwnd(sourceHit);
                 penContexts?.IsWindowDisabled = disabled;
+
+                if (disabled)
+                {
+                    OrphanTouchDevices(sourceHit);
+                }
             }
 
-            // See if we need to update the mouse state when going enabled.
-            if (!disabled && _currentStylusDevice != null)
+            // An orphaned contact has abandoned its press. Re-enabling must not restore it
+            // or overwrite a newer contact's mouse state.
+            if (!disabled && _currentStylusDevice != null &&
+                _currentStylusDevice.ActiveTouchDevice?.IsOrphaned != true)
             {
                 // If we are in air or have not fired down the set mouse in up state.
                 if (_currentStylusDevice.InAir || !_currentStylusDevice.GestureWasFired)
@@ -3555,6 +3566,26 @@ namespace System.Windows.Input.StylusWisp
                 {
                     _mouseLeftButtonState = _currentStylusDevice.LeftIsActiveMouseButton ? MouseButtonState.Pressed : MouseButtonState.Released;
                     _mouseRightButtonState = !_currentStylusDevice.LeftIsActiveMouseButton ? MouseButtonState.Pressed : MouseButtonState.Released;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Touch devices active in a window that is being disabled (e.g. by Window.ShowDialog called while
+        /// processing their input) cannot deliver further input until their up arrives.  Orphan them so
+        /// they do not prevent touches in other (e.g. dialog) windows from becoming primary.
+        /// </summary>
+        private void OrphanTouchDevices(PresentationSource source)
+        {
+            foreach (TabletDevice tabletDevice in TabletDevices)
+            {
+                foreach (StylusDevice stylusDevice in tabletDevice.StylusDevices)
+                {
+                    WispStylusTouchDevice touchDevice = stylusDevice.As<WispStylusDevice>()?.ActiveTouchDevice;
+                    if (touchDevice != null && touchDevice.ActiveSource == source)
+                    {
+                        touchDevice.OnOrphaned();
+                    }
                 }
             }
         }

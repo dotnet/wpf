@@ -107,4 +107,4 @@
 #include "HwShaderEffect.h"
 #include "ShaderAssemblies\Shaders.h"
 
-
+#include "hybridrt.h"

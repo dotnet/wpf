@@ -3418,16 +3418,6 @@ Değiştirmek istiyor musunuz?</target>
         <target state="translated">MultiBinding'in iç Binding'de UpdateSourceTrigger ayarlanamaz. Yalnızca varsayılan Acil UpdateSourceTrigger geçerlidir.</target>
         <note />
       </trans-unit>
-      <trans-unit id="NonCLSException">
-        <source>Unknown exception during '{0}'.</source>
-        <target state="translated">'{0}' sırasında bilinmeyen özel durum.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="NonClsActivationException">
-        <source>Nonstandard exception occurred while activating the application.</source>
-        <target state="translated">Uygulama etkinleştirilirken standart olmayan özel durum oluştu.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NonPackAppAbsoluteUriNotAllowed">
         <source>Unsupported URI syntax. Method expects a relative URI or a pack://application:,,,/ form of absolute URI.</source>
         <target state="translated">Desteklenmeyen Uri sözdizimi. Metot göreli bir Uri veya pack://application:,,,/ biçiminde mutlak Uri bekliyor.</target>
@@ -3506,16 +3496,6 @@ Değiştirmek istiyor musunuz?</target>
       <trans-unit id="ObjectDataProviderHasNoSource">
         <source>ObjectDataProvider needs either an ObjectType or ObjectInstance.</source>
         <target state="translated">ObjectDataProvider, ObjectType veya ObjectInstance'a gereksinim duyar.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ObjectDataProviderNonCLSException">
-        <source>Unknown exception while creating type '{0}' for ObjectDataProvider.</source>
-        <target state="translated">ObjectDataProvider için '{0}' türü oluşturulurken bilinmeyen özel durum oluştu.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ObjectDataProviderNonCLSExceptionInvoke">
-        <source>Unknown exception while invoking method '{0}' on type '{1}' for ObjectDataProvider.</source>
-        <target state="translated">ObjectDataProvider için '{1}' türünde '{0}' metodu çağrılırken bilinmeyen özel durum oluştu.</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectDataProviderParameterCollectionIsNotInUse">

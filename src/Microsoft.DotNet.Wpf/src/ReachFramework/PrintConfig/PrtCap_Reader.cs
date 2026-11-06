@@ -511,14 +511,9 @@ namespace MS.Internal.Printing.Configuration
     /// <summary>
     /// QName helper class for XMLTextReader
     /// </summary>
-    internal class XmlReaderQName
+    internal static class XmlReaderQName
     {
-        #region Constructors
 
-        // Never need to use an instance. All static methods.
-        private XmlReaderQName() {}
-
-        #endregion Constructors
 
         #region Public Methods
 

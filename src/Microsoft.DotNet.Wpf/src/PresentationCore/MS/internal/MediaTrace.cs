@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace MS.Internal
@@ -25,7 +25,7 @@ namespace MS.Internal
         public static MediaTrace QueueItems = new MediaTrace("MILQueueItems");
         public static MediaTrace Statistics = new MediaTrace("Statistics");
         
-        public class ChangeQueue
+        public static class ChangeQueue
         {
             public static MediaTrace ApplyChange = new MediaTrace("Change queue: Apply Change");
             public static MediaTrace Enqueue = new MediaTrace("Change queue: Enqueue");

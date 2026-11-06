@@ -38,4 +38,22 @@ extern int g_fCmapAndSbitOverflowProtectionEnabled;
 
 #define CMAP_SAFE_CHECKS_ENABLED() (g_fCmapAndSbitOverflowProtectionEnabled != 0)
 
+
+/*
+ * TtfDelta font security protection switch —
+ * prevents heap over-reads in cmap Format 4/6 and stack overflow from
+ * deeply nested composite glyphs.
+ *
+ * AppContext switch name:
+ *   Switch.MS.Internal.TtfDelta.DisableFontSecurityProtection
+ *
+ * Default (false / absent): Protection ON (new behavior).
+ * Set to true:              Protection OFF (old behavior / opt-out).
+ */
+
+ /* 0 = protection disabled (old), 1 = protection enabled (new) */
+extern int g_fFontSecurityProtectionEnabled;
+
+#define FONT_SECURITY_CHECKS_ENABLED() (g_fFontSecurityProtectionEnabled != 0)
+
 #endif /* TTF_SAFE_CHECKS_H */

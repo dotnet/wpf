@@ -116,17 +116,51 @@ namespace System.Windows.Navigation
             INavigatorBase navigator = null;
             bool inSameThread = true;
 
-            // If the navigation originates from a FixedPage element (Path, Canvas, Glyphs, or
-            // FixedPage) carrying FixedPage.NavigateUri, the target content could be attacker-
-            // controlled XAML within an XPS package. Mark this NavigationService as unsafe so that
-            // the XAML loader uses the restrictive reader and blocks dangerous types like
-            // ObjectDataProvider.
-            UIElement sourceElement = e.OriginalSource as UIElement;
-            if (sourceElement != null &&
-                (sourceElement is System.Windows.Shapes.Path || sourceElement is Canvas || sourceElement is Glyphs || sourceElement is FixedPage) &&
-                FixedPage.GetNavigateUri(sourceElement) != null)
+            if (!FrameworkAppContextSwitches.OptOutOfRestrictiveXamlNavigationBlock)
             {
-                IsUnsafe = true;
+                // If the navigation originates from attacker-controllable XPS / fixed-document content,
+                // the target could be malicious XAML inside an XPS package. Mark this NavigationService
+                // as unsafe so that the XAML loader uses the restrictive reader and blocks dangerous
+                // types such as ObjectDataProvider. See IsXpsOriginatedNavigation for the covered cases.
+                if (IsXpsOriginatedNavigation(e.OriginalSource))
+                {
+                    IsUnsafe = true;
+                }
+
+                // Generic guard: walk the logical tree from the navigation event source upward.
+                // If any ancestor element was the root of a restrictive-reader XAML parse
+                // (RestrictiveXamlContext.IsRestrictivelyLoaded == true), the navigation target
+                // must also be processed through the restrictive reader.
+                if (!IsUnsafe && e.OriginalSource is DependencyObject navigationSource)
+                {
+                    DependencyObject current = navigationSource;
+
+                    while (current != null)
+                    {
+                        if (RestrictiveXamlContext.GetIsRestrictivelyLoaded(current))
+                        {
+                            IsUnsafe = true;
+                            break;
+                        }
+
+                        current = LogicalTreeHelper.GetParent(current);
+                    }
+                }
+            }
+            else
+            {
+                // If the navigation originates from a FixedPage element (Path, Canvas, Glyphs, or
+                // FixedPage) carrying FixedPage.NavigateUri, the target content could be attacker-
+                // controlled XAML within an XPS package. Mark this NavigationService as unsafe so that
+                // the XAML loader uses the restrictive reader and blocks dangerous types like
+                // ObjectDataProvider.
+                UIElement sourceElement = e.OriginalSource as UIElement;
+                if (sourceElement != null &&
+                    (sourceElement is System.Windows.Shapes.Path || sourceElement is Canvas || sourceElement is Glyphs || sourceElement is FixedPage) &&
+                    FixedPage.GetNavigateUri(sourceElement) != null)
+                {
+                    IsUnsafe = true;
+                }
             }
 
             if (!String.IsNullOrEmpty(target))
@@ -187,14 +221,29 @@ namespace System.Windows.Navigation
             {
                 if (inSameThread)
                 {
+                    if (!FrameworkAppContextSwitches.OptOutOfRestrictiveXamlNavigationBlock
+                        && IsUnsafe && navigator is MS.Internal.AppModel.IJournalNavigationScopeHost scopeHost
+                        && scopeHost.NavigationService is NavigationService targetNs)
+                    {
+                        targetNs.IsUnsafe = true;
+                    }
+
                     navigator.Navigate(bpu);
                 }
                 else
                 {
+                    bool capturedIsUnsafe = IsUnsafe;
                     ((DispatcherObject)navigator).Dispatcher.BeginInvoke(
                                 DispatcherPriority.Send,
                                 (DispatcherOperationCallback)delegate(object unused)
                                 {
+                                    if (!FrameworkAppContextSwitches.OptOutOfRestrictiveXamlNavigationBlock
+                                        && capturedIsUnsafe && navigator is MS.Internal.AppModel.IJournalNavigationScopeHost scopeHost
+                                        && scopeHost.NavigationService is NavigationService targetNs)
+                                    {
+                                        targetNs.IsUnsafe = true;
+                                    }
+
                                     return navigator.Navigate(bpu);
                                 },
                                 null);
@@ -204,6 +253,40 @@ namespace System.Windows.Navigation
             {
                 throw new System.ArgumentException(SR.HyperLinkTargetNotFound);
             }
+        }
+
+        // Determines whether a navigation raised through OnRequestNavigate originates from an
+        // XPS UIElement source that cannot carry RestrictiveXamlContext.IsRestrictivelyLoaded
+        // (because it is not a parsed root element). Two UIElement-only vectors are covered here;
+        // all FrameworkContentElement / Hyperlink vectors are handled by the generic logical-tree
+        // walk in OnRequestNavigate using RestrictiveXamlContext.
+        //
+        //   1. XPS "pseudo-hyperlink": a fixed-page UIElement (Path, Canvas, or Glyphs) carrying
+        //      an attached FixedPage.NavigateUri. This is the original XPS hyperlink vector.
+        //   2. Synthetic logical Hyperlink re-raised from the *root* FixedPage by the fixed-document
+        //      text model (FixedElement.ClickHyperlink). Here OriginalSource is the FixedPage itself,
+        //      whose own NavigateUri is null (the NavigateUri lives on the child element). This path
+        //      is reachable without a physical mouse click - e.g. via UI Automation InvokePattern.
+        private static bool IsXpsOriginatedNavigation(object originalSource)
+        {
+            if (originalSource is UIElement sourceElement)
+            {
+                // Case 2: root FixedPage re-raise (NavigateUri may be null on the FixedPage itself).
+                if (sourceElement is FixedPage fixedPage &&
+                    RestrictiveXamlContext.GetIsRestrictivelyLoaded(fixedPage))
+                {
+                    return true;
+                }
+
+                // Case 1: fixed-page element carrying FixedPage.NavigateUri.
+                if ((sourceElement is System.Windows.Shapes.Path || sourceElement is Canvas || sourceElement is Glyphs) &&
+                    FixedPage.GetNavigateUri(sourceElement) != null)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         // Tests if two uris resolve to the same Uri.  The Uri fragments are also

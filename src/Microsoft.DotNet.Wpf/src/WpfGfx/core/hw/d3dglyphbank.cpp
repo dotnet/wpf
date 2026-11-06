@@ -336,9 +336,46 @@ HRESULT CD3DGlyphBank::RectFillAlpha(
 
     IFC(pTempSurface->LockRect(&lockedRect, &rcTemp, 0 ) );
 
-    BYTE *pDst00 = (BYTE*)lockedRect.pBits
-                 - lockedRect.Pitch*srcRect.top
-                 - srcRect.left;
+    if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+    {
+        // before writing anything, confirm the whole destination byte range stays inside the locked
+        // temporary surface. Every memset/memcpy below targets rows in [srcRect.top, srcRect.bottom)
+        // and columns in [srcRect.left, srcRect.right), which map to locked-surface coordinates in
+        // [0, uHeight) x [0, uWidth).
+        // Using 64-bit arithmetic, verify srcRect is well formed and that the widest write ends
+        // within [pBits, pBits + Pitch*uHeight). Reject the glyph realization instead of writing out
+        // of bounds otherwise.
+        const INT64 dstPitch    = (INT64)lockedRect.Pitch;
+        const INT64 surfaceSize = dstPitch * (INT64)uHeight;
+        const INT64 lastByteEnd = dstPitch * ((INT64)uHeight - 1) + (INT64)uWidth;
+
+        if (srcRect.right  < srcRect.left ||
+            srcRect.bottom < srcRect.top  ||
+            lastByteEnd > surfaceSize)
+        {
+            IFC( pTempSurface->UnlockRect() );
+            hr = E_FAIL;
+            goto Cleanup;
+        }
+    }
+
+    // Use 64-bit arithmetic to avoid integer overflow when lockedRect.Pitch * srcRect.top
+    // (or lockedRect.Pitch * y in the loops below) exceeds INT32 range. Attacker-controlled
+    // glyph coordinates can drive these products past 2^31, wrapping the destination pointer
+    // and causing an out-of-bounds write in the memset/memcpy calls below.
+    BYTE *pDst00;
+    if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+    {
+        pDst00 = (BYTE*)lockedRect.pBits
+               - (INT64)lockedRect.Pitch*srcRect.top
+               - srcRect.left;
+    }
+    else
+    {
+        pDst00 = (BYTE*)lockedRect.pBits
+               - lockedRect.Pitch*srcRect.top
+               - srcRect.left;
+    }
 
     // pDst00 points to the texel in destination that corresponds
     // to point (x,y) = (0,0) in source array
@@ -364,7 +401,15 @@ HRESULT CD3DGlyphBank::RectFillAlpha(
     // fill top edge
     for (y = srcRect.top; y < fullDataRect.top; y++)
     {
-        BYTE *pDstRow = pDst00 + lockedRect.Pitch*y;
+        BYTE *pDstRow;
+        if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+        {
+            pDstRow = pDst00 + (INT64)lockedRect.Pitch*y;
+        }
+        else
+        {
+            pDstRow = pDst00 + lockedRect.Pitch*y;
+        }
         memset(pDstRow + srcRect.left, 0, srcRect.right - srcRect.left);
     }
 
@@ -376,7 +421,15 @@ HRESULT CD3DGlyphBank::RectFillAlpha(
     {
         for (; y < ymax; y++)
         {
-                  BYTE* pDstRow = pDst00 + lockedRect.Pitch*y;
+            BYTE* pDstRow;
+            if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+            {
+                pDstRow = pDst00 + (INT64)lockedRect.Pitch*y;
+            }
+            else
+            {
+                pDstRow = pDst00 + lockedRect.Pitch*y;
+            }
             const BYTE* pSrcRow;
             if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
             {
@@ -397,7 +450,15 @@ HRESULT CD3DGlyphBank::RectFillAlpha(
         // degenerate case: srcRect and fullDataRect have empty intersection
         for (; y < ymax; y++)
         {
-            BYTE* pDstRow = pDst00 + lockedRect.Pitch*y;
+            BYTE* pDstRow;
+            if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+            {
+                pDstRow = pDst00 + (INT64)lockedRect.Pitch*y;
+            }
+            else
+            {
+                pDstRow = pDst00 + lockedRect.Pitch*y;
+            }
             memset(pDstRow + srcRect.left, 0, srcRect.right - srcRect.left);
         }
     }
@@ -405,7 +466,15 @@ HRESULT CD3DGlyphBank::RectFillAlpha(
     // fill bottom edge
     for (; y < srcRect.bottom; y++)
     {
-        unsigned char *pDstRow = pDst00 + lockedRect.Pitch*y;
+        unsigned char *pDstRow;
+        if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+        {
+            pDstRow = pDst00 + (INT64)lockedRect.Pitch*y;
+        }
+        else
+        {
+            pDstRow = pDst00 + lockedRect.Pitch*y;
+        }
         memset(pDstRow + srcRect.left, 0, srcRect.right - srcRect.left);
     }
 

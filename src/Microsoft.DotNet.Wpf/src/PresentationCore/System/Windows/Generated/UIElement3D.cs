@@ -9,7 +9,6 @@
 //
 
 using MS.Internal;
-using MS.Internal.KnownBoxes;
 using MS.Utility;
 using System.ComponentModel;
 using System.Windows.Input;

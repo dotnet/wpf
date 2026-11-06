@@ -3,7 +3,6 @@
 
 using MS.Internal;
 using MS.Internal.Media3D;
-using MS.Internal.KnownBoxes;
 using System.Windows.Markup;
 
 namespace System.Windows.Media.Media3D

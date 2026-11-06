@@ -2796,7 +2796,6 @@
 
         <Namespaces>
             <Namespace Name="MS.Internal"/>
-            <Namespace Name="MS.Internal.KnownBoxes"/>
             <Namespace Name="MS.Internal.Collections"/>
             <Namespace Name="MS.Utility"/>
             <Namespace Name="System.Collections"/>

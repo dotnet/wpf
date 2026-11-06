@@ -426,7 +426,7 @@ namespace System.Windows.Controls.Primitives
                 TextEditor.IsReadOnlyProperty.AddOwner(
                     typeof(TextBoxBase),
                     new FrameworkPropertyMetadata(
-                        false,
+                        BooleanBoxes.FalseBox,
                         FrameworkPropertyMetadataOptions.Inherits,
                         new PropertyChangedCallback(OnVisualStatePropertyChanged)));
 
@@ -446,7 +446,7 @@ namespace System.Windows.Controls.Primitives
             DependencyProperty.Register("IsReadOnlyCaretVisible",
                 typeof(bool),
                 typeof(TextBoxBase),
-                new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnIsReadOnlyCaretVisiblePropertyChanged)));
+                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, new PropertyChangedCallback(OnIsReadOnlyCaretVisiblePropertyChanged)));
 
         /// <summary>
         /// Whether or not the caret is visible when the textbox is read-only.
@@ -490,7 +490,7 @@ namespace System.Windows.Controls.Primitives
                         "AcceptsTab", // Property name
                         typeof(bool), // Property type
                         typeof(TextBoxBase), // Property owner
-                        new FrameworkPropertyMetadata(false /*default value*/));
+                        new FrameworkPropertyMetadata(defaultValue: BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Whether or not the Textbox accepts tabs
@@ -682,7 +682,7 @@ namespace System.Windows.Controls.Primitives
         /// </remarks>
         public static readonly DependencyProperty IsUndoEnabledProperty =
             DependencyProperty.Register("IsUndoEnabled", typeof(bool), typeof(TextBoxBase),
-            new FrameworkPropertyMetadata(true, new PropertyChangedCallback(OnIsUndoEnabledChanged)));
+            new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, new PropertyChangedCallback(OnIsUndoEnabledChanged)));
 
         /// <summary>
         /// Enables or disabled undo support on this Control.
@@ -754,7 +754,7 @@ namespace System.Windows.Controls.Primitives
                 "AutoWordSelection", // Property name
                 typeof(bool), // Property type
                 typeof(TextBoxBase), // Property owner
-                new FrameworkPropertyMetadata(false));
+                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Whether or not dragging with the mouse automatically selects words
@@ -866,7 +866,7 @@ namespace System.Windows.Controls.Primitives
                         "IsSelectionActive",
                         typeof(bool),
                         typeof(TextBoxBase),
-                        new FrameworkPropertyMetadata(MS.Internal.KnownBoxes.BooleanBoxes.FalseBox));
+                        new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
         public static readonly DependencyProperty IsSelectionActiveProperty =
             IsSelectionActivePropertyKey.DependencyProperty;

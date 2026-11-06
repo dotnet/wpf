@@ -16,7 +16,6 @@ using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.AppModel;
 using MS.Internal.Interop;
-using MS.Internal.KnownBoxes;
 using MS.Win32;
 using System.Diagnostics.CodeAnalysis;
 

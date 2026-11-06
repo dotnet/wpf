@@ -21,6 +21,7 @@
 
 class CHwColorTransformColorSource;
 class CHwRadialGradientColorSource;
+class CHwSweepGradientColorSource;
 
 #define HWPIPELINE_ANTIALIAS_LOCATION MILVFAttrDiffuse
 
@@ -54,6 +55,10 @@ public:
 
     virtual HRESULT Set_RadialGradient(
         __in_ecount(1) CHwRadialGradientColorSource *pRadialGradient
+        ) PURE;
+
+    virtual HRESULT Set_SweepGradient(
+        __in_ecount(1) CHwSweepGradientColorSource *pSweepGradient
         ) PURE;
 
     virtual HRESULT Mul_ConstAlpha(
@@ -350,6 +355,10 @@ public:
 
     override HRESULT Set_RadialGradient(
         __in_ecount(1) CHwRadialGradientColorSource *pRadialGradient
+        );
+
+    override HRESULT Set_SweepGradient(
+        __in_ecount(1) CHwSweepGradientColorSource *pSweepGradient
         );
 
     override HRESULT Mul_ConstAlpha(

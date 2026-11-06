@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -269,11 +269,11 @@ namespace MS.Internal.MilCodeGen.Generators
             {
                 m_cpp.Write(
                     [[inline]]
-                        typedef struct
+                        struct [[commandName]]
                         {
                             MILCMD Type;
                             [[commandList]]
-                        } [[commandName]];
+                        };
 
                     [[/inline]]
                     );
@@ -282,10 +282,10 @@ namespace MS.Internal.MilCodeGen.Generators
             {
                 m_cpp.Write(
                     [[inline]]
-                        typedef struct
+                        struct [[commandName]]
                         {
                             [[commandList]]
-                        } [[commandName]];
+                        };
     
                     [[/inline]]
                     );

@@ -99,8 +99,10 @@
     <ClCompile Include="HwLightingColorSource.cpp" />
     <ClCompile Include="HwLinearGradientBrush.cpp" />
     <ClCompile Include="HwRadialGradientBrush.cpp" />
+    <ClCompile Include="HwSweepGradientBrush.cpp" />
     <ClCompile Include="HwLinearGradientColorSource.cpp" />
     <ClCompile Include="HwRadialGradientColorSource.cpp" />
+    <ClCompile Include="HwSweepGradientColorSource.cpp" />
     <ClCompile Include="HwPipeline.cpp" />
     <ClCompile Include="HwPipelineBuilder.cpp" />
     <ClCompile Include="hwrasterizer.cpp" />

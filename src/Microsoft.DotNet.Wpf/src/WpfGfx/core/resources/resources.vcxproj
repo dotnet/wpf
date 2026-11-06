@@ -121,6 +121,7 @@
     <ClCompile Include="projectioncamera.cpp" />
     <ClCompile Include="quaternionrotation3d.cpp" />
     <ClCompile Include="radialgradient.cpp" />
+    <ClCompile Include="sweepgradient.cpp" />
     <ClCompile Include="rectanglegeometry.cpp" />
     <ClCompile Include="renderdata.cpp" />
     <ClCompile Include="renderdata_generated.cpp" />

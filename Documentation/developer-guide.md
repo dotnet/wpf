@@ -200,13 +200,15 @@ Follow the steps defined [here](https://github.com/dotnet/arcade/blob/main/Docum
 
 ### Testing PresentationBuildTasks
 
+The SDK packages task assemblies under `tools\net` for Core MSBuild and `tools\netframework` for .NET Framework MSBuild, independently of their target framework versions.
+
 #### Debugging Presentation Build Task
 Debugging Presentation Build Task(hereafter called PBT)  can be required for various reasons. One of them can be if there is something you wanted to know about markup compilation. In this section you will learn how to debug PBT.
 
 For the sake of explaining the debugging steps, we will try to stop the debugger at execute (public function) of markupCompilatonPass2.
 
 Follow the following steps sequentially.
-1.  Replace the`PresentationBuildTasks.dll` located at `C:\Program Files\dotnet\sdk\<your sdk version>\Sdks\Microsoft.NET.Sdk.WindowsDesktop\tools\net472` with your binaries (`<wpf clone directory>\artifacts\packaging\Debug\Microsoft.NET.Sdk.WindowsDesktop.Debug\tools\net472`).
+1.  Replace the`PresentationBuildTasks.dll` located at `C:\Program Files\dotnet\sdk\<your sdk version>\Sdks\Microsoft.NET.Sdk.WindowsDesktop\tools\netframework` with your binaries (`<wpf clone directory>\artifacts\packaging\Debug\Microsoft.NET.Sdk.WindowsDesktop.Debug\tools\netframework`).
 2. Launch Visual Studio and open the `Msbuild.exe` (generally located at `C:\Program Files\Microsoft Visual Studio\2022\Preview\MSBuild\Current\Bin\MSBuild.exe`)
 3. Go to Debug->Options->Symbols
 4. Check option - `Load only specified modules` and click on `Specify included modules`

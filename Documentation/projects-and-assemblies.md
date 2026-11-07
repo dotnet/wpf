@@ -2,7 +2,7 @@
 
 The following assemblies are being produced today: 
 ```
-+---net472
++---netframework
 |   |   PresentationBuildTasks.dll
 |   |   System.Collections.Immutable.dll
 |   |   System.Memory.dll
@@ -50,7 +50,7 @@ The following assemblies are being produced today:
 |   \---zh-Hant
 |           PresentationBuildTasks.resources.dll
 |           
-\---netcoreapp2.1
+\---net
     |   PresentationBuildTasks.dll
     |   System.Reflection.MetadataLoadContext.dll
     |   

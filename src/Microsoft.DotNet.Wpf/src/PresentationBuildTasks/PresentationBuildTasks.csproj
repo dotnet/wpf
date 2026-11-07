@@ -2,6 +2,8 @@
   <PropertyGroup>
     <TargetFrameworks>$(BundledNETCoreAppTargetFramework);$(NetFrameworkToolCurrent)</TargetFrameworks>
     <TargetFramework />
+    <DestinationSubFolder Condition="'$(TargetFramework)' == '$(BundledNETCoreAppTargetFramework)'">tools\net\</DestinationSubFolder>
+    <DestinationSubFolder Condition="'$(TargetFramework)' == '$(NetFrameworkToolCurrent)'">tools\netframework\</DestinationSubFolder>
     <EnableDefaultItems>false</EnableDefaultItems>
     <EnablePInvokeAnalyzer>true</EnablePInvokeAnalyzer>
 

@@ -483,8 +483,12 @@ namespace Microsoft.Windows.Shell
 
         private void _FixupTemplateIssues()
         {
-            Assert.IsNotNull(_chromeInfo);
-            Assert.IsNotNull(_window);
+            if (_chromeInfo == null || _window == null)
+            {
+                // Posted for a template change and the chrome was removed in the meantime (for example the
+                // automatic one, when the theme mode goes back to None): nothing to fix up any more.
+                return;
+            }
 
             if (!_ManagesNonClientArea)
             {
@@ -674,11 +678,6 @@ namespace Microsoft.Windows.Shell
         // area, so we added the NonClientFrameEdges property.
         private IntPtr _HandleNCCalcSize(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
-            if (_FrameMode == WindowChromeFrameMode.SystemFrame)
-            {
-                return _HandleNCCalcSizeSystemFrame(wParam, lParam, out handled);
-            }
-
             if (!_ManagesNonClientArea)
             {
                 handled = false;
@@ -738,45 +737,6 @@ namespace Microsoft.Windows.Shell
             }
 
             return retVal;
-        }
-
-        /// <summary>
-        /// WM_NCCALCSIZE for SystemFrame: the standard frame is laid out by DefWindowProc. One correction is
-        /// needed while a backdrop is applied: the standard layout of a maximized window puts the client right
-        /// below a caption that is one border shorter (that border lies off-screen), but with a sheet-of-glass
-        /// extension DWM draws the caption at its full height anchored to the visible frame, so the caption band
-        /// would overlap the top of the client by that border. Push the client down accordingly.
-        /// </summary>
-        private IntPtr _HandleNCCalcSizeSystemFrame(IntPtr wParam, IntPtr lParam, out bool handled)
-        {
-            handled = false;
-
-            // Only the sheet of glass moves the caption; explicit glass margins (a band) keep the standard layout.
-            if (wParam == IntPtr.Zero || lParam == IntPtr.Zero || !_systemFrameSheetOfGlassApplied || !_IsHwndMaximized())
-            {
-                return IntPtr.Zero;
-            }
-
-            int border = _GetSystemFrameBorderDevice();
-            if (border <= 0)
-            {
-                return IntPtr.Zero;
-            }
-
-            IntPtr result = NativeMethods.DefWindowProc(_hwnd, WM.NCCALCSIZE, wParam, lParam);
-
-            var rc = Marshal.PtrToStructure<RECT>(lParam);
-            rc.Top += border;
-            Marshal.StructureToPtr(rc, lParam, false);
-
-            handled = true;
-            return result;
-        }
-
-        /// <summary>Thickness of the invisible resize border in device pixels, from the system metrics.</summary>
-        private int _GetSystemFrameBorderDevice()
-        {
-            return _GetResizeFrameThickness(_GetNonClientDpi());
         }
 
         /// <summary>
@@ -1882,8 +1842,6 @@ namespace Microsoft.Windows.Shell
             // left completely untouched (_savedBackgroundColor tracks whether we did).
             bool extend = compositionEnabled && (_isBackdropApplied || _HasExplicitGlassMargins);
             bool sheet = extend && !_HasExplicitGlassMargins;
-            bool extensionChanged = sheet != _systemFrameSheetOfGlassApplied;
-            _systemFrameSheetOfGlassApplied = sheet;
 
             if (extend)
             {
@@ -1902,15 +1860,7 @@ namespace Microsoft.Windows.Shell
                     NativeMethods.DwmExtendFrameIntoClientArea(_hwnd, ref dwmMargin);
                 }
             }
-
-            // The maximized client rect depends on the extension (see _HandleNCCalcSizeSystemFrame): recompute it.
-            if (extensionChanged && _IsHwndMaximized())
-            {
-                _ChangeFrame();
-            }
         }
-
-        private bool _systemFrameSheetOfGlassApplied;
 
         /// <summary>
         /// DWM frame extension for ExtendedClientArea: either the whole surface (GlassFrameThickness negative,

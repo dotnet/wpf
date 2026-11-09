@@ -202,6 +202,12 @@ public class ClipboardTextConversionTests
         try
         {
             Clipboard.SetDataObject(new LegacyDataObject(source), copy: false);
+            // A legacy-only source must also allow safe typed text reads through the composed clipboard view.
+            ITypedDataObject result = (ITypedDataObject)Clipboard.GetDataObject()!;
+            result.TryGetData(DataFormats.UnicodeText, autoConvert: false, out string? text).Should().BeTrue();
+            text.Should().Be("test string");
+            result.TryGetData(DataFormats.UnicodeText, static _ => null, autoConvert: false, out text).Should().BeTrue();
+            text.Should().Be("test string");
             Clipboard.GetText().Should().Be("test string");
             Clipboard.GetText(TextDataFormat.Text).Should().Be("test string");
             Clipboard.GetAudioStream().Should().BeOfType<System.IO.MemoryStream>().Which.ToArray().Should().Equal(1, 2, 3);
@@ -239,6 +245,30 @@ public class ClipboardTextConversionTests
         }
     }
 
+    [WpfFact]
+    public void SetDataObject_LegacyDataObject_UsesAutoConvertOverloads()
+    {
+        // As in .NET 9, clipboard wrappers forward single-argument getters to the autoConvert overloads,
+        // even when an application's single-argument getters expose different data.
+        object payload = new();
+        DataObject source = new();
+        source.SetText("test string", TextDataFormat.Text);
+
+        try
+        {
+            Clipboard.SetDataObject(new LegacyDataObject(source, payload), copy: false);
+            IDataObject result = Clipboard.GetDataObject()!;
+            result.GetData("SingleArgumentPayload").Should().BeNull();
+            result.GetDataPresent("SingleArgumentPayload").Should().BeFalse();
+            result.GetData("SingleArgumentPayload", autoConvert: true).Should().BeNull();
+            result.GetDataPresent("SingleArgumentPayload", autoConvert: true).Should().BeFalse();
+        }
+        finally
+        {
+            Clipboard.Clear();
+        }
+    }
+
     private static void AssertClipboardText()
     {
         // autoConvert:false suppresses managed mapping, but must not suppress Windows' synthesized formats.
@@ -261,13 +291,14 @@ public class ClipboardTextConversionTests
     }
 
     // Expose only the legacy contract, regardless of other interfaces implemented by the delegated object.
-    private sealed class LegacyDataObject(DataObject data) : IDataObject
+    private sealed class LegacyDataObject(DataObject data, object? singleArgumentPayload = null) : IDataObject
     {
         public object? GetData(string format, bool autoConvert) => data.GetData(format, autoConvert);
-        public object? GetData(string format) => data.GetData(format);
+        public object? GetData(string format) => format == "SingleArgumentPayload" ? singleArgumentPayload : data.GetData(format);
         public object? GetData(Type format) => data.GetData(format);
         public bool GetDataPresent(string format, bool autoConvert) => data.GetDataPresent(format, autoConvert);
-        public bool GetDataPresent(string format) => data.GetDataPresent(format);
+        public bool GetDataPresent(string format) =>
+            (format == "SingleArgumentPayload" && singleArgumentPayload is not null) || data.GetDataPresent(format);
         public bool GetDataPresent(Type format) => data.GetDataPresent(format);
         public string[] GetFormats(bool autoConvert) => data.GetFormats(autoConvert);
         public string[] GetFormats() => data.GetFormats();

@@ -16,6 +16,8 @@ internal sealed class DataObjectAdapter : IDataObjectInternal
 {
     public IDataObject DataObject { get; }
 
+    public bool SupportsTypedData => DataObject is ITypedDataObject;
+
     public DataObjectAdapter(IDataObject dataObject) => DataObject = dataObject;
 
     public object? GetData(string format, bool autoConvert) => DataObject.GetData(format, autoConvert);

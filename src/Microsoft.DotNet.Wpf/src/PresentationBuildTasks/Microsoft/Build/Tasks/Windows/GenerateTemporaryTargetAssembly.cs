@@ -993,7 +993,33 @@ namespace Microsoft.Build.Tasks.Windows
             }
 
             XmlElement newImportGroup = (XmlElement)importGroup.CloneNode(deep: false);
-            importGroup.ParentNode.InsertAfter(newImportGroup, importGroup);
+            XmlNode parentNode = importGroup.ParentNode;
+
+            string condition = importGroup.GetAttribute("Condition");
+            if (!string.IsNullOrEmpty(condition))
+            {
+                string conditionPropertyName = "_WpfTempProjectImportGroupCondition_" + Guid.NewGuid().ToString("N");
+                XmlElement conditionPropertyGroup = importGroup.OwnerDocument.CreateElement("PropertyGroup", importGroup.NamespaceURI);
+
+                XmlElement conditionProperty = importGroup.OwnerDocument.CreateElement(conditionPropertyName, importGroup.NamespaceURI);
+                conditionProperty.InnerText = "false";
+                conditionPropertyGroup.AppendChild(conditionProperty);
+
+                conditionProperty = importGroup.OwnerDocument.CreateElement(conditionPropertyName, importGroup.NamespaceURI);
+                conditionProperty.InnerText = "true";
+                conditionProperty.SetAttribute("Condition", condition);
+                conditionPropertyGroup.AppendChild(conditionProperty);
+
+                parentNode.InsertBefore(conditionPropertyGroup, importGroup);
+
+                // Preserve ImportGroup semantics by evaluating its condition once, before any import in the group
+                // can change properties referenced by the condition.
+                string savedCondition = $"'$({conditionPropertyName})' == 'true'";
+                importGroup.SetAttribute("Condition", savedCondition);
+                newImportGroup.SetAttribute("Condition", savedCondition);
+            }
+
+            parentNode.InsertAfter(newImportGroup, importGroup);
 
             XmlNode nodeToMove = firstImportToMove;
             while (nodeToMove != null)

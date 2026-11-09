@@ -1,11 +1,13 @@
 """Trusted configuration and intake rules for WPF issue triage."""
 
 import json
+import argparse
 import hashlib
 import os
 from pathlib import Path
 import re
 import time
+import sys
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -192,6 +194,9 @@ def prepare(client: GitHub, number: int, releases: dict | None = None) -> dict:
         raise TriageError("GitHub returned an unexpected issue")
     if not eligible(issue):
         return {"should_process": False, "number": number, "reason": "Ineligible issue"}
+    if releases is None:
+        from priority import fetch_releases
+        releases = fetch_releases()
     if type(issue.get("comments")) is not int or not 0 <= issue["comments"] < 1000:
         raise TriageError("Issue comment coverage requires manual review")
     catalog = {item["name"] for item in client.pages("labels")}
@@ -320,3 +325,64 @@ def label_plan(result: dict, evidence: dict) -> dict:
         "input_sha256": evidence["input_sha256"], "policy_sha256": evidence["policy_sha256"],
         "result": result, "add_labels": additions, "published": False,
     }
+
+
+def read_json(path: Path, limit: int = 2 * 1024 * 1024):
+    with path.open("rb") as stream:
+        data = stream.read(limit + 1)
+    if len(data) > limit:
+        raise TriageError("JSON file exceeds the read limit")
+    return json.loads(data)
+
+
+def write_json(path: Path, value: object) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(value, ensure_ascii=True, indent=2) + "\n", encoding="utf-8")
+
+
+def event_number(event: dict) -> int:
+    if event.get("repository", {}).get("full_name") != REPOSITORY:
+        raise TriageError("Event repository does not match WPF")
+    if "issue" in event:
+        value = event["issue"].get("number")
+        if "pull_request" in event["issue"] or type(value) is not int:
+            raise TriageError("Expected an issue event")
+    else:
+        value = event.get("inputs", {}).get("issue_number", "")
+        if not isinstance(value, str) or not re.fullmatch(r"[1-9][0-9]{0,8}", value):
+            raise TriageError("Manual issue number must be a positive integer")
+        value = int(value)
+    if not 0 < value < 1_000_000_000:
+        raise TriageError("Invalid issue number")
+    return value
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="WPF issue triage")
+    modes = parser.add_subparsers(dest="mode", required=True)
+    for mode in ("prepare", "attach-context"):
+        command = modes.add_parser(mode)
+        command.add_argument("source", type=Path)
+        command.add_argument("destination", type=Path)
+    preview = modes.add_parser("preview")
+    preview.add_argument("context", type=Path)
+    preview.add_argument("result", type=Path)
+    preview.add_argument("destination", type=Path)
+    args = parser.parse_args(argv)
+    try:
+        if args.mode == "attach-context":
+            attach_context(args.source, args.destination)
+        elif args.mode == "prepare":
+            if os.environ.get("GITHUB_REPOSITORY") != REPOSITORY:
+                raise TriageError("Only the WPF repository is supported")
+            write_json(args.destination, prepare(GitHub(), event_number(read_json(args.source))))
+        else:
+            write_json(args.destination, label_plan(read_json(args.result), read_json(args.context)))
+        return 0
+    except (ValueError, KeyError, TypeError, OSError):
+        print("::error::WPF triage stopped: invalid, unavailable, or stale input.", file=sys.stderr)
+        return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

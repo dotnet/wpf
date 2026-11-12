@@ -33,6 +33,8 @@ public sealed unsafe partial class DataObject :
     private readonly Composition _innerData;
     private readonly bool _doNotUnwrap;
 
+    bool IDataObjectInternal.SupportsTypedData => true;
+
     static DataObject IDataObjectInternal<DataObject, IDataObject>.Create() => new();
     static DataObject IDataObjectInternal<DataObject, IDataObject>.Create(Com.IDataObject* dataObject) => new(dataObject);
     static DataObject IDataObjectInternal<DataObject, IDataObject>.Create(object data) => new(data);

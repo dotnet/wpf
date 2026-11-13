@@ -1892,12 +1892,14 @@ namespace MS.Internal.Automation
         {
             while (hwnd != NativeMethods.HWND.NULL)
             {
-                if (ProxyManager.GetClassName(hwnd).CompareTo("Progman") == 0)
+                if (ProxyManager.GetClassName(hwnd).Equals("Progman", StringComparison.Ordinal))
                 {
                     return true;
                 }
+
                 hwnd = SafeNativeMethods.GetAncestor(hwnd, SafeNativeMethods.GA_PARENT);
             }
+
             return false;
         }
 

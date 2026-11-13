@@ -8,7 +8,7 @@ using Microsoft.Win32.SafeHandles;
 
 namespace MS.Win32
 {
-    internal partial class NativeMethods
+    internal static partial class NativeMethods
     {
         // Translates Win32 error codes into HRESULTs.
         public static int MakeHRFromErrorCode(int errorCode)

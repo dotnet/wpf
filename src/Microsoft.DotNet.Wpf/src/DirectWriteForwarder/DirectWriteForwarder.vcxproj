@@ -63,6 +63,9 @@
       <ForceConformanceInForLoopScope>false</ForceConformanceInForLoopScope>
       <PreprocessorDefinitions>$(CDefines);_NO_CRT_STDIO_INLINE;_INC_SWPRINTF_INL_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <Link>
+      <AdditionalOptions Condition="'$(Configuration)'=='Release'">%(AdditionalOptions) /PROFILE</AdditionalOptions>
+    </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj">

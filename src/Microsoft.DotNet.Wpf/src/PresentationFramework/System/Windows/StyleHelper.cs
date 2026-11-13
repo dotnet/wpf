@@ -5909,10 +5909,6 @@ namespace System.Windows
                                 throw;
                             // if the conversion failed, just use the unconverted value
                         }
-                        catch // non CLS compliant exception
-                        {
-                            // if the conversion failed, just use the unconverted value
-                        }
                     }
 
                     // cache the converted value

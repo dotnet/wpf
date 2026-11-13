@@ -2130,12 +2130,6 @@ Do you want to replace it?</value>
   <data name="NoMulticastHandlers" xml:space="preserve">
     <value>WeakEventManager supports only delegates with one target.</value>
   </data>
-  <data name="NonClsActivationException" xml:space="preserve">
-    <value>Nonstandard exception occurred while activating the application.</value>
-  </data>
-  <data name="NonCLSException" xml:space="preserve">
-    <value>Unknown exception during '{0}'.</value>
-  </data>
   <data name="NonPackAppAbsoluteUriNotAllowed" xml:space="preserve">
     <value>Unsupported URI syntax. Method expects a relative URI or a pack://application:,,,/ form of absolute URI.</value>
   </data>
@@ -2195,12 +2189,6 @@ Do you want to replace it?</value>
   </data>
   <data name="ObjectDataProviderHasNoSource" xml:space="preserve">
     <value>ObjectDataProvider needs either an ObjectType or ObjectInstance.</value>
-  </data>
-  <data name="ObjectDataProviderNonCLSException" xml:space="preserve">
-    <value>Unknown exception while creating type '{0}' for ObjectDataProvider.</value>
-  </data>
-  <data name="ObjectDataProviderNonCLSExceptionInvoke" xml:space="preserve">
-    <value>Unknown exception while invoking method '{0}' on type '{1}' for ObjectDataProvider.</value>
   </data>
   <data name="ObjectDataProviderParameterCollectionIsNotInUse" xml:space="preserve">
     <value>ConstructorParameters cannot be changed because ObjectDataProvider is using user-assigned ObjectInstance.</value>

@@ -839,6 +839,7 @@
     <Compile Include="System\Windows\Media\StreamGeometry.cs" />
     <Compile Include="System\Windows\Media\StreamGeometryContext.cs" />
     <Compile Include="System\Windows\Media\StyleSimulations.cs" />
+    <Compile Include="System\Windows\Media\SweepGradientBrush.cs" />
     <Compile Include="System\Windows\Media\TextEffect.cs" />
     <Compile Include="System\Windows\Media\TextEffectCollection.cs" />
     <Compile Include="System\Windows\Media\TileBrush.cs" />
@@ -1152,6 +1153,7 @@
     <Compile Include="System\Windows\Media\Generated\StreamGeometry.cs" />
     <Compile Include="System\Windows\Media\Generated\Stretch.cs" />
     <Compile Include="System\Windows\Media\Generated\SweepDirection.cs" />
+    <Compile Include="System\Windows\Media\Generated\SweepGradientBrush.cs" />
     <Compile Include="System\Windows\Media\Generated\TextEffect.cs" />
     <Compile Include="System\Windows\Media\Generated\TextEffectCollection.cs" />
     <Compile Include="System\Windows\Media\Generated\TextHintingMode.cs" />

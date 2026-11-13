@@ -931,6 +931,26 @@ namespace System.Windows.Media.Composition
         [FieldOffset(104)] internal DUCE.ResourceHandle hGradientOriginAnimations;
         };
         [StructLayout(LayoutKind.Explicit, Pack=1)]
+        internal struct MILCMD_SWEEPGRADIENTBRUSH
+        {
+        [FieldOffset(0)] internal MILCMD Type;
+        [FieldOffset(4)] internal DUCE.ResourceHandle Handle;
+        [FieldOffset(8)] internal double Opacity;
+        [FieldOffset(16)] internal Point Center;
+        [FieldOffset(32)] internal double StartAngle;
+        [FieldOffset(40)] internal double EndAngle;
+        [FieldOffset(48)] internal DUCE.ResourceHandle hOpacityAnimations;
+        [FieldOffset(52)] internal DUCE.ResourceHandle hTransform;
+        [FieldOffset(56)] internal DUCE.ResourceHandle hRelativeTransform;
+        [FieldOffset(60)] internal ColorInterpolationMode ColorInterpolationMode;
+        [FieldOffset(64)] internal BrushMappingMode MappingMode;
+        [FieldOffset(68)] internal GradientSpreadMethod SpreadMethod;
+        [FieldOffset(72)] internal UInt32 GradientStopsSize;
+        [FieldOffset(76)] internal DUCE.ResourceHandle hCenterAnimations;
+        [FieldOffset(80)] internal DUCE.ResourceHandle hStartAngleAnimations;
+        [FieldOffset(84)] internal DUCE.ResourceHandle hEndAngleAnimations;
+        };
+        [StructLayout(LayoutKind.Explicit, Pack=1)]
         internal struct MILCMD_IMAGEBRUSH
         {
         [FieldOffset(0)] internal MILCMD Type;

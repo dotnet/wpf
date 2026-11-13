@@ -459,6 +459,25 @@ struct CMilRadialGradientBrushDuce_Data
     CMilSlavePoint *m_pGradientOriginAnimation;
 };
 
+struct CMilSweepGradientBrushDuce_Data
+{
+    DOUBLE m_Opacity;
+    CMilSlaveDouble *m_pOpacityAnimation;
+    CMilTransformDuce *m_pTransform;
+    CMilTransformDuce *m_pRelativeTransform;
+    MilColorInterpolationMode::Enum m_ColorInterpolationMode;
+    MilBrushMappingMode::Enum m_MappingMode;
+    MilGradientSpreadMethod::Enum m_SpreadMethod;
+    UINT32 m_cbGradientStopsSize;
+    MilGradientStop *m_pGradientStopsData;
+    MilPoint2D m_Center;
+    CMilSlavePoint *m_pCenterAnimation;
+    DOUBLE m_StartAngle;
+    CMilSlaveDouble *m_pStartAngleAnimation;
+    DOUBLE m_EndAngle;
+    CMilSlaveDouble *m_pEndAngleAnimation;
+};
+
 struct CMilImageBrushDuce_Data
 {
     DOUBLE m_Opacity;

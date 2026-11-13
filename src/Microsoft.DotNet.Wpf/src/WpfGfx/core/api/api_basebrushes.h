@@ -19,6 +19,7 @@ enum BrushTypes
     BrushSolid = 1,
     BrushGradientLinear,
     BrushGradientRadial,
+    BrushGradientSweep,
     BrushBitmap,
     BrushShaderEffect,
     BRUSHTYPES_FORCE_DWORD = MIL_FORCE_DWORD

@@ -84,6 +84,8 @@
 #include "HwBitmapCache.h"              // needs HwBitmapColorSource.h
 #include "HwRadialGradientBrush.h"          // needs HwLinearGradientBrush.h
 #include "HwRadialGradientColorSource.h"    // needs HwLinearGradientColorSource.h
+#include "HwSweepGradientBrush.h"           // needs HwLinearGradientBrush.h
+#include "HwSweepGradientColorSource.h"     // needs HwLinearGradientColorSource.h
 
 
 // ETW Tracing support

@@ -825,35 +825,35 @@ BEGIN_MILFLAGENUM( MilRTInitialization )
     // useful for when the window position may be faked or the system may try
     // to make use of window contents that are not recognized as visible.  For
     // example DWM thumbnails expect a fully rendered and presented window.
-    // Note: This does not guarantee that some clipping will not be used. 
+    // Note: This does not guarantee that some clipping will not be used.
     //
     DisableDisplayClipping = 0x00001000,
 
     //
     // This flag forces the creation of a render target bitmap to match its
     // parent's type, so a software surface only creates software RTs and a
-    // hardware surface only creates hardware RTs.  This is necessary for the 
+    // hardware surface only creates hardware RTs.  This is necessary for the
     // hardware-accelerated bitmap effects pipeline to guarantee that we do
-    // not encounter a situation where we're trying to run shaders sampling 
+    // not encounter a situation where we're trying to run shaders sampling
     // from a hardware texture to render into a software intermediate.
     //
     ForceCompatible = 0x00002000,
 
     //
-    // This flag is the same as DisableDisplayClipping except that it disables 
+    // This flag is the same as DisableDisplayClipping except that it disables
     // display clipping on multi-monitor configurations in all OS'. This flag is 
-    // automatically 
-    // set on Windows 8 and newer systems. If WPF decides to unset 
-    // DisableDisplayClipping, then DisableMultimonDisplayClipping flag will not be 
+    // automatically
+    // set on Windows 8 and newer systems. If WPF decides to unset
+    // DisableDisplayClipping, then DisableMultimonDisplayClipping flag will not be
     // respected even if set by an applicaiton via its manifest
     //
     DisableMultimonDisplayClipping = 0x00004000,
 
     //
-    // This flag is passed down by PresentationCore to tell wpfgfx that 
-    // the DisableMultimonDisplayClipping compatibity flag is set by the user. This 
+    // This flag is passed down by PresentationCore to tell wpfgfx that
+    // the DisableMultimonDisplayClipping compatibity flag is set by the user. This
     // allows us to distinguish between when DisableMultimonDisplayClipping == 0 means
-    // that the user set it to false explicitly, versus when the user didn't set it 
+    // that the user set it to false explicitly, versus when the user didn't set it
     // and the DisableMultimonDisplayClipping bit happens to be implicitly set to 0
     //
     IsDisableMultimonDisplayClippingValid = 0x00008000,
@@ -1773,26 +1773,27 @@ enum MIL_RESOURCE_TYPE
     /* 0x4c */ TYPE_GRADIENTBRUSH = 76,
     /* 0x4d */ TYPE_LINEARGRADIENTBRUSH = 77,
     /* 0x4e */ TYPE_RADIALGRADIENTBRUSH = 78,
-    /* 0x4f */ TYPE_TILEBRUSH = 79,
-    /* 0x50 */ TYPE_IMAGEBRUSH = 80,
-    /* 0x51 */ TYPE_DRAWINGBRUSH = 81,
-    /* 0x52 */ TYPE_VISUALBRUSH = 82,
-    /* 0x53 */ TYPE_BITMAPCACHEBRUSH = 83,
-    /* 0x54 */ TYPE_DASHSTYLE = 84,
-    /* 0x55 */ TYPE_PEN = 85,
-    /* 0x56 */ TYPE_DRAWING = 86,
-    /* 0x57 */ TYPE_GEOMETRYDRAWING = 87,
-    /* 0x58 */ TYPE_GLYPHRUNDRAWING = 88,
-    /* 0x59 */ TYPE_IMAGEDRAWING = 89,
-    /* 0x5a */ TYPE_VIDEODRAWING = 90,
-    /* 0x5b */ TYPE_DRAWINGGROUP = 91,
-    /* 0x5c */ TYPE_GUIDELINESET = 92,
-    /* 0x5d */ TYPE_CACHEMODE = 93,
-    /* 0x5e */ TYPE_BITMAPCACHE = 94,
-    /* 0x5f */ TYPE_BITMAPSOURCE = 95,
-    /* 0x60 */ TYPE_DOUBLEBUFFEREDBITMAP = 96,
-    /* 0x61 */ TYPE_D3DIMAGE = 97,
-    /* 0x62 */ TYPE_LAST = 98,
+    /* 0x4f */ TYPE_SWEEPGRADIENTBRUSH = 79,
+    /* 0x50 */ TYPE_TILEBRUSH = 80,
+    /* 0x51 */ TYPE_IMAGEBRUSH = 81,
+    /* 0x52 */ TYPE_DRAWINGBRUSH = 82,
+    /* 0x53 */ TYPE_VISUALBRUSH = 83,
+    /* 0x54 */ TYPE_BITMAPCACHEBRUSH = 84,
+    /* 0x55 */ TYPE_DASHSTYLE = 85,
+    /* 0x56 */ TYPE_PEN = 86,
+    /* 0x57 */ TYPE_DRAWING = 87,
+    /* 0x58 */ TYPE_GEOMETRYDRAWING = 88,
+    /* 0x59 */ TYPE_GLYPHRUNDRAWING = 89,
+    /* 0x5a */ TYPE_IMAGEDRAWING = 90,
+    /* 0x5b */ TYPE_VIDEODRAWING = 91,
+    /* 0x5c */ TYPE_DRAWINGGROUP = 92,
+    /* 0x5d */ TYPE_GUIDELINESET = 93,
+    /* 0x5e */ TYPE_CACHEMODE = 94,
+    /* 0x5f */ TYPE_BITMAPCACHE = 95,
+    /* 0x60 */ TYPE_BITMAPSOURCE = 96,
+    /* 0x61 */ TYPE_DOUBLEBUFFEREDBITMAP = 97,
+    /* 0x62 */ TYPE_D3DIMAGE = 98,
+    /* 0x63 */ TYPE_LAST = 99,
     /* ---- */ TYPE_FORCE_DWORD = 0xFFFFFFFF
 };
 
@@ -1809,67 +1810,67 @@ typedef enum
     //
     //--------------------------------------------------------------------------
 
-    /* 0x01 */ MilCmdTransportSyncFlush                      = 0x01,
-    /* 0x02 */ MilCmdTransportDestroyResourcesOnChannel      = 0x02,
-    /* 0x03 */ MilCmdPartitionRegisterForNotifications       = 0x03,
-    /* 0x04 */ MilCmdChannelRequestTier                      = 0x04,
-    /* 0x05 */ MilCmdPartitionSetVBlankSyncMode              = 0x05,
-    /* 0x06 */ MilCmdPartitionNotifyPresent                  = 0x06,
-    /* 0x07 */ MilCmdChannelCreateResource                   = 0x07,
-    /* 0x08 */ MilCmdChannelDeleteResource                   = 0x08,
-    /* 0x09 */ MilCmdChannelDuplicateHandle                  = 0x09,
-    /* 0x0a */ MilCmdD3DImage                                = 0x0a,
-    /* 0x0b */ MilCmdD3DImagePresent                         = 0x0b,
-    /* 0x0c */ MilCmdBitmapSource                            = 0x0c,
-    /* 0x0d */ MilCmdBitmapInvalidate                        = 0x0d,
-    /* 0x0e */ MilCmdDoubleResource                          = 0x0e,
-    /* 0x0f */ MilCmdColorResource                           = 0x0f,
-    /* 0x10 */ MilCmdPointResource                           = 0x10,
-    /* 0x11 */ MilCmdRectResource                            = 0x11,
-    /* 0x12 */ MilCmdSizeResource                            = 0x12,
-    /* 0x13 */ MilCmdMatrixResource                          = 0x13,
-    /* 0x14 */ MilCmdPoint3DResource                         = 0x14,
-    /* 0x15 */ MilCmdVector3DResource                        = 0x15,
-    /* 0x16 */ MilCmdQuaternionResource                      = 0x16,
-    /* 0x17 */ MilCmdMediaPlayer                             = 0x17,
-    /* 0x18 */ MilCmdRenderData                              = 0x18,
-    /* 0x19 */ MilCmdEtwEventResource                        = 0x19,
-    /* 0x1a */ MilCmdVisualCreate                            = 0x1a,
-    /* 0x1b */ MilCmdVisualSetOffset                         = 0x1b,
-    /* 0x1c */ MilCmdVisualSetTransform                      = 0x1c,
-    /* 0x1d */ MilCmdVisualSetEffect                         = 0x1d,
-    /* 0x1e */ MilCmdVisualSetCacheMode                      = 0x1e,
-    /* 0x1f */ MilCmdVisualSetClip                           = 0x1f,
-    /* 0x20 */ MilCmdVisualSetAlpha                          = 0x20,
-    /* 0x21 */ MilCmdVisualSetRenderOptions                  = 0x21,
-    /* 0x22 */ MilCmdVisualSetContent                        = 0x22,
-    /* 0x23 */ MilCmdVisualSetAlphaMask                      = 0x23,
-    /* 0x24 */ MilCmdVisualRemoveAllChildren                 = 0x24,
-    /* 0x25 */ MilCmdVisualRemoveChild                       = 0x25,
-    /* 0x26 */ MilCmdVisualInsertChildAt                     = 0x26,
-    /* 0x27 */ MilCmdVisualSetGuidelineCollection            = 0x27,
-    /* 0x28 */ MilCmdVisualSetScrollableAreaClip             = 0x28,
-    /* 0x29 */ MilCmdViewport3DVisualSetCamera               = 0x29,
-    /* 0x2a */ MilCmdViewport3DVisualSetViewport             = 0x2a,
-    /* 0x2b */ MilCmdViewport3DVisualSet3DChild              = 0x2b,
-    /* 0x2c */ MilCmdVisual3DSetContent                      = 0x2c,
-    /* 0x2d */ MilCmdVisual3DSetTransform                    = 0x2d,
-    /* 0x2e */ MilCmdVisual3DRemoveAllChildren               = 0x2e,
-    /* 0x2f */ MilCmdVisual3DRemoveChild                     = 0x2f,
-    /* 0x30 */ MilCmdVisual3DInsertChildAt                   = 0x30,
-    /* 0x31 */ MilCmdHwndTargetCreate                        = 0x31,
-    /* 0x32 */ MilCmdHwndTargetSuppressLayered               = 0x32,
-    /* 0x33 */ MilCmdTargetUpdateWindowSettings              = 0x33,
-    /* 0x34 */ MilCmdGenericTargetCreate                     = 0x34,
-    /* 0x35 */ MilCmdTargetSetRoot                           = 0x35,
-    /* 0x36 */ MilCmdTargetSetClearColor                     = 0x36,
-    /* 0x37 */ MilCmdTargetInvalidate                        = 0x37,
-    /* 0x38 */ MilCmdTargetSetFlags                          = 0x38,
-    /* 0x39 */ MilCmdHwndTargetDpiChanged                    = 0x39,
-    /* 0x3a */ MilCmdGlyphRunCreate                          = 0x3a,
-    /* 0x3b */ MilCmdDoubleBufferedBitmap                    = 0x3b,
-    /* 0x3c */ MilCmdDoubleBufferedBitmapCopyForward         = 0x3c,
-    /* 0x3d */ MilCmdPartitionNotifyPolicyChangeForNonInteractiveMode = 0x3d,
+    /* 0x01 */ MilCmdTransportSyncFlush                                = 0x01,
+    /* 0x02 */ MilCmdTransportDestroyResourcesOnChannel                = 0x02,
+    /* 0x03 */ MilCmdPartitionRegisterForNotifications                 = 0x03,
+    /* 0x04 */ MilCmdChannelRequestTier                                = 0x04,
+    /* 0x05 */ MilCmdPartitionSetVBlankSyncMode                        = 0x05,
+    /* 0x06 */ MilCmdPartitionNotifyPresent                            = 0x06,
+    /* 0x07 */ MilCmdChannelCreateResource                             = 0x07,
+    /* 0x08 */ MilCmdChannelDeleteResource                             = 0x08,
+    /* 0x09 */ MilCmdChannelDuplicateHandle                            = 0x09,
+    /* 0x0a */ MilCmdD3DImage                                          = 0x0a,
+    /* 0x0b */ MilCmdD3DImagePresent                                   = 0x0b,
+    /* 0x0c */ MilCmdBitmapSource                                      = 0x0c,
+    /* 0x0d */ MilCmdBitmapInvalidate                                  = 0x0d,
+    /* 0x0e */ MilCmdDoubleResource                                    = 0x0e,
+    /* 0x0f */ MilCmdColorResource                                     = 0x0f,
+    /* 0x10 */ MilCmdPointResource                                     = 0x10,
+    /* 0x11 */ MilCmdRectResource                                      = 0x11,
+    /* 0x12 */ MilCmdSizeResource                                      = 0x12,
+    /* 0x13 */ MilCmdMatrixResource                                    = 0x13,
+    /* 0x14 */ MilCmdPoint3DResource                                   = 0x14,
+    /* 0x15 */ MilCmdVector3DResource                                  = 0x15,
+    /* 0x16 */ MilCmdQuaternionResource                                = 0x16,
+    /* 0x17 */ MilCmdMediaPlayer                                       = 0x17,
+    /* 0x18 */ MilCmdRenderData                                        = 0x18,
+    /* 0x19 */ MilCmdEtwEventResource                                  = 0x19,
+    /* 0x1a */ MilCmdVisualCreate                                      = 0x1a,
+    /* 0x1b */ MilCmdVisualSetOffset                                   = 0x1b,
+    /* 0x1c */ MilCmdVisualSetTransform                                = 0x1c,
+    /* 0x1d */ MilCmdVisualSetEffect                                   = 0x1d,
+    /* 0x1e */ MilCmdVisualSetCacheMode                                = 0x1e,
+    /* 0x1f */ MilCmdVisualSetClip                                     = 0x1f,
+    /* 0x20 */ MilCmdVisualSetAlpha                                    = 0x20,
+    /* 0x21 */ MilCmdVisualSetRenderOptions                            = 0x21,
+    /* 0x22 */ MilCmdVisualSetContent                                  = 0x22,
+    /* 0x23 */ MilCmdVisualSetAlphaMask                                = 0x23,
+    /* 0x24 */ MilCmdVisualRemoveAllChildren                           = 0x24,
+    /* 0x25 */ MilCmdVisualRemoveChild                                 = 0x25,
+    /* 0x26 */ MilCmdVisualInsertChildAt                               = 0x26,
+    /* 0x27 */ MilCmdVisualSetGuidelineCollection                      = 0x27,
+    /* 0x28 */ MilCmdVisualSetScrollableAreaClip                       = 0x28,
+    /* 0x29 */ MilCmdViewport3DVisualSetCamera                         = 0x29,
+    /* 0x2a */ MilCmdViewport3DVisualSetViewport                       = 0x2a,
+    /* 0x2b */ MilCmdViewport3DVisualSet3DChild                        = 0x2b,
+    /* 0x2c */ MilCmdVisual3DSetContent                                = 0x2c,
+    /* 0x2d */ MilCmdVisual3DSetTransform                              = 0x2d,
+    /* 0x2e */ MilCmdVisual3DRemoveAllChildren                         = 0x2e,
+    /* 0x2f */ MilCmdVisual3DRemoveChild                               = 0x2f,
+    /* 0x30 */ MilCmdVisual3DInsertChildAt                             = 0x30,
+    /* 0x31 */ MilCmdHwndTargetCreate                                  = 0x31,
+    /* 0x32 */ MilCmdHwndTargetSuppressLayered                         = 0x32,
+    /* 0x33 */ MilCmdTargetUpdateWindowSettings                        = 0x33,
+    /* 0x34 */ MilCmdGenericTargetCreate                               = 0x34,
+    /* 0x35 */ MilCmdTargetSetRoot                                     = 0x35,
+    /* 0x36 */ MilCmdTargetSetClearColor                               = 0x36,
+    /* 0x37 */ MilCmdTargetInvalidate                                  = 0x37,
+    /* 0x38 */ MilCmdTargetSetFlags                                    = 0x38,
+    /* 0x39 */ MilCmdHwndTargetDpiChanged                              = 0x39,
+    /* 0x3a */ MilCmdGlyphRunCreate                                    = 0x3a,
+    /* 0x3b */ MilCmdDoubleBufferedBitmap                              = 0x3b,
+    /* 0x3c */ MilCmdDoubleBufferedBitmapCopyForward                   = 0x3c,
+    /* 0x3d */ MilCmdPartitionNotifyPolicyChangeForNonInteractiveMode  = 0x3d,
 
 
     //--------------------------------------------------------------------------
@@ -1878,31 +1879,31 @@ typedef enum
     //
     //--------------------------------------------------------------------------
 
-    /* 0x3e */ MilDrawLine                                   = 0x3e,
-    /* 0x3f */ MilDrawLineAnimate                            = 0x3f,
-    /* 0x40 */ MilDrawRectangle                              = 0x40,
-    /* 0x41 */ MilDrawRectangleAnimate                       = 0x41,
-    /* 0x42 */ MilDrawRoundedRectangle                       = 0x42,
-    /* 0x43 */ MilDrawRoundedRectangleAnimate                = 0x43,
-    /* 0x44 */ MilDrawEllipse                                = 0x44,
-    /* 0x45 */ MilDrawEllipseAnimate                         = 0x45,
-    /* 0x46 */ MilDrawGeometry                               = 0x46,
-    /* 0x47 */ MilDrawImage                                  = 0x47,
-    /* 0x48 */ MilDrawImageAnimate                           = 0x48,
-    /* 0x49 */ MilDrawGlyphRun                               = 0x49,
-    /* 0x4a */ MilDrawDrawing                                = 0x4a,
-    /* 0x4b */ MilDrawVideo                                  = 0x4b,
-    /* 0x4c */ MilDrawVideoAnimate                           = 0x4c,
-    /* 0x4d */ MilPushClip                                   = 0x4d,
-    /* 0x4e */ MilPushOpacityMask                            = 0x4e,
-    /* 0x4f */ MilPushOpacity                                = 0x4f,
-    /* 0x50 */ MilPushOpacityAnimate                         = 0x50,
-    /* 0x51 */ MilPushTransform                              = 0x51,
-    /* 0x52 */ MilPushGuidelineSet                           = 0x52,
-    /* 0x53 */ MilPushGuidelineY1                            = 0x53,
-    /* 0x54 */ MilPushGuidelineY2                            = 0x54,
-    /* 0x55 */ MilPushEffect                                 = 0x55,
-    /* 0x56 */ MilPop                                        = 0x56,
+    /* 0x3e */ MilDrawLine                                             = 0x3e,
+    /* 0x3f */ MilDrawLineAnimate                                      = 0x3f,
+    /* 0x40 */ MilDrawRectangle                                        = 0x40,
+    /* 0x41 */ MilDrawRectangleAnimate                                 = 0x41,
+    /* 0x42 */ MilDrawRoundedRectangle                                 = 0x42,
+    /* 0x43 */ MilDrawRoundedRectangleAnimate                          = 0x43,
+    /* 0x44 */ MilDrawEllipse                                          = 0x44,
+    /* 0x45 */ MilDrawEllipseAnimate                                   = 0x45,
+    /* 0x46 */ MilDrawGeometry                                         = 0x46,
+    /* 0x47 */ MilDrawImage                                            = 0x47,
+    /* 0x48 */ MilDrawImageAnimate                                     = 0x48,
+    /* 0x49 */ MilDrawGlyphRun                                         = 0x49,
+    /* 0x4a */ MilDrawDrawing                                          = 0x4a,
+    /* 0x4b */ MilDrawVideo                                            = 0x4b,
+    /* 0x4c */ MilDrawVideoAnimate                                     = 0x4c,
+    /* 0x4d */ MilPushClip                                             = 0x4d,
+    /* 0x4e */ MilPushOpacityMask                                      = 0x4e,
+    /* 0x4f */ MilPushOpacity                                          = 0x4f,
+    /* 0x50 */ MilPushOpacityAnimate                                   = 0x50,
+    /* 0x51 */ MilPushTransform                                        = 0x51,
+    /* 0x52 */ MilPushGuidelineSet                                     = 0x52,
+    /* 0x53 */ MilPushGuidelineY1                                      = 0x53,
+    /* 0x54 */ MilPushGuidelineY2                                      = 0x54,
+    /* 0x55 */ MilPushEffect                                           = 0x55,
+    /* 0x56 */ MilPop                                                  = 0x56,
 
 
     //--------------------------------------------------------------------------
@@ -1911,61 +1912,62 @@ typedef enum
     //
     //--------------------------------------------------------------------------
 
-    /* 0x57 */ MilCmdAxisAngleRotation3D                     = 0x57,
-    /* 0x58 */ MilCmdQuaternionRotation3D                    = 0x58,
-    /* 0x59 */ MilCmdPerspectiveCamera                       = 0x59,
-    /* 0x5a */ MilCmdOrthographicCamera                      = 0x5a,
-    /* 0x5b */ MilCmdMatrixCamera                            = 0x5b,
-    /* 0x5c */ MilCmdModel3DGroup                            = 0x5c,
-    /* 0x5d */ MilCmdAmbientLight                            = 0x5d,
-    /* 0x5e */ MilCmdDirectionalLight                        = 0x5e,
-    /* 0x5f */ MilCmdPointLight                              = 0x5f,
-    /* 0x60 */ MilCmdSpotLight                               = 0x60,
-    /* 0x61 */ MilCmdGeometryModel3D                         = 0x61,
-    /* 0x62 */ MilCmdMeshGeometry3D                          = 0x62,
-    /* 0x63 */ MilCmdMaterialGroup                           = 0x63,
-    /* 0x64 */ MilCmdDiffuseMaterial                         = 0x64,
-    /* 0x65 */ MilCmdSpecularMaterial                        = 0x65,
-    /* 0x66 */ MilCmdEmissiveMaterial                        = 0x66,
-    /* 0x67 */ MilCmdTransform3DGroup                        = 0x67,
-    /* 0x68 */ MilCmdTranslateTransform3D                    = 0x68,
-    /* 0x69 */ MilCmdScaleTransform3D                        = 0x69,
-    /* 0x6a */ MilCmdRotateTransform3D                       = 0x6a,
-    /* 0x6b */ MilCmdMatrixTransform3D                       = 0x6b,
-    /* 0x6c */ MilCmdPixelShader                             = 0x6c,
-    /* 0x6d */ MilCmdImplicitInputBrush                      = 0x6d,
-    /* 0x6e */ MilCmdBlurEffect                              = 0x6e,
-    /* 0x6f */ MilCmdDropShadowEffect                        = 0x6f,
-    /* 0x70 */ MilCmdShaderEffect                            = 0x70,
-    /* 0x71 */ MilCmdDrawingImage                            = 0x71,
-    /* 0x72 */ MilCmdTransformGroup                          = 0x72,
-    /* 0x73 */ MilCmdTranslateTransform                      = 0x73,
-    /* 0x74 */ MilCmdScaleTransform                          = 0x74,
-    /* 0x75 */ MilCmdSkewTransform                           = 0x75,
-    /* 0x76 */ MilCmdRotateTransform                         = 0x76,
-    /* 0x77 */ MilCmdMatrixTransform                         = 0x77,
-    /* 0x78 */ MilCmdLineGeometry                            = 0x78,
-    /* 0x79 */ MilCmdRectangleGeometry                       = 0x79,
-    /* 0x7a */ MilCmdEllipseGeometry                         = 0x7a,
-    /* 0x7b */ MilCmdGeometryGroup                           = 0x7b,
-    /* 0x7c */ MilCmdCombinedGeometry                        = 0x7c,
-    /* 0x7d */ MilCmdPathGeometry                            = 0x7d,
-    /* 0x7e */ MilCmdSolidColorBrush                         = 0x7e,
-    /* 0x7f */ MilCmdLinearGradientBrush                     = 0x7f,
-    /* 0x80 */ MilCmdRadialGradientBrush                     = 0x80,
-    /* 0x81 */ MilCmdImageBrush                              = 0x81,
-    /* 0x82 */ MilCmdDrawingBrush                            = 0x82,
-    /* 0x83 */ MilCmdVisualBrush                             = 0x83,
-    /* 0x84 */ MilCmdBitmapCacheBrush                        = 0x84,
-    /* 0x85 */ MilCmdDashStyle                               = 0x85,
-    /* 0x86 */ MilCmdPen                                     = 0x86,
-    /* 0x87 */ MilCmdGeometryDrawing                         = 0x87,
-    /* 0x88 */ MilCmdGlyphRunDrawing                         = 0x88,
-    /* 0x89 */ MilCmdImageDrawing                            = 0x89,
-    /* 0x8a */ MilCmdVideoDrawing                            = 0x8a,
-    /* 0x8b */ MilCmdDrawingGroup                            = 0x8b,
-    /* 0x8c */ MilCmdGuidelineSet                            = 0x8c,
-    /* 0x8d */ MilCmdBitmapCache                             = 0x8d,
+    /* 0x57 */ MilCmdAxisAngleRotation3D                               = 0x57,
+    /* 0x58 */ MilCmdQuaternionRotation3D                              = 0x58,
+    /* 0x59 */ MilCmdPerspectiveCamera                                 = 0x59,
+    /* 0x5a */ MilCmdOrthographicCamera                                = 0x5a,
+    /* 0x5b */ MilCmdMatrixCamera                                      = 0x5b,
+    /* 0x5c */ MilCmdModel3DGroup                                      = 0x5c,
+    /* 0x5d */ MilCmdAmbientLight                                      = 0x5d,
+    /* 0x5e */ MilCmdDirectionalLight                                  = 0x5e,
+    /* 0x5f */ MilCmdPointLight                                        = 0x5f,
+    /* 0x60 */ MilCmdSpotLight                                         = 0x60,
+    /* 0x61 */ MilCmdGeometryModel3D                                   = 0x61,
+    /* 0x62 */ MilCmdMeshGeometry3D                                    = 0x62,
+    /* 0x63 */ MilCmdMaterialGroup                                     = 0x63,
+    /* 0x64 */ MilCmdDiffuseMaterial                                   = 0x64,
+    /* 0x65 */ MilCmdSpecularMaterial                                  = 0x65,
+    /* 0x66 */ MilCmdEmissiveMaterial                                  = 0x66,
+    /* 0x67 */ MilCmdTransform3DGroup                                  = 0x67,
+    /* 0x68 */ MilCmdTranslateTransform3D                              = 0x68,
+    /* 0x69 */ MilCmdScaleTransform3D                                  = 0x69,
+    /* 0x6a */ MilCmdRotateTransform3D                                 = 0x6a,
+    /* 0x6b */ MilCmdMatrixTransform3D                                 = 0x6b,
+    /* 0x6c */ MilCmdPixelShader                                       = 0x6c,
+    /* 0x6d */ MilCmdImplicitInputBrush                                = 0x6d,
+    /* 0x6e */ MilCmdBlurEffect                                        = 0x6e,
+    /* 0x6f */ MilCmdDropShadowEffect                                  = 0x6f,
+    /* 0x70 */ MilCmdShaderEffect                                      = 0x70,
+    /* 0x71 */ MilCmdDrawingImage                                      = 0x71,
+    /* 0x72 */ MilCmdTransformGroup                                    = 0x72,
+    /* 0x73 */ MilCmdTranslateTransform                                = 0x73,
+    /* 0x74 */ MilCmdScaleTransform                                    = 0x74,
+    /* 0x75 */ MilCmdSkewTransform                                     = 0x75,
+    /* 0x76 */ MilCmdRotateTransform                                   = 0x76,
+    /* 0x77 */ MilCmdMatrixTransform                                   = 0x77,
+    /* 0x78 */ MilCmdLineGeometry                                      = 0x78,
+    /* 0x79 */ MilCmdRectangleGeometry                                 = 0x79,
+    /* 0x7a */ MilCmdEllipseGeometry                                   = 0x7a,
+    /* 0x7b */ MilCmdGeometryGroup                                     = 0x7b,
+    /* 0x7c */ MilCmdCombinedGeometry                                  = 0x7c,
+    /* 0x7d */ MilCmdPathGeometry                                      = 0x7d,
+    /* 0x7e */ MilCmdSolidColorBrush                                   = 0x7e,
+    /* 0x7f */ MilCmdLinearGradientBrush                               = 0x7f,
+    /* 0x80 */ MilCmdRadialGradientBrush                               = 0x80,
+    /* 0x81 */ MilCmdSweepGradientBrush                                = 0x81,
+    /* 0x82 */ MilCmdImageBrush                                        = 0x82,
+    /* 0x83 */ MilCmdDrawingBrush                                      = 0x83,
+    /* 0x84 */ MilCmdVisualBrush                                       = 0x84,
+    /* 0x85 */ MilCmdBitmapCacheBrush                                  = 0x85,
+    /* 0x86 */ MilCmdDashStyle                                         = 0x86,
+    /* 0x87 */ MilCmdPen                                               = 0x87,
+    /* 0x88 */ MilCmdGeometryDrawing                                   = 0x88,
+    /* 0x89 */ MilCmdGlyphRunDrawing                                   = 0x89,
+    /* 0x8a */ MilCmdImageDrawing                                      = 0x8a,
+    /* 0x8b */ MilCmdVideoDrawing                                      = 0x8b,
+    /* 0x8c */ MilCmdDrawingGroup                                      = 0x8c,
+    /* 0x8d */ MilCmdGuidelineSet                                      = 0x8d,
+    /* 0x8e */ MilCmdBitmapCache                                       = 0x8e,
 
 #if DBG
     //
@@ -1978,7 +1980,7 @@ typedef enum
     // debug/retail and managed/unmanaged code.
     //
 
-    /* 0x8e */ MilCmdValidateStructureOrder                  = 0x8e
+    /* 0x8f */ MilCmdValidateStructureOrder                  = 0x8f
 #endif
 } MILCMD;
 
@@ -2950,6 +2952,26 @@ struct MILCMD_RADIALGRADIENTBRUSH
     HMIL_RESOURCE hRadiusXAnimations;
     HMIL_RESOURCE hRadiusYAnimations;
     HMIL_RESOURCE hGradientOriginAnimations;
+};
+
+struct MILCMD_SWEEPGRADIENTBRUSH
+{
+    MILCMD Type;
+    HMIL_RESOURCE Handle;
+    DOUBLE Opacity;
+    MilPoint2D Center;
+    DOUBLE StartAngle;
+    DOUBLE EndAngle;
+    HMIL_RESOURCE hOpacityAnimations;
+    HMIL_RESOURCE hTransform;
+    HMIL_RESOURCE hRelativeTransform;
+    MilColorInterpolationMode::Enum ColorInterpolationMode;
+    MilBrushMappingMode::Enum MappingMode;
+    MilGradientSpreadMethod::Enum SpreadMethod;
+    UINT32 GradientStopsSize;
+    HMIL_RESOURCE hCenterAnimations;
+    HMIL_RESOURCE hStartAngleAnimations;
+    HMIL_RESOURCE hEndAngleAnimations;
 };
 
 struct MILCMD_IMAGEBRUSH

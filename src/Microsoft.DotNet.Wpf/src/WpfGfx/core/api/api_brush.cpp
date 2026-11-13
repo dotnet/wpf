@@ -23,6 +23,7 @@ MtDefine(CMILBrushSolid, MILApi, "CMILBrushSolid");
 MtDefine(CMILBrushLinearGradient, MILApi, "CMILBrushLinearGradient");
 MtDefine(CMILBrushRadialGradient, MILApi, "CMILBrushRadialGradient");
 MtDefine(CMILBrushFocalGradient, MILApi, "CMILBrushFocalGradient");
+MtDefine(CMILBrushSweepGradient, MILApi, "CMILBrushSweepGradient");
 MtDefine(CMILBrushBitmap, MILApi, "CMILBrushBitmap");
 
 MtDefine(MBitmapBrushData, MILRawMemory, "MBitmapBrushData");
@@ -922,7 +923,7 @@ CMILBrushRadialGradient::GetGradientOrigin() const
 
 //+------------------------------------------------------------------------
 //
-//  Member:     CMILBrushLinearGradient::HrFindInterface
+//  Member:     CMILBrushRadialGradient::HrFindInterface
 //
 //  Synopsis:   HrFindInterface implementation
 //
@@ -932,6 +933,105 @@ CMILBrushRadialGradient::HrFindInterface(
     __in_ecount(1) REFIID riid,
     __deref_out void **ppvObject
     )
+{
+    HRESULT hr = S_OK;
+
+    if (ppvObject == NULL)
+    {
+        MIL_THR(E_INVALIDARG);
+    }
+
+    if (SUCCEEDED(hr))
+    {
+        // Call our base object's HrFindInterface
+        hr = CMILObject::HrFindInterface(riid, ppvObject);
+    }
+
+    return hr;
+}
+
+/*=========================================================================*\
+    CMILBrushSweepGradient - MIL Sweep Gradient Brush Object
+\*=========================================================================*/
+
+//+------------------------------------------------------------------------
+//
+//  Member:     CMILBrushSweepGradient::CMILBrushSweepGradient
+//
+//  Synopsis:   ctor
+//
+//-------------------------------------------------------------------------
+CMILBrushSweepGradient::CMILBrushSweepGradient(__in_ecount_opt(1) CMILFactory* pFactory)
+    : CMILBrushGradient(pFactory)
+{
+    m_StartAngle = 0.0f;
+    m_EndAngle = 360.0f;
+}
+
+//+------------------------------------------------------------------------
+//
+//  Member:     CMILBrushSweepGradient::~CMILBrushSweepGradient
+//
+//  Synopsis:   dctor
+//
+//-------------------------------------------------------------------------
+CMILBrushSweepGradient::~CMILBrushSweepGradient()
+{
+}
+
+//+------------------------------------------------------------------------
+//
+//  Member:     CMILBrushSweepGradient::Create
+//
+//  Synopsis:   Creation method
+//
+//-------------------------------------------------------------------------
+HRESULT CMILBrushSweepGradient::Create(
+    CMILFactory* pFactory,
+    CMILBrushSweepGradient** ppSweepGradientBrush
+)
+{
+    HRESULT hr = S_OK;
+
+    // Create brush
+    CMILBrushSweepGradient* pTempBrush = new CMILBrushSweepGradient(pFactory);
+    if (pTempBrush == NULL)
+    {
+        MIL_THR(E_OUTOFMEMORY);
+    }
+    else
+    {
+        pTempBrush->AddRef();
+    }
+
+    // Return brush via out-param
+    if (SUCCEEDED(hr))
+    {
+        *ppSweepGradientBrush = pTempBrush;
+        pTempBrush = NULL;
+    }
+
+    // Release brush if it's non-NULL
+    if (pTempBrush != NULL)
+    {
+        pTempBrush->Release();
+    }
+
+    RRETURN(hr);
+}
+
+//+------------------------------------------------------------------------
+//
+//  Member:     CMILBrushSweepGradient::HrFindInterface
+//
+//  Synopsis:   HrFindInterface implementation
+//
+//-------------------------------------------------------------------------
+HRESULT
+CMILBrushSweepGradient::HrFindInterface(
+    __in_ecount(1) REFIID riid,
+    __deref_out void** ppvObject
+)
 {
     HRESULT hr = S_OK;
 

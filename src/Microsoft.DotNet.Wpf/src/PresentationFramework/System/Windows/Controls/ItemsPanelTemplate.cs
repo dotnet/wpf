@@ -6,6 +6,8 @@
 //     that manages layout of containers for an ItemsControl.
 //
 
+using MS.Internal.KnownBoxes;
+
 namespace System.Windows.Controls
 {
     /// <summary>
@@ -124,7 +126,7 @@ namespace System.Windows.Controls
                 if (!typeof(Panel).IsAssignableFrom(root.Type))
                     throw new InvalidOperationException(SR.Format(SR.ItemsPanelNotAPanel, root.Type));
 
-                root.SetValue(Panel.IsItemsHostProperty, true);
+                root.SetValue(Panel.IsItemsHostProperty, BooleanBoxes.TrueBox);
             }
         }
 

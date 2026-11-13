@@ -34,6 +34,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowsBase", "src\Microsoft.DotNet.Wpf\src\WindowsBase\WindowsBase.csproj", "{FA69991B-9696-42D0-A5C7-F5E73F0DEE9E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectWriteForwarder", "src\Microsoft.DotNet.Wpf\src\DirectWriteForwarder\DirectWriteForwarder.vcxproj", "{50A5318F-3B9A-48B9-9615-D5FA9D6D9C3E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FA69991B-9696-42D0-A5C7-F5E73F0DEE9E} = {FA69991B-9696-42D0-A5C7-F5E73F0DEE9E}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationCore", "src\Microsoft.DotNet.Wpf\src\PresentationCore\PresentationCore.csproj", "{74C63A45-EAE5-407A-9F89-E0C6BC604841}"
 EndProject
@@ -157,6 +160,13 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationFramework.Royale-ref", "src\Microsoft.DotNet.Wpf\src\Themes\PresentationFramework.Royale\ref\PresentationFramework.Royale-ref.csproj", "{598B6188-937C-448B-8E6B-925F000BC076}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "System.Printing", "src\Microsoft.DotNet.Wpf\src\System.Printing\System.Printing.vcxproj", "{765E6BBC-772B-4808-BB72-E85615E8F237}"
+	ProjectSection(ProjectDependencies) = postProject
+		{17AA6CC2-CAE3-429C-B065-B76B8E14C632} = {17AA6CC2-CAE3-429C-B065-B76B8E14C632}
+		{74C63A45-EAE5-407A-9F89-E0C6BC604841} = {74C63A45-EAE5-407A-9F89-E0C6BC604841}
+		{9AC36357-34B7-40A1-95CA-FE9F46D089A7} = {9AC36357-34B7-40A1-95CA-FE9F46D089A7}
+		{B0C1157E-8664-44C4-AD8E-35CD6A78C769} = {B0C1157E-8664-44C4-AD8E-35CD6A78C769}
+		{FA69991B-9696-42D0-A5C7-F5E73F0DEE9E} = {FA69991B-9696-42D0-A5C7-F5E73F0DEE9E}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PresentationUI", "src\Microsoft.DotNet.Wpf\src\PresentationUI\PresentationUI.csproj", "{B8E5B99C-D162-4DCA-9C4F-90CF2CDE942E}"
 EndProject

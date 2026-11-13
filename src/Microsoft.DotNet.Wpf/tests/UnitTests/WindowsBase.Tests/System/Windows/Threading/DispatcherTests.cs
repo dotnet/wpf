@@ -3,6 +3,7 @@
 
 using System.ComponentModel;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace System.Windows.Threading.Tests;
 
@@ -132,6 +133,264 @@ public class DispatcherTests
         Assert.Equal(DispatcherPriority.Normal, operation.Priority);
         Assert.Equal(DispatcherOperationStatus.Pending, operation.Status);
         Assert.NotNull(operation.Task);
+    }
+
+    [WpfFact]
+    public void BeginInvoke_SameThread_DispatcherOperation_Return_Result_Block_Success()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static object action() => 5;
+        DispatcherOperation operation = dispatcher.BeginInvoke(DispatcherPriority.Send, action);
+
+        Assert.Equal(DispatcherOperationStatus.Completed, operation.Wait());
+        Assert.Equal(5, (int)operation.Result);
+    }
+
+    [WpfFact]
+    public async Task BeginInvoke_SameThread_DispatcherOperation_Result_Await_SuccessAsync()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static object action() => 5;
+        DispatcherOperation operation = dispatcher.BeginInvoke(DispatcherPriority.Send, action);
+        await operation;
+
+        Assert.Equal(DispatcherOperationStatus.Completed, operation.Status);
+        Assert.Equal(5, (int)operation.Result);
+    }
+
+    [WpfFact]
+    public void InvokeAsync_SameThread_DispatcherOperation_TReturn_Result_Block_Success()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static int action() => 5;
+        DispatcherOperation<int> operation = dispatcher.InvokeAsync(action, DispatcherPriority.Send, CancellationToken.None);
+        DispatcherOperation parentOperation = operation;
+
+        Assert.Equal(5, operation.Result);
+        Assert.Equal(5, (int)parentOperation.Result);
+        Assert.Equal(DispatcherOperationStatus.Completed, operation.Status);
+        Assert.Equal(DispatcherOperationStatus.Completed, parentOperation.Status);
+    }
+
+    [WpfFact]
+    public async Task InvokeAsync_SameThread_DispatcherOperation_TReturn_Await_SuccessAsync()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static int action() => 5;
+        DispatcherOperation<int> operation = dispatcher.InvokeAsync(action, DispatcherPriority.Send, CancellationToken.None);
+        DispatcherOperation parentOperation = operation;
+
+        Assert.Equal(5, await operation);
+        Assert.Equal(5, operation.Result);
+        Assert.Equal(5, (int)parentOperation.Result);
+        Assert.Equal(DispatcherOperationStatus.Completed, operation.Status);
+        Assert.Equal(DispatcherOperationStatus.Completed, parentOperation.Status);
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_TReturn_Success()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static int action() => 5;
+        // Send + current thread forces direct callback invocation
+        int result = dispatcher.Invoke(action);
+
+        Assert.Equal(5, result);
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_TReturn_PropagatesException()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static double action() => throw new InvalidOperationException("Throw this");
+        // Send + current thread forces direct callback invocation
+        Assert.Throws<InvalidOperationException>(() => dispatcher.Invoke(action, DispatcherPriority.Send, CancellationToken.None, TimeSpan.FromSeconds(3)));
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_TArg_Success()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        int result = 5;
+        // Send + current thread forces direct callback invocation
+        dispatcher.Invoke((param) => result += param, DispatcherPriority.Send, CancellationToken.None, TimeSpan.FromSeconds(3), 4);
+
+        Assert.Equal(9, result);
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_TArg_PropagatesException()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static void action(double action) => throw new InvalidOperationException("Throw this");
+        // Send + current thread forces direct callback invocation
+        Assert.Throws<InvalidOperationException>(() => dispatcher.Invoke(action, DispatcherPriority.Send, CancellationToken.None, TimeSpan.FromSeconds(3), 7.0));
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_TReturn_TArg_Success()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static int action(int parameter) => parameter + 5;
+        // Send + current thread forces direct callback invocation
+        int result = dispatcher.Invoke(action, DispatcherPriority.Send, TimeSpan.FromSeconds(3), 4);
+
+        Assert.Equal(9, result);
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_DispatcherOperation_TReturn_TArg_Success()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static int action(int parameter) => parameter + 5;
+        // Anything different than Send + current thread is DispatcherOperation allocation and queue pass
+        int result = dispatcher.Invoke(action, DispatcherPriority.Background, TimeSpan.FromSeconds(3), 4);
+
+        Assert.Equal(9, result);
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_TReturn_TArg1_TArg2_Success()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static double action(int parameter, double doubleParameter) => parameter + doubleParameter + 5.5;
+        // Send + current thread forces direct callback invocation
+        double result = dispatcher.Invoke(action, DispatcherPriority.Send, TimeSpan.FromSeconds(3), 4, 14.5);
+
+        Assert.Equal(24.0, result);
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_DispatcherOperation_TReturn_TArg1_TArg2_Success()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static double action(int parameter, double doubleParameter) => parameter + doubleParameter + 5.5;
+        // Anything different than Send + current thread is DispatcherOperation allocation and queue pass
+        double result = dispatcher.Invoke(action, DispatcherPriority.Background, TimeSpan.FromSeconds(3), 4, 14.5);
+
+        Assert.Equal(24.0, result);
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_TReturn_TArg1_TArg2_PropagatesException()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static double action(int parameter, double doubleParameter) => throw new InvalidOperationException("Throw this");
+        // Send + current thread forces direct callback invocation
+        Assert.Throws<InvalidOperationException>(() => dispatcher.Invoke(action, DispatcherPriority.Send, TimeSpan.FromSeconds(3), 4, 14.5));
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_DispatcherOperation_TReturn_TArg1_TArg2_PropagatesException()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static double action(int parameter, double doubleParameter) => throw new InvalidOperationException("Throw this");
+        // Anything different than Send + current thread is DispatcherOperation allocation and queue pass
+        Assert.Throws<InvalidOperationException>(() => dispatcher.Invoke(action, DispatcherPriority.Background, TimeSpan.FromSeconds(3), 4, 14.5));
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_Legacy_PropagatesException()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static object action(object exceptionText) => throw new InvalidOperationException((string)exceptionText);
+        // Send + current thread forces direct callback invocation
+        Assert.Throws<InvalidOperationException>(() => dispatcher.Invoke(DispatcherPriority.Send, TimeSpan.FromSeconds(3), (DispatcherOperationCallback)action, "Throw this"));
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_Legacy_UnhandledException_Handled_DoesNotThrow()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+        dispatcher.UnhandledException += unhandledException;
+
+        // Legacy Invoke with unhandled exception handler will not propagate the exception
+        static void unhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) => e.Handled = true;
+        static object action(object exceptionText) => throw new InvalidOperationException((string)exceptionText);
+
+        // Send + current thread forces direct callback invocation
+        dispatcher.Invoke(DispatcherPriority.Send, TimeSpan.FromSeconds(3), (DispatcherOperationCallback)action, "Throw this");
+
+        dispatcher.UnhandledException -= unhandledException;
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_Legacy_UnhandledExceptionFilter_RequestCatch_PropagatesException()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+        dispatcher.UnhandledException += unhandledException;
+        dispatcher.UnhandledExceptionFilter += unhandledExceptionFilter;
+
+        // Legacy Invoke with unhandled exception handler will not propagate the exception unless the filter requests it
+        static void unhandledExceptionFilter(object sender, DispatcherUnhandledExceptionFilterEventArgs e) => e.RequestCatch = false;
+        static void unhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) => e.Handled = true;
+        static object action(object exceptionText) => throw new InvalidOperationException((string)exceptionText);
+
+        // Send + current thread forces direct callback invocation
+        Assert.Throws<InvalidOperationException>(() => dispatcher.Invoke(DispatcherPriority.Send, TimeSpan.FromSeconds(3), (DispatcherOperationCallback)action, "Throw this"));
+
+        dispatcher.UnhandledException -= unhandledException;
+        dispatcher.UnhandledExceptionFilter -= unhandledExceptionFilter;
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_DispatcherOperation_Legacy_PropagatesException()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static object action(object exceptionText) => throw new InvalidOperationException((string)exceptionText);
+        // Anything different than Send + current thread is DispatcherOperation allocation and queue pass
+        Assert.Throws<InvalidOperationException>(() => dispatcher.Invoke(DispatcherPriority.Background, TimeSpan.FromSeconds(3), (DispatcherOperationCallback)action, "Throw this"));
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_DispatcherOperation_Legacy_UnhandledException_Handled_DoesNotThrow()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+        dispatcher.UnhandledException += unhandledException;
+
+        // Legacy Invoke with unhandled exception handler will not propagate the exception
+        static void unhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) => e.Handled = true;
+        static object action(object exceptionText) => throw new InvalidOperationException((string)exceptionText);
+
+        // Anything different than Send + current thread is DispatcherOperation allocation and queue pass
+        dispatcher.Invoke(DispatcherPriority.Background, TimeSpan.FromSeconds(3), (DispatcherOperationCallback)action, "Throw this");
+
+        dispatcher.UnhandledException -= unhandledException;
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_DispatcherOperation_Legacy_UnhandledExceptionFilter_RequestCatch_PropagatesException()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+        dispatcher.UnhandledException += unhandledException;
+        dispatcher.UnhandledExceptionFilter += unhandledExceptionFilter;
+
+        // Legacy Invoke with unhandled exception handler will not propagate the exception unless the filter requests it
+        static void unhandledExceptionFilter(object sender, DispatcherUnhandledExceptionFilterEventArgs e) => e.RequestCatch = false;
+        static void unhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) => e.Handled = true;
+        static object action(object exceptionText) => throw new InvalidOperationException((string)exceptionText);
+
+        // Anything different than Send + current thread is DispatcherOperation allocation and queue pass
+        Assert.Throws<InvalidOperationException>(() => dispatcher.Invoke(DispatcherPriority.Background, TimeSpan.FromSeconds(3), (DispatcherOperationCallback)action, "Throw this"));
+
+        dispatcher.UnhandledException -= unhandledException;
+        dispatcher.UnhandledExceptionFilter -= unhandledExceptionFilter;
     }
 
     [WpfTheory]

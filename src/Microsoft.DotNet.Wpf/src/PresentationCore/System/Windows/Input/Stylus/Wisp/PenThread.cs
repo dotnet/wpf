@@ -11,7 +11,7 @@ namespace System.Windows.Input
 
     internal sealed class PenThread
     {
-        private PenThreadWorker _penThreadWorker;
+        private readonly PenThreadWorker _penThreadWorker;
 
         internal PenThread()
         {
@@ -37,12 +37,13 @@ namespace System.Windows.Input
 
         private void DisposeHelper()
         {
-            // NOTE: PenThreadWorker deals with already being disposed logic.
-            _penThreadWorker?.Dispose();
+            _penThreadWorker.Dispose();
             GC.KeepAlive(this);
         }
 
         /////////////////////////////////////////////////////////////////////
+
+        internal bool IsDisposed => _penThreadWorker.IsDisposed;
 
         internal bool AddPenContext(PenContext penContext)
         {

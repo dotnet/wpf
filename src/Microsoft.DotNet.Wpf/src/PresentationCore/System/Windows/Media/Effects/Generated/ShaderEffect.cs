@@ -46,8 +46,6 @@ namespace System.Windows.Media.Effects
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -65,7 +63,6 @@ namespace System.Windows.Media.Effects
             target.PixelShaderPropertyChangedHook(e);
 
 
-
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -79,8 +76,6 @@ namespace System.Windows.Media.Effects
             {
                 return;
             }
-
-
 
             PixelShader oldV = (PixelShader) e.OldValue;
             PixelShader newV = (PixelShader) e.NewValue;
@@ -106,7 +101,6 @@ namespace System.Windows.Media.Effects
 
             target.PropertyChanged(PixelShaderProperty);
         }
-
 
         #region Public Properties
 
@@ -147,8 +141,6 @@ namespace System.Windows.Media.Effects
             return (Freezable)Activator.CreateInstance(this.GetType());
         }
 
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -166,7 +158,6 @@ namespace System.Windows.Media.Effects
         }
         private DUCE.ResourceHandle GeneratedAddRefOnChannelCore(DUCE.Channel channel)
         {
-
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_SHADEREFFECT))
                 {
                     PixelShader vPixelShader = PixelShader;
@@ -174,16 +165,13 @@ namespace System.Windows.Media.Effects
 
                     AddRefOnChannelAnimations(channel);
 
-
                     UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
                 }
 
                 return _duceResource.GetHandle(channel);
-
         }
         private void GeneratedReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
@@ -192,9 +180,7 @@ namespace System.Windows.Media.Effects
                     if (vPixelShader != null) ((DUCE.IResource)vPixelShader).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
-
                 }
-
         }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
@@ -212,7 +198,6 @@ namespace System.Windows.Media.Effects
             return _duceResource.GetChannel(index);
         }
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -222,9 +207,6 @@ namespace System.Windows.Media.Effects
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -252,14 +234,9 @@ namespace System.Windows.Media.Effects
 
         #region Internal Fields
 
-
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
 
-
-
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -290,7 +267,6 @@ namespace System.Windows.Media.Effects
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

@@ -16,7 +16,6 @@ using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
-
     [Serializable]
     [TypeConverter(typeof(MatrixConverter))]
     [ValueSerializer(typeof(MatrixValueSerializer))] // Used by MarkupWriter
@@ -29,9 +28,6 @@ namespace System.Windows.Media
         //------------------------------------------------------
 
         #region Public Methods
-
-
-
 
         /// <summary>
         /// Compares two Matrix instances for exact equality.
@@ -213,10 +209,7 @@ namespace System.Windows.Media
         //------------------------------------------------------
 
 
-
-
         #region Public Properties
-
 
 
         #endregion Public Properties
@@ -230,9 +223,6 @@ namespace System.Windows.Media
         #region Protected Methods
 
 
-
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -242,13 +232,6 @@ namespace System.Windows.Media
         //------------------------------------------------------
 
         #region Internal Methods
-
-
-
-
-
-
-
 
 
         #endregion Internal Methods
@@ -261,7 +244,6 @@ namespace System.Windows.Media
 
         #region Internal Properties
 
-
         /// <summary>
         /// Creates a string representation of this object based on the current culture.
         /// </summary>
@@ -270,7 +252,6 @@ namespace System.Windows.Media
         /// </returns>
         public override string ToString()
         {
-
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, null /* format provider */);
         }
@@ -284,7 +265,6 @@ namespace System.Windows.Media
         /// </returns>
         public string ToString(IFormatProvider provider)
         {
-
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, provider);
         }
@@ -300,7 +280,6 @@ namespace System.Windows.Media
         /// </returns>
         string IFormattable.ToString(string format, IFormatProvider provider)
         {
-
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(format, provider);
         }
@@ -335,7 +314,6 @@ namespace System.Windows.Media
         }
 
 
-
         #endregion Internal Properties
 
         //------------------------------------------------------
@@ -345,7 +323,6 @@ namespace System.Windows.Media
         //------------------------------------------------------
 
         #region Dependency Properties
-
 
 
         #endregion Dependency Properties
@@ -359,13 +336,7 @@ namespace System.Windows.Media
         #region Internal Fields
 
 
-
-
-
-
-
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -375,8 +346,6 @@ namespace System.Windows.Media
         //  Constructors
         //
         //------------------------------------------------------
-
-
 
 
         #endregion Constructors

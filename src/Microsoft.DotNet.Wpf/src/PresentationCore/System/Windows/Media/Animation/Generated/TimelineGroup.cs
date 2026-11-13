@@ -43,8 +43,6 @@ namespace System.Windows.Media.Animation
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -52,8 +50,6 @@ namespace System.Windows.Media.Animation
         //  Public Properties
         //
         //------------------------------------------------------
-
-
 
 
         #region Public Properties
@@ -84,9 +80,6 @@ namespace System.Windows.Media.Animation
         #region Protected Methods
 
 
-
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -98,13 +91,6 @@ namespace System.Windows.Media.Animation
         #region Internal Methods
 
 
-
-
-
-
-
-
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -114,9 +100,6 @@ namespace System.Windows.Media.Animation
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -144,14 +127,9 @@ namespace System.Windows.Media.Animation
 
         #region Internal Fields
 
-
-
-
-
         internal static TimelineCollection s_Children = TimelineCollection.Empty;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -184,7 +162,6 @@ namespace System.Windows.Media.Animation
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

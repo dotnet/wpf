@@ -671,7 +671,7 @@ namespace System.Windows.Input
         /// <returns></returns>        
         private void CopyAdditionalData()
         {
-            _additionalValues = (int[])_additionalValues?.Clone();
+            _additionalValues = _additionalValues?.AsSpan().ToArray();
         }
 
         /// <summary>

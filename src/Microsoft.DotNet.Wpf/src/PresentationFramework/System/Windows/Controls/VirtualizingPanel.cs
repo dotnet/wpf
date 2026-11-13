@@ -5,7 +5,7 @@
 using MS.Internal;
 using System.Collections.Specialized;
 using System.Windows.Media;
-using System.Windows.Controls.Primitives;   // IItemContainerGenerator
+using System.Windows.Controls.Primitives; // IItemContainerGenerator
 
 namespace System.Windows.Controls
 {
@@ -52,7 +52,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static readonly DependencyProperty IsVirtualizingProperty =
             DependencyProperty.RegisterAttached("IsVirtualizing", typeof(bool), typeof(VirtualizingPanel),
-                new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsMeasure, new PropertyChangedCallback(OnVirtualizationPropertyChanged)));
+                new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, FrameworkPropertyMetadataOptions.AffectsMeasure, new PropertyChangedCallback(OnVirtualizationPropertyChanged)));
 
         /// <summary>
         ///     Retrieves the value for <see cref="IsVirtualizingProperty" />.
@@ -86,7 +86,8 @@ namespace System.Windows.Controls
         /// </summary>
         public static readonly DependencyProperty VirtualizationModeProperty =
             DependencyProperty.RegisterAttached("VirtualizationMode", typeof(VirtualizationMode), typeof(VirtualizingPanel),
-                new FrameworkPropertyMetadata(VirtualizationMode.Standard, FrameworkPropertyMetadataOptions.AffectsMeasure, new PropertyChangedCallback(OnVirtualizationPropertyChanged)));
+                new FrameworkPropertyMetadata(VirtualizationMode.Standard, FrameworkPropertyMetadataOptions.AffectsMeasure,
+                    new PropertyChangedCallback(OnVirtualizationPropertyChanged)));
 
         /// <summary>
         ///     Retrieves the value for <see cref="VirtualizationModeProperty" />.
@@ -118,7 +119,10 @@ namespace System.Windows.Controls
         /// </summary>
         public static readonly DependencyProperty IsVirtualizingWhenGroupingProperty =
             DependencyProperty.RegisterAttached("IsVirtualizingWhenGrouping", typeof(bool), typeof(VirtualizingPanel),
-                new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsMeasure, new PropertyChangedCallback(OnVirtualizationPropertyChanged), new CoerceValueCallback(CoerceIsVirtualizingWhenGrouping)));
+                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox,
+                    FrameworkPropertyMetadataOptions.AffectsMeasure,
+                    new PropertyChangedCallback(OnVirtualizationPropertyChanged),
+                    new CoerceValueCallback(CoerceIsVirtualizingWhenGrouping)));
 
         /// <summary>
         ///     Retrieves the value for <see cref="IsVirtualizingWhenGroupingProperty" />.
@@ -250,7 +254,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static readonly DependencyProperty IsContainerVirtualizableProperty =
             DependencyProperty.RegisterAttached("IsContainerVirtualizable", typeof(bool), typeof(VirtualizingPanel),
-                new FrameworkPropertyMetadata(true));
+                new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
         ///     Retrieves the value for <see cref="IsContainerVirtualizableProperty" />.
@@ -282,7 +286,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal static readonly DependencyProperty ShouldCacheContainerSizeProperty =
             DependencyProperty.RegisterAttached("ShouldCacheContainerSize", typeof(bool), typeof(VirtualizingPanel),
-                new FrameworkPropertyMetadata(true));
+                new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
         ///     Retrieves the value for <see cref="ShouldCacheContainerSizeProperty" />.

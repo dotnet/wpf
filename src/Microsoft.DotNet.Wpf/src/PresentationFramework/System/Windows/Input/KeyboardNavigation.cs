@@ -11,7 +11,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using MS.Internal;
-using MS.Internal.KnownBoxes;
 
 using CommonDependencyProperty = MS.Internal.PresentationFramework.CommonDependencyPropertyAttribute;
 

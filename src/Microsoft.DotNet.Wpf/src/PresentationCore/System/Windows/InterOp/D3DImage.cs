@@ -5,7 +5,6 @@
 //                  An ImageSource that displays a user created D3D surface
 
 using MS.Internal;
-using MS.Internal.KnownBoxes;
 using MS.Win32.PresentationCore;
 using System.ComponentModel;
 using System.Windows.Media;

@@ -63,7 +63,7 @@ namespace System.Windows.Input
                         "RestoreInputLanguage",
                         typeof(bool),
                         typeof(InputLanguageManager),
-                        new PropertyMetadata(false)
+                        new PropertyMetadata(BooleanBoxes.FalseBox)
                         );
 
         /// <summary>

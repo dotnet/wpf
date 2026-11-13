@@ -360,7 +360,7 @@ namespace System.Windows.Controls
                 {
                     ToolBar toolBar = band[toolBarIndex];
                     remainingLength -= toolBar.MinLength;
-                    if (DoubleUtil.LessThan(remainingLength, 0))
+                    if (remainingLength < 0)
                     {
                         remainingLength = 0;
                         break;
@@ -380,7 +380,7 @@ namespace System.Windows.Controls
                     bandThickness = Math.Max(bandThickness, fHorizontal ? toolBar.DesiredSize.Height : toolBar.DesiredSize.Width);
                     bandLength += fHorizontal ? toolBar.DesiredSize.Width : toolBar.DesiredSize.Height;
                     remainingLength -= fHorizontal ? toolBar.DesiredSize.Width : toolBar.DesiredSize.Height;
-                    if (DoubleUtil.LessThan(remainingLength, 0))
+                    if (remainingLength < 0)
                     {
                         remainingLength = 0;
                     }

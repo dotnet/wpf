@@ -113,7 +113,7 @@ namespace System.Windows.Input
 
                 // Create CultureInfo from each ID and store it
                 for (int i = 0; i < langArray.Length; i++)
-                    langArray[i] = new CultureInfo(languageIDs[i]);
+                    langArray[i] = InputLanguageSource.GetCultureInfo(languageIDs[i]);
 
                 // Call CoTaskMemFree().
                 Marshal.FreeCoTaskMem(ptrLanguageIDs);

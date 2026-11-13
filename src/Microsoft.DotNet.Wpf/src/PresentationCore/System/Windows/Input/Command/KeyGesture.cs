@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -286,9 +286,9 @@ namespace System.Windows.Input
         {
             // combine the gesture and the display string, producing a string
             // that the type converter will recognize
-            if (!String.IsNullOrEmpty(keyDisplayString))
+            if (!string.IsNullOrEmpty(keyDisplayString))
             {
-                keyGestureToken += KeyGestureConverter.DISPLAYSTRING_SEPARATOR + keyDisplayString;
+                keyGestureToken += DisplayStringSeparator + keyDisplayString;
             }
 
             return _keyGestureConverter.ConvertFromInvariantString(keyGestureToken) as KeyGesture;
@@ -306,6 +306,7 @@ namespace System.Windows.Input
         private Key            _key = Key.None;
         private string         _displayString;
         private const char MULTIPLEGESTURE_DELIMITER = ';';
+        private const char DisplayStringSeparator = ',';
         private static TypeConverter _keyGestureConverter = new KeyGestureConverter();
         //private static bool    _classRegistered = false;
 #endregion Private Fields

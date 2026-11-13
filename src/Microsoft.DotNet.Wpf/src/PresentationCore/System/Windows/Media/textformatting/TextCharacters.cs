@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -19,7 +19,7 @@ namespace System.Windows.Media.TextFormatting
 {
     /// <summary>
     /// A specialized TextSymbols implemented by TextFormatter to produces 
-    /// a collection of TextCharacterShape � each represents a collection of 
+    /// a collection of TextCharacterShape – each represents a collection of 
     /// character glyphs from distinct physical typeface.
     /// </summary>
     public class TextCharacters : TextRun, ITextSymbols, IShapeableTextCollector
@@ -119,7 +119,10 @@ namespace System.Windows.Media.TextFormatting
                 throw new ArgumentNullException("textRunProperties.CultureInfo");
             }
 
-            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(textRunProperties.FontRenderingEmSize, "textRunProperties.FontRenderingEmSize");
+            if (textRunProperties.FontRenderingEmSize <= 0)
+            {
+                throw new ArgumentOutOfRangeException("textRunProperties.FontRenderingEmSize", SR.ParameterMustBeGreaterThanZero);
+            }
 
             _characterBufferReference = characterBufferReference;
             _length = length;

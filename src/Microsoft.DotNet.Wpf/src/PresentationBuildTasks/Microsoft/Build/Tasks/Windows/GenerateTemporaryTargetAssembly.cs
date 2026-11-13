@@ -264,9 +264,6 @@ namespace Microsoft.Build.Tasks.Windows
                 // Add Analyzers to Analyzer item list.
                 AddNewItems(xmlProjectDoc, AnalyzerTypeName, Analyzers);
 
-                // Replace implicit SDK imports with explicit SDK imports
-                ReplaceImplicitImports(xmlProjectDoc);
-
                 // Add properties required for temporary assembly compilation
                 var properties = new List<(string PropertyName, string PropertyValue)>
                 {
@@ -282,6 +279,10 @@ namespace Microsoft.Build.Tasks.Windows
                 RemovePropertiesByName(xmlProjectDoc, nameof(AssemblyName));
 
                 AddNewProperties(xmlProjectDoc, properties);
+
+                // Replace implicit SDK imports with explicit SDK imports
+                // In this temorary project file, the SDK import must be inserted before the added PropertyGroup.
+                ReplaceImplicitImports(xmlProjectDoc);
 
                 // Save the xmlDocument content into the temporary project file.
                 xmlProjectDoc.Save(TemporaryTargetAssemblyProjectName);

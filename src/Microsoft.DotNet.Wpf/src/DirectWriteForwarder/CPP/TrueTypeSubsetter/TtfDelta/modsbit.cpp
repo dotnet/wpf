@@ -960,7 +960,7 @@ int fCompletedRange = 0;    /* set when loop processes all entries through *pusL
         if (ulTableSize & 0x03)  /* if we aren't on a long word boundary */
             ulTableSize +=sizeof(usNewGlyphOffset);
         if (CMAP_SAFE_CHECKS_ENABLED() && fCompletedRange)
-            ; /* already correct — processed through last index via safe-check break */
+            ; /* already correct - processed through last index via safe-check break */
         else
             *pusLastIndex = usIndex - 1; /* the one we were working on last */
         return(ulTableSize);

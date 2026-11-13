@@ -6,7 +6,7 @@
 #define TTF_SAFE_CHECKS_H
 
 /*
- * TtfDelta safety switch — read once from managed code (AppContext),
+ * TtfDelta safety switch - read once from managed code (AppContext),
  * then checked from native C code via the global.
  *
  * AppContext switch name:
@@ -23,7 +23,7 @@ extern int g_fDWFBoundsCheckEnabled;
 
 
 /*
- * CMapDelta safety switch — read once from managed code (AppContext),
+ * CMapDelta safety switch - read once from managed code (AppContext),
  * then checked from native C code via the global.
  *
  * AppContext switch name:

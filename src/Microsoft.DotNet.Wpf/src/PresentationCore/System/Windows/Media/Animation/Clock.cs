@@ -3480,12 +3480,7 @@ namespace System.Windows.Media.Animation
         {
             if (_eventHandlersStore != null)
             {
-                EventHandler handler = (EventHandler)_eventHandlersStore.Get(key);
-
-                if (handler != null)
-                {
-                    handler(this, null);
-                }
+                ((EventHandler)_eventHandlersStore.Get(key))?.Invoke(this, null);
             }
         }
 

@@ -465,8 +465,7 @@ namespace MS.Internal.Data
 
         private void OnLiveShapingDirty()
         {
-            if (LiveShapingDirty != null)
-                LiveShapingDirty(this, EventArgs.Empty);
+            LiveShapingDirty?.Invoke(this, EventArgs.Empty);
         }
 
         private bool ContainsDP(LivePropertyInfo[] infos, DependencyProperty dp)

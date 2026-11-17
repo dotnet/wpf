@@ -1,0 +1,59 @@
+name: Publish WPF triage labels
+run-name: WPF publication ${{ github.event.workflow_run.display_title || inputs.assessment_run }}
+on:
+  workflow_run:
+    workflows: [WPF issue assessment]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      assessment_run:
+        description: Trusted successful assessment run
+        type: number
+        required: true
+      publish:
+        description: Apply enabled labels; false previews only
+        type: boolean
+        default: false
+permissions: {}
+concurrency:
+  group: wpf-triage-publication
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: >-
+      github.repository == 'dotnet/wpf' && github.ref == 'refs/heads/main' &&
+      (github.event_name == 'workflow_dispatch' ||
+       (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      issues: write
+      actions: read
+      deployments: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Validate and preview enabled label changes
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          ASSESSMENT_RUN: ${{ inputs.assessment_run || github.event.workflow_run.id }}
+          PUBLISH: ${{ github.event_name == 'workflow_dispatch' && inputs.publish || false }}
+          AREA_ENABLED: ${{ vars.WPF_TRIAGE_AREA_ENABLED == 'true' }}
+          PRIORITY_ENABLED: ${{ vars.WPF_TRIAGE_PRIORITY_ENABLED == 'true' }}
+          APPROVAL_RUN: ${{ vars.WPF_TRIAGE_APPROVAL_RUN || '0' }}
+        run: >-
+          python .github/scripts/issue-triage/publisher.py "$ASSESSMENT_RUN" "$RUNNER_TEMP/wpf-assessment.json"
+          --publish "$PUBLISH" --area-enabled "$AREA_ENABLED" --priority-enabled "$PRIORITY_ENABLED"
+          --approval-run "$APPROVAL_RUN"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: wpf-assessment-${{ github.run_id }}
+          path: ${{ runner.temp }}/wpf-assessment.json
+          retention-days: 90
+          if-no-files-found: error

@@ -191,6 +191,30 @@ class GitHub:
         except (OSError, TimeoutError):
             raise TriageError("Assessment dispatch failed or is ambiguous; inspect before retrying") from None
 
+    def add_labels(self, number: int, labels: list[str]) -> None:
+        issue = self.get(f"issues/{number}")
+        catalog = {item["name"]: item.get("node_id") for item in self.pages("labels")}
+        if not eligible(issue) or not labels or any(not catalog.get(name) for name in labels):
+            raise TriageError("Issue or existing label IDs cannot be verified")
+        query = """
+        mutation($issue:ID!,$labels:[ID!]!) {
+          addLabelsToLabelable(input:{labelableId:$issue,labelIds:$labels}) { clientMutationId }
+        }"""
+        request = urllib.request.Request(
+            "https://api.github.com/graphql", method="POST",
+            data=json.dumps({"query": query, "variables": {
+                "issue": issue["node_id"], "labels": [catalog[name] for name in labels],
+            }}).encode(),
+            headers={"Authorization": f"Bearer {self.token}", "Content-Type": "application/json"},
+        )
+        try:
+            with self.opener.open(request, timeout=30) as response:
+                result = json.loads(response.read(65536))
+            if result.get("errors") or not result.get("data", {}).get("addLabelsToLabelable"):
+                raise TriageError("Label mutation was not confirmed")
+        except (OSError, ValueError):
+            raise TriageError("Label mutation failed or is ambiguous; inspect before retrying") from None
+
 
 def digest(value: object) -> str:
     encoded = json.dumps(value, sort_keys=True, ensure_ascii=True, separators=(",", ":"))

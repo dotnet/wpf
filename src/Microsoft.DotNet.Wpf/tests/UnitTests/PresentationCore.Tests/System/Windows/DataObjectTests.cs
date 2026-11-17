@@ -1,7 +1,10 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Windows.Media.Imaging;
+using ComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 namespace System.Windows;
 
@@ -468,5 +471,77 @@ public class DataObjectTests
 
         dataObject.ContainsImage().Should().BeTrue();
     }
+    #endregion
+
+    #region EnhancedMetafile COM contract
+
+    [WpfTheory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void ComDataObject_EnhancedMetafile_InvalidPayload_ThrowsCOMException(bool useEmptyStream)
+    {
+        // .NET 9 returned E_FAIL when matching EMF data could not supply a handle.
+        using MemoryStream stream = new();
+        ComDataObject dataObject = new DataObject(DataFormats.EnhancedMetafile, useEmptyStream ? stream : new object());
+        FORMATETC format = CreateEnhancedMetafileFormat();
+
+        Action action = () => dataObject.GetData(ref format, out _);
+
+        action.Should().Throw<COMException>().Which.HResult.Should().Be(unchecked((int)0x80004005));
+    }
+
+    [WpfFact]
+    public void ComDataObject_EnhancedMetafile_MalformedStream_ReturnsFailureHResult()
+    {
+        // Unlike an empty stream, this expandable/exposable buffer reaches SetEnhMetaFileBits.
+        using MemoryStream stream = new();
+        stream.Write(new byte[] { 1, 2, 3 });
+        stream.Position = 0;
+        ComDataObject dataObject = new DataObject(DataFormats.EnhancedMetafile, stream);
+        FORMATETC format = CreateEnhancedMetafileFormat();
+
+        Action action = () => dataObject.GetData(ref format, out _);
+
+        // .NET 9's direct managed COM call throws Win32Exception; the current COM bridge
+        // can surface COMException instead, retaining E_FAIL. This public HRESULT assertion
+        // cannot distinguish an internal native-failure throw from an E_FAIL return.
+        action.Should().Throw<ExternalException>().Which.HResult.Should().Be(unchecked((int)0x80004005));
+    }
+
+    [WpfTheory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ComDataObject_EnhancedMetafile_NonEmfFormat_ThrowsDvETymed(bool getDataHere)
+    {
+        // The requested format must be present for GetData to reach the ENHMF renderer,
+        // rather than fail earlier with DV_E_FORMATETC.
+        ComDataObject dataObject = new DataObject(DataFormats.UnicodeText, "Not an enhanced metafile");
+        FORMATETC format = CreateEnhancedMetafileFormat();
+        format.cfFormat = (short)DataFormats.GetDataFormat(DataFormats.UnicodeText).Id;
+        STGMEDIUM medium = new() { tymed = TYMED.TYMED_ENHMF };
+        Action action = () =>
+        {
+            if (getDataHere)
+            {
+                // .NET 9 rejects ENHMF for GetDataHere before invoking the renderer.
+                dataObject.GetDataHere(ref format, ref medium);
+            }
+            else
+            {
+                dataObject.GetData(ref format, out _);
+            }
+        };
+
+        action.Should().Throw<COMException>().Which.HResult.Should().Be(unchecked((int)0x80040069));
+    }
+
+    private static FORMATETC CreateEnhancedMetafileFormat() => new()
+    {
+        cfFormat = (short)DataFormats.GetDataFormat(DataFormats.EnhancedMetafile).Id,
+        dwAspect = DVASPECT.DVASPECT_CONTENT,
+        lindex = -1,
+        tymed = TYMED.TYMED_ENHMF
+    };
+
     #endregion
 }

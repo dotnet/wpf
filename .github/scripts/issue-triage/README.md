@@ -84,6 +84,14 @@ requires a reviewed complete backlog assessment. Area publication and project
 publication each require an accepted narrow pilot before automatic activation.
 Each capability must remain independently disableable.
 
+## Workflow source
+
+`issue-triage.md` in `.github/workflows` is a GitHub Agentic Workflows source
+file. Its YAML frontmatter configures execution; the Markdown body contains the
+agent instructions. GitHub Actions runs the compiled `issue-triage.lock.yml`.
+Edit the `.md` source and regenerate the lock file with
+`gh aw compile issue-triage --strict --no-check-update`. CI checks for drift.
+
 ## Area configuration and tests
 
 `area-map.json` lists permitted primary-area labels and their routing guidance.

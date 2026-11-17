@@ -2,6 +2,7 @@
 # Agentic workflow source: YAML frontmatter configures the Markdown instructions below.
 # Compile this file with gh aw; GitHub Actions executes the generated .lock.yml.
 name: WPF issue assessment
+run-name: WPF assessment ${{ inputs.request_id || github.run_id }}
 description: Assess one human-created WPF issue without publishing labels or comments.
 on:
   workflow_dispatch:
@@ -9,6 +10,10 @@ on:
       issue_number:
         description: Existing WPF issue number
         required: true
+        type: string
+      request_id:
+        description: Optional correlation ID for a bounded backlog batch
+        required: false
         type: string
   roles: all
 if: github.repository == 'dotnet/wpf' && github.ref == 'refs/heads/main'

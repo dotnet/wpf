@@ -134,7 +134,12 @@ class GitHub:
         self.opener = urllib.request.build_opener(NoRedirect)
 
     def get(self, path: str, **params):
-        if not re.fullmatch(r"(?:issues(?:/[1-9][0-9]*(?:/(?:comments|timeline|labels))?)?|labels)", path):
+        if not re.fullmatch(
+            r"(?:issues(?:/[1-9][0-9]*(?:/(?:comments|timeline|labels))?)?|labels"
+            r"|actions/(?:runs/[1-9][0-9]*(?:/(?:artifacts|approvals))?"
+            r"|workflows/issue-triage[-.a-z]*(?:/runs)?|artifacts/[1-9][0-9]*)"
+            r"|environments/wpf-triage-priority)", path
+        ):
             raise TriageError("Unsupported repository API path")
         url = f"https://api.github.com/repos/{REPOSITORY}/{path}"
         if params:
@@ -170,6 +175,21 @@ class GitHub:
             if len(batch) < 100:
                 return items
         raise TriageError("GitHub pagination limit reached; coverage is incomplete")
+
+    def dispatch(self, number: int, request_id: str) -> None:
+        if type(number) is not int or number <= 0 or not re.fullmatch(r"[a-z0-9-]{1,100}", request_id):
+            raise TriageError("Invalid assessment dispatch")
+        payload = {"ref": "main", "inputs": {"issue_number": str(number), "request_id": request_id}}
+        request = urllib.request.Request(
+            f"https://api.github.com/repos/{REPOSITORY}/actions/workflows/issue-triage.lock.yml/dispatches",
+            data=json.dumps(payload).encode(), method="POST",
+            headers={"Authorization": f"Bearer {self.token}", "Accept": "application/vnd.github+json"},
+        )
+        try:
+            with self.opener.open(request, timeout=30):
+                pass
+        except (OSError, TimeoutError):
+            raise TriageError("Assessment dispatch failed or is ambiguous; inspect before retrying") from None
 
 
 def digest(value: object) -> str:

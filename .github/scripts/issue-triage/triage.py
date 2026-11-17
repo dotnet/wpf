@@ -191,6 +191,30 @@ class GitHub:
         except (OSError, TimeoutError):
             raise TriageError("Assessment dispatch failed or is ambiguous; inspect before retrying") from None
 
+    def add_labels(self, number: int, labels: list[str]) -> None:
+        issue = self.get(f"issues/{number}")
+        catalog = {item["name"]: item.get("node_id") for item in self.pages("labels")}
+        if not eligible(issue) or not labels or any(not catalog.get(name) for name in labels):
+            raise TriageError("Issue or existing label IDs cannot be verified")
+        query = """
+        mutation($issue:ID!,$labels:[ID!]!) {
+          addLabelsToLabelable(input:{labelableId:$issue,labelIds:$labels}) { clientMutationId }
+        }"""
+        request = urllib.request.Request(
+            "https://api.github.com/graphql", method="POST",
+            data=json.dumps({"query": query, "variables": {
+                "issue": issue["node_id"], "labels": [catalog[name] for name in labels],
+            }}).encode(),
+            headers={"Authorization": f"Bearer {self.token}", "Content-Type": "application/json"},
+        )
+        try:
+            with self.opener.open(request, timeout=30) as response:
+                result = json.loads(response.read(65536))
+            if result.get("errors") or not result.get("data", {}).get("addLabelsToLabelable"):
+                raise TriageError("Label mutation was not confirmed")
+        except (OSError, ValueError):
+            raise TriageError("Label mutation failed or is ambiguous; inspect before retrying") from None
+
 
 def digest(value: object) -> str:
     encoded = json.dumps(value, sort_keys=True, ensure_ascii=True, separators=(",", ":"))
@@ -387,6 +411,16 @@ def agent_result(output: dict) -> dict:
     return item
 
 
+def event_eligible(client: GitHub, event: dict) -> bool:
+    issue = client.get(f"issues/{event_number(event)}")
+    if not eligible(issue):
+        return False
+    if "comment" in event:
+        author = event["comment"].get("user") or {}
+        return author.get("id") == issue["user"]["id"] and author.get("type") == "User"
+    return True
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="WPF issue triage")
     modes = parser.add_subparsers(dest="mode", required=True)
@@ -402,9 +436,15 @@ def main(argv: list[str] | None = None) -> int:
     assess.add_argument("event", type=Path)
     assess.add_argument("result", type=Path)
     assess.add_argument("destination", type=Path)
+    gate = modes.add_parser("eligible")
+    gate.add_argument("source", type=Path)
     args = parser.parse_args(argv)
     try:
-        if args.mode == "attach-context":
+        if args.mode == "eligible":
+            if os.environ.get("GITHUB_REPOSITORY") != REPOSITORY:
+                raise TriageError("Only the WPF repository is supported")
+            return 0 if event_eligible(GitHub(), read_json(args.source)) else 1
+        elif args.mode == "attach-context":
             attach_context(args.source, args.destination)
         elif args.mode == "prepare":
             if os.environ.get("GITHUB_REPOSITORY") != REPOSITORY:

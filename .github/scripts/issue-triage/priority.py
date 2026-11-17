@@ -4,7 +4,7 @@ import json
 import re
 import urllib.request
 
-from triage import NoRedirect, TriageError, digest
+from triage import NoRedirect, TriageError, digest, eligible, label_names
 
 
 RELEASE_URL = "https://builds.dotnet.microsoft.com/dotnet/release-metadata/releases-index.json"
@@ -58,3 +58,20 @@ def candidate_priority(result: dict, evidence: dict) -> str | None:
 
 def release_fingerprint(summary: dict) -> str:
     return digest(summary)
+
+
+def projected_counts(issues: list[dict], additions: dict[int, list[str]]) -> dict[str, int]:
+    totals = {"Priority:0": set(), "Priority:1": set()}
+    for issue in issues:
+        if not eligible(issue):
+            continue
+        labels = label_names(issue) | set(additions.get(issue["number"], []))
+        for priority in totals:
+            if priority in labels:
+                totals[priority].add(issue["number"])
+    return {priority: len(numbers) for priority, numbers in totals.items()}
+
+
+def enforce_limits(counts: dict[str, int]) -> None:
+    if counts["Priority:0"] > 20 or counts["Priority:1"] > 50:
+        raise TriageError("Projected P0/P1 totals exceed 20/50; review criteria before publication")

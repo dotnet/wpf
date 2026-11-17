@@ -3,6 +3,7 @@
 import argparse
 import io
 import json
+import os
 import time
 import urllib.error
 import urllib.parse
@@ -191,6 +192,72 @@ def assess_batch(client: GitHub, manifest: dict, size: int, credit_budget: int, 
     return manifest
 
 
+def validated_assessments(manifest: dict, issues: list[dict], now: int | None = None) -> dict[int, dict]:
+    now = int(time.time()) if now is None else now
+    complete_coverage(manifest, issues, now)
+    records = {}
+    for issue in issues:
+        if not eligible(issue):
+            continue
+        record = manifest["entries"][str(issue["number"])].get("assessment", {})
+        evidence = record.get("evidence", {})
+        if (
+            record.get("number") != issue["number"] or record.get("repository") != REPOSITORY
+            or record.get("policy_sha256") != manifest["policy_sha256"]
+            or evidence.get("policy_sha256") != manifest["policy_sha256"]
+            or evidence.get("number") != issue["number"] or evidence.get("repository") != REPOSITORY
+            or evidence.get("existing_labels") != sorted(item["name"] for item in issue["labels"])
+            or type(record.get("assessed_at")) is not int
+            or not now - RETENTION_SECONDS <= record["assessed_at"] <= now
+            or record.get("input_sha256") != evidence.get("input_sha256")
+            or label_plan(record.get("result"), evidence).get("add_labels") != record.get("add_labels")
+        ):
+            raise TriageError("Assessment record is invalid or expired")
+        records[issue["number"]] = record
+    return records
+
+
+def require_review_environment(client: GitHub, run_id: int) -> None:
+    environment = client.get("environments/wpf-triage-priority")
+    rules = environment.get("protection_rules", [])
+    if not any(rule.get("type") == "required_reviewers" and rule.get("prevent_self_review") for rule in rules):
+        raise TriageError("Configure required reviewers with self-review disabled")
+    reviews = client.get(f"actions/runs/{run_id}/approvals")
+    if not isinstance(reviews, list) or not any(
+        review.get("state") == "approved"
+        and any(item.get("name") == "wpf-triage-priority" for item in review.get("environments", []))
+        for review in reviews
+    ):
+        raise TriageError("Priority calibration lacks an environment approval")
+
+
+def calibration_approval(client: GitHub, manifest: dict, issues: list[dict], run_id: int) -> dict:
+    from priority import enforce_limits, projected_counts
+
+    records = validated_assessments(manifest, issues)
+    counts = projected_counts(issues, {number: record["add_labels"] for number, record in records.items()})
+    enforce_limits(counts)
+    require_review_environment(client, run_id)
+    return {
+        "schema": 1, "repository": REPOSITORY, "manifest": manifest,
+        "manifest_sha256": digest(manifest), "policy_sha256": policy_digest(),
+        "approval_run_id": run_id, "approved_at": int(time.time()), "projected_counts": counts,
+    }
+
+
+def load_approval(client: GitHub, run_id: int) -> dict:
+    approval = artifact_json(client, run_id, "issue-triage-calibrate.yml", "wpf-approval", "approval.json")
+    if (
+        approval.get("schema") != 1 or approval.get("repository") != REPOSITORY
+        or approval.get("approval_run_id") != run_id or approval.get("policy_sha256") != policy_digest()
+        or approval.get("manifest_sha256") != digest(approval.get("manifest"))
+    ):
+        raise TriageError("Calibration approval does not match the current policy and manifest")
+    validate_manifest(approval["manifest"])
+    require_review_environment(client, run_id)
+    return approval
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="WPF backlog inventory")
     parser.add_argument("destination", type=Path)
@@ -199,12 +266,19 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--batch-size", type=int, default=0)
     parser.add_argument("--credit-budget", type=int, default=0)
     parser.add_argument("--retry-errors", choices=("true", "false"), default="false")
+    parser.add_argument("--approve", action="store_true")
     args = parser.parse_args(argv)
     client = GitHub()
     previous = read_json(args.resume, 64 * 1024 * 1024) if args.resume else None
     if args.resume_run:
         previous = artifact_json(client, args.resume_run, "issue-triage-backlog.yml", "wpf-backlog", "manifest.json")
-    manifest = manifest_for(inventory(client), previous=previous)
+    issues = inventory(client)
+    if args.approve:
+        if not args.resume_run or os.environ.get("GITHUB_REF") != "refs/heads/main":
+            raise TriageError("Approve only a trusted backlog run from main")
+        write_json(args.destination, calibration_approval(client, previous, issues, int(os.environ["GITHUB_RUN_ID"])))
+        return 0
+    manifest = manifest_for(issues, previous=previous)
     assess_batch(client, manifest, args.batch_size, args.credit_budget, args.destination, args.retry_errors == "true")
     return 0
 

@@ -1,4 +1,6 @@
 ---
+# Agentic workflow source: YAML frontmatter configures the Markdown instructions below.
+# Compile this file with gh aw; GitHub Actions executes the generated .lock.yml.
 name: WPF issue assessment
 run-name: WPF assessment ${{ inputs.request_id || format('issue-{0}', inputs.issue_number || github.event.issue.number) }}
 description: Assess one human-created WPF issue without publishing labels or comments.

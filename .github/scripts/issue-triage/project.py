@@ -4,7 +4,7 @@ import json
 import os
 import urllib.request
 
-from triage import NoRedirect, TriageError
+from triage import FEATURE_LABELS, OTHER_LABELS, NoRedirect, TriageError, eligible, label_names
 
 
 FIELD_TYPES = {
@@ -15,6 +15,68 @@ FIELD_OPTIONS = {
     "Selection control": {"Auto", "Pin", "Exclude"},
     "Selected": {"Yes", "No"}, "Priority": {"P0", "P1"},
 }
+
+
+def issue_items(items: list[dict]) -> dict[int, dict]:
+    result = {}
+    for item in items:
+        content = item.get("content") or {}
+        if content.get("repository", {}).get("nameWithOwner") != "dotnet/wpf":
+            continue
+        number = content["number"]
+        if number in result:
+            raise TriageError("Duplicate WPF project membership needs private review")
+        control = item["values"].get("Selection control", "Auto")
+        if control not in FIELD_OPTIONS["Selection control"]:
+            raise TriageError("Private selection control is invalid")
+        result[number] = item
+    return result
+
+
+def shortlist(issues: list[dict], records: dict[int, dict], items: list[dict]) -> list[dict]:
+    """Rank complete, previously validated assessment coverage without API calls."""
+    controls = issue_items(items)
+    if any(issue["number"] not in records for issue in issues if eligible(issue)):
+        raise TriageError("Complete current assessment coverage is required")
+    ranked = []
+    for issue in issues:
+        if not eligible(issue):
+            continue
+        number = issue["number"]
+        control = controls.get(number, {}).get("values", {}).get("Selection control", "Auto")
+        record, labels = records[number], label_names(issue)
+        if (
+            control == "Exclude" or record["result"]["issue_kind"] != "BUG"
+            or labels & (FEATURE_LABELS | OTHER_LABELS)
+        ):
+            continue
+        priorities = {name for name in labels if name.startswith("Priority:")}
+        if len(priorities) > 1 or priorities - {"Priority:0", "Priority:1", "Priority:2", "Priority:3"}:
+            continue
+        priority = next(iter(priorities), None)
+        if priority is None:
+            priority = next((name for name in record["add_labels"] if name in {"Priority:0", "Priority:1"}), None)
+        impact = record["result"]["impact"]
+        evidenced = record["result"]["confidence"] == "HIGH" and not record["evidence"]["context_truncated"]
+        impact_rank = {"CRASH": 3, "REGRESSION": 2, "BROKEN_FUNCTIONALITY": 1}.get(impact, 0) if evidenced else 0
+        compatibility = bool(labels & {"tenet-compatibility", "regression"}) or (evidenced and impact == "REGRESSION")
+        reactions = issue.get("reactions", {}).get("+1", 0)
+        if type(reactions) is not int or reactions < 0:
+            raise TriageError("Issue reaction evidence is unavailable")
+        key = (control != "Pin", {"Priority:0": 0, "Priority:1": 1}.get(priority, 2),
+               -impact_rank, -int(compatibility), -reactions, number)
+        ranked.append({
+            "number": number, "node_id": issue.get("node_id"), "key": key,
+            "priority": {"Priority:0": "P0", "Priority:1": "P1"}.get(priority),
+            "reason": f"{'Pinned; ' if control == 'Pin' else ''}{priority or 'Unprioritized'}; "
+                      f"{impact if evidenced else 'impact deferred'}; thumbs-up {reactions}",
+        })
+    if sum(not item["key"][0] for item in ranked) > 10:
+        raise TriageError("More than ten eligible pins require private review")
+    return [
+        {name: value for name, value in item.items() if name != "key"} | {"rank": rank}
+        for rank, item in enumerate(sorted(ranked, key=lambda item: item["key"])[:10], 1)
+    ]
 
 
 class Project:

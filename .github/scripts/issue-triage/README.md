@@ -79,6 +79,13 @@ Use a project-scoped GitHub App credential or an approved project token only in
 the trusted project job. Do not expose it to analysis, detection, or PR jobs.
 Issue publication uses a separate job-scoped `GITHUB_TOKEN`.
 
+The private project needs these exact fields: `Selection control` (single select:
+Auto, Pin, Exclude), `Selected` (single select: Yes, No), `Rank` (number),
+`Priority` (single select: P0, P1), and `Selection reason` (text). Configure the
+default view to filter `Selected: Yes` and sort by Rank. Keep the project number
+and approved project credential in `WPF_TRIAGE_PROJECT_NUMBER` and
+`WPF_TRIAGE_PROJECT_TOKEN` secrets, available only to the project job.
+
 Rollout starts with offline fixtures and read-only previews. Priority publication
 requires a reviewed complete backlog assessment. Area publication and project
 publication each require an accepted narrow pilot before automatic activation.

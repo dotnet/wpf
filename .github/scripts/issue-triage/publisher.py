@@ -10,12 +10,13 @@ from priority import enforce_limits, projected_counts
 from triage import GitHub, REPOSITORY, TriageError, label_plan, prepare, write_json
 
 
-def publication_controls(event: str, requested: bool, area: bool, priority: bool, area_pilot: bool = False) -> tuple[bool, bool, bool]:
+def publication_controls(event: str, requested: bool, area: bool, priority: bool,
+                         area_pilot: bool = False, priority_pilot: bool = False) -> tuple[bool, bool, bool]:
     if event == "workflow_dispatch":
         return requested, area, priority
     if event == "workflow_run":
-        enabled = area and area_pilot
-        return enabled, enabled, False
+        area_ready, priority_ready = area and area_pilot, priority and priority_pilot
+        return area_ready or priority_ready, area_ready, priority_ready
     raise TriageError("Unsupported publication event")
 
 
@@ -76,6 +77,7 @@ def main(argv: list[str] | None = None) -> int:
         os.environ.get("GITHUB_EVENT_NAME"), args.publish == "true",
         args.area_enabled == "true", args.priority_enabled == "true",
         os.environ.get("WPF_TRIAGE_AREA_PILOT_APPROVED") == "true",
+        os.environ.get("WPF_TRIAGE_PRIORITY_PILOT_APPROVED") == "true",
     )
     plan = publish_record(client, record, publish, area, priority, args.approval_run)
     write_json(args.destination, plan)

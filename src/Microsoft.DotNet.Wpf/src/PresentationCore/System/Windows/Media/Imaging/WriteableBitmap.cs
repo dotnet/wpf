@@ -325,7 +325,7 @@ namespace System.Windows.Media.Imaging
 
         private void SubscribeToCommittingBatchAndWritePostscript()
         {
-            if (_hasDirtyRects)
+            if (_lockCount == 0 && _hasDirtyRects)
             {
                 SubscribeToCommittingBatch();
 

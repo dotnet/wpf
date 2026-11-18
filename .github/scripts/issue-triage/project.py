@@ -1,10 +1,11 @@
 """Private WPF project access. Never log responses, field values, or credentials."""
 
+import argparse
 import json
 import os
 import urllib.request
 
-from triage import FEATURE_LABELS, OTHER_LABELS, NoRedirect, TriageError, eligible, label_names
+from triage import FEATURE_LABELS, OTHER_LABELS, GitHub, NoRedirect, REPOSITORY, TriageError, digest, eligible, label_names
 
 
 FIELD_TYPES = {
@@ -307,3 +308,34 @@ class Project:
         data = self.query(query, variables)
         if data.get(operation, {}).get("projectV2Item", {}).get("id") != item_id:
             raise TriageError("Private field mutation was not confirmed")
+
+
+def main(argv: list[str] | None = None) -> int:
+    from backlog import inventory, load_approval, resolve_coverage
+
+    parser = argparse.ArgumentParser(description="Private WPF project refresh")
+    parser.add_argument("--publish", choices=("true", "false"), default="false")
+    args = parser.parse_args(argv)
+    if os.environ.get("GITHUB_REPOSITORY") != REPOSITORY or os.environ.get("GITHUB_REF") != "refs/heads/main":
+        raise TriageError("Private refresh must use trusted main")
+    client = GitHub()
+    approval = load_approval(client, int(os.environ.get("WPF_TRIAGE_APPROVAL_RUN", "0")))
+    issues = inventory(client)
+    records = resolve_coverage(client, approval, issues)
+    expected = digest(issues)
+
+    def verify_public():
+        if digest(inventory(client)) != expected:
+            raise TriageError("Public issue evidence changed during private refresh")
+
+    project = Project(int(os.environ.get("WPF_TRIAGE_PROJECT_NUMBER", "0")))
+    reconcile(project, issues, records, args.publish == "true", verify_public)
+    print("Private WPF project refresh passed.")
+    return 0
+
+
+if __name__ == "__main__":
+    try:
+        raise SystemExit(main())
+    except (ValueError, KeyError, TypeError, OSError):
+        raise SystemExit("Private WPF project refresh stopped; review setup, coverage, or partial writes privately.")

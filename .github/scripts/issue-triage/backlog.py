@@ -1,6 +1,8 @@
 """Paginated human-issue inventory and resumable assessment manifests."""
 
 import argparse
+import copy
+import datetime
 import io
 import json
 import os
@@ -12,16 +14,10 @@ import uuid
 import zipfile
 from pathlib import Path
 
-from triage import GitHub, REPOSITORY, TriageError, digest, eligible, label_plan, policy_digest, read_json, write_json
+from triage import GitHub, REPOSITORY, TriageError, digest, eligible, issue_stamp, label_plan, policy_digest, read_json, write_json
 
 
 RETENTION_SECONDS = 90 * 24 * 60 * 60
-
-
-def issue_stamp(issue: dict) -> str:
-    return digest({name: issue.get(name) for name in (
-        "number", "title", "body", "user", "labels", "state", "locked", "updated_at", "comments",
-    )})
 
 
 def inventory(client: GitHub) -> list[dict]:
@@ -93,8 +89,11 @@ def trusted_run(client: GitHub, run_id: int, workflow: str) -> dict:
     run = client.get(f"actions/runs/{run_id}")
     if (
         run.get("head_branch") != "main" or run.get("conclusion") != "success"
-        or run.get("event") not in {"workflow_dispatch", "issues", "issue_comment"}
-        or run.get("head_repository", {}).get("full_name") != REPOSITORY
+        or run.get("event") not in (
+            {"workflow_dispatch", "workflow_run"} if workflow == "issue-triage-publish.yml"
+            else {"workflow_dispatch", "issues", "issue_comment"}
+        )
+        or (run.get("head_repository") or {}).get("full_name") != REPOSITORY
         or run.get("path") != f".github/workflows/{workflow}"
     ):
         raise TriageError("Assessment artifact does not come from a trusted successful main run")
@@ -206,6 +205,7 @@ def validated_assessments(manifest: dict, issues: list[dict], now: int | None = 
             or record.get("policy_sha256") != manifest["policy_sha256"]
             or evidence.get("policy_sha256") != manifest["policy_sha256"]
             or evidence.get("number") != issue["number"] or evidence.get("repository") != REPOSITORY
+            or evidence.get("issue_sha256") != issue_stamp(issue)
             or evidence.get("existing_labels") != sorted(item["name"] for item in issue["labels"])
             or type(record.get("assessed_at")) is not int
             or not now - RETENTION_SECONDS <= record["assessed_at"] <= now
@@ -215,6 +215,72 @@ def validated_assessments(manifest: dict, issues: list[dict], now: int | None = 
             raise TriageError("Assessment record is invalid or expired")
         records[issue["number"]] = record
     return records
+
+
+def resolve_coverage(client: GitHub, approval: dict, issues: list[dict], additional: tuple = ()) -> dict[int, dict]:
+    """Resolve an unexpired reviewed baseline plus trusted current deltas."""
+    from priority import fetch_releases
+
+    manifest = copy.deepcopy(approval["manifest"])
+    validate_manifest(manifest)
+    if manifest["policy_sha256"] != policy_digest():
+        raise TriageError("Assessment policy changed")
+    releases = fetch_releases()
+    current = {issue["number"]: issue for issue in issues if eligible(issue)}
+    pending = set()
+    for number, issue in current.items():
+        try:
+            records = validated_assessments(manifest, [issue])
+            if records[number]["evidence"]["releases"] != releases:
+                pending.add(number)
+        except (ValueError, KeyError, TypeError):
+            pending.add(number)
+
+    def accept(record):
+        number = record.get("number")
+        if type(number) is not int or number not in pending:
+            return
+        issue = current[number]
+        if record.get("evidence", {}).get("issue_sha256") != issue_stamp(issue):
+            return
+        candidate = copy.deepcopy(manifest)
+        candidate["entries"][str(number)] = {
+            "status": "assessed", "issue_sha256": issue_stamp(issue), "assessment": record,
+        }
+        checked = validated_assessments(candidate, [issue])[number]
+        if checked["evidence"]["releases"] != releases:
+            return
+        manifest["entries"][str(number)] = candidate["entries"][str(number)]
+        pending.remove(number)
+
+    for record in additional:
+        accept(record)
+    since = datetime.datetime.fromtimestamp(manifest["created_at"], datetime.timezone.utc).isoformat()
+    for workflow in ("issue-triage-publish.yml", "issue-triage.lock.yml"):
+        if not pending:
+            break
+        for page in range(1, 21):
+            data = client.get(
+                f"actions/workflows/{workflow}/runs", branch="main", status="success",
+                created=f">={since}", per_page=100, page=page,
+            )
+            runs = data["workflow_runs"]
+            for run in runs:
+                try:
+                    record = artifact_json(client, run["id"], workflow, "wpf-assessment", "wpf-assessment.json")
+                    if record.get("run_id") != str(run["id"]):
+                        raise TriageError("Delta assessment provenance mismatch")
+                    accept(record)
+                except (ValueError, KeyError, TypeError, OSError):
+                    # Ineligible event runs may have no assessment artifact.
+                    continue
+                if not pending:
+                    break
+            if not pending or len(runs) < 100:
+                break
+    if pending:
+        raise TriageError("Current assessment coverage is missing, stale, or expired")
+    return validated_assessments(manifest, issues)
 
 
 def require_review_environment(client: GitHub, run_id: int) -> None:

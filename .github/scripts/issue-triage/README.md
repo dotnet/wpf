@@ -45,6 +45,12 @@ Versioned Actions artifacts will hold public-issue assessments and resumable
 checkpoints with explicit retention. Expired artifacts or incomplete coverage
 require read-only repair before board publication resumes.
 
+The board and priority publisher resolve a reviewed baseline plus trusted
+assessment/publication deltas from successful `main` runs. Every eligible issue
+needs current coverage under the same policy and runtime release metadata.
+Artifacts expire after 90 days; publishing labels does not renew assessment age.
+The manual board workflow defaults to preview and uploads no project data.
+
 ## Private top-10 project
 
 The planned project will have private visibility and a selected-issues view

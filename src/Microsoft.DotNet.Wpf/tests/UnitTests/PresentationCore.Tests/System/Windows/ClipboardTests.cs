@@ -229,10 +229,12 @@ public class ClipboardTests
     [WpfTheory]
     [InlineData(TextDataFormat.Text, TextDataFormat.UnicodeText)]
     [InlineData(TextDataFormat.UnicodeText, TextDataFormat.Text)]
-    public void GetText_AutoConvertibleFormat_DoesNotAutoConvert(
+    public void GetText_AutoConvertibleFormat_UsesClipboardSynthesis(
         TextDataFormat sourceFormat,
         TextDataFormat requestedFormat)
     {
+        // Distinguish managed format conversion from Windows' clipboard synthesis in both text directions.
+        // The requested format is absent without managed conversion until the source is published to OLE.
         const string text = "Hello, World!";
         string sourceDataFormat = DataFormats.ConvertToDataFormats(sourceFormat);
         string requestedDataFormat = DataFormats.ConvertToDataFormats(requestedFormat);
@@ -244,7 +246,8 @@ public class ClipboardTests
 
         Clipboard.SetDataObject(dataObject);
 
-        Clipboard.GetText(requestedFormat).Should().BeEmpty();
+        // OLE synthesis applies even though Clipboard.GetText disables managed format conversion.
+        Clipboard.GetText(requestedFormat).Should().Be(text);
     }
 
     [WpfFact]

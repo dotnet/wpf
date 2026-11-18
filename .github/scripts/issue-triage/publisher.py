@@ -10,6 +10,15 @@ from priority import enforce_limits, projected_counts
 from triage import GitHub, REPOSITORY, TriageError, label_plan, prepare, write_json
 
 
+def publication_controls(event: str, requested: bool, area: bool, priority: bool, area_pilot: bool = False) -> tuple[bool, bool, bool]:
+    if event == "workflow_dispatch":
+        return requested, area, priority
+    if event == "workflow_run":
+        enabled = area and area_pilot
+        return enabled, enabled, False
+    raise TriageError("Unsupported publication event")
+
+
 def publish_record(client: GitHub, record: dict, publish: bool, area_enabled: bool, priority_enabled: bool, approval_run: int = 0) -> dict:
     if type(record.get("assessed_at")) is not int or not int(time.time()) - RETENTION_SECONDS <= record["assessed_at"] <= int(time.time()):
         raise TriageError("Assessment is expired")
@@ -63,10 +72,12 @@ def main(argv: list[str] | None = None) -> int:
     record = artifact_json(client, args.assessment_run, "issue-triage.lock.yml", "wpf-assessment", "wpf-assessment.json")
     if record.get("run_id") != str(args.assessment_run):
         raise TriageError("Assessment run provenance mismatch")
-    plan = publish_record(
-        client, record, args.publish == "true", args.area_enabled == "true",
-        args.priority_enabled == "true", args.approval_run,
+    publish, area, priority = publication_controls(
+        os.environ.get("GITHUB_EVENT_NAME"), args.publish == "true",
+        args.area_enabled == "true", args.priority_enabled == "true",
+        os.environ.get("WPF_TRIAGE_AREA_PILOT_APPROVED") == "true",
     )
+    plan = publish_record(client, record, publish, area, priority, args.approval_run)
     write_json(args.destination, plan)
     return 0
 

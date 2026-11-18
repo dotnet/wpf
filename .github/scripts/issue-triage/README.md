@@ -97,6 +97,13 @@ requires a reviewed complete backlog assessment. Area publication and project
 publication each require an accepted narrow pilot before automatic activation.
 Each capability must remain independently disableable.
 
+Automatic analysis requires `WPF_TRIAGE_ANALYSIS_ENABLED=true`. Automatic area
+publication additionally requires both `WPF_TRIAGE_AREA_ENABLED=true` and
+`WPF_TRIAGE_AREA_PILOT_APPROVED=true`. Leave pilot acceptance unset until the
+manual label pilot is verified. Manual publication still requires an explicit
+publish request and the corresponding capability control. Priority publication
+requires calibration even during a manual pilot.
+
 ## Pilot and recovery
 
 Offline fixtures cover assessment, additive area publication, refreshed coverage,

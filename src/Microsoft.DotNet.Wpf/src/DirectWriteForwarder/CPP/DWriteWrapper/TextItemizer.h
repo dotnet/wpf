@@ -66,7 +66,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             TextItemizer(DWriteTextAnalysisNode<DWRITE_SCRIPT_ANALYSIS>*     pScriptAnalysisListHead,
                          DWriteTextAnalysisNode<IDWriteNumberSubstitution*>* pNumberSubstitutionListHead);
 
-            IList<Span^>^ Itemize(CultureInfo^ numberCulture, __in_ecount(textLength) CharAttributeType* pCharAttribute, UINT32 textLength);
+            IList<Span>^ Itemize(CultureInfo^ numberCulture, __in_ecount(textLength) CharAttributeType* pCharAttribute, UINT32 textLength);
 
             void SetIsDigit(
                 UINT32 textPosition,

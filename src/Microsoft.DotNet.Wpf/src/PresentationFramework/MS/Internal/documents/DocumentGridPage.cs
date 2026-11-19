@@ -315,10 +315,7 @@ namespace MS.Internal.Documents
             {
                 _loaded = true;
 
-                if (PageLoaded != null)
-                {
-                    PageLoaded(this, EventArgs.Empty);
-                }
+                PageLoaded?.Invoke(this, EventArgs.Empty);
             }
         }
 

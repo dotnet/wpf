@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -366,10 +366,7 @@ namespace MS.Internal.Documents
         /// <param name="e">Event arguments for the BringPositionIntoViewCompleted event.</param>
         protected virtual void OnBringPositionIntoViewCompleted(BringPositionIntoViewCompletedEventArgs e)
         {
-            if (this.BringPositionIntoViewCompleted != null)
-            {
-                this.BringPositionIntoViewCompleted(this, e);
-            }
+            this.BringPositionIntoViewCompleted?.Invoke(this, e);
         }
 
         /// <summary>
@@ -378,10 +375,7 @@ namespace MS.Internal.Documents
         /// <param name="e">Event arguments for the BringPointIntoViewCompleted event.</param>
         protected virtual void OnBringPointIntoViewCompleted(BringPointIntoViewCompletedEventArgs e)
         {
-            if (this.BringPointIntoViewCompleted != null)
-            {
-                this.BringPointIntoViewCompleted(this, e);
-            }
+            this.BringPointIntoViewCompleted?.Invoke(this, e);
         }
 
         /// <summary>
@@ -390,10 +384,7 @@ namespace MS.Internal.Documents
         /// <param name="e">Event arguments for the BringLineIntoViewCompleted event.</param>
         protected virtual void OnBringLineIntoViewCompleted(BringLineIntoViewCompletedEventArgs e)
         {
-            if (this.BringLineIntoViewCompleted != null)
-            {
-                this.BringLineIntoViewCompleted(this, e);
-            }
+            this.BringLineIntoViewCompleted?.Invoke(this, e);
         }
 
         /// <summary>
@@ -402,10 +393,7 @@ namespace MS.Internal.Documents
         /// <param name="e">Event arguments for the BringPageIntoViewCompleted event.</param>
         protected virtual void OnBringPageIntoViewCompleted(BringPageIntoViewCompletedEventArgs e)
         {
-            if (this.BringPageIntoViewCompleted != null)
-            {
-                this.BringPageIntoViewCompleted(this, e);
-            }
+            this.BringPageIntoViewCompleted?.Invoke(this, e);
         }
 
         /// <summary>
@@ -414,10 +402,7 @@ namespace MS.Internal.Documents
         /// <param name="e">Event arguments for the Updated event.</param>
         protected virtual void OnUpdated(EventArgs e)
         {
-            if (this.Updated != null)
-            {
-                this.Updated(this, e);
-            }
+            this.Updated?.Invoke(this, e);
         }
 
         /// <summary>

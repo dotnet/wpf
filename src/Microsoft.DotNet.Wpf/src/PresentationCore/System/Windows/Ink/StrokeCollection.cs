@@ -622,14 +622,8 @@ namespace System.Windows.Ink
             //they are the first in the delegate chain, they can be optimized
             //to not have to handle out of order events caused by 3rd party code
             //getting called first
-            if ( this.StrokesChangedInternal != null)
-            {
-                this.StrokesChangedInternal(this, e);
-            }
-            if ( this.StrokesChanged != null )
-            {
-                this.StrokesChanged(this, e);
-            }
+            this.StrokesChangedInternal?.Invoke(this, e);
+            this.StrokesChanged?.Invoke(this, e);
             if ( _collectionChanged != null )
             {
                 //raise CollectionChanged.  We support the following 
@@ -674,10 +668,7 @@ namespace System.Windows.Ink
                 throw new ArgumentNullException(nameof(e), SR.EventArgIsNull);
             }
 
-            if ( this.PropertyDataChanged != null )
-            {
-                this.PropertyDataChanged(this, e);
-            }
+            this.PropertyDataChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -688,10 +679,7 @@ namespace System.Windows.Ink
         /// instance, but every other INotifyPropertyChanged implementation follows this pattern.</remarks>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if ( _propertyChanged != null )
-            {
-                _propertyChanged(this, e);
-            }
+            _propertyChanged?.Invoke(this, e);
         }
 
 

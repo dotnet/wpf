@@ -872,8 +872,7 @@ namespace MS.Internal.IO.Packaging
                 }
             }
         }
-
-        int IComparable<MemoryStreamBlock>.CompareTo(MemoryStreamBlock other)
+        private int Compare(MemoryStreamBlock other)
         {
             if (other == null)
                 return 1;
@@ -895,7 +894,71 @@ namespace MS.Internal.IO.Packaging
                     return -1;
             }
         }
+        int IComparable<MemoryStreamBlock>.CompareTo(MemoryStreamBlock other)
+        {
+            return Compare(other);
+        }
+        public bool Equals(MemoryStreamBlock other)
+        {
+            if (other == null)
+                return false;
 
+            if (_offset == other.Offset)
+                return true;
+            if (_offset >= other.Offset && _offset < other.EndOffset)
+                return true;
+            if (other.Offset >= _offset && other.Offset < EndOffset)
+                return true;
+
+            return false;
+        }
+        public override bool Equals(object obj)
+        {
+            return obj is MemoryStreamBlock other && Equals(other);
+        }
+        public override int GetHashCode()
+        {
+            return _offset.GetHashCode();
+        }
+        public static bool operator ==(MemoryStreamBlock left, MemoryStreamBlock right)
+        {
+            if (left is null)
+                return right is null;
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(MemoryStreamBlock left, MemoryStreamBlock right)
+        {
+            return !(left == right);
+        }
+
+        public static bool operator <(MemoryStreamBlock left, MemoryStreamBlock right)
+        {
+            if (left is null)
+                return right is not null;
+            return left.Compare(right) < 0;
+        }
+
+        public static bool operator >(MemoryStreamBlock left, MemoryStreamBlock right)
+        {
+            if (left is null)
+                return false;
+            return left.Compare(right) > 0;
+        }
+
+        public static bool operator <=(MemoryStreamBlock left, MemoryStreamBlock right)
+        {
+            if (left is null)
+                return true;
+            return left.Compare(right) <= 0;
+        }
+
+        public static bool operator >=(MemoryStreamBlock left, MemoryStreamBlock right)
+        {
+            if (left is null)
+                return right is null;
+            return left.Compare(right) >= 0;
+        }
         private MemoryStream _stream;
         private long _offset;
     }

@@ -22,10 +22,6 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <Grid.Effect>
-                                <DropShadowEffect Color="White" BlurRadius="15.0" ShadowDepth="0"/>
-                            </Grid.Effect>
-
                             <primitives:RibbonQuickAccessToolBarPanel IsItemsHost="true" Name="PART_MainPanel" Grid.Column="0"/>
                             
                             <ContentPresenter Name="MainCustomizeMenuHost"

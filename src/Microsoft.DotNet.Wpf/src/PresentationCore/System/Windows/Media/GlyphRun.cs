@@ -13,6 +13,7 @@
 //
 //
 
+using System.Buffers;
 using System.Collections;
 using System.ComponentModel;
 using System.Windows.Media.Converters;
@@ -1598,6 +1599,232 @@ namespace System.Windows.Media
         }
 
         /// <summary>
+        /// Attempts to decompose this glyph run into colored layers using the font's
+        /// COLR/CPAL tables via IDWriteFactory2::TranslateColorGlyphRun.
+        ///
+        /// Returns a frozen <see cref="Drawing"/> (specifically a <see cref="DrawingGroup"/>)
+        /// containing one <see cref="GeometryDrawing"/>
+        /// per COLR layer (painted back to front), or null if:
+        ///   - The font is not a color font (no COLR table)
+        ///   - The system does not support IDWriteFactory2 (pre-Windows 8.1)
+        ///   - The specific glyphs in this run have no color layers
+        ///
+        /// The fallback to geometry rendering (rather than bitmap glyph rasterization) means
+        /// color glyphs do not benefit from ClearType, which is acceptable because emoji
+        /// are typically rendered at sizes where subpixel hinting provides no visual benefit.
+        /// </summary>
+        /// <param name="foregroundBrush">The brush to use for layers with paletteIndex 0xFFFF
+        /// (the "use foreground color" sentinel in the COLR spec).</param>
+        /// <returns>A frozen Drawing, or null if the glyphs have no color layers.</returns>
+        internal Drawing TryBuildColorGlyphDrawing(Brush foregroundBrush)
+        {
+            CheckInitialized();
+
+            // Return cached result if available. GlyphRun is immutable after init,
+            // so only the foreground brush can vary between calls. _cachedColorForeground
+            // being non-null means we've computed at least once; _cachedColorDrawing may
+            // be null (for non-color fonts or glyphs with no color layers).
+            if (_cachedColorForeground != null && _cachedColorForeground == foregroundBrush)
+                return _cachedColorDrawing;
+
+            if (_glyphTypeface == null || !_glyphTypeface.IsColorFont)
+            {
+                _cachedColorForeground = foregroundBrush;
+                _cachedColorDrawing = null;
+                return null;
+            }
+
+            var factory = MS.Internal.FontCache.DWriteFactory.Instance;
+            if (!factory.SupportsColorGlyphs)
+            {
+                _cachedColorForeground = foregroundBrush;
+                _cachedColorDrawing = null;
+                return null;
+            }
+
+            // Get the DWrite FontFace for TranslateColorGlyphRun
+            MS.Internal.Text.TextInterface.FontFace fontFace = _glyphTypeface.FontDWrite.GetFontFace();
+            try
+            {
+                int glyphCount = GlyphCount;
+
+                // Rent temporary arrays from the pool to avoid per-call heap allocations.
+                // These are only needed for the duration of the TranslateColorGlyphRun call.
+                ushort[] glyphIndices = ArrayPool<ushort>.Shared.Rent(glyphCount);
+                float[] glyphAdvances = ArrayPool<float>.Shared.Rent(glyphCount);
+                float[] glyphOffsets = null;
+
+                try
+                {
+                    for (int i = 0; i < glyphCount; i++)
+                        glyphIndices[i] = _glyphIndices[i];
+
+                    for (int i = 0; i < glyphCount; i++)
+                        glyphAdvances[i] = (float)_advanceWidths[i];
+
+                    if (_glyphOffsets != null && _glyphOffsets.Count == glyphCount)
+                    {
+                        glyphOffsets = ArrayPool<float>.Shared.Rent(glyphCount * 2);
+                        for (int i = 0; i < glyphCount; i++)
+                        {
+                            Point offset = _glyphOffsets[i];
+                            glyphOffsets[i * 2] = (float)offset.X;
+                            glyphOffsets[i * 2 + 1] = (float)offset.Y;
+                        }
+                    }
+
+                    var colorLayers = factory.TranslateColorGlyphRun(
+                        fontFace,
+                        (float)_renderingEmSize,
+                        glyphIndices,
+                        glyphAdvances,
+                        glyphOffsets,
+                        (uint)glyphCount,
+                        IsSideways,
+                        (uint)_bidiLevel,
+                        (float)_baselineOrigin.X,
+                        (float)_baselineOrigin.Y,
+                        _textFormattingMode == TextFormattingMode.Display ? 1u : 0u  // GDI_CLASSIC = 1, NATURAL = 0
+                        );
+
+                    if (colorLayers == null || colorLayers.Count == 0)
+                    {
+                        _cachedColorForeground = foregroundBrush;
+                        _cachedColorDrawing = null;
+                        return null;
+                    }
+
+                    // Build a DrawingGroup with one GeometryDrawing per color layer
+                    DrawingGroup drawingGroup = new DrawingGroup();
+                    foreach (var layer in colorLayers)
+                    {
+                        Brush layerBrush;
+                        if (layer.UseForegroundColor)
+                        {
+                            layerBrush = foregroundBrush;
+                        }
+                        else
+                        {
+                            // DWRITE_COLOR_F values from the CPAL table are sRGB gamma-encoded.
+                            // Use FromArgb (which expects sRGB) rather than FromScRgb (which
+                            // expects linear light) to avoid washed-out colors.
+                            layerBrush = new SolidColorBrush(
+                                Color.FromArgb(
+                                    (byte)(layer.ColorA * 255f + 0.5f),
+                                    (byte)(layer.ColorR * 255f + 0.5f),
+                                    (byte)(layer.ColorG * 255f + 0.5f),
+                                    (byte)(layer.ColorB * 255f + 0.5f)));
+                            layerBrush.Freeze();
+                        }
+
+                        // Build geometry for this layer's glyphs
+                        Geometry layerGeometry = BuildLayerGeometry(
+                            layer.GlyphIndices,
+                            layer.GlyphAdvances,
+                            layer.GlyphOffsets,
+                            layer.BaselineOriginX,
+                            layer.BaselineOriginY);
+
+                        if (layerGeometry != null && !layerGeometry.IsEmpty())
+                        {
+                            GeometryDrawing drawing = new GeometryDrawing(layerBrush, null, layerGeometry);
+                            drawingGroup.Children.Add(drawing);
+                        }
+                    }
+
+                    if (drawingGroup.Children.Count == 0)
+                    {
+                        _cachedColorDrawing = null;
+                        _cachedColorForeground = foregroundBrush;
+                        return null;
+                    }
+
+                    // Freeze when possible for thread safety and perf; cache either way
+                    // since the result is the same for the same foreground brush instance.
+                    if (drawingGroup.CanFreeze)
+                        drawingGroup.Freeze();
+
+                    _cachedColorDrawing = drawingGroup;
+                    _cachedColorForeground = foregroundBrush;
+                    return drawingGroup;
+                }
+                finally
+                {
+                    ArrayPool<ushort>.Shared.Return(glyphIndices);
+                    ArrayPool<float>.Shared.Return(glyphAdvances);
+                    if (glyphOffsets != null)
+                        ArrayPool<float>.Shared.Return(glyphOffsets);
+                }
+            }
+            finally
+            {
+                fontFace.Release();
+            }
+        }
+
+        /// <summary>
+        /// Builds geometry for a single COLR color layer's glyphs.
+        ///
+        /// DirectWrite's TranslateColorGlyphRun returns each layer with a pre-computed
+        /// baselineOrigin that already accounts for the glyph's position within the run
+        /// (advances, offsets, bidi). Within a single layer, glyphs are positioned using
+        /// their own advances relative to that layer's baseline origin — this mirrors the
+        /// layout logic in <see cref="BuildGeometry"/>.
+        /// </summary>
+        private Geometry BuildLayerGeometry(
+            ushort[] layerGlyphIndices,
+            float[] layerGlyphAdvances,
+            float[] layerGlyphOffsets,
+            float baselineOriginX,
+            float baselineOriginY)
+        {
+            GeometryGroup layerGeometry = null;
+            double accumulatedWidth = 0;
+
+            for (int i = 0; i < layerGlyphIndices.Length; i++)
+            {
+                ushort glyphIndex = layerGlyphIndices[i];
+
+                double offsetX = 0;
+                double offsetY = 0;
+                if (layerGlyphOffsets != null && i * 2 + 1 < layerGlyphOffsets.Length)
+                {
+                    offsetX = layerGlyphOffsets[i * 2];
+                    offsetY = layerGlyphOffsets[i * 2 + 1];
+                }
+
+                double originX;
+                if (IsLeftToRight)
+                {
+                    originX = accumulatedWidth + offsetX;
+                }
+                else
+                {
+                    double nominalAdvance = layerGlyphAdvances[i];
+                    originX = -accumulatedWidth - (nominalAdvance + offsetX);
+                }
+                accumulatedWidth += layerGlyphAdvances[i];
+
+                double originY = -offsetY;
+
+                Geometry glyphGeometry = _glyphTypeface.ComputeGlyphOutline(glyphIndex, IsSideways, _renderingEmSize);
+                if (glyphGeometry.IsEmpty())
+                    continue;
+
+                glyphGeometry.Transform = new TranslateTransform(
+                    originX + baselineOriginX,
+                    originY + baselineOriginY);
+
+                layerGeometry ??= new GeometryGroup() { FillRule = FillRule.Nonzero };
+                layerGeometry.Children.Add(glyphGeometry.GetOutlinedPathGeometry(RelativeFlatteningTolerance, ToleranceType.Relative));
+            }
+
+            if (layerGeometry == null || layerGeometry.IsEmpty())
+                return Geometry.Empty;
+            return layerGeometry;
+        }
+
+        /// <summary>
         /// Computes the alignment box for the glyph run.
         /// The alignment box is relative to origin.
         /// </summary>
@@ -2464,7 +2691,9 @@ namespace System.Windows.Media
         private XmlLanguage         _language;
         private string              _deviceFontName;
         private object              _inkBoundingBox;    // Used when CacheInkBounds is on
-        private TextFormattingMode      _textFormattingMode;
+        private Drawing             _cachedColorDrawing;   // Cached result of TryBuildColorGlyphDrawing
+        private Brush               _cachedColorForeground; // Foreground brush used for _cachedColorDrawing
+        private TextFormattingMode  _textFormattingMode;
         private float               _pixelsPerDip = MS.Internal.FontCache.Util.PixelsPerDip;
 
         // the sine of 20 degrees

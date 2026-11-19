@@ -44,8 +44,6 @@ namespace System.Windows
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -53,8 +51,6 @@ namespace System.Windows
         //  Public Properties
         //
         //------------------------------------------------------
-
-
 
 
         #region Public Properties
@@ -158,8 +154,6 @@ namespace System.Windows
             return new TextDecoration();
         }
 
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -171,13 +165,6 @@ namespace System.Windows
         #region Internal Methods
 
 
-
-
-
-
-
-
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -187,9 +174,6 @@ namespace System.Windows
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -233,17 +217,12 @@ namespace System.Windows
 
         #region Internal Fields
 
-
-
-
-
         internal const double c_PenOffset = 0.0;
         internal const TextDecorationUnit c_PenOffsetUnit = TextDecorationUnit.FontRecommended;
         internal const TextDecorationUnit c_PenThicknessUnit = TextDecorationUnit.FontRecommended;
         internal const TextDecorationLocation c_Location = TextDecorationLocation.Underline;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -310,7 +289,6 @@ namespace System.Windows
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

@@ -25,7 +25,6 @@ namespace System.Windows.Media.Media3D
     /// <summary>
     /// A collection of GeneralTransform3D objects.
     /// </summary>
-
     public sealed partial class GeneralTransform3DCollection : Animatable, IList, IList<GeneralTransform3D>
     {
         //------------------------------------------------------
@@ -55,8 +54,6 @@ namespace System.Windows.Media.Media3D
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -64,7 +61,6 @@ namespace System.Windows.Media.Media3D
         //  Public Properties
         //
         //------------------------------------------------------
-
 
         #region IList<T>
 
@@ -132,8 +128,6 @@ namespace System.Windows.Media.Media3D
 
             _collection.Insert(index, value);
 
-
-
             ++_version;
             WritePostscript();
         }
@@ -163,9 +157,6 @@ namespace System.Windows.Media.Media3D
 
                 _collection.RemoveAt(index);
 
-
-
-
                 ++_version;
                 WritePostscript();
 
@@ -190,7 +181,6 @@ namespace System.Windows.Media.Media3D
             WritePostscript();
         }
 
-
         /// <summary>
         ///     Removes the element at the specified index without firing
         ///     the public Changed event.
@@ -207,14 +197,10 @@ namespace System.Windows.Media.Media3D
 
             _collection.RemoveAt(index);
 
-
-
-
             ++_version;
 
             // No WritePostScript to avoid firing the Changed event.
         }
-
 
         /// <summary>
         ///     Indexer for the collection
@@ -236,17 +222,14 @@ namespace System.Windows.Media.Media3D
 
                 WritePreamble();
 
-                if (!Object.ReferenceEquals(_collection[ index ], value))
+                if (!Object.ReferenceEquals(_collection[index], value))
                 {
+                    GeneralTransform3D oldValue = _collection[index];
 
-                    GeneralTransform3D oldValue = _collection[ index ];
                     OnFreezablePropertyChanged(oldValue, value);
 
-                    _collection[ index ] = value;
-
-
+                    _collection[index] = value;
                 }
-
 
                 ++_version;
                 WritePostscript();
@@ -529,12 +512,12 @@ namespace System.Windows.Media.Media3D
             {
                 throw new System.ArgumentException(SR.Collection_NoNull);
             }
+
             WritePreamble();
             GeneralTransform3D newValue = value;
+
             OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
             index = _collection.Add(newValue);
-
-
 
             ++_version;
 
@@ -543,15 +526,12 @@ namespace System.Windows.Media.Media3D
             return index;
         }
 
-
-
         #endregion Private Helpers
 
         private static GeneralTransform3DCollection s_empty;
 
 
         #region Public Properties
-
 
 
         #endregion Public Properties
@@ -588,11 +568,10 @@ namespace System.Windows.Media.Media3D
             for (int i = 0; i < count; i++)
             {
                 GeneralTransform3D newValue = (GeneralTransform3D)sourceGeneralTransform3DCollection._collection[i].Clone();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
@@ -610,11 +589,10 @@ namespace System.Windows.Media.Media3D
             for (int i = 0; i < count; i++)
             {
                 GeneralTransform3D newValue = (GeneralTransform3D)sourceGeneralTransform3DCollection._collection[i].CloneCurrentValue();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
@@ -632,11 +610,10 @@ namespace System.Windows.Media.Media3D
             for (int i = 0; i < count; i++)
             {
                 GeneralTransform3D newValue = (GeneralTransform3D)sourceGeneralTransform3DCollection._collection[i].GetAsFrozen();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
@@ -654,11 +631,10 @@ namespace System.Windows.Media.Media3D
             for (int i = 0; i < count; i++)
             {
                 GeneralTransform3D newValue = (GeneralTransform3D)sourceGeneralTransform3DCollection._collection[i].GetCurrentValueAsFrozen();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-
             }
-
         }
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.FreezeCore">Freezable.FreezeCore</see>.
@@ -687,13 +663,6 @@ namespace System.Windows.Media.Media3D
         #region Internal Methods
 
 
-
-
-
-
-
-
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -703,9 +672,6 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -719,7 +685,6 @@ namespace System.Windows.Media.Media3D
         #region Dependency Properties
 
 
-
         #endregion Dependency Properties
 
         //------------------------------------------------------
@@ -730,12 +695,8 @@ namespace System.Windows.Media.Media3D
 
         #region Internal Fields
 
-
-
-
         internal FrugalStructList<GeneralTransform3D> _collection;
         internal uint _version = 0;
-
 
         #endregion Internal Fields
 
@@ -873,7 +834,6 @@ namespace System.Windows.Media.Media3D
         //
         //------------------------------------------------------
 
-
         /// <summary>
         /// Initializes a new instance that is empty.
         /// </summary>
@@ -929,10 +889,11 @@ namespace System.Windows.Media.Media3D
                         {
                             throw new System.ArgumentException(SR.Collection_NoNull);
                         }
+
                         GeneralTransform3D newValue = item;
+
                         OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                         _collection.Add(newValue);
-
                     }
 
                     needsItemValidation = false;
@@ -947,11 +908,10 @@ namespace System.Windows.Media.Media3D
                     {
                         throw new System.ArgumentException(SR.Collection_NoNull);
                     }
-                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
 
+                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
                 }
             }
-
 
             WritePostscript();
         }

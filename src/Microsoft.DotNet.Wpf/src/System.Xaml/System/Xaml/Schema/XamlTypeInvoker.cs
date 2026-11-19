@@ -18,10 +18,6 @@ namespace System.Xaml.Schema
         internal MethodInfo EnumeratorMethod { get; set; }
         private XamlType _xamlType;
 
-        private Action<object> _constructorDelegate;
-
-        private ThreeValuedBool _isPublic;
-
         protected XamlTypeInvoker()
         {
         }
@@ -125,14 +121,6 @@ namespace System.Xaml.Schema
         public virtual object CreateInstance(object[] arguments)
         {
             ThrowIfUnknown();
-            if (!_xamlType.UnderlyingType.IsValueType && (arguments is null || arguments.Length == 0))
-            {
-                object result = DefaultCtorXamlActivator.CreateInstance(this);
-                if (result is not null)
-                {
-                    return result;
-                }
-            }
 
             return Activator.CreateInstance(_xamlType.UnderlyingType, arguments);
         }
@@ -225,20 +213,6 @@ namespace System.Xaml.Schema
             return (IEnumerator)getEnumMethod.Invoke(instance, Array.Empty<object>());
         }
 
-        private bool IsPublic
-        {
-            get
-            {
-                if (_isPublic == ThreeValuedBool.NotSet)
-                {
-                    Type type = _xamlType.UnderlyingType.UnderlyingSystemType;
-                    _isPublic = type.IsVisible ? ThreeValuedBool.True : ThreeValuedBool.False;
-                }
-
-                return _isPublic == ThreeValuedBool.True;
-            }
-        }
-
         private bool IsUnknown
         {
             get { return _xamlType is null || _xamlType.UnderlyingType is null; }
@@ -249,87 +223,6 @@ namespace System.Xaml.Schema
             if (IsUnknown)
             {
                 throw new NotSupportedException(SR.NotSupportedOnUnknownType);
-            }
-        }
-
-        private static class DefaultCtorXamlActivator
-        {
-            private static ThreeValuedBool s_securityFailureWithCtorDelegate;
-            private static ConstructorInfo s_actionCtor =
-                typeof(Action<object>).GetConstructor(new Type[] { typeof(object), typeof(IntPtr) });
-
-            public static object CreateInstance(XamlTypeInvoker type)
-            {
-                if (!EnsureConstructorDelegate(type))
-                {
-                    return null;
-                }
-
-                object inst = CallCtorDelegate(type);
-                return inst;
-            }
-#pragma warning disable SYSLIB0050
-            private static object CallCtorDelegate(XamlTypeInvoker type)
-            {
-                object inst = FormatterServices.GetUninitializedObject(type._xamlType.UnderlyingType);
-                InvokeDelegate(type._constructorDelegate, inst);
-                return inst;
-            }
-#pragma warning restore SYSLIB0050
-            private static void InvokeDelegate(Action<object> action, object argument)
-            {
-                action.Invoke(argument);
-            }
-
-            // returns true if a delegate is available, false if not
-            private static bool EnsureConstructorDelegate(XamlTypeInvoker type)
-            {
-                if (type._constructorDelegate is not null)
-                {
-                    return true;
-                }
-
-                if (!type.IsPublic)
-                {
-                    return false;
-                }
-
-                if (s_securityFailureWithCtorDelegate == ThreeValuedBool.NotSet)
-                {
-                    s_securityFailureWithCtorDelegate =
-                        ThreeValuedBool.False;
-                }
-
-                if (s_securityFailureWithCtorDelegate == ThreeValuedBool.True)
-                {
-                    return false;
-                }
-
-                Type underlyingType = type._xamlType.UnderlyingType.UnderlyingSystemType;
-                // Look up public ctors only, for equivalence with Activator.CreateInstance
-                ConstructorInfo tConstInfo = underlyingType.GetConstructor(Type.EmptyTypes);
-                if (tConstInfo is null)
-                {
-                    // Throwing MissingMethodException for equivalence with Activator.CreateInstance
-                    throw new MissingMethodException(SR.Format(SR.NoDefaultConstructor, underlyingType.FullName));
-                }
-
-                if ((tConstInfo.IsSecurityCritical && !tConstInfo.IsSecuritySafeCritical) ||
-                    (tConstInfo.Attributes & MethodAttributes.HasSecurity) == MethodAttributes.HasSecurity ||
-                    (underlyingType.Attributes & TypeAttributes.HasSecurity) == TypeAttributes.HasSecurity)
-                {
-                    // We don't want to bypass security checks for a critical or demanding ctor,
-                    // so just treat it as if it were non-public
-                    type._isPublic = ThreeValuedBool.False;
-                    return false;
-                }
-
-                IntPtr constPtr = tConstInfo.MethodHandle.GetFunctionPointer();
-                // This requires Reflection Permission
-                Action<object> ctorDelegate = ctorDelegate =
-                    (Action<object>)s_actionCtor.Invoke(new object[] { null, constPtr });
-                type._constructorDelegate = ctorDelegate;
-                return true;
             }
         }
     }

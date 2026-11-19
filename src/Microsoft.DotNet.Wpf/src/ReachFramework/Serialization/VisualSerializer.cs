@@ -1307,7 +1307,7 @@ namespace System.Windows.Xps.Serialization
                                 rslt.Append('A');
                                 AppendPoint(rslt, new Point(s.Width * map.M11, s.Height * map.M22), Matrix.Identity);
                                 rslt.Append(' ');
-                                rslt.Append(a.RotationAngle);
+                                rslt.Append(a.RotationAngle.ToString(CultureInfo.InvariantCulture));
                                 rslt.Append(' ');
                                 rslt.Append(Ord(a.IsLargeArc));
                                 rslt.Append(' ');

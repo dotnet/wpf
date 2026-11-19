@@ -624,7 +624,7 @@
       </trans-unit>
       <trans-unit id="MarkupExtensionDepthExceeded">
         <source>Markup extension nesting depth exceeded the maximum allowed ({0}). Deeply nested markup extensions are not supported.</source>
-        <target state="new">Markup extension nesting depth exceeded the maximum allowed ({0}). Deeply nested markup extensions are not supported.</target>
+        <target state="translated">İşaretleme uzantısı iç içe yerleştirme derinliği izin verilen maksimum değeri ({0}) aştı. Derinlemesine iç içe yerleştirilmiş işaretleme uzantıları desteklenmez.</target>
         <note />
       </trans-unit>
       <trans-unit id="MarkupExtensionNoContext">
@@ -754,7 +754,7 @@
       </trans-unit>
       <trans-unit id="NameNotFound">
         <source>Name resolution failure. '{0}' was not found.</source>
-        <target state="translated">Ad çözme hatası. '{0}' bulunamadı.</target>
+        <target state="translated">Ad çözümlemesi hatası. '{0}' bulunamadı.</target>
         <note />
       </trans-unit>
       <trans-unit id="NameScopeDuplicateNamesNotAllowed">

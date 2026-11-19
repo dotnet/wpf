@@ -1837,6 +1837,22 @@ namespace System.Windows.Input.StylusWisp
             }
         }
 
+        /// <summary>
+        /// Drops the mouse button press promoted for this device without promoting a mouse up.
+        /// Used when the up for this device can no longer be delivered as a mouse up because its
+        /// window was disabled (e.g. by a modal dialog).  Disabling the window sends it WM_CANCELMODE,
+        /// which releases mouse capture, so this mirrors a real mouse whose button up is lost to the
+        /// disabled window.
+        /// </summary>
+        internal void AbandonPromotedMouseButton()
+        {
+            if (_promotedMouseState == MouseButtonState.Pressed)
+            {
+                _promotedMouseState = MouseButtonState.Released;
+                _stylusLogic.UpdateMouseButtonState(_fLeftButtonDownTrigger ? RawMouseActions.Button1Release : RawMouseActions.Button2Release);
+            }
+        }
+
         /////////////////////////////////////////////////////////////////////
 
 
@@ -1901,6 +1917,14 @@ namespace System.Windows.Input.StylusWisp
 
                 return _touchDevice;
             }
+        }
+
+        /// <summary>
+        /// The touch device for this stylus device if it has been created and is active; otherwise null.
+        /// </summary>
+        internal WispStylusTouchDevice ActiveTouchDevice
+        {
+            get { return (_touchDevice?.IsActive ?? false) ? _touchDevice : null; }
         }
 
         internal void UpdateTouchActiveSource()

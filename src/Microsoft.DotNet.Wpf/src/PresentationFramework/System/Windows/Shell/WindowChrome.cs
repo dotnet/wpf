@@ -261,7 +261,7 @@ namespace Microsoft.Windows.Shell
                 (d, e) => ((WindowChrome)d)._OnPropertyChangedThatRequiresRepaint()),
             _NonClientFrameEdgesAreValid);
 
-        private static readonly NonClientFrameEdges NonClientFrameEdges_All = NonClientFrameEdges.Left | NonClientFrameEdges.Top | NonClientFrameEdges.Right | NonClientFrameEdges.Bottom;
+        private const NonClientFrameEdges NonClientFrameEdges_All = NonClientFrameEdges.Left | NonClientFrameEdges.Top | NonClientFrameEdges.Right | NonClientFrameEdges.Bottom;
 
         private static bool _NonClientFrameEdgesAreValid(object value)
         {

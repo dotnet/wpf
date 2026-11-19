@@ -165,18 +165,19 @@ static MILCOMMAND MarshalCommands[] =
     /* 0x7e */ { "MILCMD_SOLIDCOLORBRUSH", "milcore!MILCMD_SOLIDCOLORBRUSH", false, false, 0, 0, 0 }, // MilCmdSolidColorBrush
     /* 0x7f */ { "MILCMD_LINEARGRADIENTBRUSH", "milcore!MILCMD_LINEARGRADIENTBRUSH", true, false, 0, 0, 0 }, // MilCmdLinearGradientBrush
     /* 0x80 */ { "MILCMD_RADIALGRADIENTBRUSH", "milcore!MILCMD_RADIALGRADIENTBRUSH", true, false, 0, 0, 0 }, // MilCmdRadialGradientBrush
-    /* 0x81 */ { "MILCMD_IMAGEBRUSH", "milcore!MILCMD_IMAGEBRUSH", false, false, 0, 0, 0 }, // MilCmdImageBrush
-    /* 0x82 */ { "MILCMD_DRAWINGBRUSH", "milcore!MILCMD_DRAWINGBRUSH", false, false, 0, 0, 0 }, // MilCmdDrawingBrush
-    /* 0x83 */ { "MILCMD_VISUALBRUSH", "milcore!MILCMD_VISUALBRUSH", false, false, 0, 0, 0 }, // MilCmdVisualBrush
-    /* 0x84 */ { "MILCMD_BITMAPCACHEBRUSH", "milcore!MILCMD_BITMAPCACHEBRUSH", false, false, 0, 0, 0 }, // MilCmdBitmapCacheBrush
-    /* 0x85 */ { "MILCMD_DASHSTYLE", "milcore!MILCMD_DASHSTYLE", true, false, 0, 0, 0 }, // MilCmdDashStyle
-    /* 0x86 */ { "MILCMD_PEN", "milcore!MILCMD_PEN", false, false, 0, 0, 0 }, // MilCmdPen
-    /* 0x87 */ { "MILCMD_GEOMETRYDRAWING", "milcore!MILCMD_GEOMETRYDRAWING", false, false, 0, 0, 0 }, // MilCmdGeometryDrawing
-    /* 0x88 */ { "MILCMD_GLYPHRUNDRAWING", "milcore!MILCMD_GLYPHRUNDRAWING", false, false, 0, 0, 0 }, // MilCmdGlyphRunDrawing
-    /* 0x89 */ { "MILCMD_IMAGEDRAWING", "milcore!MILCMD_IMAGEDRAWING", false, false, 0, 0, 0 }, // MilCmdImageDrawing
-    /* 0x8a */ { "MILCMD_VIDEODRAWING", "milcore!MILCMD_VIDEODRAWING", false, false, 0, 0, 0 }, // MilCmdVideoDrawing
-    /* 0x8b */ { "MILCMD_DRAWINGGROUP", "milcore!MILCMD_DRAWINGGROUP", true, false, 0, 0, 0 }, // MilCmdDrawingGroup
-    /* 0x8c */ { "MILCMD_GUIDELINESET", "milcore!MILCMD_GUIDELINESET", true, false, 0, 0, 0 }, // MilCmdGuidelineSet
-    /* 0x8d */ { "MILCMD_BITMAPCACHE", "milcore!MILCMD_BITMAPCACHE", false, false, 0, 0, 0 }, // MilCmdBitmapCache
+    /* 0x81 */ { "MILCMD_SWEEPGRADIENTBRUSH", "milcore!MILCMD_SWEEPGRADIENTBRUSH", true, false, 0, 0, 0 }, // MilCmdSweepGradientBrush
+    /* 0x82 */ { "MILCMD_IMAGEBRUSH", "milcore!MILCMD_IMAGEBRUSH", false, false, 0, 0, 0 }, // MilCmdImageBrush
+    /* 0x83 */ { "MILCMD_DRAWINGBRUSH", "milcore!MILCMD_DRAWINGBRUSH", false, false, 0, 0, 0 }, // MilCmdDrawingBrush
+    /* 0x84 */ { "MILCMD_VISUALBRUSH", "milcore!MILCMD_VISUALBRUSH", false, false, 0, 0, 0 }, // MilCmdVisualBrush
+    /* 0x85 */ { "MILCMD_BITMAPCACHEBRUSH", "milcore!MILCMD_BITMAPCACHEBRUSH", false, false, 0, 0, 0 }, // MilCmdBitmapCacheBrush
+    /* 0x86 */ { "MILCMD_DASHSTYLE", "milcore!MILCMD_DASHSTYLE", true, false, 0, 0, 0 }, // MilCmdDashStyle
+    /* 0x87 */ { "MILCMD_PEN", "milcore!MILCMD_PEN", false, false, 0, 0, 0 }, // MilCmdPen
+    /* 0x88 */ { "MILCMD_GEOMETRYDRAWING", "milcore!MILCMD_GEOMETRYDRAWING", false, false, 0, 0, 0 }, // MilCmdGeometryDrawing
+    /* 0x89 */ { "MILCMD_GLYPHRUNDRAWING", "milcore!MILCMD_GLYPHRUNDRAWING", false, false, 0, 0, 0 }, // MilCmdGlyphRunDrawing
+    /* 0x8a */ { "MILCMD_IMAGEDRAWING", "milcore!MILCMD_IMAGEDRAWING", false, false, 0, 0, 0 }, // MilCmdImageDrawing
+    /* 0x8b */ { "MILCMD_VIDEODRAWING", "milcore!MILCMD_VIDEODRAWING", false, false, 0, 0, 0 }, // MilCmdVideoDrawing
+    /* 0x8c */ { "MILCMD_DRAWINGGROUP", "milcore!MILCMD_DRAWINGGROUP", true, false, 0, 0, 0 }, // MilCmdDrawingGroup
+    /* 0x8d */ { "MILCMD_GUIDELINESET", "milcore!MILCMD_GUIDELINESET", true, false, 0, 0, 0 }, // MilCmdGuidelineSet
+    /* 0x8e */ { "MILCMD_BITMAPCACHE", "milcore!MILCMD_BITMAPCACHE", false, false, 0, 0, 0 }, // MilCmdBitmapCache
 };
 

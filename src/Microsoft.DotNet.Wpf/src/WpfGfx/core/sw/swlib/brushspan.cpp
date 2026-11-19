@@ -27,6 +27,7 @@ MtDefine(CLinearGradientBrushSpan, MILRender, "CLinearGradientBrushSpan");
 MtDefine(CLinearGradientBrushSpan_MMX, MILRender, "CLinearGradientBrushSpan_MMX");
 MtDefine(CRadialGradientBrushSpan, MILRender, "CRadialGradientBrushSpan");
 MtDefine(CFocalGradientBrushSpan, MILRender, "CFocalGradientBrushSpan");
+MtDefine(CSweepGradientBrushSpan, MILRender, "CSweepGradientBrushSpan");
 MtDefine(CShaderEffectBrushSpan, MILRender, "CShaderEffectBrushSpan");
 
 // # of fractional bits that we iterate across the texture with:
@@ -1616,6 +1617,248 @@ CFocalGradientBrushSpan::GenerateColors(
     } while (--nCount != 0);
 }
 
+//+-----------------------------------------------------------------------------
+//
+//  CSweepGradientBrushSpan implementation
+//
+//------------------------------------------------------------------------------
+
+CSweepGradientBrushSpan::CSweepGradientBrushSpan()
+    : CGradientBrushSpan()
+{
+}
+
+CSweepGradientBrushSpan::~CSweepGradientBrushSpan()
+{
+}
+
+HRESULT
+CSweepGradientBrushSpan::Initialize(
+    __in_ecount(1) const CMatrix<CoordinateSpace::BaseSamplingHPC,CoordinateSpace::DeviceHPC> *pmatWorldHPCToDeviceHPC,
+    __in_ecount(3) const MilPoint2F *pGradientPoints,
+    __in FLOAT startAngleDegrees,
+    __in FLOAT endAngleDegrees,
+    __in_ecount(uCount) const MilColorF *pColors,
+    __in_ecount(uCount) const FLOAT *pPositions,
+    __in UINT uCount,
+    __in MilGradientWrapMode::Enum wrapMode,
+    __in MilColorInterpolationMode::Enum colorInterpolationMode
+    )
+{
+    HRESULT hr = S_OK;
+
+    // pGraidentPoints are exepcted to be:
+    // [0] center
+    // [1] +X direction in brush-local space
+    // [2] +Y direction in brush-local space
+
+    CMILMatrix matDeviceIPCtoBrushLocalHPC;
+
+    MIL_THR(InitializeTexture(
+        pmatWorldHPCToDeviceHPC,
+        pGradientPoints,
+        TRUE, // Use the radial path
+        pColors,
+        pPositions,
+        uCount,
+        wrapMode,
+        colorInterpolationMode,
+        &matDeviceIPCtoBrushLocalHPC
+        ));
+
+    if (SUCCEEDED(hr))
+    {
+        m_rM11 = matDeviceIPCtoBrushLocalHPC.GetM11();
+        m_rM21 = matDeviceIPCtoBrushLocalHPC.GetM21();
+        m_rDx  = matDeviceIPCtoBrushLocalHPC.GetDx();
+
+        m_rM12 = matDeviceIPCtoBrushLocalHPC.GetM12();
+        m_rM22 = matDeviceIPCtoBrushLocalHPC.GetM22();
+        m_rDy  = matDeviceIPCtoBrushLocalHPC.GetDy();
+
+        //
+        // The matrix produced by InitializeTexture with fRadialGradient=TRUE
+        // also scales by m_flGradientSpanEnd (number of texels covered by the
+        // unit-circle radius), since the radial code computes its texel index
+        // directly from the unit-circle distance. For sweep we don't want
+        // that scale - we want raw unit-circle coordinates so atan2 yields
+        // proper angles - so divide it out.
+        //
+        if (m_flGradientSpanEnd > 0.0f)
+        {
+            FLOAT flInvScale = 1.0f / m_flGradientSpanEnd;
+            m_rM11 *= flInvScale; m_rM21 *= flInvScale; m_rDx *= flInvScale;
+            m_rM12 *= flInvScale; m_rM22 *= flInvScale; m_rDy *= flInvScale;
+        }
+
+        //
+        // Compute angular span in radians.
+        //
+        FLOAT flDegToRad = static_cast<FLOAT>(M_PI) / 180.0f;
+        m_flStartAngleRadians = startAngleDegrees * flDegToRad;
+        FLOAT flEndRad = endAngleDegrees * flDegToRad;
+        m_flAngularSpanRadians = flEndRad - m_flStartAngleRadians;
+        m_fAngularSpanIsZero = (m_flAngularSpanRadians == 0.0f);
+    }
+
+    RRETURN(hr);
+}
+
+//+-----------------------------------------------------------------------------
+//
+//  Member:
+//      CSweepGradientBrushSpan::ReleaseExpensiveResources, CColorSource
+//
+//  Synopsis:
+//      Release expensive resources
+//
+//------------------------------------------------------------------------------
+
+VOID
+CSweepGradientBrushSpan::ReleaseExpensiveResources()
+{
+    // This class doesn't hold onto resources that need to be released.
+}
+
+VOID
+CSweepGradientBrushSpan::GenerateColors(
+    __in INT nX,
+    __in INT nY,
+    __in INT nCount,
+    __out_ecount_full(nCount) ARGB *pArgbDest
+    )
+{
+    // Copy some class stuff to local variables for faster access in
+    // our inner loop:
+
+    const AGRB64TEXEL *pStartTexels = &m_rgStartTexelAgrb[0];
+    const AGRB64TEXEL *pEndTexels = &m_rgEndTexelAgrb[0];
+    
+    const AGRB64TEXEL *pStartTexel;
+    const AGRB64TEXEL *pEndTexel;
+    
+    UINT uWeightA = 256;
+    UINT uWeightB = 0;
+
+    BOOL extendMode = (m_wrapMode == MilGradientWrapMode::Extend);
+
+    const INT nTexelCountMinusOne = static_cast<INT>(m_uTexelCountMinusOne);
+    const UINT uTexelCount = m_uTexelCount;
+
+    FLOAT rXLocal = nX * m_rM11 + nY * m_rM21 + m_rDx;
+    FLOAT rYLocal = nX * m_rM12 + nY * m_rM22 + m_rDy;
+
+    do
+    {
+        FLOAT t;
+
+        FLOAT angle = atan2f(rYLocal, rXLocal);
+        if (angle < 0.0f) angle += 2.0f * static_cast<FLOAT>(M_PI);
+
+        if (m_fAngularSpanIsZero)
+        {
+            // Degenerate sweep (start == end): For Extent wrap mode,
+            // draw two solid color regions on either side of the start angle.
+            t = (angle > m_flStartAngleRadians) ? 1.0f : 0.0f;
+        }
+        else
+        {
+            t = (angle - m_flStartAngleRadians) / m_flAngularSpanRadians;
+
+            switch (m_wrapMode)
+            {
+            case MilGradientWrapMode::Extend:
+                if (t < 0.0f) t = 0.0f;
+                else if (t > 1.0f) t = 1.0f;
+                break;
+
+            case MilGradientWrapMode::Flip:
+                t -= floorf(t * 0.5f) * 2.0f;
+                if (t > 1.0f) t = 2.0f - t;
+                break;
+
+            case MilGradientWrapMode::Tile:
+            default:
+                t -= floorf(t);
+                break;
+            }
+        }
+
+        rXLocal += m_rM11;
+        rYLocal += m_rM12;
+
+        FLOAT rTexelPosFloat = t * static_cast<FLOAT>(uTexelCount);
+        FLOAT rTexelPosClamped = min(rTexelPosFloat, static_cast<FLOAT>(FIXED16_INT_MAX));
+        INT nTexturePositionIPC = GpRealToFix16(rTexelPosClamped);
+
+        uWeightB = ONEDGETFRACTIONAL8BITS(nTexturePositionIPC);
+        uWeightA = 256 - uWeightB;
+
+        // __bound indicates that this value is carefully bounds checked.  In this case
+        // nTextureIndex is bounded at 0..nTexelCountMinusOne explicitly by the first two cases
+        // and in a trickier manner by the &= operator in the last else clause below.
+        __bound INT nTextureIndex = ONEDGETINTEGERBITS(nTexturePositionIPC);
+
+        if (extendMode)
+        {
+            if (nTextureIndex < 0)
+            {
+                nTextureIndex = 0;
+                uWeightA = 256;
+                uWeightB = 0;
+            }
+            else if (nTextureIndex >= nTexelCountMinusOne)
+            {
+                nTextureIndex = nTexelCountMinusOne;
+                uWeightA = 256;
+                uWeightB = 0;
+            }
+        }
+        else
+        {
+            // Because the texel count is a power of 2, we can accomplish a mod (%)
+            // operation using a bitwise &.  That is:
+            // 'value % NumberOfTexels' == 'value & NumberOfTexelsMinusOne'            
+            nTextureIndex &= nTexelCountMinusOne;
+        }
+
+        pStartTexel = &pStartTexels[nTextureIndex];
+        pEndTexel = &pEndTexels[nTextureIndex];
+
+        // Note that we can gamma correct the texels so that we don't
+        // have to do gamma correction here.  The addition of constants
+        // here are to accomplish rounding:
+
+        UINT rrrrbbbb = (pStartTexel->A00rr00bb * uWeightA)
+                        + (pEndTexel->A00rr00bb * uWeightB)
+                        + 0x00800080;
+
+        UINT aaaagggg = (pStartTexel->A00aa00gg * uWeightA)
+                        + (pEndTexel->A00aa00gg * uWeightB)
+                        + 0x00800080;
+
+        *pArgbDest++ = (aaaagggg & 0xff00ff00) + ((rrrrbbbb & 0xff00ff00) >> 8);
+    } while (--nCount != 0);
+}
+
+VOID
+FASTCALL ColorSource_SweepGradient_32bppPARGB(
+    __in_ecount(1) const PipelineParams *pPP,
+    __in_ecount(1) const ScanOpParams *pSOP
+    )
+{
+    CSweepGradientBrushSpan *pColorSource =
+        DYNCAST(CSweepGradientBrushSpan, pSOP->m_posd);
+    Assert(pColorSource);
+
+    pColorSource->GenerateColors(
+        pPP->m_iX,
+        pPP->m_iY,
+        pPP->m_uiCount,
+        (ARGB*) pSOP->m_pvDest
+        );
+}
+
 
 VOID 
 FASTCALL ColorSource_ShaderEffect_32bppPARGB(
@@ -1717,7 +1960,7 @@ CShaderEffectBrushSpan::GenerateColors(
     params.nY = nY;
     params.nCount = nCount;
     params.pPargbBuffer = reinterpret_cast<unsigned *>(pArgbDest);
-    
+
     (*m_pfnGenerateColorsEffectWeakRef)(&params);
 }
 

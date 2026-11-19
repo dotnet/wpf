@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description: This file contains the implementation of MatrixUtil, which 
@@ -102,108 +102,86 @@ namespace MS.Internal
         /// </summary>
         internal static void MultiplyMatrix(ref Matrix matrix1, ref Matrix matrix2)
         {
-            MatrixTypes type1 = matrix1._type;
-            MatrixTypes type2 = matrix2._type;
+            // Assuming Unknown is correctly exclusive with other flags,
+            // there are only 25 allowed matrix combinations,
+            // which can easily be numbered from 0 to 25 using arithmetic encoding.
+            // Of those 25, many coalesce into the same cases, but it remains to be seen
+            // if there is an easy way to coalesce the numeric cases further.
 
-            // Check for idents
-
-            // If the second is ident, we can just return
-            if (type2 == MatrixTypes.TRANSFORM_IS_IDENTITY)
+            switch ((uint)matrix1._type * 5 + (uint)matrix2._type)
             {
-                return;
-            }
-
-            // If the first is ident, we can just copy the memory across.
-            if (type1 == MatrixTypes.TRANSFORM_IS_IDENTITY)
-            {
-                matrix1 = matrix2;
-                return;
-            }
-
-            // Optimize for translate case, where the second is a translate
-            if (type2 == MatrixTypes.TRANSFORM_IS_TRANSLATION)
-            {
-                // 2 additions
-                matrix1._offsetX += matrix2._offsetX;
-                matrix1._offsetY += matrix2._offsetY;
-
-                // If matrix 1 wasn't unknown we added a translation
-                if (type1 != MatrixTypes.TRANSFORM_IS_UNKNOWN)
-                {
-                    matrix1._type |= MatrixTypes.TRANSFORM_IS_TRANSLATION;
-                }
-
-                return;
-            }
-
-            // Check for the first value being a translate
-            if (type1 == MatrixTypes.TRANSFORM_IS_TRANSLATION)
-            {
-                // Save off the old offsets
-                double offsetX = matrix1._offsetX;
-                double offsetY = matrix1._offsetY;
-
-                // Copy the matrix
-                matrix1 = matrix2;
-
-                matrix1._offsetX = offsetX * matrix2._m11 + offsetY * matrix2._m21 + matrix2._offsetX;
-                matrix1._offsetY = offsetX * matrix2._m12 + offsetY * matrix2._m22 + matrix2._offsetY;
-
-                if (type2 == MatrixTypes.TRANSFORM_IS_UNKNOWN)
-                {
-                    matrix1._type = MatrixTypes.TRANSFORM_IS_UNKNOWN;
-                }
-                else
-                {
+                case 1:  // I * T
+                case 2:  // I * S
+                case 3:  // I * S|T
+                case 4:  // I * U
+                    matrix1 = matrix2;
+                    goto case 0;
+                case 0:  // I * I
+                case 5:  // T * I
+                case 10: // S * I
+                case 15: // S|T * I
+                case 20: // U * I
+                    return;
+                case 11:  // S * T
                     matrix1._type = MatrixTypes.TRANSFORM_IS_SCALING | MatrixTypes.TRANSFORM_IS_TRANSLATION;
-                }
-                return;
-            }
+                    goto case 6;
+                case 6:  // T * T
+                case 16: // S|T * T
+                case 21: // U * T
 
-            // The following code combines the type of the transformations so that the high nibble
-            // is "this"'s type, and the low nibble is mat's type.  This allows for a switch rather
-            // than nested switches.
+                    // 2 additions
+                    matrix1._offsetX += matrix2._offsetX;
+                    matrix1._offsetY += matrix2._offsetY;
+                    return;
+                case 7:  // T * S
+                case 8:  // T * S|T
+                case 9:  // T * U
 
-            // trans1._type |  trans2._type
-            //  7  6  5  4   |  3  2  1  0
-            int combinedType = ((int)type1 << 4) | (int)type2;
+                    // Save off the old offsets
+                    double offsetX = matrix1._offsetX;
+                    double offsetY = matrix1._offsetY;
 
-            switch (combinedType)
-            {
-                case 34:  // S * S
-                    // 2 multiplications
-                    matrix1._m11 *= matrix2._m11;
-                    matrix1._m22 *= matrix2._m22;
+                    // Copy the matrix
+                    matrix1 = matrix2;
+
+                    matrix1._offsetX = offsetX * matrix2._m11 + offsetY * matrix2._m21 + matrix2._offsetX;
+                    matrix1._offsetY = offsetX * matrix2._m12 + offsetY * matrix2._m22 + matrix2._offsetY;
+                    matrix1._type = matrix2._type == MatrixTypes.TRANSFORM_IS_UNKNOWN ? MatrixTypes.TRANSFORM_IS_UNKNOWN : MatrixTypes.TRANSFORM_IS_SCALING | MatrixTypes.TRANSFORM_IS_TRANSLATION;
                     return;
 
-                case 35:  // S * S|T
-                    matrix1._m11 *= matrix2._m11;
-                    matrix1._m22 *= matrix2._m22;
+                case 13: // S * S|T
                     matrix1._offsetX = matrix2._offsetX;
                     matrix1._offsetY = matrix2._offsetY;
-
-                    // Transform set to Translate and Scale
                     matrix1._type = MatrixTypes.TRANSFORM_IS_TRANSLATION | MatrixTypes.TRANSFORM_IS_SCALING;
-                    return;
+                    goto case 12;
 
-                case 50: // S|T * S
-                    matrix1._m11 *= matrix2._m11;
-                    matrix1._m22 *= matrix2._m22;
+                case 17: // S|T * S
                     matrix1._offsetX *= matrix2._m11;
                     matrix1._offsetY *= matrix2._m22;
-                    return;
+                    goto case 12;
 
-                case 51: // S|T * S|T
-                    matrix1._m11 *= matrix2._m11;
-                    matrix1._m22 *= matrix2._m22;
+                case 18: // S|T * S|T
                     matrix1._offsetX = matrix2._m11 * matrix1._offsetX + matrix2._offsetX;
                     matrix1._offsetY = matrix2._m22 * matrix1._offsetY + matrix2._offsetY;
+                    goto case 12;
+
+                case 12: // S * S
+                    matrix1._m11 *= matrix2._m11;
+                    matrix1._m22 *= matrix2._m22;
                     return;
-                case 36: // S * U
-                case 52: // S|T * U
-                case 66: // U * S
-                case 67: // U * S|T
-                case 68: // U * U
+#if DEBUG
+                case 14: // S * U
+                case 19: // S|T * U
+                case 22: // U * S
+                case 23: // U * S|T
+                case 24: // U * U
+#else
+                default: // S * U
+                         // S|T * U
+                         // U * S
+                         // U * S|T
+                         // U * U
+#endif
                     matrix1 = new Matrix(
                         matrix1._m11 * matrix2._m11 + matrix1._m12 * matrix2._m21,
                         matrix1._m11 * matrix2._m12 + matrix1._m12 * matrix2._m22,
@@ -215,9 +193,9 @@ namespace MS.Internal
                         matrix1._offsetX * matrix2._m12 + matrix1._offsetY * matrix2._m22 + matrix2._offsetY);
                     return;
 #if DEBUG
-            default:
-                Debug.Fail("Matrix multiply hit an invalid case: " + combinedType);
-                break;
+                default:
+                    Debug.Fail("Matrix multiply hit an invalid case: " + ((uint)matrix1._type * 5 + (uint)matrix2._type));
+                    break;
 #endif
             }
         }        

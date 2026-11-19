@@ -9,6 +9,7 @@ using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Windows.Automation;
+using System.Windows.Automation.Provider;
 using System.Windows;
 using Accessibility;
 using System.Runtime.InteropServices;
@@ -294,6 +295,82 @@ namespace MS.Internal.AutomationProxies
         internal bool   IsEnabled          { get { return ! HasState(AccessibleState.Unavailable); } }
         internal bool   IsFocused          { get { return HasState(AccessibleState.Focused); } }
         internal bool   IsOffScreen        { get { return HasState(AccessibleState.Offscreen); } }
+
+        internal object GetPatternProvider(int patternId)
+        {
+            return GetPatternProvider(AccessibleExProvider, patternId);
+        }
+
+        internal object GetPropertyValue(int propertyId)
+        {
+            return GetPropertyValue(AccessibleExProvider, propertyId);
+        }
+
+        internal static object GetPatternProvider(IRawElementProviderSimple provider, int patternId)
+        {
+            if (provider == null)
+            {
+                return null;
+            }
+
+            try
+            {
+                return provider.GetPatternProvider(patternId);
+            }
+            catch (Exception e) when (IsAccessibleExUnavailable(e))
+            {
+                return null;
+            }
+        }
+
+        internal static object GetPropertyValue(IRawElementProviderSimple provider, int propertyId)
+        {
+            if (provider == null)
+            {
+                return null;
+            }
+
+            try
+            {
+                return provider.GetPropertyValue(propertyId);
+            }
+            catch (Exception e) when (IsAccessibleExUnavailable(e))
+            {
+                return null;
+            }
+        }
+
+        internal static IRawElementProviderSimple GetAccessibleExProvider(UnsafeNativeMethods.IServiceProvider serviceProvider, int childId)
+        {
+            if (serviceProvider == null)
+            {
+                return null;
+            }
+
+            try
+            {
+                Guid serviceId = typeof(UnsafeNativeMethods.IAccessibleEx).GUID;
+                Guid interfaceId = serviceId;
+                UnsafeNativeMethods.IAccessibleEx accessibleEx =
+                    serviceProvider.QueryService(ref serviceId, ref interfaceId) as UnsafeNativeMethods.IAccessibleEx;
+
+                if (accessibleEx == null)
+                {
+                    return null;
+                }
+
+                if (childId != NativeMethods.CHILD_SELF)
+                {
+                    accessibleEx = accessibleEx.GetObjectForChild(childId);
+                }
+
+                return accessibleEx as IRawElementProviderSimple;
+            }
+            catch (Exception e) when (IsAccessibleExUnavailable(e))
+            {
+                return null;
+            }
+        }
 
         internal Accessible FirstChild      
         { 
@@ -1391,6 +1468,19 @@ namespace MS.Internal.AutomationProxies
             return true;
         }
 
+        private static bool IsAccessibleExUnavailable(Exception e)
+        {
+            COMException comException = e as COMException;
+            return e is ArgumentException
+                || e is InvalidCastException
+                || e is NotImplementedException
+                || comException != null
+                    && (comException.ErrorCode == NativeMethods.E_FAIL
+                        || comException.ErrorCode == NativeMethods.E_NOINTERFACE
+                        || comException.ErrorCode == NativeMethods.E_NOTIMPL
+                        || comException.ErrorCode == NativeMethods.E_INVALIDARG);
+        }
+
         // IAccessibles that we get from Winforms apps in partial trust return failure
         // code for some methods - notably accNavigate and accChild. The operation will
         // succeed, however, if we first navigate up to the parent, and then back down
@@ -1476,8 +1566,24 @@ namespace MS.Internal.AutomationProxies
         private IAccessible _acc;   // a full IAccessible object or an IAccessible parent that is managing a ChildID
         private int _idChild;       // this is ChildID which is the ID a server gives this child (not related to child order!)
         private int _accessibleChildrenIndex;    // this is how many children to skip over when calling AccessibleChildren
+        private bool _accessibleExProviderInitialized;
+        private IRawElementProviderSimple _accessibleExProvider;
 
         private IntPtr _hwnd;
+
+        private IRawElementProviderSimple AccessibleExProvider
+        {
+            get
+            {
+                if (!_accessibleExProviderInitialized)
+                {
+                    _accessibleExProvider = GetAccessibleExProvider(_acc as UnsafeNativeMethods.IServiceProvider, _idChild);
+                    _accessibleExProviderInitialized = true;
+                }
+
+                return _accessibleExProvider;
+            }
+        }
 
         #endregion Private Fields
     }

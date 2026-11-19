@@ -446,6 +446,7 @@ namespace System.Windows.Interop
                 break;
 
                 case WindowMessage.WM_MOUSEWHEEL:
+                case WindowMessage.WM_MOUSEHWHEEL:
                 {
                     int wheel = NativeMethods.SignedHIWORD(wParam);
                     int x = NativeMethods.SignedLOWORD(lParam);
@@ -457,6 +458,12 @@ namespace System.Windows.Interop
                     {
                         SafeNativeMethods.ScreenToClient(new HandleRef(this,hwnd), ref pt);
 
+                        RawMouseActions actions = RawMouseActions.VerticalWheelRotate;
+                        if (msg == WindowMessage.WM_MOUSEHWHEEL)
+                        {
+                            actions = RawMouseActions.HorizontalWheelRotate;
+                        }
+
                         x = pt.x;
                         y = pt.y;
 
@@ -467,7 +474,7 @@ namespace System.Windows.Interop
                             handled = ReportInput(hwnd,
                                               InputMode.Foreground,
                                               _msgTime,
-                                              RawMouseActions.VerticalWheelRotate,
+                                              actions,
                                               x,
                                               y,
                                               wheel);
@@ -1254,7 +1261,8 @@ namespace System.Windows.Interop
             {
                 // We have lost capture, but don't do anything else.
             }
-            else if(!_active && (actions & RawMouseActions.VerticalWheelRotate) == RawMouseActions.VerticalWheelRotate)
+            else if(!_active && ((actions & RawMouseActions.VerticalWheelRotate) == RawMouseActions.VerticalWheelRotate ||
+                                 (actions & RawMouseActions.HorizontalWheelRotate) == RawMouseActions.HorizontalWheelRotate))
             {
                 // report mouse wheel events as if they came from the window that
                 // is under the mouse (even though they are reported to the window

@@ -1073,6 +1073,15 @@ namespace System.Windows.Documents
             return group;
         }
 
+        // Sets IsIMELeftEdgeDeferred while the element is in a tree.
+        // Returns a difference in character count that the caller should use to update cached values.
+        internal int SetIMELeftEdgeDeferred(bool isDeferred)
+        {
+            int oldCount = this.IMELeftEdgeCharCount;
+            _isIMELeftEdgeDeferred = isDeferred;
+            return this.IMELeftEdgeCharCount - oldCount;
+        }
+
         // ........................................................................
         //
         // Helpers for Text Flow Initialization
@@ -1356,8 +1365,9 @@ namespace System.Windows.Documents
                     {
                         // The first sibling is always invisible to the IME.
                         // This ensures we don't get into trouble creating implicit
-                        // content on IME SetText calls.
-                        leftEdgeCharCount = this.TextElementNode.IsFirstSibling ? 0 : 1;
+                        // content on IME SetText calls. For other implicit content,
+                        // we need to hide the left edges until composition is over.
+                        leftEdgeCharCount = (this.TextElementNode.IsFirstSibling || this.IsIMELeftEdgeDeferred) ? 0 : 1;
                     }
                 }
 
@@ -1390,6 +1400,27 @@ namespace System.Windows.Documents
                 }
 
                 return isFirstIMEVisibleSibling;
+            }
+        }
+
+        //------------------------------------------------------
+        // Returns true if the left edge of this element is hidden
+        // from the IME during composition.
+        //------------------------------------------------------
+        internal bool IsIMELeftEdgeDeferred
+        {
+            get
+            {
+                return _isIMELeftEdgeDeferred;
+            }
+
+            set
+            {
+                // When we are in a tree, this change would invalidate the cached character count.
+                // Use SetIMELeftEdgeDeferred that returns the count difference and update the cache accordingly.
+                // (IsInTree is not enough here, in InsertElementInternal we have node but not attached yet)
+                Invariant.Assert(_textElementNode?.ParentNode == null, "TextElement is in a TextContainer, caller should update character count.");
+                _isIMELeftEdgeDeferred = value;
             }
         }
 
@@ -1613,6 +1644,9 @@ namespace System.Windows.Documents
 
         // The node in a TextContainer representing this TextElement.
         private TextTreeTextElementNode _textElementNode;
+
+        // The left edge is hidden from IME during composition.
+        private bool _isIMELeftEdgeDeferred;
 
         //-------------------------------------------------------------------
         // Typography Group Property

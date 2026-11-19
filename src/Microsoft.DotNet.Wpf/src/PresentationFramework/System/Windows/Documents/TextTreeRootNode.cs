@@ -426,6 +426,20 @@ namespace System.Windows.Documents
             }
         }
 
+        // An active composition that requires deferring element edges.
+        internal IMECompositionScope IMECompositionScope
+        {
+            get
+            {
+                return _imeCompositionScope;
+            }
+
+            set
+            {
+                _imeCompositionScope = value;
+            }
+        }
+
         #endregion Internal Properties
 
         //------------------------------------------------------
@@ -476,6 +490,9 @@ namespace System.Windows.Documents
         // Structure that allows for dispatcher processing to be
         // enabled after a call to Dispatcher.DisableProcessing.
         private DispatcherProcessingDisabled _processingDisabled;
+
+        // An active composition that requires deferring element edges.
+        private IMECompositionScope _imeCompositionScope;
 
         #endregion Private Fields
     }

@@ -1503,6 +1503,54 @@ namespace System.Windows.Documents
             // Anything required for custom types here?
         }
 
+        /// <summary>
+        /// Replaces a range containing BlockUIContainer at the start and at the end of the range with a new Paragraph.
+        /// When IME deletes or replaces such range, we would remove both BlockUIContainers, but the IME still keeps
+        /// the left edge coming from the first BlockUIContainer. We stay in sync by inerting a Paragraph instead.
+        /// </summary>
+        /// <param name="start">
+        /// Position indicating a beginning of range. Should be at the start of a BlockUContainer. 
+        /// </param>
+        /// <param name="end">
+        /// Position indicating an end of selection. Should be at the end  of a BlockUIContainer
+        /// </param>
+        internal static TextPointer ReplaceBlockUIContainersWithParagraph(ITextPointer start, ITextPointer end)
+        {
+            if (start.CompareTo(end) == 0 || !TextPointerBase.IsAtBlockUIContainerStart(start) || !TextPointerBase.IsAtBlockUIContainerEnd(end))
+            {
+                return null;
+            }
+
+            TextPointer startPosition = (TextPointer)start;
+            TextPointer endPosition = (TextPointer)end;
+
+            BlockUIContainer firstBlockUIContainer = (BlockUIContainer)startPosition.Parent;
+            BlockUIContainer lastBlockUIContainer = (BlockUIContainer)endPosition.Parent;
+
+            if (firstBlockUIContainer.Parent != lastBlockUIContainer.Parent)
+            {
+                return null;
+            }
+
+            // Create a Paragraph before the first BlockUIContainer
+            TextPointer insertionPosition = TextRangeEditTables.EnsureInsertionPosition(startPosition);
+            Paragraph paragraph = insertionPosition.Paragraph;
+
+            TextContainer textContainer = startPosition.TextContainer;
+
+            textContainer.BeginChange();
+            try
+            {
+                textContainer.DeleteContentInternal(paragraph.ElementEnd, lastBlockUIContainer.ElementEnd);
+            }
+            finally
+            {
+                textContainer.EndChange();
+            }
+
+            return insertionPosition;
+        }
+
         // Helper for DeleteParagraphContent 
         // Takes 2 positions possibly parented by paragraph or BlockUIContainer
         // and deletes them if they are empty .

@@ -26,6 +26,7 @@ namespace System.Windows.Documents
             _type = elementNode.TextElement.GetType();
             _localValues = GetPropertyRecordArray(elementNode.TextElement);
             _resources = elementNode.TextElement.Resources;
+            _isIMELeftEdgeDeferred = elementNode.TextElement.IsIMELeftEdgeDeferred;
 
             // Table requires additional work for storing its Columns collection
             if (elementNode.TextElement is Table)
@@ -60,6 +61,7 @@ namespace System.Windows.Documents
 
             // Insert a new element.
             element = (TextElement)Activator.CreateInstance(_type);
+            element.IsIMELeftEdgeDeferred = _isIMELeftEdgeDeferred;
             element.Reposition(start, end);
 
             // Restore local resources
@@ -101,6 +103,9 @@ namespace System.Windows.Documents
 
         // TableColumns collection
         private readonly TableColumn[] _columns;
+
+        // The left edge of the extracted TextElement was deferred during composition.
+        private readonly bool _isIMELeftEdgeDeferred;
 
         #endregion Private Fields
     }

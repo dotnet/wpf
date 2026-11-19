@@ -922,6 +922,7 @@
     <Compile Include="System\Windows\Documents\Highlights.cs" />
     <Compile Include="System\Windows\Documents\HighlightVisual.cs" />
     <Compile Include="System\Windows\Documents\Hyperlink.cs" />
+    <Compile Include="System\Windows\Documents\IMECompositionScope.cs" />
     <Compile Include="System\Windows\Documents\ImmComposition.cs" />
     <Compile Include="System\Windows\Documents\InkInteropObject.cs" />
     <Compile Include="System\Windows\Documents\Inline.cs" />
@@ -1059,6 +1060,7 @@
     <Compile Include="System\Windows\Documents\TextTreeDumper.cs" />
     <Compile Include="System\Windows\Documents\TextTreeExtractElementUndoUnit.cs" />
     <Compile Include="System\Windows\Documents\TextTreeFixupNode.cs" />
+    <Compile Include="System\Windows\Documents\TextTreeIMEDeferralUndoUnit.cs" />
     <Compile Include="System\Windows\Documents\TextTreeInsertElementUndoUnit.cs" />
     <Compile Include="System\Windows\Documents\TextTreeInsertUndoUnit.cs" />
     <Compile Include="System\Windows\Documents\TextTreeNode.cs" />

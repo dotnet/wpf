@@ -484,8 +484,9 @@ namespace System.Windows.Controls
         {
             ComboBox comboBox = (ComboBox)o;
             ComboBoxItem highlightedElement;
-            return (!comboBox.IsDropDownOpen && comboBox.IsKeyboardFocusWithin) ||
-                   ((highlightedElement = comboBox.HighlightedElement) != null && highlightedElement.Content == comboBox._clonedElement);
+
+            return BooleanBoxes.Box((!comboBox.IsDropDownOpen && comboBox.IsKeyboardFocusWithin) ||
+                   ((highlightedElement = comboBox.HighlightedElement) != null && highlightedElement.Content == comboBox._clonedElement));
         }
 
         #endregion

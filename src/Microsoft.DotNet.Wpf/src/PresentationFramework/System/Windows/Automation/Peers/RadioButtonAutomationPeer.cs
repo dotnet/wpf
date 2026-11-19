@@ -51,7 +51,7 @@ namespace System.Windows.Automation.Peers
             if (!IsEnabled())
                 throw new ElementNotEnabledException();
 
-            ((RadioButton)Owner).SetCurrentValueInternal(RadioButton.IsCheckedProperty, MS.Internal.KnownBoxes.BooleanBoxes.TrueBox);
+            ((RadioButton)Owner).SetCurrentValueInternal(RadioButton.IsCheckedProperty, BooleanBoxes.TrueBox);
         }
 
 

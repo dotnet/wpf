@@ -4,7 +4,6 @@
 
 using MS.Internal;
 using MS.Internal.Controls;
-using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
 using System.Collections;
 using System.Collections.ObjectModel;

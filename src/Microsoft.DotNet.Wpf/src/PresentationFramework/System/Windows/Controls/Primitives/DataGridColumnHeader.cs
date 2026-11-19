@@ -1,7 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-
 using System.ComponentModel;
 using System.Windows.Automation.Peers;
 using System.Windows.Input;
@@ -32,7 +31,7 @@ namespace System.Windows.Controls.Primitives
             StyleProperty.OverrideMetadata(typeof(DataGridColumnHeader), new FrameworkPropertyMetadata(null, OnNotifyPropertyChanged, OnCoerceStyle));
             HeightProperty.OverrideMetadata(typeof(DataGridColumnHeader), new FrameworkPropertyMetadata(OnNotifyPropertyChanged, OnCoerceHeight));
 
-            FocusableProperty.OverrideMetadata(typeof(DataGridColumnHeader), new FrameworkPropertyMetadata(false));
+            FocusableProperty.OverrideMetadata(typeof(DataGridColumnHeader), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
             ClipProperty.OverrideMetadata(typeof(DataGridColumnHeader), new FrameworkPropertyMetadata(null, OnCoerceClip));
             AutomationProperties.IsOffscreenBehaviorProperty.OverrideMetadata(typeof(DataGridColumnHeader), new FrameworkPropertyMetadata(IsOffscreenBehavior.FromClip));
         }
@@ -696,7 +695,7 @@ namespace System.Windows.Controls.Primitives
                         "CanUserSort",
                         typeof(bool),
                         typeof(DataGridColumnHeader),
-                        new FrameworkPropertyMetadata(true, null, new CoerceValueCallback(OnCoerceCanUserSort)));
+                        new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, null, new CoerceValueCallback(OnCoerceCanUserSort)));
 
         /// <summary>
         ///     The DependencyProperty for the CanUserSort property.
@@ -849,7 +848,7 @@ namespace System.Windows.Controls.Primitives
                         "IsFrozen",
                         typeof(bool),
                         typeof(DataGridColumnHeader),
-                        new FrameworkPropertyMetadata(false, null, new CoerceValueCallback(OnCoerceIsFrozen)));
+                        new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, null, new CoerceValueCallback(OnCoerceIsFrozen)));
 
         /// <summary>
         ///     The DependencyProperty for the IsFrozen property.

@@ -1,7 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -56,7 +55,7 @@ namespace System.Windows.Controls.Primitives
         static CalendarItem()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(CalendarItem), new FrameworkPropertyMetadata(typeof(CalendarItem)));
-            FocusableProperty.OverrideMetadata(typeof(CalendarItem), new FrameworkPropertyMetadata(false));
+            FocusableProperty.OverrideMetadata(typeof(CalendarItem), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
             KeyboardNavigation.TabNavigationProperty.OverrideMetadata(typeof(CalendarItem), new FrameworkPropertyMetadata(KeyboardNavigationMode.Once));
             KeyboardNavigation.DirectionalNavigationProperty.OverrideMetadata(typeof(CalendarItem), new FrameworkPropertyMetadata(KeyboardNavigationMode.Contained));
 

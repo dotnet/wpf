@@ -11,7 +11,6 @@
 using MS.Internal.Commands;
 using MS.Internal.Controls;
 using MS.Internal.Ink;
-using MS.Internal.KnownBoxes;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;

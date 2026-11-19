@@ -9,7 +9,6 @@
 //
 
 using MS.Internal;
-using MS.Internal.KnownBoxes;
 using MS.Internal.Collections;
 using MS.Utility;
 using System.Collections;
@@ -334,7 +333,7 @@ namespace System.Windows.Media
                   RegisterProperty("SnapsToDevicePixels",
                                    typeof(bool),
                                    typeofThis,
-                                   false,
+                                   BooleanBoxes.FalseBox,
                                    new PropertyChangedCallback(SnapsToDevicePixelsPropertyChanged),
                                    null,
                                    /* isIndependentlyAnimated  = */ false,
@@ -343,7 +342,7 @@ namespace System.Windows.Media
                   RegisterProperty("EnableClearType",
                                    typeof(bool),
                                    typeofThis,
-                                   false,
+                                   BooleanBoxes.FalseBox,
                                    new PropertyChangedCallback(EnableClearTypePropertyChanged),
                                    null,
                                    /* isIndependentlyAnimated  = */ false,

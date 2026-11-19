@@ -27,7 +27,7 @@ namespace System.Windows.Documents
         static CompositionAdorner()
         {
             // Provide a new default value for the composition adorner so that it is not hit-testable.
-            IsEnabledProperty.OverrideMetadata(typeof(CompositionAdorner), new FrameworkPropertyMetadata(false));
+            IsEnabledProperty.OverrideMetadata(typeof(CompositionAdorner), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
         }
         
         /// <summary>

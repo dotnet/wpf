@@ -37,6 +37,11 @@ public sealed unsafe partial class DataObject :
     static DataObject IDataObjectInternal<DataObject, IDataObject>.Create(Com.IDataObject* dataObject) => new(dataObject);
     static DataObject IDataObjectInternal<DataObject, IDataObject>.Create(object data) => new(data);
 
+    // Share the captured proxy's owning adapters while retaining the original managed payload.
+    // Application IDataObject implementations need an adapter; built-in sources already expose the internal contract.
+    static DataObject IDataObjectInternal<DataObject, IDataObject>.Create(DataObject clipboardData, IDataObject managedData) =>
+        new(clipboardData._innerData.WithManagedDataObject(managedData as IDataObjectInternal ?? new DataObjectAdapter(managedData)));
+        
     static IDataObjectInternal IDataObjectInternal<DataObject, IDataObject>.Wrap(IDataObject data) =>
         new DataObjectAdapter(data);
 

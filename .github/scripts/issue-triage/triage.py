@@ -134,7 +134,12 @@ class GitHub:
         self.opener = urllib.request.build_opener(NoRedirect)
 
     def get(self, path: str, **params):
-        if not re.fullmatch(r"(?:issues(?:/[1-9][0-9]*(?:/(?:comments|timeline|labels))?)?|labels)", path):
+        if not re.fullmatch(
+            r"(?:issues(?:/[1-9][0-9]*(?:/(?:comments|timeline|labels))?)?|labels"
+            r"|actions/(?:runs/[1-9][0-9]*(?:/(?:artifacts|approvals))?"
+            r"|workflows/issue-triage[-.a-z]*(?:/runs)?|artifacts/[1-9][0-9]*)"
+            r"|environments/wpf-triage-priority)", path
+        ):
             raise TriageError("Unsupported repository API path")
         url = f"https://api.github.com/repos/{REPOSITORY}/{path}"
         if params:
@@ -171,10 +176,55 @@ class GitHub:
                 return items
         raise TriageError("GitHub pagination limit reached; coverage is incomplete")
 
+    def dispatch(self, number: int, request_id: str) -> None:
+        if type(number) is not int or number <= 0 or not re.fullmatch(r"[a-z0-9-]{1,100}", request_id):
+            raise TriageError("Invalid assessment dispatch")
+        payload = {"ref": "main", "inputs": {"issue_number": str(number), "request_id": request_id}}
+        request = urllib.request.Request(
+            f"https://api.github.com/repos/{REPOSITORY}/actions/workflows/issue-triage.lock.yml/dispatches",
+            data=json.dumps(payload).encode(), method="POST",
+            headers={"Authorization": f"Bearer {self.token}", "Accept": "application/vnd.github+json"},
+        )
+        try:
+            with self.opener.open(request, timeout=30):
+                pass
+        except (OSError, TimeoutError):
+            raise TriageError("Assessment dispatch failed or is ambiguous; inspect before retrying") from None
+
+    def add_labels(self, number: int, labels: list[str]) -> None:
+        issue = self.get(f"issues/{number}")
+        catalog = {item["name"]: item.get("node_id") for item in self.pages("labels")}
+        if not eligible(issue) or not labels or any(not catalog.get(name) for name in labels):
+            raise TriageError("Issue or existing label IDs cannot be verified")
+        query = """
+        mutation($issue:ID!,$labels:[ID!]!) {
+          addLabelsToLabelable(input:{labelableId:$issue,labelIds:$labels}) { clientMutationId }
+        }"""
+        request = urllib.request.Request(
+            "https://api.github.com/graphql", method="POST",
+            data=json.dumps({"query": query, "variables": {
+                "issue": issue["node_id"], "labels": [catalog[name] for name in labels],
+            }}).encode(),
+            headers={"Authorization": f"Bearer {self.token}", "Content-Type": "application/json"},
+        )
+        try:
+            with self.opener.open(request, timeout=30) as response:
+                result = json.loads(response.read(65536))
+            if result.get("errors") or not result.get("data", {}).get("addLabelsToLabelable"):
+                raise TriageError("Label mutation was not confirmed")
+        except (OSError, ValueError):
+            raise TriageError("Label mutation failed or is ambiguous; inspect before retrying") from None
+
 
 def digest(value: object) -> str:
     encoded = json.dumps(value, sort_keys=True, ensure_ascii=True, separators=(",", ":"))
     return hashlib.sha256(encoded.encode("utf-8")).hexdigest()
+
+
+def issue_stamp(issue: dict) -> str:
+    return digest({name: issue.get(name) for name in (
+        "number", "title", "body", "user", "labels", "state", "locked", "updated_at", "comments",
+    )})
 
 
 def policy_digest() -> str:
@@ -233,6 +283,7 @@ def prepare(client: GitHub, number: int, releases: dict | None = None) -> dict:
     return {
         "schema": 1, "should_process": True, "repository": REPOSITORY, "number": number,
         "input_sha256": digest(source), "policy_sha256": source["policy_sha256"],
+        "issue_sha256": issue_stamp(issue),
         "issue_kind": issue_kind(issue), "title": issue["title"][:300], "body": body[:16000],
         "existing_labels": sorted(label_names(issue)), "human_removed_labels": removed,
         "allowed_areas": areas, "followups": [{**item, "body": item["body"][:2000]} for item in selected],
@@ -367,6 +418,16 @@ def agent_result(output: dict) -> dict:
     return item
 
 
+def event_eligible(client: GitHub, event: dict) -> bool:
+    issue = client.get(f"issues/{event_number(event)}")
+    if not eligible(issue):
+        return False
+    if "comment" in event:
+        author = event["comment"].get("user") or {}
+        return author.get("id") == issue["user"]["id"] and author.get("type") == "User"
+    return True
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="WPF issue triage")
     modes = parser.add_subparsers(dest="mode", required=True)
@@ -382,9 +443,15 @@ def main(argv: list[str] | None = None) -> int:
     assess.add_argument("event", type=Path)
     assess.add_argument("result", type=Path)
     assess.add_argument("destination", type=Path)
+    gate = modes.add_parser("eligible")
+    gate.add_argument("source", type=Path)
     args = parser.parse_args(argv)
     try:
-        if args.mode == "attach-context":
+        if args.mode == "eligible":
+            if os.environ.get("GITHUB_REPOSITORY") != REPOSITORY:
+                raise TriageError("Only the WPF repository is supported")
+            return 0 if event_eligible(GitHub(), read_json(args.source)) else 1
+        elif args.mode == "attach-context":
             attach_context(args.source, args.destination)
         elif args.mode == "prepare":
             if os.environ.get("GITHUB_REPOSITORY") != REPOSITORY:

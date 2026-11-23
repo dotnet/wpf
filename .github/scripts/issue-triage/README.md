@@ -45,6 +45,12 @@ Versioned Actions artifacts will hold public-issue assessments and resumable
 checkpoints with explicit retention. Expired artifacts or incomplete coverage
 require read-only repair before board publication resumes.
 
+The board and priority publisher resolve a reviewed baseline plus trusted
+assessment/publication deltas from successful `main` runs. Every eligible issue
+needs current coverage under the same policy and runtime release metadata.
+Artifacts expire after 90 days; publishing labels does not renew assessment age.
+The manual board workflow defaults to preview and uploads no project data.
+
 ## Private top-10 project
 
 The planned project will have private visibility and a selected-issues view
@@ -79,10 +85,47 @@ Use a project-scoped GitHub App credential or an approved project token only in
 the trusted project job. Do not expose it to analysis, detection, or PR jobs.
 Issue publication uses a separate job-scoped `GITHUB_TOKEN`.
 
+The private project needs these exact fields: `Selection control` (single select:
+Auto, Pin, Exclude), `Selected` (single select: Yes, No), `Rank` (number),
+`Priority` (single select: P0, P1), and `Selection reason` (text). Configure the
+default view to filter `Selected: Yes` and sort by Rank. Keep the project number
+and approved project credential in `WPF_TRIAGE_PROJECT_NUMBER` and
+`WPF_TRIAGE_PROJECT_TOKEN` secrets, available only to the project job.
+
 Rollout starts with offline fixtures and read-only previews. Priority publication
 requires a reviewed complete backlog assessment. Area publication and project
 publication each require an accepted narrow pilot before automatic activation.
 Each capability must remain independently disableable.
+
+## Pilot and recovery
+
+Offline fixtures cover assessment, additive area publication, refreshed coverage,
+and private selection. They do not prove live billing, organization permissions,
+or persistent project updates. This implementation is fixed to `dotnet/wpf`;
+testing against a different repository requires a reviewed identity change.
+
+Before a live pilot, obtain approval for its issue list and analysis budget.
+Run a single manual assessment and inspect the validated artifact. Preview the
+publisher, then explicitly authorize one area-only manual write and verify the
+issue labels and absence of comments. Keep automatic publication off.
+
+Inventory the backlog with batch size zero, then assess bounded batches under an
+explicit cumulative credit budget. Resume from trusted runs; inspect error
+request IDs before opting into retries. Review all P0/P1 proposals and deferred
+samples, then approve the complete manifest through `wpf-triage-priority`.
+Counts above 20 P0 or 50 P1 require policy review and reassessment.
+
+Configure the private project and preview its refresh before an authorized
+manual write. Verify the selected view, ordering, pin/exclude behavior, and
+persistent read-back privately. Record pilot acceptance before automatic writes.
+Do not post project selections or controls in public logs, artifacts, or PRs.
+
+For an emergency stop, disable the analysis, area, priority, and board controls
+and cancel active runs. Inspect ambiguous or partial writes before rerunning a
+fresh preview. A resumed reconciliation preserves overrides and repairs managed
+fields; it never retries an uncertain mutation automatically. Missing coverage
+requires a read-only repair pass. An expired baseline requires fresh calibration.
+Remove only confirmed bot-owned additions through an approved manual recovery.
 
 ## Workflow source
 

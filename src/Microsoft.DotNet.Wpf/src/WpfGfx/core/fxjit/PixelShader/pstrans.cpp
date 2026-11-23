@@ -295,11 +295,18 @@ void CPSTrans::Initialize(  const DWORD *pCode,
 {
     Assert(pCode && ByteCodeSize);     // CPSTrans::Initialize - Invalid input parameters
 
-    //Reject excessively large bytecode to prevent integer overflow in 
-    //allocation size calculations (sizeof(struct) * instruction_count).
+    // Reject excessively large bytecode to prevent integer overflow in
+    // allocation size calculations (sizeof(struct) * instruction_count).
+    //
+    // Also reject bytecode whose size is not a whole number of DWORDs.  Shader
+    // bytecode is a stream of 32-bit tokens, so a valid size is always a
+    // multiple of sizeof(DWORD).  dwDwordCodeSize = ByteCodeSize/4 truncates,
+    // so the m_pCode buffer is sized to floor(ByteCodeSize/4) DWORDs while the
+    // memcpy below copies the full ByteCodeSize bytes; a misaligned size would
+    // overrun that allocation by 1-3 bytes.
     if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
     {
-        if (ByteCodeSize == 0 || ByteCodeSize > 1024 * 1024)
+        if (ByteCodeSize == 0 || ByteCodeSize > 1024 * 1024 || (ByteCodeSize % sizeof(DWORD)) != 0)
         {
             EXIT_WITH_STATUS(E_FAIL);
         }
@@ -507,7 +514,28 @@ void CPSTrans::Initialize(  const DWORD *pCode,
             }
             else
             {
-                while (*pToken & (1L<<31)) pToken++; // parameter tokens
+                // Skip parameter tokens.  The bounds check must run *before*
+                // dereferencing *pToken (the loop condition); otherwise a token
+                // stream that ends with parameter tokens and no D3DPS_END
+                // terminator reads one dword past the end of the buffer.
+                // _DWordCount() == dwDwordCodeSize already points one past the
+                // last valid dword, so the comparison must be ">=".
+                for (;;)
+                {
+                    if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+                    {
+                        if (_DWordCount() >= (int)dwDwordCodeSize)
+                        {
+                            DPFERR("CPSTrans::Initialize - Parameter tokens past end of bytecode!");
+                            EXIT_WITH_STATUS(E_FAIL);
+                        }
+                    }
+                    if (!(*pToken & (1L<<31)))
+                    {
+                        break;
+                    }
+                    pToken++; // parameter tokens
+                }
             }
             if (_DWordCount() > (int)dwDwordCodeSize)
             {
@@ -568,7 +596,9 @@ void CPSTrans::Initialize(  const DWORD *pCode,
     // ------------------------------------------------------------------------
     {
         DWORD* pToken = m_pCode;
+        DWORD* const pTokenEnd = m_pCode + dwDwordCodeSize;
         D3DPixelShaderInstruction* pInst = m_pD3DPixelShaderInstructionArray;
+        D3DPixelShaderInstruction* const pInstEnd = m_pD3DPixelShaderInstructionArray + m_cD3DInst;
         D3DPixelShaderInstruction* pPrevious_NonTrivial_Inst = NULL;
         pToken++; // skip over version
 
@@ -590,6 +620,20 @@ void CPSTrans::Initialize(  const DWORD *pCode,
 
         while (*pToken != D3DPS_END())
         {
+            // Defense-in-depth: guard every write to *pInst, including the
+            // early-continue opcode cases (COMMENT/DEF/DEFI/DEFB/NOP) that skip
+            // the overrun check at the bottom of the loop.  If the second pass
+            // ever produces more records than the first pass counted (and thus
+            // allocated), fail rather than write past the instruction array.
+            if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+            {
+                if (pInst >= pInstEnd)
+                {
+                    DPFERR("CPSTrans::Initialize - Instruction array overrun in second pass!");
+                    EXIT_WITH_STATUS(E_FAIL);
+                }
+            }
+
             pInst->ByteOffset = (BYTE*)pToken - (BYTE*)m_pCode;
             pInst->bPredicated = FALSE;
 
@@ -614,6 +658,17 @@ void CPSTrans::Initialize(  const DWORD *pCode,
                     switch(D3DSI_GETREGTYPE_RESOLVING_CONSTANTS(pInst->DstParam))
                     {
                     case D3DSPR_CONST:
+                        // The float constant-def array was sized in pass 1.  Bound
+                        // the index against that count so a pass-1/pass-2 desync
+                        // cannot write past the allocation.
+                        if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+                        {
+                            if (CurrConstDefF >= m_cConstDefsF)
+                            {
+                                DPFERR("CPSTrans::Initialize - Float constant def array overrun!");
+                                EXIT_WITH_STATUS(E_FAIL);
+                            }
+                        }
                         m_pConstDefsF[CurrConstDefF].RegNum = D3DSI_GETREGNUM_RESOLVING_CONSTANTS(pInst->DstParam);
 
                         // clamp constants on input to range of values in pixel shaders
@@ -624,6 +679,16 @@ void CPSTrans::Initialize(  const DWORD *pCode,
                             pToken++;
                         }
                         CurrConstDefF++;
+                        break;
+                    default:
+                        // Always advance past the 4 constant tokens even when
+                        // the register type is not D3DSPR_CONST.  Pass 1
+                        // unconditionally does pToken += 5 (dst + 4 values),
+                        // so pass 2 must consume the same tokens to stay in sync.
+                        if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+                        {
+                            pToken += 4;
+                        }
                         break;
                     }
                     pInst++;
@@ -637,6 +702,16 @@ void CPSTrans::Initialize(  const DWORD *pCode,
                     switch(D3DSI_GETREGTYPE_RESOLVING_CONSTANTS(pInst->DstParam))
                     {
                     case D3DSPR_CONSTINT:
+                        // The integer constant-def array was sized in pass 1.
+                        // Bound the index against that count.
+                        if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+                        {
+                            if (CurrConstDefI >= m_cConstDefsI)
+                            {
+                                DPFERR("CPSTrans::Initialize - Integer constant def array overrun!");
+                                EXIT_WITH_STATUS(E_FAIL);
+                            }
+                        }
                         m_pConstDefsI[CurrConstDefI].RegNum = D3DSI_GETREGNUM(pInst->DstParam);
 
                         for( UINT i = 0; i < 4; i++ )
@@ -646,6 +721,14 @@ void CPSTrans::Initialize(  const DWORD *pCode,
                             pToken++;
                         }
                         CurrConstDefI++;
+                        break;
+                    default:
+                        // Always advance past the 4 constant tokens to match
+                        // pass 1's unconditional pToken += 5.
+                        if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+                        {
+                            pToken += 4;
+                        }
                         break;
                     }
                     pInst++;
@@ -659,11 +742,29 @@ void CPSTrans::Initialize(  const DWORD *pCode,
                     switch(D3DSI_GETREGTYPE(pInst->DstParam))
                     {
                     case D3DSPR_CONSTBOOL:
+                        // The boolean constant-def array was sized in pass 1.
+                        // Bound the index against that count.
+                        if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+                        {
+                            if (CurrConstDefB >= m_cConstDefsB)
+                            {
+                                DPFERR("CPSTrans::Initialize - Boolean constant def array overrun!");
+                                EXIT_WITH_STATUS(E_FAIL);
+                            }
+                        }
                         m_pConstDefsB[CurrConstDefB].RegNum = D3DSI_GETREGNUM(pInst->DstParam);
                         pInst->bDefValue = *(BOOL*)pToken;
                         m_pConstDefsB[CurrConstDefB].b = 0!=*(BOOL*)pToken;
                         pToken++;
                         CurrConstDefB++;
+                        break;
+                    default:
+                        // Always advance past the 1 value token to match
+                        // pass 1's unconditional pToken += 2.
+                        if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+                        {
+                            pToken += 1;
+                        }
                         break;
                     }
                     pInst++;
@@ -684,8 +785,26 @@ void CPSTrans::Initialize(  const DWORD *pCode,
             switch(D3DSI_OPCODE_MASK & pInst->Opcode)
             {
             case D3DSIO_DCL:
+            {
                 pInst->DclInfoToken = *pToken++;
+
+                // Always consume the register token so the second pass advances
+                // the same number of tokens as the first pass, even if bounds-
+                // check protection is disabled.  Without this, a register token
+                // with bit 31 clear is not consumed here and is instead parsed
+                // as a new instruction on the next iteration, creating more
+                // records than were allocated.
+                DWORD dclRegisterToken = *pToken++;
+
+                // Store/count the consumed DCL register token unconditionally so
+                // the instruction record is consistent regardless of the bounds-
+                // check kill-switch.  This matches pre-change behavior, where a
+                // register token with bit 31 set was stored by the generic
+                // destination-parameter block below.
+                pInst->DstParam = dclRegisterToken;
+                pInst->DstParamCount++;
                 break;
+            }
             }
             if (*pToken & (1L<<31))
             {
@@ -712,6 +831,18 @@ void CPSTrans::Initialize(  const DWORD *pCode,
             }
             if(pInst->bPredicated)
             {
+                // The Assert below is compiled out in retail.  The predication
+                // flag is attacker-controlled, so back it with a real runtime
+                // bounds/format check: a predicated instruction with a missing
+                // predicate token must not read past the end of the bytecode.
+                if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+                {
+                    if ((pToken >= pTokenEnd) || !(*pToken & (1L<<31)))
+                    {
+                        DPFERR("CPSTrans::Initialize - Expected source predicate token!");
+                        EXIT_WITH_STATUS(E_FAIL);
+                    }
+                }
                 Assert(*pToken & (1L<<31));             // CPSTrans::Initialize - Expected source predicate token.
                 pInst->SrcPredicateToken = *pToken++;
             }
@@ -730,6 +861,18 @@ void CPSTrans::Initialize(  const DWORD *pCode,
                 pInst->SrcParam[pInst->SrcParamCount] = *pToken++;
                 if( D3DSHADER_ADDRMODE_RELATIVE == D3DSI_GETADDRESSMODE(pInst->SrcParam[pInst->SrcParamCount]) )
                 {
+                    // The Assert below is compiled out in retail.  The relative
+                    // addressing mode is attacker-controlled, so back it with a
+                    // real runtime bounds/format check to prevent reading the
+                    // relative-address token past the end of the bytecode buffer.
+                    if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+                    {
+                        if ((pToken >= pTokenEnd) || !(*pToken & (1L<<31)))
+                        {
+                            DPFERR("CPSTrans::Initialize - Expected relative address token!");
+                            EXIT_WITH_STATUS(E_FAIL);
+                        }
+                    }
                     Assert(*pToken & (1L<<31));         // CPSTrans::Initialize - Expected relative address token
                     pInst->SrcParamRelAddr[pInst->SrcParamCount] = *pToken++;
                 }
@@ -1022,8 +1165,27 @@ void CPSTrans::Initialize(  const DWORD *pCode,
             pPrevious_NonTrivial_Inst = pInst;
 
             pInst++;
+
+            // Defense-in-depth: reject the shader if the second pass produced
+            // more records than the first pass counted (and thus allocated).
+            if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+            {
+                if (pInst >= pInstEnd)
+                {
+                    DPFERR("CPSTrans::Initialize - Instruction array overrun in second pass!");
+                    EXIT_WITH_STATUS(E_FAIL);
+                }
+            }
         }
         // Note the end token.
+        if (!WpfGfxSwitches::IsWpfGfxBoundsCheckProtectionDisabled())
+        {
+            if (pInst >= pInstEnd)
+            {
+                DPFERR("CPSTrans::Initialize - No room for END record!");
+                EXIT_WITH_STATUS(E_FAIL);
+            }
+        }
         pInst->Opcode = D3DPS_END();
         pInst->ByteOffset = pInst->ByteOffset = (BYTE*)pToken - (BYTE*)m_pCode;
         if(pPrevious_NonTrivial_Inst && (pPrevious_NonTrivial_Inst->Opcode & D3DSI_COISSUE))

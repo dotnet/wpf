@@ -543,7 +543,18 @@ CMAP_SUBHEADER_GEN CmapSubHeader;
                 usMaxGlyphIndexUsed = usGlyphIdx;
                 ++ (usGlyphKeepCount);
 
-                GetComponentGlyphList( pInputBufferInfo, usGlyphIdx, &usnComponents, pausComponents, usnMaxComponents, &usnComponentDepth, 0, usIdxToLocFmt, ulLocaOffset, ulGlyfOffset);
+                if (FONT_SECURITY_CHECKS_ENABLED())
+                {
+                    int16 errCode = GetComponentGlyphList( pInputBufferInfo, usGlyphIdx, &usnComponents, pausComponents, usnMaxComponents, &usnComponentDepth, 0, usIdxToLocFmt, ulLocaOffset, ulGlyfOffset);
+                    if (errCode != NO_ERROR)
+                    {
+                        usnComponents = 0;  /* skip this glyph's components — invalid composite */
+                    }
+                }
+                else
+                {
+                    GetComponentGlyphList( pInputBufferInfo, usGlyphIdx, &usnComponents, pausComponents, usnMaxComponents, &usnComponentDepth, 0, usIdxToLocFmt, ulLocaOffset, ulGlyfOffset);
+                }
                 for ( j = 0; j < usnComponents; j++ )   /* check component value before assignment */
                 {
                     if ((pausComponents[ j ] < usGlyphListCount) && ((puchKeepGlyphList)[ pausComponents[ j ] ] == 0))

@@ -1,6 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Reflection;
 using System.Threading;
@@ -20,6 +21,11 @@ namespace PresentationCore.Tests.MS.Internal.AppModel;
 /// local/private IP fast path, and the fail-closed behavior when the security manager could
 /// not be created. Zone-classification for routable hosts is delegated to the OS zone manager
 /// and is not unit-testable without a live COM object, so it is intentionally not covered here.
+///
+/// The per-host cache stores a private nested <c>CachedZoneDecision</c> value (not a bare
+/// <see cref="bool"/>), so this fixture accesses it purely through reflection and the
+/// non-generic <see cref="IDictionary"/> interface rather than a statically-typed
+/// <see cref="ConcurrentDictionary{TKey, TValue}"/>.
 /// </remarks>
 [Collection(CredentialPolicyCollection.Name)]
 public sealed class DefaultCredentialsZonePolicyTests : IDisposable
@@ -34,6 +40,9 @@ public sealed class DefaultCredentialsZonePolicyTests : IDisposable
 
     private static readonly FieldInfo s_localHostCacheField =
         s_policyType.GetField("s_localHostCache", BindingFlags.Static | BindingFlags.NonPublic)!;
+
+    private static readonly Type s_cachedZoneDecisionType =
+        s_policyType.GetNestedType("CachedZoneDecision", BindingFlags.NonPublic)!;
 
     private readonly object? _originalSecurityManager;
     private readonly bool _originalSecurityManagerInitFailed;
@@ -54,8 +63,19 @@ public sealed class DefaultCredentialsZonePolicyTests : IDisposable
         Monitor.Exit(CredentialPolicyCollection.s_gate);
     }
 
-    private static ConcurrentDictionary<string, bool> GetCache() =>
-        (ConcurrentDictionary<string, bool>)s_localHostCacheField.GetValue(null)!;
+    // The cache's value type (CachedZoneDecision) is a private nested struct, so it can
+    // only be accessed through the non-generic IDictionary interface implemented by
+    // ConcurrentDictionary<TKey, TValue>.
+    private static IDictionary GetCache() =>
+        (IDictionary)s_localHostCacheField.GetValue(null)!;
+
+    // Builds a cached "negative" (not local/private) decision the same way the
+    // production code does, via the private CachedZoneDecision(bool) constructor.
+    private static void SetCachedNegativeDecision(string host)
+    {
+        object cachedDecision = Activator.CreateInstance(s_cachedZoneDecisionType, false)!;
+        GetCache()[host] = cachedDecision;
+    }
 
     [Fact]
     public void ShouldSendDefaultCredentials_NullUri_ReturnsFalse()
@@ -96,7 +116,7 @@ public sealed class DefaultCredentialsZonePolicyTests : IDisposable
 
         // Mark the host as non-local so the decision falls through to the (unavailable)
         // zone manager rather than the local/private fast path.
-        GetCache()[Host] = false;
+        SetCachedNegativeDecision(Host);
 
         // Simulate a failed COM activation: clear the singleton and set the
         // "previously failed" flag so EnsureSecurityManager will not retry.

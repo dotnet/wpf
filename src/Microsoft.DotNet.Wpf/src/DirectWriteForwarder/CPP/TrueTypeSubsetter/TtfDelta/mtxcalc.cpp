@@ -20,6 +20,7 @@
 #include "ttftabl1.h"
 #include "ttftable.h"
 #include "ttferror.h" /* error codes */
+#include "ttf_safe_checks.h"
 #include "mtxcalc.h"
 
 
@@ -95,7 +96,16 @@ BOOL bStatus;
 
     
 /* This call has changed to be recursive, will flatten out the tree */
-    GetComponentGlyphList( pInputBufferInfo, usGlyphIdx, &usnGlyphs, pausComponents, usnMaxComponents, pusnComponentDepth, 0, indexToLocFormat, ulLocaOffset, ulGlyfOffset);
+    if (FONT_SECURITY_CHECKS_ENABLED())
+    {
+        errCode = GetComponentGlyphList( pInputBufferInfo, usGlyphIdx, &usnGlyphs, pausComponents, usnMaxComponents, pusnComponentDepth, 0, indexToLocFormat, ulLocaOffset, ulGlyfOffset);
+        if (errCode != NO_ERROR)
+            return errCode;
+    }
+    else
+    {
+        GetComponentGlyphList( pInputBufferInfo, usGlyphIdx, &usnGlyphs, pausComponents, usnMaxComponents, pusnComponentDepth, 0, indexToLocFormat, ulLocaOffset, ulGlyfOffset);
+    }
 
     /* track max number of components at any given level */
     *pusnComponentElements = max( *pusnComponentElements, usnGlyphs );
@@ -194,9 +204,20 @@ BOOL bStatus;
         {
         /* start with usnInstructions at 0 for MAX test in fn call... */
             usnCompElements = usnCompDepth = usnInstructions = 0;
-            GetCompositeGlyphStats( pInputBufferInfo, usGlyphIdx, &snContours, &usnPoints,
-                 &usnInstructions, &usnCompElements, &usnCompDepth,
-                 Head.indexToLocFormat, ulLocaOffset, ulGlyfOffset, pausComponents, usnMaxComponents );
+            if (FONT_SECURITY_CHECKS_ENABLED())
+            {
+                int16 compositeErr = GetCompositeGlyphStats( pInputBufferInfo, usGlyphIdx, &snContours, &usnPoints,
+                     &usnInstructions, &usnCompElements, &usnCompDepth,
+                     Head.indexToLocFormat, ulLocaOffset, ulGlyfOffset, pausComponents, usnMaxComponents );
+                if (compositeErr != NO_ERROR)
+                    return compositeErr;
+            }
+            else
+            {
+                GetCompositeGlyphStats( pInputBufferInfo, usGlyphIdx, &snContours, &usnPoints,
+                     &usnInstructions, &usnCompElements, &usnCompDepth,
+                     Head.indexToLocFormat, ulLocaOffset, ulGlyfOffset, pausComponents, usnMaxComponents );
+            }
             *pusMaxCompositeContours = max( *pusMaxCompositeContours, (uint16) snContours );
             *pusMaxCompositePoints   = max( *pusMaxCompositePoints, usnPoints );
             *pusMaxInstructions      = max( *pusMaxInstructions, usnInstructions );

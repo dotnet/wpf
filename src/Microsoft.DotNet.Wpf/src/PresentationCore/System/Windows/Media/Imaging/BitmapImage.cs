@@ -74,6 +74,11 @@ namespace System.Windows.Media.Imaging
                 throw new InvalidOperationException(SR.Format(SR.Image_NeitherArgument, "UriSource", "StreamSource"));
             }
 
+            // Capture the XPS package origin during the parse window so that
+            // the deferred FinalizeCreation path (DelayCreation) can enforce
+            // same-package containment even after ActivePackageUri is restored.
+            _xpsPackageOrigin = XpsLoadingContext.ActivePackageUri;
+
             // If the Uri is relative, use delay creation as the BaseUri could be set at a later point
             if (UriSource != null && !UriSource.IsAbsoluteUri && CacheOption != BitmapCacheOption.OnLoad)
             {
@@ -283,6 +288,14 @@ namespace System.Windows.Media.Imaging
             Uri uri = UriSource;
             if (_baseUri != null)
                 uri = new Uri(_baseUri, UriSource);
+
+            // Enforce XPS package boundary before any network request.
+            // _xpsPackageOrigin was captured in EndInit (during the parse window).
+            if (_xpsPackageOrigin != null
+                && !XpsLoadingContext.IsUriAllowedAgainstPackage(_xpsPackageOrigin, uri))
+            {
+                throw new FileFormatException(SR.Resource_XpsPackageBoundaryViolation);
+            }
 
             if ((CreateOptions & BitmapCreateOptions.IgnoreImageCache) != 0)
             {
@@ -922,6 +935,10 @@ namespace System.Windows.Media.Imaging
         private BitmapSource _finalSource;
 
         private BitmapImage _cachedBitmapImage;
+
+        // Captured in EndInit so deferred FinalizeCreation can enforce
+        // XPS package boundary even after the ambient context has ended.
+        private Uri _xpsPackageOrigin;
 
         #endregion
     }

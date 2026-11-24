@@ -1,0 +1,150 @@
+# WPF issue triage
+
+This directory defines the policy for a planned issue triage bot. It does not
+install a workflow or change issues. Area labeling, priority labeling, and project
+updates will be introduced separately, starting with read-only previews.
+
+## Scope
+
+The bot will assess open, unlocked, human-created WPF issues, including reports
+without labels. Bot-authored issues, pull requests, and unidentified authors must
+be rejected before analysis and checked again before publication. A human
+dispatching a bot-authored issue does not make it eligible.
+
+The permitted issue changes are:
+
+- Add one existing primary-area label when the evidence is clear and no primary
+  area is already assigned.
+- Add `Priority:0` or `Priority:1` under the [priority policy](priority-policy.md),
+  after backlog calibration is reviewed and approved.
+
+Existing labels and maintainer decisions, including label removals, take
+precedence. Uncertain assessments leave the affected labels unchanged. The bot
+must not create labels or add `Priority:2` or `Priority:3`.
+
+The bot will not post issue comments, change issue Type, assign people, change
+milestones, close issues, request reproductions, suggest duplicates, or add team,
+feedback, or stale labels. Existing issue-management workflows remain unchanged.
+
+## Intended operation
+
+Automatic assessment will cover issue opens, edits, reopens, and author
+follow-ups. Manual dispatch will support previews and resumable backlog
+assessment. Automatic publication remains disabled until its rollout checks pass.
+
+Analysis will receive bounded issue evidence and return structured output. Issue
+text, comments, code samples, and links are untrusted evidence, not instructions.
+The model must not execute samples, fetch arbitrary links, or write issues.
+
+A separate publisher must require successful threat detection, validate the
+output against trusted policy and existing labels, and recheck the issue before
+an additive write. Stale, incomplete, or invalid results must not authorize writes.
+Ambiguous mutation results require inspection rather than blind retries.
+
+Versioned Actions artifacts will hold public-issue assessments and resumable
+checkpoints with explicit retention. Expired artifacts or incomplete coverage
+require read-only repair before board publication resumes.
+
+The board and priority publisher resolve a reviewed baseline plus trusted
+assessment/publication deltas from successful `main` runs. Every eligible issue
+needs current coverage under the same policy and runtime release metadata.
+Artifacts expire after 90 days; publishing labels does not renew assessment age.
+The manual board workflow defaults to preview and uploads no project data.
+
+## Private top-10 project
+
+The planned project will have private visibility and a selected-issues view
+containing at most 10 open, human-created bugs. Private maintainer controls will
+pin or exclude issues; pins count toward the limit. More than 10 eligible pins
+requires maintainer resolution.
+
+Selection will use eligible pins, authoritative or approved priority,
+evidence-backed impact, compatibility/regression, issue-body thumbs-up reactions,
+and issue number as a stable final tie-breaker. Unprioritized bugs may fill
+remaining places without receiving P2/P3 labels.
+
+A separate GitHub Action will refresh the project daily and on manual dispatch,
+using current assessments without rerunning the model. It must preserve human
+controls and stop without board writes when assessment coverage, access, private
+visibility, or project schema cannot be verified.
+
+Private controls, selections, ranks, reasons, and project API payloads must not
+appear in public Actions logs, summaries, or artifacts. A private project does
+not make workflow output in this public repository private.
+
+## Setup and rollout prerequisites
+
+Before live analysis, maintainers must confirm organization support for the
+agentic workflow, Copilot billing, approved action/runtime pins, artifact
+retention, and a protected approval mechanism. A backlog run needs an explicit
+aggregate analysis budget as well as per-run limits.
+
+Project setup requires an authorized maintainer to create the private project,
+configure its fields and selected view, and grant the required team/app access.
+Use a project-scoped GitHub App credential or an approved project token only in
+the trusted project job. Do not expose it to analysis, detection, or PR jobs.
+Issue publication uses a separate job-scoped `GITHUB_TOKEN`.
+
+The private project needs these exact fields: `Selection control` (single select:
+Auto, Pin, Exclude), `Selected` (single select: Yes, No), `Rank` (number),
+`Priority` (single select: P0, P1), and `Selection reason` (text). Configure the
+default view to filter `Selected: Yes` and sort by Rank. Keep the project number
+and approved project credential in `WPF_TRIAGE_PROJECT_NUMBER` and
+`WPF_TRIAGE_PROJECT_TOKEN` secrets, available only to the project job.
+
+Rollout starts with offline fixtures and read-only previews. Priority publication
+requires a reviewed complete backlog assessment. Area publication and project
+publication each require an accepted narrow pilot before automatic activation.
+Each capability must remain independently disableable.
+
+## Pilot and recovery
+
+Offline fixtures cover assessment, additive area publication, refreshed coverage,
+and private selection. They do not prove live billing, organization permissions,
+or persistent project updates. This implementation is fixed to `dotnet/wpf`;
+testing against a different repository requires a reviewed identity change.
+
+Before a live pilot, obtain approval for its issue list and analysis budget.
+Run a single manual assessment and inspect the validated artifact. Preview the
+publisher, then explicitly authorize one area-only manual write and verify the
+issue labels and absence of comments. Keep automatic publication off.
+
+Inventory the backlog with batch size zero, then assess bounded batches under an
+explicit cumulative credit budget. Resume from trusted runs; inspect error
+request IDs before opting into retries. Review all P0/P1 proposals and deferred
+samples, then approve the complete manifest through `wpf-triage-priority`.
+Counts above 20 P0 or 50 P1 require policy review and reassessment.
+
+Configure the private project and preview its refresh before an authorized
+manual write. Verify the selected view, ordering, pin/exclude behavior, and
+persistent read-back privately. Record pilot acceptance before automatic writes.
+Do not post project selections or controls in public logs, artifacts, or PRs.
+
+For an emergency stop, disable the analysis, area, priority, and board controls
+and cancel active runs. Inspect ambiguous or partial writes before rerunning a
+fresh preview. A resumed reconciliation preserves overrides and repairs managed
+fields; it never retries an uncertain mutation automatically. Missing coverage
+requires a read-only repair pass. An expired baseline requires fresh calibration.
+Remove only confirmed bot-owned additions through an approved manual recovery.
+
+## Workflow source
+
+`issue-triage.md` in `.github/workflows` is a GitHub Agentic Workflows source
+file. Its YAML frontmatter configures execution; the Markdown body contains the
+agent instructions. GitHub Actions runs the compiled `issue-triage.lock.yml`.
+Edit the `.md` source and regenerate the lock file with
+`gh aw compile issue-triage --strict --no-check-update`. CI checks for drift.
+
+## Area configuration and tests
+
+`area-map.json` lists permitted primary-area labels and their routing guidance.
+Validate every configured name against the current repository label catalog
+before analysis. Names are case-sensitive; an unclear or unmapped area must
+remain unlabelled.
+
+The configuration loader and tests use Python 3.12 and the standard library.
+Run from the repository root:
+
+```powershell
+python -m unittest discover -s .github\scripts\issue-triage\tests -v
+```

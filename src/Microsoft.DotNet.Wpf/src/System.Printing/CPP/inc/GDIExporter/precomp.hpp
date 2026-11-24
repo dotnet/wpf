@@ -34,6 +34,7 @@ using namespace System::Windows::Media;
 using namespace Microsoft::Internal::AlphaFlattener;
 
 #include "..\LegacyDevice.hpp"
+#include "..\PrintingSwitches.h"
 
 using namespace System::Printing;
                 

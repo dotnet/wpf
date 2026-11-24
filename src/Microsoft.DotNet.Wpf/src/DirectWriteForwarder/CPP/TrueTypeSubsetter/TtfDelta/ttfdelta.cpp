@@ -353,6 +353,11 @@ HEAD Head;
                 }
                 ++j;
             }
+            if (CMAP_SAFE_CHECKS_ENABLED())
+            {
+                if (i == usGlyphListCount)
+                    break; /* prevent uint16 wraparound on ++i */
+            }
         }
         ulLocaLength = (uint32) (usDttfGlyphIndexCount+1) * sizeof(uint16);
     }
@@ -373,6 +378,11 @@ HEAD Head;
                         break;
                 }
                 ++j;
+            }
+            if (CMAP_SAFE_CHECKS_ENABLED())
+            {
+                if (i == usGlyphListCount)
+                    break; /* prevent uint16 wraparound on ++i */
             }
         }
         ulLocaLength = (uint32) (usDttfGlyphIndexCount+1) * sizeof(uint32);

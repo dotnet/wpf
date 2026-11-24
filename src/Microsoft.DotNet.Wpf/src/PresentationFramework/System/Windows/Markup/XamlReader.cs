@@ -375,6 +375,26 @@ namespace System.Windows.Markup
 
                             XmlAttributeProperties.SetXmlnsDictionary(dObject, dictionary);
                         }
+
+                        if (_textReader is RestrictiveXamlXmlReader)
+                        {
+                            if (args.Instance is System.Windows.ResourceDictionary rd)
+                            {
+                                rd.IsUnsafe = true;
+                            }
+                            else if (args.Instance is System.Windows.Controls.Frame frame)
+                            {
+                                frame.NavigationService.IsUnsafe = true;
+                            }
+                            else if (args.Instance is System.Windows.Navigation.NavigationWindow nw)
+                            {
+                                nw.NavigationService.IsUnsafe = true;
+                            }
+                            else if (!FrameworkAppContextSwitches.OptOutOfRestrictiveXamlNavigationBlock && args.Instance is DependencyObject rootElement)
+                            {
+                                RestrictiveXamlContext.SetIsRestrictivelyLoaded(rootElement, true);
+                            }
+                        }
                     };
 
                 _objectWriter = new System.Xaml.XamlObjectWriter(_textReader.SchemaContext, objectSettings);

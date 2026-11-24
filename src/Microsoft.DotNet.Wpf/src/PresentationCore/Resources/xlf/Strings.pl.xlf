@@ -2752,6 +2752,11 @@
         <target state="translated">Bieżąca CachePolicy jest typu CacheOnly, ale żądany zasób nie istnieje w pamięci podręcznej.</target>
         <note />
       </trans-unit>
+      <trans-unit id="Resource_XpsPackageBoundaryViolation">
+        <source>The URI references a resource outside the current XPS package. External URIs (http, https, file, UNC, cross-package) are not permitted when loading XPS content.</source>
+        <target state="new">The URI references a resource outside the current XPS package. External URIs (http, https, file, UNC, cross-package) are not permitted when loading XPS content.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="RoutedEventArgsMustHaveRoutedEvent">
         <source>Every RoutedEventArgs must have a non-null RoutedEvent associated with it.</source>
         <target state="translated">Wszystkie argumenty RoutedEventArgs muszą mieć skojarzoną niezerową właściwość RoutedEvent.</target>

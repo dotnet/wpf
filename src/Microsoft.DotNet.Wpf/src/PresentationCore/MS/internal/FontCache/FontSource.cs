@@ -14,6 +14,7 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 using MS.Internal.IO.Packaging;
+using MS.Internal.AppModel;
 using MS.Internal.Text.TextInterface;
 
 namespace MS.Internal.FontCache
@@ -67,6 +68,7 @@ namespace MS.Internal.FontCache
             _fontUri = fontUri;
             _isComposite = isComposite;
             _isInternalCompositeFont = isInternalCompositeFont;
+            _xpsPackageOrigin = XpsLoadingContext.ActivePackageUri;
             Invariant.Assert(_isInternalCompositeFont || _fontUri.IsAbsoluteUri);
             Debug.Assert(_isInternalCompositeFont || String.IsNullOrEmpty(_fontUri.Fragment));
         }
@@ -181,6 +183,14 @@ namespace MS.Internal.FontCache
                 }
                 else
                 {
+                    // Security: When loading XPS content, block font URIs that escape
+                    // the current package to prevent SSRF. Uses stored origin to
+                    // handle deferred loading after XPS parse context has ended.
+                    if (!_fontUri.IsFile && !XpsLoadingContext.IsUriAllowedAgainstPackage(_xpsPackageOrigin, _fontUri))
+                    {
+                        throw new FileFormatException(SR.Resource_XpsPackageBoundaryViolation);
+                    }
+
                     WebResponse response = WpfWebRequestHelper.CreateRequestAndGetResponse(_fontUri);
                     fontStream = response.GetResponseStream();
                     if (string.Equals(response.ContentType, ObfuscatedContentType, StringComparison.Ordinal))
@@ -255,7 +265,33 @@ namespace MS.Internal.FontCache
             }
             else
             {
+                // Security: When loading XPS content, block font URIs that escape
+                // the current package to prevent SSRF. Uses stored origin to
+                // handle deferred loading after XPS parse context has ended.
+                if (!XpsLoadingContext.IsUriAllowedAgainstPackage(_xpsPackageOrigin, _fontUri))
+                {
+                    throw new FileFormatException(SR.Resource_XpsPackageBoundaryViolation);
+                }
+
                 WebRequest request = PackWebRequestFactory.CreateWebRequest(_fontUri);
+
+                // Apply the same default-credentials zone policy that
+                // WpfWebRequestHelper.CreateRequest enforces. This code path
+                // uses PackWebRequestFactory (needed for pack:// URIs) and
+                // therefore bypasses the central WpfWebRequestHelper chokepoint.
+                // Without this gate, a font URI referencing an Internet-zone
+                // host could cause default credentials to be sent
+                // unintentionally.
+                if (request is HttpWebRequest httpFontRequest
+                    && !CoreAppContextSwitches.DoNotApplyZoneCheckForDefaultCredentials)
+                {
+                    if (DefaultCredentialsZonePolicy.ShouldSendDefaultCredentials(_fontUri))
+                    {
+                        httpFontRequest.UseDefaultCredentials = true;
+                    }
+                    // else: Internet/Untrusted zone — no default credentials attached.
+                }
+
                 WebResponse response = request.GetResponse();
 
                 fontStream = response.GetResponseStream();
@@ -441,6 +477,11 @@ namespace MS.Internal.FontCache
         private bool _isInternalCompositeFont;
 
         private Uri     _fontUri;
+
+        // Captured at construction time so deferred font loads (e.g. during
+        // rendering/printing) can still enforce same-package containment
+        // after the ambient XpsLoadingContext has been restored.
+        private Uri _xpsPackageOrigin;
 
         private static readonly SizeLimitedCache<Uri, byte[]> s_resourceCache = new(MaximumCacheItems);
 

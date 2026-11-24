@@ -2752,6 +2752,11 @@
         <target state="translated">Текущая политика CachePolicy имеет тип CacheOnly, но запрошенный ресурс в кэше отсутствует.</target>
         <note />
       </trans-unit>
+      <trans-unit id="Resource_XpsPackageBoundaryViolation">
+        <source>The URI references a resource outside the current XPS package. External URIs (http, https, file, UNC, cross-package) are not permitted when loading XPS content.</source>
+        <target state="new">The URI references a resource outside the current XPS package. External URIs (http, https, file, UNC, cross-package) are not permitted when loading XPS content.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="RoutedEventArgsMustHaveRoutedEvent">
         <source>Every RoutedEventArgs must have a non-null RoutedEvent associated with it.</source>
         <target state="translated">С каждой группой RoutedEventArgs должно быть связано свойство RoutedEvent, не являющееся неопределенным.</target>

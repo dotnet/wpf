@@ -13,6 +13,12 @@
 # Set to true to output binary log from msbuild. Note that emitting binary log slows down the build.
 [bool]$binaryLog = if (Test-Path variable:binaryLog) { $binaryLog } else { $ci -and !$excludeCIBinarylog }
 
+# Set to true to use the pipelines logger which will enable Azure logging output.
+# https://github.com/Microsoft/azure-pipelines-tasks/blob/master/docs/authoring/commands.md
+# This flag is meant as a temporary opt-in for the feature while validating it across
+# our consumers. It will be deleted in the future.
+[bool]$pipelinesLog = if (Test-Path variable:pipelinesLog) { $pipelinesLog } else { $ci }
+
 # Turns on machine preparation/clean up code that changes the machine state (e.g. kills build processes).
 [bool]$prepareMachine = if (Test-Path variable:prepareMachine) { $prepareMachine } else { $false }
 
@@ -25,11 +31,16 @@
 # Set to true to reuse msbuild nodes. Recommended to not reuse on CI.
 [bool]$nodeReuse = if (Test-Path variable:nodeReuse) { $nodeReuse } else { !$ci }
 
+# Set to true to build with MSBuild's multi-threaded mode (-mt). Enabled by default for both local and CI builds.
+# Not applied when building with msbuild.exe (VS MSBuild).
+[bool]$msbuildMultiThreaded = if (Test-Path variable:msbuildMultiThreaded) { $msbuildMultiThreaded } else { $true }
+
 # Configures warning treatment in msbuild.
 [bool]$warnAsError = if (Test-Path variable:warnAsError) { $warnAsError } else { $true }
 
 # Specifies semi-colon delimited list of warning codes that should not be treated as errors.
-[string]$warnNotAsError = if (Test-Path variable:warnNotAsError) { $warnNotAsError } else { '' }
+# Defaults to NuGet Audit warning codes NU1901-NU1904.
+[string]$warnNotAsError = if ((Test-Path variable:warnNotAsError) -and $warnNotAsError) { $warnNotAsError } else { 'NU1901;NU1902;NU1903;NU1904' }
 
 # Specifies which msbuild engine to use for build: 'vs', 'dotnet' or unspecified (determined based on presence of tools.vs in global.json).
 [string]$msbuildEngine = if (Test-Path variable:msbuildEngine) { $msbuildEngine } else { $null }
@@ -64,6 +75,8 @@ $ErrorActionPreference = 'Stop'
 
 # True when the build is running within the VMR.
 [bool]$fromVMR = if (Test-Path variable:fromVMR) { $fromVMR } else { $false }
+
+[bool]$disablePipelineSetResult = if (Test-Path variable:disablePipelineSetResult) { $disablePipelineSetResult } else { $false }
 
 function Create-Directory ([string[]] $path) {
     New-Item -Path $path -Force -ItemType 'Directory' | Out-Null
@@ -172,7 +185,7 @@ function InitializeDotNetCli([bool]$install, [bool]$createSdkLocationFile) {
     }
   }
 
-  $dotnetSdkVersion = $GlobalJson.tools.dotnet
+  $dotnetSdkVersion = GetDotNetSdkVersion
 
   # Use dotnet installation specified in DOTNET_INSTALL_DIR if it contains the required SDK version,
   # otherwise install the dotnet CLI and SDK to repo local .dotnet directory to avoid potential permission issues.
@@ -226,6 +239,24 @@ function InitializeDotNetCli([bool]$install, [bool]$createSdkLocationFile) {
   Write-PipelineSetVariable -Name 'DOTNET_NOLOGO' -Value '1'
 
   return $global:_DotNetInstallDir = $dotnetRoot
+}
+
+# Returns the .NET SDK version to install: 'tools.dotnet' if specified, otherwise 'sdk.version', otherwise $null.
+function GetDotNetSdkVersion() {
+  if ((Get-Member -InputObject $GlobalJson.tools -Name 'dotnet') -and $GlobalJson.tools.dotnet) {
+    return $GlobalJson.tools.dotnet
+  }
+
+  if ((Get-Member -InputObject $GlobalJson -Name 'sdk') -and (Get-Member -InputObject $GlobalJson.sdk -Name 'version') -and $GlobalJson.sdk.version) {
+    return $GlobalJson.sdk.version
+  }
+
+  return $null
+}
+
+# True if global.json specifies a .NET SDK version to install, either via 'tools.dotnet' or via 'sdk.version'.
+function GlobalJsonSpecifiesDotNetSdk() {
+  return [bool](GetDotNetSdkVersion)
 }
 
 function Retry($downloadBlock, $maxRetries = 5) {
@@ -432,11 +463,31 @@ function InitializeVisualStudioMSBuild([object]$vsRequirements = $null) {
   $msbuildVersionDir = if ([int]$vsMajorVersion -lt 16) { "$vsMajorVersion.0" } else { "Current" }
 
   $local:BinFolder = Join-Path $vsInstallDir "MSBuild\$msbuildVersionDir\Bin"
-  $local:Prefer64bit = if (Get-Member -InputObject $vsRequirements -Name 'Prefer64bit') { $vsRequirements.Prefer64bit } else { $false }
-  if ($local:Prefer64bit -and (Test-Path(Join-Path $local:BinFolder "amd64"))) {
-    $global:_MSBuildExe = Join-Path $local:BinFolder "amd64\msbuild.exe"
-  } else {
-    $global:_MSBuildExe = Join-Path $local:BinFolder "msbuild.exe"
+
+  # Use the MSBuild matching the host's process architecture (e.g. amd64 or arm64),
+  # falling back to the 32-bit MSBuild in the root Bin folder when no matching subfolder exists.
+
+  # Determine the architecture of the current process, accounting for a 32-bit process
+  # running on a 64-bit OS (PROCESSOR_ARCHITEW6432 holds the real machine architecture).
+  $local:ProcessArchitecture = $env:PROCESSOR_ARCHITECTURE
+  if (($local:ProcessArchitecture -eq 'x86') -and ($env:PROCESSOR_ARCHITEW6432)) {
+    $local:ProcessArchitecture = $env:PROCESSOR_ARCHITEW6432
+  }
+
+  # Map the architecture to the corresponding MSBuild subfolder. The 32-bit MSBuild lives in the
+  # root Bin folder, so x86 maps to an empty subfolder.
+  $local:MSBuildArchSubFolder = switch ($local:ProcessArchitecture) {
+    'AMD64' { 'amd64' }
+    'ARM64' { 'arm64' }
+    default { '' }
+  }
+
+  $global:_MSBuildExe = Join-Path $local:BinFolder "msbuild.exe"
+  if ($local:MSBuildArchSubFolder) {
+    $local:ArchMSBuildExe = Join-Path $local:BinFolder (Join-Path $local:MSBuildArchSubFolder "msbuild.exe")
+    if (Test-Path $local:ArchMSBuildExe) {
+      $global:_MSBuildExe = $local:ArchMSBuildExe
+    }
   }
 
   return $global:_MSBuildExe
@@ -531,6 +582,16 @@ function LocateVisualStudio([object]$vsRequirements = $null){
 }
 
 function InitializeBuildTool() {
+  # Allow a caller (e.g. a bootstrap script running out-of-proc) to inject the build tool via
+  # environment variables instead of the in-proc $global:_BuildTool variable. Only Path and
+  # Command are consumed by the MSBuild function below, so those are all that's needed.
+  if ($env:_BuildToolPath) {
+    return $global:_BuildTool = @{
+      Path    = $env:_BuildToolPath
+      Command = $env:_BuildToolCommand
+    }
+  }
+
   if (Test-Path variable:global:_BuildTool) {
     # If the requested msbuild parameters do not match, clear the cached variables.
     if($global:_BuildTool.Contains('ExcludePrereleaseVS') -and $global:_BuildTool.ExcludePrereleaseVS -ne $excludePrereleaseVS) {
@@ -545,20 +606,20 @@ function InitializeBuildTool() {
     $msbuildEngine = GetDefaultMSBuildEngine
   }
 
-  # Initialize dotnet cli if listed in 'tools'
+  # Initialize dotnet cli if global.json specifies a .NET SDK version ('tools.dotnet' or 'sdk.version')
   $dotnetRoot = $null
-  if (Get-Member -InputObject $GlobalJson.tools -Name 'dotnet') {
+  if (GlobalJsonSpecifiesDotNetSdk) {
     $dotnetRoot = InitializeDotNetCli -install:$restore
   }
 
   if ($msbuildEngine -eq 'dotnet') {
     if (!$dotnetRoot) {
-      Write-PipelineTelemetryError -Category 'InitializeToolset' -Message "/global.json must specify 'tools.dotnet'."
+      Write-PipelineTelemetryError -Category 'InitializeToolset' -Message "/global.json must specify 'tools.dotnet' or 'sdk.version'."
       ExitWithExitCode 1
     }
     $dotnetPath = Join-Path $dotnetRoot (GetExecutableFileName 'dotnet')
 
-    $buildTool = @{ Path = $dotnetPath; Command = 'msbuild'; Tool = 'dotnet'; Framework = 'net' }
+    $buildTool = @{ Path = $dotnetPath; Command = 'msbuild' }
   } elseif ($msbuildEngine -eq "vs") {
     try {
       $msbuildPath = InitializeVisualStudioMSBuild
@@ -567,7 +628,7 @@ function InitializeBuildTool() {
       ExitWithExitCode 1
     }
 
-    $buildTool = @{ Path = $msbuildPath; Command = ""; Tool = "vs"; Framework = "netframework"; ExcludePrereleaseVS = $excludePrereleaseVS }
+    $buildTool = @{ Path = $msbuildPath; Command = ""; ExcludePrereleaseVS = $excludePrereleaseVS }
   } else {
     Write-PipelineTelemetryError -Category 'InitializeToolset' -Message "Unexpected value of -msbuildEngine: '$msbuildEngine'."
     ExitWithExitCode 1
@@ -582,11 +643,11 @@ function GetDefaultMSBuildEngine() {
     return 'vs'
   }
 
-  if (Get-Member -InputObject $GlobalJson.tools -Name 'dotnet') {
+  if (GlobalJsonSpecifiesDotNetSdk) {
     return 'dotnet'
   }
 
-  Write-PipelineTelemetryError -Category 'InitializeToolset' -Message "-msbuildEngine must be specified, or /global.json must specify 'tools.dotnet' or 'tools.vs'."
+  Write-PipelineTelemetryError -Category 'InitializeToolset' -Message "-msbuildEngine must be specified, or /global.json must specify 'tools.dotnet', 'sdk.version' or 'tools.vs'."
   ExitWithExitCode 1
 }
 
@@ -683,7 +744,17 @@ function InitializeToolset() {
     $downloadArgs += "--configfile"
     $downloadArgs += $nugetConfig
   }
-  DotNet @downloadArgs
+
+  # 'dotnet package download' fails outright if any source in the repo's NuGet.config is
+  # unavailable (for example a transport feed that was decommissioned after a release). The
+  # Arcade SDK is always published to the public dotnet-eng feed, so if the config-driven
+  # download fails, retry once against that feed directly (which ignores the other sources)
+  # before giving up, so a single dead source doesn't block the build.
+  $downloadExitCode = DotNet -ignoreFailure @downloadArgs
+  if ($downloadExitCode) {
+    Write-Host "Restoring the Arcade SDK from the configured sources failed; retrying from the public dotnet-eng feed."
+    DotNet @downloadArgs --source "https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-eng/nuget/v3/index.json"
+  }
 
   $packageDir = Join-Path $nugetPackageCachePath (Join-Path 'microsoft.dotnet.arcade.sdk' $toolsetVersion)
   $packageToolsetDir = Join-Path $packageDir 'toolset'
@@ -706,7 +777,7 @@ function InitializeToolset() {
 }
 
 function ExitWithExitCode([int] $exitCode) {
-  if ($ci -and $prepareMachine) {
+  if ($prepareMachine) {
     Stop-Processes
   }
   exit $exitCode
@@ -741,19 +812,30 @@ function MSBuild() {
       Write-PipelineTelemetryError -Category 'Build' -Message 'Binary log must be enabled in CI build, or explicitly opted-out from with the -excludeCIBinarylog switch.'
       ExitWithExitCode 1
     }
-
-    if ($nodeReuse) {
-      Write-PipelineTelemetryError -Category 'Build' -Message 'Node reuse must be disabled in CI build.'
-      ExitWithExitCode 1
-    }
   }
 
   $buildTool = InitializeBuildTool
 
-  $cmdArgs = "$($buildTool.Command) /m /nologo /clp:Summary /v:$verbosity /nr:$nodeReuse /p:ContinuousIntegrationBuild=$ci"
+  if ($pipelinesLog) {
+    $toolsetBuildProject = InitializeToolset
+    $basePath = Split-Path -parent $toolsetBuildProject
+    $selectedPath = Join-Path $basePath (Join-Path 'net' 'Microsoft.DotNet.ArcadeLogging.dll')
 
-  # Add -mt flag for MSBuild multithreaded mode if enabled via environment variable
-  if ($env:MSBUILD_MT_ENABLED -eq "1") {
+    # Only inject the logger when it's present. A last-known-good Arcade used to bootstrap
+    # the build may not ship the logger yet, so its absence must not be a hard error.
+    # Specify the logger type explicitly so loading is deterministic.
+    if (Test-Path $selectedPath) {
+      $args += "/logger:Microsoft.DotNet.ArcadeLogging.PipelinesLogger,$selectedPath"
+    }
+  }
+
+  $restoreSwitch = if ($restore) { ' /restore' } else { '' }
+
+  $cmdArgs = "$($buildTool.Command)$restoreSwitch /m /nologo /clp:Summary /v:$verbosity /nr:$nodeReuse /p:ContinuousIntegrationBuild=$ci"
+
+  # Build with MSBuild's multi-threaded mode, but not with msbuild.exe (VS MSBuild) for now.
+  # TODO: Enable for VS MSBuild as well: https://github.com/dotnet/dotnet/issues/9989
+  if ($msbuildMultiThreaded -and [System.IO.Path]::GetFileName($buildTool.Path) -ne 'msbuild.exe') {
     $cmdArgs += ' -mt'
   }
 
@@ -765,7 +847,8 @@ function MSBuild() {
   }
 
   if ($warnAsError -and $warnNotAsError) {
-    $cmdArgs += " /warnnotaserror:$warnNotAsError /p:AdditionalWarningsNotAsErrors=$warnNotAsError"
+    $escapedWarnNotAsError = $warnNotAsError -replace ';', '%3B'
+    $cmdArgs += " /warnnotaserror:$warnNotAsError /p:AdditionalWarningsNotAsErrors=$escapedWarnNotAsError"
   }
 
   foreach ($arg in $args) {
@@ -787,14 +870,9 @@ function MSBuild() {
     # The build already logged an error, that's the reason it failed. Producing an error here only adds noise.
     Write-Host "Build failed with exit code $exitCode. Check errors above." -ForegroundColor Red
 
-    $buildLog = GetMSBuildBinaryLogCommandLineArgument $args
-    if ($null -ne $buildLog) {
-      Write-Host "See log: $buildLog" -ForegroundColor DarkGray
-    }
-
     # When running on Azure Pipelines, override the returned exit code to avoid double logging.
-    # Skip this when the build is a child of the VMR build.
-    if ($ci -and $env:SYSTEM_TEAMPROJECT -ne $null -and !$fromVMR) {
+    # Skip this when the build is a child of the VMR build, or when -disablePipelineSetResult is set so the real exit code propagates.
+    if ($ci -and $env:SYSTEM_TEAMPROJECT -ne $null -and !$fromVMR -and !$disablePipelineSetResult) {
       Write-PipelineSetResult -Result "Failed" -Message "msbuild execution failed."
       # Exiting with an exit code causes the azure pipelines task to log yet another "noise" error
       # The above Write-PipelineSetResult will cause the task to be marked as failure without adding yet another error
@@ -809,7 +887,7 @@ function MSBuild() {
 # Executes a dotnet command with arguments passed to the function.
 # Terminates the script if the command fails.
 #
-function DotNet() {
+function DotNet([switch]$ignoreFailure) {
   $dotnetRoot = InitializeDotNetCli -install:$restore
   $dotnetPath = Join-Path $dotnetRoot (GetExecutableFileName 'dotnet')
 
@@ -828,32 +906,21 @@ function DotNet() {
   $exitCode = Exec-Process $dotnetPath $cmdArgs
 
   if ($exitCode -ne 0) {
+    # When -ignoreFailure is set, return the exit code to the caller so it can implement
+    # its own fallback logic instead of terminating the script.
+    if ($ignoreFailure) {
+      return $exitCode
+    }
+
     Write-Host "dotnet command failed with exit code $exitCode. Check errors above." -ForegroundColor Red
 
-    if ($ci -and $env:SYSTEM_TEAMPROJECT -ne $null -and !$fromVMR) {
+    if ($ci -and $env:SYSTEM_TEAMPROJECT -ne $null -and !$fromVMR -and !$disablePipelineSetResult) {
       Write-PipelineSetResult -Result "Failed" -Message "dotnet command execution failed."
       ExitWithExitCode 0
     } else {
       ExitWithExitCode $exitCode
     }
   }
-}
-
-function GetMSBuildBinaryLogCommandLineArgument($arguments) {
-  foreach ($argument in $arguments) {
-    if ($argument -ne $null) {
-      $arg = $argument.Trim()
-      if ($arg.StartsWith('/bl:', "OrdinalIgnoreCase")) {
-        return $arg.Substring('/bl:'.Length)
-      }
-
-      if ($arg.StartsWith('/binaryLogger:', 'OrdinalIgnoreCase')) {
-        return $arg.Substring('/binaryLogger:'.Length)
-      }
-    }
-  }
-
-  return $null
 }
 
 function GetExecutableFileName($baseName) {
@@ -889,8 +956,13 @@ $ToolsDir = Join-Path $RepoRoot '.tools'
 $LogDir = Join-Path (Join-Path $ArtifactsDir 'log') $configuration
 $TempDir = Join-Path (Join-Path $ArtifactsDir 'tmp') $configuration
 $GlobalJson = Get-Content -Raw -Path (Join-Path $RepoRoot 'global.json') | ConvertFrom-Json
+# The 'tools' section is optional (the SDK version can come from 'sdk.version'). Default it to an empty object
+# so that code inspecting it doesn't need to handle a missing section.
+if (-not (Get-Member -InputObject $GlobalJson -Name 'tools')) {
+  $GlobalJson | Add-Member -NotePropertyName 'tools' -NotePropertyValue ([pscustomobject]@{})
+}
 # true if global.json contains a "runtimes" section
-$globalJsonHasRuntimes = if ($GlobalJson.tools.PSObject.Properties.Name -Match 'runtimes') { $true } else { $false }
+$globalJsonHasRuntimes = [bool](Get-Member -InputObject $GlobalJson.tools -Name 'runtimes')
 
 Create-Directory $ToolsetDir
 Create-Directory $TempDir

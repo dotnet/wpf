@@ -1039,6 +1039,9 @@
   <data name="Image_OriginalStreamReadOnly" xml:space="preserve">
     <value>In place editing of bitmap metadata is not allowed because the original source is not writable.</value>
   </data>
+  <data name="Resource_XpsPackageBoundaryViolation" xml:space="preserve">
+    <value>The URI references a resource outside the current XPS package. External URIs (http, https, file, UNC, cross-package) are not permitted when loading XPS content.</value>
+  </data>
   <data name="Image_Overflow" xml:space="preserve">
     <value>The image data generated an overflow during processing.</value>
   </data>

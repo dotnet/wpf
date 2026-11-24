@@ -161,6 +161,10 @@ namespace System.Windows.Documents
                     {
                         this._exception = e;
                     }
+                    catch (FileFormatException e)
+                    {
+                        this._exception = e;
+                    }
                     goto case GetPageStatus.Finished;                    
 
                 case GetPageStatus.Cancelled:

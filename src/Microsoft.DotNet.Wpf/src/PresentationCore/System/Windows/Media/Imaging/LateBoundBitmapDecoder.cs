@@ -4,6 +4,7 @@
 using System.IO;
 using System.Collections.ObjectModel;
 using System.Net.Cache;
+using MS.Internal;
 
 namespace System.Windows.Media.Imaging
 {
@@ -37,6 +38,10 @@ namespace System.Windows.Media.Imaging
             _createOptions = createOptions;
             _cacheOption = cacheOption;
             _requestCachePolicy = requestCachePolicy;
+            // Capture the XPS package origin at construction time so the
+            // deferred BitmapDownload worker thread can enforce same-package
+            // containment even after the ambient XpsLoadingContext has ended.
+            _xpsPackageOrigin = XpsLoadingContext.ActivePackageUri;
 
             // Check to see if we need to download content off thread
             Uri uriToDecode = (_baseUri != null) ? new Uri(_baseUri, _uri) : _uri;
@@ -368,4 +373,3 @@ namespace System.Windows.Media.Imaging
 
     #endregion
 }
-

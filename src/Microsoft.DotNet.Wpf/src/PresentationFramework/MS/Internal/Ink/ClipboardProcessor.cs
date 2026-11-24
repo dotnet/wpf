@@ -337,7 +337,7 @@ namespace MS.Internal.Ink
                         //      3. Add the new instances to the new container.
                         string xml = XamlWriter.Save(elements[i]);
 
-                        UIElement newElement = XamlReader.Load(new XmlTextReader(new StringReader(xml))) as UIElement;
+                        UIElement newElement = XamlReader.Load(new XmlTextReader(new StringReader(xml)), useRestrictiveXamlReader: true) as UIElement;
                         ((IAddChild)inkCanvas).AddChild(newElement);
 
                         // Now we tranform the element.

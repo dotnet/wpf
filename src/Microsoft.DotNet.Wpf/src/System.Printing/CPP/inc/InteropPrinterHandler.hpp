@@ -126,6 +126,10 @@ namespace PrintWin32Thunk
             Int32 startIndex, 
             Int32 length
             );
+
+        // Tracks the allocation size in bytes.  Zero means "unknown"
+        // (e.g. Wrap'd handle where we do not own the memory).
+        Int32 _byteCount;
     };
 
 
@@ -843,4 +847,3 @@ namespace PrintWin32Thunk
 }
 }
 #endif
-

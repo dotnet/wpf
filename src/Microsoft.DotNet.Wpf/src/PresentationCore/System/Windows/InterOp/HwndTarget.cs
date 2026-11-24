@@ -1752,7 +1752,7 @@ namespace System.Windows.Interop
                 _hWnd.MakeHandleRef(this),
                 new HandleRef(null, IntPtr.Zero), // HWND_TOP
                 (int)e.SuggestedRect.Left, (int)e.SuggestedRect.Top, (int)e.SuggestedRect.Width, (int)e.SuggestedRect.Height,
-                NativeMethods.SWP_NOZORDER | NativeMethods.SWP_ASYNCWINDOWPOS);
+                NativeMethods.SWP_NOZORDER | NativeMethods.SWP_ASYNCWINDOWPOS | NativeMethods.SWP_NOACTIVATE);
         }
 
         /// <summary>

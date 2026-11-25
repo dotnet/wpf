@@ -15,6 +15,8 @@ using System.Windows.Navigation;
 using MS.Internal.Resources;
 using System.IO.Packaging;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.Loader;
 using System.Windows;
 using System.IO;
 
@@ -234,7 +236,8 @@ namespace MS.Internal.AppModel
 
         private static void UpdateCachedRMW(ReadOnlySpan<char> key, Assembly assembly)
         {
-            if (s_registeredResourceManagersLookup.TryGetValue(key, out ResourceManagerWrapper value))
+            if (s_registeredResourceManagersLookup.TryGetValue(key, out ResourceManagerWrapper value) &&
+                MayRepoint(value.Assembly, assembly))
             {
                 // Update the ResourceManagerWrapper with the new assembly. 
                 // Note Package caches Part and Part holds on to ResourceManagerWrapper. Package does not provide a way for 
@@ -242,6 +245,65 @@ namespace MS.Internal.AppModel
                 // Part cached in the Package class can reference the new dll too. 
                 value.Assembly = assembly;
             }
+        }
+
+        /// <summary>
+        /// Tells whether a cached wrapper may follow a newly loaded assembly with the same name.
+        /// </summary>
+        /// <remarks>
+        /// The AssemblyLoad event fires for a load in any AssemblyLoadContext, and the newcomer is
+        /// typically another component's own copy. Moving the wrapper would serve everyone who used
+        /// the cached copy from that newcomer, so it only follows a copy in its own context, or one
+        /// replacing a copy in a collectible context, which is the reload this handler exists for.
+        /// </remarks>
+        private static bool MayRepoint(Assembly held, Assembly incoming)
+        {
+            if (held is null)
+            {
+                return true;
+            }
+
+            AssemblyLoadContext heldContext = AssemblyLoadContext.GetLoadContext(held);
+
+            return heldContext is null ||
+                   heldContext.IsCollectible ||
+                   heldContext == AssemblyLoadContext.GetLoadContext(incoming);
+        }
+
+        /// <summary>
+        /// Returns the wrapper a lookup made for the current load context should use.
+        /// </summary>
+        /// <remarks>
+        /// The cache holds one wrapper per assembly name for the whole process, created for
+        /// whichever context asked first. A lookup made for another context is served by a wrapper
+        /// of the copy that context resolves, and the shared cache is left as it is.
+        /// </remarks>
+        private static ResourceManagerWrapper GetWrapperForContext(ResourceManagerWrapper cached)
+        {
+            Assembly cachedAssembly = cached?.Assembly;
+            if (cachedAssembly is null)
+            {
+                return cached;
+            }
+
+            AssemblyLoadContext context = AssemblyLoadContext.CurrentContextualReflectionContext ?? AssemblyLoadContext.Default;
+            if (AssemblyLoadContext.GetLoadContext(cachedAssembly) == context)
+            {
+                return cached;
+            }
+
+            Assembly assembly = MS.Internal.WindowsBase.SafeSecurityHelper.GetAssemblyForCurrentContext(cachedAssembly.GetName());
+            if (assembly is null || assembly == cachedAssembly)
+            {
+                return cached;
+            }
+
+            if (assembly.Equals(Application.ResourceAssembly))
+            {
+                return ApplicationResourceManagerWrapper;
+            }
+
+            return s_contextResourceManagers.GetValue(assembly, static a => new ResourceManagerWrapper(a));
         }
 
         /// <summary>
@@ -285,6 +347,8 @@ namespace MS.Internal.AppModel
 
                     s_registeredResourceManagersLookup[key.Slice(0, totalLength)] = rmwResult;
                 }
+
+                rmwResult = GetWrapperForContext(rmwResult);
             }
 
             if (rmwResult == ApplicationResourceManagerWrapper)
@@ -321,6 +385,8 @@ namespace MS.Internal.AppModel
 
         private static readonly Dictionary<string, ResourceManagerWrapper> s_registeredResourceManagers = new(StringComparer.Ordinal);
         private static readonly Dictionary<string, ResourceManagerWrapper>.AlternateLookup<ReadOnlySpan<char>> s_registeredResourceManagersLookup = s_registeredResourceManagers.GetAlternateLookup<ReadOnlySpan<char>>();
+        // Wrappers of the copies that load contexts other than the cached one resolve, per assembly.
+        private static readonly ConditionalWeakTable<Assembly, ResourceManagerWrapper> s_contextResourceManagers = new();
         private static readonly FileShare s_fileShare = FileShare.Read;
 
         private static ResourceManagerWrapper s_applicationResourceManagerWrapper = null;

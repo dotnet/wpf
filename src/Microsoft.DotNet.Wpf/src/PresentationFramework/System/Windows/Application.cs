@@ -1978,8 +1978,10 @@ namespace System.Windows
             _globalLock = new object();
 
             // Add an instance of the ResourceContainer to PreloadedPackages so that PackWebRequestFactory can find it
-            // and mark it as thread-safe so PackWebResponse won't protect returned streams with a synchronizing wrapper
-            PreloadedPackages.AddPackage(PackUriHelper.GetPackageUri(BaseUriHelper.PackAppBaseUri), new ResourceContainer(), true);
+            // and mark it as thread-safe so PackWebResponse won't protect returned streams with a synchronizing wrapper.
+            // A ResourceContainer caches the parts it hands out, so each AssemblyLoadContext other than the default
+            // one is served its own instance and never receives a part resolved for another context.
+            PreloadedPackages.AddPackage(PackUriHelper.GetPackageUri(BaseUriHelper.PackAppBaseUri), new ResourceContainer(), true, static () => new ResourceContainer());
 
 
             MimeObjectFactory.RegisterCore(MimeTypeMapper.BamlMime, new StreamToObjectFactoryDelegateCore(AppModelKnownContentFactory.BamlConverterCore));

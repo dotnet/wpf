@@ -10,6 +10,8 @@
 
 using System.Collections.Specialized;
 using System.IO.Packaging;
+using System.Runtime.CompilerServices;
+using System.Runtime.Loader;
 using MS.Internal.PresentationCore;     // for ExceptionStringTable
 
 namespace MS.Internal.IO.Packaging
@@ -73,7 +75,7 @@ namespace MS.Internal.IO.Packaging
                     PackageThreadSafePair packagePair = _packagePairs[uri] as PackageThreadSafePair;
                     if (packagePair != null)
                     {
-                        package = packagePair.Package;
+                        package = packagePair.GetPackageForCurrentContext();
                         threadSafe = packagePair.ThreadSafe;
                     }
                 }
@@ -106,6 +108,23 @@ namespace MS.Internal.IO.Packaging
         /// The object will not be subject to automatic removal from the cache</remarks>
         internal static void AddPackage(Uri uri, Package package, bool threadSafe)
         {
+            AddPackage(uri, package, threadSafe, createForLoadContext: null);
+        }
+
+        /// <summary>
+        /// Adds a uri, package pair to the package cache, with a factory for the instance a load
+        /// context other than the default one is served.
+        /// </summary>
+        /// <param name="uri">key uri</param>
+        /// <param name="package">package served to the default load context</param>
+        /// <param name="threadSafe">whether the package is thread-safe</param>
+        /// <param name="createForLoadContext">
+        /// Creates the package served while another AssemblyLoadContext is the current contextual
+        /// reflection context, so that what a package caches is never shared across contexts;
+        /// <see langword="null"/> to serve every context the same package.
+        /// </param>
+        internal static void AddPackage(Uri uri, Package package, bool threadSafe, Func<Package> createForLoadContext)
+        {
             ValidateUriKey(uri);
 
             lock (_globalLock)
@@ -115,7 +134,7 @@ namespace MS.Internal.IO.Packaging
                     _packagePairs = new HybridDictionary(3);
                 }
 
-                _packagePairs.Add(uri, new PackageThreadSafePair(package, threadSafe));
+                _packagePairs.Add(uri, new PackageThreadSafePair(package, threadSafe, createForLoadContext));
             }
         }
 
@@ -167,12 +186,29 @@ namespace MS.Internal.IO.Packaging
             //  Internal Constructors
             //
             //------------------------------------------------------
-            internal PackageThreadSafePair(Package package, bool threadSafe)
+            internal PackageThreadSafePair(Package package, bool threadSafe, Func<Package> createForLoadContext)
             {
                 Invariant.Assert(package != null);
 
                 _package = package;
                 _threadSafe = threadSafe;
+                _createForLoadContext = createForLoadContext;
+            }
+
+            /// <summary>
+            /// The package served to the current load context: the shared one, unless a factory was
+            /// given and an AssemblyLoadContext other than the default one is current.
+            /// </summary>
+            internal Package GetPackageForCurrentContext()
+            {
+                AssemblyLoadContext context = AssemblyLoadContext.CurrentContextualReflectionContext;
+
+                if (_createForLoadContext == null || context == null || context == AssemblyLoadContext.Default)
+                {
+                    return _package;
+                }
+
+                return _contextPackages.GetValue(context, _ => _createForLoadContext());
             }
 
             //------------------------------------------------------
@@ -209,6 +245,8 @@ namespace MS.Internal.IO.Packaging
             //------------------------------------------------------
             private readonly Package _package;
             private readonly bool    _threadSafe;
+            private readonly Func<Package> _createForLoadContext;
+            private readonly ConditionalWeakTable<AssemblyLoadContext, Package> _contextPackages = new();
         }
 
 

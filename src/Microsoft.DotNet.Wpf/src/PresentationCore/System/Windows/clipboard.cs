@@ -85,13 +85,19 @@ public static class Clipboard
         IDataObject? data = GetDataObject();
         bool autoConvert = IsDataFormatAutoConvert(format);
 
-        if (data is ITypedDataObject typed)
+        // The composed clipboard wrapper implements ITypedDataObject even if its application source does not.
+        // Avoid requiring typed support from that legacy source when using convenience getters.
+        if (data is ITypedDataObject typed
+            && (data is not DataObject wrapper
+                || !wrapper.TryUnwrapUserDataObject(out IDataObject? source)
+                || source is ITypedDataObject))
         {
             return typed.TryGetData(format, autoConvert, out T? value) ? value : default;
         }
 
         if (data is IDataObject dataObject)
         {
+            // Read through the wrapper, not the unwrapped source, so native text synthesis remains available.
             return dataObject.GetData(format, autoConvert) is T value ? value : default;
         }
 
@@ -261,8 +267,20 @@ public static class Clipboard
     /// <summary>
     ///  Query the specified data format from Clipboard.
     /// </summary>
-    private static bool ContainsDataInternal(string format) =>
-        GetDataObject() is { } dataObject && dataObject.GetDataPresent(format, IsDataFormatAutoConvert(format));
+    private static bool ContainsDataInternal(string format)
+    {
+        // Restore native availability only for plain text; other formats keep their .NET 10 retrieval behavior.
+        if (format.Equals(DataFormats.Text, StringComparison.OrdinalIgnoreCase)
+            || format.Equals(DataFormats.UnicodeText, StringComparison.OrdinalIgnoreCase)
+            || format.Equals(DataFormats.OemText, StringComparison.OrdinalIgnoreCase))
+        {
+            // As in .NET 9, query Windows' published text formats, including native synthesis.
+            // Later mutations of the unwrapped managed source do not publish new clipboard formats.
+            return MS.Win32.SafeNativeMethods.IsClipboardFormatAvailable(DataFormats.GetDataFormat(format).Id);
+        }
+
+        return GetDataObject() is { } dataObject && dataObject.GetDataPresent(format, IsDataFormatAutoConvert(format));
+    }
 
     /// <summary>
     ///  Get the specified format from Clipboard.

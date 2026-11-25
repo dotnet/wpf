@@ -9,6 +9,12 @@ using System.Globalization;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
+#if WINDOWS_BASE || PRESENTATION_CORE || SYSTEM_XAML
+using System.Collections.Concurrent;
+using System.IO;
+using System.Runtime.CompilerServices;
+using System.Runtime.Loader;
+#endif
 #if SYSTEM_XAML
 using TypeConverterHelper = System.Xaml.TypeConverterHelper;
 #else
@@ -93,35 +99,163 @@ namespace System.Xaml
         // PERF: Cache delegate for CleanupCollectedAssemblies to avoid allocating it each time.
         private static readonly WaitCallback _cleanupCollectedAssemblies = CleanupCollectedAssemblies;
 
+        // Names an AssemblyLoadContext was asked for and could not resolve, so that it is
+        // asked once rather than on every lookup. Keyed weakly so collectible contexts can unload.
+        private static readonly ConditionalWeakTable<AssemblyLoadContext, ConcurrentDictionary<string, bool>> s_unresolvedNames = new();
+
         /// <summary>
-        ///     This function iterates through the assemblies loaded in the current
-        ///     AppDomain and finds one that has the same assembly name passed in.
+        ///     Finds the assembly that a lookup for the given name refers to.
         /// </summary>
+        /// <remarks>
+        ///     <para>
+        ///     An assembly with a given name and version can be loaded more than once, each copy
+        ///     in its own <see cref="AssemblyLoadContext"/>, and each copy has its own type identity.
+        ///     Picking the last loaded match from the whole process can therefore hand the caller
+        ///     a copy that belongs to an unrelated context.
+        ///     </para>
+        ///     <para>
+        ///     A lookup is made for a load context: the current contextual reflection context, or
+        ///     the default context when none is established, which is where the caller's own
+        ///     <see cref="Assembly.Load(AssemblyName)"/> fallback would resolve the name. That context
+        ///     answers first, from the assemblies it holds or through its own resolution, wherever
+        ///     the assembly it chooses lives. When it cannot resolve the name at all, and exactly
+        ///     one context holds a copy, that copy is the answer. Otherwise the last loaded match
+        ///     in the process is returned, as before.
+        ///     </para>
+        ///     <para>
+        ///     An application with a single load context sees no difference: every copy is in the
+        ///     default context, and its answer is the one the process-wide search gives.
+        ///     </para>
+        /// </remarks>
         internal static Assembly GetLoadedAssembly(AssemblyName assemblyName)
+        {
+            return GetAssemblyForCurrentContext(assemblyName) ?? GetLastLoadedAssembly(assemblyName);
+        }
+
+        /// <summary>
+        ///     Finds the assembly the current load context means by the given name, or the only
+        ///     loaded copy when that context cannot resolve it.
+        /// </summary>
+        /// <returns>
+        ///     The assembly, or <see langword="null"/> when neither applies; unlike
+        ///     <see cref="GetLoadedAssembly"/>, this never falls back to the process-wide search.
+        /// </returns>
+        internal static Assembly GetAssemblyForCurrentContext(AssemblyName assemblyName)
+        {
+            AssemblyLoadContext context = AssemblyLoadContext.CurrentContextualReflectionContext ?? AssemblyLoadContext.Default;
+
+            return GetAssemblyForContext(context, assemblyName) ?? GetOnlyLoadedAssembly(assemblyName);
+        }
+
+        /// <summary>
+        ///     Finds the assembly a load context means by the given name: one it already holds,
+        ///     or the one its own resolution chooses.
+        /// </summary>
+        private static Assembly GetAssemblyForContext(AssemblyLoadContext context, AssemblyName assemblyName)
+        {
+            Assembly held = FindMatch(context.Assemblies, assemblyName);
+            if (held is not null)
+            {
+                return held;
+            }
+
+            // A name the context has not loaded yet may still be one it ships. Treating it as
+            // foreign is what hands the caller another context's copy, so the context is asked.
+            ConcurrentDictionary<string, bool> unresolved = s_unresolvedNames.GetValue(context, static _ => new ConcurrentDictionary<string, bool>(StringComparer.OrdinalIgnoreCase));
+            string key = assemblyName.FullName;
+
+            if (unresolved.ContainsKey(key))
+            {
+                return null;
+            }
+
+            try
+            {
+                return context.LoadFromAssemblyName(assemblyName);
+            }
+            catch (Exception ex) when (ex is FileNotFoundException || ex is FileLoadException || ex is BadImageFormatException)
+            {
+                // The ways a context says the name is not one it can resolve. The runtime also
+                // reports a Load override or Resolving handler that throws as a FileLoadException,
+                // so a failing resolver falls back to the search below, as the callers' own
+                // Assembly.Load fallbacks already did.
+                unresolved.TryAdd(key, true);
+                return null;
+            }
+        }
+
+        /// <summary>
+        ///     Returns the matching assembly when exactly one load context holds a copy of it.
+        /// </summary>
+        /// <remarks>
+        ///     Several copies are left to the process-wide search, since a name alone cannot tell
+        ///     which of them was meant. Nothing is remembered, as another copy can load at any time.
+        /// </remarks>
+        private static Assembly GetOnlyLoadedAssembly(AssemblyName assemblyName)
+        {
+            Assembly only = null;
+
+            foreach (AssemblyLoadContext context in AssemblyLoadContext.All)
+            {
+                Assembly match = FindMatch(context.Assemblies, assemblyName);
+                if (match is null)
+                {
+                    continue;
+                }
+
+                if (only is not null)
+                {
+                    return null;
+                }
+
+                only = match;
+            }
+
+            return only;
+        }
+
+        /// <summary>
+        ///     Iterates through the assemblies loaded in the current AppDomain, newest first,
+        ///     and finds one that has the same assembly name passed in.
+        /// </summary>
+        private static Assembly GetLastLoadedAssembly(AssemblyName assemblyName)
         {
             Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
-            Version reqVersion = assemblyName.Version;
-            CultureInfo reqCulture = assemblyName.CultureInfo;
-            byte[] reqKeyToken = assemblyName.GetPublicKeyToken();
-
             for (int i = assemblies.Length - 1; i >= 0; i--)
             {
-                AssemblyName curAsmName = GetAssemblyName(assemblies[i]);
-                Version curVersion = curAsmName.Version;
-                CultureInfo curCulture = curAsmName.CultureInfo;
-                byte[] curKeyToken = curAsmName.GetPublicKeyToken();
-
-                if (string.Equals(curAsmName.Name, assemblyName.Name, StringComparison.InvariantCultureIgnoreCase) &&
-                     (reqVersion is null || reqVersion.Equals(curVersion)) &&
-                     (reqCulture is null || reqCulture.Equals(curCulture)) &&
-                     (reqKeyToken is null || IsSameKeyToken(reqKeyToken, curKeyToken)))
+                if (IsMatch(assemblyName, GetAssemblyName(assemblies[i])))
                 {
                     return assemblies[i];
                 }
             }
 
             return null;
+        }
+
+        private static Assembly FindMatch(IEnumerable<Assembly> assemblies, AssemblyName assemblyName)
+        {
+            foreach (Assembly assembly in assemblies)
+            {
+                if (IsMatch(assemblyName, GetAssemblyName(assembly)))
+                {
+                    return assembly;
+                }
+            }
+
+            return null;
+        }
+
+        private static bool IsMatch(AssemblyName requested, AssemblyName candidate)
+        {
+            Version reqVersion = requested.Version;
+            CultureInfo reqCulture = requested.CultureInfo;
+            byte[] reqKeyToken = requested.GetPublicKeyToken();
+
+            return string.Equals(candidate.Name, requested.Name, StringComparison.InvariantCultureIgnoreCase) &&
+                   (reqVersion is null || reqVersion.Equals(candidate.Version)) &&
+                   (reqCulture is null || reqCulture.Equals(candidate.CultureInfo)) &&
+                   (reqKeyToken is null || IsSameKeyToken(reqKeyToken, candidate.GetPublicKeyToken()));
         }
 
         private static AssemblyName GetAssemblyName(Assembly assembly)

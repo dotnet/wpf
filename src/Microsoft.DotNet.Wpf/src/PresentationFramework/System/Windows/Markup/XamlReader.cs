@@ -1028,6 +1028,9 @@ namespace System.Windows.Markup
         {
             object root = null;
 
+            // A BAML stream carries the assembly it belongs to; resolve what it references there.
+            using IDisposable loadContextScope = MS.Internal.LoadContextScope.EnterFor((stream as IStreamInfo)?.Assembly);
+
 #if DEBUG_CLR_MEM
             bool clrTracingEnabled = false;
             // Use local pass variable to correctly log nested parses.

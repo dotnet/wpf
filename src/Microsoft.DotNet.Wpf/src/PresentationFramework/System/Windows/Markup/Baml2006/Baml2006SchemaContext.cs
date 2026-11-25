@@ -461,31 +461,10 @@ namespace System.Windows.Baml2006
 
             AssemblyName assemblyName = new AssemblyName(bamlAssembly.Name);
 
-#if NETCOREAPP
-            // Try to resolve the requested assembly in the same AssemblyLoadContext as the local assembly which requests it.
-            if (_localAssembly != null)
-            {
-                System.Runtime.Loader.AssemblyLoadContext alc = System.Runtime.Loader.AssemblyLoadContext.GetLoadContext(_localAssembly);
-
-                if (alc != null)
-                {
-                    try
-                    {
-                        bamlAssembly.Assembly = alc.LoadFromAssemblyName(assemblyName);
-                        if (bamlAssembly.Assembly != null)
-                        {
-                            return bamlAssembly.Assembly;
-                        }
-                    }
-                    catch (System.Exception ex) when (ex is System.IO.FileNotFoundException ||
-                                                     ex is System.IO.FileLoadException ||
-                                                     ex is System.BadImageFormatException)
-                    {
-                        // Fallback to legacy resolution logic.
-                    }
-                }
-            }
-#endif
+            // Resolve the reference, and the Assembly.Load fallbacks below, in the load context of
+            // the assembly that owns this BAML. Template content is parsed lazily, long after the
+            // load that carried it returned, and this schema context still knows whose it is.
+            using IDisposable loadContextScope = MS.Internal.LoadContextScope.EnterFor(_localAssembly);
 
             bamlAssembly.Assembly = MS.Internal.WindowsBase.SafeSecurityHelper.GetLoadedAssembly(assemblyName);
             if (bamlAssembly.Assembly == null)

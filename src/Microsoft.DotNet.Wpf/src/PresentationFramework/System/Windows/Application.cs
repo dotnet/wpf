@@ -354,6 +354,10 @@ namespace System.Windows
             if (resourceLocator.IsAbsoluteUri)
                 throw new ArgumentException(SR.AbsoluteUriNotAllowed);
 
+            // Resolve the markup's references, and its own pack URI, in the load context of the
+            // component it is loaded for, which is also what the stream is checked against below.
+            using IDisposable loadContextScope = MS.Internal.LoadContextScope.EnterFor(component.GetType().Assembly);
+
             // Passed a relative Uri here.
             // needs to resolve it to Pack://Application.
             //..\..\ in the relative Uri will get stripped when creating the new Uri and resolving to the

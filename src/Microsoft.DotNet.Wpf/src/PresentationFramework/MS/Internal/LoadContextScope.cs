@@ -26,9 +26,16 @@ namespace MS.Internal
         /// </summary>
         /// <param name="owner">The assembly that owns the markup being loaded.</param>
         /// <returns>
-        ///     The scope to dispose, or <see langword="null"/> when the owner is unknown, belongs to
-        ///     the default context, or its context is already current.
+        ///     The scope to dispose, or <see langword="null"/> when the owner is unknown or nothing
+        ///     would change.
         /// </returns>
+        /// <remarks>
+        ///     The owner's context is entered even when another one is current: markup owned by a
+        ///     component in the default context, loaded while a plugin's context flows, still has
+        ///     to resolve in the default context. Nothing is entered when the owner's context is
+        ///     already current, or when it is the default context and none is established, since
+        ///     lookups then resolve in the default context anyway.
+        /// </remarks>
         internal static IDisposable EnterFor(Assembly owner)
         {
             if (owner is null)
@@ -37,10 +44,11 @@ namespace MS.Internal
             }
 
             AssemblyLoadContext context = AssemblyLoadContext.GetLoadContext(owner);
+            AssemblyLoadContext current = AssemblyLoadContext.CurrentContextualReflectionContext;
 
             if (context is null ||
-                context == AssemblyLoadContext.Default ||
-                context == AssemblyLoadContext.CurrentContextualReflectionContext)
+                context == current ||
+                (context == AssemblyLoadContext.Default && current is null))
             {
                 return null;
             }
@@ -60,28 +68,11 @@ namespace MS.Internal
         /// <remarks>
         ///     Deferred markup is realized during a layout pass, a resource lookup or a theme change,
         ///     under whatever context flowed with whoever queued that work: none, or another
-        ///     component's. The owner's context is therefore entered even when another one is current.
+        ///     component's. The owner is read from the schema context the markup was recorded with.
         /// </remarks>
         internal static IDisposable EnterForDeferred(XamlSchemaContext schemaContext)
         {
-            Assembly owner = (schemaContext as Baml2006SchemaContext)?.LocalAssembly;
-
-            if (owner is null)
-            {
-                return null;
-            }
-
-            AssemblyLoadContext context = AssemblyLoadContext.GetLoadContext(owner);
-            AssemblyLoadContext current = AssemblyLoadContext.CurrentContextualReflectionContext;
-
-            if (context is null ||
-                context == current ||
-                (context == AssemblyLoadContext.Default && current is null))
-            {
-                return null;
-            }
-
-            return context.EnterContextualReflection();
+            return EnterFor((schemaContext as Baml2006SchemaContext)?.LocalAssembly);
         }
     }
 }

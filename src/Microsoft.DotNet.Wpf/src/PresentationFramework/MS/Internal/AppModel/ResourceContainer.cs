@@ -253,8 +253,9 @@ namespace MS.Internal.AppModel
         /// <remarks>
         /// The AssemblyLoad event fires for a load in any AssemblyLoadContext, and the newcomer is
         /// typically another component's own copy. Moving the wrapper would serve everyone who used
-        /// the cached copy from that newcomer, so it only follows a copy in its own context, or one
-        /// replacing a copy in a collectible context, which is the reload this handler exists for.
+        /// the cached copy, including the parts already cached with it, from that newcomer, so it
+        /// only follows a copy loaded into its own context. A component reloaded into a new context
+        /// is served a wrapper of its own copy by <see cref="GetWrapperForContext"/> instead.
         /// </remarks>
         private static bool MayRepoint(Assembly held, Assembly incoming)
         {
@@ -266,7 +267,6 @@ namespace MS.Internal.AppModel
             AssemblyLoadContext heldContext = AssemblyLoadContext.GetLoadContext(held);
 
             return heldContext is null ||
-                   heldContext.IsCollectible ||
                    heldContext == AssemblyLoadContext.GetLoadContext(incoming);
         }
 

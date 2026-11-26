@@ -28,6 +28,7 @@ namespace Microsoft.Build.Tasks.Windows
     /// output resource groups, such as Resources for Main assembly and Resources for satellite
     /// assembly.
     /// </summary>
+    [MSBuildMultiThreadableTask]
     public sealed class FileClassifier : Task
     {
         //------------------------------------------------------

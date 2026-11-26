@@ -273,12 +273,18 @@ namespace MS.Internal.AppModel
         /// <summary>
         /// Returns the wrapper a lookup made for the current load context should use.
         /// </summary>
+        /// <param name="cached">The wrapper the shared cache holds for the URI.</param>
+        /// <param name="assemblyName">The assembly name the URI specifies.</param>
+        /// <param name="assemblyVersion">The version the URI specifies, or empty.</param>
+        /// <param name="assemblyToken">The public key token the URI specifies, or empty.</param>
         /// <remarks>
         /// The cache holds one wrapper per assembly name for the whole process, created for
         /// whichever context asked first. A lookup made for another context is served by a wrapper
-        /// of the copy that context resolves, and the shared cache is left as it is.
+        /// of the copy that context resolves, and the shared cache is left as it is. The copy is
+        /// resolved by the identity the URI specifies, not by the cached copy's: a URI without a
+        /// version names whatever version the context has, not the version another context chose.
         /// </remarks>
-        private static ResourceManagerWrapper GetWrapperForContext(ResourceManagerWrapper cached)
+        private static ResourceManagerWrapper GetWrapperForContext(ResourceManagerWrapper cached, string assemblyName, string assemblyVersion, string assemblyToken)
         {
             Assembly cachedAssembly = cached?.Assembly;
             if (cachedAssembly is null)
@@ -292,7 +298,8 @@ namespace MS.Internal.AppModel
                 return cached;
             }
 
-            Assembly assembly = MS.Internal.WindowsBase.SafeSecurityHelper.GetAssemblyForCurrentContext(cachedAssembly.GetName());
+            Assembly assembly = MS.Internal.WindowsBase.SafeSecurityHelper.GetAssemblyForCurrentContext(
+                BaseUriHelper.CreateAssemblyName(assemblyName, assemblyVersion, assemblyToken));
             if (assembly is null || assembly == cachedAssembly)
             {
                 return cached;
@@ -348,7 +355,7 @@ namespace MS.Internal.AppModel
                     s_registeredResourceManagersLookup[key.Slice(0, totalLength)] = rmwResult;
                 }
 
-                rmwResult = GetWrapperForContext(rmwResult);
+                rmwResult = GetWrapperForContext(rmwResult, assemblyName, assemblyVersion, assemblyToken);
             }
 
             if (rmwResult == ApplicationResourceManagerWrapper)

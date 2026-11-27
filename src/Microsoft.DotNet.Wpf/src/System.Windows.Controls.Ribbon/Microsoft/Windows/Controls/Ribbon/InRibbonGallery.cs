@@ -159,8 +159,8 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 _cachedDesiredSize = desiredSize;
 
-                if (DoubleUtil.AreClose(_scrollButtonsBorderFactor, 0) || 
-                    (_contentPresenter != null && DoubleUtil.AreClose(_contentPresenter.MaxWidth, 0)))
+                if (DoubleUtil.IsZero(_scrollButtonsBorderFactor) || 
+                    (_contentPresenter != null && DoubleUtil.IsZero(_contentPresenter.MaxWidth)))
                 {
                     UpdateInRibbonGalleryModeProperties();
                 }
@@ -381,7 +381,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 _scrollButtonsBorderFactor = 0;
                 if (_scrollButtonsBorder != null)
                 {
-                    if (DoubleUtil.AreClose(_scrollButtonsBorder.ActualWidth, 0))
+                    if (DoubleUtil.IsZero(_scrollButtonsBorder.ActualWidth))
                     {
                         _scrollButtonsBorderFactor = 0;
                     }

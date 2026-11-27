@@ -120,7 +120,7 @@ namespace System.Windows.Controls
                 childMeasureConstraint.Width = column.GetConstraintWidth(isColumnHeader);
             }
 
-            if (DoubleUtil.AreClose(desiredWidth, 0.0))
+            if (DoubleUtil.IsZero(desiredWidth))
             {
                 child.Measure(childMeasureConstraint);
             }
@@ -134,7 +134,7 @@ namespace System.Windows.Controls
                 // Allow the column to process the desired size
                 column.UpdateDesiredWidthForAutoColumn(
                     isColumnHeader,
-                    DoubleUtil.AreClose(desiredWidth, 0.0) ? childDesiredSize.Width : desiredWidth);
+                    DoubleUtil.IsZero(desiredWidth) ? childDesiredSize.Width : desiredWidth);
 
                 // For auto kind columns measure again with display value if
                 // the desired width is greater than display value.
@@ -244,7 +244,7 @@ namespace System.Windows.Controls
 
             bool hasStarColumns = parentDataGrid.InternalColumns.HasVisibleStarColumns;
             double averageColumnWidth = parentDataGrid.InternalColumns.AverageColumnWidth;
-            bool invalidAverage = DoubleUtil.AreClose(averageColumnWidth, 0.0);
+            bool invalidAverage = DoubleUtil.IsZero(averageColumnWidth);
             bool notVirtualizing = !IsVirtualizing;
             bool generateAll = invalidAverage || hasStarColumns || notVirtualizing;
             int frozenColumnCount = parentDataGrid.FrozenColumnCount;
@@ -348,7 +348,7 @@ namespace System.Windows.Controls
                                     }
 
                                     double cellChoppedWidth = viewportStartX - nextNonFrozenCellStart;
-                                    if (DoubleUtil.AreClose(cellChoppedWidth, 0.0))
+                                    if (DoubleUtil.IsZero(cellChoppedWidth))
                                     {
                                         nextNonFrozenCellStart = nextFrozenCellStart + childSize.Width;
                                         allocatedSpace += childSize.Width;
@@ -1498,7 +1498,7 @@ namespace System.Windows.Controls
                     else
                     {
                         double cellChoppedWidth = arrangeState.ViewportStartX - arrangeState.NextNonFrozenCellStart;
-                        if (DoubleUtil.AreClose(cellChoppedWidth, 0.0))
+                        if (DoubleUtil.IsZero(cellChoppedWidth))
                         {
                             rcChild.X = arrangeState.NextFrozenCellStart;
                             arrangeState.NextNonFrozenCellStart = arrangeState.NextFrozenCellStart + childWidth;
@@ -1999,7 +1999,7 @@ namespace System.Windows.Controls
 
             DataGridRowsPresenter parentRowsPresenter = ParentRowsPresenter;
 
-            if (DoubleUtil.AreClose(availableViewportWidth, 0.0) && parentRowsPresenter != null)
+            if (DoubleUtil.IsZero(availableViewportWidth) && parentRowsPresenter != null)
             {
                 Size rowPresenterAvailableSize = parentRowsPresenter.AvailableSize;
                 if (!double.IsNaN(rowPresenterAvailableSize.Width) && !Double.IsInfinity(rowPresenterAvailableSize.Width))
@@ -2272,7 +2272,7 @@ namespace System.Windows.Controls
                         {
                             columnStart = nextFrozenCellStart;
                             double cellChoppedWidth = viewportStartX - nextNonFrozenCellStart;
-                            if (DoubleUtil.AreClose(cellChoppedWidth, 0.0))
+                            if (DoubleUtil.IsZero(cellChoppedWidth))
                             {
                                 columnEnd = columnStart + columnWidth;
                                 nextNonFrozenCellStart = nextFrozenCellStart + columnWidth;
@@ -2320,7 +2320,7 @@ namespace System.Windows.Controls
                     offsetChange = columnStart - nextFrozenCellStart;
                 }
 
-                if (DoubleUtil.AreClose(offsetChange, 0.0))
+                if (DoubleUtil.IsZero(offsetChange))
                 {
                     return true;
                 }

@@ -33,12 +33,12 @@ namespace MS.Internal.Controls
             // Initialize the internal data
             _inkCanvas = inkCanvas;
 
-            _adornerBorderPen = new Pen(Brushes.Black, 1.0);
-            DoubleCollection dashes = new DoubleCollection();
-            dashes.Add(4.5);
-            dashes.Add(4.5);
-            _adornerBorderPen.DashStyle = new DashStyle(dashes, 2.25);
-            _adornerBorderPen.DashCap = PenLineCap.Flat;
+            _adornerBorderPen = new Pen(Brushes.Black, 1.0)
+            {
+                DashStyle = new DashStyle(new DoubleCollection(4.5, 4.5), 2.25),
+                DashCap = PenLineCap.Flat
+            };
+            _adornerBorderPen.Freeze();
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace MS.Internal.Controls
         private double _offsetX = 0;
         private double _offsetY = 0;
 
-        private Pen _adornerBorderPen;
+        private readonly Pen _adornerBorderPen;
 
         private const int CornerResizeHandleSize = 8;
         private const double BorderMargin = 8f;

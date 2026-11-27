@@ -559,10 +559,10 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 Rect bounds = GetRectBounds(true);
 
-                double[] snapx = new double[] { bounds.Left, bounds.Right };
-                double[] snapy = new double[] { bounds.Top, bounds.Bottom };
+                ReadOnlySpan<double> snapX = [bounds.Left, bounds.Right];
+                ReadOnlySpan<double> snapY = [bounds.Top, bounds.Bottom];
 
-                dc.PushGuidelineSet(new GuidelineSet(snapx, snapy));
+                dc.PushGuidelineSet(new GuidelineSet(snapX, snapY));
                 level++;
             }
 

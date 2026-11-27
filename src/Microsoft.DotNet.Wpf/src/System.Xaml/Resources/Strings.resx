@@ -609,9 +609,6 @@
   <data name="NoConstructorWithNArugments" space_="preserve">
     <value>A Constructor for '{0}' with '{1}' arguments was not found.</value>
   </data>
-  <data name="NoDefaultConstructor" space_="preserve">
-    <value>No default constructor found for type '{0}'. You can use the Arguments or FactoryMethod directives to construct this type.</value>
-  </data>
   <data name="NoElementUsage" space_="preserve">
     <value>'{0}' is not allowed in element usage.</value>
   </data>

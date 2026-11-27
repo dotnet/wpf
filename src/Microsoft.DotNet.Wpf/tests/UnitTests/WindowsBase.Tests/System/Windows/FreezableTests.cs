@@ -7303,10 +7303,7 @@ public class FreezableTests
 
         protected override void OnChanged()
         {
-            if (OnChangedAction != null)
-            {
-                OnChangedAction();
-            }
+            OnChangedAction?.Invoke();
 
             base.OnChanged();
         }

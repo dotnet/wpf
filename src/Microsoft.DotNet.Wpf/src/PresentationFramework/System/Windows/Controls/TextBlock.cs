@@ -124,7 +124,7 @@ namespace System.Windows.Controls
 
             if (!(_complexContent.TextContainer is TextContainer))
             {
-                throw new ArgumentException(SR.Format(SR.TextPanelIllegalParaTypeForIAddChild, "value", value.GetType()));
+                throw new ArgumentException(SR.Format(SR.TextPanelIllegalParaTypeForIAddChild, nameof(value), value.GetType()));
             }
 
             // Get parent of the text container. Note that it can be not a "this" TextBlock - in case

@@ -123,8 +123,8 @@ namespace MS.Internal.TextFormatting
                 throw new ArgumentException(
                     SR.Format(
                         SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, 
-                        "arrayIndex", 
-                        "array"),
+                        nameof(arrayIndex), 
+                        nameof(array)),
                     nameof(arrayIndex));
             }
 
@@ -133,8 +133,8 @@ namespace MS.Internal.TextFormatting
                 throw new ArgumentException(
                     SR.Format(
                         SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength,
-                        "arrayIndex",
-                        "array"));
+                        nameof(arrayIndex),
+                        nameof(array)));
             }           
             
 

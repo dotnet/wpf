@@ -129,14 +129,12 @@ namespace System.Xaml
             {
                 if (objectNode.Members is null)
                 {
-                    objectNode.Members = new XamlPropertySet();
+                    objectNode.Members = new HashSet<XamlMember>() { property };
                 }
-                else if (objectNode.Members.Contains(property))
+                else if (!objectNode.Members.Add(property))
                 {
                     throw new InvalidOperationException(SR.Format(SR.XamlMarkupExtensionWriterDuplicateMember, property.Name));
                 }
-
-                objectNode.Members.Add(property);
             }
         }
 
@@ -188,7 +186,7 @@ namespace System.Xaml
                 set;
             }
 
-            public XamlPropertySet Members
+            public HashSet<XamlMember> Members
             {
                 get;
                 set;

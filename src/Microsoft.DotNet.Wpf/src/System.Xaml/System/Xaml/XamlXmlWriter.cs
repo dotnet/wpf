@@ -495,27 +495,23 @@ namespace System.Xaml
             {
                 // Find the top most object frame.
                 Frame objectFrame = namespaceScopes.Peek();
-                if (objectFrame.AllocatingNodeType != XamlNodeType.StartObject &&
-                    objectFrame.AllocatingNodeType != XamlNodeType.GetObject)
+                if (objectFrame.AllocatingNodeType is not XamlNodeType.StartObject and not XamlNodeType.GetObject)
                 {
                     Frame temp = namespaceScopes.Pop();
                     objectFrame = namespaceScopes.Peek();
                     namespaceScopes.Push(temp);
                 }
 
-                Debug.Assert(objectFrame.AllocatingNodeType == XamlNodeType.StartObject ||
-                             objectFrame.AllocatingNodeType == XamlNodeType.GetObject);
+                Debug.Assert(objectFrame.AllocatingNodeType is XamlNodeType.StartObject or XamlNodeType.GetObject);
 
                 if (objectFrame.Members is null)
                 {
-                    objectFrame.Members = new XamlPropertySet();
+                    objectFrame.Members = new HashSet<XamlMember>() { property };
                 }
-                else if (objectFrame.Members.Contains(property))
+                else if (!objectFrame.Members.Add(property))
                 {
                     throw new XamlXmlWriterException(SR.Format(SR.XamlXmlWriterDuplicateMember, property.Name));
                 }
-
-                objectFrame.Members.Add(property);
             }
         }
 
@@ -690,7 +686,7 @@ namespace System.Xaml
                 set;
             }
 
-            public XamlPropertySet Members
+            public HashSet<XamlMember> Members
             {
                 get;
                 set;
@@ -2179,23 +2175,6 @@ namespace System.Xaml
 
                 CurrentDepth = 0;
             }
-        }
-    }
-
-    // need to implement our own Set class to alleviate ties to System.Core.dll
-    // HashSet<T> lives in System.Core.dll
-    internal class XamlPropertySet
-    {
-        private Dictionary<XamlMember, bool> dictionary = new Dictionary<XamlMember, bool>();
-
-        public bool Contains(XamlMember member)
-        {
-            return dictionary.ContainsKey(member);
-        }
-
-        public void Add(XamlMember member)
-        {
-            dictionary.Add(member, true);
         }
     }
 }

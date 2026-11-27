@@ -3378,6 +3378,17 @@ CD3DDeviceLevel1::PresentWithD3D(
 
         hr = S_OK;
     }
+    else if (hr == DXGI_ERROR_DEVICE_REMOVED)
+    {
+        //
+        // On ARM64, the D3D9-over-DXGI compatibility layer surfaces
+        // DXGI_ERROR_DEVICE_REMOVED directly when the GPU is suspended or
+        // removed, instead of mapping it to D3DERR_DEVICELOST.
+        // Convert here so HandlePresentFailure can recognize and handle it
+        // gracefully rather than letting MIL_THR trigger a fatal crash.
+        //
+        hr = D3DERR_DEVICELOST;
+    }
 
     //
     // !!! Critical Note: After this point hr may not be S_OK.  Make sure not
@@ -3477,9 +3488,11 @@ CD3DDeviceLevel1::HandlePresentFailure(
         hr == D3DERR_DEVICEHUNG ||  // Hw Adapter timed out and has
                                     // been reset by the OS (LH Only)
                                     //
-        hr == D3DERR_DEVICEREMOVED  // Hw Adapter has been removed (LH
-                                    // Only)
-                                    //
+        hr == D3DERR_DEVICEREMOVED ||  // Hw Adapter has been removed (LH
+                                       // Only)
+                                       //
+        hr == DXGI_ERROR_DEVICE_REMOVED // surfaced directly by D3D9-over-DXGI
+                                        // on ARM64 when GPU is suspended or removed
         )
     {
         hr = WGXERR_DISPLAYSTATEINVALID;

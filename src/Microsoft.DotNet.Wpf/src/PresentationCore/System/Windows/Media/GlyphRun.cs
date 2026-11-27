@@ -15,6 +15,7 @@
 
 using System.Collections;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows.Media.Converters;
 using System.Windows.Media.Composition;
 using System.Windows.Media.TextFormatting;
@@ -1226,9 +1227,9 @@ namespace System.Windows.Media
 
             if ((_flags & GlyphRunFlags.CacheInkBounds) != 0)
             {
-                if (_inkBoundingBox != null)
+                if (_inkBoundingBox is not null)
                 {
-                    return (Rect)_inkBoundingBox;
+                    return _inkBoundingBox.Value;
                 }
             }
 
@@ -1401,7 +1402,7 @@ namespace System.Windows.Media
 
             if ((_flags & GlyphRunFlags.CacheInkBounds) != 0)
             {
-                _inkBoundingBox = bounds;
+                _inkBoundingBox = new StrongBox<Rect>(bounds);
             }
 
             return bounds;
@@ -2463,7 +2464,7 @@ namespace System.Windows.Media
         private IList<bool>         _caretStops;
         private XmlLanguage         _language;
         private string              _deviceFontName;
-        private object              _inkBoundingBox;    // Used when CacheInkBounds is on
+        private StrongBox<Rect>     _inkBoundingBox;    // Used when CacheInkBounds is on
         private TextFormattingMode      _textFormattingMode;
         private float               _pixelsPerDip = MS.Internal.FontCache.Util.PixelsPerDip;
 

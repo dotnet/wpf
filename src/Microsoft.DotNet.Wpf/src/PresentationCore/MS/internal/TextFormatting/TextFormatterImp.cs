@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Windows.Media;
@@ -460,12 +460,19 @@ namespace MS.Internal.TextFormatting
 
             double realMaxFontRenderingEmSize = Constants.RealInfiniteWidth / Constants.GreatestMutiplierOfEm;
 
-            ArgumentOutOfRangeException.ThrowIfNegative(paragraphProperties.DefaultTextRunProperties.FontRenderingEmSize, "paragraphProperties.DefaultTextRunProperties.FontRenderingEmSize");
-            ArgumentOutOfRangeException.ThrowIfGreaterThan(paragraphProperties.DefaultTextRunProperties.FontRenderingEmSize, realMaxFontRenderingEmSize, "paragraphProperties.DefaultTextRunProperties.FontRenderingEmSize");
+            if (    paragraphProperties.DefaultTextRunProperties.FontRenderingEmSize < 0
+                ||  paragraphProperties.DefaultTextRunProperties.FontRenderingEmSize > realMaxFontRenderingEmSize)
+            {
+                throw new ArgumentOutOfRangeException("paragraphProperties.DefaultTextRunProperties.FontRenderingEmSize", SR.Format(SR.ParameterMustBeBetween, 0, realMaxFontRenderingEmSize));
+            }
+
             ArgumentOutOfRangeException.ThrowIfGreaterThan(paragraphProperties.Indent, Constants.RealInfiniteWidth, "paragraphProperties.Indent");
             ArgumentOutOfRangeException.ThrowIfGreaterThan(paragraphProperties.LineHeight, Constants.RealInfiniteWidth, "paragraphProperties.LineHeight");
-            ArgumentOutOfRangeException.ThrowIfNegative(paragraphProperties.DefaultIncrementalTab, "paragraphProperties.DefaultIncrementalTab");
-            ArgumentOutOfRangeException.ThrowIfGreaterThan(paragraphProperties.DefaultIncrementalTab, Constants.RealInfiniteWidth, "paragraphProperties.DefaultIncrementalTab");
+            if (   paragraphProperties.DefaultIncrementalTab < 0
+                || paragraphProperties.DefaultIncrementalTab > Constants.RealInfiniteWidth)
+            {
+                throw new ArgumentOutOfRangeException("paragraphProperties.DefaultIncrementalTab", SR.Format(SR.ParameterMustBeBetween, 0, Constants.RealInfiniteWidth));
+            }
         }
 
 

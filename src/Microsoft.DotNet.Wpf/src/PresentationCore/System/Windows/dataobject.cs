@@ -43,7 +43,7 @@ public sealed unsafe partial class DataObject :
     // Application IDataObject implementations need an adapter; built-in sources already expose the internal contract.
     static DataObject IDataObjectInternal<DataObject, IDataObject>.Create(DataObject clipboardData, IDataObject managedData) =>
         new(clipboardData._innerData.WithManagedDataObject(managedData as IDataObjectInternal ?? new DataObjectAdapter(managedData)));
-        
+
     static IDataObjectInternal IDataObjectInternal<DataObject, IDataObject>.Wrap(IDataObject data) =>
         new DataObjectAdapter(data);
 
@@ -87,6 +87,9 @@ public sealed unsafe partial class DataObject :
     /// </remarks>
     /// <inheritdoc cref="DataObject(object)"/>
     internal DataObject(Com.IDataObject* data) => _innerData = Composition.Create(data);
+
+    // Install the composed view directly so its captured native fallback and managed source are not rewrapped.
+    private DataObject(Composition data) => _innerData = data;
 
     /// <summary>
     ///  Special factory for the <see cref="Clipboard"/> to use.

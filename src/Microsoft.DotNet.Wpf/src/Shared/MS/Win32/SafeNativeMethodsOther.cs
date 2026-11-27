@@ -95,6 +95,12 @@ namespace MS.Win32
             return SafeNativeMethodsPrivate.GetSysColor(nIndex);
         }
 
+        // Preserve the .NET 9 clipboard text availability check without retrieving a data object.
+        public static bool IsClipboardFormatAvailable(int format)
+        {
+            return SafeNativeMethodsPrivate.IsClipboardFormatAvailable(format);
+        }
+
 #if FRAMEWORK_NATIVEMETHODS || BASE_NATIVEMETHODS 
         public static bool IsDebuggerPresent() { return SafeNativeMethodsPrivate.IsDebuggerPresent(); }
 #endif
@@ -149,6 +155,10 @@ namespace MS.Win32
             [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
             public static extern int GetSysColor(int nIndex);
 
+            // Reuse the .NET 9 interop signature to query published formats without unwrapping managed data.
+            [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
+            public static extern bool IsClipboardFormatAvailable(int format);
+
 #if FRAMEWORK_NATIVEMETHODS || BASE_NATIVEMETHODS
             [DllImport("kernel32.dll", ExactSpelling = true, CharSet = CharSet.Auto)]
             internal static extern bool IsDebuggerPresent();
@@ -168,4 +178,3 @@ namespace MS.Win32
         }
     }
 }
-

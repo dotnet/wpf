@@ -78,8 +78,10 @@
 
   <PropertyGroup>
         <!-- Add Markup compilation to the CoreCompileDependsOn so that the IDE inproc compilers (particularly VB)
-             can "see" the generated source files. -->
-      <CoreCompileDependsOn Condition="'$(BuildingInsideVisualStudio)' == 'true' Or '$(DesignTimeBuild)' == 'true'">
+             can "see" the generated source files. The temporary '*_wpftmp' project is excluded: it exists only
+             to compile the already-generated code (which it lists explicitly), so running markup compilation for
+             it too would add the generated *.g.cs a second time and trip NETSDK1022 (Duplicate 'Compile' items). -->
+      <CoreCompileDependsOn Condition="('$(BuildingInsideVisualStudio)' == 'true' Or '$(DesignTimeBuild)' == 'true') And !$(MSBuildProjectName.EndsWith('_wpftmp'))">
           DesignTimeMarkupCompilation;
           $(CoreCompileDependsOn)
       </CoreCompileDependsOn>

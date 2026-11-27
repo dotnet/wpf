@@ -1,10 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using System.Windows.Automation;
+using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
+using System.Windows.Documents;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -43,11 +47,59 @@ namespace Microsoft.Windows.Shell
         /// <summary>Object that describes the current modifications being made to the chrome.</summary>
         private WindowChrome _chromeInfo;
 
-        // Keep track of this so we can detect when we need to apply changes.  Tracking these separately
+        // Keep track of this so we can detect when we need to apply changes. Tracking these separately
         // as I've seen using just one cause things to get enough out of sync that occasionally the caption will redraw.
         private WindowState _lastRoundingState;
         private WindowState _lastMenuState;
         private bool _isGlassEnabled;
+
+        /// <summary>True when the worker was created for a SystemFrame-only chrome (see EnsureWorker).</summary>
+        private readonly bool _createdForSystemFrame;
+
+        /// <summary>The FrameMode that the current HWND state reflects; null until the first application.</summary>
+        private WindowChromeFrameMode? _appliedFrameMode;
+
+        /// <summary>ExtendedClientArea is requested and DWM composition is available.</summary>
+        private bool _isExtendedFrameActive;
+
+        /// <summary>The SystemFrame chrome attached by <see cref="EnsureWorker"/>, so it can be removed again.</summary>
+        private WindowChrome _autoChrome;
+
+        private Rect _captionButtonsBounds;
+        private Size _captionButtonsClipClientSize;
+        private Rect _titleBarBounds;
+        private bool _captionButtonsUpdatePending;
+        private bool _frameStateUpdatePending;
+
+        /// <summary>Whether the HWND is the active window, as reported by WM_ACTIVATE.</summary>
+        private bool _isActive = true;
+
+        private WindowCaptionAdorner _captionAdorner;
+        private UIElement _captionAdornedElement;
+        private bool _isTitleListenerAttached;
+
+        // Elements with a CaptionButtonRole the pointer is over / pressing: the system owns the pointer over
+        // them (the hit test answers a caption button code), so their states are driven from the non-client
+        // mouse messages instead of the input pipeline.
+        private DependencyObject _hoveredCaptionButton;
+        private DependencyObject _pressedCaptionButton;
+
+        // Last values pushed to DWM, so redundant calls are skipped and restore knows what to undo.
+        private WTNCA _appliedThemeAttributes;
+        private bool _themeAttributesApplied;
+        private Color? _appliedCaptionForegroundColor;
+        private uint? _appliedCaptionColor;
+        private uint? _appliedTextColor;
+        private uint? _appliedBorderColor;
+        private DWMWCP? _appliedCornerPreference;
+        private bool? _appliedDarkMode;
+        private DWMSBT _appliedBackdrop = DWMSBT.DWMSBT_AUTO;
+        private bool _isBackdropApplied;
+        private Color? _savedBackgroundColor;
+
+        // State provided by the ThemeManager (Fluent theme) for the Auto values of CaptionTheme and BackdropType.
+        private bool? _themeUseLightColors;
+        private WindowBackdropKind? _themeBackdropKind;
 
         #endregion
 
@@ -56,7 +108,14 @@ namespace Microsoft.Windows.Shell
         }
 
         public WindowChromeWorker()
+            : this(false)
         {
+        }
+
+        private WindowChromeWorker(bool createdForSystemFrame)
+        {
+            _createdForSystemFrame = createdForSystemFrame;
+
             _messageTable = new List<HANDLE_MESSAGE>
             {
                 new HANDLE_MESSAGE(WM.SETTEXT,               _HandleSetTextOrIcon),
@@ -65,10 +124,78 @@ namespace Microsoft.Windows.Shell
                 new HANDLE_MESSAGE(WM.NCCALCSIZE,            _HandleNCCalcSize),
                 new HANDLE_MESSAGE(WM.NCHITTEST,             _HandleNCHitTest),
                 new HANDLE_MESSAGE(WM.NCRBUTTONUP,           _HandleNCRButtonUp),
+                new HANDLE_MESSAGE(WM.NCMOUSEMOVE,           _HandleNCMouseMove),
+                new HANDLE_MESSAGE(WM.NCLBUTTONDOWN,         _HandleNCLButtonDown),
+                new HANDLE_MESSAGE(WM.NCLBUTTONDBLCLK,       _HandleNCLButtonDown),
+                new HANDLE_MESSAGE(WM.NCLBUTTONUP,           _HandleNCLButtonUp),
+                new HANDLE_MESSAGE(WM.NCMOUSELEAVE,          _HandleNCMouseLeave),
+                new HANDLE_MESSAGE(WM.ACTIVATE,              _HandleActivate),
                 new HANDLE_MESSAGE(WM.SIZE,                  _HandleSize),
                 new HANDLE_MESSAGE(WM.WINDOWPOSCHANGED,      _HandleWindowPosChanged),
+                new HANDLE_MESSAGE(WM.DPICHANGED,            _HandleDpiChanged),
                 new HANDLE_MESSAGE(WM.DWMCOMPOSITIONCHANGED, _HandleDwmCompositionChanged),
+                new HANDLE_MESSAGE(WM.DWMNCRENDERINGCHANGED, _HandleEnvironmentChanged),
+                new HANDLE_MESSAGE(WM.DWMCOLORIZATIONCOLORCHANGED, _HandleEnvironmentChanged),
+                new HANDLE_MESSAGE(WM.THEMECHANGED,          _HandleEnvironmentChanged),
+                new HANDLE_MESSAGE(WM.SETTINGCHANGE,         _HandleEnvironmentChanged),
+                new HANDLE_MESSAGE(WM.SYSCOLORCHANGE,        _HandleEnvironmentChanged),
             };
+        }
+
+        /// <summary>
+        /// Returns the worker of <paramref name="window"/>, creating it when needed. When the window has no
+        /// WindowChrome a SystemFrame chrome is attached with SetCurrentValue, so that a Style setter or a later
+        /// SetValue from the application replaces it. Used by the ThemeManager to manage the caption theme
+        /// and the backdrop of Fluent-themed windows.
+        /// </summary>
+        internal static WindowChromeWorker EnsureWorker(Window window)
+        {
+            Verify.IsNotNull(window, "window");
+
+            WindowChromeWorker worker = GetWindowChromeWorker(window);
+            if (worker == null)
+            {
+                worker = new WindowChromeWorker(createdForSystemFrame: true);
+                SetWindowChromeWorker(window, worker);
+            }
+
+            if (WindowChrome.GetWindowChrome(window) == null && !System.ComponentModel.DesignerProperties.GetIsInDesignMode(window))
+            {
+                worker._autoChrome = WindowChrome.CreateSystemFrameChrome();
+                window.SetCurrentValue(WindowChrome.WindowChromeProperty, worker._autoChrome);
+            }
+
+            return worker;
+        }
+
+        /// <summary>
+        /// Stores the decisions of the theme (light/dark caption and backdrop) that apply when the chrome's
+        /// CaptionTheme / BackdropType are set to Auto, and pushes them to DWM.
+        /// </summary>
+        internal void ApplyThemeState(bool useLightColors, WindowBackdropKind backdropKind)
+        {
+            VerifyAccess();
+            _themeUseLightColors = useLightColors;
+            _themeBackdropKind = backdropKind;
+            _UpdateDwmAttributes(WindowChromeDwmAttributes.CaptionTheme | WindowChromeDwmAttributes.Backdrop);
+        }
+
+        /// <summary>
+        /// Detaches the SystemFrame chrome that <see cref="EnsureWorker"/> attached, when it is still the chrome
+        /// in use. Used by the ThemeManager when a window leaves the Fluent theme, so that the window looks like
+        /// it never had a chrome. A chrome set by the application (or by a style) is left alone.
+        /// </summary>
+        internal void RemoveAutomaticChrome()
+        {
+            VerifyAccess();
+
+            if (_autoChrome != null && _window != null && ReferenceEquals(WindowChrome.GetWindowChrome(_window), _autoChrome))
+            {
+                // SetCurrentValue left the base value untouched: clearing goes back to that base value.
+                _window.ClearValue(WindowChrome.WindowChromeProperty);
+            }
+
+            _autoChrome = null;
         }
 
         public void SetWindowChrome(WindowChrome newChrome)
@@ -82,9 +209,19 @@ namespace Microsoft.Windows.Shell
                 return;
             }
 
-            _chromeInfo?.PropertyChangedThatRequiresRepaint -= _OnChromePropertyChangedThatRequiresRepaint;
+            if (_chromeInfo != null)
+            {
+                _chromeInfo.PropertyChangedThatRequiresRepaint -= _OnChromePropertyChangedThatRequiresRepaint;
+                _chromeInfo.PropertyChangedThatRequiresDwmUpdate -= _OnChromePropertyChangedThatRequiresDwmUpdate;
+            }
+
             _chromeInfo = newChrome;
-            _chromeInfo?.PropertyChangedThatRequiresRepaint += _OnChromePropertyChangedThatRequiresRepaint;
+
+            if (_chromeInfo != null)
+            {
+                _chromeInfo.PropertyChangedThatRequiresRepaint += _OnChromePropertyChangedThatRequiresRepaint;
+                _chromeInfo.PropertyChangedThatRequiresDwmUpdate += _OnChromePropertyChangedThatRequiresDwmUpdate;
+            }
 
             _ApplyNewCustomChrome();
         }
@@ -92,6 +229,42 @@ namespace Microsoft.Windows.Shell
         private void _OnChromePropertyChangedThatRequiresRepaint(object sender, EventArgs e)
         {
             _UpdateFrameState(true);
+        }
+
+        private void _OnChromePropertyChangedThatRequiresDwmUpdate(object sender, WindowChromeDwmAttributesChangedEventArgs e)
+        {
+            _UpdateDwmAttributes(e.Attributes);
+        }
+
+        private WindowChromeFrameMode _FrameMode
+        {
+            get { return _chromeInfo != null ? _chromeInfo.FrameMode : WindowChromeFrameMode.Custom; }
+        }
+
+        private bool _IsExtendedMode
+        {
+            get { return _FrameMode == WindowChromeFrameMode.ExtendedClientArea; }
+        }
+
+        /// <summary>Whether the worker owns the non-client area (everything but SystemFrame).</summary>
+        private bool _ManagesNonClientArea
+        {
+            get { return _chromeInfo != null && _FrameMode != WindowChromeFrameMode.SystemFrame; }
+        }
+
+        private bool _IsHwndAlive
+        {
+            get { return _hwnd != IntPtr.Zero && _hwndSource != null && !_hwndSource.IsDisposed; }
+        }
+
+        /// <summary>
+        /// Whether the HWND is maximized. Unlike Window.WindowState this is already up to date when the
+        /// WM_NCCALCSIZE of the maximize transition arrives.
+        /// </summary>
+        private bool _IsHwndMaximized()
+        {
+            var dwStyle = (WS)NativeMethods.GetWindowLongPtr(_hwnd, GWL.STYLE).ToInt32();
+            return Utility.IsFlagSet((int)dwStyle, (int)WS.MAXIMIZE);
         }
 
         public static readonly DependencyProperty WindowChromeWorkerProperty = DependencyProperty.RegisterAttached(
@@ -132,6 +305,7 @@ namespace Microsoft.Windows.Shell
             // We need to modify the template to fix this on behalf of the user.
             Utility.AddDependencyPropertyChangeListener(_window, Window.TemplateProperty, _OnWindowPropertyChangedThatRequiresTemplateFixup);
             Utility.AddDependencyPropertyChangeListener(_window, Window.FlowDirectionProperty, _OnWindowPropertyChangedThatRequiresTemplateFixup);
+            Utility.AddDependencyPropertyChangeListener(_window, Window.FlowDirectionProperty, _OnWindowFlowDirectionChanged);
 
             _window.Closed += _UnsetWindow;
 
@@ -142,7 +316,14 @@ namespace Microsoft.Windows.Shell
                 // Specifically it seems to sometimes disappear when the OS theme is changing.
                 _hwndSource = HwndSource.FromHwnd(_hwnd);
                 Assert.IsNotNull(_hwndSource);
-                _window.ApplyTemplate();
+
+                if (!_createdForSystemFrame)
+                {
+                    // A SystemFrame worker is created while the HWND exists but before the RootVisual is set
+                    // (ThemeManager.ApplyStyleOnWindow); applying the template that early would change the
+                    // startup sequence of the window, and the SystemFrame mode never touches the template.
+                    _window.ApplyTemplate();
+                }
 
                 if (_chromeInfo != null)
                 {
@@ -174,6 +355,7 @@ namespace Microsoft.Windows.Shell
             {
                 Utility.RemoveDependencyPropertyChangeListener(_window, Window.TemplateProperty, _OnWindowPropertyChangedThatRequiresTemplateFixup);
                 Utility.RemoveDependencyPropertyChangeListener(_window, Window.FlowDirectionProperty, _OnWindowPropertyChangedThatRequiresTemplateFixup);
+                Utility.RemoveDependencyPropertyChangeListener(_window, Window.FlowDirectionProperty, _OnWindowFlowDirectionChanged);
                 _window.SourceInitialized -= _WindowSourceInitialized;
             }
         }
@@ -182,7 +364,11 @@ namespace Microsoft.Windows.Shell
         {
             UnsubscribeWindowEvents();
 
-            _chromeInfo?.PropertyChangedThatRequiresRepaint -= _OnChromePropertyChangedThatRequiresRepaint;
+            if (_chromeInfo != null)
+            {
+                _chromeInfo.PropertyChangedThatRequiresRepaint -= _OnChromePropertyChangedThatRequiresRepaint;
+                _chromeInfo.PropertyChangedThatRequiresDwmUpdate -= _OnChromePropertyChangedThatRequiresDwmUpdate;
+            }
 
             _RestoreStandardChromeState(true);
         }
@@ -217,6 +403,20 @@ namespace Microsoft.Windows.Shell
             }
         }
 
+        /// <summary>
+        /// When the layout direction changes, the system moves its caption buttons to the other side of the
+        /// window. Refresh everything that depends on their position: the published bounds and the band drawn
+        /// by the adorner.
+        /// </summary>
+        private void _OnWindowFlowDirectionChanged(object sender, EventArgs e)
+        {
+            if (_IsExtendedMode && _IsHwndAlive)
+            {
+                _PostUpdateCaptionButtonsBounds();
+                _captionAdorner?.InvalidateVisual();
+            }
+        }
+
         private void _ApplyNewCustomChrome()
         {
             if (_hwnd == IntPtr.Zero || _hwndSource.IsDisposed)
@@ -237,13 +437,28 @@ namespace Microsoft.Windows.Shell
                 _isHooked = true;
             }
 
-            _FixupTemplateIssues();
+            if (_ManagesNonClientArea)
+            {
+                _FixupTemplateIssues();
 
-            // Force this the first time.
-            _UpdateSystemMenu(_window.WindowState);
-            _UpdateFrameState(true);
+                // Force this the first time.
+                if (!_IsExtendedMode)
+                {
+                    // With a real DWM frame (ExtendedClientArea) user32 keeps the system menu up to date itself.
+                    _UpdateSystemMenu(_window.WindowState);
+                }
 
-            NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, 0, 0, 0, 0, _SwpFlags);
+                _UpdateFrameState(true);
+
+                _ChangeFrame();
+            }
+            else
+            {
+                // SystemFrame: the standard frame is untouched, only DWM attributes and the backdrop are managed.
+                _UpdateFrameState(true);
+            }
+
+            _UpdateDwmAttributes(WindowChromeDwmAttributes.All);
         }
 
         /// <summary>
@@ -268,12 +483,22 @@ namespace Microsoft.Windows.Shell
 
         private void _FixupTemplateIssues()
         {
-            Assert.IsNotNull(_chromeInfo);
-            Assert.IsNotNull(_window);
+            if (_chromeInfo == null || _window == null)
+            {
+                // Posted for a template change and the chrome was removed in the meantime (for example the
+                // automatic one, when the theme mode goes back to None): nothing to fix up any more.
+                return;
+            }
+
+            if (!_ManagesNonClientArea)
+            {
+                // SystemFrame mode never touches the template.
+                return;
+            }
 
             if (_window.Template == null)
             {
-                // Nothing to fixup yet.  This will get called again when a template does get set.
+                // Nothing to fixup yet. This will get called again when a template does get set.
                 return;
             }
 
@@ -281,7 +506,7 @@ namespace Microsoft.Windows.Shell
             if (VisualTreeHelper.GetChildrenCount(_window) == 0)
             {
                 // The template isn't null, but we don't have a visual tree.
-                // Wait for the visual tree after ApplyTemplate, and then repost this  
+                // Wait for the visual tree after ApplyTemplate, and then repost this
                 _window.VisualChildrenChanged += RetryFixupTemplateIssuesOnVisualChildrenAdded;
                 return;
             }
@@ -290,7 +515,9 @@ namespace Microsoft.Windows.Shell
 
             FrameworkElement rootElement = (FrameworkElement)VisualTreeHelper.GetChild(_window, 0);
 
-            if (_chromeInfo.NonClientFrameEdges != NonClientFrameEdges.None)
+            // In ExtendedClientArea mode the client rect is computed exactly from the DWM frame bounds, so the
+            // template does not need to compensate for anything: NonClientFrameEdges is ignored.
+            if (!_IsExtendedMode && _chromeInfo.NonClientFrameEdges != NonClientFrameEdges.None)
             {
                 if (Utility.IsFlagSet((int)_chromeInfo.NonClientFrameEdges, (int)NonClientFrameEdges.Top))
                 {
@@ -326,7 +553,53 @@ namespace Microsoft.Windows.Shell
                 }
             }
 
+            if (_IsExtendedMode)
+            {
+                // Maximized with a sheet-of-glass extension: the client must start at the window top (DWM stops
+                // hit-testing its buttons otherwise) while DWM draws the buttons at the visible frame, one border
+                // down. Push the content down by the same amount so it lines up with them and nothing is cut off.
+                // With a top-band extension the buttons are cut off together with the content, so nothing moves.
+                templateFixupMargin.Top = _GetContentTopOffsetLogical();
+            }
+
             rootElement.Margin = templateFixupMargin;
+
+            if (_IsExtendedMode)
+            {
+                _EnsureCaptionAdorner();
+            }
+        }
+
+        /// <summary>
+        /// Top margin applied to the template root in ExtendedClientArea mode: the off-screen overhang when the
+        /// window is maximized and the frame is extended as a sheet of glass, zero otherwise.
+        /// </summary>
+        private double _GetContentTopOffsetLogical()
+        {
+            return _IsExtendedMode && _isExtendedFrameActive && _IsSheetOfGlassExtension
+                ? _GetMaximizedTopOverhangLogical()
+                : 0;
+        }
+
+        /// <summary>Re-applies the root margin when the window state or the frame extension changed.</summary>
+        private void _UpdateContentTopOffset()
+        {
+            if (!_IsExtendedMode || _window == null || VisualTreeHelper.GetChildrenCount(_window) == 0)
+            {
+                return;
+            }
+
+            var rootElement = VisualTreeHelper.GetChild(_window, 0) as FrameworkElement;
+            if (rootElement == null)
+            {
+                return;
+            }
+
+            double top = _GetContentTopOffsetLogical();
+            if (rootElement.Margin.Top != top)
+            {
+                rootElement.Margin = new Thickness(0, top, 0, 0);
+            }
         }
 
         #region WindowProc and Message Handlers
@@ -349,6 +622,15 @@ namespace Microsoft.Windows.Shell
 
         private IntPtr _HandleSetTextOrIcon(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
+            if (!_ManagesNonClientArea || _IsExtendedMode)
+            {
+                // With a real DWM frame the caption drawing is already suppressed through WTNCA_NODRAWCAPTION and
+                // DWM must see title/icon changes (taskbar, Alt+Tab). The adorner redraws through the
+                // Window.Title / Window.Icon listeners.
+                handled = false;
+                return IntPtr.Zero;
+            }
+
             bool modified = _ModifyStyle(WS.VISIBLE, 0);
 
             // Setting the caption text and icon cause Windows to redraw the caption.
@@ -367,6 +649,14 @@ namespace Microsoft.Windows.Shell
 
         private IntPtr _HandleNCActivate(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
+            if (!_ManagesNonClientArea || _IsExtendedMode)
+            {
+                // DWM owns the frame: it must receive the standard WM_NCACTIVATE flow so the active/inactive
+                // rendering of the caption buttons and of the border stays in sync.
+                handled = false;
+                return IntPtr.Zero;
+            }
+
             // Despite MSDN's documentation of lParam not being used,
             // calling DefWindowProc with lParam set to -1 causes Windows not to draw over the caption.
 
@@ -388,6 +678,17 @@ namespace Microsoft.Windows.Shell
         // area, so we added the NonClientFrameEdges property.
         private IntPtr _HandleNCCalcSize(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
+            if (!_ManagesNonClientArea)
+            {
+                handled = false;
+                return IntPtr.Zero;
+            }
+
+            if (_IsExtendedMode)
+            {
+                return _HandleNCCalcSizeExtended(wParam, lParam, out handled);
+            }
+
             // lParam is an [in, out] that can be either a RECT* (wParam == FALSE) or an NCCALCSIZE_PARAMS*.
             // Since the first field of NCCALCSIZE_PARAMS is a RECT and is the only field we care about
             // we can unconditionally treat it as a RECT.
@@ -435,7 +736,225 @@ namespace Microsoft.Windows.Shell
                 retVal = new IntPtr((int) (WVR.REDRAW));
             }
 
-            return retVal; 
+            return retVal;
+        }
+
+        /// <summary>
+        /// Whether the system scales the non-client area of this window to the DPI of its monitor. Only the
+        /// per-monitor V2 awareness context does; with the V1 context the content follows the monitor while the
+        /// frame stays at the system DPI, and system-aware or unaware windows are virtualized as a whole.
+        /// </summary>
+        private bool _IsNonClientScaledPerMonitor()
+        {
+            return _hwnd != IntPtr.Zero
+                   && MS.Internal.DpiUtil.GetDpiAwarenessContext(_hwnd).Equals(MS.Utility.DpiAwarenessContextValue.PerMonitorAwareVersion2);
+        }
+
+        /// <summary>
+        /// The DPI the non-client metrics of the window are expressed at: the window's DPI when the frame is
+        /// scaled per monitor (V2), the system DPI otherwise. 96 when the HWND is not available yet.
+        /// </summary>
+        private uint _GetNonClientDpi()
+        {
+            if (_window == null || _hwnd == IntPtr.Zero)
+            {
+                return 96u;
+            }
+
+            if (_IsNonClientScaledPerMonitor())
+            {
+                return (uint)Math.Round(_window.GetDpi().PixelsPerInchY);
+            }
+
+            MS.Internal.DpiScale2 systemDpi = MS.Internal.DpiUtil.GetSystemDpi();
+            return systemDpi != null ? (uint)Math.Round(systemDpi.PixelsPerInchY) : 96u;
+        }
+
+        /// <summary>
+        /// WM_NCCALCSIZE for ExtendedClientArea. DefWindowProc computes the standard client rect; its top edge is
+        /// then moved back up to the top of the window rect. As a result the left, right and bottom insets are
+        /// the standard resize frame for the current DPI and theme (including themes with visible borders),
+        /// with nothing to measure, and the whole caption band becomes part of the client area: the WPF content
+        /// draws there while DWM keeps drawing the caption buttons on top of it.
+        /// </summary>
+        /// <remarks>
+        /// The client area must start exactly at the top of the window rect: DWM hit-tests its caption buttons
+        /// only as long as it does, with either kind of frame extension (moving the client top down disables
+        /// them). A maximized window is inflated by the resize frame on every side, so the first frame thickness
+        /// of the client lies above the screen; <see cref="_GetMaximizedTopOverhangLogical"/> lets the title and
+        /// the caption band follow the visible frame. Where DWM draws the buttons depends on the extension: at
+        /// the client top with a top band, at the visible frame with a sheet of glass (see
+        /// _UpdateCaptionButtonsBounds). The left, right and bottom edges of a maximized client coincide with
+        /// the work area, as for a standard maximized window.
+        /// </remarks>
+        private IntPtr _HandleNCCalcSizeExtended(IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            if (!_isExtendedFrameActive || lParam == IntPtr.Zero)
+            {
+                // No composition: leave the standard frame alone.
+                handled = false;
+                return IntPtr.Zero;
+            }
+
+            if (wParam == IntPtr.Zero)
+            {
+                // wParam == FALSE is the query form used by the system (and by DWM when it lays out its own frame
+                // elements) to map a window rect to a client rect. Leave it to DefWindowProc: answering with the
+                // extended client area here alters the caption button layout DWM computes.
+                handled = false;
+                return IntPtr.Zero;
+            }
+
+            // rgrc[0] is the first field of NCCALCSIZE_PARAMS: the proposed window rect on input, the client
+            // rect on output.
+            var proposed = Marshal.PtrToStructure<RECT>(lParam);
+            NativeMethods.DefWindowProc(_hwnd, WM.NCCALCSIZE, wParam, lParam);
+            var rc = Marshal.PtrToStructure<RECT>(lParam);
+            rc.Top = proposed.Top;
+
+            if (_IsHwndMaximized())
+            {
+                // When the client area of a maximized window covers the whole monitor, the shell treats the
+                // window as full screen and an auto-hide app bar (the taskbar) can no longer be summoned with
+                // the mouse. The standard frame avoids this by leaving a one-pixel row free along the edge that
+                // hosts the bar. Here the row is always left free at the bottom whenever the client reaches the
+                // bottom of the monitor (no taskbar there, or an auto-hide one): the shell only requires that
+                // the window does not cover the entire monitor, whichever edge the bar is on.
+                IntPtr hMon = NativeMethods.MonitorFromRect(ref rc, MONITOR_DEFAULTTONEAREST);
+                if (hMon == IntPtr.Zero)
+                {
+                    hMon = NativeMethods.MonitorFromWindow(_hwnd, MONITOR_DEFAULTTONEAREST);
+                }
+
+                if (hMon != IntPtr.Zero)
+                {
+                    MONITORINFO mi = NativeMethods.GetMonitorInfo(hMon);
+                    if (rc.Bottom >= mi.rcMonitor.Bottom)
+                    {
+                        rc.Bottom = mi.rcMonitor.Bottom - 1;
+                    }
+                }
+            }
+
+            Marshal.StructureToPtr(rc, lParam, false);
+            handled = true;
+
+            // See the remarks in the legacy handler: WVR_REDRAW for wParam == TRUE.
+            return new IntPtr((int)WVR.REDRAW);
+        }
+
+        private const uint MONITOR_DEFAULTTONEAREST = 0x00000002;
+
+        /// <summary>The thickness by which the system inflates a maximized window on every side, in device pixels.</summary>
+        private int _GetMaximizedFrameThicknessDevice()
+        {
+            return _GetResizeFrameThickness(_GetNonClientDpi());
+        }
+
+        /// <summary>Whether the DWM frame is extended over the whole window (MARGINS -1) rather than as a top band.</summary>
+        private bool _IsSheetOfGlassExtension
+        {
+            get
+            {
+                if (_chromeInfo == null)
+                {
+                    return false;
+                }
+
+                // A negative GlassFrameThickness is an explicit request for the sheet of glass and always wins.
+                if (!Utility.IsThicknessNonNegative(_chromeInfo.GlassFrameThickness))
+                {
+                    return true;
+                }
+
+                // A backdrop gets the sheet of glass unless the application sized the band itself (explicit
+                // CaptionHeight) or asked for specific glass margins.
+                return _isBackdropApplied && !_chromeInfo.IsCaptionHeightSet && !_HasExplicitGlassMargins;
+            }
+        }
+
+        /// <summary>
+        /// Whether the application asked for specific glass margins.  They are extended as such in every theme,
+        /// with or without a backdrop, instead of the sheet of glass a backdrop would otherwise get.
+        /// </summary>
+        private bool _HasExplicitGlassMargins
+        {
+            get
+            {
+                return _chromeInfo != null
+                       && _chromeInfo.IsGlassFrameThicknessSet
+                       && Utility.IsThicknessNonNegative(_chromeInfo.GlassFrameThickness);
+            }
+        }
+
+        /// <summary>
+        /// Device independent pixels of client area lying above the screen when the window is maximized: the
+        /// resize frame thickness (the same on every side). Used to place the title, and to extend the
+        /// caption hit-test band, so they line up with the visible part of the caption; the DWM buttons need no
+        /// correction because DWM anchors them to the client top.
+        /// </summary>
+        private double _GetMaximizedTopOverhangLogical()
+        {
+            if (!_IsHwndMaximized() || _hwndSource?.CompositionTarget == null)
+            {
+                return 0;
+            }
+
+            return _hwndSource.CompositionTarget.TransformFromDevice.Transform(new Vector(0, _GetMaximizedFrameThicknessDevice())).Y;
+        }
+
+        /// <summary>
+        /// Factor converting DWM (physical monitor) pixels into the window's pixels. It differs from 1 only for
+        /// a DPI-virtualized window (system-DPI-aware process on a monitor with a different DPI), and only when
+        /// the ratio measured between the window rect and the visible frame agrees with the DPI ratio.
+        /// </summary>
+        internal static double ComputeDwmToWindowScale(int windowWidth, int visibleWidth, double windowDpi, double monitorDpi)
+        {
+            if (windowWidth <= 0 || visibleWidth <= 0 || windowDpi <= 0 || monitorDpi <= 0)
+            {
+                return 1.0;
+            }
+
+            double dpiScale = windowDpi / monitorDpi;
+            if (Math.Abs(dpiScale - 1.0) < 0.01)
+            {
+                return 1.0;
+            }
+
+            double measured = (double)windowWidth / visibleWidth;
+            return Math.Abs(measured - dpiScale) <= Math.Abs(measured - 1.0) ? dpiScale : 1.0;
+        }
+
+        /// <summary>
+        /// The current factor converting DWM (physical monitor) pixels into window pixels. It must be evaluated
+        /// at every use: a system-DPI-aware window gets no WM_DPICHANGED when it moves to a monitor with a
+        /// different scale, yet DWM keeps reporting physical pixels. The ratio between the window rect and the
+        /// DWM bounds is only used as a sanity check, so it does not matter that the bounds describe the
+        /// customized frame.
+        /// </summary>
+        private double _GetCurrentDwmToWindowScale()
+        {
+            if (!_IsHwndAlive || _hwndSource.CompositionTarget == null)
+            {
+                return 1.0;
+            }
+
+            RECT visibleRect;
+            if (!NativeMethods.DwmGetWindowAttributeRect(_hwnd, DWMWA.EXTENDED_FRAME_BOUNDS, out visibleRect))
+            {
+                return 1.0;
+            }
+
+            RECT windowRect = NativeMethods.GetWindowRect(_hwnd);
+            double windowDpi = _hwndSource.CompositionTarget.TransformToDevice.M11 * 96.0;
+            double monitorDpi = NativeMethods.GetEffectiveMonitorDpi(_hwnd);
+            return ComputeDwmToWindowScale(windowRect.Width, visibleRect.Width, windowDpi, monitorDpi);
+        }
+
+        // SM_CXFRAME + SM_CXPADDEDBORDER at the given DPI: the thickness Windows uses for the resize frame.
+        private static int _GetResizeFrameThickness(uint dpi)
+        {
+            return NativeMethods.GetSystemMetricsForDpi(SM.CXFRAME, dpi) + NativeMethods.GetSystemMetricsForDpi(SM.CXPADDEDBORDER, dpi);
         }
 
         private HT _GetHTFromResizeGripDirection(ResizeGripDirection direction)
@@ -466,15 +985,42 @@ namespace Microsoft.Windows.Shell
 
         private IntPtr _HandleNCHitTest(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
+            if (!_ManagesNonClientArea || (_IsExtendedMode && !_isExtendedFrameActive))
+            {
+                handled = false;
+                return IntPtr.Zero;
+            }
+
             DpiScale dpi = _window.GetDpi();
 
             // Let the system know if we consider the mouse to be in our effective non-client area.
             var mousePosScreen = new Point(Utility.GET_X_LPARAM(lParam), Utility.GET_Y_LPARAM(lParam));
             Rect windowPosition = _GetWindowRect();
+            Point mousePosWindow = _GetMousePositionInContent(mousePosScreen, windowPosition, dpi);
 
-            Point mousePosWindow = mousePosScreen;
-            mousePosWindow.Offset(-windowPosition.X, -windowPosition.Y);
-            mousePosWindow = DpiHelper.DevicePixelsToLogical(mousePosWindow, dpi.DpiScaleX, dpi.DpiScaleY);
+            if (_IsExtendedMode && _AreDwmCaptionButtonsInUse)
+            {
+                // With a real system frame the caption buttons are DWM's and must always win, before any WPF
+                // content is consulted: the content is expected to stay out of CaptionButtonsBounds anyway.
+                IntPtr dwmRet;
+                if (NativeMethods.DwmDefWindowProc(_hwnd, uMsg, wParam, lParam, out dwmRet) && dwmRet != IntPtr.Zero)
+                {
+                    handled = true;
+                    return dwmRet;
+                }
+            }
+
+            if (_IsExtendedMode && _captionAdorner != null && _captionAdorner.ShowIcon)
+            {
+                // The icon drawn by the adorner gets the standard system behavior through HTSYSMENU:
+                // DefWindowProc opens the system menu on click and closes the window on double click.
+                Rect iconBounds = _captionAdorner.IconBounds;
+                if (!iconBounds.IsEmpty && iconBounds.Contains(mousePosWindow))
+                {
+                    handled = true;
+                    return new IntPtr((int)HT.SYSMENU);
+                }
+            }
 
             // If the app is asking for content to be treated as client then that takes precedence over _everything_, even DWM caption buttons.
             // This allows apps to set the glass frame to be non-empty, still cover it with WPF content to hide all the glass,
@@ -482,6 +1028,15 @@ namespace Microsoft.Windows.Shell
             IInputElement inputElement = _window.InputHitTest(mousePosWindow);
             if (inputElement != null)
             {
+                // An element standing for a caption button gets the system's hit code, so the system treats it as
+                // the button (window layout flyout over the maximize one); only while no system-drawn buttons exist.
+                CaptionButtonRole role;
+                if (!_AreDwmCaptionButtonsInUse && _FindCaptionButtonElement(inputElement as DependencyObject, out role) != null)
+                {
+                    handled = true;
+                    return new IntPtr((int)_GetHTFromCaptionButtonRole(role));
+                }
+
                 if (WindowChrome.GetIsHitTestVisibleInChrome(inputElement))
                 {
                     handled = true;
@@ -497,35 +1052,85 @@ namespace Microsoft.Windows.Shell
             }
 
             // It's not opted out, so offer up the hittest to DWM, then to our custom non-client area logic.
-            if (_chromeInfo.UseAeroCaptionButtons)
+            // (In ExtendedClientArea mode DWM was already consulted above.)
+            if (!_IsExtendedMode && _chromeInfo.UseAeroCaptionButtons && _AreDwmCaptionButtonsInUse)
             {
                 IntPtr lRet;
-                if (Utility.IsOSVistaOrNewer && _chromeInfo.GlassFrameThickness != default(Thickness) && _isGlassEnabled)
-                {
-                    // If we're on Vista, give the DWM a chance to handle the message first.
-                    handled = NativeMethods.DwmDefWindowProc(_hwnd, uMsg, wParam, lParam, out lRet);
 
-                    if (IntPtr.Zero != lRet)
-                    {
-                        // If DWM claims to have handled this, then respect their call.
-                        return lRet;
-                    }
+                // Give the DWM a chance to handle the message first (caption buttons).
+                handled = NativeMethods.DwmDefWindowProc(_hwnd, uMsg, wParam, lParam, out lRet);
+
+                if (IntPtr.Zero != lRet)
+                {
+                    // If DWM claims to have handled this, then respect their call.
+                    return lRet;
                 }
             }
 
-            HT ht = _HitTestNca(
-                DpiHelper.DeviceRectToLogical(windowPosition, dpi.DpiScaleX, dpi.DpiScaleY),
-                DpiHelper.DevicePixelsToLogical(mousePosScreen, dpi.DpiScaleX, dpi.DpiScaleY));
+            Rect windowPositionLogical = DpiHelper.DeviceRectToLogical(windowPosition, dpi.DpiScaleX, dpi.DpiScaleY);
+            Point mousePosScreenLogical = DpiHelper.DevicePixelsToLogical(mousePosScreen, dpi.DpiScaleX, dpi.DpiScaleY);
+            HT ht;
+
+            if (_IsExtendedMode)
+            {
+                // The resize borders are the standard resize frame on the left, right and bottom (outside the
+                // client area) plus a strip of the same height inside the client along the top. When the window
+                // is maximized they disappear, and the caption band is extended by the off-screen part so that
+                // the whole visible title stays draggable.
+                bool maximized = _IsHwndMaximized();
+                Thickness resizeBorder = new Thickness();
+                double captionHeight = _chromeInfo.CaptionHeight;
+
+                if (maximized)
+                {
+                    captionHeight += _GetMaximizedTopOverhangLogical();
+                }
+                else
+                {
+                    int frameDevice = _GetResizeFrameThickness(_GetNonClientDpi());
+                    double frame = DpiHelper.DevicePixelsToLogical(new Point(0, frameDevice), dpi.DpiScaleX, dpi.DpiScaleY).Y;
+                    resizeBorder = new Thickness(frame);
+                }
+
+                ht = _HitTestNcaExtended(windowPositionLogical, mousePosScreenLogical, resizeBorder, captionHeight);
+            }
+            else
+            {
+                ht = _HitTestNca(windowPositionLogical, mousePosScreenLogical, _chromeInfo.ResizeBorderThickness, _chromeInfo.CaptionHeight);
+            }
 
             handled = true;
             return new IntPtr((int)ht);
         }
 
+        /// <summary>Whether DWM is currently drawing the caption buttons over an area the worker hit-tests.</summary>
+        private bool _AreDwmCaptionButtonsInUse
+        {
+            get
+            {
+                if (_chromeInfo == null)
+                {
+                    return false;
+                }
+
+                if (_IsExtendedMode)
+                {
+                    // The system frame is kept, so DWM draws its buttons whatever UseAeroCaptionButtons says:
+                    // they must be hit-tested, otherwise they would be visible but dead.
+                    return _isExtendedFrameActive;
+                }
+
+                return _chromeInfo.UseAeroCaptionButtons && Utility.IsOSVistaOrNewer && _chromeInfo.GlassFrameThickness != default(Thickness) && _isGlassEnabled;
+            }
+        }
+
         private IntPtr _HandleNCRButtonUp(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
-            // Emulate the system behavior of clicking the right mouse button over the caption area
-            // to bring up the system menu.
-            if (HT.CAPTION == (HT)wParam.ToInt32())
+            // Emulate the system behavior of clicking the right mouse button over the caption area, or over the
+            // window icon (the one drawn by the chrome, which the hit test reports as the system menu), to bring
+            // up the system menu.
+            var ht = (HT)wParam.ToInt32();
+            if (_ManagesNonClientArea && (ht == HT.CAPTION || ht == HT.SYSMENU))
             {
                 SystemCommands.ShowSystemMenuPhysicalCoordinates(_window, new Point(Utility.GET_X_LPARAM(lParam), Utility.GET_Y_LPARAM(lParam)));
             }
@@ -533,20 +1138,407 @@ namespace Microsoft.Windows.Shell
             return IntPtr.Zero;
         }
 
+        #region Caption button roles (elements that stand for the system caption buttons)
+
+        private static HT _GetHTFromCaptionButtonRole(CaptionButtonRole role)
+        {
+            switch (role)
+            {
+                case CaptionButtonRole.Minimize:
+                    return HT.MINBUTTON;
+                case CaptionButtonRole.Maximize:
+                    return HT.MAXBUTTON;
+                case CaptionButtonRole.Close:
+                    return HT.CLOSE;
+                default:
+                    return HT.CLIENT;
+            }
+        }
+
+        private static bool _IsCaptionButtonHit(HT ht)
+        {
+            return ht == HT.MINBUTTON || ht == HT.MAXBUTTON || ht == HT.CLOSE;
+        }
+
+        /// <summary>
+        /// The element that carries the CaptionButtonRole covering <paramref name="hit"/>: the property is inherited,
+        /// so the hit element may be a child of the button; walk up to the element the role was set on.
+        /// </summary>
+        private static DependencyObject _FindCaptionButtonElement(DependencyObject hit, out CaptionButtonRole role)
+        {
+            role = CaptionButtonRole.None;
+            DependencyObject current = hit;
+            while (current != null)
+            {
+                var value = (CaptionButtonRole)current.GetValue(WindowChrome.CaptionButtonRoleProperty);
+                if (value == CaptionButtonRole.None)
+                {
+                    return null;
+                }
+
+                BaseValueSource source = DependencyPropertyHelper.GetValueSource(current, WindowChrome.CaptionButtonRoleProperty).BaseValueSource;
+                if (source != BaseValueSource.Inherited && source != BaseValueSource.Default)
+                {
+                    role = value;
+                    return current;
+                }
+
+                current = (current is Visual || current is System.Windows.Media.Media3D.Visual3D ? VisualTreeHelper.GetParent(current) : null)
+                          ?? LogicalTreeHelper.GetParent(current);
+            }
+
+            return null;
+        }
+
+        /// <summary>The caption button element under the screen point of a non-client mouse message, if any.</summary>
+        private DependencyObject _GetCaptionButtonAt(IntPtr lParam, out CaptionButtonRole role)
+        {
+            role = CaptionButtonRole.None;
+            if (!_IsHwndAlive || _window == null || _AreDwmCaptionButtonsInUse)
+            {
+                return null;
+            }
+
+            var mousePosScreen = new Point(Utility.GET_X_LPARAM(lParam), Utility.GET_Y_LPARAM(lParam));
+            Point mousePosWindow = _GetMousePositionInContent(mousePosScreen, _GetWindowRect(), _window.GetDpi());
+
+            return _FindCaptionButtonElement(_window.InputHitTest(mousePosWindow) as DependencyObject, out role);
+        }
+
+        /// <summary>
+        /// Converts the screen position of a non-client mouse message into the coordinates of the Window
+        /// element: logical pixels measured from the top-left corner of the client area, always left to right
+        /// (the Window mirrors its content by itself in a right-to-left layout). In ExtendedClientArea mode the
+        /// client area is inset from the window rect by the resize frame on the left, right and bottom, so the
+        /// client origin is used. The resize borders themselves are still hit-tested against the window rect.
+        /// </summary>
+        private Point _GetMousePositionInContent(Point mousePosScreen, Rect windowPosition, DpiScale dpi)
+        {
+            Point origin = windowPosition.TopLeft;
+            if (_IsExtendedMode)
+            {
+                // In a right-to-left layout the system mirrors the client coordinates: the client origin maps to
+                // the top-right corner and the rect comes back with Left and Right swapped. Use the leftmost edge.
+                RECT client = NativeMethods.GetClientRectInScreen(_hwnd);
+                origin = new Point(Math.Min(client.Left, client.Right), client.Top);
+            }
+
+            Point mousePosContent = mousePosScreen;
+            mousePosContent.Offset(-origin.X, -origin.Y);
+            return DpiHelper.DevicePixelsToLogical(mousePosContent, dpi.DpiScaleX, dpi.DpiScaleY);
+        }
+
+        private void _SetHoveredCaptionButton(DependencyObject element)
+        {
+            if (ReferenceEquals(element, _hoveredCaptionButton))
+            {
+                return;
+            }
+
+            _hoveredCaptionButton?.ClearValue(WindowChrome.IsCaptionButtonHoveredPropertyKey);
+            _hoveredCaptionButton = element;
+
+            if (element != null)
+            {
+                element.SetValue(WindowChrome.IsCaptionButtonHoveredPropertyKey, true);
+                // The input pipeline does not track the pointer here: ask for WM_NCMOUSELEAVE ourselves.
+                NativeMethods.TrackNonClientMouseLeave(_hwnd);
+            }
+            else
+            {
+                _SetPressedCaptionButton(null);
+            }
+        }
+
+        private void _SetPressedCaptionButton(DependencyObject element)
+        {
+            if (ReferenceEquals(element, _pressedCaptionButton))
+            {
+                return;
+            }
+
+            _pressedCaptionButton?.ClearValue(WindowChrome.IsCaptionButtonPressedPropertyKey);
+            _pressedCaptionButton = element;
+            element?.SetValue(WindowChrome.IsCaptionButtonPressedPropertyKey, true);
+        }
+
+        /// <summary>
+        /// Performs the action of a clicked caption button element: its own invoke pattern (command or click
+        /// handler) when it has one, the window command of its role otherwise.
+        /// </summary>
+        private void _InvokeCaptionButton(DependencyObject element, CaptionButtonRole role)
+        {
+            if (element is UIElement uiElement)
+            {
+                AutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(uiElement);
+                if (peer?.GetPattern(PatternInterface.Invoke) is IInvokeProvider invoke)
+                {
+                    try
+                    {
+                        invoke.Invoke();
+                    }
+                    catch (ElementNotEnabledException)
+                    {
+                        // A disabled button does nothing, like a disabled system button.
+                    }
+                    return;
+                }
+            }
+
+            switch (role)
+            {
+                case CaptionButtonRole.Minimize:
+                    SystemCommands.MinimizeWindow(_window);
+                    break;
+                case CaptionButtonRole.Maximize:
+                    if (_window.WindowState == WindowState.Maximized)
+                    {
+                        SystemCommands.RestoreWindow(_window);
+                    }
+                    else
+                    {
+                        SystemCommands.MaximizeWindow(_window);
+                    }
+                    break;
+                case CaptionButtonRole.Close:
+                    SystemCommands.CloseWindow(_window);
+                    break;
+            }
+        }
+
+        private IntPtr _HandleNCMouseMove(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            handled = false;
+            if (!_ManagesNonClientArea)
+            {
+                return IntPtr.Zero;
+            }
+
+            CaptionButtonRole role;
+            DependencyObject element = _IsCaptionButtonHit((HT)wParam.ToInt32()) ? _GetCaptionButtonAt(lParam, out role) : null;
+            _SetHoveredCaptionButton(element);
+            return IntPtr.Zero;
+        }
+
+        private IntPtr _HandleNCLButtonDown(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            handled = false;
+            if (!_ManagesNonClientArea || !_IsCaptionButtonHit((HT)wParam.ToInt32()))
+            {
+                return IntPtr.Zero;
+            }
+
+            CaptionButtonRole role;
+            DependencyObject element = _GetCaptionButtonAt(lParam, out role);
+            if (element == null)
+            {
+                return IntPtr.Zero;
+            }
+
+            // Swallowed: the default handling would act on the window itself (and track the press in the frame).
+            _SetHoveredCaptionButton(element);
+            _SetPressedCaptionButton(element);
+            handled = true;
+            return IntPtr.Zero;
+        }
+
+        private IntPtr _HandleNCLButtonUp(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            handled = false;
+            if (!_ManagesNonClientArea || !_IsCaptionButtonHit((HT)wParam.ToInt32()))
+            {
+                return IntPtr.Zero;
+            }
+
+            CaptionButtonRole role;
+            DependencyObject element = _GetCaptionButtonAt(lParam, out role);
+            DependencyObject pressed = _pressedCaptionButton;
+            _SetPressedCaptionButton(null);
+
+            if (element == null)
+            {
+                return IntPtr.Zero;
+            }
+
+            handled = true;
+            if (ReferenceEquals(element, pressed))
+            {
+                _InvokeCaptionButton(element, role);
+            }
+            return IntPtr.Zero;
+        }
+
+        #endregion
+
+        private IntPtr _HandleNCMouseLeave(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            _SetHoveredCaptionButton(null);
+
+            // Let DWM clear the hover state of its caption buttons, otherwise a button may stay highlighted.
+            if (_ManagesNonClientArea && _AreDwmCaptionButtonsInUse)
+            {
+                IntPtr lRet;
+                handled = NativeMethods.DwmDefWindowProc(_hwnd, uMsg, wParam, lParam, out lRet);
+                return lRet;
+            }
+
+            handled = false;
+            return IntPtr.Zero;
+        }
+
+        private IntPtr _HandleActivate(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            const int WA_INACTIVE = 0;
+
+            _isActive = Utility.LOWORD(wParam.ToInt32()) != WA_INACTIVE;
+
+            _UpdateCaptionForeground();
+
+            handled = false;
+            return IntPtr.Zero;
+        }
+
+        private IntPtr _HandleDpiChanged(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            // The client rect follows the new frame thickness on its own, because WM_NCCALCSIZE is answered
+            // from the standard frame. This hook runs before HwndTarget resizes the window for the new DPI.
+            if (_IsExtendedMode)
+            {
+                // The DWM frame extension is expressed in device pixels: re-extend it once the window has
+                // been resized for the new DPI, otherwise the band hosting the caption buttons keeps the old height.
+                if (_isExtendedFrameActive && !_reextendFramePending)
+                {
+                    _reextendFramePending = true;
+                    _window.Dispatcher.BeginInvoke(DispatcherPriority.Render, (_Action)_ReextendFrameAfterDpiChange);
+                }
+
+                _PostUpdateCaptionButtonsBounds();
+            }
+
+            handled = false;
+            return IntPtr.Zero;
+        }
+
+        private bool _reextendFramePending;
+
+        private void _ReextendFrameAfterDpiChange()
+        {
+            _reextendFramePending = false;
+            if (_IsHwndAlive && _IsExtendedMode && _isExtendedFrameActive && _chromeInfo != null)
+            {
+                _ExtendFrameForExtendedClientArea();
+                _captionAdorner?.InvalidateVisual();
+
+                // The system reworks the frame after the resize WPF performs for the new DPI (see
+                // _RepaintAfterFrameRebuild).
+                _RepaintAfterFrameRebuild();
+            }
+        }
+
+        private IntPtr _HandleEnvironmentChanged(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            // Theme, system colors, DWM colorization or settings changed. The client rect needs no work: the
+            // system recomputes the frame on its own and WM_NCCALCSIZE is answered from the standard one, also
+            // for themes with visible borders. Coalesce the remaining work and run it after the framework has
+            // invalidated SystemParameters and SystemColors.
+            if (!_frameStateUpdatePending)
+            {
+                _frameStateUpdatePending = true;
+                _window.Dispatcher.BeginInvoke(DispatcherPriority.Background, (_Action)_OnEnvironmentChanged);
+            }
+
+            handled = false;
+            return IntPtr.Zero;
+        }
+
+        private void _OnEnvironmentChanged()
+        {
+            _frameStateUpdatePending = false;
+
+            if (!_IsHwndAlive || _chromeInfo == null)
+            {
+                return;
+            }
+
+            // Only what depends on colors and theme is refreshed. The frame is re-applied solely when the
+            // composition state actually changed: forcing NCRENDERING_POLICY, the DWM extension and a
+            // SWP_FRAMECHANGED on every color/settings notification made DWM chain frame transitions, which
+            // showed as flicker until the next real resize.
+            if (_ManagesNonClientArea)
+            {
+                _UpdateFrameState(false);
+                _ApplyWindowThemeAttributes();
+            }
+
+            _UpdateCaptionForeground();
+            _captionAdorner?.InvalidateVisual();
+            _UpdateDwmAttributes(WindowChromeDwmAttributes.CaptionTheme | WindowChromeDwmAttributes.Backdrop);
+
+            // Every mode whose client is inset from the window rect needs the fresh frame: ExtendedClientArea by
+            // construction, Custom as soon as NonClientFrameEdges keeps some frame edges (without the repaint the
+            // content drifts by the inset at every theme or color change, further each time).
+            if (_ManagesNonClientArea)
+            {
+                _RepaintAfterFrameRebuild();
+            }
+        }
+
+        /// <summary>
+        /// Requests a full repaint of the client area. After a colorization or theme change (and after the
+        /// resize for a new DPI) the system rebuilds the frame with a series of frame-changing SetWindowPos
+        /// calls that leave the window and client rectangles untouched; DWM then composes the last frame the
+        /// application presented at the window origin, shifted left by the invisible border, until a fresh
+        /// frame is presented. The paint request makes the composition target present one.
+        /// </summary>
+        private void _RepaintAfterFrameRebuild()
+        {
+            if (!_IsHwndAlive || NativeMethods.GetWindowPlacement(_hwnd).showCmd == SW.SHOWMINIMIZED)
+            {
+                return;
+            }
+
+            NativeMethods.InvalidateRect(_hwnd, IntPtr.Zero, true);
+        }
+
+        /// <summary>
+        /// Asks the system to recompute the frame (SWP_FRAMECHANGED, no size or move) and then requests a fresh
+        /// frame from the application. The second step is not optional: with the client inset from the window
+        /// rect, DWM composes the last presented frame at the window origin (content shifted left by the inset)
+        /// until a new one is presented, which is what happens when a chrome property changes with the window
+        /// otherwise idle.
+        /// </summary>
+        private void _ChangeFrame()
+        {
+            NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, 0, 0, 0, 0, _SwpFlags);
+            _RepaintAfterFrameRebuild();
+        }
+
         private IntPtr _HandleSize(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
             const int SIZE_MAXIMIZED = 2;
 
-            // Force when maximized.
-            // We can tell what's happening right now, but the Window doesn't yet know it's
-            // maximized.  Not forcing this update will eventually cause the
-            // default caption to be drawn.
-            WindowState? state = null;
-            if (wParam.ToInt32() == SIZE_MAXIMIZED)
+            if (_ManagesNonClientArea && !_IsExtendedMode)
             {
-                state = WindowState.Maximized;
+                // Force when maximized.
+                // We can tell what's happening right now, but the Window doesn't yet know it's
+                // maximized. Not forcing this update will eventually cause the
+                // default caption to be drawn.
+                WindowState? state = null;
+                if (wParam.ToInt32() == SIZE_MAXIMIZED)
+                {
+                    state = WindowState.Maximized;
+                }
+                _UpdateSystemMenu(state);
             }
-            _UpdateSystemMenu(state);
+
+            if (_IsExtendedMode)
+            {
+                // WM_SIZE already carries the final client size: refresh synchronously (see _HandleWindowPosChangedExtended).
+                _UpdateContentTopOffset();
+                _UpdateCaptionButtonsBounds();
+                _PostUpdateCaptionButtonsBounds();
+                _captionAdorner?.InvalidateVisual();
+            }
 
             // Still let the default WndProc handle this.
             handled = false;
@@ -565,8 +1557,21 @@ namespace Microsoft.Windows.Shell
             Assert.IsNotDefault(lParam);
             var wp = Marshal.PtrToStructure<WINDOWPOS>(lParam);
 
+            if (!_ManagesNonClientArea)
+            {
+                handled = false;
+                return IntPtr.Zero;
+            }
+
+            if (_IsExtendedMode)
+            {
+                _HandleWindowPosChangedExtended(wp);
+                handled = false;
+                return IntPtr.Zero;
+            }
+
             // We only care to take action when the window dimensions are changing.
-            // Otherwise, we may get a StackOverflowException. 
+            // Otherwise, we may get a StackOverflowException.
             if (!Utility.IsFlagSet(wp.flags, (int)SWP.NOSIZE))
             {
                 _UpdateSystemMenu(null);
@@ -575,6 +1580,8 @@ namespace Microsoft.Windows.Shell
                 {
                     _SetRoundingRegion(wp);
                 }
+
+                _PostUpdateCaptionButtonsBounds();
             }
 
             // Still want to pass this to DefWndProc
@@ -582,9 +1589,36 @@ namespace Microsoft.Windows.Shell
             return IntPtr.Zero;
         }
 
+        private void _HandleWindowPosChangedExtended(WINDOWPOS wp)
+        {
+            if (!_isExtendedFrameActive)
+            {
+                return;
+            }
+
+            // The caption buttons rect is refreshed on moves as well: a system-DPI-aware window that crosses to a
+            // monitor with another scale keeps its size but DWM reports the buttons in the new physical pixels.
+            if (!Utility.IsFlagSet(wp.flags, (int)SWP.NOSIZE)
+                || !Utility.IsFlagSet(wp.flags, (int)SWP.NOMOVE)
+                || Utility.IsFlagSet(wp.flags, (int)SWP.SHOWWINDOW))
+            {
+                // Synchronously first: the client size is already final here and the rect only depends on it and
+                // on the button size, so consumers reading CaptionButtonsBounds from SizeChanged (which WPF raises
+                // later, during layout) see the new value. The deferred pass covers the cases where DWM itself
+                // updates the button bounds a little later (DPI changes).
+                _UpdateCaptionButtonsBounds();
+                _PostUpdateCaptionButtonsBounds();
+            }
+        }
+
         private IntPtr _HandleDwmCompositionChanged(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
-            _UpdateFrameState(false);
+            if (_ManagesNonClientArea)
+            {
+                _UpdateFrameState(false);
+            }
+
+            _UpdateBackdrop();
 
             handled = false;
             return IntPtr.Zero;
@@ -593,8 +1627,8 @@ namespace Microsoft.Windows.Shell
         #endregion
 
         /// <summary>Add and remove a native WindowStyle from the HWND.</summary>
-        /// <param name="removeStyle">The styles to be removed.  These can be bitwise combined.</param>
-        /// <param name="addStyle">The styles to be added.  These can be bitwise combined.</param>
+        /// <param name="removeStyle">The styles to be removed. These can be bitwise combined.</param>
+        /// <param name="addStyle">The styles to be added. These can be bitwise combined.</param>
         /// <returns>Whether the styles of the HWND were modified as a result of this call.</returns>
         private bool _ModifyStyle(WS removeStyle, WS addStyle)
         {
@@ -610,8 +1644,9 @@ namespace Microsoft.Windows.Shell
             return true;
         }
 
+
         /// <summary>
-        /// Get the WindowState as the native HWND knows it to be.  This isn't necessarily the same as what Window thinks.
+        /// Get the WindowState as the native HWND knows it to be. This isn't necessarily the same as what Window thinks.
         /// </summary>
         private WindowState _GetHwndState()
         {
@@ -639,7 +1674,7 @@ namespace Microsoft.Windows.Shell
         /// Update the items in the system menu based on the current, or assumed, WindowState.
         /// </summary>
         /// <param name="assumeState">
-        /// The state to assume that the Window is in.  This can be null to query the Window's state.
+        /// The state to assume that the Window is in. This can be null to query the Window's state.
         /// </param>
         /// <remarks>
         /// We want to update the menu while we have some control over whether the caption will be repainted.
@@ -700,7 +1735,7 @@ namespace Microsoft.Windows.Shell
 
         private void _UpdateFrameState(bool force)
         {
-            if (IntPtr.Zero == _hwnd || _hwndSource.IsDisposed)
+            if (!_IsHwndAlive || _chromeInfo == null)
             {
                 return;
             }
@@ -708,23 +1743,1002 @@ namespace Microsoft.Windows.Shell
             // Don't rely on SystemParameters for this, just make the check ourselves.
             bool frameState = NativeMethods.DwmIsCompositionEnabled();
 
-            if (force || frameState != _isGlassEnabled)
+            WindowChromeFrameMode mode = _FrameMode;
+            bool modeChanged = _appliedFrameMode.HasValue && mode != _appliedFrameMode.Value;
+            if (modeChanged)
             {
-                _isGlassEnabled = frameState && _chromeInfo.GlassFrameThickness != default(Thickness);
+                _RestoreModeSpecificState(_appliedFrameMode.Value);
+                force = true;
+            }
+            _appliedFrameMode = mode;
 
-                if (!_isGlassEnabled)
-                {
-                    _SetRoundingRegion(null);
-                }
-                else
-                {
-                    _ClearRoundingRegion();
-                    _ExtendGlassFrame();
-                }
+            switch (mode)
+            {
+                case WindowChromeFrameMode.ExtendedClientArea:
+                    _UpdateExtendedFrameState(frameState, force);
+                    break;
 
-                NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, 0, 0, 0, 0, _SwpFlags);
+                case WindowChromeFrameMode.SystemFrame:
+                    _UpdateSystemFrameState(frameState);
+                    break;
+
+                default:
+                    if (force || frameState != _isGlassEnabled)
+                    {
+                        // A backdrop needs the sheet-of-glass extension even when no glass thickness was asked for.
+                        _isGlassEnabled = frameState && (_chromeInfo.GlassFrameThickness != default(Thickness) || _isBackdropApplied);
+
+                        if (!_isGlassEnabled)
+                        {
+                            if (frameState && _savedBackgroundColor.HasValue)
+                            {
+                                // A backdrop extension was applied earlier and is no longer wanted: undo it.
+                                _RestoreGlassFrameCore();
+                            }
+
+                            _SetRoundingRegion(null);
+                        }
+                        else
+                        {
+                            _ClearRoundingRegion();
+                            _ExtendGlassFrame();
+                        }
+
+                        _ChangeFrame();
+                    }
+                    break;
+            }
+
+            if (modeChanged)
+            {
+                _FixupTemplateIssues();
+            }
+
+            _ApplyWindowThemeAttributes();
+            _UpdateCaptionForeground();
+            _EnsureCaptionAdorner();
+            _UpdateContentTopOffset();
+            _PostUpdateCaptionButtonsBounds();
+        }
+
+        private void _UpdateExtendedFrameState(bool compositionEnabled, bool force)
+        {
+            if (!force && compositionEnabled == _isExtendedFrameActive)
+            {
+                return;
+            }
+
+            _isGlassEnabled = false;
+            _isExtendedFrameActive = compositionEnabled;
+            _ClearRoundingRegion();
+
+            if (_isExtendedFrameActive)
+            {
+                // Keep DWM rendering the frame (and the caption buttons) even though the client area covers it.
+                NativeMethods.DwmSetWindowAttributeNCRenderingPolicy(_hwnd, DWMNCRP.ENABLED);
+                _SetCompositionBackground(Colors.Transparent);
+                _ExtendFrameForExtendedClientArea();
+            }
+            else
+            {
+                // No composition (never on a supported OS): fall back to the standard frame, not to a
+                // frameless window, so the title bar stays usable.
+                _RestoreCompositionBackground();
+                var dwmMargin = new MARGINS();
+                NativeMethods.DwmExtendFrameIntoClientArea(_hwnd, ref dwmMargin);
+            }
+
+            _ChangeFrame();
+        }
+
+        private void _UpdateSystemFrameState(bool compositionEnabled)
+        {
+            _isGlassEnabled = false;
+            _isExtendedFrameActive = false;
+
+            // The only frame work in this mode is the frame extension: the sheet of glass required by a backdrop,
+            // or the margins the application asked for through GlassFrameThickness, with or without a backdrop
+            // (top = CaptionHeight when set, otherwise the system caption band). A window that never had one is
+            // left completely untouched (_savedBackgroundColor tracks whether we did).
+            bool extend = compositionEnabled && (_isBackdropApplied || _HasExplicitGlassMargins);
+            bool sheet = extend && !_HasExplicitGlassMargins;
+
+            if (extend)
+            {
+                _SetCompositionBackground(Colors.Transparent);
+                MARGINS dwmMargin = sheet
+                    ? new MARGINS { cxLeftWidth = -1, cxRightWidth = -1, cyTopHeight = -1, cyBottomHeight = -1 }
+                    : _GetExplicitGlassMargins(defaultTop: _GetSystemCaptionBandDevice());
+                NativeMethods.DwmExtendFrameIntoClientArea(_hwnd, ref dwmMargin);
+            }
+            else if (_savedBackgroundColor.HasValue)
+            {
+                _RestoreCompositionBackground();
+                if (compositionEnabled)
+                {
+                    var dwmMargin = new MARGINS();
+                    NativeMethods.DwmExtendFrameIntoClientArea(_hwnd, ref dwmMargin);
+                }
             }
         }
+
+        /// <summary>
+        /// DWM frame extension for ExtendedClientArea: either the whole surface (GlassFrameThickness negative,
+        /// i.e. GlassFrameCompleteThickness) or just a band tall enough to keep the caption buttons rendered.
+        /// System metrics are acceptable here: they only size the alpha region where DWM paints the buttons,
+        /// they never influence the client rectangle.
+        /// </summary>
+        private void _ExtendFrameForExtendedClientArea()
+        {
+            MARGINS dwmMargin;
+            if (_IsSheetOfGlassExtension)
+            {
+                dwmMargin = new MARGINS { cxLeftWidth = -1, cxRightWidth = -1, cyTopHeight = -1, cyBottomHeight = -1 };
+            }
+            else if (_HasExplicitGlassMargins)
+            {
+                // Backdrop with explicit glass margins: the application decides where the material shows.
+                dwmMargin = _GetExplicitGlassMargins(defaultTop: null);
+            }
+            else
+            {
+                // The application sized the caption band itself, or the band is the system caption.
+                int top = _chromeInfo.IsCaptionHeightSet ? _GetExplicitCaptionHeightDevice() : _GetSystemCaptionBandDevice();
+                dwmMargin = new MARGINS { cyTopHeight = top };
+            }
+
+            if (!NativeMethods.DwmExtendFrameIntoClientArea(_hwnd, ref dwmMargin))
+            {
+                _RestoreCompositionBackground();
+            }
+        }
+
+        /// <summary>
+        /// Height (device pixels) of the caption band the system lays out: the standard caption plus the top
+        /// frame, or the height of the caption buttons when those are taller.
+        /// </summary>
+        private int _GetSystemCaptionBandDevice()
+        {
+            // Metrics at the DPI of the non-client area: with a frame scaled per monitor the plain (system DPI)
+            // values would give a band shorter than the caption buttons, leaving a black strip under them.
+            uint dpi = _GetNonClientDpi();
+            int top = NativeMethods.GetSystemMetricsForDpi(SM.CYCAPTION, dpi)
+                      + NativeMethods.GetSystemMetricsForDpi(SM.CYSIZEFRAME, dpi)
+                      + NativeMethods.GetSystemMetricsForDpi(SM.CXPADDEDBORDER, dpi);
+
+            RECT buttons;
+            if (NativeMethods.DwmGetWindowAttributeRect(_hwnd, DWMWA.CAPTION_BUTTON_BOUNDS, out buttons) && buttons.Height > 0)
+            {
+                top = Math.Max(top, (int)Math.Ceiling(buttons.Height * _GetCurrentDwmToWindowScale()));
+            }
+
+            return top;
+        }
+
+        /// <summary>The application's CaptionHeight in device pixels.</summary>
+        private int _GetExplicitCaptionHeightDevice()
+        {
+            DpiScale dpi = _window.GetDpi();
+            return (int)Math.Round(DpiHelper.LogicalPixelsToDevice(new Point(0, _chromeInfo.CaptionHeight), dpi.DpiScaleX, dpi.DpiScaleY).Y);
+        }
+
+        /// <summary>
+        /// The frame extension asked for by an explicit GlassFrameThickness.  The top is the application's
+        /// CaptionHeight when set, otherwise <paramref name="defaultTop"/>, or the glass thickness itself when
+        /// that is null; the glass thickness wins when it is taller, so the glass can extend beyond the band.
+        /// </summary>
+        private MARGINS _GetExplicitGlassMargins(int? defaultTop)
+        {
+            DpiScale dpi = _window.GetDpi();
+            Thickness glass = DpiHelper.LogicalThicknessToDevice(_chromeInfo.GlassFrameThickness, dpi.DpiScaleX, dpi.DpiScaleY);
+
+            int glassTop = (int)Math.Round(glass.Top);
+            int top;
+            if (_chromeInfo.IsCaptionHeightSet)
+            {
+                top = _GetExplicitCaptionHeightDevice();
+            }
+            else
+            {
+                top = defaultTop ?? glassTop;
+            }
+
+            top = Math.Max(top, glassTop);
+
+            return new MARGINS
+            {
+                cxLeftWidth = (int)Math.Round(glass.Left),
+                cxRightWidth = (int)Math.Round(glass.Right),
+                cyBottomHeight = (int)Math.Round(glass.Bottom),
+                cyTopHeight = top,
+            };
+        }
+
+        /// <summary>Undoes what a previous FrameMode left on the HWND before a new one is applied.</summary>
+        private void _RestoreModeSpecificState(WindowChromeFrameMode previousMode)
+        {
+            switch (previousMode)
+            {
+                case WindowChromeFrameMode.ExtendedClientArea:
+                    _RestoreExtendedFrame();
+                    break;
+
+                case WindowChromeFrameMode.Custom:
+                    _RestoreFrameworkIssueFixups();
+                    _RestoreGlassFrameCore();
+                    _ClearRoundingRegion();
+                    break;
+            }
+        }
+
+        private void _RestoreExtendedFrame()
+        {
+            _RemoveCaptionAdorner();
+            _isExtendedFrameActive = false;
+
+            if (_IsHwndAlive)
+            {
+                NativeMethods.DwmSetWindowAttributeNCRenderingPolicy(_hwnd, DWMNCRP.USEWINDOWSTYLE);
+                _RestoreGlassFrameCore();
+                _RestoreFrameworkIssueFixups();
+            }
+
+            _SetCaptionButtonsBounds(default(Rect), default(Size));
+            _SetTitleBarBounds(default(Rect));
+        }
+
+        #region Caption appearance (WTNCA flags, caption foreground, title adorner, caption buttons bounds)
+
+        /// <summary>
+        /// Applies WTNCA_NODRAWCAPTION / WTNCA_NODRAWICON. In ExtendedClientArea mode both are always set,
+        /// otherwise they follow ShowTitle / ShowSystemIcon. Nothing is called when both are true and nothing
+        /// was applied before, so the default configuration does not touch the window at all.
+        /// </summary>
+        private void _ApplyWindowThemeAttributes()
+        {
+            if (!_IsHwndAlive || _chromeInfo == null)
+            {
+                return;
+            }
+
+            const WTNCA mask = WTNCA.NODRAWCAPTION | WTNCA.NODRAWICON;
+            WTNCA flags = WTNCA.NODRAWCAPTION | WTNCA.NODRAWICON;
+
+            if (!(_IsExtendedMode && _isExtendedFrameActive))
+            {
+                flags = 0;
+                if (!_chromeInfo.EffectiveShowTitle)
+                {
+                    flags |= WTNCA.NODRAWCAPTION;
+                }
+                if (!_chromeInfo.EffectiveShowSystemIcon)
+                {
+                    // Best effort on a system-drawn caption: the composed frame of Windows 10 and later keeps
+                    // drawing the icon regardless of this attribute (the title does go away). The only known way
+                    // around it is the dialog frame extended style, which is not applied here on purpose.
+                    flags |= WTNCA.NODRAWICON;
+                }
+            }
+
+            _SetWindowThemeAttributes(flags, mask);
+        }
+
+        private void _SetWindowThemeAttributes(WTNCA flags, WTNCA mask)
+        {
+            if (!_themeAttributesApplied && flags == 0)
+            {
+                // Default configuration and nothing applied before: do not touch the window.
+                return;
+            }
+
+            if (_themeAttributesApplied && flags == _appliedThemeAttributes)
+            {
+                return;
+            }
+
+            if (NativeMethods.SetWindowThemeNonClientAttributes(_hwnd, flags, mask))
+            {
+                _appliedThemeAttributes = flags;
+                _themeAttributesApplied = true;
+            }
+        }
+
+        /// <summary>
+        /// Computes the brush matching the caption text color DWM would use for this window and publishes it
+        /// through WindowChrome.CaptionForeground.
+        /// </summary>
+        private void _UpdateCaptionForeground()
+        {
+            if (_window == null || _chromeInfo == null)
+            {
+                return;
+            }
+
+            Color color;
+
+            if (_chromeInfo.CaptionTextColor.HasValue && Utility.IsOSWindows11OrNewer)
+            {
+                color = _chromeInfo.CaptionTextColor.Value;
+                color.A = 0xFF;
+            }
+            else if (!Utility.IsOSWindows10OrNewer || SystemParameters.HighContrast)
+            {
+                // Classic themes and high contrast: the system colors are authoritative.
+                color = _isActive ? SystemColors.ActiveCaptionTextColor : SystemColors.InactiveCaptionTextColor;
+            }
+            else
+            {
+                // The fill DWM paints behind the caption text, when known: the caption color, or the accent color
+                // when the user shows it on title bars. A transparent caption color over a backdrop asks DWM for
+                // no fill at all (see ResolveCaptionColor): the material shows through, the accent is not painted,
+                // and the text must follow only the light/dark rendering of the caption.
+                Color? background = null;
+                bool noFill;
+                Color? captionColor = ResolveCaptionColor(_chromeInfo.CaptionColor, _isBackdropApplied, out noFill);
+                if (captionColor.HasValue && !noFill && Utility.IsOSWindows11OrNewer)
+                {
+                    Color c = captionColor.Value;
+                    c.A = 0xFF;
+                    background = c;
+                }
+                else if (_isActive && !(noFill && Utility.IsOSWindows11OrNewer))
+                {
+                    Color accent;
+                    if (CaptionTextColorHelper.TryGetPrevalentAccentColor(out accent))
+                    {
+                        background = accent;
+                    }
+                }
+
+                // The caption is dark only when this window asked DWM for it and DWM accepted: the system theme
+                // alone never darkens a Win32 caption, and before Windows 11 the attribute is not documented at all.
+                bool darkMode = _appliedDarkMode ?? false;
+
+                color = _isActive
+                    ? CaptionTextColorHelper.GetActiveCaptionText(background, darkMode)
+                    : CaptionTextColorHelper.GetInactiveCaptionText(background, darkMode);
+            }
+
+            if (_appliedCaptionForegroundColor == color)
+            {
+                return;
+            }
+
+            var brush = new SolidColorBrush(color);
+            brush.Freeze();
+            _window.SetValue(WindowChrome.CaptionForegroundPropertyKey, brush);
+            _appliedCaptionForegroundColor = color;
+            _captionAdorner?.InvalidateVisual();
+        }
+
+        /// <summary>
+        /// The caption band in window coordinates (DIPs, always left to right), used by the title adorner.
+        /// TitleBarBounds is expressed in content coordinates, which are mirrored in a right-to-left layout, so
+        /// in that case the band is flipped back across the client width: the buttons are then on the left side
+        /// of the window.
+        /// </summary>
+        private Rect _GetCaptionBand()
+        {
+            if (_chromeInfo == null || !_IsHwndAlive)
+            {
+                return Rect.Empty;
+            }
+
+            bool rtl = _window.FlowDirection == FlowDirection.RightToLeft;
+
+            // The band DWM lays out (TitleBarBounds, content coordinates) when known, brought back to window
+            // coordinates; otherwise the caption height below the top resize strip. Maximized: the top border
+            // thickness of the client lies off-screen (see _HandleNCCalcSizeExtended), so the band starts below it.
+            if (_titleBarBounds.Height > 0)
+            {
+                // An application-sized band may be taller than the system caption buttons: the icon and the
+                // title drawn by the adorner then line up with the buttons, in a strip of their height at the
+                // top of the band (TitleBarBounds itself still describes the whole band).
+                double bandHeight = _titleBarBounds.Height;
+                if (_chromeInfo.IsCaptionHeightSet && _captionButtonsBounds.Height > 0)
+                {
+                    bandHeight = Math.Min(bandHeight, _captionButtonsBounds.Height - _titleBarBounds.Y);
+                }
+
+                double x = rtl ? _captionButtonsClipClientSize.Width - _titleBarBounds.Right : _titleBarBounds.X;
+                return new Rect(x, _titleBarBounds.Y + _GetContentTopOffsetLogical(), _titleBarBounds.Width, Math.Max(0, bandHeight));
+            }
+
+            double top = _IsHwndMaximized() ? _GetMaximizedTopOverhangLogical() : _chromeInfo.ResizeBorderThickness.Top;
+            double height = _chromeInfo.CaptionHeight;
+            double width = _window.ActualWidth;
+
+            Rect buttons = _captionButtonsBounds;
+            if (buttons.Width > 0)
+            {
+                if (rtl)
+                {
+                    double buttonsRight = _captionButtonsClipClientSize.Width - buttons.Left;
+                    return new Rect(buttonsRight, top, Math.Max(0, width - buttonsRight), height);
+                }
+
+                width = Math.Min(width, buttons.Left);
+            }
+
+            return new Rect(0, top, Math.Max(0, width), height);
+        }
+
+        /// <summary>Creates, updates or removes the adorner drawing the title/icon in ExtendedClientArea mode.</summary>
+        private void _EnsureCaptionAdorner()
+        {
+            bool wanted = _IsExtendedMode && _isExtendedFrameActive && _chromeInfo != null
+                          && (_chromeInfo.EffectiveShowTitle || _chromeInfo.EffectiveShowSystemIcon);
+
+            if (!wanted)
+            {
+                _RemoveCaptionAdorner();
+                return;
+            }
+
+            if (_captionAdorner != null && (_captionAdornedElement == null || !_window.IsAncestorOf(_captionAdornedElement)))
+            {
+                // The template was replaced: the adorner still hangs from the old tree. Host it again in the new one.
+                _RemoveCaptionAdorner();
+            }
+
+            if (_captionAdorner == null)
+            {
+                UIElement host = _FindAdornedElement();
+                if (host == null)
+                {
+                    // No AdornerDecorator in the template yet; _FixupTemplateIssues retries once the tree exists.
+                    return;
+                }
+
+                AdornerLayer layer = AdornerLayer.GetAdornerLayer(host);
+                if (layer == null)
+                {
+                    return;
+                }
+
+                _captionAdorner = new WindowCaptionAdorner(host, _window, _GetCaptionBand);
+                _captionAdornedElement = host;
+                layer.Add(_captionAdorner);
+                _AttachTitleListeners();
+            }
+
+            _captionAdorner.ShowTitle = _chromeInfo.EffectiveShowTitle;
+            _captionAdorner.ShowIcon = _chromeInfo.EffectiveShowSystemIcon;
+            _captionAdorner.InvalidateVisual();
+        }
+
+        private void _RemoveCaptionAdorner()
+        {
+            if (_captionAdorner == null)
+            {
+                return;
+            }
+
+            _DetachTitleListeners();
+
+            AdornerLayer layer = _captionAdornedElement != null ? AdornerLayer.GetAdornerLayer(_captionAdornedElement) : null;
+            layer?.Remove(_captionAdorner);
+
+            _captionAdorner = null;
+            _captionAdornedElement = null;
+        }
+
+        /// <summary>The child of the first AdornerDecorator in the window's template (depth first).</summary>
+        private UIElement _FindAdornedElement()
+        {
+            if (_window == null || VisualTreeHelper.GetChildrenCount(_window) == 0)
+            {
+                return null;
+            }
+
+            var pending = new Stack<DependencyObject>();
+            pending.Push(_window);
+            while (pending.Count > 0)
+            {
+                DependencyObject current = pending.Pop();
+                int count = VisualTreeHelper.GetChildrenCount(current);
+                for (int i = count - 1; i >= 0; i--)
+                {
+                    DependencyObject child = VisualTreeHelper.GetChild(current, i);
+                    if (child is AdornerDecorator decorator)
+                    {
+                        return decorator.Child;
+                    }
+
+                    pending.Push(child);
+                }
+            }
+
+            return null;
+        }
+
+        private void _AttachTitleListeners()
+        {
+            if (_isTitleListenerAttached)
+            {
+                return;
+            }
+
+            Utility.AddDependencyPropertyChangeListener(_window, Window.TitleProperty, _OnWindowTitleOrIconChanged);
+            Utility.AddDependencyPropertyChangeListener(_window, Window.IconProperty, _OnWindowTitleOrIconChanged);
+            _window.SizeChanged += _OnWindowSizeChanged;
+            _isTitleListenerAttached = true;
+        }
+
+        private void _DetachTitleListeners()
+        {
+            if (!_isTitleListenerAttached)
+            {
+                return;
+            }
+
+            Utility.RemoveDependencyPropertyChangeListener(_window, Window.TitleProperty, _OnWindowTitleOrIconChanged);
+            Utility.RemoveDependencyPropertyChangeListener(_window, Window.IconProperty, _OnWindowTitleOrIconChanged);
+            _window.SizeChanged -= _OnWindowSizeChanged;
+            _isTitleListenerAttached = false;
+        }
+
+        private void _OnWindowTitleOrIconChanged(object sender, EventArgs e)
+        {
+            _captionAdorner?.InvalidateIcon();
+        }
+
+        private void _OnWindowSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            _captionAdorner?.InvalidateVisual();
+        }
+
+        private void _PostUpdateCaptionButtonsBounds()
+        {
+            if (_captionButtonsUpdatePending || _window == null || !_ManagesNonClientArea)
+            {
+                return;
+            }
+
+            // DWM updates DWMWA_CAPTION_BUTTON_BOUNDS slightly after the size change; read it at Render priority.
+            _captionButtonsUpdatePending = true;
+            _window.Dispatcher.BeginInvoke(DispatcherPriority.Render, (_Action)_UpdateCaptionButtonsBounds);
+        }
+
+        /// <summary>
+        /// Publishes the area covered by the DWM caption buttons through WindowChrome.CaptionButtonsBounds.
+        /// Only the size reported by DWM is used: in mixed-DPI configurations the origin is expressed in a
+        /// different space than the size, while the buttons are always anchored to the top corner of the client
+        /// area. The rectangles are expressed in content coordinates, which the window mirrors in a right-to-left
+        /// layout: the buttons then appear at the left edge of the screen, but in content coordinates they are
+        /// still at the end of the horizontal axis, so the same values are valid in both flow directions.
+        /// </summary>
+        private void _UpdateCaptionButtonsBounds()
+        {
+            _captionButtonsUpdatePending = false;
+
+            Rect value = default(Rect);
+            Rect titleBar = default(Rect);
+            Size clipClientSize = default(Size);
+
+            if (_IsHwndAlive && _hwndSource.CompositionTarget != null && _AreDwmCaptionButtonsInUse)
+            {
+                RECT buttons;
+                if (NativeMethods.DwmGetWindowAttributeRect(_hwnd, DWMWA.CAPTION_BUTTON_BOUNDS, out buttons)
+                    && buttons.Width > 0 && buttons.Height > 0)
+                {
+                    RECT client = NativeMethods.GetClientRect(_hwnd);
+                    Matrix fromDevice = _hwndSource.CompositionTarget.TransformFromDevice;
+
+                    // Evaluated now, not cached: the window may have moved to a monitor with a different scale.
+                    double scale = _GetCurrentDwmToWindowScale();
+                    Vector size = fromDevice.Transform(new Vector(buttons.Width * scale, buttons.Height * scale));
+                    Vector clientSize = fromDevice.Transform(new Vector(client.Width, client.Height));
+
+                    if (size.X > 0 && size.Y > 0 && clientSize.X > 0)
+                    {
+                        double width = Math.Min(size.X, clientSize.X);
+                        double x = clientSize.X - width;
+                        // Maximized: with a top-band extension DWM anchors the buttons to the client top (partly
+                        // off-screen, like the content); with a sheet of glass it anchors them to the visible frame,
+                        // one border down, and the content is pushed down by the same amount (see
+                        // _GetContentTopOffsetLogical). In the coordinates of the content the buttons are thus
+                        // always at the top.
+                        value = new Rect(x, 0, width, size.Y);
+                        clipClientSize = new Size(clientSize.X, Math.Max(0, clientSize.Y));
+
+                        // The rest of the caption band, as tall as the buttons, is free for application content.
+                        // Maximized with a top-band extension the first border of the band lies off-screen (the
+                        // buttons are cut off as well): only the visible part is offered.
+                        double titleWidth = Math.Max(0, clientSize.X - width);
+                        double titleTop = _IsSheetOfGlassExtension ? 0 : _GetMaximizedTopOverhangLogical();
+                        // The band is as tall as the caption buttons unless the application sized it itself.
+                        double bandHeight = _chromeInfo.IsCaptionHeightSet ? _chromeInfo.CaptionHeight : size.Y;
+                        titleBar = new Rect(0, titleTop, titleWidth, Math.Max(0, bandHeight - titleTop));
+                    }
+                }
+            }
+
+            _SetCaptionButtonsBounds(value, clipClientSize);
+            _SetTitleBarBounds(titleBar);
+        }
+
+        private void _SetCaptionButtonsBounds(Rect value, Size clipClientSize)
+        {
+            if (_window == null || (value == _captionButtonsBounds && clipClientSize == _captionButtonsClipClientSize))
+            {
+                return;
+            }
+
+            _captionButtonsBounds = value;
+            _captionButtonsClipClientSize = clipClientSize;
+            _window.SetValue(WindowChrome.CaptionButtonsBoundsPropertyKey, value);
+            _window.SetValue(WindowChrome.CaptionButtonsClipPropertyKey, _CreateCaptionButtonsClip(value, clipClientSize));
+            _captionAdorner?.InvalidateVisual();
+        }
+
+        /// <summary>
+        /// The client area minus the caption buttons, for the Clip of an element filling the client area. A
+        /// frozen geometry, recreated only when the buttons or the client size change. Null when there is
+        /// nothing to clip.
+        /// </summary>
+        private static Geometry _CreateCaptionButtonsClip(Rect buttons, Size clientSize)
+        {
+            if (buttons.Width <= 0 || buttons.Height <= 0 || clientSize.Width <= 0 || clientSize.Height <= 0)
+            {
+                return null;
+            }
+
+            var clip = new CombinedGeometry(
+                GeometryCombineMode.Exclude,
+                new RectangleGeometry(new Rect(clientSize)),
+                new RectangleGeometry(buttons));
+            clip.Freeze();
+            return clip;
+        }
+
+        private void _SetTitleBarBounds(Rect value)
+        {
+            if (_window == null || value == _titleBarBounds)
+            {
+                return;
+            }
+
+            _titleBarBounds = value;
+            _window.SetValue(WindowChrome.TitleBarBoundsPropertyKey, value);
+        }
+
+        #endregion
+
+        #region DWM attributes and backdrop
+
+        /// <summary>Pushes the DWM attributes selected by <paramref name="which"/> to the HWND, skipping unchanged ones.</summary>
+        private void _UpdateDwmAttributes(WindowChromeDwmAttributes which)
+        {
+            if (!_IsHwndAlive)
+            {
+                return;
+            }
+
+            if ((which & WindowChromeDwmAttributes.CaptionColor) != 0)
+            {
+                bool allowNone;
+                Color? captionColor = ResolveCaptionColor(_chromeInfo?.CaptionColor, _isBackdropApplied, out allowNone);
+                _UpdateColorAttribute(captionColor, ref _appliedCaptionColor, allowNone, NativeMethods.DwmSetWindowAttributeCaptionColor);
+                _UpdateCaptionForeground();
+            }
+
+            if ((which & WindowChromeDwmAttributes.CaptionTextColor) != 0)
+            {
+                _UpdateColorAttribute(_chromeInfo?.CaptionTextColor, ref _appliedTextColor, false, NativeMethods.DwmSetWindowAttributeTextColor);
+                _UpdateCaptionForeground();
+            }
+
+            if ((which & WindowChromeDwmAttributes.BorderColor) != 0)
+            {
+                _UpdateColorAttribute(_chromeInfo?.BorderColor, ref _appliedBorderColor, true, NativeMethods.DwmSetWindowAttributeBorderColor);
+            }
+
+            if ((which & WindowChromeDwmAttributes.CornerPreference) != 0)
+            {
+                _UpdateCornerPreference();
+            }
+
+            if ((which & WindowChromeDwmAttributes.CaptionTheme) != 0)
+            {
+                _UpdateImmersiveDarkMode();
+                _UpdateCaptionForeground();
+            }
+
+            if ((which & WindowChromeDwmAttributes.Backdrop) != 0)
+            {
+                _UpdateBackdrop();
+            }
+        }
+
+        /// <summary>
+        /// The caption color to hand to DWM. A fully transparent color asks DWM not to paint the caption
+        /// fill at all so that the system backdrop shows through the whole title bar, as the system's own
+        /// backdrop windows do; that only makes sense while a backdrop is applied, otherwise the request is
+        /// treated as "not set" and the system default (accent or theme color) stays.
+        /// </summary>
+        internal static Color? ResolveCaptionColor(Color? requested, bool backdropApplied, out bool allowNone)
+        {
+            allowNone = false;
+            if (requested.HasValue && requested.Value.A == 0)
+            {
+                if (!backdropApplied)
+                {
+                    return null;
+                }
+
+                allowNone = true;
+            }
+
+            return requested;
+        }
+
+        private void _UpdateColorAttribute(Color? requested, ref uint? applied, bool allowNone, Func<IntPtr, uint, bool> setter)
+        {
+            if (!Utility.IsOSWindows11OrNewer)
+            {
+                return;
+            }
+
+            uint? target;
+            if (requested.HasValue)
+            {
+                target = allowNone && requested.Value.A == 0
+                    ? NativeMethods.DWMWA_COLOR_NONE
+                    : Utility.ColorRefFromColor(requested.Value);
+            }
+            else if (applied.HasValue)
+            {
+                // Something was applied before: explicitly go back to the system default.
+                target = NativeMethods.DWMWA_COLOR_DEFAULT;
+            }
+            else
+            {
+                // Never touched and nothing requested: leave DWM alone.
+                return;
+            }
+
+            if (applied == target)
+            {
+                return;
+            }
+
+            if (setter(_hwnd, target.Value))
+            {
+                applied = target;
+            }
+        }
+
+        private void _UpdateCornerPreference()
+        {
+            if (!Utility.IsOSWindows11OrNewer)
+            {
+                return;
+            }
+
+            var requested = _chromeInfo != null ? _chromeInfo.CornerPreference : WindowCornerPreference.Default;
+            var target = (DWMWCP)(int)requested;
+
+            if (target == DWMWCP.DEFAULT && !_appliedCornerPreference.HasValue)
+            {
+                return;
+            }
+
+            if (_appliedCornerPreference == target)
+            {
+                return;
+            }
+
+            if (NativeMethods.DwmSetWindowAttributeWindowCornerPreference(_hwnd, target))
+            {
+                _appliedCornerPreference = target;
+            }
+        }
+
+        /// <summary>
+        /// The dark/light decision: CaptionTheme when explicit, the ThemeManager state otherwise,
+        /// null when nobody decided (DWM is then left untouched).
+        /// </summary>
+        private bool? _GetEffectiveDarkMode()
+        {
+            switch (_chromeInfo != null ? _chromeInfo.CaptionTheme : WindowCaptionTheme.Auto)
+            {
+                case WindowCaptionTheme.Dark:
+                    return true;
+                case WindowCaptionTheme.Light:
+                    return false;
+                default:
+                    return _themeUseLightColors.HasValue ? !_themeUseLightColors.Value : (bool?)null;
+            }
+        }
+
+        private void _UpdateImmersiveDarkMode()
+        {
+            bool? dark = _GetEffectiveDarkMode();
+            if (!dark.HasValue || dark == _appliedDarkMode)
+            {
+                return;
+            }
+
+            if (NativeMethods.DwmSetWindowAttributeUseImmersiveDarkMode(_hwnd, dark.Value))
+            {
+                _appliedDarkMode = dark;
+            }
+        }
+
+        /// <summary>
+        /// The backdrop to use: the explicit BackdropType, otherwise the theme's choice. A legacy Custom chrome
+        /// never gets a theme backdrop: its template paints an opaque surface anyway.
+        /// </summary>
+        private WindowBackdropKind _GetEffectiveBackdropKind()
+        {
+            WindowBackdropKind requested = _chromeInfo != null ? _chromeInfo.BackdropType : WindowBackdropKind.Auto;
+            if (requested != WindowBackdropKind.Auto)
+            {
+                return requested;
+            }
+
+            if (_FrameMode == WindowChromeFrameMode.Custom)
+            {
+                return WindowBackdropKind.None;
+            }
+
+            return _themeBackdropKind ?? WindowBackdropKind.None;
+        }
+
+        private bool _IsBackdropPossible(WindowBackdropKind kind)
+        {
+            return kind != WindowBackdropKind.None
+                   && kind != WindowBackdropKind.Auto
+                   && Utility.IsWindows11_22H2OrNewer
+                   && _window != null
+                   && !_window.AllowsTransparency
+                   && !MS.Internal.FrameworkAppContextSwitches.DisableFluentThemeWindowBackdrop
+                   && !SystemParameters.HighContrast
+                   && NativeMethods.DwmIsCompositionEnabled();
+        }
+
+        private void _UpdateBackdrop()
+        {
+            if (!_IsHwndAlive || _chromeInfo == null)
+            {
+                return;
+            }
+
+            // DWM itself takes care of the window state: inactive, maximized and minimized windows get the
+            // appropriate treatment for every material, so the backdrop is simply kept while it is possible.
+            WindowBackdropKind kind = _GetEffectiveBackdropKind();
+            bool apply = _IsBackdropPossible(kind);
+            DWMSBT target = apply ? (DWMSBT)(uint)kind : DWMSBT.DWMSBT_NONE;
+
+            if (apply != _isBackdropApplied)
+            {
+                // The frame extension and the transparent composition background are owned by _UpdateFrameState.
+                _isBackdropApplied = apply;
+                _UpdateFrameState(true);
+
+                // A transparent CaptionColor means "no caption fill" only over a backdrop (see ResolveCaptionColor).
+                _UpdateDwmAttributes(WindowChromeDwmAttributes.CaptionColor);
+            }
+
+            if (target == _appliedBackdrop)
+            {
+                return;
+            }
+
+            if (target == DWMSBT.DWMSBT_NONE && _appliedBackdrop == DWMSBT.DWMSBT_AUTO)
+            {
+                // Never applied anything: no need to tell DWM.
+                return;
+            }
+
+            if (NativeMethods.DwmSetWindowAttributeSystemBackdropType(_hwnd, target).Succeeded)
+            {
+                _appliedBackdrop = target;
+            }
+        }
+
+        /// <summary>Sets the composition background, remembering the original value the first time.</summary>
+        private void _SetCompositionBackground(Color color)
+        {
+            HwndTarget target = _hwndSource?.CompositionTarget;
+            if (target == null)
+            {
+                return;
+            }
+
+            if (!_savedBackgroundColor.HasValue)
+            {
+                _savedBackgroundColor = target.BackgroundColor;
+            }
+
+            target.BackgroundColor = color;
+        }
+
+        /// <summary>
+        /// Restores the composition background. The value saved by <see cref="_SetCompositionBackground"/> is
+        /// used when the application had set one; the HwndTarget default (opaque black) and a transparent color on
+        /// a non-layered window fall back to SystemColors.WindowColor, as the legacy code always did.
+        /// </summary>
+        private void _RestoreCompositionBackground()
+        {
+            HwndTarget target = _hwndSource?.CompositionTarget;
+            if (target == null)
+            {
+                return;
+            }
+
+            if (_savedBackgroundColor.HasValue && target.BackgroundColor != Colors.Transparent)
+            {
+                // The application set a background of its own while the frame was extended: that is the value it
+                // wants, not the one saved before the extension.
+                _savedBackgroundColor = null;
+                return;
+            }
+
+            Color restore = SystemColors.WindowColor;
+            if (_savedBackgroundColor.HasValue)
+            {
+                Color saved = _savedBackgroundColor.Value;
+                bool isHwndTargetDefault = saved == Color.FromRgb(0, 0, 0);
+                bool isTransparentOnOpaqueWindow = saved == Colors.Transparent && _window != null && !_window.AllowsTransparency;
+                if (!isHwndTargetDefault && !isTransparentOnOpaqueWindow)
+                {
+                    restore = saved;
+                }
+            }
+
+            target.BackgroundColor = restore;
+
+            // Restored: the next extension saves the background in force at that time.
+            _savedBackgroundColor = null;
+        }
+
+        /// <summary>Resets every DWM attribute the worker applied, so the window looks like it never had a chrome.</summary>
+        private void _RestoreDwmAttributes()
+        {
+            if (!_IsHwndAlive)
+            {
+                return;
+            }
+
+            if (_appliedCaptionColor.HasValue)
+            {
+                NativeMethods.DwmSetWindowAttributeCaptionColor(_hwnd, NativeMethods.DWMWA_COLOR_DEFAULT);
+                _appliedCaptionColor = null;
+            }
+            if (_appliedTextColor.HasValue)
+            {
+                NativeMethods.DwmSetWindowAttributeTextColor(_hwnd, NativeMethods.DWMWA_COLOR_DEFAULT);
+                _appliedTextColor = null;
+            }
+            if (_appliedBorderColor.HasValue)
+            {
+                NativeMethods.DwmSetWindowAttributeBorderColor(_hwnd, NativeMethods.DWMWA_COLOR_DEFAULT);
+                _appliedBorderColor = null;
+            }
+            if (_appliedCornerPreference.HasValue)
+            {
+                NativeMethods.DwmSetWindowAttributeWindowCornerPreference(_hwnd, DWMWCP.DEFAULT);
+                _appliedCornerPreference = null;
+            }
+            if (_appliedBackdrop != DWMSBT.DWMSBT_AUTO)
+            {
+                NativeMethods.DwmSetWindowAttributeSystemBackdropType(_hwnd, DWMSBT.DWMSBT_NONE);
+                _appliedBackdrop = DWMSBT.DWMSBT_AUTO;
+            }
+            _isBackdropApplied = false;
+
+            // The caption theme is left as is: there is no "unset" value for DWMWA_USE_IMMERSIVE_DARK_MODE and
+            // the ThemeManager keeps owning it for Fluent windows.
+
+            if (_themeAttributesApplied)
+            {
+                _SetWindowThemeAttributes(0, WTNCA.NODRAWCAPTION | WTNCA.NODRAWICON);
+            }
+        }
+
+        #endregion
 
         private void _ClearRoundingRegion()
         {
@@ -926,7 +2940,7 @@ namespace Microsoft.Windows.Shell
             // Expect that this might be called on OSes other than Vista.
             if (!Utility.IsOSVistaOrNewer)
             {
-                // Not an error.  Just not on Vista so we're not going to get glass.
+                // Not an error. Just not on Vista so we're not going to get glass.
                 return;
             }
 
@@ -939,7 +2953,18 @@ namespace Microsoft.Windows.Shell
             // Ensure standard HWND background painting when DWM isn't enabled.
             if (!NativeMethods.DwmIsCompositionEnabled())
             {
-                _hwndSource.CompositionTarget.BackgroundColor = SystemColors.WindowColor;
+                _RestoreCompositionBackground();
+            }
+            else if (_isBackdropApplied)
+            {
+                // A backdrop needs the whole surface to be "frame" (sheet of glass) and a transparent background.
+                _SetCompositionBackground(Colors.Transparent);
+
+                var backdropMargin = new MARGINS { cxLeftWidth = -1, cxRightWidth = -1, cyTopHeight = -1, cyBottomHeight = -1 };
+                if (!NativeMethods.DwmExtendFrameIntoClientArea(_hwnd, ref backdropMargin))
+                {
+                    _RestoreCompositionBackground();
+                }
             }
             else
             {
@@ -949,7 +2974,7 @@ namespace Microsoft.Windows.Shell
                 // The Window's Background needs to be changed independent of this.
 
                 // Apply the transparent background to the HWND
-                _hwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
+                _SetCompositionBackground(Colors.Transparent);
 
                 // Thickness is going to be DIPs, need to convert to system coordinates.
                 Thickness deviceGlassThickness = DpiHelper.LogicalThicknessToDevice(_chromeInfo.GlassFrameThickness, dpi.DpiScaleX, dpi.DpiScaleY);
@@ -995,7 +3020,7 @@ namespace Microsoft.Windows.Shell
                 bool dwmApiResult = NativeMethods.DwmExtendFrameIntoClientArea(_hwnd, ref dwmMargin);
                 if(!dwmApiResult)
                 {
-                    _hwndSource.CompositionTarget.BackgroundColor = SystemColors.WindowColor;
+                    _RestoreCompositionBackground();
                 }
             }
         }
@@ -1011,7 +3036,89 @@ namespace Microsoft.Windows.Shell
             { HT.BOTTOMLEFT, HT.BOTTOM,  HT.BOTTOMRIGHT },
         };
 
-        private HT _HitTestNca(Rect windowPosition, Point mousePosition)
+        /// <summary>
+        /// Non-client hit test for ExtendedClientArea, laid out like the standard frame. The zones are tested in
+        /// order, as rectangles relative to the window (left/top inclusive, right/bottom exclusive):
+        /// top-left and top-right corners (twice the border wide), top strip and caption band, left strip,
+        /// bottom-left and bottom-right corners (twice the border wide), bottom strip, right strip.
+        /// The caption buttons are not excluded here: DWM is asked first and claims them, so a point that
+        /// reaches this test lies beside or below them and the caption band must still be draggable there.
+        /// All values are logical pixels; the borders are zero when the window is maximized.
+        /// </summary>
+        private static HT _HitTestNcaExtended(Rect windowPosition, Point mousePosition, Thickness border, double captionHeight)
+        {
+            double x = mousePosition.X - windowPosition.Left;
+            double y = mousePosition.Y - windowPosition.Top;
+            double width = windowPosition.Width;
+            double height = windowPosition.Height;
+
+            if (x < 0 || y < 0 || x >= width || y >= height)
+            {
+                return HT.NOWHERE;
+            }
+
+            double left = border.Left;
+            double right = border.Right;
+            double top = border.Top;
+            double bottom = border.Bottom;
+
+            // Right bound of the top strip and of the caption band.
+            double captionRight = width - right;
+
+            if (_IsInRect(x, y, 0, 0, left * 2, top))
+            {
+                return HT.TOPLEFT;
+            }
+
+            if (_IsInRect(x, y, width - right * 2, 0, width, top))
+            {
+                return HT.TOPRIGHT;
+            }
+
+            if (_IsInRect(x, y, left, 0, captionRight, top))
+            {
+                return HT.TOP;
+            }
+
+            if (_IsInRect(x, y, left, top, captionRight, top + captionHeight))
+            {
+                return HT.CAPTION;
+            }
+
+            if (_IsInRect(x, y, 0, top, left, height - bottom))
+            {
+                return HT.LEFT;
+            }
+
+            if (_IsInRect(x, y, 0, height - bottom, left * 2, height))
+            {
+                return HT.BOTTOMLEFT;
+            }
+
+            if (_IsInRect(x, y, width - right * 2, height - bottom, width, height))
+            {
+                return HT.BOTTOMRIGHT;
+            }
+
+            if (_IsInRect(x, y, left, height - bottom, width - left, height))
+            {
+                return HT.BOTTOM;
+            }
+
+            if (_IsInRect(x, y, width - right, top, width, height - bottom))
+            {
+                return HT.RIGHT;
+            }
+
+            return HT.CLIENT;
+        }
+
+        private static bool _IsInRect(double x, double y, double left, double top, double right, double bottom)
+        {
+            return x >= left && x < right && y >= top && y < bottom;
+        }
+
+        private HT _HitTestNca(Rect windowPosition, Point mousePosition, Thickness resizeBorderThickness, double captionHeight)
         {
             // Determine if hit test is for resizing, default middle (1,1).
             int uRow = 1;
@@ -1019,22 +3126,22 @@ namespace Microsoft.Windows.Shell
             bool onResizeBorder = false;
 
             // Determine if the point is at the top or bottom of the window.
-            if (mousePosition.Y >= windowPosition.Top && mousePosition.Y < windowPosition.Top + _chromeInfo.ResizeBorderThickness.Top + _chromeInfo.CaptionHeight)
+            if (mousePosition.Y >= windowPosition.Top && mousePosition.Y < windowPosition.Top + resizeBorderThickness.Top + captionHeight)
             {
-                onResizeBorder = (mousePosition.Y < (windowPosition.Top + _chromeInfo.ResizeBorderThickness.Top));
+                onResizeBorder = (mousePosition.Y < (windowPosition.Top + resizeBorderThickness.Top));
                 uRow = 0; // top (caption or resize border)
             }
-            else if (mousePosition.Y < windowPosition.Bottom && mousePosition.Y >= windowPosition.Bottom - (int)_chromeInfo.ResizeBorderThickness.Bottom)
+            else if (mousePosition.Y < windowPosition.Bottom && mousePosition.Y >= windowPosition.Bottom - (int)resizeBorderThickness.Bottom)
             {
                 uRow = 2; // bottom
             }
 
             // Determine if the point is at the left or right of the window.
-            if (mousePosition.X >= windowPosition.Left && mousePosition.X < windowPosition.Left + (int)_chromeInfo.ResizeBorderThickness.Left)
+            if (mousePosition.X >= windowPosition.Left && mousePosition.X < windowPosition.Left + (int)resizeBorderThickness.Left)
             {
                 uCol = 0; // left side
             }
-            else if (mousePosition.X < windowPosition.Right && mousePosition.X >= windowPosition.Right - _chromeInfo.ResizeBorderThickness.Right)
+            else if (mousePosition.X < windowPosition.Right && mousePosition.X >= windowPosition.Right - resizeBorderThickness.Right)
             {
                 uCol = 2; // right side
             }
@@ -1059,16 +3166,34 @@ namespace Microsoft.Windows.Shell
         // Return the effective client area, excluding the invisible caption
         // and resize-border areas.
         // This method is called via private reflection from PresentationCore,
-        // method HwndMouseInputProvider.HasCustomChrome.  Both places have to
+        // method HwndMouseInputProvider.HasCustomChrome. Both places have to
         // agree on the signature.
         private bool GetEffectiveClientArea(ref MS.Win32.NativeMethods.RECT rcClient)
         {
-            if (_window == null || _chromeInfo == null)
+            if (_window == null || _chromeInfo == null || !_ManagesNonClientArea)
                 return false;
 
             DpiScale dpi = _window.GetDpi();
             double captionHeight = _chromeInfo.CaptionHeight;
             Thickness resizeBorderThickness = _chromeInfo.ResizeBorderThickness;
+
+            if (_IsExtendedMode)
+            {
+                if (!_isExtendedFrameActive || !_IsHwndAlive)
+                    return false;
+
+                // The resize borders are outside the client area in this mode; only the caption band (and the
+                // top resize border when not maximized) lies inside it.
+                RECT rc = NativeMethods.GetClientRect(_hwnd);
+                double topLogical = captionHeight + (_IsHwndMaximized() ? _GetMaximizedTopOverhangLogical() : resizeBorderThickness.Top);
+                Point deviceTop = DpiHelper.LogicalPixelsToDevice(new Point(0, topLogical), dpi.DpiScaleX, dpi.DpiScaleY);
+
+                rcClient.left = 0;
+                rcClient.top = (int)deviceTop.Y;
+                rcClient.right = rc.Width;
+                rcClient.bottom = rc.Height;
+                return true;
+            }
 
             RECT rcWindow = NativeMethods.GetWindowRect(_hwnd);
             Size logicalSize = DpiHelper.DeviceSizeToLogical(new Size(rcWindow.Width, rcWindow.Height), dpi.DpiScaleX, dpi.DpiScaleY);
@@ -1096,12 +3221,46 @@ namespace Microsoft.Windows.Shell
             VerifyAccess();
 
             _UnhookCustomChrome();
+            _RemoveCaptionAdorner();
+            _SetHoveredCaptionButton(null);
 
-            if (!isClosing && !_hwndSource.IsDisposed)
+            if (!isClosing && _IsHwndAlive && _appliedFrameMode.HasValue)
             {
-                _RestoreFrameworkIssueFixups();
-                _RestoreGlassFrame();
-                _RestoreHrgn();
+                switch (_appliedFrameMode.Value)
+                {
+                    case WindowChromeFrameMode.ExtendedClientArea:
+                        _RestoreExtendedFrame();
+                        _RestoreHrgn();
+                        break;
+
+                    case WindowChromeFrameMode.SystemFrame:
+                        _RestoreGlassFrameCore();
+                        break;
+
+                    default:
+                        _RestoreFrameworkIssueFixups();
+                        _RestoreGlassFrame();
+                        _RestoreHrgn();
+                        break;
+                }
+
+                _RestoreDwmAttributes();
+                if (_savedBackgroundColor.HasValue)
+                {
+                    // Still extended (the mode-specific restore above did not undo it): put the background back.
+                    _RestoreCompositionBackground();
+                }
+
+                _window.ClearValue(WindowChrome.CaptionButtonsBoundsPropertyKey);
+                _window.ClearValue(WindowChrome.CaptionButtonsClipPropertyKey);
+                _window.ClearValue(WindowChrome.TitleBarBoundsPropertyKey);
+                _window.ClearValue(WindowChrome.CaptionForegroundPropertyKey);
+                _captionButtonsBounds = default(Rect);
+                _captionButtonsClipClientSize = default(Size);
+                _titleBarBounds = default(Rect);
+                _appliedCaptionForegroundColor = null;
+                _appliedFrameMode = null;
+                _isExtendedFrameActive = false;
 
                 _window.InvalidateMeasure();
             }
@@ -1121,6 +3280,12 @@ namespace Microsoft.Windows.Shell
 
         private void _RestoreFrameworkIssueFixups()
         {
+            if (_window == null || VisualTreeHelper.GetChildrenCount(_window) == 0)
+            {
+                // The template was never applied (e.g. SystemFrame chrome on a window that is not shown yet).
+                return;
+            }
+
             FrameworkElement rootElement = (FrameworkElement)VisualTreeHelper.GetChild(_window, 0);
 
             // Undo anything that was done before.
@@ -1132,14 +3297,19 @@ namespace Microsoft.Windows.Shell
             Assert.IsNull(_chromeInfo);
             Assert.IsNotNull(_window);
 
+            _RestoreGlassFrameCore();
+        }
+
+        private void _RestoreGlassFrameCore()
+        {
             // Expect that this might be called on OSes other than Vista
             // and if the window hasn't yet been shown, then we don't need to undo anything.
-            if (!Utility.IsOSVistaOrNewer || _hwnd == IntPtr.Zero)
+            if (!Utility.IsOSVistaOrNewer || !_IsHwndAlive)
             {
                 return;
             }
 
-            _hwndSource.CompositionTarget.BackgroundColor = SystemColors.WindowColor;
+            _RestoreCompositionBackground();
 
             if (NativeMethods.DwmIsCompositionEnabled())
             {
@@ -1152,7 +3322,7 @@ namespace Microsoft.Windows.Shell
         private void _RestoreHrgn()
         {
             _ClearRoundingRegion();
-            NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, 0, 0, 0, 0, _SwpFlags);
+            _ChangeFrame();
         }
 
         #endregion

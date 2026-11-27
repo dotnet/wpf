@@ -283,6 +283,7 @@
     <Compile Include="MS\Internal\Tasks\IPersistFileCheckSum.cs" />
     <Compile Include="MS\Internal\Tasks\IVsMSBuildTaskFileManager.cs" />
     <Compile Include="MS\Internal\Tasks\TaskFileService.cs" />
+    <Compile Include="Microsoft\Build\Framework\MSBuildMultiThreadableTaskAttribute.cs" />
     <Compile Include="Microsoft\Build\Tasks\Windows\MergeLocalizationDirectives.cs" />
     <Compile Include="Microsoft\Build\Tasks\Windows\MarkupCompilePass1.cs" />
     <Compile Include="Microsoft\Build\Tasks\Windows\MarkupCompilePass2.cs" />

@@ -105,7 +105,7 @@ namespace MS.Internal.WindowsRuntime
             };
 
 
-            public static readonly string Undetermined = "und";
+            public const string Undetermined = "und";
         }
     }
 }

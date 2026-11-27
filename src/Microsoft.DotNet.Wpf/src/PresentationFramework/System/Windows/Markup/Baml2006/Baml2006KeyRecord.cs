@@ -129,7 +129,7 @@ namespace System.Windows.Baml2006
         private bool _isStatic;
         private bool _isType;
 
-        private static readonly byte TypeExtensionValueMask = 0x01;
-        private static readonly byte StaticExtensionValueMask = 0x02;
+        private const byte TypeExtensionValueMask = 0x01;
+        private const byte StaticExtensionValueMask = 0x02;
     }
 }

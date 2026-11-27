@@ -43,8 +43,6 @@ namespace System.Windows.Media.Imaging
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -62,7 +60,6 @@ namespace System.Windows.Media.Imaging
             target.SourcePropertyChangedHook(e);
 
 
-
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -77,16 +74,14 @@ namespace System.Windows.Media.Imaging
                 return;
             }
 
-
-
             target.PropertyChanged(SourceProperty);
         }
         private static void SourceColorContextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ColorConvertedBitmap target = ((ColorConvertedBitmap) d);
 
-
             target.SourceColorContextPropertyChangedHook(e);
+
 
             target.PropertyChanged(SourceColorContextProperty);
         }
@@ -94,8 +89,8 @@ namespace System.Windows.Media.Imaging
         {
             ColorConvertedBitmap target = ((ColorConvertedBitmap) d);
 
-
             target.DestinationColorContextPropertyChangedHook(e);
+
 
             target.PropertyChanged(DestinationColorContextProperty);
         }
@@ -103,12 +98,11 @@ namespace System.Windows.Media.Imaging
         {
             ColorConvertedBitmap target = ((ColorConvertedBitmap) d);
 
-
             target.DestinationFormatPropertyChangedHook(e);
+
 
             target.PropertyChanged(DestinationFormatProperty);
         }
-
 
         #region Public Properties
 
@@ -203,7 +197,6 @@ namespace System.Windows.Media.Imaging
             base.CloneCore(source);
 
 
-
             // Set state once clone has finished
             ClonePostscript(sourceColorConvertedBitmap);
         }
@@ -218,7 +211,6 @@ namespace System.Windows.Media.Imaging
             ClonePrequel(sourceColorConvertedBitmap);
 
             base.CloneCurrentValueCore(source);
-
 
 
             // Set state once clone has finished
@@ -237,7 +229,6 @@ namespace System.Windows.Media.Imaging
             base.GetAsFrozenCore(source);
 
 
-
             // Set state once clone has finished
             ClonePostscript(sourceColorConvertedBitmap);
         }
@@ -254,11 +245,9 @@ namespace System.Windows.Media.Imaging
             base.GetCurrentValueAsFrozenCore(source);
 
 
-
             // Set state once clone has finished
             ClonePostscript(sourceColorConvertedBitmap);
         }
-
 
         #endregion ProtectedMethods
 
@@ -271,13 +260,6 @@ namespace System.Windows.Media.Imaging
         #region Internal Methods
 
 
-
-
-
-
-
-
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -287,9 +269,6 @@ namespace System.Windows.Media.Imaging
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -329,17 +308,12 @@ namespace System.Windows.Media.Imaging
 
         #region Internal Fields
 
-
-
-
-
         internal static BitmapSource s_Source = null;
         internal static ColorContext s_SourceColorContext = null;
         internal static ColorContext s_DestinationColorContext = null;
         internal static PixelFormat s_DestinationFormat = PixelFormats.Pbgra32;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -399,7 +373,6 @@ namespace System.Windows.Media.Imaging
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ new CoerceValueCallback(CoerceDestinationFormat));
         }
-
 
 
         #endregion Constructors

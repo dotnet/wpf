@@ -46,8 +46,6 @@ namespace System.Windows.Media.Effects
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -60,10 +58,8 @@ namespace System.Windows.Media.Effects
         {
             BitmapEffectInput target = ((BitmapEffectInput) d);
 
-
             target.PropertyChanged(AreaToApplyEffectProperty);
         }
-
 
         #region Public Properties
 
@@ -131,8 +127,6 @@ namespace System.Windows.Media.Effects
             return new BitmapEffectInput();
         }
 
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -144,13 +138,6 @@ namespace System.Windows.Media.Effects
         #region Internal Methods
 
 
-
-
-
-
-
-
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -160,9 +147,6 @@ namespace System.Windows.Media.Effects
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -198,16 +182,11 @@ namespace System.Windows.Media.Effects
 
         #region Internal Fields
 
-
-
-
-
         internal static BitmapSource s_Input = BitmapEffectInput.ContextInputSource;
         internal const BrushMappingMode c_AreaToApplyEffectUnits = BrushMappingMode.RelativeToBoundingBox;
         internal static Rect s_AreaToApplyEffect = Rect.Empty;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -258,7 +237,6 @@ namespace System.Windows.Media.Effects
                                    /* isIndependentlyAnimated  = */ true,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

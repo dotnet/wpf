@@ -53,8 +53,6 @@ namespace System.Windows.Media
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -65,9 +63,6 @@ namespace System.Windows.Media
 
         private static void ImageSourcePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
-
-
 
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
@@ -85,7 +80,6 @@ namespace System.Windows.Media
 
 
             ImageDrawing target = ((ImageDrawing) d);
-
 
             ImageSource oldV = (ImageSource) e.OldValue;
             ImageSource newV = (ImageSource) e.NewValue;
@@ -115,10 +109,8 @@ namespace System.Windows.Media
         {
             ImageDrawing target = ((ImageDrawing) d);
 
-
             target.PropertyChanged(RectProperty);
         }
-
 
         #region Public Properties
 
@@ -171,8 +163,6 @@ namespace System.Windows.Media
             return new ImageDrawing();
         }
 
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -223,7 +213,6 @@ namespace System.Windows.Media
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_IMAGEDRAWING))
                 {
                     ImageSource vImageSource = ImageSource;
@@ -231,16 +220,13 @@ namespace System.Windows.Media
 
                     AddRefOnChannelAnimations(channel);
 
-
                     UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
                 }
 
                 return _duceResource.GetHandle(channel);
-
         }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
@@ -249,9 +235,7 @@ namespace System.Windows.Media
                     if (vImageSource != null) ((DUCE.IResource)vImageSource).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
-
                 }
-
         }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
@@ -269,7 +253,6 @@ namespace System.Windows.Media
             return _duceResource.GetChannel(index);
         }
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -279,9 +262,6 @@ namespace System.Windows.Media
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -313,14 +293,10 @@ namespace System.Windows.Media
 
         #region Internal Fields
 
-
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
-
         internal static Rect s_Rect = Rect.Empty;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -360,7 +336,6 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ true,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

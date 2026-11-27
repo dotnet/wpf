@@ -46,8 +46,6 @@ namespace System.Windows.Media.Effects
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -60,13 +58,11 @@ namespace System.Windows.Media.Effects
         {
             DropShadowBitmapEffect target = ((DropShadowBitmapEffect) d);
 
-
             target.PropertyChanged(ShadowDepthProperty);
         }
         private static void ColorPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DropShadowBitmapEffect target = ((DropShadowBitmapEffect) d);
-
 
             target.PropertyChanged(ColorProperty);
         }
@@ -74,13 +70,11 @@ namespace System.Windows.Media.Effects
         {
             DropShadowBitmapEffect target = ((DropShadowBitmapEffect) d);
 
-
             target.PropertyChanged(DirectionProperty);
         }
         private static void NoisePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DropShadowBitmapEffect target = ((DropShadowBitmapEffect) d);
-
 
             target.PropertyChanged(NoiseProperty);
         }
@@ -88,17 +82,14 @@ namespace System.Windows.Media.Effects
         {
             DropShadowBitmapEffect target = ((DropShadowBitmapEffect) d);
 
-
             target.PropertyChanged(OpacityProperty);
         }
         private static void SoftnessPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DropShadowBitmapEffect target = ((DropShadowBitmapEffect) d);
 
-
             target.PropertyChanged(SoftnessProperty);
         }
-
 
         #region Public Properties
 
@@ -211,8 +202,6 @@ namespace System.Windows.Media.Effects
             return new DropShadowBitmapEffect();
         }
 
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -224,13 +213,6 @@ namespace System.Windows.Media.Effects
         #region Internal Methods
 
 
-
-
-
-
-
-
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -240,9 +222,6 @@ namespace System.Windows.Media.Effects
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -290,10 +269,6 @@ namespace System.Windows.Media.Effects
 
         #region Internal Fields
 
-
-
-
-
         internal const double c_ShadowDepth = 5.0;
         internal static Color s_Color = Colors.Black;
         internal const double c_Direction = 315.0;
@@ -302,7 +277,6 @@ namespace System.Windows.Media.Effects
         internal const double c_Softness = 0.5;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -378,7 +352,6 @@ namespace System.Windows.Media.Effects
                                    /* isIndependentlyAnimated  = */ true,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

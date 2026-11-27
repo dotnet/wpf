@@ -46,8 +46,6 @@ namespace System.Windows.Media.Effects
         }
 
 
-
-
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -60,17 +58,14 @@ namespace System.Windows.Media.Effects
         {
             EmbossBitmapEffect target = ((EmbossBitmapEffect) d);
 
-
             target.PropertyChanged(LightAngleProperty);
         }
         private static void ReliefPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             EmbossBitmapEffect target = ((EmbossBitmapEffect) d);
 
-
             target.PropertyChanged(ReliefProperty);
         }
-
 
         #region Public Properties
 
@@ -123,8 +118,6 @@ namespace System.Windows.Media.Effects
             return new EmbossBitmapEffect();
         }
 
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -136,13 +129,6 @@ namespace System.Windows.Media.Effects
         #region Internal Methods
 
 
-
-
-
-
-
-
-
         #endregion Internal Methods
 
         //------------------------------------------------------
@@ -152,9 +138,6 @@ namespace System.Windows.Media.Effects
         //------------------------------------------------------
 
         #region Internal Properties
-
-
-
 
 
         #endregion Internal Properties
@@ -186,15 +169,10 @@ namespace System.Windows.Media.Effects
 
         #region Internal Fields
 
-
-
-
-
         internal const double c_LightAngle = 45.0;
         internal const double c_Relief = 0.44;
 
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -234,7 +212,6 @@ namespace System.Windows.Media.Effects
                                    /* isIndependentlyAnimated  = */ true,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

@@ -16,7 +16,6 @@ using System.Windows.Converters;
 
 namespace System.Windows
 {
-
     [Serializable]
     [TypeConverter(typeof(VectorConverter))]
     [ValueSerializer(typeof(VectorValueSerializer))] // Used by MarkupWriter
@@ -29,9 +28,6 @@ namespace System.Windows
         //------------------------------------------------------
 
         #region Public Methods
-
-
-
 
         /// <summary>
         /// Compares two Vector instances for exact equality.
@@ -167,8 +163,6 @@ namespace System.Windows
         //------------------------------------------------------
 
 
-
-
         #region Public Properties
 
         /// <summary>
@@ -180,12 +174,10 @@ namespace System.Windows
             {
                 return _x;
             }
-
             set
             {
                 _x = value;
             }
-
         }
 
         /// <summary>
@@ -197,12 +189,10 @@ namespace System.Windows
             {
                 return _y;
             }
-
             set
             {
                 _y = value;
             }
-
         }
 
         #endregion Public Properties
@@ -216,9 +206,6 @@ namespace System.Windows
         #region Protected Methods
 
 
-
-
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------
@@ -228,13 +215,6 @@ namespace System.Windows
         //------------------------------------------------------
 
         #region Internal Methods
-
-
-
-
-
-
-
 
 
         #endregion Internal Methods
@@ -247,7 +227,6 @@ namespace System.Windows
 
         #region Internal Properties
 
-
         /// <summary>
         /// Creates a string representation of this object based on the current culture.
         /// </summary>
@@ -256,7 +235,6 @@ namespace System.Windows
         /// </returns>
         public override string ToString()
         {
-
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, null /* format provider */);
         }
@@ -270,7 +248,6 @@ namespace System.Windows
         /// </returns>
         public string ToString(IFormatProvider provider)
         {
-
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, provider);
         }
@@ -286,7 +263,6 @@ namespace System.Windows
         /// </returns>
         string IFormattable.ToString(string format, IFormatProvider provider)
         {
-
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(format, provider);
         }
@@ -312,7 +288,6 @@ namespace System.Windows
         }
 
 
-
         #endregion Internal Properties
 
         //------------------------------------------------------
@@ -322,7 +297,6 @@ namespace System.Windows
         //------------------------------------------------------
 
         #region Dependency Properties
-
 
 
         #endregion Dependency Properties
@@ -335,15 +309,10 @@ namespace System.Windows
 
         #region Internal Fields
 
-
         internal double _x;
         internal double _y;
 
-
-
-
         #endregion Internal Fields
-
 
 
         #region Constructors
@@ -353,8 +322,6 @@ namespace System.Windows
         //  Constructors
         //
         //------------------------------------------------------
-
-
 
 
         #endregion Constructors

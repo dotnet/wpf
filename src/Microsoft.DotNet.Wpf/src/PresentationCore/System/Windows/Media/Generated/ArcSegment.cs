@@ -9,7 +9,6 @@
 //
 
 using MS.Internal;
-using MS.Internal.KnownBoxes;
 using MS.Internal.Collections;
 using MS.Utility;
 using System.Collections;
@@ -300,7 +299,7 @@ namespace System.Windows.Media
                   RegisterProperty("IsLargeArc",
                                    typeof(bool),
                                    typeofThis,
-                                   false,
+                                   BooleanBoxes.FalseBox,
                                    null,
                                    null,
                                    /* isIndependentlyAnimated  = */ false,

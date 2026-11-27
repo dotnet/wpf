@@ -11,7 +11,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using MS.Internal;
-using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Controls
 {

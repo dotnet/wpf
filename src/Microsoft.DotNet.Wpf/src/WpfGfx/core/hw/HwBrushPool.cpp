@@ -604,6 +604,65 @@ Cleanup:
 //+-----------------------------------------------------------------------------
 //
 //  Member:
+//      CHwSweepGradientBrushPoolManager::CreateHwBrush
+//
+//  Synopsis:
+//      Create a new HW brush for the given DI brush
+//
+//------------------------------------------------------------------------------
+HRESULT
+CHwSweepGradientBrushPoolManager::CreateHwBrush(
+    __inout_ecount(1) CMILBrush *pBrush,
+    __in_ecount(1) const CHwBrushContext &hwBrushContext,
+    __deref_out_ecount(1) CHwBrush ** const ppHwBrush
+    )
+{
+    HRESULT hr;
+
+    *ppHwBrush = NULL;
+
+    CHwSweepGradientBrush *pHwBrush;
+
+    pHwBrush = new CHwSweepGradientBrush(this, m_pDeviceNoRef);
+    IFCOOM(pHwBrush);
+    // No AddRef here
+
+    MIL_THR(pHwBrush->SetBrushAndContext(
+        pBrush,
+        hwBrushContext
+        ));
+
+    if (SUCCEEDED(hr))
+    {
+        //
+        // Add to list
+        //
+
+        AddToList(pHwBrush);
+
+        //
+        // Return the new, referenced brush
+        //
+
+        *ppHwBrush = pHwBrush;
+        (*ppHwBrush)->AddRef();
+    }
+    else
+    {
+        // If new brush creation failed then we need to just
+        // delete the object.  Had we AddRef'ed it and then
+        // Release'd it, it would end up on our unused list.
+        delete pHwBrush;
+    }
+
+Cleanup:
+    RRETURN(hr);
+}
+
+
+//+-----------------------------------------------------------------------------
+//
+//  Member:
 //      CHwBrushPool::CHwBrushPool
 //
 //  Synopsis:
@@ -615,6 +674,7 @@ CHwBrushPool::CHwBrushPool()
     m_psbScratch = NULL;
     m_pbpmGradientLinear = NULL;
     m_pbpmGradientRadial = NULL;
+    m_pbpmGradientSweep = NULL;
 
     m_pbbScratch = NULL;
 }
@@ -634,6 +694,7 @@ CHwBrushPool::~CHwBrushPool()
 
     ReleaseInterfaceNoNULL(m_pbpmGradientLinear);
     ReleaseInterfaceNoNULL(m_pbpmGradientRadial);
+    ReleaseInterfaceNoNULL(m_pbpmGradientSweep);
 
     delete m_pbbScratch;
 }
@@ -667,6 +728,9 @@ CHwBrushPool::Init(
     m_pbpmGradientRadial = new CHwRadialGradientBrushPoolManager(pDevice);
     IFCOOM(m_pbpmGradientRadial);
 
+    m_pbpmGradientSweep = new CHwSweepGradientBrushPoolManager(pDevice);
+    IFCOOM(m_pbpmGradientSweep);
+
     m_pbbScratch = new CHwBitmapBrush(pDevice);
     IFCOOM(m_pbbScratch);
 
@@ -695,6 +759,7 @@ CHwBrushPool::GetHwBrush(
     Assert(m_psbScratch);
     Assert(m_pbpmGradientLinear);
     Assert(m_pbpmGradientRadial);
+    Assert(m_pbpmGradientSweep);
     Assert(m_pbbScratch);
 
     switch (pBrush->GetType())
@@ -721,6 +786,14 @@ CHwBrushPool::GetHwBrush(
 
     case BrushGradientRadial:
         IFC(m_pbpmGradientRadial->AllocateHwBrush(
+            pBrush,
+            hwBrushContext,
+            ppHwBrush
+            ));
+        break;
+
+    case BrushGradientSweep:
+        IFC(m_pbpmGradientSweep->AllocateHwBrush(
             pBrush,
             hwBrushContext,
             ppHwBrush

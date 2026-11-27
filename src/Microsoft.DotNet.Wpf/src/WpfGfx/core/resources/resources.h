@@ -87,6 +87,7 @@ class CMilSlaveBitmap;
 #include "gradientbrush.h"
 #include "lineargradient.h"
 #include "radialgradient.h"
+#include "sweepgradient.h"
 #include "BrushIntermediateCache.h"
 #include "tilebrush.h"
 #include "imagebrush.h"

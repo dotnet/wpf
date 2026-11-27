@@ -164,7 +164,7 @@
       </trans-unit>
       <trans-unit id="Argument_InvalidOffLen">
         <source>Offset and length were out of bounds for the array or count is greater than the number of elements from index to the end of the source collection.</source>
-        <target state="translated">O deslocamento e o comprimento estavam fora dos limites para a matriz ou a contagem é maior do que o número de elementos do índice até o fim da coleção de origem.</target>
+        <target state="translated">Deslocamento e comprimento estavam fora dos limites da matriz, ou a contagem é maior do que o número de elementos do índice até o fim da coleção de origem.</target>
         <note />
       </trans-unit>
       <trans-unit id="ArrangeReentrancyInvalid">
@@ -5635,7 +5635,7 @@ Deseja substituí-lo?</target>
       </trans-unit>
       <trans-unit id="TextElementCollection_CannotCopyToArrayNotSufficientMemory">
         <source>Not enough space to copy {0} elements to index {1} of array with length {2}.</source>
-        <target state="translated">Não há espaço suficiente para copiar elementos {0} para o índice {1} da matriz com o tamanho {2}.</target>
+        <target state="translated">Não há espaço suficiente para copiar {0} elementos para o índice {1} da matriz com o tamanho {2}.</target>
         <note />
       </trans-unit>
       <trans-unit id="TextElementCollection_IndexOutOfRange">

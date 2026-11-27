@@ -1104,7 +1104,7 @@
       </trans-unit>
       <trans-unit id="DataGrid_InvalidSortDescription">
         <source>The SortDescriptions added are not valid. The probable solutions are to set the CanUserSort on the Column to false, or to use SortMemberPath property on the Column, or to handle the Sorting event on DataGrid.</source>
-        <target state="translated">SortDescriptions aggiunto non valido. Le soluzioni probabili sono di impostare CanUserSort sulla Colonna su false, oppure di utilizzare la proprietà SortMemberPath sulla Colonna, oppure di gestire l'evento di Ordinamento su DataGrid.</target>
+        <target state="translated">Valore SortDescriptions aggiunto non valido. Soluzioni probabili: impostare CanUserSort su false sulla Colonna; utilizzare la proprietà SortMemberPath sulla Colonna; gestire l'evento di Ordinamento su DataGrid.</target>
         <note />
       </trans-unit>
       <trans-unit id="DataGrid_NewColumnInvalidDisplayIndex">
@@ -1119,7 +1119,7 @@
       </trans-unit>
       <trans-unit id="DataGrid_ProbableInvalidSortDescription">
         <source>Items refresh of the DataGrid failed. One of the probable causes is that the SortDescriptions added are not valid, in which case probable solutions are to set the CanUserSort on the Column to false, or to use SortMemberPath property on the Column, or to handle the Sorting event on DataGrid.</source>
-        <target state="translated">Aggiornamento degli elementi del DataGrid non riuscito. Una delle cause probabili è che SortDescriptions aggiunto non sia valido. Le soluzioni probabili sono di impostare CanUserSort sulla Colonna su false, oppure di utilizzare la proprietà SortMemberPath sulla Colonna, oppure di gestire l'evento di Ordinamento su DataGrid.</target>
+        <target state="translated">Aggiornamento degli elementi del DataGrid non riuscito. Una delle cause probabili è che il valore SortDescriptions aggiunto non sia valido. Soluzioni probabili: impostare CanUserSort su false sulla Colonna; utilizzare la proprietà SortMemberPath sulla Colonna; gestire l'evento di Ordinamento su DataGrid.</target>
         <note />
       </trans-unit>
       <trans-unit id="DataGrid_ReadonlyCellsItemsSource">

@@ -1031,6 +1031,18 @@ namespace System.Windows.Documents
                 element.TextElementNode = (TextTreeTextElementNode)elementNode;
             }
 
+            if (element.IsIMELeftEdgeDeferred)
+            {
+                if (this.IMECompositionScope is IMECompositionScope scope)
+                {
+                    scope.DeferredElements.Add(element);
+                }
+                else
+                {
+                    element.IsIMELeftEdgeDeferred = false;
+                }
+            }
+
             // If the new element will become the parent of an old element,
             // the old element may become a firstIMEVisibleSibling.
             TextTreeTextElementNode newFirstIMEVisibleNode = null;
@@ -1263,6 +1275,100 @@ namespace System.Windows.Documents
             {
                 RaiseEventForNewFirstIMEVisibleNode(nextIMEVisibleNode);
             }
+        }
+
+        // Hides the left edge of element from the IMEs until the composition is over.
+        internal void DeferIMELeftEdge(TextElement element)
+        {
+            DemandCreateIMECompositionScope();
+            UpdateIMELeftEdgeDeferred(element, true /* isDeferred */);
+        }
+
+        // Under active composition, sets the TextElement.IsIMELeftEdgeDeferred.
+        // Outside of composition, a deferred edge is revealed (used during user's undo).
+        internal void UpdateIMELeftEdgeDeferred(TextElement element, bool isDeferred)
+        {
+            Invariant.Assert(element.IsInTree, "Element must be in the tree!");
+
+            IMECompositionScope scope = this.IMECompositionScope;
+
+            // Only a composition in progress in this tree may defer an edge.
+            if (scope == null)
+            {
+                isDeferred = false;
+            }
+
+            bool wasDeferred = element.IsIMELeftEdgeDeferred;
+
+            if (isDeferred == wasDeferred)
+            {
+                return;
+            }
+
+            BeginChangeNoUndo();
+            try
+            {
+                TextTreeUndo.CreateIMEDeferralUndoUnit(this, element, wasDeferred);
+
+                if (isDeferred)
+                {
+                    scope.DeferredElements.Add(element);
+                }
+
+                int diffCount = element.SetIMELeftEdgeDeferred(isDeferred);
+
+                if (diffCount != 0)
+                {
+                    TextTreeTextElementNode node = element.TextElementNode;
+
+                    node.IMECharCount += diffCount;
+                    UpdateContainerSymbolCount(node.GetContainingNode(), /* symbolCount */ 0, diffCount);
+
+                    if (diffCount > 0)
+                    {
+                        RaiseEventForFormerFirstIMEVisibleNode(node);
+                    }
+                    else
+                    {
+                        RaiseEventForNewFirstIMEVisibleNode(node);
+                    }
+                }
+            }
+            finally
+            {
+                EndChange(true /* skipEvents */);
+            }
+        }
+
+        // Reveals deferred edges to the IME and clears the composition scope.
+        internal void RevealDeferredIMELeftEdges()
+        {
+            IMECompositionScope imeCompositionScope = this.IMECompositionScope;
+
+            if (imeCompositionScope == null)
+            {
+                return;
+            }
+
+            foreach (TextElement element in imeCompositionScope.DeferredElements)
+            {
+                // Revealed already, by undo or by an earlier entry for the same instance.
+                if (!element.IsIMELeftEdgeDeferred)
+                {
+                    continue;
+                }
+
+                if (element.IsInTree)
+                {
+                    element.TextContainer.UpdateIMELeftEdgeDeferred(element, false /* isDeferred */);
+                }
+                else
+                {
+                    element.IsIMELeftEdgeDeferred = false;
+                }
+            }
+
+            _rootNode.IMECompositionScope = null;
         }
 
         internal void GetNodeAndEdgeAtOffset(int offset, out SplayTreeNode node, out ElementEdge edge)
@@ -3407,6 +3513,15 @@ namespace System.Windows.Documents
             AddChange(startEdgePosition, /* symbolCount */ 0, /* IMECharCount */ 1, PrecursorTextChangeType.ContentRemoved);
         }
 
+        // Lazy allocates the composition scope, which we don't need until we have to
+        // defer edges inside an IME composition.
+        private void DemandCreateIMECompositionScope()
+        {
+            Invariant.Assert(_rootNode != null, "Asking for composition scope before root node create!");
+
+            _rootNode.IMECompositionScope ??= new IMECompositionScope();
+        }
+
         // Sets boolean state.
         private void SetFlags(bool value, Flags flags)
         {
@@ -3436,6 +3551,15 @@ namespace System.Windows.Documents
             get
             {
                 return this.Parent?.Dispatcher;
+            }
+        }
+
+        // Composition in progress for which edges need to be deferred.
+        private IMECompositionScope IMECompositionScope
+        {
+            get
+            {
+                return _rootNode?.IMECompositionScope;
             }
         }
 

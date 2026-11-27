@@ -146,6 +146,7 @@ namespace System.Windows
         public static readonly System.Windows.RoutedEvent LostTouchCaptureEvent;
         public static readonly System.Windows.RoutedEvent MouseDownEvent;
         public static readonly System.Windows.RoutedEvent MouseEnterEvent;
+        public static readonly System.Windows.RoutedEvent MouseHorizontalWheelEvent;
         public static readonly System.Windows.RoutedEvent MouseLeaveEvent;
         public static readonly System.Windows.RoutedEvent MouseLeftButtonDownEvent;
         public static readonly System.Windows.RoutedEvent MouseLeftButtonUpEvent;
@@ -164,6 +165,7 @@ namespace System.Windows
         public static readonly System.Windows.RoutedEvent PreviewKeyUpEvent;
         public static readonly System.Windows.RoutedEvent PreviewLostKeyboardFocusEvent;
         public static readonly System.Windows.RoutedEvent PreviewMouseDownEvent;
+        public static readonly System.Windows.RoutedEvent PreviewMouseHorizontalWheelEvent;
         public static readonly System.Windows.RoutedEvent PreviewMouseLeftButtonDownEvent;
         public static readonly System.Windows.RoutedEvent PreviewMouseLeftButtonUpEvent;
         public static readonly System.Windows.RoutedEvent PreviewMouseMoveEvent;
@@ -263,6 +265,7 @@ namespace System.Windows
         public event System.EventHandler<System.Windows.Input.TouchEventArgs> LostTouchCapture { add { } remove { } }
         public event System.Windows.Input.MouseButtonEventHandler MouseDown { add { } remove { } }
         public event System.Windows.Input.MouseEventHandler MouseEnter { add { } remove { } }
+        public event System.Windows.Input.MouseWheelEventHandler MouseHorizontalWheel { add { } remove { } }
         public event System.Windows.Input.MouseEventHandler MouseLeave { add { } remove { } }
         public event System.Windows.Input.MouseButtonEventHandler MouseLeftButtonDown { add { } remove { } }
         public event System.Windows.Input.MouseButtonEventHandler MouseLeftButtonUp { add { } remove { } }
@@ -281,6 +284,7 @@ namespace System.Windows
         public event System.Windows.Input.KeyEventHandler PreviewKeyUp { add { } remove { } }
         public event System.Windows.Input.KeyboardFocusChangedEventHandler PreviewLostKeyboardFocus { add { } remove { } }
         public event System.Windows.Input.MouseButtonEventHandler PreviewMouseDown { add { } remove { } }
+        public event System.Windows.Input.MouseWheelEventHandler PreviewMouseHorizontalWheel { add { } remove { } }
         public event System.Windows.Input.MouseButtonEventHandler PreviewMouseLeftButtonDown { add { } remove { } }
         public event System.Windows.Input.MouseButtonEventHandler PreviewMouseLeftButtonUp { add { } remove { } }
         public event System.Windows.Input.MouseEventHandler PreviewMouseMove { add { } remove { } }
@@ -363,6 +367,7 @@ namespace System.Windows
         protected internal virtual void OnLostTouchCapture(System.Windows.Input.TouchEventArgs e) { }
         protected internal virtual void OnMouseDown(System.Windows.Input.MouseButtonEventArgs e) { }
         protected internal virtual void OnMouseEnter(System.Windows.Input.MouseEventArgs e) { }
+        protected internal virtual void OnMouseHorizontalWheel(System.Windows.Input.MouseWheelEventArgs e) { }
         protected internal virtual void OnMouseLeave(System.Windows.Input.MouseEventArgs e) { }
         protected internal virtual void OnMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs e) { }
         protected internal virtual void OnMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs e) { }
@@ -381,6 +386,7 @@ namespace System.Windows
         protected internal virtual void OnPreviewKeyUp(System.Windows.Input.KeyEventArgs e) { }
         protected internal virtual void OnPreviewLostKeyboardFocus(System.Windows.Input.KeyboardFocusChangedEventArgs e) { }
         protected internal virtual void OnPreviewMouseDown(System.Windows.Input.MouseButtonEventArgs e) { }
+        protected internal virtual void OnPreviewMouseHorizontalWheel(System.Windows.Input.MouseWheelEventArgs e) { }
         protected internal virtual void OnPreviewMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs e) { }
         protected internal virtual void OnPreviewMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs e) { }
         protected internal virtual void OnPreviewMouseMove(System.Windows.Input.MouseEventArgs e) { }
@@ -1453,6 +1459,7 @@ namespace System.Windows
         public static readonly System.Windows.RoutedEvent ManipulationStartingEvent;
         public static readonly System.Windows.RoutedEvent MouseDownEvent;
         public static readonly System.Windows.RoutedEvent MouseEnterEvent;
+        public static readonly System.Windows.RoutedEvent MouseHorizontalWheelEvent;
         public static readonly System.Windows.RoutedEvent MouseLeaveEvent;
         public static readonly System.Windows.RoutedEvent MouseLeftButtonDownEvent;
         public static readonly System.Windows.RoutedEvent MouseLeftButtonUpEvent;
@@ -1473,6 +1480,7 @@ namespace System.Windows
         public static readonly System.Windows.RoutedEvent PreviewKeyUpEvent;
         public static readonly System.Windows.RoutedEvent PreviewLostKeyboardFocusEvent;
         public static readonly System.Windows.RoutedEvent PreviewMouseDownEvent;
+        public static readonly System.Windows.RoutedEvent PreviewMouseHorizontalWheelEvent;
         public static readonly System.Windows.RoutedEvent PreviewMouseLeftButtonDownEvent;
         public static readonly System.Windows.RoutedEvent PreviewMouseLeftButtonUpEvent;
         public static readonly System.Windows.RoutedEvent PreviewMouseMoveEvent;
@@ -1616,6 +1624,7 @@ namespace System.Windows
         public event System.EventHandler<System.Windows.Input.ManipulationStartingEventArgs> ManipulationStarting { add { } remove { } }
         public event System.Windows.Input.MouseButtonEventHandler MouseDown { add { } remove { } }
         public event System.Windows.Input.MouseEventHandler MouseEnter { add { } remove { } }
+        public event System.Windows.Input.MouseWheelEventHandler MouseHorizontalWheel { add { } remove { } }
         public event System.Windows.Input.MouseEventHandler MouseLeave { add { } remove { } }
         public event System.Windows.Input.MouseButtonEventHandler MouseLeftButtonDown { add { } remove { } }
         public event System.Windows.Input.MouseButtonEventHandler MouseLeftButtonUp { add { } remove { } }
@@ -1634,6 +1643,7 @@ namespace System.Windows
         public event System.Windows.Input.KeyEventHandler PreviewKeyUp { add { } remove { } }
         public event System.Windows.Input.KeyboardFocusChangedEventHandler PreviewLostKeyboardFocus { add { } remove { } }
         public event System.Windows.Input.MouseButtonEventHandler PreviewMouseDown { add { } remove { } }
+        public event System.Windows.Input.MouseWheelEventHandler PreviewMouseHorizontalWheel { add { } remove { } }
         public event System.Windows.Input.MouseButtonEventHandler PreviewMouseLeftButtonDown { add { } remove { } }
         public event System.Windows.Input.MouseButtonEventHandler PreviewMouseLeftButtonUp { add { } remove { } }
         public event System.Windows.Input.MouseEventHandler PreviewMouseMove { add { } remove { } }
@@ -1735,6 +1745,7 @@ namespace System.Windows
         protected virtual void OnManipulationStarting(System.Windows.Input.ManipulationStartingEventArgs e) { }
         protected virtual void OnMouseDown(System.Windows.Input.MouseButtonEventArgs e) { }
         protected virtual void OnMouseEnter(System.Windows.Input.MouseEventArgs e) { }
+        protected virtual void OnMouseHorizontalWheel(System.Windows.Input.MouseWheelEventArgs e) { }
         protected virtual void OnMouseLeave(System.Windows.Input.MouseEventArgs e) { }
         protected virtual void OnMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs e) { }
         protected virtual void OnMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs e) { }
@@ -1753,6 +1764,7 @@ namespace System.Windows
         protected virtual void OnPreviewKeyUp(System.Windows.Input.KeyEventArgs e) { }
         protected virtual void OnPreviewLostKeyboardFocus(System.Windows.Input.KeyboardFocusChangedEventArgs e) { }
         protected virtual void OnPreviewMouseDown(System.Windows.Input.MouseButtonEventArgs e) { }
+        protected virtual void OnPreviewMouseHorizontalWheel(System.Windows.Input.MouseWheelEventArgs e) { }
         protected virtual void OnPreviewMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs e) { }
         protected virtual void OnPreviewMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs e) { }
         protected virtual void OnPreviewMouseMove(System.Windows.Input.MouseEventArgs e) { }
@@ -1851,6 +1863,7 @@ namespace System.Windows
         public static readonly System.Windows.RoutedEvent LostTouchCaptureEvent;
         public static readonly System.Windows.RoutedEvent MouseDownEvent;
         public static readonly System.Windows.RoutedEvent MouseEnterEvent;
+        public static readonly System.Windows.RoutedEvent MouseHorizontalWheelEvent;
         public static readonly System.Windows.RoutedEvent MouseLeaveEvent;
         public static readonly System.Windows.RoutedEvent MouseLeftButtonDownEvent;
         public static readonly System.Windows.RoutedEvent MouseLeftButtonUpEvent;
@@ -1869,6 +1882,7 @@ namespace System.Windows
         public static readonly System.Windows.RoutedEvent PreviewKeyUpEvent;
         public static readonly System.Windows.RoutedEvent PreviewLostKeyboardFocusEvent;
         public static readonly System.Windows.RoutedEvent PreviewMouseDownEvent;
+        public static readonly System.Windows.RoutedEvent PreviewMouseHorizontalWheelEvent;
         public static readonly System.Windows.RoutedEvent PreviewMouseLeftButtonDownEvent;
         public static readonly System.Windows.RoutedEvent PreviewMouseLeftButtonUpEvent;
         public static readonly System.Windows.RoutedEvent PreviewMouseMoveEvent;
@@ -1974,6 +1988,7 @@ namespace System.Windows
         public event System.EventHandler<System.Windows.Input.TouchEventArgs> LostTouchCapture { add { } remove { } }
         public event System.Windows.Input.MouseButtonEventHandler MouseDown { add { } remove { } }
         public event System.Windows.Input.MouseEventHandler MouseEnter { add { } remove { } }
+        public event System.Windows.Input.MouseWheelEventHandler MouseHorizontalWheel { add { } remove { } }
         public event System.Windows.Input.MouseEventHandler MouseLeave { add { } remove { } }
         public event System.Windows.Input.MouseButtonEventHandler MouseLeftButtonDown { add { } remove { } }
         public event System.Windows.Input.MouseButtonEventHandler MouseLeftButtonUp { add { } remove { } }
@@ -1992,6 +2007,7 @@ namespace System.Windows
         public event System.Windows.Input.KeyEventHandler PreviewKeyUp { add { } remove { } }
         public event System.Windows.Input.KeyboardFocusChangedEventHandler PreviewLostKeyboardFocus { add { } remove { } }
         public event System.Windows.Input.MouseButtonEventHandler PreviewMouseDown { add { } remove { } }
+        public event System.Windows.Input.MouseWheelEventHandler PreviewMouseHorizontalWheel { add { } remove { } }
         public event System.Windows.Input.MouseButtonEventHandler PreviewMouseLeftButtonDown { add { } remove { } }
         public event System.Windows.Input.MouseButtonEventHandler PreviewMouseLeftButtonUp { add { } remove { } }
         public event System.Windows.Input.MouseEventHandler PreviewMouseMove { add { } remove { } }
@@ -2071,6 +2087,7 @@ namespace System.Windows
         protected internal virtual void OnLostTouchCapture(System.Windows.Input.TouchEventArgs e) { }
         protected internal virtual void OnMouseDown(System.Windows.Input.MouseButtonEventArgs e) { }
         protected internal virtual void OnMouseEnter(System.Windows.Input.MouseEventArgs e) { }
+        protected internal virtual void OnMouseHorizontalWheel(System.Windows.Input.MouseWheelEventArgs e) { }
         protected internal virtual void OnMouseLeave(System.Windows.Input.MouseEventArgs e) { }
         protected internal virtual void OnMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs e) { }
         protected internal virtual void OnMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs e) { }
@@ -2089,6 +2106,7 @@ namespace System.Windows
         protected internal virtual void OnPreviewKeyUp(System.Windows.Input.KeyEventArgs e) { }
         protected internal virtual void OnPreviewLostKeyboardFocus(System.Windows.Input.KeyboardFocusChangedEventArgs e) { }
         protected internal virtual void OnPreviewMouseDown(System.Windows.Input.MouseButtonEventArgs e) { }
+        protected internal virtual void OnPreviewMouseHorizontalWheel(System.Windows.Input.MouseWheelEventArgs e) { }
         protected internal virtual void OnPreviewMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs e) { }
         protected internal virtual void OnPreviewMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs e) { }
         protected internal virtual void OnPreviewMouseMove(System.Windows.Input.MouseEventArgs e) { }
@@ -3945,6 +3963,7 @@ namespace System.Windows.Input
         public static readonly System.Windows.RoutedEvent LostMouseCaptureEvent;
         public static readonly System.Windows.RoutedEvent MouseDownEvent;
         public static readonly System.Windows.RoutedEvent MouseEnterEvent;
+        public static readonly System.Windows.RoutedEvent MouseHorizontalWheelEvent;
         public static readonly System.Windows.RoutedEvent MouseLeaveEvent;
         public static readonly System.Windows.RoutedEvent MouseMoveEvent;
         public static readonly System.Windows.RoutedEvent MouseUpEvent;
@@ -3952,6 +3971,7 @@ namespace System.Windows.Input
         public static readonly System.Windows.RoutedEvent MouseWheelEvent;
         public static readonly System.Windows.RoutedEvent PreviewMouseDownEvent;
         public static readonly System.Windows.RoutedEvent PreviewMouseDownOutsideCapturedElementEvent;
+        public static readonly System.Windows.RoutedEvent PreviewMouseHorizontalWheelEvent;
         public static readonly System.Windows.RoutedEvent PreviewMouseMoveEvent;
         public static readonly System.Windows.RoutedEvent PreviewMouseUpEvent;
         public static readonly System.Windows.RoutedEvent PreviewMouseUpOutsideCapturedElementEvent;
@@ -3970,12 +3990,14 @@ namespace System.Windows.Input
         public static void AddLostMouseCaptureHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseEventHandler handler) { }
         public static void AddMouseDownHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseButtonEventHandler handler) { }
         public static void AddMouseEnterHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseEventHandler handler) { }
+        public static void AddMouseHorizontalWheelHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseWheelEventHandler handler) { }
         public static void AddMouseLeaveHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseEventHandler handler) { }
         public static void AddMouseMoveHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseEventHandler handler) { }
         public static void AddMouseUpHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseButtonEventHandler handler) { }
         public static void AddMouseWheelHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseWheelEventHandler handler) { }
         public static void AddPreviewMouseDownHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseButtonEventHandler handler) { }
         public static void AddPreviewMouseDownOutsideCapturedElementHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseButtonEventHandler handler) { }
+        public static void AddPreviewMouseHorizontalWheelHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseWheelEventHandler handler) { }
         public static void AddPreviewMouseMoveHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseEventHandler handler) { }
         public static void AddPreviewMouseUpHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseButtonEventHandler handler) { }
         public static void AddPreviewMouseUpOutsideCapturedElementHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseButtonEventHandler handler) { }
@@ -3989,12 +4011,14 @@ namespace System.Windows.Input
         public static void RemoveLostMouseCaptureHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseEventHandler handler) { }
         public static void RemoveMouseDownHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseButtonEventHandler handler) { }
         public static void RemoveMouseEnterHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseEventHandler handler) { }
+        public static void RemoveMouseHorizontalWheelHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseWheelEventHandler handler) { }
         public static void RemoveMouseLeaveHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseEventHandler handler) { }
         public static void RemoveMouseMoveHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseEventHandler handler) { }
         public static void RemoveMouseUpHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseButtonEventHandler handler) { }
         public static void RemoveMouseWheelHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseWheelEventHandler handler) { }
         public static void RemovePreviewMouseDownHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseButtonEventHandler handler) { }
         public static void RemovePreviewMouseDownOutsideCapturedElementHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseButtonEventHandler handler) { }
+        public static void RemovePreviewMouseHorizontalWheelHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseWheelEventHandler handler) { }
         public static void RemovePreviewMouseMoveHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseEventHandler handler) { }
         public static void RemovePreviewMouseUpHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseButtonEventHandler handler) { }
         public static void RemovePreviewMouseUpOutsideCapturedElementHandler(System.Windows.DependencyObject element, System.Windows.Input.MouseButtonEventHandler handler) { }

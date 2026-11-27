@@ -2402,11 +2402,6 @@
         <target state="translated">Następna strona</target>
         <note />
       </trans-unit>
-      <trans-unit id="NonCLSException">
-        <source>Text formatting engine encountered a non-CLS exception.</source>
-        <target state="translated">Aparat formatowania tekstu napotkał wyjątek niezgodny z CLS.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NonPackAppAbsoluteUriNotAllowed">
         <source>Unsupported Uri syntax. Method expects a relative Uri or a pack://application:,,,/ form of absolute Uri.</source>
         <target state="translated">Nieobsługiwana składnia identyfikatora URI. Metoda oczekuje względnego identyfikatora URI lub absolutnego identyfikatora URI w postaci pakiet://aplikacja:,,,/.</target>

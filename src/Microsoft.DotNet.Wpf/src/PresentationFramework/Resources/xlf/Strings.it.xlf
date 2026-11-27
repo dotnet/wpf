@@ -3418,16 +3418,6 @@ Sostituirlo?</target>
         <target state="translated">Impossibile impostare UpdateSourceTrigger per il Binding interno di MultiBinding. È valido solo l'UpdateSourceTrigger diretto predefinito.</target>
         <note />
       </trans-unit>
-      <trans-unit id="NonCLSException">
-        <source>Unknown exception during '{0}'.</source>
-        <target state="translated">Eccezione sconosciuta durante '{0}'.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="NonClsActivationException">
-        <source>Nonstandard exception occurred while activating the application.</source>
-        <target state="translated">Eccezione non standard durante l'attivazione dell'applicazione.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NonPackAppAbsoluteUriNotAllowed">
         <source>Unsupported URI syntax. Method expects a relative URI or a pack://application:,,,/ form of absolute URI.</source>
         <target state="translated">Sintassi URI non supportata. Per il metodo è previsto un URI relativo oppure un URI assoluto di tipo pack://applicazione:,,,/.</target>
@@ -3506,16 +3496,6 @@ Sostituirlo?</target>
       <trans-unit id="ObjectDataProviderHasNoSource">
         <source>ObjectDataProvider needs either an ObjectType or ObjectInstance.</source>
         <target state="translated">ObjectDataProvider richiede un ObjectType o una ObjectInstance.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ObjectDataProviderNonCLSException">
-        <source>Unknown exception while creating type '{0}' for ObjectDataProvider.</source>
-        <target state="translated">Eccezione sconosciuta durante la creazione del tipo '{0}' per ObjectDataProvider.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ObjectDataProviderNonCLSExceptionInvoke">
-        <source>Unknown exception while invoking method '{0}' on type '{1}' for ObjectDataProvider.</source>
-        <target state="translated">Eccezione sconosciuta durante la chiamata del metodo '{0}' sul tipo '{1}' per ObjectDataProvider.</target>
         <note />
       </trans-unit>
       <trans-unit id="ObjectDataProviderParameterCollectionIsNotInUse">

@@ -460,6 +460,12 @@ namespace System.Windows.Baml2006
             }
 
             AssemblyName assemblyName = new AssemblyName(bamlAssembly.Name);
+
+            // Resolve the reference, and the Assembly.Load fallbacks below, in the load context of
+            // the assembly that owns this BAML. Template content is parsed lazily, long after the
+            // load that carried it returned, and this schema context still knows whose it is.
+            using IDisposable loadContextScope = MS.Internal.LoadContextScope.EnterFor(_localAssembly);
+
             bamlAssembly.Assembly = MS.Internal.WindowsBase.SafeSecurityHelper.GetLoadedAssembly(assemblyName);
             if (bamlAssembly.Assembly == null)
             {

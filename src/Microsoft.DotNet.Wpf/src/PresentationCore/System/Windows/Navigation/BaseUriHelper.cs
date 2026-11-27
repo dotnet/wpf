@@ -190,6 +190,25 @@ namespace System.Windows.Navigation
         internal static Assembly GetLoadedAssembly(string assemblyName, string assemblyVersion, string assemblyKey)
         {
             Assembly assembly;
+            AssemblyName asmName = CreateAssemblyName(assemblyName, assemblyVersion, assemblyKey);
+
+            assembly = SafeSecurityHelper.GetLoadedAssembly(asmName);
+
+            if (assembly == null)
+            {
+                // The assembly is not yet loaded to the AppDomain, try to load it with information specified in resource Uri.
+                assembly = Assembly.Load(asmName);
+            }
+
+            return assembly;
+        }
+
+        //
+        // The assembly identity a pack URI names: only the version and key token the URI
+        // itself specifies, so that a URI without a version matches any version.
+        //
+        internal static AssemblyName CreateAssemblyName(string assemblyName, string assemblyVersion, string assemblyKey)
+        {
             AssemblyName asmName = new AssemblyName(assemblyName)
             {
                 // We always use the primary assembly (culture neutral) for resource manager.
@@ -210,15 +229,7 @@ namespace System.Windows.Navigation
                 asmName.SetPublicKeyToken(keyToken);
             }
 
-            assembly = SafeSecurityHelper.GetLoadedAssembly(asmName);
-
-            if (assembly == null)
-            {
-                // The assembly is not yet loaded to the AppDomain, try to load it with information specified in resource Uri.
-                assembly = Assembly.Load(asmName);
-            }
-
-            return assembly;
+            return asmName;
         }
 
         //

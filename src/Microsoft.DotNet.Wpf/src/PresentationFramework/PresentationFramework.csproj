@@ -294,6 +294,7 @@
     <Compile Include="MS\Internal\KnownBoxes.cs" />
     <Compile Include="MS\Internal\LayoutDump.cs" />
     <Compile Include="MS\Internal\ListOfObject.cs" />
+    <Compile Include="MS\Internal\LoadContextScope.cs" />
     <Compile Include="MS\Internal\Markup\StaticExtension.cs" />
     <Compile Include="MS\Internal\MatchedTextInfo.cs" />
     <Compile Include="MS\Internal\Navigation\BindStream.cs" />

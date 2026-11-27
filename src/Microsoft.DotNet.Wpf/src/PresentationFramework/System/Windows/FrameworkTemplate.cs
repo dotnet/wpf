@@ -888,6 +888,10 @@ namespace System.Windows
             IComponentConnector componentConnector,
             IStyleConnector styleConnector, List<DependencyObject> affectedChildren, UncommonField<Hashtable> templatedNonFeChildrenField)
         {
+            // Template content is realized when a layout pass applies it, under whatever load context
+            // flowed with that work; use the context of the assembly the markup belongs to instead.
+            using IDisposable loadContextScope = MS.Internal.LoadContextScope.EnterForDeferred(_templateHolder?.SchemaContext);
+
             if (Names == null)
             {
                 Names = new XamlContextStack<Frame>(() => new Frame());

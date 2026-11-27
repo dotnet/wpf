@@ -354,6 +354,10 @@ namespace System.Windows
             if (resourceLocator.IsAbsoluteUri)
                 throw new ArgumentException(SR.AbsoluteUriNotAllowed);
 
+            // Resolve the markup's references, and its own pack URI, in the load context of the
+            // component it is loaded for, which is also what the stream is checked against below.
+            using IDisposable loadContextScope = MS.Internal.LoadContextScope.EnterFor(component.GetType().Assembly);
+
             // Passed a relative Uri here.
             // needs to resolve it to Pack://Application.
             //..\..\ in the relative Uri will get stripped when creating the new Uri and resolving to the
@@ -1974,8 +1978,10 @@ namespace System.Windows
             _globalLock = new object();
 
             // Add an instance of the ResourceContainer to PreloadedPackages so that PackWebRequestFactory can find it
-            // and mark it as thread-safe so PackWebResponse won't protect returned streams with a synchronizing wrapper
-            PreloadedPackages.AddPackage(PackUriHelper.GetPackageUri(BaseUriHelper.PackAppBaseUri), new ResourceContainer(), true);
+            // and mark it as thread-safe so PackWebResponse won't protect returned streams with a synchronizing wrapper.
+            // A ResourceContainer caches the parts it hands out, so each AssemblyLoadContext other than the default
+            // one is served its own instance and never receives a part resolved for another context.
+            PreloadedPackages.AddPackage(PackUriHelper.GetPackageUri(BaseUriHelper.PackAppBaseUri), new ResourceContainer(), true, static () => new ResourceContainer());
 
 
             MimeObjectFactory.RegisterCore(MimeTypeMapper.BamlMime, new StreamToObjectFactoryDelegateCore(AppModelKnownContentFactory.BamlConverterCore));

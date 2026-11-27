@@ -1425,6 +1425,10 @@ namespace System.Windows
 
         private object CreateObject(KeyRecord key)
         {
+            // A deferred resource is realized on its first lookup, and again on a theme change, under
+            // whatever load context flowed with that work; use the context of the assembly it belongs to.
+            using IDisposable loadContextScope = MS.Internal.LoadContextScope.EnterForDeferred(_reader?.SchemaContext);
+
             System.Xaml.XamlReader xamlReader = _reader.ReadObject(key);
             // v3 Markup Compiler will occasionally produce deferred
             // content with keys but no values.  We need to allow returning

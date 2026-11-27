@@ -20,6 +20,7 @@ using System.Xaml.Permissions;
 using System.Windows.Navigation;
 using MS.Internal.Xaml.Context;
 using System.Runtime.CompilerServices;
+using System.Runtime.Loader;
 
 namespace System.Windows.Markup
 {
@@ -785,7 +786,17 @@ namespace System.Windows.Markup
         internal static WpfSharedBamlSchemaContext XamlV3SharedSchemaContext { get { return _xamlV3SharedContext.Value; } }
         public static XamlSchemaContext GetWpfSchemaContext()
         {
-            return _xamlSharedContext.Value;
+            // A schema context caches the assemblies and types it resolves, so one shared by every
+            // AssemblyLoadContext pins the first answer for all of them. Loose XAML parsed while
+            // another context is current is given a schema context of that context's own.
+            AssemblyLoadContext context = AssemblyLoadContext.CurrentContextualReflectionContext;
+
+            if (context == null || context == AssemblyLoadContext.Default)
+            {
+                return _xamlSharedContext.Value;
+            }
+
+            return _xamlContextSchemaContexts.GetValue(context, static _ => CreateXamlSchemaContext(false));
         }
 
         /// <summary>
@@ -1032,6 +1043,9 @@ namespace System.Windows.Markup
         {
             object root = null;
 
+            // A BAML stream carries the assembly it belongs to; resolve what it references there.
+            using IDisposable loadContextScope = MS.Internal.LoadContextScope.EnterFor((stream as IStreamInfo)?.Assembly);
+
 #if DEBUG_CLR_MEM
             bool clrTracingEnabled = false;
             // Use local pass variable to correctly log nested parses.
@@ -1195,6 +1209,7 @@ namespace System.Windows.Markup
             new Lazy<WpfSharedXamlSchemaContext>(() => CreateXamlSchemaContext(false));
         private static readonly Lazy<WpfSharedXamlSchemaContext> _xamlV3SharedContext =
             new Lazy<WpfSharedXamlSchemaContext>(() => CreateXamlSchemaContext(true));
+        private static readonly ConditionalWeakTable<AssemblyLoadContext, WpfSharedXamlSchemaContext> _xamlContextSchemaContexts = new();
 
 #if DEBUG_CLR_MEM
         private static int _CLRBamlPass = 0;
